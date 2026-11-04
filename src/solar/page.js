@@ -48,7 +48,13 @@ export async function mountSolar(root, assets, signal) {
     bodies = new Map(),
     disposables = new Set(),
     unreleasedImages = new Set();
-  let orbitLines, belt;
+  let orbitLines,
+    belt,
+    needsRender = true;
+  const invalidate = () => {
+    needsRender = true;
+  };
+  controls.addEventListener("change", invalidate);
   let disposed = false,
     frame = 0,
     days = 0,
@@ -75,6 +81,7 @@ export async function mountSolar(root, assets, signal) {
     disposed = true;
     cancelAnimationFrame(frame);
     observer.disconnect();
+    controls.removeEventListener("change", invalidate);
     controls.dispose();
     for (const m of loaded.values()) disposeObject(m);
     for (const o of disposables) disposeObject(o);
@@ -91,6 +98,7 @@ export async function mountSolar(root, assets, signal) {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    needsRender = true;
     if (!selected) overview();
   };
   const observer = new ResizeObserver(resize);
@@ -103,6 +111,7 @@ export async function mountSolar(root, assets, signal) {
       "The 3D view was interrupted. Return to Gallery, then reopen Solar System.";
   });
   function overview() {
+    needsRender = true;
     selected = "";
     $("#solar-select").value = "";
     controls.target.set(0, 0, 0);
@@ -128,6 +137,7 @@ export async function mountSolar(root, assets, signal) {
   function focus(id) {
     const entry = bodies.get(id);
     if (!entry) return;
+    needsRender = true;
     selected = id;
     $("#solar-select").value = id;
     updateInfo(id);
@@ -282,6 +292,7 @@ export async function mountSolar(root, assets, signal) {
     scene.add(tail);
     disposables.add(tail);
     function scales() {
+      needsRender = true;
       for (const child of [...orbitLines.children]) {
         disposeObject(child);
         orbitLines.remove(child);
@@ -449,19 +460,29 @@ export async function mountSolar(root, assets, signal) {
       if (disposed) return;
       const dt = last ? Math.min((now - last) / 1000, 0.05) : 0;
       last = now;
-      const old = selected ? bodies.get(selected).orbit.position.clone() : null;
-      if (!document.hidden) days += dt * Number($("#solar-speed").value);
-      updatePositions();
-      if (old) {
-        const delta = bodies.get(selected).orbit.position.clone().sub(old);
-        camera.position.add(delta);
-        controls.target.add(delta);
+      const speed = document.hidden ? 0 : Number($("#solar-speed").value);
+      const advancing = speed !== 0 && dt > 0;
+      if (advancing) {
+        const old = selected
+          ? bodies.get(selected).orbit.position.clone()
+          : null;
+        days += dt * speed;
+        updatePositions();
+        if (old) {
+          const delta = bodies.get(selected).orbit.position.clone().sub(old);
+          camera.position.add(delta);
+          controls.target.add(delta);
+        }
       }
       sky.visible = !selected;
       orbitLines.visible = !selected;
       belt.visible = mode === "presentation" && !selected;
-      controls.update();
-      renderer.render(scene, camera);
+      const cameraChanged = controls.update();
+      // A paused atlas needs a new frame only after input, resize or a view change.
+      if (!document.hidden && (advancing || needsRender || cameraChanged)) {
+        renderer.render(scene, camera);
+        needsRender = false;
+      }
       frame = requestAnimationFrame(render);
     };
     frame = requestAnimationFrame(render);

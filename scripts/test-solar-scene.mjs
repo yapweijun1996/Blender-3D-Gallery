@@ -4,12 +4,32 @@ import { chromium } from "playwright";
 import { serveBuild, launchOptions } from "./browser-test-utils.mjs";
 const server = await serveBuild();
 const browser = await chromium.launch(launchOptions);
-const artifacts = "models/solar-system/reports";
+const artifacts =
+  process.env.TEST_ARTIFACT_DIR || "models/solar-system/reports";
+await fs.mkdir(artifacts, { recursive: true });
 const results = [];
 try {
   for (const width of [1440, 768, 390, 320]) {
     const page = await browser.newPage({
       viewport: { width, height: width === 1440 ? 1000 : 844 },
+    });
+    await page.addInitScript(() => {
+      window.solarDrawCalls = 0;
+      for (const context of [WebGLRenderingContext, WebGL2RenderingContext]) {
+        for (const method of [
+          "drawArrays",
+          "drawElements",
+          "drawArraysInstanced",
+          "drawElementsInstanced",
+        ]) {
+          const original = context.prototype[method];
+          if (!original) continue;
+          context.prototype[method] = function (...args) {
+            window.solarDrawCalls++;
+            return original.apply(this, args);
+          };
+        }
+      }
     });
     const errors = [],
       cancellations = [];
@@ -41,6 +61,15 @@ try {
     }
     assert.equal(await page.locator("#solar-select option").count(), 18);
     await page.selectOption("#solar-speed", "0");
+    await page.waitForTimeout(350);
+    const pausedDraws = await page.evaluate(() => window.solarDrawCalls);
+    assert.ok(pausedDraws > 0, "the scene rendered before pausing");
+    await page.waitForTimeout(350);
+    assert.equal(
+      await page.evaluate(() => window.solarDrawCalls),
+      pausedDraws,
+      "paused scene stops GPU draw calls",
+    );
     await page.screenshot({
       path: `${artifacts}/scene-${width}.png`,
       fullPage: false,
@@ -119,6 +148,7 @@ try {
         "focus",
         "realistic ratios",
         "pause speed",
+        "paused scene stops GPU draw calls",
         "overview",
         "gallery return",
         "viewer reset close",
