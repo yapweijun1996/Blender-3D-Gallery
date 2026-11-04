@@ -1,12 +1,13 @@
 import { defineConfig } from 'vite';
 import { loadCatalog } from './scripts/catalog.mjs';
+import { pwaBuildPlugin } from './scripts/pwa-build.mjs';
 
 const virtualId = 'virtual:gallery-catalog';
 const resolvedId = '\0' + virtualId;
 export default defineConfig({
   base: './',
   build: { assetsInlineLimit: 0 },
-  plugins: [{
+  plugins: [pwaBuildPlugin(), {
     name: 'gallery-catalog',
     resolveId(id) { return id === virtualId ? resolvedId : null; },
     load(id) {

@@ -1,6 +1,6 @@
 # Quality and release
 
-Status: the GitHub Actions workflow installs dependencies, validates every cataloged GLB with Khronos glTF Validator, builds the gallery and deploys the Pages artifact. The broader checks below remain proposed until implemented and independently verified.
+Status: the GitHub Actions workflow installs dependencies, validates every cataloged GLB with Khronos glTF Validator, builds the gallery and deploys the Pages artifact. Game-specific unit, browser and PWA lifecycle suites now gate deployment; see [executed Game verification](game-verification.md). The broader checks below remain proposals unless covered by that evidence.
 
 ## Validation
 

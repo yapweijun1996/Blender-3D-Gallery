@@ -134,10 +134,25 @@ for i,(x,y) in enumerate(pockets):
 for y in (-.636,.636):
     for x in (-.60,.60):
         cube('Long rail',(x,y,.811),(1.05,.125,.085),wood_edge,table,.009)
-        cube('Cushion',(x,y*.86,.796),(1.03,.052,.052),rubber,table,.006)
+        cube('Cushion',(.555 if x>0 else -.555,y*.86,.796),(.94,.052,.052),rubber,table,.006)
 for x in (-1.215,1.215):
     cube('End rail',(x,0,.811),(.11,1.02,.085),wood_edge,table,.009)
-    cube('Cushion',(x*.93,0,.796),(.05,.99,.052),rubber,table,.006)
+    cube('Cushion',(x*.93,0,.796),(.05,.92,.052),rubber,table,.006)
+# Pocket-jaw faces match the calibrated game boundaries (glTF X/Z plane).
+def pocket_jaw(ax, az, bx, bz):
+    dx, dz = bx-ax, bz-az
+    length = math.hypot(dx,dz)
+    nx, nz = -dz/length, dx/length
+    mx, mz = (ax+bx)/2, (az+bz)/2
+    if nx*(-mx)+nz*(-mz) < 0: nx, nz = -nx, -nz
+    ob = cube('Pocket jaw', (mx-nx*.009, -(mz-nz*.009), .796), (length,.018,.052), rubber, table, .003)
+    ob.rotation_euler.z = -math.atan2(dz,dx)
+for sx in (-1,1):
+    for sz in (-1,1):
+        pocket_jaw(sx*1.025,sz*.52096,sx*1.10,sz*.615)
+        pocket_jaw(sx*1.10495,sz*.46,sx*1.19,sz*.54)
+        pocket_jaw(sx*.085,sz*.52096,sx*.055,sz*.605)
+
 for x in (-.97,.97):
     for y in (-.48,.48):
         cube('Table leg',(x,y,.305),(.17,.17,.61),wood,table,.012)

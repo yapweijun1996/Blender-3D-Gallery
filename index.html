@@ -2,18 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#111513">
   <meta name="description" content="An independent gallery of real 3D works made with Blender.">
-  <link rel="icon" href="data:,">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Blender 3D Gallery</title>
 </head>
 <body>
   <header class="header shell">
     <a class="brand" href="./" aria-label="Blender 3D Gallery home"><span class="brand-mark">✳</span><span>BLENDER <i>3D</i> GALLERY<small>OBJECTS &amp; SPACES</small></span></a>
-    <nav aria-label="Main navigation"><a href="#collection">Collection</a><a href="#about">About</a><a class="source-link" href="https://github.com/yapweijun1996/Blender-3D-Gallery">GitHub <span aria-hidden="true">↗</span></a></nav>
+    <nav aria-label="Main navigation"><a href="./#collection" data-page="gallery">Gallery</a><a href="?page=game" data-page="game">Game</a><a class="about-link" href="./#about" data-page="gallery">About</a><a class="source-link" href="https://github.com/yapweijun1996/Blender-3D-Gallery">GitHub <span aria-hidden="true">↗</span></a></nav>
   </header>
-  <main class="shell">
+  <main id="gallery-page" class="shell">
     <section class="intro" aria-labelledby="intro-title">
       <div><p class="eyebrow"><span class="dot"></span> A COLLECTION IN THE MAKING</p><h1 id="intro-title">Objects worth<br><em>looking closer.</em></h1></div>
       <p class="intro-copy">A small collection of original 3D works, made in Blender and ready to explore from every angle.</p>
@@ -27,6 +31,7 @@
     </section>
     <section class="about" id="about"><p class="eyebrow">A NOTE ABOUT THIS SPACE</p><p>Blender 3D Gallery is a growing collection of real, interactive 3D objects. Made in Blender, created with different tools, and shared for the joy of looking closer.</p></section>
   </main>
+  <main id="game-page" class="shell" hidden></main>
   <footer class="shell footer"><span>✳ &nbsp; BLENDER 3D GALLERY</span><span>AN INDEPENDENT 3D GALLERY</span><a href="https://github.com/yapweijun1996/Blender-3D-Gallery">VIEW SOURCE ↗</a></footer>
   <dialog id="viewer" aria-labelledby="viewer-title">
     <div class="viewer-header"><div><p id="viewer-category" class="eyebrow">INTERACTIVE OBJECT</p><h2 id="viewer-title">3D asset</h2></div><button id="close-viewer" class="icon-button" type="button" aria-label="Close 3D viewer">×</button></div>

@@ -1,6 +1,6 @@
 # Roadmap and decision register
 
-Status: proposed milestones; none are represented here as completed.
+Status: the individual billiards gallery, local two-player Game and explicit offline PWA contract are implemented. See [Game delivery](game-implementation-plan.md) and [verification](game-verification.md). Broader curated-catalog milestones remain proposed.
 
 1. **Foundation:** resolve licensing, attribution, visual direction, supported Blender and package versions, hosting and candidate budgets. Record decisions and acceptance criteria.
 2. **Gallery skeleton:** implement a responsive static gallery, base-path-aware links, one real validated GLB fixture, viewer controls and fallback states. Verify desktop and mobile behavior.
@@ -14,6 +14,6 @@ Status: proposed milestones; none are represented here as completed.
 - Final visual system, responsive breakpoints and accessibility validation.
 - Supported Blender release and compatible frontend dependency versions.
 - Measured performance and asset budgets and exception process.
-- Initial launch scope, final model count, source storage and whether PWA is included.
+- Initial launch scope, final model count, source storage and expansion beyond the delivered Game/PWA.
 
 Keep decision records current: distinguish proposed, approved and superseded choices, with rationale, impacts and supporting evidence. Inspect actual repository and deployment state before treating any milestone as complete.

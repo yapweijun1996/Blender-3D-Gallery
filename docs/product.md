@@ -1,6 +1,6 @@
 # Product requirements
 
-Status: v1.0 candidate. The requirements below describe a proposed product, not completed functionality.
+Status: broader gallery v1.0 candidate. The individual-asset gallery and local two-player Game/PWA are implemented; see [Game delivery](game-implementation-plan.md). Search and the broader discovery requirements below remain proposals.
 
 ## Goal and scope
 
@@ -21,4 +21,4 @@ Present a growing, curated collection of real Blender-created 3D works. The prod
 - Non-canvas actions are keyboard accessible; touch targets and focus states are clear. A text description and poster provide an alternative to the 3D view.
 - No login, API key or local Blender installation is required to view published works.
 
-A launch collection of 12 validated works is a proposed target, not a completed count or a fixed commitment. Optional later features include animations, fullscreen, collections, favorites and PWA support; availability must be reflected honestly in the interface.
+A launch collection of 12 validated works is a proposed target, not a completed count or a fixed commitment. Favorites, expanded discovery and additional collections remain possible later work. The delivered Game/PWA scope and its limits are documented separately.

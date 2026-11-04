@@ -1,6 +1,6 @@
 # Proposed architecture
 
-Status: the broader architecture remains a v1.0 candidate. The initial implementation is a Vite and vanilla JavaScript gallery with a lazily loaded Three.js viewer, a data-driven collection of individual GLBs and an optional complete scene, and a GitHub Pages Actions workflow. It does not yet implement React or the other proposed capabilities below. `models/catalog.json` owns asset identities and paths; the Vite catalog plugin reads sizes and triangle counts from each GLB at build time and resolves URLs through Vite.
+Status: the broader architecture remains a v1.0 candidate. The initial implementation is a Vite and vanilla JavaScript gallery with a lazily loaded Three.js viewer, a data-driven collection of individual GLBs and an optional complete scene, and a GitHub Pages Actions workflow. The implemented Game/PWA boundaries are described in [game implementation](game-implementation-plan.md). It does not implement the proposed React migration or all capabilities below. `models/catalog.json` owns asset identities and paths; the Vite catalog plugin reads sizes and triangle counts from each GLB at build time and resolves URLs through Vite.
 
 ## Boundaries and data flow
 

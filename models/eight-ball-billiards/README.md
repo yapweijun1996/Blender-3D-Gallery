@@ -40,3 +40,7 @@ npm run validate:assets
 Each individual export contains only its asset root and children, with the root at the origin. The table origin is at floor level; balls use their centers. The full scene preserves the assembled positions and the original `?model=eight-ball-billiards` link.
 
 Card thumbnails were generated from the corresponding source asset, using `scripts/render-asset-thumbnails.py` with Blender Workbench, then converted to WebP with `cwebp`. The catalog at `models/catalog.json` maps identities to exports and thumbnails. Triangle counts and file sizes are calculated from the GLBs at build time.
+
+## Game table revision
+
+The Game page reuses the individual exports. Cushion lengths and twelve pocket-jaw pieces were updated in the Blender source and generator so the six visible pocket approaches agree with the planar game colliders. The table, assembled scene, source, scene WebP and table thumbnail were regenerated; ball identities, curved markings and separate asset roots were retained. See [game implementation](../../docs/game-implementation-plan.md) for measured dimensions and [verification](../../docs/game-verification.md) for source/export/browser results.

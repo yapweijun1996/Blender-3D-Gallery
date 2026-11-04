@@ -1,5 +1,6 @@
 import './style.css';
 import catalog from 'virtual:gallery-catalog';
+import { setupPwa } from './pwa/register.js';
 
 const dialog = document.querySelector('#viewer');
 const viewport = document.querySelector('#viewport');
@@ -138,10 +139,106 @@ function closeViewer(updateUrl = true) {
 document.querySelector('#close-viewer').addEventListener('click', () => closeViewer());
 dialog.addEventListener('cancel', event => { event.preventDefault(); closeViewer(); });
 dialog.addEventListener('click', event => { if (event.target === dialog) closeViewer(); });
-function syncUrl() {
+function syncModelUrl() {
   const id = new URL(location.href).searchParams.get('model');
   if (assetById.has(id)) openViewer(assetById.get(id), null, false);
   else if (dialog.open) closeViewer(false);
 }
-window.addEventListener('popstate', syncUrl);
-syncUrl();
+let gamePage = null,
+  gameController = null,
+  routeRun = 0;
+const galleryRoot = document.querySelector("#gallery-page");
+const gameRoot = document.querySelector("#game-page");
+const footer = document.querySelector(".footer");
+setupPwa(() => gamePage);
+async function syncRoute() {
+  const isGame = new URL(location.href).searchParams.get("page") === "game";
+  if (isGame && (gamePage || gameController)) return;
+  const run = ++routeRun;
+  if (!isGame && gamePage && !gamePage.beforeLeave()) {
+    history.replaceState({}, "", "?page=game");
+    return;
+  }
+  if (isGame) {
+    if (dialog.open) closeViewer(false);
+    galleryRoot.hidden = true;
+    gameRoot.hidden = false;
+    footer.hidden = true;
+    document.body.classList.add("game-page");
+    const url = new URL(location.href);
+    if (url.searchParams.has("model")) {
+      url.searchParams.delete("model");
+      history.replaceState({}, "", url);
+    }
+    gameController = new AbortController();
+    const controller = gameController;
+    try {
+      const { mountGame } = await import("./game/page.js");
+      if (run !== routeRun || controller.signal.aborted) return;
+      const result = await mountGame(gameRoot, assets, controller.signal, () =>
+        navigate("gallery", true),
+      );
+      if (controller.signal.aborted) result.dispose();
+      else {
+        gamePage = result;
+        window.dispatchEvent(new CustomEvent("game-mounted"));
+      }
+    } catch {
+      gameRoot.textContent =
+        "The game could not start. Reconnect and return to Gallery to retry.";
+    }
+  } else {
+    gameController?.abort();
+    gameController = null;
+    gamePage?.dispose();
+    gamePage = null;
+    galleryRoot.hidden = false;
+    gameRoot.hidden = true;
+    footer.hidden = false;
+    document.body.classList.remove("game-page");
+    syncModelUrl();
+  }
+  document
+    .querySelector("[data-page=game]")
+    .setAttribute("aria-current", isGame ? "page" : "false");
+  document
+    .querySelector("[data-page=gallery]")
+    .setAttribute("aria-current", !isGame ? "page" : "false");
+}
+function navigate(page, alreadyConfirmed = false) {
+  if (
+    page === "gallery" &&
+    gamePage &&
+    !alreadyConfirmed &&
+    !gamePage.beforeLeave()
+  )
+    return;
+  if (page === "gallery" && gamePage) {
+    gameController?.abort();
+    gameController = null;
+    gamePage.dispose();
+    gamePage = null;
+  }
+  const url = new URL(location.href);
+  url.search = "";
+  url.hash = "";
+  if (page === "game") url.searchParams.set("page", "game");
+  history.pushState({}, "", url);
+  window.scrollTo(0, 0);
+  void syncRoute();
+}
+document.querySelectorAll("[data-page]").forEach((link) =>
+  link.addEventListener("click", (event) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+    event.preventDefault();
+    navigate(link.dataset.page);
+    if (link.hash) document.querySelector(link.hash)?.scrollIntoView();
+  }),
+);
+document.querySelector(".brand").addEventListener("click", (event) => {
+  if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+  event.preventDefault();
+  navigate("gallery");
+});
+window.addEventListener("popstate", () => void syncRoute());
+void syncRoute();
