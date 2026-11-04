@@ -62,6 +62,20 @@ const setRange = (page, id, value) =>
     el.dispatchEvent(new Event("input", { bubbles: true }));
   }, String(value));
 try {
+  await run("first entry exposes Start and the complete table", async page => {
+    for (const [width,height] of [[1280,720],[390,844],[320,568]]) {
+      await page.setViewportSize({width,height});
+      await gameReady(page,server.url);
+      const boxes=await page.evaluate(()=>{
+        const start=document.querySelector('[data-action=new]').getBoundingClientRect();
+        const board=document.querySelector('.game-board').getBoundingClientRect();
+        return {startBottom:start.bottom,boardBottom:board.bottom,height:innerHeight};
+      });
+      assert.ok(boxes.startBottom<=height,JSON.stringify(boxes));
+      assert.ok(boxes.boardBottom<=height,JSON.stringify(boxes));
+      await page.screenshot({path:path.join(artifacts,`entry-${width}.png`)});
+    }
+  });
   await run(
     "start, invalid placement, single impulse, pause and shot settlement",
     async (page) => {

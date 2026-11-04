@@ -96,7 +96,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     status.textContent = contextLost
       ? "3D view interrupted. Reload the table to continue."
       : state?.message ||
-        "A complete local match, using the original Blender assets.";
+        "Clear your group, then pocket the eight. Two players share this device.";
     for (let i = 0; i < 2; i++) {
       const c = $(`#player-${i}`);
       c.classList.toggle(
@@ -161,9 +161,9 @@ export async function mountGame(root, assets, signal, onLeave) {
     $('[data-action="resume"]').disabled =
       !ready || !saved || !ownership || contextLost;
   }
+  const previewState = { phase: "preview", balls: makeRack(42) };
   function draw() {
-    if (state && view) view.update(state, angle, power, candidate);
-    else view?.render();
+    view?.update(state || previewState, angle, power, candidate);
   }
   async function startNew() {
     if (!ready) return;
@@ -732,6 +732,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     all('[data-action="new"]').forEach((b) => (b.disabled = !ownership));
     $('[data-action="resume"]').disabled = !saved || !ownership;
     ui();
+    draw();
   } catch (e) {
     if (!signal.aborted) {
       loading.textContent =

@@ -11,3 +11,5 @@ Original prompt: based on the .md, please finish the game task, and commit and m
 - Five-persona review found event-order, corrupted-save, storage ownership, save-failure, WebGL recovery, mobile layout and offline-pack issues. Fixed and reran affected browser journeys.
 - Unit/geometry tests: 23 pass. Game browser suite: 12 Chromium scenarios plus WebKit shot smoke pass. PWA lifecycle suite: 9 pass, including failure injection and explicit N-to-N+1 recovery.
 - Release procedure: final checks/diff, focused feature commit, fast-forward merge/push main, verify Actions and live Game; remote results are reported in the final delivery. The remaining hardware follow-up is physical iOS/Android installation and sustained performance.
+
+- User challenged the release quality. Live first-entry review reproduced an empty table, mobile start action below the fold and desktop clipping. Added a real rack preview, compact desktop framing and mobile start controls before the table; testing entry separately from active play.

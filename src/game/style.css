@@ -641,3 +641,33 @@
     padding: 0 8px;
   }
 }
+
+/* Entry needs the same first-screen budget as an active match. */
+body.game-page .header{min-height:64px}
+.game-shell{padding:16px 0 20px}
+.game-heading{margin-bottom:14px;align-items:center}
+.game-heading h1{font-size:32px}
+.game-heading .eyebrow{display:none}
+.players{margin-bottom:12px}
+.player-card{padding:10px 14px}
+#game-viewport{height:calc(100dvh - 280px);min-height:220px;max-height:650px}
+@media(max-width:650px){
+ body.game-page .header{min-height:44px}
+ .game-shell:not(.is-playing){padding:8px 0}
+ .game-shell:not(.is-playing) .game-heading{height:30px;margin-bottom:8px}
+ .game-shell:not(.is-playing) .game-heading h1{font-size:25px}
+ .game-shell:not(.is-playing) .game-mode,.game-shell:not(.is-playing) .players{display:none}
+ .game-shell:not(.is-playing) .game-heading-actions button{min-height:30px;padding:4px 8px}
+ .game-shell:not(.is-playing) .game-layout{display:flex;flex-direction:column;gap:8px}
+ .game-shell:not(.is-playing) .game-controls{order:-1;width:100%;padding:10px 12px}
+ .game-shell:not(.is-playing) .game-turn{font-size:18px;line-height:22px;margin:0 0 4px}
+ .game-shell:not(.is-playing) #game-status{font-size:11px;line-height:15px;margin:0 0 8px}
+ .game-shell:not(.is-playing) .game-start{display:flex;gap:8px}
+ .game-shell:not(.is-playing) .game-start button{flex:1;margin:0;padding:8px;font-size:12px}
+ .game-shell:not(.is-playing) .game-start button[data-action=resume]:disabled{display:none}
+ .game-shell:not(.is-playing) .game-start p{display:none}
+ .game-shell:not(.is-playing) .save-status{font-size:10px;margin:6px 0 0}
+ .game-shell:not(.is-playing) .game-board{width:100%}
+ .game-shell:not(.is-playing) #game-viewport{height:calc(100dvh - 302px);min-height:190px;max-height:560px}
+ .game-shell:not(.is-playing) .game-table-caption{height:44px;padding:0 8px}
+}

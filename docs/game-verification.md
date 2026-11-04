@@ -10,7 +10,7 @@ Verification date: 2026-11-04 (Asia/Singapore). Tested from a clean remote-basel
 | `npm run build` | Pass | Production relative-path build; all 22 catalog GLBs validated |
 | Khronos glTF Validator | 22/22; zero errors and warnings | Each standalone asset and optional assembled scene independently |
 | Blender 5.1.2 source audit | Pass | Metric scale 1.0, 21 asset roots, Ball 00–15, 141 meshes; no mesh validation repairs, missing UV/materials, nonfinite vertices or degenerate faces |
-| `npm run test:browser` | 13 scenario groups pass | Twelve Chromium groups plus WebKit shot smoke; details below |
+| `npm run test:browser` | 14 scenario groups pass | Thirteen Chromium groups plus WebKit shot smoke; details below |
 | `npm run test:pwa` | 9 lifecycle checks pass | Full pack, offline startup and update failure/recovery; details below |
 | Development skill client | Run; screenshots/text inspected | Actual game canvas and keyboard input through the existing web-game action client |
 | Five-persona review | Findings fixed and affected paths rerun | Rules, gameplay, mobile, assets, PWA/reliability |
@@ -73,3 +73,7 @@ Generated locally:
 There was no attached physical iOS/Android device. Installation UI, real home-screen behavior, mobile GPU performance, memory pressure and browser storage eviction remain hardware checks. No claim of 30/60 fps on a particular phone, full accessibility certification, cross-browser bit-identical physics or tournament simulation is made.
 
 The Pages workflow is gated by these suites. The exact deployed commit and workflow result should be checked in GitHub Actions and against `build-info.json`; the final delivery message records the verified remote release. Local checks alone are not a deployment claim.
+
+## First-entry correction
+
+A subsequent live review found that setup had an empty table and the phone start button below the fold; the earlier responsive checks covered active play only. Setup now renders real rack geometry and places phone start controls before the table. A separate first-entry viewport regression covers phone and desktop framing. This is a correction to the coverage gap, not a claim of a complete visual redesign.
