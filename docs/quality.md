@@ -1,6 +1,6 @@
 # Quality and release
 
-Status: proposed checks. No CI, build or release is currently claimed.
+Status: the GitHub Actions workflow installs dependencies, builds the initial gallery and deploys the Pages artifact. The broader checks below remain proposed until implemented and independently verified.
 
 ## Validation
 

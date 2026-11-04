@@ -1,6 +1,6 @@
 # Proposed architecture
 
-Status: v1.0 candidate; no application or deployment is implied.
+Status: the broader architecture remains a v1.0 candidate. The initial implementation is a Vite and vanilla JavaScript gallery with a lazily loaded Three.js viewer, a single directly referenced GLB, and a GitHub Pages Actions workflow. It does not yet implement React, a catalog generator, or the other proposed capabilities below.
 
 ## Boundaries and data flow
 

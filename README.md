@@ -2,7 +2,7 @@
 
 A planned public, interactive gallery for real 3D models made in Blender. Artists may create models manually or with any suitable tool, including coding agents. The gallery is tool-neutral and focuses on discovering and viewing artwork.
 
-This repository currently contains project documentation only. The application, model catalog, assets, CI and deployment described below are proposals, not evidence of an existing implementation or release.
+The repository contains an initial static gallery and one original billiards asset pack. A GitHub Actions workflow builds and deploys the site to GitHub Pages on pushes to `main`. The broader product specifications remain proposals.
 
 ## Proposed visitor experience
 
@@ -25,4 +25,10 @@ The gallery is not an online model editor, model-generation service, marketplace
 
 ## Status
 
-The specifications are a v1.0 candidate, not a claim of deployment or a substitute for implementation evidence. Decisions such as licensing, final visual direction, supported versions, performance budgets and release scope still require confirmation or measurement. There are no build or run instructions until an application exists.
+The broader specifications are a v1.0 candidate. The initial site presents one model with an interactive viewer; a full searchable catalog, PWA, and additional models are future work. The asset pack is original, and redistribution terms have not yet been specified.
+
+## Develop and deploy
+
+Use Node.js 24, then run `npm ci`, `npm run dev`, or `npm run build`. Vite produces `dist/` with relative asset paths suitable for a GitHub Pages project site. The `Build and deploy gallery` workflow runs on every push to `main` and can also be started manually. It builds with `npm ci` and deploys the `dist/` artifact to the `github-pages` environment. Check the Actions run and published URL before treating a release as successful. The source `.blend` and individual GLBs remain in the repository and are not copied into the published site build.
+
+To roll back, revert the problematic commit on `main` and let the same workflow deploy the restored build.
