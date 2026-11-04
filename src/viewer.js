@@ -2,16 +2,16 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-export default async function createViewer(container, url, status) {
+export default async function createViewer(container, url, status, signal, name) {
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x657078);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.domElement.setAttribute('aria-label', 'Interactive 3D billiards table. Use the mouse or touch to rotate and zoom.');
+  renderer.domElement.setAttribute('aria-label', `Interactive 3D ${name}. Use the mouse or touch to rotate and zoom.`);
   renderer.domElement.setAttribute('role', 'img');
   container.appendChild(renderer.domElement);
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(35, 1, 0.01, 100);
+  const camera = new THREE.PerspectiveCamera(35, 1, 0.00001, 1000);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   scene.add(new THREE.HemisphereLight(0xffffff, 0x535b53, 2));
@@ -20,6 +20,7 @@ export default async function createViewer(container, url, status) {
   scene.add(light);
   let frame = 0;
   let model;
+  let disposed = false;
   const resize = () => {
     const { clientWidth: width, clientHeight: height } = container;
     if (!width || !height) return;
@@ -29,38 +30,60 @@ export default async function createViewer(container, url, status) {
   };
   const observer = new ResizeObserver(resize);
   observer.observe(container);
-  const dispose = () => {
-    cancelAnimationFrame(frame);
-    observer.disconnect();
-    controls.dispose();
-    if (model) model.traverse(object => {
-      if (object.geometry) object.geometry.dispose();
-      for (const material of (Array.isArray(object.material) ? object.material : [object.material])) {
+  const disposeModel = object => {
+    object?.traverse(child => {
+      child.geometry?.dispose();
+      for (const material of (Array.isArray(child.material) ? child.material : [child.material])) {
         if (!material) continue;
         for (const value of Object.values(material)) if (value?.isTexture) value.dispose();
         material.dispose();
       }
     });
+  };
+  const dispose = () => {
+    if (disposed) return;
+    disposed = true;
+    cancelAnimationFrame(frame);
+    observer.disconnect();
+    controls.dispose();
+    disposeModel(model);
     renderer.dispose();
     renderer.domElement.remove();
+    signal.removeEventListener('abort', dispose);
   };
+  signal.addEventListener('abort', dispose, { once: true });
   renderer.domElement.addEventListener('webglcontextlost', event => {
     event.preventDefault();
-    status.textContent = 'The 3D view was interrupted. Close and reopen it to retry.';
+    if (!disposed) status.textContent = 'The 3D view was interrupted. Close and reopen it to retry.';
   });
   try {
     const gltf = await new GLTFLoader().loadAsync(url);
+    if (disposed || signal.aborted) {
+      disposeModel(gltf.scene);
+      throw new DOMException('Viewer closed', 'AbortError');
+    }
     model = gltf.scene;
     scene.add(model);
     const bounds = new THREE.Box3().setFromObject(model);
     if (bounds.isEmpty()) throw new Error('Model has no visible bounds');
     const center = bounds.getCenter(new THREE.Vector3());
     const size = bounds.getSize(new THREE.Vector3());
-    const distance = Math.max(size.x, size.y, size.z) * 1.4;
-    const initial = center.clone().add(new THREE.Vector3(distance, distance * .9, distance));
-    const reset = () => { camera.position.copy(initial); controls.target.copy(center); controls.update(); };
+    const radius = Math.max(size.length() / 2, 0.001);
+    camera.near = radius / 1000;
+    camera.far = radius * 1000;
+    controls.minDistance = radius * 1.05;
+    controls.maxDistance = radius * 20;
+    const direction = new THREE.Vector3(1, .9, 1).normalize();
+    const reset = () => {
+      resize();
+      const vertical = THREE.MathUtils.degToRad(camera.fov / 2);
+      const horizontal = Math.atan(Math.tan(vertical) * camera.aspect);
+      const distance = radius / Math.sin(Math.min(vertical, horizontal)) * 1.08;
+      camera.position.copy(center).addScaledVector(direction, distance);
+      controls.target.copy(center);
+      controls.update();
+    };
     reset();
-    resize();
     status.textContent = '';
     const render = () => { controls.update(); renderer.render(scene, camera); frame = requestAnimationFrame(render); };
     render();

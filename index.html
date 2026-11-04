@@ -19,21 +19,20 @@
       <p class="intro-copy">A small collection of original 3D works, made in Blender and ready to explore from every angle.</p>
     </section>
     <section id="collection" class="collection" aria-labelledby="collection-title">
-      <div class="section-heading"><div><p class="eyebrow">THE COLLECTION <span class="faint">/ 001</span></p><h2 id="collection-title">Made to be explored<span class="period">.</span></h2></div><p>ONE OBJECT AT A TIME <span aria-hidden="true">↙</span></p></div>
-      <article class="artwork">
-        <button class="artwork-image" id="open-viewer" type="button" aria-label="Explore Eight-ball Billiards in 3D"><img id="poster" alt="A wooden billiards table with sixteen balls, cues, rack and chalk" width="1600" height="1200"><span class="image-tag"><span class="dot"></span> INTERACTIVE 3D</span><span class="image-action">Explore in 3D <span aria-hidden="true">↗</span></span></button>
-        <div class="artwork-meta"><div><p class="eyebrow">01 &nbsp; / &nbsp; GAME ASSET</p><h3>Eight-ball Billiards</h3><p>A complete table, ready for a closer look.</p></div><div class="meta-right"><span>BLENDER</span><span>GLB</span><span>2026</span></div></div>
-      </article>
-      <p class="collection-note"><span class="dot"></span> More objects, in time. <span>BUILT WITH CURIOSITY</span></p>
+      <div class="section-heading"><div><p class="eyebrow">THE COLLECTION <span class="faint">/ 001</span></p><h2 id="collection-title">The collections<span class="period">.</span></h2></div><p>EXPLORE EACH OBJECT <span aria-hidden="true">↙</span></p></div>
+      <p class="collection-description">Individually modeled objects, made to explore and download.</p>
+      <div id="catalog" class="catalog" aria-live="polite"></div>
+      <noscript><p>Enable JavaScript to explore the 3D asset collection.</p></noscript>
+      <p class="collection-note"><span class="dot"></span> Made in Blender, one object at a time. <span>BUILT WITH CURIOSITY</span></p>
     </section>
     <section class="about" id="about"><p class="eyebrow">A NOTE ABOUT THIS SPACE</p><p>Blender 3D Gallery is a growing collection of real, interactive 3D objects. Made in Blender, created with different tools, and shared for the joy of looking closer.</p></section>
   </main>
   <footer class="shell footer"><span>✳ &nbsp; BLENDER 3D GALLERY</span><span>AN INDEPENDENT 3D GALLERY</span><a href="https://github.com/yapweijun1996/Blender-3D-Gallery">VIEW SOURCE ↗</a></footer>
   <dialog id="viewer" aria-labelledby="viewer-title">
-    <div class="viewer-header"><div><p class="eyebrow">INTERACTIVE OBJECT / 001</p><h2 id="viewer-title">Eight-ball Billiards</h2></div><button id="close-viewer" class="icon-button" type="button" aria-label="Close 3D viewer">×</button></div>
+    <div class="viewer-header"><div><p id="viewer-category" class="eyebrow">INTERACTIVE OBJECT</p><h2 id="viewer-title">3D asset</h2></div><button id="close-viewer" class="icon-button" type="button" aria-label="Close 3D viewer">×</button></div>
     <div id="viewport" class="viewport"><p id="viewer-status" class="viewer-status" role="status">Loading the 3D model…</p></div>
     <div class="viewer-footer"><p>Drag to rotate · Scroll or pinch to zoom</p><button id="reset-view" type="button">Reset view ↺</button></div>
-    <p class="viewer-description">A complete billiards asset pack, modeled in Blender at real-world scale. Includes the table, sixteen balls, cues, rack and chalk.</p>
+    <div class="viewer-details"><p id="viewer-description" class="viewer-description"></p><a id="viewer-download" class="viewer-download" download>Download GLB ↓</a></div>
   </dialog>
   <script type="module" src="/src/main.js"></script>
 </body>

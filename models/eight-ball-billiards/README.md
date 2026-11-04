@@ -1,6 +1,6 @@
 # Eight-ball billiards asset pack
 
-Original, unbranded, meter-scale 3D assets created procedurally with Blender 5.1.2. The full scene is included in the gallery build; the individual source assets remain in the repository. No redistribution license has yet been selected.
+Original, unbranded, meter-scale 3D assets created procedurally with Blender 5.1.2. The gallery build includes the independently selectable GLBs and the complete scene; the editable Blender source remains in the repository. No redistribution license has yet been selected.
 
 ## Contents
 
@@ -31,3 +31,16 @@ The generator writes and replaces the artifacts in this directory. It also produ
 - Khronos glTF Validator checked all 22 GLBs: zero errors and zero warnings. Informational messages were present.
 - The complete scene loaded and rendered in desktop Chrome through Three.js GLTFLoader with WebGL2; 106 mesh primitives and materials were observed. Mobile devices, other engines and physics behavior were not tested.
 - Preview inspected against the generated scene. The geometry and materials are intentionally lightweight and unbranded; redistribution terms remain to be decided.
+
+## Independent export and catalog maintenance
+
+The saved source contains 21 `ASSET_*` roots. To export them without changing the source file, provide a destination directory:
+
+```sh
+blender --background models/eight-ball-billiards/scene.blend --python scripts/export-selected-assets.py -- /tmp/billiards-exports
+npm run validate:assets
+```
+
+Each individual export contains only its asset root and children, with the root at the origin. The table origin is at floor level; balls use their centers. The full scene preserves the assembled positions and the original `?model=eight-ball-billiards` link.
+
+Card thumbnails were generated from the corresponding source asset, using `scripts/render-asset-thumbnails.py` with Blender Workbench, then converted to WebP with `cwebp`. The catalog at `models/catalog.json` maps identities to exports and thumbnails. Triangle counts and file sizes are calculated from the GLBs at build time.
