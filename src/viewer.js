@@ -2,12 +2,12 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-export default async function createViewer(container, url, status, signal, name) {
+export default async function createViewer(container, url, status, signal, asset) {
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x657078);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.domElement.setAttribute('aria-label', `Interactive 3D ${name}. Use the mouse or touch to rotate and zoom.`);
+  renderer.domElement.setAttribute('aria-label', `Interactive 3D ${asset.name}. Use the mouse or touch to rotate and zoom.`);
   renderer.domElement.setAttribute('role', 'img');
   container.appendChild(renderer.domElement);
   const scene = new THREE.Scene();
@@ -69,11 +69,13 @@ export default async function createViewer(container, url, status, signal, name)
     const center = bounds.getCenter(new THREE.Vector3());
     const size = bounds.getSize(new THREE.Vector3());
     const radius = Math.max(size.length() / 2, 0.001);
-    camera.near = radius / 1000;
-    camera.far = radius * 1000;
+    camera.near = radius / 50;
+    camera.far = radius * 50;
     controls.minDistance = radius * 1.05;
     controls.maxDistance = radius * 20;
-    const direction = new THREE.Vector3(1, .9, 1).normalize();
+    const direction = (asset.category === 'Balls'
+      ? new THREE.Vector3(1, .3, .25)
+      : new THREE.Vector3(1, .9, 1)).normalize();
     const reset = () => {
       resize();
       const vertical = THREE.MathUtils.degToRad(camera.fov / 2);

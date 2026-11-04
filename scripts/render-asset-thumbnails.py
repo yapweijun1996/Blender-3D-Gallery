@@ -29,7 +29,8 @@ for root in roots:
     center = (minimum + maximum) * 0.5
     size = maximum - minimum
     camera = scene.camera
-    direction = Vector((3.3, -4.5, 4.8)).normalized()
+    # Show the numbered side of balls, while keeping the original view for equipment.
+    direction = Vector((5, -1, 1.8) if root.name.startswith('ASSET_Ball_') else (3.3, -4.5, 4.8)).normalized()
     camera.location = center + direction * max(size.length, .01) * 3
     camera.rotation_euler = (center-camera.location).to_track_quat('-Z','Y').to_euler()
     camera.data.type = 'ORTHO'

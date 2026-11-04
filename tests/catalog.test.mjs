@@ -47,3 +47,36 @@ test('assembled scene retains all 21 roots at their assembled locations', () => 
   assert.deepEqual(new Set(roots.map(root => root.name)), new Set(assets.filter(item => item.root).map(item => item.root)));
   assert.notDeepEqual(roots.find(root => root.name === 'ASSET_Ball_08').translation ?? [0, 0, 0], [0, 0, 0]);
 });
+
+test('number marks follow the ball surface on opposite sides', () => {
+  const { assets } = loadCatalog().collections.find(item => item.id === 'billiards');
+  const radius = 0.028575;
+  for (let number = 1; number <= 15; number++) {
+    const asset = assets.find(item => item.id === `ball-${String(number).padStart(2, '0')}`);
+    const bytes = fs.readFileSync(asset.file);
+    const jsonLength = bytes.readUInt32LE(12);
+    const data = JSON.parse(bytes.subarray(20, 20 + jsonLength).toString('utf8'));
+    const binaryStart = 20 + jsonLength + 8;
+    const numberNodes = data.nodes.filter(node => /number medallion|\| numeral/.test(node.name ?? ''));
+    assert.equal(numberNodes.length, 4, `${asset.id} needs two medallions and two numerals`);
+    for (const node of numberNodes) {
+      const primitive = data.meshes[node.mesh].primitives[0];
+      const accessor = data.accessors[primitive.attributes.POSITION];
+      const view = data.bufferViews[accessor.bufferView];
+      assert.equal(accessor.componentType, 5126);
+      assert.equal(accessor.type, 'VEC3');
+      assert.ok(accessor.min[0] > 0.025 || accessor.max[0] < -0.025, `${node.name} must sit on a side of the ball`);
+      assert.ok(accessor.max[0] - accessor.min[0] > 0.0001, `${node.name} must curve with the sphere`);
+      const start = binaryStart + (view.byteOffset ?? 0) + (accessor.byteOffset ?? 0);
+      const stride = view.byteStride ?? 12;
+      for (let i = 0; i < accessor.count; i++) {
+        const offset = start + i * stride;
+        const distance = Math.hypot(bytes.readFloatLE(offset), bytes.readFloatLE(offset + 4), bytes.readFloatLE(offset + 8));
+        assert.ok(distance >= radius && distance <= radius + 0.00012, `${node.name} vertex must stay close to ball surface`);
+      }
+    }
+    const sphere = data.nodes.find(node => node.name === `Ball ${String(number).padStart(2, '0')} | resin`);
+    const position = data.meshes[sphere.mesh].primitives[0].attributes.POSITION;
+    assert.ok(data.accessors[position].count > 1000, `${asset.id} should have smooth sphere geometry`);
+  }
+});

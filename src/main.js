@@ -113,7 +113,7 @@ async function openViewer(asset, trigger, updateUrl = true) {
   try {
     const { default: createViewer } = await import('./viewer.js');
     if (signal.aborted) return;
-    const viewer = await createViewer(viewport, asset.file, status, signal, asset.name);
+    const viewer = await createViewer(viewport, asset.file, status, signal, asset);
     if (signal.aborted) { viewer.dispose(); return; }
     activeViewer = viewer;
     document.querySelector('#reset-view').onclick = viewer.reset;

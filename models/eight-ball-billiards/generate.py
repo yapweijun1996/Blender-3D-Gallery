@@ -155,7 +155,7 @@ positions=[(-.70,-.12)] + [(.20+(i%5)*.078,-.20+(i//5)*.105) for i in range(15)]
 for n,(x,y) in enumerate(positions):
     z=.7785+R
     b=root('ASSET_Ball_%02d'%n,(x,y,z)); balls.append(b)
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=32, ring_count=16, radius=R, location=(x,y,z))
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, radius=R, location=(x,y,z))
     sphere=bpy.context.object; sphere.name='Ball %02d | resin'%n
     base_mat=white if n==0 or n>=9 else (ball8 if n==8 else ballmats[n-1])
     assign(sphere,base_mat)
@@ -167,19 +167,54 @@ for n,(x,y) in enumerate(positions):
     for p in sphere.data.polygons: p.use_smooth=True
     adopt(sphere,b)
     if n:
-        # Raised, non-textured mesh marks remain legible in glTF and move with their ball.
-        cylinder('Ball %02d | number medallion'%n,(x,y,z+R+.00030),.0113,.00055,white,b,32)
-        bpy.ops.object.text_add(location=(x,y,z+R+.00065))
-        t=bpy.context.object; t.name='Ball %02d | numeral %d'%(n,n)
-        t.data.body=str(n); t.data.align_x='CENTER'; t.data.align_y='CENTER'; t.data.size=.015 if n<10 else .012
-        t.data.extrude=.00008; t.data.resolution_u=3
-        assign(t,ink)
-        bpy.context.view_layer.objects.active=t
-        bpy.ops.object.convert(target='MESH')
-        bm = bmesh.new(); bm.from_mesh(t.data)
-        bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=0.000001)
-        bm.to_mesh(t.data); bm.free(); t.data.update()
-        adopt(t,b)
+        # Number patches are curved to the ball, centered on the colored equator.
+        # Opposite marks are readable from either side as a physical ball rolls.
+        for side in (1, -1):
+            suffix = '' if side == 1 else ' | opposite'
+            radius = R + .00005
+            mark_radius = .0095
+            rings, segments = 5, 48
+            vertices = [(side * radius, 0, 0)]
+            for ring in range(1, rings + 1):
+                distance = mark_radius * ring / rings
+                for j in range(segments):
+                    angle = 2 * math.pi * j / segments
+                    u, v = distance * math.cos(angle), distance * math.sin(angle)
+                    vertices.append((side * math.sqrt(radius * radius - u * u - v * v), side * u, v))
+            faces = [(0, 1 + j, 1 + (j + 1) % segments) for j in range(segments)]
+            for ring in range(1, rings):
+                inner = 1 + (ring - 1) * segments
+                outer = 1 + ring * segments
+                for j in range(segments):
+                    k = (j + 1) % segments
+                    faces.append((inner+j, outer+j, outer+k, inner+k))
+            mesh = bpy.data.meshes.new('Ball %02d | curved medallion'%n + suffix)
+            mesh.from_pydata(vertices, [], faces)
+            mesh.update()
+            medallion = bpy.data.objects.new('Ball %02d | number medallion'%n + suffix, mesh)
+            scene.collection.objects.link(medallion)
+            medallion.location = (x,y,z)
+            assign(medallion, white)
+            for poly in mesh.polygons: poly.use_smooth = True
+            adopt(medallion, b)
+
+            # Subdivide the glyph before projecting it onto the same spherical surface.
+            bpy.ops.object.text_add(location=(x,y,z))
+            t=bpy.context.object; t.name='Ball %02d | numeral %d'%(n,n) + suffix
+            t.data.body=str(n); t.data.align_x='CENTER'; t.data.align_y='CENTER'; t.data.size=.012 if n<10 else .0095
+            t.data.extrude=0; t.data.resolution_u=4
+            assign(t,ink)
+            bpy.context.view_layer.objects.active=t
+            bpy.ops.object.convert(target='MESH')
+            bm = bmesh.new(); bm.from_mesh(t.data)
+            bmesh.ops.triangulate(bm, faces=list(bm.faces))
+            bmesh.ops.subdivide_edges(bm, edges=list(bm.edges), cuts=3, use_grid_fill=True)
+            glyph_radius = R + .00009
+            for vertex in bm.verts:
+                u, v = vertex.co.x, vertex.co.y
+                vertex.co = (side * math.sqrt(max(0, glyph_radius*glyph_radius-u*u-v*v)), side*u, v)
+            bm.to_mesh(t.data); bm.free(); t.data.update()
+            adopt(t,b)
 
 # Two separate tapered sticks, each 1.47 m long, positioned alongside the table.
 cues=[]
@@ -212,7 +247,7 @@ bpy.ops.object.camera_add(location=(3.5,-4.8,4.2))
 cam=bpy.context.object; cam.name='Studio | camera'; cam.rotation_euler=(Vector((0,0,.52))-cam.location).to_track_quat('-Z','Y').to_euler(); cam.data.type='ORTHO'; cam.data.ortho_scale=4.05
 adopt(cam,studio); scene.camera=cam
 scene.render.image_settings.color_mode='RGBA'
-scene.render.filepath=str(ROOT/'preview.png')
+scene.render.filepath='//preview.png'
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'scene.blend'))
 bpy.ops.render.render(write_still=True)
 
