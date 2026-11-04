@@ -1,0 +1,57 @@
+{
+  "id": "uranus",
+  "name": "Uranus",
+  "category": "Solar System",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 359,
+  "paths": {
+    "glb": "exports/uranus.glb",
+    "source": "sources/uranus.blend",
+    "preview": "previews/uranus.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": 0
+  },
+  "scientific_properties": {
+    "diameter_km": 51118,
+    "orbital_period_days": 30589,
+    "axial_tilt_degrees": 97.8,
+    "rotation_period_hours": -17.2,
+    "semi_major_axis_million_km": 2867,
+    "orbit_primary": "Sun",
+    "source": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  },
+  "accuracy_notes": "Subtle procedural bands; 97.8 degree obliquity retained in metadata, not baked into geometry. No terrain displacement.",
+  "attribution": [],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 924720,
+    "triangles": 9024,
+    "vertices": 4751,
+    "texture_images": [
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "srgb",
+        "role": "map"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 11184811
+  },
+  "validation": {
+    "report": "reports/uranus.json",
+    "glb_sha256": "99f5a909892eb63b68cc8342533fdb9d4e8e97f61bd2ef8261e9615bc6ac0416",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

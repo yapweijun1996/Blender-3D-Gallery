@@ -70,6 +70,11 @@ for (const collection of catalog.collections) {
   collectionDescription.textContent = collection.description;
   heading.append(collectionName, collectionDescription);
   section.append(heading);
+  if (collection.id === 'solar-system') {
+    const link = document.createElement('a');
+    link.href = '?page=solar'; link.dataset.page = 'solar'; link.className = 'solar-collection-link';
+    link.textContent = 'Explore the Solar System ↗'; section.append(link);
+  }
   const individual = collection.assets.filter(asset => asset.category !== 'Showcase');
   const grid = document.createElement('div');
   grid.className = 'asset-grid';
@@ -100,6 +105,11 @@ async function openViewer(asset, trigger, updateUrl = true) {
   title.textContent = asset.name;
   category.textContent = `${asset.category.toUpperCase()} / INTERACTIVE 3D`;
   description.textContent = `${asset.triangles.toLocaleString()} triangles · ${formatBytes(asset.bytes)} · GLB`;
+  if (asset.details) {
+    const facts = asset.details.scientific_properties;
+    description.textContent += facts ? ` · ${facts.diameter_km.toLocaleString()} km diameter · ${facts.axial_tilt_degrees}° axial tilt. ` : '. ';
+    description.textContent += asset.details.accuracy_notes + ' ' + asset.details.attribution.map(x => x.credit).join('; ');
+  }
   download.href = asset.file;
   download.download = `${asset.id}.glb`;
   download.setAttribute('aria-label', `Download ${asset.name} GLB`);
@@ -144,101 +154,63 @@ function syncModelUrl() {
   if (assetById.has(id)) openViewer(assetById.get(id), null, false);
   else if (dialog.open) closeViewer(false);
 }
-let gamePage = null,
-  gameController = null,
-  routeRun = 0;
-const galleryRoot = document.querySelector("#gallery-page");
-const gameRoot = document.querySelector("#game-page");
-const footer = document.querySelector(".footer");
+let gamePage = null, gameController = null, solarPage = null, solarController = null, routeRun = 0;
+const galleryRoot = document.querySelector('#gallery-page');
+const gameRoot = document.querySelector('#game-page');
+const solarRoot = document.querySelector('#solar-page');
+const footer = document.querySelector('.footer');
 setupPwa(() => gamePage);
 async function syncRoute() {
-  const isGame = new URL(location.href).searchParams.get("page") === "game";
-  if (isGame && (gamePage || gameController)) return;
-  const run = ++routeRun;
+  const page = new URL(location.href).searchParams.get('page');
+  const isGame = page === 'game', isSolar = page === 'solar';
+  if (isGame && (gamePage || gameController) || isSolar && (solarPage || solarController)) return;
   if (!isGame && gamePage && !gamePage.beforeLeave()) {
-    history.replaceState({}, "", "?page=game");
-    return;
+    history.replaceState({}, '', '?page=game'); return;
   }
-  if (isGame) {
+  const run = ++routeRun;
+  if (!isGame) { gameController?.abort(); gameController = null; gamePage?.dispose(); gamePage = null; }
+  if (!isSolar) { solarController?.abort(); solarController = null; solarPage?.dispose(); solarPage = null; }
+  galleryRoot.hidden = isGame || isSolar; gameRoot.hidden = !isGame; solarRoot.hidden = !isSolar;
+  footer.hidden = isGame; document.body.classList.toggle('game-page', isGame);
+  document.querySelectorAll('[data-page]').forEach(link => link.setAttribute('aria-current', link.dataset.page === (isGame ? 'game' : isSolar ? 'solar' : 'gallery') ? 'page' : 'false'));
+  if (isGame || isSolar) {
     if (dialog.open) closeViewer(false);
-    galleryRoot.hidden = true;
-    gameRoot.hidden = false;
-    footer.hidden = true;
-    document.body.classList.add("game-page");
-    const url = new URL(location.href);
-    if (url.searchParams.has("model")) {
-      url.searchParams.delete("model");
-      history.replaceState({}, "", url);
-    }
-    gameController = new AbortController();
-    const controller = gameController;
+    const url = new URL(location.href); url.searchParams.delete('model'); history.replaceState({}, '', url);
+    const controller = new AbortController();
+    if (isGame) gameController = controller; else solarController = controller;
     try {
-      const { mountGame } = await import("./game/page.js");
+      let module;
+      if (isGame) module = await import('./game/page.js');
+      else module = await import('./solar/page.js');
       if (run !== routeRun || controller.signal.aborted) return;
-      const result = await mountGame(gameRoot, assets, controller.signal, () =>
-        navigate("gallery", true),
-      );
+      const result = isGame
+        ? await module.mountGame(gameRoot, assets, controller.signal, () => navigate('gallery', true))
+        : await module.mountSolar(solarRoot, assets.filter(a => a.family === 'solar-system'), controller.signal);
       if (controller.signal.aborted) result.dispose();
-      else {
-        gamePage = result;
-        window.dispatchEvent(new CustomEvent("game-mounted"));
-      }
-    } catch {
-      gameRoot.textContent =
-        "The game could not start. Reconnect and return to Gallery to retry.";
+      else if (isGame) { gamePage = result; window.dispatchEvent(new CustomEvent('game-mounted')); }
+      else { solarPage = result; window.dispatchEvent(new CustomEvent('solar-mounted')); }
+    } catch (error) {
+      if (controller.signal.aborted) return;
+      (isGame ? gameRoot : solarRoot).textContent = 'This page could not start. Reconnect and return to Gallery to retry.';
+      console.error(error);
     }
-  } else {
-    gameController?.abort();
-    gameController = null;
-    gamePage?.dispose();
-    gamePage = null;
-    galleryRoot.hidden = false;
-    gameRoot.hidden = true;
-    footer.hidden = false;
-    document.body.classList.remove("game-page");
-    syncModelUrl();
-  }
-  document
-    .querySelector("[data-page=game]")
-    .setAttribute("aria-current", isGame ? "page" : "false");
-  document
-    .querySelector("[data-page=gallery]")
-    .setAttribute("aria-current", !isGame ? "page" : "false");
+  } else syncModelUrl();
 }
 function navigate(page, alreadyConfirmed = false) {
-  if (
-    page === "gallery" &&
-    gamePage &&
-    !alreadyConfirmed &&
-    !gamePage.beforeLeave()
-  )
-    return;
-  if (page === "gallery" && gamePage) {
-    gameController?.abort();
-    gameController = null;
-    gamePage.dispose();
-    gamePage = null;
-  }
-  const url = new URL(location.href);
-  url.search = "";
-  url.hash = "";
-  if (page === "game") url.searchParams.set("page", "game");
-  history.pushState({}, "", url);
-  window.scrollTo(0, 0);
-  void syncRoute();
+  if (page !== 'game' && gamePage && !alreadyConfirmed && !gamePage.beforeLeave()) return;
+  if (page !== 'game' && gamePage) { gameController?.abort(); gameController = null; gamePage.dispose(); gamePage = null; }
+  const url = new URL(location.href); url.search = ''; url.hash = '';
+  if (page === 'game' || page === 'solar') url.searchParams.set('page', page);
+  history.pushState({}, '', url); window.scrollTo(0, 0); void syncRoute();
 }
-document.querySelectorAll("[data-page]").forEach((link) =>
-  link.addEventListener("click", (event) => {
-    if (event.metaKey || event.ctrlKey || event.shiftKey) return;
-    event.preventDefault();
-    navigate(link.dataset.page);
-    if (link.hash) document.querySelector(link.hash)?.scrollIntoView();
-  }),
-);
-document.querySelector(".brand").addEventListener("click", (event) => {
+document.querySelectorAll('[data-page]').forEach(link => link.addEventListener('click', event => {
   if (event.metaKey || event.ctrlKey || event.shiftKey) return;
-  event.preventDefault();
-  navigate("gallery");
+  event.preventDefault(); navigate(link.dataset.page);
+  if (link.hash) document.querySelector(link.hash)?.scrollIntoView();
+}));
+document.querySelector('.brand').addEventListener('click', event => {
+  if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+  event.preventDefault(); navigate('gallery');
 });
-window.addEventListener("popstate", () => void syncRoute());
+window.addEventListener('popstate', () => void syncRoute());
 void syncRoute();

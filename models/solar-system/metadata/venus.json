@@ -1,0 +1,57 @@
+{
+  "id": "venus",
+  "name": "Venus",
+  "category": "Solar System",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 174,
+  "paths": {
+    "glb": "exports/venus.glb",
+    "source": "sources/venus.blend",
+    "preview": "previews/venus.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": 0
+  },
+  "scientific_properties": {
+    "diameter_km": 12104,
+    "orbital_period_days": 224.7,
+    "axial_tilt_degrees": 177.4,
+    "rotation_period_hours": -5832.5,
+    "semi_major_axis_million_km": 108.2,
+    "orbit_primary": "Sun",
+    "source": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  },
+  "accuracy_notes": "Opaque cloud-top representation. Procedural yellow/cream variations are enhanced; the surface is intentionally concealed.",
+  "attribution": [],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 1746704,
+    "triangles": 9024,
+    "vertices": 4751,
+    "texture_images": [
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "srgb",
+        "role": "map"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 11184811
+  },
+  "validation": {
+    "report": "reports/venus.json",
+    "glb_sha256": "4c989378f69d3b944263061c94194802375b87eff8656cec1dd61a15105fe0fd",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

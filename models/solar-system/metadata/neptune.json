@@ -1,0 +1,57 @@
+{
+  "id": "neptune",
+  "name": "Neptune",
+  "category": "Solar System",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 396,
+  "paths": {
+    "glb": "exports/neptune.glb",
+    "source": "sources/neptune.blend",
+    "preview": "previews/neptune.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": 0
+  },
+  "scientific_properties": {
+    "diameter_km": 49528,
+    "orbital_period_days": 59800,
+    "axial_tilt_degrees": 28.3,
+    "rotation_period_hours": 16.1,
+    "semi_major_axis_million_km": 4515,
+    "orbit_primary": "Sun",
+    "source": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  },
+  "accuracy_notes": "Restrained blue cloud bands are illustrative; no invented named storm. Color enhanced for visual identification.",
+  "attribution": [],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 619624,
+    "triangles": 9024,
+    "vertices": 4751,
+    "texture_images": [
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "srgb",
+        "role": "map"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 11184811
+  },
+  "validation": {
+    "report": "reports/neptune.json",
+    "glb_sha256": "26314e28d136b2188275677fe01a27c53259cbed96abb80bf36023dcade50b02",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

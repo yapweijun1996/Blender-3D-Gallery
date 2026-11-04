@@ -1,0 +1,63 @@
+{
+  "id": "mercury",
+  "name": "Mercury",
+  "category": "Solar System",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 137,
+  "paths": {
+    "glb": "exports/mercury.glb",
+    "source": "sources/mercury.blend",
+    "preview": "previews/mercury.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": 0
+  },
+  "scientific_properties": {
+    "diameter_km": 4879,
+    "orbital_period_days": 88,
+    "axial_tilt_degrees": 0.034,
+    "rotation_period_hours": 1407.6,
+    "semi_major_axis_million_km": 57.9,
+    "orbit_primary": "Sun",
+    "source": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  },
+  "accuracy_notes": "Procedural crater distribution and shallow radial relief are illustrative, not mapped Mercury topography.",
+  "attribution": [],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 4237384,
+    "triangles": 9024,
+    "vertices": 4751,
+    "texture_images": [
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "srgb",
+        "role": "map"
+      },
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "",
+        "role": "normalMap"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 22369622
+  },
+  "validation": {
+    "report": "reports/mercury.json",
+    "glb_sha256": "400abc9fe4b82c810c5578edaceb96155c930496d0e9045826f36d613a544188",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

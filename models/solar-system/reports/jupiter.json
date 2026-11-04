@@ -1,0 +1,80 @@
+{
+  "id": "jupiter",
+  "triangles": 9024,
+  "vertices": 4751,
+  "degenerate": 0,
+  "invalid": 0,
+  "normalErrors": 0,
+  "inward": 0,
+  "bounds": {
+    "min": [
+      -1.3484350600100885,
+      -1,
+      -1.3484350600100885
+    ],
+    "max": [
+      1.3484350600100885,
+      1,
+      1.3484350600100885
+    ]
+  },
+  "textures": [
+    {
+      "width": 2048,
+      "height": 1024,
+      "colorSpace": "srgb",
+      "role": "map"
+    }
+  ],
+  "textureMemoryBytes": 11184810.666666666,
+  "materials": [
+    {
+      "name": "jupiter | surface",
+      "roughness": 0.6499999761581421,
+      "metalness": 0,
+      "transparent": false,
+      "opacity": 1,
+      "side": 2
+    }
+  ],
+  "renderer": {
+    "frame": 15,
+    "calls": 1,
+    "triangles": 9024,
+    "points": 0,
+    "lines": 0
+  },
+  "allPass": true,
+  "bytes": 1672088,
+  "sha256": "184d526f725944f44e152eeee3768c81b21d05542242254c5a636fb01c139c23",
+  "statuses": {
+    "exists": "PASS",
+    "header": "PASS",
+    "khronos": "PASS",
+    "embeddedTextures": "PASS",
+    "threeLoader": "PASS",
+    "geometry": "PASS",
+    "browserErrors": "PASS",
+    "blenderPreview": "PASS",
+    "visualReview": "PASS",
+    "physicalMobileDevice": "NOT TESTED"
+  },
+  "khronos": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 1,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+      }
+    ],
+    "truncated": false
+  },
+  "browserErrors": [],
+  "testedAt": "2026-11-04T14:09:44.859Z",
+  "browser": "156.0.8078.4"
+}

@@ -7,6 +7,9 @@ export default async function createViewer(container, url, status, signal, asset
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x657078);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  if (asset.family === 'solar-system') {
+    renderer.setClearColor(0x313840); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1;
+  }
   renderer.domElement.setAttribute('aria-label', `Interactive 3D ${asset.name}. Use the mouse or touch to rotate and zoom.`);
   renderer.domElement.setAttribute('role', 'img');
   container.appendChild(renderer.domElement);
@@ -63,6 +66,7 @@ export default async function createViewer(container, url, status, signal, asset
       throw new DOMException('Viewer closed', 'AbortError');
     }
     model = gltf.scene;
+    if (asset.details) model.rotation.y = asset.details.display.previewRotationY;
     scene.add(model);
     const bounds = new THREE.Box3().setFromObject(model);
     if (bounds.isEmpty()) throw new Error('Model has no visible bounds');
@@ -73,7 +77,9 @@ export default async function createViewer(container, url, status, signal, asset
     camera.far = radius * 50;
     controls.minDistance = radius * 1.05;
     controls.maxDistance = radius * 20;
-    const direction = (asset.category === 'Balls'
+    const direction = (asset.family === 'solar-system'
+      ? new THREE.Vector3(.55, .42, 1)
+      : asset.category === 'Balls'
       ? new THREE.Vector3(1, .3, .25)
       : new THREE.Vector3(1, .9, 1)).normalize();
     const reset = () => {

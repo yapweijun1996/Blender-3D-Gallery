@@ -1,0 +1,74 @@
+{
+  "id": "pluto",
+  "name": "Pluto",
+  "category": "Solar System",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 470,
+  "paths": {
+    "glb": "exports/pluto.glb",
+    "source": "sources/pluto.blend",
+    "preview": "previews/pluto.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": -1.1
+  },
+  "scientific_properties": {
+    "diameter_km": 2376,
+    "orbital_period_days": 90560,
+    "axial_tilt_degrees": 119.5,
+    "rotation_period_hours": -153.3,
+    "semi_major_axis_million_km": 5906.4,
+    "orbit_primary": "Sun",
+    "source": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  },
+  "accuracy_notes": "New Horizons MVIC enhanced-color mosaic preserves Tombaugh Regio. Sparse/unobserved southern coverage is filled with a neutral procedural icy continuation, explicitly not measured terrain.",
+  "attribution": [
+    {
+      "id": "pluto",
+      "url": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/09/p/l/pluto_color_mapmosaic.jpg",
+      "page": "https://science.nasa.gov/resource/pluto-global-color-map/",
+      "credit": "NASA/JHUAPL/SwRI, New Horizons MVIC color mosaic",
+      "sha256": "d63da5ee9eab8d0b98ebef3c0cdc3a92676d7c9b247b2383294fb5da5c67a71a",
+      "bytes": 3972946,
+      "retrieved": "2026-11-04",
+      "usage": "Educational visualization; acknowledge original source; no endorsement. See NASA media guidelines and source credits."
+    }
+  ],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 4273772,
+    "triangles": 9024,
+    "vertices": 4751,
+    "texture_images": [
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "srgb",
+        "role": "map"
+      },
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "",
+        "role": "normalMap"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 22369622
+  },
+  "validation": {
+    "report": "reports/pluto.json",
+    "glb_sha256": "fff5f7fe91e9ac0de01cd0410f36825bcc215472378e6c3623173f5540034d6b",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

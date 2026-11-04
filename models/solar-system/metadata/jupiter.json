@@ -1,0 +1,57 @@
+{
+  "id": "jupiter",
+  "name": "Jupiter",
+  "category": "Solar System",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 285,
+  "paths": {
+    "glb": "exports/jupiter.glb",
+    "source": "sources/jupiter.blend",
+    "preview": "previews/jupiter.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": -2.05
+  },
+  "scientific_properties": {
+    "diameter_km": 142984,
+    "orbital_period_days": 4331,
+    "axial_tilt_degrees": 3.1,
+    "rotation_period_hours": 9.9,
+    "semi_major_axis_million_km": 778.5,
+    "orbit_primary": "Sun",
+    "source": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  },
+  "accuracy_notes": "Procedural cloud bands and Great Red Spot are representative, not a current observation; no terrain displacement.",
+  "attribution": [],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 1672088,
+    "triangles": 9024,
+    "vertices": 4751,
+    "texture_images": [
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "srgb",
+        "role": "map"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 11184811
+  },
+  "validation": {
+    "report": "reports/jupiter.json",
+    "glb_sha256": "184d526f725944f44e152eeee3768c81b21d05542242254c5a636fb01c139c23",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

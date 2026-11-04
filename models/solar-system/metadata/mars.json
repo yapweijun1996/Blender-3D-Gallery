@@ -1,0 +1,74 @@
+{
+  "id": "mars",
+  "name": "Mars",
+  "category": "Solar System",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 248,
+  "paths": {
+    "glb": "exports/mars.glb",
+    "source": "sources/mars.blend",
+    "preview": "previews/mars.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": 0
+  },
+  "scientific_properties": {
+    "diameter_km": 6792,
+    "orbital_period_days": 687,
+    "axial_tilt_degrees": 25.2,
+    "rotation_period_hours": 24.6,
+    "semi_major_axis_million_km": 228,
+    "orbit_primary": "Sun",
+    "source": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  },
+  "accuracy_notes": "Viking albedo mosaic preserves broad geographic regions including Tharsis/Olympus Mons region; no elevation dataset is used. Warm color enhancement and microrelief are illustrative; mapped bright poles are retained.",
+  "attribution": [
+    {
+      "id": "mars",
+      "url": "https://space.jpl.nasa.gov/tmaps/pix/mar0kuu2.jpg",
+      "page": "https://space.jpl.nasa.gov/tmaps/mars.html",
+      "credit": "NASA/JPL/USGS Viking mosaic",
+      "sha256": "0f9a3faf586ac857623660504e63dd3e2b8358203d8d0c32c27c5fe1585548c6",
+      "bytes": 149687,
+      "retrieved": "2026-11-04",
+      "usage": "Educational visualization; acknowledge original source; no endorsement. See NASA media guidelines and source credits."
+    }
+  ],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 3498900,
+    "triangles": 9024,
+    "vertices": 4751,
+    "texture_images": [
+      {
+        "width": 1440,
+        "height": 720,
+        "colorSpace": "srgb",
+        "role": "map"
+      },
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "",
+        "role": "normalMap"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 16714411
+  },
+  "validation": {
+    "report": "reports/mars.json",
+    "glb_sha256": "4e0113e0d0e96e7ccffdb517906b9a5b8799b87d2b17ceac5ea76067f10db96c",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

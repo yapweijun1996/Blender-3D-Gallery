@@ -1,0 +1,74 @@
+{
+  "id": "moon",
+  "name": "Moon",
+  "category": "Solar System",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 433,
+  "paths": {
+    "glb": "exports/moon.glb",
+    "source": "sources/moon.blend",
+    "preview": "previews/moon.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": 0
+  },
+  "scientific_properties": {
+    "diameter_km": 3475,
+    "orbital_period_days": 27.3,
+    "axial_tilt_degrees": 6.7,
+    "rotation_period_hours": 655.7,
+    "semi_major_axis_million_km": 0.384,
+    "orbit_primary": "Earth",
+    "source": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  },
+  "accuracy_notes": "NASA CGI Moon Kit albedo preserves maria and mapped impact features. Added micro-normal texture is illustrative, not LOLA elevation.",
+  "attribution": [
+    {
+      "id": "moon",
+      "url": "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg",
+      "page": "https://svs.gsfc.nasa.gov/4720/",
+      "credit": "NASA/GSFC/Arizona State University, CGI Moon Kit, Ernie Wright",
+      "sha256": "f7130a1822681fa7512d7dcfd40db8c10b9ba4f06777910348698260ed7a2170",
+      "bytes": 457942,
+      "retrieved": "2026-11-04",
+      "usage": "Educational visualization; acknowledge original source; no endorsement. See NASA media guidelines and source credits."
+    }
+  ],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 4684196,
+    "triangles": 9024,
+    "vertices": 4751,
+    "texture_images": [
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "srgb",
+        "role": "map"
+      },
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "",
+        "role": "normalMap"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 22369622
+  },
+  "validation": {
+    "report": "reports/moon.json",
+    "glb_sha256": "019098c346c85f2bde90fca6dfbf266fd436e1285a17830dfcfd12b41792ae9f",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

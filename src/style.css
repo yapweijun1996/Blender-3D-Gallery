@@ -599,3 +599,15 @@ nav a[aria-current="page"] {
     display: none;
   }
 }
+/* Leave room for the Solar System destination in narrow headers. */
+@media (max-width: 400px) {
+  .header .brand small { display: none; }
+  .header .brand { gap: 8px; }
+  .header nav { gap: 10px; }
+}
+.header nav a { min-height: 44px; display: inline-flex; align-items: center; }
+.solar-collection-link { display: inline-block; margin: 12px 0 24px; padding: 12px 18px; border: 1px solid #5a6c5c; border-radius: 6px; }
+[hidden] { display: none !important; }
+@media (max-width: 650px) {
+  .header nav .about-link { display: none; }
+}

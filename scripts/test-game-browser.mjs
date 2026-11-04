@@ -355,7 +355,7 @@ try {
         if (r.url().endsWith(".glb")) glbs.push(r.url());
       });
       await page.goto(server.url);
-      assert.equal(await page.locator(".asset-card").count(), 22);
+      assert.equal(await page.locator(".asset-card").count(), 39);
       assert.equal(glbs.length, 0);
       const ids = await page
         .locator("[data-asset-id]")

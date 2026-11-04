@@ -31,3 +31,11 @@ Keep publication artifacts and original sources under intentional ownership; avo
 ## Hosting and evolution
 
 GitHub Pages is the proposed static host. Check current hosting limits, total artifact size and bandwidth before release and as the catalog grows. Adopt external storage or a backend only when measured needs and an explicit decision justify it. License code and artwork separately; a repository code license does not automatically license models.
+
+## Implemented Solar System collection
+
+The `solar-system` catalog collection adds 17 independent GLBs under `models/solar-system/`. Per-asset metadata JSON owns physical facts, source attribution and approximation notes; the catalog loader reads it at build time. Sources, previews, generators and measured reports are retained alongside the exports. Existing billiards paths and Game asset identities remain unchanged.
+
+`?page=solar` lazily mounts `src/solar/page.js`. It composes the independent assets with display transforms, circular orbital motion, metadata tilts, time controls, focus navigation, an instanced belt and a dynamic tail. Realistic mode uses one radius/distance conversion; Presentation mode uses separate configurable display scales. Neither is an ephemeris. The demo downsamples only its own GPU textures to 1K. Its GLBs are online-only and are not added to the Game's prepared offline pack. Leaving the route aborts pending work and releases renderer resources. Each dynamic page uses an explicit import branch so its own CSS is preloaded correctly.
+
+See [Solar delivery and verification](../models/solar-system/reports/REPORT.md). The existing Pages workflow validates the collection and demo before publishing a `main` push. Publication was authorized on 2026-11-04; verify the workflow and actual site for each release.

@@ -40,3 +40,9 @@ To roll back, revert the problematic commit on `main` and let the same workflow 
 Open **Game** or `?page=game`, start a two-player match, place the cue ball, aim and press Shoot. See Rules & controls for the casual ruleset. App options contains installation help and Make available offline; install alone does not download the game pack.
 
 After `npm run build`, run `npx playwright install --with-deps chromium webkit`, `npm run test:browser` and `npm run test:pwa`. Browser artifacts are written to `/tmp/` by default. Real-device installation and performance checks are recorded as limits in the verification document.
+
+## Solar System collection
+
+A second collection adds 17 independent Blender-generated Solar System assets and an optional `?page=solar` demonstration. Each asset retains a packed `.blend`, standalone `.glb`, preview, metadata and reproducible generator. The demo includes selection, time speed, orbit/spin animation, two scale modes and a Three.js comet tail. It requires online asset loading; the existing prepared offline pack continues to cover Game only.
+
+See [asset inventory, validation and scientific limitations](models/solar-system/reports/REPORT.md). Run `npm run test:solar` for independent Khronos/Three.js checks and `node scripts/test-solar-scene.mjs` for production-subpath scene checks. Physical mobile testing and separate artwork redistribution terms remain pending. Solar System publication was authorized on 2026-11-04; use the successful Pages workflow for the corresponding `main` commit as deployment evidence.

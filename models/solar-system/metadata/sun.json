@@ -1,0 +1,57 @@
+{
+  "id": "sun",
+  "name": "Sun",
+  "category": "Star",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 100,
+  "paths": {
+    "glb": "exports/sun.glb",
+    "source": "sources/sun.blend",
+    "preview": "previews/sun.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": 0
+  },
+  "scientific_properties": {
+    "diameter_km": 1391400,
+    "orbital_period_days": null,
+    "axial_tilt_degrees": 7.25,
+    "rotation_period_hours": 609.12,
+    "semi_major_axis_million_km": 0,
+    "orbit_primary": "galactic orbit not modeled",
+    "source": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html"
+  },
+  "accuracy_notes": "Procedural granulation and sunspots are artistic approximations, not an observation at a specific date. Warm color enhanced for display; no halo. Sun tilt is relative to the ecliptic; rotation is the adopted 16 degree latitude reference.",
+  "attribution": [],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 3013072,
+    "triangles": 9024,
+    "vertices": 4751,
+    "texture_images": [
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "srgb",
+        "role": "emissiveMap"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 11184811
+  },
+  "validation": {
+    "report": "reports/sun.json",
+    "glb_sha256": "87e5326ed9a0239a08709fafb1291fa2a8ea51b5484dcafef82235834aab7119",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

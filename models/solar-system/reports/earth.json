@@ -1,0 +1,126 @@
+{
+  "id": "earth",
+  "triangles": 22016,
+  "vertices": 11645,
+  "degenerate": 0,
+  "invalid": 0,
+  "normalErrors": 0,
+  "inward": 0,
+  "bounds": {
+    "min": [
+      -1.0180000066757202,
+      -1.0180000066757202,
+      -1.0180000066757202
+    ],
+    "max": [
+      1.0180000066757202,
+      1.0180000066757202,
+      1.0180000066757202
+    ]
+  },
+  "textures": [
+    {
+      "width": 1440,
+      "height": 720,
+      "colorSpace": "srgb",
+      "role": "map"
+    },
+    {
+      "width": 2048,
+      "height": 1024,
+      "colorSpace": "srgb",
+      "role": "map"
+    }
+  ],
+  "textureMemoryBytes": 16714410.666666666,
+  "materials": [
+    {
+      "name": "Earth | thin atmosphere.001",
+      "roughness": 1,
+      "metalness": 0,
+      "transparent": true,
+      "opacity": 0.06499999761581421,
+      "side": 0
+    },
+    {
+      "name": "earth | surface.001",
+      "roughness": 0.8600000143051147,
+      "metalness": 0,
+      "transparent": false,
+      "opacity": 1,
+      "side": 2
+    },
+    {
+      "name": "Earth | synthetic cloud deck.001",
+      "roughness": 0.9300000071525574,
+      "metalness": 0,
+      "transparent": true,
+      "opacity": 1,
+      "side": 2
+    }
+  ],
+  "renderer": {
+    "frame": 13,
+    "calls": 4,
+    "triangles": 31040,
+    "points": 0,
+    "lines": 0
+  },
+  "allPass": true,
+  "bytes": 3714212,
+  "sha256": "73348f42063e499ccae460915de358a0c15a4c404f2fada18cfba3fbbf5117db",
+  "statuses": {
+    "exists": "PASS",
+    "header": "PASS",
+    "khronos": "PASS",
+    "embeddedTextures": "PASS",
+    "threeLoader": "PASS",
+    "geometry": "PASS",
+    "browserErrors": "PASS",
+    "blenderPreview": "PASS",
+    "visualReview": "PASS",
+    "physicalMobileDevice": "NOT TESTED"
+  },
+  "khronos": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 5,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/1/primitives/0/attributes/TANGENT"
+      },
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/2/primitives/0/attributes/TANGENT"
+      },
+      {
+        "code": "IMAGE_NPOT_DIMENSIONS",
+        "message": "Image has non-power-of-two dimensions: 1440x720.",
+        "severity": 2,
+        "pointer": "/images/0"
+      }
+    ],
+    "truncated": false
+  },
+  "browserErrors": [],
+  "testedAt": "2026-11-04T14:09:44.543Z",
+  "browser": "156.0.8078.4"
+}

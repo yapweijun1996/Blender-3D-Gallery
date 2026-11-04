@@ -1,0 +1,55 @@
+{
+  "id": "comet",
+  "name": "Comet nucleus",
+  "category": "Small bodies",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 692,
+  "paths": {
+    "glb": "exports/comet.glb",
+    "source": "sources/comet.blend",
+    "preview": "previews/comet.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": 0
+  },
+  "scientific_properties": null,
+  "accuracy_notes": "Fictional procedural small body; not a reconstruction of a named observed object.",
+  "attribution": [],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 1784632,
+    "triangles": 3968,
+    "vertices": 2143,
+    "texture_images": [
+      {
+        "width": 1024,
+        "height": 512,
+        "colorSpace": "srgb",
+        "role": "map"
+      },
+      {
+        "width": 1024,
+        "height": 512,
+        "colorSpace": "",
+        "role": "normalMap"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 5592406
+  },
+  "validation": {
+    "report": "reports/comet.json",
+    "glb_sha256": "873f858897aa2fd5cfce057c01c4e194168f859283ee486abeef03b5194f8541",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

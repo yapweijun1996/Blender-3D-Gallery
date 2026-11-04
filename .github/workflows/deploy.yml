@@ -21,6 +21,8 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium webkit
+      - run: npm run test:solar
+      - run: node scripts/test-solar-scene.mjs
       - run: npm run test:browser
       - run: npm run test:pwa
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5

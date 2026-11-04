@@ -1,0 +1,80 @@
+{
+  "id": "uranus",
+  "triangles": 9024,
+  "vertices": 4751,
+  "degenerate": 0,
+  "invalid": 0,
+  "normalErrors": 0,
+  "inward": 0,
+  "bounds": {
+    "min": [
+      -1,
+      -1,
+      -1
+    ],
+    "max": [
+      1,
+      1,
+      1
+    ]
+  },
+  "textures": [
+    {
+      "width": 2048,
+      "height": 1024,
+      "colorSpace": "srgb",
+      "role": "map"
+    }
+  ],
+  "textureMemoryBytes": 11184810.666666666,
+  "materials": [
+    {
+      "name": "uranus | surface",
+      "roughness": 0.6499999761581421,
+      "metalness": 0,
+      "transparent": false,
+      "opacity": 1,
+      "side": 2
+    }
+  ],
+  "renderer": {
+    "frame": 31,
+    "calls": 1,
+    "triangles": 9024,
+    "points": 0,
+    "lines": 0
+  },
+  "allPass": true,
+  "bytes": 924720,
+  "sha256": "99f5a909892eb63b68cc8342533fdb9d4e8e97f61bd2ef8261e9615bc6ac0416",
+  "statuses": {
+    "exists": "PASS",
+    "header": "PASS",
+    "khronos": "PASS",
+    "embeddedTextures": "PASS",
+    "threeLoader": "PASS",
+    "geometry": "PASS",
+    "browserErrors": "PASS",
+    "blenderPreview": "PASS",
+    "visualReview": "PASS",
+    "physicalMobileDevice": "NOT TESTED"
+  },
+  "khronos": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 1,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+      }
+    ],
+    "truncated": false
+  },
+  "browserErrors": [],
+  "testedAt": "2026-11-04T14:09:48.010Z",
+  "browser": "156.0.8078.4"
+}

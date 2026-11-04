@@ -1,0 +1,128 @@
+{
+  "id": "saturn",
+  "triangles": 10560,
+  "vertices": 6293,
+  "degenerate": 0,
+  "invalid": 0,
+  "normalErrors": 0,
+  "inward": 0,
+  "bounds": {
+    "min": [
+      -2.2699999809265137,
+      -1,
+      -2.2699999809265137
+    ],
+    "max": [
+      2.2699999809265137,
+      1,
+      2.2699999809265137
+    ]
+  },
+  "textures": [
+    {
+      "width": 2048,
+      "height": 1024,
+      "colorSpace": "srgb",
+      "role": "map"
+    },
+    {
+      "width": 1024,
+      "height": 4,
+      "colorSpace": "srgb",
+      "role": "map"
+    }
+  ],
+  "textureMemoryBytes": 11206656,
+  "materials": [
+    {
+      "name": "saturn | surface",
+      "roughness": 0.6499999761581421,
+      "metalness": 0,
+      "transparent": false,
+      "opacity": 1,
+      "side": 2
+    },
+    {
+      "name": "Saturn | semitransparent icy rings",
+      "roughness": 0.8999999761581421,
+      "metalness": 0,
+      "transparent": true,
+      "opacity": 1,
+      "side": 2
+    },
+    {
+      "name": "Saturn | semitransparent icy rings",
+      "roughness": 0.8999999761581421,
+      "metalness": 0,
+      "transparent": true,
+      "opacity": 1,
+      "side": 2
+    },
+    {
+      "name": "Saturn | semitransparent icy rings",
+      "roughness": 0.8999999761581421,
+      "metalness": 0,
+      "transparent": true,
+      "opacity": 1,
+      "side": 2
+    }
+  ],
+  "renderer": {
+    "frame": 27,
+    "calls": 7,
+    "triangles": 12096,
+    "points": 0,
+    "lines": 0
+  },
+  "allPass": true,
+  "bytes": 1280740,
+  "sha256": "e6921d3af51264f6488b0bfbeb93563b512a99743ec9f154626d3f5a77318836",
+  "statuses": {
+    "exists": "PASS",
+    "header": "PASS",
+    "khronos": "PASS",
+    "embeddedTextures": "PASS",
+    "threeLoader": "PASS",
+    "geometry": "PASS",
+    "browserErrors": "PASS",
+    "blenderPreview": "PASS",
+    "visualReview": "PASS",
+    "physicalMobileDevice": "NOT TESTED"
+  },
+  "khronos": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 4,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+      },
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/1/primitives/0/attributes/TANGENT"
+      },
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/2/primitives/0/attributes/TANGENT"
+      },
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/3/primitives/0/attributes/TANGENT"
+      }
+    ],
+    "truncated": false
+  },
+  "browserErrors": [],
+  "testedAt": "2026-11-04T14:09:47.322Z",
+  "browser": "156.0.8078.4"
+}

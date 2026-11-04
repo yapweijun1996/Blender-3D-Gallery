@@ -1,0 +1,63 @@
+{
+  "id": "saturn",
+  "name": "Saturn",
+  "category": "Solar System",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 322,
+  "paths": {
+    "glb": "exports/saturn.glb",
+    "source": "sources/saturn.blend",
+    "preview": "previews/saturn.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": 0
+  },
+  "scientific_properties": {
+    "diameter_km": 120536,
+    "orbital_period_days": 10747,
+    "axial_tilt_degrees": 26.7,
+    "rotation_period_hours": 10.7,
+    "semi_major_axis_million_km": 1432,
+    "orbit_primary": "Sun",
+    "source": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  },
+  "accuracy_notes": "Procedural cloud bands and ring optical profile, including an explicit Cassini gap. Relative ring radii approximate C/B/A rings; optical depth is artistic, not particle simulation.",
+  "attribution": [],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 1280740,
+    "triangles": 10560,
+    "vertices": 6293,
+    "texture_images": [
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "srgb",
+        "role": "map"
+      },
+      {
+        "width": 1024,
+        "height": 4,
+        "colorSpace": "srgb",
+        "role": "map"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 11206656
+  },
+  "validation": {
+    "report": "reports/saturn.json",
+    "glb_sha256": "e6921d3af51264f6488b0bfbeb93563b512a99743ec9f154626d3f5a77318836",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "id": "earth",
+  "name": "Earth",
+  "category": "Solar System",
+  "status": "validated",
+  "created": "2026-11-04",
+  "blender_version": "5.1.2",
+  "creation_method": "Blender Python through Blender MCP",
+  "generator": "scripts/generate.py",
+  "seed": 211,
+  "paths": {
+    "glb": "exports/earth.glb",
+    "source": "sources/earth.blend",
+    "preview": "previews/earth.png"
+  },
+  "display": {
+    "radius": 1,
+    "units": "normalized, not meters",
+    "north_axis": "Blender +Z / glTF +Y",
+    "uv": "Equirectangular: u=0 west seam, v=0 south; no horizontal mirror",
+    "axial_tilt_baked": false,
+    "previewRotationY": 0
+  },
+  "scientific_properties": {
+    "diameter_km": 12756,
+    "orbital_period_days": 365.2,
+    "axial_tilt_degrees": 23.4,
+    "rotation_period_hours": 23.9,
+    "semi_major_axis_million_km": 149.6,
+    "orbit_primary": "Sun",
+    "source": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  },
+  "accuracy_notes": "Caltech/JPL/USGS topographic land/ocean map; stylized colors rather than photographic Blue Marble; synthetic separate clouds and thin tinted atmosphere are illustrative, not current weather or physical scattering.",
+  "attribution": [
+    {
+      "id": "earth",
+      "url": "https://space.jpl.nasa.gov/tmaps/pix/ear0xuu2.jpg",
+      "page": "https://space.jpl.nasa.gov/tmaps/earth.html",
+      "credit": "Caltech/JPL/USGS topographic land/ocean visualization",
+      "sha256": "15888f83a67d5e3deb2601c5fa41a689790f30e8e3533222a4f6e3700f016780",
+      "bytes": 259847,
+      "retrieved": "2026-11-04",
+      "usage": "Educational visualization; acknowledge original source; no endorsement. See NASA media guidelines and source credits."
+    }
+  ],
+  "rights": "Original procedural geometry/materials: redistribution terms pending owner decision. Referenced maps retain NASA/source usage terms. No endorsement.",
+  "animations": "None; orbit, spin and dynamic comet tail belong to Three.js.",
+  "metrics": {
+    "glb_bytes": 3714212,
+    "triangles": 22016,
+    "vertices": 11645,
+    "texture_images": [
+      {
+        "width": 1440,
+        "height": 720,
+        "colorSpace": "srgb",
+        "role": "map"
+      },
+      {
+        "width": 2048,
+        "height": 1024,
+        "colorSpace": "srgb",
+        "role": "map"
+      }
+    ],
+    "estimated_rgba8_texture_memory_with_mips_bytes": 16714411
+  },
+  "validation": {
+    "report": "reports/earth.json",
+    "glb_sha256": "73348f42063e499ccae460915de358a0c15a4c404f2fada18cfba3fbbf5117db",
+    "source_reopened": "PASS",
+    "publication": "Not evaluated by this pre-release validation snapshot; consult the Pages deployment for the main commit."
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "id": "mars",
+  "triangles": 9024,
+  "vertices": 4751,
+  "degenerate": 0,
+  "invalid": 0,
+  "normalErrors": 0,
+  "inward": 0,
+  "bounds": {
+    "min": [
+      -1,
+      -1,
+      -1
+    ],
+    "max": [
+      1,
+      1,
+      1
+    ]
+  },
+  "textures": [
+    {
+      "width": 1440,
+      "height": 720,
+      "colorSpace": "srgb",
+      "role": "map"
+    },
+    {
+      "width": 2048,
+      "height": 1024,
+      "colorSpace": "",
+      "role": "normalMap"
+    }
+  ],
+  "textureMemoryBytes": 16714410.666666666,
+  "materials": [
+    {
+      "name": "mars | surface.001",
+      "roughness": 0.8600000143051147,
+      "metalness": 0,
+      "transparent": false,
+      "opacity": 1,
+      "side": 2
+    }
+  ],
+  "renderer": {
+    "frame": 17,
+    "calls": 1,
+    "triangles": 9024,
+    "points": 0,
+    "lines": 0
+  },
+  "allPass": true,
+  "bytes": 3498900,
+  "sha256": "4e0113e0d0e96e7ccffdb517906b9a5b8799b87d2b17ceac5ea76067f10db96c",
+  "statuses": {
+    "exists": "PASS",
+    "header": "PASS",
+    "khronos": "PASS",
+    "embeddedTextures": "PASS",
+    "threeLoader": "PASS",
+    "geometry": "PASS",
+    "browserErrors": "PASS",
+    "blenderPreview": "PASS",
+    "visualReview": "PASS",
+    "physicalMobileDevice": "NOT TESTED"
+  },
+  "khronos": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 1,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "IMAGE_NPOT_DIMENSIONS",
+        "message": "Image has non-power-of-two dimensions: 1440x720.",
+        "severity": 2,
+        "pointer": "/images/1"
+      }
+    ],
+    "truncated": false
+  },
+  "browserErrors": [],
+  "testedAt": "2026-11-04T14:09:45.223Z",
+  "browser": "156.0.8078.4"
+}
