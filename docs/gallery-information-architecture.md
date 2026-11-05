@@ -40,7 +40,7 @@ To add a model: retain source/provenance, add a catalog entry and standalone GLB
 ## Rendering and cache boundaries
 
 - Static indexes load posters and metadata; no GLB downloads or WebGL contexts are needed for their cards.
-- A selected model activates one lazy viewer. Game and Solar activate only on their routes.
+- A selected model activates one lazy viewer. Focus the canvas to orbit with arrow keys and zoom with plus or minus; Escape closes the viewer. Game and Solar activate only on their routes.
 - Existing output color space, Solar tone mapping, lights and material properties are retained; there is no speculative exposure adjustment or asset recompression.
 - The viewer must dispose geometry, materials, textures, controls, observer and renderer when dismissed or replaced. Hidden/inactive render work is checked separately from visual correctness.
 - The [PWA Product Standard contract](pwa-standard.md) owns update/status/security and cache-retention behavior. PWA shell caching and the explicitly prepared 18-GLB Game pack retain their existing scope. The Solar demo is online-only. Installing the app does not imply every gallery model is offline.

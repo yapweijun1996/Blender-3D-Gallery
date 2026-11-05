@@ -10,7 +10,8 @@ export function setupPwa(getGame) {
     reloaded = false,
     controllerChanged = false,
     offlineCheck = 0,
-    preparingPack = false;
+    preparingPack = false,
+    registrationPending = null;
   const supported = import.meta.env.PROD && "serviceWorker" in navigator;
   let state = Object.freeze({
     connectivity: navigator.onLine ? "online" : "offline",
@@ -138,7 +139,9 @@ export function setupPwa(getGame) {
     if (preparingPack) return;
     if (!registration?.active) {
       offlineText(
-        "Offline support is starting. Online game remains available.",
+        state.offlinePack === "error"
+          ? "Offline support unavailable. Reconnect and retry."
+          : "Offline support is starting. Online game remains available.",
       );
       return;
     }
@@ -162,6 +165,75 @@ export function setupPwa(getGame) {
       publish({ offlinePack: "error" });
       offlineText("Offline support unavailable. Reconnect and retry.");
     }
+  }
+  // Broadcast only an invalidation; each tab verifies its own active build's cache.
+  const packSignal = `b3g-pack:${new URL(import.meta.env.BASE_URL, location.href).pathname}`;
+  let packChannel;
+  try {
+    if ("BroadcastChannel" in window) {
+      packChannel = new BroadcastChannel(packSignal);
+      packChannel.onmessage = (event) => {
+        if (event.data === "changed") void checkOffline();
+      };
+    }
+  } catch { /* Focus refresh remains available when messaging is blocked. */ }
+  window.addEventListener("storage", (event) => {
+    if (event.key === packSignal) void checkOffline();
+  });
+  window.addEventListener("focus", () => void checkOffline());
+  function notifyPackChange() {
+    if (packChannel) packChannel.postMessage("changed");
+    else {
+      try { localStorage.setItem(packSignal, crypto.randomUUID()); }
+      catch { /* Storage may be unavailable; focus still refreshes the status. */ }
+    }
+  }
+  const observedRegistrations = new WeakSet();
+  function observeUpdates(reg) {
+    if (observedRegistrations.has(reg)) return;
+    observedRegistrations.add(reg);
+    reg.addEventListener("updatefound", () => {
+      const worker = reg.installing;
+      worker?.addEventListener("statechange", () => {
+        if (worker.state === "installed" && navigator.serviceWorker.controller)
+          showUpdate();
+      });
+    });
+  }
+  async function ensureActiveWorker() {
+    if (!supported) throw new Error("Offline support is unavailable in this browser.");
+    if (registration?.active) return registration.active;
+    if (registrationPending) return registrationPending;
+    registrationPending = (async () => {
+      const base = new URL(import.meta.env.BASE_URL, location.href);
+      const reg = await navigator.serviceWorker.register(new URL("sw.js", base), {
+        scope: base.pathname, updateViaCache: "none",
+      });
+      registration = reg;
+      observeUpdates(reg);
+      if (reg.active) return reg.active;
+      const worker = reg.installing || reg.waiting;
+      if (!worker) throw new Error("Offline support failed to start. Reconnect and retry.");
+      await new Promise((resolve, reject) => {
+        let timer;
+        const finish = (error) => {
+          clearTimeout(timer);
+          worker.removeEventListener("statechange", changed);
+          error ? reject(error) : resolve();
+        };
+        const changed = () => {
+          if (reg.active) finish();
+          else if (worker.state === "redundant")
+            finish(new Error("Offline support failed to start. Reconnect and retry."));
+        };
+        timer = setTimeout(() => finish(new Error("Offline support timed out. Reconnect and retry.")), REQUEST_TIMEOUT);
+        worker.addEventListener("statechange", changed);
+        changed();
+      });
+      return reg.active;
+    })();
+    try { return await registrationPending; }
+    finally { registrationPending = null; }
   }
   const showUpdate = () => {
     if (flow || reloaded) return;
@@ -364,7 +436,8 @@ export function setupPwa(getGame) {
     publish({ offlinePack: "preparing" });
     offlineText("Preparing offline game…");
     try {
-      const result = await request(registration?.active, "CACHE_GAME", {
+      const worker = await ensureActiveWorker();
+      const result = await request(worker, "CACHE_GAME", {
         timeout: 90000,
         onProgress: (progress) =>
           offlineText(
@@ -375,6 +448,7 @@ export function setupPwa(getGame) {
         offlinePack: result.ready ? "ready" : "missing",
         build: result.build,
       });
+      if (result.ready) notifyPackChange();
       offlineText(
         result.ready
           ? "Offline ready · local matches available"
@@ -393,24 +467,9 @@ export function setupPwa(getGame) {
   if (supported) {
     const register = async () => {
       try {
-        const base = new URL(import.meta.env.BASE_URL, location.href);
-        registration = await navigator.serviceWorker.register(
-          new URL("sw.js", base),
-          { scope: base.pathname, updateViaCache: "none" },
-        );
-        await navigator.serviceWorker.ready;
+        await ensureActiveWorker();
         void checkOffline();
         if (registration.waiting) showUpdate();
-        registration.addEventListener("updatefound", () => {
-          const worker = registration.installing;
-          worker?.addEventListener("statechange", () => {
-            if (
-              worker.state === "installed" &&
-              navigator.serviceWorker.controller
-            )
-              showUpdate();
-          });
-        });
         await registration.update();
       } catch {
         publish({ offlinePack: "error" });

@@ -122,7 +122,7 @@ Validation rejects duplicate or shuffled identities, malformed/null entries, non
 
 Before a shot, the complete pre-shot checkpoint and pending ID are saved. Once the full shot settles and rules finish, one new stable checkpoint replaces it. Reloading during motion restores the previous complete turn and explains why the unfinished shot was discarded. It does not attempt to resume half a collision simulation.
 
-Web Locks give one tab write ownership and automatically release on page termination. A twenty-second IndexedDB lease and periodic reacquisition cover browsers without that API; a reload in that fallback may wait for expiry. A second tab waits rather than overwriting the match. Ownership is checked again before shooting.
+Web Locks give one tab write ownership and automatically release on page termination. A twenty-second IndexedDB lease and periodic reacquisition cover browsers without that API; a reload in that fallback may wait for expiry. A second tab waits rather than overwriting the match. Ownership is checked again before shooting. After ownership is reacquired, interaction stays locked until the latest checkpoint is loaded. Conflicting unsaved local progress is retained and requires an explicit leave or reload rather than overwriting the shared checkpoint.
 
 If storage is unavailable, in-memory play still works with a warning. Save & return remains in the match on failure and offers an explicit Leave without saving choice. Route navigation also warns before discarding an unfinished shot or unsaved progress. Browser storage eviction, clearing site data and different origins can remove or separate local saves; no cloud backup is implied.
 

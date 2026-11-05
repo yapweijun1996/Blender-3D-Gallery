@@ -270,6 +270,9 @@ dialog::backdrop {
   display: block;
   touch-action: none;
 }
+.viewport canvas:focus-visible {
+  outline-offset: -4px;
+}
 .viewer-status {
   position: absolute;
   inset: 0;

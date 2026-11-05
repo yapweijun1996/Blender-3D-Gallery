@@ -12,6 +12,8 @@ export async function mountSolar(root, assets, signal) {
   const $ = (s) => root.querySelector(s),
     container = $("#solar-canvas"),
     status = $("#solar-status");
+  const overviewInfo = ["#solar-name", "#solar-facts", "#solar-accuracy"]
+    .map((selector) => $(selector).textContent);
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -114,6 +116,10 @@ export async function mountSolar(root, assets, signal) {
     needsRender = true;
     selected = "";
     $("#solar-select").value = "";
+    ["#solar-name", "#solar-facts", "#solar-accuracy"].forEach((selector, index) => {
+      $(selector).textContent = overviewInfo[index];
+    });
+    $("#solar-model-link").hidden = true;
     controls.target.set(0, 0, 0);
     const d = camera.aspect < 1 ? 165 : 115;
     camera.position.set(0, d * 0.8, d * 0.68);

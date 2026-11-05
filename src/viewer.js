@@ -20,14 +20,33 @@ export default async function createViewer(
   }
   renderer.domElement.setAttribute(
     "aria-label",
-    `Interactive 3D ${asset.name}. Use the mouse or touch to rotate and zoom.`,
+    `Interactive 3D ${asset.name}. Drag or use arrow keys to rotate. Use plus and minus keys to zoom.`,
   );
-  renderer.domElement.setAttribute("role", "img");
+  renderer.domElement.setAttribute("role", "group");
+  renderer.domElement.tabIndex = 0;
   container.appendChild(renderer.domElement);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, 1, 0.00001, 1000);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
+  renderer.domElement.addEventListener("keydown", (event) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    const orbit = new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target));
+    const step = Math.PI / 18;
+    if (event.key === "ArrowLeft") orbit.theta -= step;
+    else if (event.key === "ArrowRight") orbit.theta += step;
+    else if (event.key === "ArrowUp") orbit.phi -= step;
+    else if (event.key === "ArrowDown") orbit.phi += step;
+    else if (["+", "=", "PageUp"].includes(event.key)) orbit.radius /= 1.15;
+    else if (["-", "_", "PageDown"].includes(event.key)) orbit.radius *= 1.15;
+    else return;
+    event.preventDefault();
+    orbit.makeSafe();
+    orbit.radius = THREE.MathUtils.clamp(orbit.radius, controls.minDistance, controls.maxDistance);
+    camera.position.copy(controls.target).add(new THREE.Vector3().setFromSpherical(orbit));
+    controls.update();
+    invalidate();
+  });
   scene.add(new THREE.HemisphereLight(0xffffff, 0x535b53, 2));
   const light = new THREE.DirectionalLight(0xffffff, 2.1);
   light.position.set(4, 7, 5);

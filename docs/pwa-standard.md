@@ -24,7 +24,7 @@ Retain the dark editorial identity, all39 assets and original sources, query rou
 | Solar System | Online GLB loading; excluded from Game pack |
 | Original Blender files | Not downloaded by installation or Game preparation |
 
-A Game-cached model does not imply full-library offline availability. The runtime's verified pack state owns readiness; connectivity, pack status and update stage are separate facts.
+A Game-cached model does not imply full-library offline availability. The runtime's verified pack state owns readiness; connectivity, pack status and update stage are separate facts. Tabs broadcast only a cache-change signal; each tab independently checks its own active build before reporting readiness. A failed initial worker installation can be retried from Game options without reloading.
 
 ## Updating and cache lifecycle
 

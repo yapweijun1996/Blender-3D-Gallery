@@ -56,12 +56,18 @@ export async function mountGame(root, assets, signal, onLeave) {
     contextLost = false;
   const uuid = () => crypto.randomUUID();
   const stableCopy = (s) => structuredClone(s);
+  const conflictMessage = "Your local turn conflicts with the saved match. Leave without saving or reload to restore the saved match.";
   function setSaveStatus(message, warning = false) {
     if (disposed) return;
     saveStatus.textContent = message;
     saveStatus.classList.toggle("is-warning", warning);
   }
   async function persist(s, pending = null) {
+    if (!ownership) {
+      setSaveStatus("This tab does not own the match. Your current turn was not saved.", true);
+      saveFailed = true;
+      return false;
+    }
     if (!store) {
       setSaveStatus("Autosave unavailable. Keep this tab open.", true);
       saveFailed = true;
@@ -185,6 +191,9 @@ export async function mountGame(root, assets, signal, onLeave) {
     );
     $('[data-action="resume"]').disabled =
       !ready || !saved || !ownership || contextLost;
+    $('[data-action="continue"]').disabled = !ownership || busy;
+    $('[data-action="restart"]').disabled = !ownership || busy;
+    $('[data-action="confirm-new"]').disabled = !ownership || busy;
     $("#graphics-quality").disabled = !ready || contextLost || loadFailed;
   }
   const previewState = { phase: "preview", balls: makeRack(42) };
@@ -192,7 +201,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     if (!contextLost) view?.update(state || previewState, angle, power, candidate);
   }
   async function startNew() {
-    if (!ready) return;
+    if (!ready || !ownership) return;
     busy = true;
     state = {
       schema: 1,
@@ -356,7 +365,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     }
   }
   function resume() {
-    if (state?.phase !== "paused") return;
+    if (state?.phase !== "paused" || !ownership || busy) return;
     state.phase = pausedPhase || "aiming";
     pausedPhase = null;
     state.message =
@@ -531,6 +540,11 @@ export async function mountGame(root, assets, signal, onLeave) {
           $('[data-action="cancel-new"]').focus();
           break;
         case "leave":
+          if (!store && !ownership) {
+            $("#menu-save-message").textContent = conflictMessage;
+            $('[data-action="discard"]').hidden = false;
+            break;
+          }
           if (
             shot &&
             !confirm(
@@ -709,18 +723,53 @@ export async function mountGame(root, assets, signal, onLeave) {
     },
     { signal },
   );
+  let heartbeatRunning = false;
   const heartbeat = setInterval(async () => {
-    if (!store || disposed || document.hidden) return;
+    // An in-flight save owns its state transition until it settles.
+    if (!store || disposed || document.hidden || busy || heartbeatRunning) return;
+    heartbeatRunning = true;
     try {
       const wasOwner = ownership;
-      ownership = ownership ? await store.renew() : await store.claim();
+      const acquired = ownership ? await store.renew() : await store.claim();
       if (disposed) return;
-      if (ownership && !wasOwner) {
+      if (acquired && !wasOwner) {
+        // Keep input locked until the shared checkpoint replaces stale tab state.
+        ownership = false;
+        ui();
         saved = await store.load();
         if (disposed) return;
+        if (state && (!saved?.checkpoint ||
+            (saveFailed && JSON.stringify(stable) !== JSON.stringify(saved.checkpoint)))) {
+          // Do not discard a local unsaved turn or keep a lease while blocked.
+          saveFailed = true;
+          const conflictedStore = store;
+          store = null;
+          setSaveStatus(conflictMessage, true);
+          $("#menu-save-message").textContent = conflictMessage;
+          $('[data-action="discard"]').hidden = false;
+          ui();
+          await conflictedStore.release();
+          return;
+        }
+        if (state) {
+          const paused = state.phase === "paused";
+          stable = stableCopy(saved.checkpoint);
+          state = stableCopy(saved.checkpoint);
+          pausedPhase = paused ? state.phase : null;
+          if (paused) state.phase = "paused";
+          state.message = saved.pending
+            ? "Interrupted shot was not recorded. Your previous turn is restored."
+            : "Latest saved match restored from this device.";
+          shot = null;
+          before = null;
+          candidate = { x: -0.7, z: 0 };
+          saveFailed = false;
+        }
+        ownership = true;
         setSaveStatus("Local save ready. This tab now owns the match.");
         ui();
-      } else if (!ownership && state) {
+        draw();
+      } else if (!(ownership = acquired) && state) {
         pause();
         setSaveStatus(
           "Another tab owns this match. Waiting for it to close…",
@@ -730,6 +779,8 @@ export async function mountGame(root, assets, signal, onLeave) {
       }
     } catch {
       setSaveStatus("Local save is unavailable.", true);
+    } finally {
+      heartbeatRunning = false;
     }
   }, 5000);
   const frameLoop = (now) => {
@@ -851,6 +902,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     hasActiveMatch: () => !!state && state.phase !== "finished",
     async prepareUpdate() {
       if (
+        (!ownership && state) ||
         busy ||
         shot ||
         state?.phase === "moving" ||

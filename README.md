@@ -35,7 +35,7 @@ The gallery presents 21 individual billiards assets and an optional complete sce
 
 ## Develop and deploy
 
-Use Node.js 24, then run `npm ci`, `npm run dev`, or `npm run build`. Vite produces `dist/` with relative asset paths suitable for a GitHub Pages project site. The `Build and deploy gallery` workflow runs on every push to `main` and can also be started manually. It installs with `npm ci`, runs unit/asset/build checks and Chromium/WebKit game, PWA, model-library and PWA-standard tests, then deploys the `dist/` artifact to the `github-pages` environment. Check the Actions run and published URL before treating a release as successful. The gallery build includes the individual GLBs, full-scene GLB and thumbnail images; the editable `.blend` remains in the repository. Asset names and paths are maintained in `models/catalog.json`. Build-time metadata is calculated directly from the GLBs; `npm run validate:assets` validates each file using Khronos glTF Validator and checks its expected root. Add assets to the catalog with a matching standalone GLB and thumbnail.
+Use Node.js 24, then run `npm ci`, `npm run dev`, or `npm run build`. Vite produces `dist/` with relative asset paths suitable for a GitHub Pages project site. The `Build and deploy gallery` workflow runs on every push to `main` and can also be started manually. It installs with `npm ci`, runs unit/asset/build checks and Chromium/WebKit game, PWA, model-library, PWA-standard and reviewed-bug regression tests, then deploys the `dist/` artifact to the `github-pages` environment. Check the Actions run and published URL before treating a release as successful. The gallery build includes the individual GLBs, full-scene GLB and thumbnail images; the editable `.blend` remains in the repository. Asset names and paths are maintained in `models/catalog.json`. Build-time metadata is calculated directly from the GLBs; `npm run validate:assets` validates each file using Khronos glTF Validator and checks its expected root. Add assets to the catalog with a matching standalone GLB and thumbnail.
 
 To roll back, revert the problematic commit on `main` and let the same workflow deploy the restored build.
 
@@ -43,7 +43,7 @@ To roll back, revert the problematic commit on `main` and let the same workflow 
 
 Open **Interactive Demos → Game** or `?page=game`, start a two-player match, place the cue ball, aim and press Shoot. See Rules & controls for the casual ruleset. App options contains installation help and Make available offline; install alone does not download the game pack.
 
-After `npm run build`, run `npx playwright install --with-deps chromium webkit`, `npm run test:browser`, `npm run test:pwa`, `npm run test:library` and `npm run test:standard`. Browser artifacts are written to `/tmp/` by default. Real-device installation and performance checks are recorded as limits in the verification document.
+After `npm run build`, run `npx playwright install --with-deps chromium webkit`, `npm run test:browser`, `npm run test:pwa`, `npm run test:library`, `npm run test:standard` and `npm run test:reviewed`. Browser artifacts are written to `/tmp/` by default. Real-device installation and performance checks are recorded as limits in the verification document.
 
 ## Solar System collection
 
