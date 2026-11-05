@@ -1,12 +1,108 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import path from 'node:path';
+import validator from 'gltf-validator';
+import { LoaderUtils } from 'three';
 import { loadCatalog } from '../scripts/catalog.mjs';
 
 function glbJson(file) {
   const bytes = fs.readFileSync(file);
   return JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)).toString('utf8'));
 }
+
+function withGlbJson(bytes, change) {
+  const originalJsonLength = bytes.readUInt32LE(12);
+  const document = JSON.parse(bytes.subarray(20, 20 + originalJsonLength).toString('utf8'));
+  change(document);
+  const json = Buffer.from(JSON.stringify(document));
+  const padded = Buffer.alloc(Math.ceil(json.length / 4) * 4, 0x20);
+  json.copy(padded);
+  const remainingChunks = bytes.subarray(20 + originalJsonLength);
+  const result = Buffer.alloc(20 + padded.length + remainingChunks.length);
+  bytes.copy(result, 0, 0, 12);
+  result.writeUInt32LE(result.length, 8);
+  result.writeUInt32LE(padded.length, 12);
+  bytes.copy(result, 16, 16, 20);
+  padded.copy(result, 20);
+  remainingChunks.copy(result, 20 + padded.length);
+  return result;
+}
+
+test('catalog rejects external core image and buffer URIs', (t) => {
+  const file = path.resolve('models/eight-ball-billiards/exports/table.glb');
+  const original = fs.readFileSync(file);
+  const read = fs.readFileSync.bind(fs);
+  let fixture = original;
+  t.mock.method(fs, 'readFileSync', (requested, ...args) =>
+    typeof requested === 'string' && path.resolve(requested) === file
+      ? fixture : read(requested, ...args));
+
+  const treatedAsRelative = [
+    'data:foo',
+    'data:image/png;base64',
+    'data:image/png,\ncontent',
+    'data:image/png,\u2028content',
+  ];
+  for (const uri of treatedAsRelative)
+    assert.equal(LoaderUtils.resolveURL(uri, '/assets/'), `/assets/${uri}`);
+
+  const disallowed = [
+    'https://example.invalid/resource',
+    '//example.invalid/resource',
+    'textures/resource.png',
+    '../resource.bin',
+    'file:///resource',
+    'blob:https://example.invalid/id',
+    ...treatedAsRelative,
+    'data:text/plain,content\n',
+    'data:text/plain,\u0000content',
+    null,
+  ];
+  for (const kind of ['images', 'buffers']) {
+    for (const uri of disallowed) {
+      fixture = withGlbJson(original, document => {
+        document[kind] ??= [];
+        document[kind].push(kind === 'buffers' ? { uri, byteLength: 4 } : { uri });
+      });
+      assert.throws(() => loadCatalog(), new RegExp(`External ${kind} URI`), `${kind}: ${uri}`);
+    }
+  }
+});
+
+test('catalog accepts embedded core resources and self-contained data URIs', async (t) => {
+  const file = path.resolve('models/eight-ball-billiards/exports/table.glb');
+  const original = fs.readFileSync(file);
+  const image = fs.readFileSync('public/icons/icon-192.png').toString('base64');
+  const imageUri = `data:image/png;base64,${image}`;
+  const bufferUri = 'data:application/octet-stream;base64,AAAAAA==';
+  for (const uri of [imageUri, bufferUri, 'DATA:text/plain,valid%0Acontent'])
+    assert.equal(LoaderUtils.resolveURL(uri, '/assets/'), uri);
+  let fixture = withGlbJson(original, document => {
+    document.images ??= [];
+    document.images.push({ uri: imageUri });
+    document.buffers.push({ uri: bufferUri, byteLength: 4 });
+  });
+  const read = fs.readFileSync.bind(fs);
+  t.mock.method(fs, 'readFileSync', (requested, ...args) =>
+    typeof requested === 'string' && path.resolve(requested) === file
+      ? fixture : read(requested, ...args));
+
+  assert.doesNotThrow(() => loadCatalog());
+  const report = await validator.validateBytes(new Uint8Array(fixture), { uri: file });
+  assert.equal(report.issues.numErrors, 0);
+  // The existing asset gate still rejects these validator warnings during build.
+  assert.equal(report.issues.numWarnings, 2);
+  assert.deepEqual(report.issues.messages.filter(issue => issue.severity === 1).map(issue => issue.code),
+    ['DATA_URI_GLB', 'DATA_URI_GLB']);
+
+  fixture = withGlbJson(original, document => {
+    document.images ??= [];
+    document.images.push({ uri: `DATA:image/png;base64,${image}` });
+    document.buffers.push({ uri: 'DATA:application/octet-stream;base64,AAAAAA==', byteLength: 4 });
+  });
+  assert.doesNotThrow(() => loadCatalog());
+});
 
 test('billiards catalog includes each physical asset and the legacy scene', () => {
   const catalog = loadCatalog();

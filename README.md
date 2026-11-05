@@ -25,6 +25,7 @@ The gallery is not an online model editor, model-generation service, marketplace
 - [Game verification](docs/game-verification.md): executed checks, artifact paths and hardware limits.
 - [Models and demos architecture](docs/gallery-information-architecture.md): registries, query routes and legacy compatibility.
 - [IA verification](docs/verification/gallery-ia.md): local baseline, browser evidence and limits.
+- [Game audit](docs/audits/game-baseline.md) and [gameplay contract](docs/game/gameplay-contract.md): baseline findings, current interaction boundaries and links to this review's release evidence.
 - [Agent guidance](AGENTS.md): repository-specific working rules.
 
 ## Status

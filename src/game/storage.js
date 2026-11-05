@@ -86,32 +86,43 @@ export async function openGameStore() {
   const owner = crypto.randomUUID();
   // Browser-managed locks disappear on reload/crash. The lease is the fallback
   // for browsers without Web Locks and is retried by the page after expiry.
-  let unlock = null;
-  const claimLock = () =>
-    !navigator.locks
-      ? Promise.resolve(true)
-      : unlock
-        ? Promise.resolve(true)
-        : new Promise((resolve, reject) => {
-            navigator.locks
-              .request(
-                "blender-gallery-game-owner",
-                { ifAvailable: true },
-                async (lock) => {
-                  if (!lock) {
-                    resolve(false);
-                    return;
-                  }
-                  await new Promise((done) => {
-                    unlock = done;
-                    resolve(true);
-                  });
-                },
-              )
-              .catch(reject);
-          });
-  const action = (fn) =>
+  let unlock = null,
+    released = false,
+    claimPending = null,
+    releasePending = null;
+  const claimLock = () => {
+    if (released) return Promise.resolve(false);
+    if (!navigator.locks || unlock) return Promise.resolve(true);
+    if (claimPending) return claimPending;
+    claimPending = new Promise((resolve, reject) => {
+      navigator.locks
+        .request(
+          "blender-gallery-game-owner",
+          { ifAvailable: true },
+          async (lock) => {
+            // A request can complete after the owning route has been disposed.
+            if (!lock || released) {
+              resolve(false);
+              return;
+            }
+            await new Promise((done) => {
+              unlock = done;
+              resolve(true);
+            });
+          },
+        )
+        .catch(reject);
+    }).finally(() => {
+      claimPending = null;
+    });
+    return claimPending;
+  };
+  const action = (fn, allowReleased = false) =>
     new Promise((resolve, reject) => {
+      if (released && !allowReleased) {
+        reject(new Error("Game storage is closed"));
+        return;
+      }
       let result;
       const tx = db.transaction("records", "readwrite");
       const s = tx.objectStore("records");
@@ -145,7 +156,9 @@ export async function openGameStore() {
   };
   return {
     claim: async () =>
-      (await claimLock()) && action((s, done) => access(s, done, null, true)),
+      (await claimLock()) &&
+      !released &&
+      action((s, done) => access(s, done, null, true)),
     renew: () => action((s, done) => access(s, done)),
     load: () =>
       action((s, done) => {
@@ -180,20 +193,25 @@ export async function openGameStore() {
         if (!ok) throw new Error("This match is owned by another tab");
       });
     },
-    release: async () => {
-      try {
-        await action((s, done) => {
-          const r = s.get("owner");
-          r.onsuccess = () => {
-            if (r.result?.id === owner) s.delete("owner");
-            done(true);
-          };
-        });
-      } finally {
-        db.close();
-        unlock?.();
-        unlock = null;
-      }
+    release: () => {
+      if (releasePending) return releasePending;
+      released = true;
+      releasePending = (async () => {
+        try {
+          await action((s, done) => {
+            const r = s.get("owner");
+            r.onsuccess = () => {
+              if (r.result?.id === owner) s.delete("owner");
+              done(true);
+            };
+          }, true);
+        } finally {
+          db.close();
+          unlock?.();
+          unlock = null;
+        }
+      })();
+      return releasePending;
     },
   };
 }

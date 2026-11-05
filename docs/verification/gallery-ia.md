@@ -1,8 +1,8 @@
-# Gallery IA local acceptance
+# Gallery IA initial local acceptance
 
 ## Result and scope
 
-Implemented and locally verified on `feature/gallery-information-architecture-v1` in the sibling `Blender-3D-Gallery-ia-v1` worktree, based on `38350b3933aa5d60bc7207d50b2e5577ae8781c3`. Changes remain uncommitted for review. No main-branch edit, push, merge, workflow trigger, deployment, production write or KB write was performed. The original worktree still has only its pre-existing untracked local plan.
+Implemented and locally verified on `feature/gallery-information-architecture-v1` in the sibling `Blender-3D-Gallery-ia-v1` worktree, based on `38350b3933aa5d60bc7207d50b2e5577ae8781c3`. At the initial handoff, changes were uncommitted for review. No main-branch edit, push, merge, workflow trigger, deployment, production write or KB write had been performed. The original worktree retained its pre-existing untracked local plan. On 2026-11-05 the owner subsequently authorized commit, merge and push to GitHub main; see [release integration](gallery-ia-release.md). The restriction on KB writes remains.
 
 The navigation now separates 3D Models, Interactive Demos and About, with GitHub external. Models have search, combined category/collection filters, result counts, reset/empty states, query-addressed independent detail, measured metadata, existing downloads, related models and viewer fallback/retry/fullscreen. The Demo Index has two registry-driven poster cards, category/search controls and explicit launch/return actions. Existing Game/Solar JavaScript behavior, all 39 model identities, source assets and legacy query links remain intact.
 
@@ -44,4 +44,4 @@ Resolved confirmed findings: filter reset/state inconsistency, blank viewer desp
 
 Not measured or not established: production LCP/CLS/INP, future hundreds-of-model search benchmarks, sustained physical mobile GPU/memory behavior, physical iOS/Android installed-app behavior, real browser 200% zoom and complete WCAG 2.2 AA compliance. A 512 px equivalent half-width reflow check and reduced-motion emulation passed, but neither is proof of real browser zoom or every assistive-technology combination. Axe incomplete items are retained as manual-review prompts, not converted into passing conformance claims.
 
-Artwork redistribution terms remain an owner decision. Existing downloads expose files without granting a new license. Further real-device validation and any future publication require their own evidence and authorization; this local task does not perform them.
+Artwork redistribution terms remain an owner decision. Existing downloads expose files without granting a new license. Real-device validation remains separate. This document records the initial local task; the subsequent authorized release is tracked in the release integration document.

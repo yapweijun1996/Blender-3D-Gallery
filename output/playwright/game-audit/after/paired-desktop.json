@@ -1,0 +1,416 @@
+{
+  "methodology": {
+    "execution": "One headless Chromium process. One fresh context per run. Baseline and after alternate sequentially three times each; no samples overlap.",
+    "warmup": "One fresh-context warmup per build in baseline/after order, with one real shot observed for 800ms; warmups are recorded separately and excluded from the six measured samples.",
+    "conditions": "1440x900 CSS pixels, DPR 1, no CPU or network throttle, loopback production builds, identical browser launch flags and SwiftShader software WebGL.",
+    "shot": "Rack seed 42, default cue placement, aim 0 degrees, power 75%; real UI controls and game simulation. Six seconds of requestAnimationFrame intervals start after moving is observed and are classified by game phase at each callback.",
+    "comparison": "Moving and settled summaries are separate. Intervals crossing a phase transition are assigned to the phase seen at the callback. Three paired samples are descriptive and do not establish statistical significance.",
+    "limitations": [
+      "SwiftShader, headless Chromium, OS file cache and loopback are not physical GPU, real mobile device or real-world network performance.",
+      "Frame intervals are not GPU timers. Other host workload, scheduling and thermal conditions can affect results.",
+      "This benchmark does not measure memory leaks or justify changing model appearance."
+    ],
+    "betweenContextsMs": 300,
+    "measuredOrder": [
+      "baseline",
+      "after",
+      "baseline",
+      "after",
+      "baseline",
+      "after"
+    ]
+  },
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "osRelease": "27.0.0",
+    "cpu": "Apple M4",
+    "logicalCpuCount": 10,
+    "launchOptions": {
+      "headless": true,
+      "args": [
+        "--use-angle=swiftshader",
+        "--enable-unsafe-swiftshader"
+      ]
+    },
+    "buildInfo": {
+      "baseline": {
+        "path": "/tmp/blender-gallery-game-audit/node24-baseline/dist",
+        "identity": {
+          "build": "75afc7500ec37f5b"
+        },
+        "sha256": "b8d00090912767d469cc49f0bae58d2609a99526e5ec679e26041f0f53560bca"
+      },
+      "after": {
+        "path": "/Users/yapweijun/Documents/GitHub/Blender-3D-Gallery-game-worktree/dist",
+        "identity": {
+          "build": "57ced48141e8adb6"
+        },
+        "sha256": "e850f98a01c7f2d6d0950fb1a45ea01121eaa7240ee3829f0eb6e759270b9681"
+      }
+    },
+    "measuredAt": "2026-11-05T00:32:41.401Z",
+    "browser": "156.0.8078.4",
+    "serverOrigins": {
+      "baseline": "http://127.0.0.1:53335/Blender-3D-Gallery/",
+      "after": "http://127.0.0.1:53336/Blender-3D-Gallery/"
+    }
+  },
+  "warmups": [
+    {
+      "build": "baseline",
+      "label": "baseline-warmup",
+      "readyMs": 605.9135409999999,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          620
+        ],
+        "canvasCssPixels": [
+          1020,
+          620
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "vendor": "Google Inc. (Google)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      }
+    },
+    {
+      "build": "after",
+      "label": "after-warmup",
+      "readyMs": 229.92904099999987,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          620
+        ],
+        "canvasCssPixels": [
+          1020,
+          620
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "vendor": "Google Inc. (Google)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      }
+    }
+  ],
+  "samples": [
+    {
+      "build": "baseline",
+      "label": "1-baseline",
+      "readyMs": 259.3118340000001,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          620
+        ],
+        "canvasCssPixels": [
+          1020,
+          620
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "vendor": "Google Inc. (Google)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "intervals": {
+        "moving": {
+          "count": 87,
+          "meanMs": 61.682758620689654,
+          "p50Ms": 66.60000000000014,
+          "p95Ms": 83.39999999999964,
+          "maxMs": 149.9000000000001
+        },
+        "settled": {
+          "count": 26,
+          "meanMs": 22.434615384615356,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 66.70000000000073,
+          "maxMs": 83.29999999999927
+        },
+        "other": {
+          "count": 1,
+          "meanMs": 66.80000000000018,
+          "p50Ms": 66.80000000000018,
+          "p95Ms": 66.80000000000018,
+          "maxMs": 66.80000000000018
+        }
+      }
+    },
+    {
+      "build": "after",
+      "label": "2-after",
+      "readyMs": 258.9618750000009,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          620
+        ],
+        "canvasCssPixels": [
+          1020,
+          620
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "vendor": "Google Inc. (Google)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "intervals": {
+        "moving": {
+          "count": 80,
+          "meanMs": 72.705,
+          "p50Ms": 66.69999999999982,
+          "p95Ms": 133.30000000000018,
+          "maxMs": 183.30000000000018
+        },
+        "settled": {
+          "count": 1,
+          "meanMs": 183.20000000000073,
+          "p50Ms": 183.20000000000073,
+          "p95Ms": 183.20000000000073,
+          "maxMs": 183.20000000000073
+        },
+        "other": {
+          "count": 1,
+          "meanMs": 100.09999999999945,
+          "p50Ms": 100.09999999999945,
+          "p95Ms": 100.09999999999945,
+          "maxMs": 100.09999999999945
+        }
+      }
+    },
+    {
+      "build": "baseline",
+      "label": "3-baseline",
+      "readyMs": 269.1148749999993,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          620
+        ],
+        "canvasCssPixels": [
+          1020,
+          620
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "vendor": "Google Inc. (Google)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "intervals": {
+        "moving": {
+          "count": 79,
+          "meanMs": 76.57974683544303,
+          "p50Ms": 66.60000000000036,
+          "p95Ms": 166.5999999999999,
+          "maxMs": 216.5999999999999
+        },
+        "settled": {
+          "count": 0,
+          "meanMs": null,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        },
+        "other": {
+          "count": 0,
+          "meanMs": null,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        }
+      }
+    },
+    {
+      "build": "after",
+      "label": "4-after",
+      "readyMs": 245.28349999999773,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          620
+        ],
+        "canvasCssPixels": [
+          1020,
+          620
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "vendor": "Google Inc. (Google)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "intervals": {
+        "moving": {
+          "count": 103,
+          "meanMs": 50.968932038834964,
+          "p50Ms": 50,
+          "p95Ms": 66.70000000000005,
+          "maxMs": 100.10000000000002
+        },
+        "settled": {
+          "count": 37,
+          "meanMs": 19.370270270270264,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 50,
+          "maxMs": 50
+        },
+        "other": {
+          "count": 1,
+          "meanMs": 50,
+          "p50Ms": 50,
+          "p95Ms": 50,
+          "maxMs": 50
+        }
+      }
+    },
+    {
+      "build": "baseline",
+      "label": "5-baseline",
+      "readyMs": 223.67416599999706,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          620
+        ],
+        "canvasCssPixels": [
+          1020,
+          620
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "vendor": "Google Inc. (Google)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "intervals": {
+        "moving": {
+          "count": 105,
+          "meanMs": 49.84000000000003,
+          "p50Ms": 50,
+          "p95Ms": 66.69999999999982,
+          "maxMs": 100
+        },
+        "settled": {
+          "count": 38,
+          "meanMs": 19.300000000000015,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 50,
+          "maxMs": 50.100000000000364
+        },
+        "other": {
+          "count": 1,
+          "meanMs": 49.899999999999636,
+          "p50Ms": 49.899999999999636,
+          "p95Ms": 49.899999999999636,
+          "maxMs": 49.899999999999636
+        }
+      }
+    },
+    {
+      "build": "after",
+      "label": "6-after",
+      "readyMs": 227.87312499999825,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          620
+        ],
+        "canvasCssPixels": [
+          1020,
+          620
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "vendor": "Google Inc. (Google)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "intervals": {
+        "moving": {
+          "count": 105,
+          "meanMs": 49.83904761904764,
+          "p50Ms": 50,
+          "p95Ms": 66.69999999999982,
+          "maxMs": 100
+        },
+        "settled": {
+          "count": 38,
+          "meanMs": 19.297368421052635,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 50,
+          "maxMs": 50.100000000000364
+        },
+        "other": {
+          "count": 1,
+          "meanMs": 50,
+          "p50Ms": 50,
+          "p95Ms": 50,
+          "maxMs": 50
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "baseline": {
+      "count": 3,
+      "movingP95Ms": [
+        83.39999999999964,
+        166.5999999999999,
+        66.69999999999982
+      ],
+      "medianMovingP95Ms": 83.39999999999964,
+      "readyMs": [
+        259.3118340000001,
+        269.1148749999993,
+        223.67416599999706
+      ]
+    },
+    "after": {
+      "count": 3,
+      "movingP95Ms": [
+        133.30000000000018,
+        66.70000000000005,
+        66.69999999999982
+      ],
+      "medianMovingP95Ms": 66.70000000000005,
+      "readyMs": [
+        258.9618750000009,
+        245.28349999999773,
+        227.87312499999825
+      ]
+    }
+  },
+  "comparability": {
+    "rackSignatures": [
+      "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44"
+    ],
+    "renderers": [
+      "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+    ],
+    "canvasPixelSizes": [
+      "1020x620"
+    ],
+    "canvasCssSizes": [
+      "1020x620"
+    ],
+    "note": "Different canvas sizes or renderer strings must be considered when interpreting timing differences."
+  }
+}

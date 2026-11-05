@@ -1,0 +1,153 @@
+{
+  "methodology": {
+    "description": "Chromium headless, software WebGL and loopback production build; mobile is viewport/touch emulation, not a physical device.",
+    "ready": "Wall time from navigation to the game ready signal in a fresh browser context; no network or CPU throttling.",
+    "shot": "Rack seed 42, default cue placement and aim 0 degrees, power 75%; actual game controls and simulation. Six-second requestAnimationFrame intervals are classified by game phase at each callback.",
+    "frameSampling": "An interval on a phase transition can partly belong to the previous phase. Frame pacing is not GPU time; the game renders only when needed.",
+    "drawCalls": "Not sampled in this quality-only mode.",
+    "lifecycle": "Not sampled in this quality-only mode.",
+    "limitations": [
+      "SwiftShader, headless execution, OS file cache and unthrottled loopback are not a hardware GPU or realistic mobile network.",
+      "Emulation does not establish physical iOS/Android performance, browser chrome, battery or thermal behavior.",
+      "Draw counts and frame intervals do not measure GPU time, shader stalls, texture allocation or total device memory.",
+      "Six lifecycle cycles and JS heap/DOM/listener snapshots do not prove the absence of sustained leaks, including GPU leaks."
+    ],
+    "quality": "Open App options, select Graphics quality: Performance, close the dialog, then measure a real shot at 390x844 / DPR 3."
+  },
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "osRelease": "27.0.0",
+    "cpu": "Apple M4",
+    "logicalCpuCount": 10,
+    "launchOptions": {
+      "headless": true,
+      "args": [
+        "--use-angle=swiftshader",
+        "--enable-unsafe-swiftshader"
+      ]
+    },
+    "buildDir": "/Users/yapweijun/Documents/GitHub/Blender-3D-Gallery-game-worktree/dist",
+    "buildInfo": {
+      "build": "57ced48141e8adb6"
+    },
+    "buildInfoSha256": "e850f98a01c7f2d6d0950fb1a45ea01121eaa7240ee3829f0eb6e759270b9681",
+    "measuredAt": "2026-11-05T00:28:26.492Z",
+    "browser": "156.0.8078.4"
+  },
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "isMobile": true,
+      "hasTouch": true,
+      "samples": 2,
+      "measurements": [
+        {
+          "sample": 1,
+          "readyMs": 513.0942909999999,
+          "renderer": {
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+            "devicePixelRatio": 3,
+            "hardwareConcurrency": 10,
+            "canvasPixels": [
+              348,
+              456
+            ],
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "vendor": "Google Inc. (Google)",
+            "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "maxTextureSize": 8192
+          },
+          "rackSignature": "71324b302667c3fe5c78eaa1a7e8ef6c2ba84be839e2547eab97731a66362f12",
+          "intervals": {
+            "moving": {
+              "count": 125,
+              "meanMs": 41.8648,
+              "p50Ms": 49.899999999999636,
+              "p95Ms": 50.09999999999991,
+              "maxMs": 50.100000000000364
+            },
+            "settled": {
+              "count": 40,
+              "meanMs": 18.752499999999987,
+              "p50Ms": 16.699999999999818,
+              "p95Ms": 33.30000000000018,
+              "maxMs": 50.099999999999454
+            },
+            "other": {
+              "count": 1,
+              "meanMs": 33.30000000000018,
+              "p50Ms": 33.30000000000018,
+              "p95Ms": 33.30000000000018,
+              "maxMs": 33.30000000000018
+            }
+          },
+          "quality": {
+            "selected": "performance",
+            "canvasCssPixels": [
+              348,
+              456
+            ]
+          }
+        },
+        {
+          "sample": 2,
+          "readyMs": 236.74074999999903,
+          "renderer": {
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+            "devicePixelRatio": 3,
+            "hardwareConcurrency": 10,
+            "canvasPixels": [
+              348,
+              456
+            ],
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "vendor": "Google Inc. (Google)",
+            "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "maxTextureSize": 8192
+          },
+          "rackSignature": "71324b302667c3fe5c78eaa1a7e8ef6c2ba84be839e2547eab97731a66362f12",
+          "intervals": {
+            "moving": {
+              "count": 127,
+              "meanMs": 41.33700787401577,
+              "p50Ms": 33.400000000000546,
+              "p95Ms": 50.09999999999991,
+              "maxMs": 116.60000000000014
+            },
+            "settled": {
+              "count": 39,
+              "meanMs": 18.37435897435896,
+              "p50Ms": 16.699999999999818,
+              "p95Ms": 33.30000000000018,
+              "maxMs": 50
+            },
+            "other": {
+              "count": 1,
+              "meanMs": 50,
+              "p50Ms": 50,
+              "p95Ms": 50,
+              "maxMs": 50
+            }
+          },
+          "quality": {
+            "selected": "performance",
+            "canvasCssPixels": [
+              348,
+              456
+            ]
+          }
+        }
+      ],
+      "drawCalls": null
+    }
+  ],
+  "lifecycle": {
+    "skipped": true,
+    "reason": "Performance-quality mode measures the selected mobile setting only."
+  },
+  "errors": []
+}

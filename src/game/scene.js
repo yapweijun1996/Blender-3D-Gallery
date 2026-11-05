@@ -171,6 +171,11 @@ export async function createGameScene(container, assets, signal, progress) {
       } else resize();
       render();
     },
+    setQuality(value) {
+      const cap = value === "performance" ? 1 : 1.5;
+      renderer.setPixelRatio(Math.min(devicePixelRatio, cap));
+      resize();
+    },
     update(state, angle, power, candidate) {
       const y = TABLE.bedHeight + TABLE.radius;
       for (const b of state.balls) {

@@ -1,6 +1,6 @@
 # Product requirements
 
-Status: the searchable model library, query-addressed model detail and Interactive Demo Index are implemented in the local IA development branch. Existing Game/PWA and Solar experiences remain available. See [IA delivery](gallery-information-architecture.md) and [executed verification](verification/gallery-ia.md). Licensing and broader curated-publication requirements remain open; implementation is not a production release.
+Status: the searchable model library, query-addressed model detail and Interactive Demo Index are implemented in the local IA development branch. Existing Game/PWA and Solar experiences remain available. See [IA delivery](gallery-information-architecture.md) and [executed verification](verification/gallery-ia.md). Licensing and broader curated-publication requirements remain open; the initial local acceptance is distinct from the subsequent [authorized release integration](verification/gallery-ia-release.md).
 
 ## Goal and scope
 
