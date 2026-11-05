@@ -60,7 +60,7 @@ Independent final acceptance after that shadow refinement:
 
 These checks use Chromium viewport emulation and mouse/keyboard interactions. They do not establish physical iOS/Android touch or installed-PWA behavior. Initial red asset measurements above must not be reused for this revision.
 
-## Reference-fidelity iteration
+## Released reference-fidelity iteration (`7dc9f06`)
 
 The owner requested another comparison against the same two supplied images, focusing on body proportions, lamps, wheels and glazing. The model revision targets a lower shoulder line and taller tapered glazing, thinner body-colored pillars and black seals, a separate rear quarterlight, reflector bowls and clear headlamp lenses, smaller recessed pressed-steel rims, parked wipers near the windscreen base, and continuous body-side molding. Front, rear, left and right are checked against the same shared geometry and reference criteria.
 
@@ -76,12 +76,32 @@ The manager inspected the four browser views and confirmed the model and materia
 
 After that final shadow refinement, the manager independently re-ran the production build and all four Saga viewport scenarios; both completed with exit code zero. Logs are stored at `/tmp/saga-detail-verified-build.log` and `/tmp/saga-detail-verified-browser.log`. The manager inspected the resulting default, front, rear, left and right browser screenshots, confirming view directions, visible lamp bowls, inset steel wheels, continuous molding and clear panes. An additional Three.js `GLTFLoader`/`Box3` check measured tire minimum Y at 0 and the displayed floor at -0.00617 meters, ruling out raised tire geometry. These checks establish the observed rendering and geometry; they do not claim physically perfect shadow contact or photorealism.
 
+## Surface-fidelity iteration (local acceptance)
+
+The next model-only revision refines the same owner-supplied references: formed body shoulders and visible surface-fitted door seams, connected window reveals, lightly bowed rounded glazing, smaller rear quarterlights, flatter pressed-steel wheel centers with actual oval openings, finer headlamp fluting, richer amber/red lamps, true front apron intakes and a rear plate panel between the tail lamps. The source retains editable parts and reproduces the GLB plus five matching 1400×1000 studio views. No viewer behavior, reference-image pixels or third-party meshes were added.
+
+Final export measurements independently match `metadata.json`: **2,983,952 bytes**, **84,080 triangles**, **77,352 stored vertices**, **16 materials**, **23 meshes / 24 nodes** and **0 animation clips**. The GLB uses the optional `KHR_materials_specular` extension. Its SHA-256 is `0df936d7ca1eb47cb71e9b9638edb118ff81461cce68590297f8572c3c93c127`.
+
+The final geometry, metadata, five renders and saved Blender source were frozen before acceptance. Upstream NASA candidate additions at `4ff550f` and Game fixes at `715b5e8` were integrated without changing those Saga artifacts. All checks below were re-executed against the rebuilt distribution on the final `715b5e8` base; earlier-base results are not the final acceptance evidence for this revision.
+
+| Check | Observed result |
+| --- | --- |
+| `npm test` | 78 passed, zero failed. |
+| `npm run build` | Passed; all 52 catalog GLBs validated with zero errors and zero warnings. The shared Three.js/OrbitControls chunk retains a size warning, approximately 641 kB. |
+| `node scripts/test-saga-browser.mjs` | Passed at 1440×900, 768×1024, 390×844 and 320×720. Actual GLB loading/WebGL draws, all four view presets, keyboard activation, scrolling/close visibility, rotation, zoom, reset, focus, direct link and reload were exercised. All GLB responses completed; no browser, console or network errors were recorded. |
+| `npm run test:library` | All nine existing regression scenarios passed, including 52-card indexes at seven viewport sizes, search/filter/navigation, loading fallback, legacy demos and reduced-motion/reflow behavior. |
+| Visual inspection | The manager and independent reviewer inspected the final Blender views. Actual browser front/rear/left/right views showed consistent clear panes without black centers, visible oval wheel openings on both sides, continuous door seams, and distinct red/amber lamps. Mobile front/right screenshots retained usable controls and a complete silhouette. |
+
+Logs are `/tmp/saga-surface-tests.log`, `/tmp/saga-surface-build.log`, `/tmp/saga-surface-browser.log` and `/tmp/saga-surface-library.log`; browser evidence is under `/tmp/saga-surface-browser-qa` and `/tmp/saga-surface-library-qa`. These are local Chromium/SwiftShader checks with service workers blocked. Physical phones, physical touch and installed-PWA behavior remain unverified.
+
+The inherited directional studio shadow can look separated from a near tire in some views. An independent `GLTFLoader`/`Box3` check found tire minimum Y at 0 and the floor at approximately -0.00617 meters, unchanged from the preceding model; there is no raised-wheel geometry regression. Shadow contact and surface reconstruction remain approximate. These checks describe the local release candidate; deployment is established separately by a successful Pages run and a matching live GLB hash.
+
 ## Release integration
 
 The initial Saga changes were committed and pushed as `284a192`. Deployment was stopped by an inherited Game mobile layout failure at 360×800; no failed check was bypassed. The owner authorized a minimal independent fix, committed as `1beabe0`. The manager independently passed the Game browser suite (including WebKit) and ten responsive touch journeys after that fix. The original working tree and its unrelated uncommitted files were kept separate from the release worktree.
 
 The silver showcase was subsequently committed as `eb6ce80391e5371f29db1780b83976c66d86798a` and successfully deployed by GitHub Pages workflow run `42035418409`. The manager checked the live vehicle at desktop 1440×900 and mobile 390×844, including all four preset controls and reset. The actual online GLB SHA-256 was `42d8c0466dfbfb4cfc3a7b6f59c805d1840ac6268a63056b96016855c88fe1cb`, matching the released artifact. That successful release supersedes the earlier pending deployment state; it does not establish deployment of the new reference-fidelity iteration.
 
-The new reference-fidelity iteration has passed local acceptance and remains pending publication.
+The reference-fidelity iteration was subsequently committed as `7dc9f06a067551d89c280e38ba2f52986ca7f848`. GitHub Pages workflow run `42043016925` completed successfully; deployment `7576157218` targets that revision. During the following surface-refinement task, an independent check confirmed the public GLB returned HTTP 200 with **2,594,816 bytes** and SHA-256 `bcaa2234f580d9a3e3ae8cb0916de3fe52444b344eea7bbe07c2003373963c40`, matching the released artifact. This establishes publication of `7dc9f06`, not any later edits.
 
 Pre-existing unrelated working-tree changes must be preserved. This task does not authorize rewriting unrelated Solar reports or Game work.
