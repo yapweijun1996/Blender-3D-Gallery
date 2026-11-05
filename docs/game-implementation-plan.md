@@ -90,6 +90,7 @@ A small analytical disk solver is used instead of adding a WASM rigid-body engin
 
 - Fixed simulation step: `1/120 s`, independent of render rate.
 - Adaptive substeps bound travel relative to ball radius. Repeated contact iterations resolve crowded racks and rail endpoints.
+- Swept contact checks improve the order of ball impacts and pocket entries within a substep, including fast grazing contacts. When an earlier collision redirects a ball, its remaining path and pocket entry are reconsidered.
 - Equal-mass impulses, ball/cushion restitution and rolling deceleration provide casual pool motion.
 - Rolling quaternions follow displacement so the actual numbered ball meshes rotate.
 - Each pocket capture is recorded once, with tick and substep identity.
@@ -97,14 +98,14 @@ A small analytical disk solver is used instead of adding a WASM rigid-body engin
 - Nonfinite positions, escape bounds or excessive shot duration trigger explicit recovery.
 - Backgrounding pauses the match and clears accumulated wall time. Returning does not simulate a long hidden interval.
 
-This model omits cloth-dependent spin, squirt, swerve, jump, airborne motion and scientific calibration against a real table. Repeatability is tested in the same JS engine; bit-identical replay across every browser is not promised.
+This is a bounded continuous approximation, not a complete continuous-event solver: later redirected contacts and repeated cushion or pocket interactions within one substep can still use endpoint approximation. The model omits cloth-dependent spin, squirt, swerve, jump, airborne motion and scientific calibration against a real table. Repeatability is tested in the same JS engine; bit-identical replay across every browser is not promised.
 
 ## Interaction and responsive layout
 
-Desktop uses a table plus controls sidebar. Portrait phones put the table above a compact aiming/power and Shoot/menu area. Short screens reduce heading and player-card height so the complete table and primary shot control can be visible together. No forced device orientation is required.
+Desktop uses a table plus controls sidebar. Portrait phones put the table above a compact aiming/power and Shoot/menu area. Short screens can scroll to reach the controls while preserving a usable table size. No forced device orientation is required.
 
 - Drag/tap on the table to aim or position the cue. Releasing the pointer sets the aim; it never shoots.
-- Aim and power ranges provide precise alternatives to dragging. Desktop also offers one-degree buttons.
+- Aim and power ranges provide alternatives to dragging. One-degree aim adjustment buttons are available on mobile as well as desktop; mobile buttons have at least a 44 × 44 CSS-pixel target.
 - When the table is focused, arrows change aim or placement, Shift makes finer changes, Enter confirms placement, Space shoots and F toggles fullscreen.
 - Inspection explicitly enables orbit and zoom. Shooting is disabled until returning to Aim.
 - Pause, restart confirmation, rules, app options and installation help use native dialogs.
@@ -177,6 +178,10 @@ The Actions workflow runs unit/asset/build and both browser suites before deploy
 
 No physical iPhone, Android phone or tablet was attached for this delivery. Home-screen installation, safe areas with actual browser chrome, storage pressure and sustained thermal/frame-time behavior require those devices. WebKit headless is useful coverage but is not iOS certification. The renderer's shared Three.js chunk still exceeds Vite's 500 kB advisory threshold; it remains lazy and is not a per-card canvas. No unsupported mobile performance score or universal PWA certification is claimed.
 
+For the subsequent gameplay changes, physical phone testing and installation of the PWA on an actual device remain outstanding. Emulated viewports and browser checks cannot establish either result.
+
 ## Subsequent game reliability and accessibility work
 
 The 2026-11-05 review preserves the same rules, checkpoint schema and assets. It tightens keyboard and pointer ownership, preserves a pending background pause through asynchronous work, releases late Web Locks after route exit, and keeps recovery available after loading or WebGL failures. Mobile play shows a concise aiming hint and real progress, including numbered remaining balls for assistive technology. App options offers a session-only Performance quality setting that lowers the renderer's pixel-ratio cap; Standard retains the original cap. See the [baseline](audits/game-baseline.md), [gameplay contract](game/gameplay-contract.md) and [release readiness](game/release-readiness.md) for executed evidence and remaining limits.
+
+The later collision-order regression suite covers early and late ball/pocket contacts, grazing and near-miss paths, moving balls, rail ordering and energy bounds. In a fixed-seed sample of 250 rack breaks, all shots settled without an invalid state or deep final overlap; the maximum simulated duration was 7.75 seconds. These checks do not establish full physical accuracy or mobile-device performance.

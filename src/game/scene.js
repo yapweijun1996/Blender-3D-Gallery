@@ -168,8 +168,25 @@ export async function createGameScene(container, assets, signal, progress) {
         camera.up.set(0, 1, 0);
         camera.position.set(2.5, 3.8, 2.5);
         camera.lookAt(center);
-      } else resize();
+      } else {
+        camera.zoom = 1;
+        resize();
+      }
       render();
+    },
+    inspectKey(key) {
+      if (!inspect) return false;
+      const step = Math.PI / 18;
+      if (key === "ArrowLeft") controls.rotateLeft(step);
+      else if (key === "ArrowRight") controls.rotateLeft(-step);
+      else if (key === "ArrowUp") controls.rotateUp(step);
+      else if (key === "ArrowDown") controls.rotateUp(-step);
+      else if (["+", "="].includes(key)) camera.zoom = Math.min(3, camera.zoom * 1.15);
+      else if (["-", "_"].includes(key)) camera.zoom = Math.max(0.7, camera.zoom / 1.15);
+      else return false;
+      camera.updateProjectionMatrix();
+      render();
+      return true;
     },
     setQuality(value) {
       const cap = value === "performance" ? 1 : 1.5;

@@ -21,7 +21,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     </aside></div>
     <dialog id="game-options" aria-labelledby="game-options-title"><h2 id="game-options-title">Your app.</h2><label for="graphics-quality">Graphics quality</label><select id="graphics-quality" aria-describedby="graphics-quality-note" disabled><option value="standard">Standard</option><option value="performance">Performance</option></select><p id="graphics-quality-note">Performance lowers rendering resolution until you leave Game.</p><div class="offline-box"><span id="game-offline-status">Online play available</span><button data-action="offline">Make available offline</button><button data-action="install">Install app / help</button></div><button data-action="fullscreen">Fullscreen</button><button data-action="close-options" class="primary">Back to the table</button></dialog>
     <dialog id="game-menu" aria-labelledby="game-menu-title"><h2 id="game-menu-title">Take a break.</h2><p id="menu-save-message" role="status">Your last complete turn is saved when local storage is available.</p><button data-action="continue" class="primary">Continue game</button><button data-action="restart">Restart match</button><button data-action="leave">Save & return to Gallery</button><button data-action="discard" hidden>Leave without saving</button></dialog>
-    <dialog id="game-rules" aria-labelledby="game-rules-title"><h2 id="game-rules-title">Casual Eight-Ball</h2><p>Two people, one device. Player 1 breaks. Drag to aim, set power, then press Shoot. Arrow keys adjust aim (Shift for fine aim); Enter confirms cue placement; Space shoots when the table is focused. Labeled sliders and buttons also work with a keyboard.</p><ul><li>Groups stay open on the break. The first legal post-break pot assigns solids or stripes. Simultaneous pots are ordered by simulation tick, substep, then ball number.</li><li>First contact must be your group. When your group is cleared, hit the eight first. If every group ball has gone while the table is still open, either player may play the eight.</li><li>A scratch, wrong first contact or no contact gives your opponent ball in hand.</li><li>Clear your group before the shot that pockets the eight. An early eight, or an eight with a foul, loses.</li><li>Eight on the break is re-spotted. Eight + scratch on the break is a foul, not an instant loss.</li><li>No called pockets, four-rail break requirement, spin or jump shots. This is a casual ruleset, not competition rules.</li></ul><p>Inspection mode is for looking around; return to Aim before shooting. The guide estimates initial contact, not a guaranteed pot. Backgrounding pauses play. After a killed or interrupted shot, Resume restores its pre-shot checkpoint.</p><button data-action="close-rules" class="primary">Back to the table</button></dialog>
+    <dialog id="game-rules" aria-labelledby="game-rules-title"><h2 id="game-rules-title">Casual Eight-Ball</h2><p>Two people, one device. Player 1 breaks. Drag to aim, set power, then press Shoot. Arrow keys adjust aim (Shift for fine aim); Enter confirms cue placement; Space shoots when the table is focused. Labeled sliders and buttons also work with a keyboard.</p><ul><li>Groups stay open on the break. The first legal post-break pot assigns solids or stripes. Simultaneous pots are ordered by simulation tick, substep, then ball number.</li><li>First contact must be your group. When your group is cleared, hit the eight first. If every group ball has gone while the table is still open, either player may play the eight.</li><li>A scratch, wrong first contact or no contact gives your opponent ball in hand.</li><li>Clear your group before the shot that pockets the eight. An early eight, or an eight with a foul, loses.</li><li>Eight on the break is re-spotted. Eight + scratch on the break is a foul, not an instant loss.</li><li>No called pockets, four-rail break requirement, spin or jump shots. This is a casual ruleset, not competition rules.</li></ul><p>In inspection mode, drag or use the table-focused arrow keys to orbit, and use + or − to zoom. Use the return button to leave inspection. The guide estimates initial contact, not a guaranteed pot. Backgrounding pauses play. After a killed or interrupted shot, Resume restores its pre-shot checkpoint.</p><button data-action="close-rules" class="primary">Back to the table</button></dialog>
     <dialog id="game-confirm" aria-labelledby="game-confirm-title"><h2 id="game-confirm-title">Start a new match?</h2><p>This replaces the current match. Your gallery assets are unaffected.</p><div><button data-action="cancel-new">Keep current match</button><button data-action="confirm-new" class="primary">Start new match</button></div></dialog>
   </section>`;
   const $ = (s) => root.querySelector(s),
@@ -90,6 +90,11 @@ export async function mountGame(root, assets, signal, onLeave) {
   function ui() {
     if (disposed) return;
     const phase = state?.phase;
+    const returnAction = phase === "placing" || (phase === "paused" && pausedPhase === "placing")
+      ? "Return to placement"
+      : phase === "finished"
+        ? "Return to table"
+        : "Return to aim";
     root.querySelector(".game-shell").classList.toggle("is-playing", !!state);
     root.querySelector(".game-shell").dataset.phase = phase || "setup";
     $("#game-start").hidden = !!state || loadFailed;
@@ -112,8 +117,16 @@ export async function mountGame(root, assets, signal, onLeave) {
       ? "3D view interrupted. Reload the table to continue."
       : loadFailed
         ? "The 3D table could not load."
+        : inspection && ["placing", "aiming"].includes(phase)
+          ? `Inspect mode. Select ${returnAction} to continue.`
         : state?.message ||
           "Clear your group, then pocket the eight. Two players share this device.";
+    viewport.setAttribute("aria-label", inspection
+      ? `Inspection view. Use arrow keys to orbit and plus or minus to zoom. Select ${returnAction} to continue.`
+      : "Pool table. Arrow keys adjust aim or cue placement.");
+    $(".control-note").textContent = inspection
+      ? "Inspect mode. Return to aim before shooting."
+      : "Drag to aim; press Shoot to strike.";
     for (let i = 0; i < 2; i++) {
       const c = $(`#player-${i}`);
       c.classList.toggle(
@@ -155,26 +168,32 @@ export async function mountGame(root, assets, signal, onLeave) {
     $('[data-action="inspect"]').disabled =
       !ready ||
       !state ||
+      busy ||
+      contextLost ||
       ["moving", "adjudicating", "recovery"].includes(phase);
     $('[data-action="inspect"]').textContent = inspection
-      ? "Return to aim"
+      ? returnAction
       : "Inspect table";
     $('[data-action="place"]').disabled =
       busy ||
       !ownership ||
+      inspection ||
+      contextLost ||
       !state ||
       !legalPlacement(state.balls, candidate.x, candidate.z, state.break);
-    if (phase === "placing")
-      $("#placement-hint").textContent = legalPlacement(
-        state.balls,
-        candidate.x,
-        candidate.z,
-        state.break,
-      )
-        ? state.break
-          ? "Place behind the head string, then confirm."
-          : "Valid position. Confirm when ready."
-        : "Position is outside the legal area or overlaps a ball.";
+    all('#game-placement input').forEach((input) => {
+      input.disabled = busy || !ownership || inspection || contextLost || phase !== "placing";
+    });
+    if (phase === "placing") {
+      const valid = legalPlacement(state.balls, candidate.x, candidate.z, state.break);
+      $("#placement-hint").textContent = inspection
+        ? "Inspect mode. Return to placement to position the cue ball."
+        : !valid
+          ? "Position is outside the legal area or overlaps a ball."
+          : state.break
+            ? "Place behind the head string, then confirm."
+            : "Valid position. Confirm when ready.";
+    }
     $("#angle-output").value = `${Math.round((angle * 180) / Math.PI)}°`;
     $("#aim-angle").value = (angle * 180) / Math.PI;
     $("#power-output").value = `${Math.round(power * 100)}%`;
@@ -227,6 +246,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     shot = null;
     pausedPhase = null;
     stable = stableCopy(state);
+    ui();
     await persist(stable);
     if (disposed) return;
     finishBusy();
@@ -501,6 +521,10 @@ export async function mountGame(root, assets, signal, onLeave) {
           break;
         case "place":
           if (
+            !inspection &&
+            !contextLost &&
+            !busy &&
+            ownership &&
             state?.phase === "placing" &&
             legalPlacement(state.balls, candidate.x, candidate.z, state.break)
           ) {
@@ -515,6 +539,7 @@ export async function mountGame(root, assets, signal, onLeave) {
             state.message = "Aim, set power, then Shoot.";
             busy = true;
             stable = stableCopy(state);
+            ui();
             await persist(stable);
             if (disposed) return;
             finishBusy();
@@ -609,6 +634,7 @@ export async function mountGame(root, assets, signal, onLeave) {
           onLeave();
           break;
         case "inspect":
+          if (busy || contextLost || !ready || !state || ["moving", "adjudicating", "recovery"].includes(state.phase)) break;
           inspection = !inspection;
           if (inspection) clearPointers();
           view.setInspection(inspection);
@@ -665,7 +691,13 @@ export async function mountGame(root, assets, signal, onLeave) {
       )
         return;
       if (e.key === "Escape") {
-        pause();
+        // Fullscreen owns Escape; let the browser leave fullscreen first.
+        if (document.fullscreenElement) return;
+        if (state && !contextLost && !["finished", "paused"].includes(state.phase)) {
+          // Keep this keypress from cancelling the modal it just opened.
+          e.preventDefault();
+          pause();
+        }
         return;
       }
       if (e.target !== viewport) return;
@@ -674,10 +706,16 @@ export async function mountGame(root, assets, signal, onLeave) {
         $('[data-action="fullscreen"]').click();
         return;
       }
-      if (state?.phase === "placing" && e.key === "Enter") {
+      if (inspection) {
+        if (e.code === "Space" || e.key === "Enter") e.preventDefault();
+        if (!busy && !contextLost && !e.ctrlKey && !e.metaKey && !e.altKey && view?.inspectKey(e.key))
+          e.preventDefault();
+        return;
+      }
+      if (state?.phase === "placing" && !busy && ownership && e.key === "Enter") {
         e.preventDefault();
         $('[data-action="place"]').click();
-      } else if (state?.phase === "placing" && e.key.startsWith("Arrow")) {
+      } else if (state?.phase === "placing" && !busy && ownership && e.key.startsWith("Arrow")) {
         const step = e.shiftKey ? 0.005 : 0.02;
         candidate.x +=
           e.key === "ArrowUp" ? step : e.key === "ArrowDown" ? -step : 0;

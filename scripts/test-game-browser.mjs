@@ -62,6 +62,19 @@ const start = async (page) => {
     return shoot && shoot.getClientRects().length > 0 && !shoot.disabled;
   });
 };
+// On short phones retain a playable table and check both controls before clicks
+// can auto-scroll them; the user may make one bounded, explicit page scroll.
+const revealShortScreen = async (page, width, height, actions) => {
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  if (width <= 650 && height <= 650) {
+    await page.evaluate((actions) => {
+      const selectors = ["#game-viewport", ...actions.map((action) => `[data-action="${action}"]`)];
+      const bottom = Math.max(...selectors.map((selector) => document.querySelector(selector).getBoundingClientRect().bottom));
+      window.scrollBy({ top: Math.max(0, bottom - innerHeight + 8), behavior: "instant" });
+    }, actions);
+    assert.ok(await page.evaluate(() => scrollY) <= height / 2, "controls and table require at most half a screen of scrolling");
+  }
+};
 // Follow the visible navigation rather than the retired per-demo top-level links.
 const navigateTo = async (page, destination) => {
   const section = destination === "game" ? "demos" : destination;
@@ -252,6 +265,9 @@ try {
       if (operation !== "new") {
         await page.click('[data-action="new"]');
         await page.waitForFunction(() => document.querySelector('.game-shell').dataset.phase === 'placing');
+        // The placing phase is visible while the new-match checkpoint is still saving.
+        await page.locator('[data-action="place"]').waitFor({ state: "visible" });
+        await page.waitForFunction(() => !document.querySelector('[data-action="place"]').disabled);
       }
       if (operation === "adjudication") {
         await page.click('[data-action="place"]');
@@ -263,6 +279,8 @@ try {
         window.__delaySave = true;
         if (operation === "adjudication") window.advanceTime(26000);
         else document.querySelector(`[data-action="${operation}"]`).click();
+        if (operation === "place" && JSON.parse(window.render_game_to_text()).phase !== "aiming")
+          throw new Error("Placement did not start before backgrounding");
         window.__hiddenForTest = true;
         document.dispatchEvent(new Event("visibilitychange"));
       }, operation);
@@ -449,7 +467,7 @@ try {
     await run(`touch targets and viewport remain usable at ${width}x${height}`, async (page) => {
       await gameReady(page, server.url);
       await start(page);
-      await page.evaluate(() => scrollTo(0, 0));
+      await revealShortScreen(page, width, height, ["shoot", "pause"]);
       const layout = await page.evaluate(() => {
         const rect = selector => {
           const r = document.querySelector(selector).getBoundingClientRect();
@@ -465,6 +483,7 @@ try {
         assert.ok(button.width >= 44 && button.height >= 44, JSON.stringify(layout));
       assert.ok(layout.board.top >= 0 && layout.board.bottom <= height, JSON.stringify(layout));
       assert.ok(layout.shoot.bottom <= height && layout.pause.bottom <= height, JSON.stringify(layout));
+      if (width === 320 && height === 568) assert.ok(layout.board.height >= 190, JSON.stringify(layout));
       if (width < 600) {
         assert.equal(await page.locator('.control-note').isVisible(), true);
         assert.match(await page.locator('.control-note').innerText(), /Drag to aim.*Shoot/);
@@ -814,16 +833,20 @@ try {
           for (const action of actions) {
             await page.locator(`[data-action="${action}"]`).waitFor({ state: "visible" });
           }
-          // Check the unscrolled viewport before click auto-scroll can hide clipping.
-          await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+          // Check the explicitly positioned viewport before click auto-scroll can hide clipping.
+          await revealShortScreen(page, width, height, actions);
           const controls = await page.evaluate((actions) => actions.map(action => {
             const rect = document.querySelector(`[data-action="${action}"]`).getBoundingClientRect();
             return { action, top: rect.top, bottom: rect.bottom, width: rect.width, height: rect.height };
           }), actions);
           for (const control of controls) {
-            assert.ok(control.width > 0 && control.height > 0, `${phase}: ${JSON.stringify(control)}`);
+            assert.ok(control.width >= 44 && control.height >= 44, `${phase}: ${JSON.stringify(control)}`);
             assert.ok(control.top >= 0 && control.bottom <= height, `${phase} ${width}x${height}: ${JSON.stringify(control)}`);
           }
+          const board = await page.locator("#game-viewport").boundingBox();
+          assert.ok(board && board.y >= 0 && board.y + board.height <= height, `${phase}: ${JSON.stringify(board)}`);
+          if (width === 320 && height === 568) assert.ok(board.height >= 190, `${phase}: ${JSON.stringify(board)}`);
+          if (width === 844 && height === 390) assert.ok(board.height >= 220, `${phase}: ${JSON.stringify(board)}`);
         };
         await page.click("[data-action=new]");
         await waitPhase(page, "placing");
