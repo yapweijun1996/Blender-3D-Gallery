@@ -1,0 +1,51 @@
+{
+  "source": "develop-web-game/scripts/web_game_playwright_client.js",
+  "sha256": "e95c3bcbdc0d15eb08fd3a6021283ec32f715b51f1e5847d3db20df526be5996",
+  "copiedWithoutModification": true,
+  "reason": "Resolve the repository-pinned Playwright from an isolated temporary runner.",
+  "build": "042c99b1e32521a0",
+  "iterations": 2,
+  "clickSelector": "[data-action=\"new\"]",
+  "actionSequence": [
+    "Enter",
+    "Left",
+    "Space",
+    "60 simulation steps"
+  ],
+  "states": [
+    "moving",
+    "moving"
+  ],
+  "consoleErrorFiles": [],
+  "pauseMs": 500,
+  "actions": {
+    "steps": [
+      {
+        "buttons": [
+          "enter"
+        ],
+        "frames": 1
+      },
+      {
+        "buttons": [
+          "left"
+        ],
+        "frames": 4
+      },
+      {
+        "buttons": [],
+        "frames": 2
+      },
+      {
+        "buttons": [
+          "space"
+        ],
+        "frames": 1
+      },
+      {
+        "buttons": [],
+        "frames": 60
+      }
+    ]
+  }
+}

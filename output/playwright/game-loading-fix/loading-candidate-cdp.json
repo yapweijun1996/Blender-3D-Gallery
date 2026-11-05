@@ -1,0 +1,1599 @@
+{
+  "node": "v24.21.0",
+  "build": "/tmp/game-loading-diagnostics/candidate-dist",
+  "observedAt": "2026-11-05T13:34:41.475Z",
+  "observation": "Passive copy of existing GLB reader chunks or returned arrayBuffer. No Response.clone, tee, or extra reads; fixture/game cases compare observed with uninstrumented behavior.",
+  "profile": "system Chrome headless, 100ms latency, 4Mbps down, 1Mbps up, cache disabled, SW blocked",
+  "expectedTableHash": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+  "expected": {
+    "assets/table-XWseCS4E.glb": {
+      "local": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+      "manifest": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+      "bytes": 417656
+    },
+    "assets/cue_01-BCqBke_n.glb": {
+      "local": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8",
+      "manifest": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8",
+      "bytes": 14632
+    },
+    "assets/ball_00-BoyXP3PW.glb": {
+      "local": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732",
+      "manifest": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732",
+      "bytes": 93692
+    },
+    "assets/ball_01-CYdwOVaM.glb": {
+      "local": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a",
+      "manifest": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a",
+      "bytes": 120536
+    },
+    "assets/ball_02-DB1WWWFC.glb": {
+      "local": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a",
+      "manifest": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a",
+      "bytes": 215296
+    },
+    "assets/ball_03-CUIVES0h.glb": {
+      "local": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352",
+      "manifest": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352",
+      "bytes": 268828
+    },
+    "assets/ball_04-BBCbhjJU.glb": {
+      "local": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85",
+      "manifest": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85",
+      "bytes": 157064
+    },
+    "assets/ball_05-g8Q6Ow2l.glb": {
+      "local": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018",
+      "manifest": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018",
+      "bytes": 203708
+    },
+    "assets/ball_06-Dx-lGkJH.glb": {
+      "local": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50",
+      "manifest": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50",
+      "bytes": 244380
+    },
+    "assets/ball_07-DTLIzTg4.glb": {
+      "local": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd",
+      "manifest": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd",
+      "bytes": 127912
+    },
+    "assets/ball_08-BGG5JkMB.glb": {
+      "local": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9",
+      "manifest": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9",
+      "bytes": 324100
+    },
+    "assets/ball_09-Bu8fLWw3.glb": {
+      "local": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af",
+      "manifest": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af",
+      "bytes": 262604
+    },
+    "assets/ball_10-Csex90PS.glb": {
+      "local": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab",
+      "manifest": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab",
+      "bytes": 227632
+    },
+    "assets/ball_11-DqkUg1Oy.glb": {
+      "local": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec",
+      "manifest": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec",
+      "bytes": 132568
+    },
+    "assets/ball_12-BBSM0uzd.glb": {
+      "local": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149",
+      "manifest": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149",
+      "bytes": 223308
+    },
+    "assets/ball_13-CbMLTUSR.glb": {
+      "local": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4",
+      "manifest": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4",
+      "bytes": 279952
+    },
+    "assets/ball_14-5cOYbVRY.glb": {
+      "local": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf",
+      "manifest": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf",
+      "bytes": 170364
+    },
+    "assets/ball_15-BhFgOajB.glb": {
+      "local": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296",
+      "manifest": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296",
+      "bytes": 213552
+    }
+  },
+  "fixture": [
+    {
+      "framing": "chunked",
+      "kind": "direct",
+      "data": {
+        "status": 200,
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+      },
+      "events": [
+        {
+          "event": "request",
+          "requestId": "6930.8",
+          "url": "http://127.0.0.1:53591/chunked/table.glb?kind=direct",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "6930.8",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:42 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "6930.8",
+          "encodedDataLength": 417859,
+          "stage": "loading"
+        }
+      ],
+      "pw": []
+    },
+    {
+      "framing": "chunked",
+      "kind": "gltf-plain",
+      "data": {
+        "scene": "Scene",
+        "meshes": 52,
+        "hashes": null
+      },
+      "events": [
+        {
+          "event": "request",
+          "requestId": "6950.7",
+          "url": "http://127.0.0.1:53591/chunked/table.glb?kind=gltf-plain",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "6950.7",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:43 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "failed",
+          "requestId": "6950.7",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true,
+          "stage": "loading"
+        }
+      ],
+      "pw": [
+        {
+          "url": "http://127.0.0.1:53591/chunked/table.glb?kind=gltf-plain",
+          "error": "net::ERR_ABORTED",
+          "stage": "loading"
+        }
+      ]
+    },
+    {
+      "framing": "chunked",
+      "kind": "gltf-observed",
+      "data": {
+        "scene": "Scene",
+        "meshes": 52,
+        "hashes": {
+          "/chunked/table.glb": {
+            "bytes": 417656,
+            "ended": true,
+            "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+          }
+        }
+      },
+      "events": [
+        {
+          "event": "request",
+          "requestId": "6970.7",
+          "url": "http://127.0.0.1:53591/chunked/table.glb?kind=gltf-observed",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "6970.7",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:44 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "failed",
+          "requestId": "6970.7",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true,
+          "stage": "loading"
+        }
+      ],
+      "pw": [
+        {
+          "url": "http://127.0.0.1:53591/chunked/table.glb?kind=gltf-observed",
+          "error": "net::ERR_ABORTED",
+          "stage": "loading"
+        }
+      ]
+    },
+    {
+      "framing": "length",
+      "kind": "direct",
+      "data": {
+        "status": 200,
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+      },
+      "events": [
+        {
+          "event": "request",
+          "requestId": "6988.7",
+          "url": "http://127.0.0.1:53591/length/table.glb?kind=direct",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "6988.7",
+          "status": 200,
+          "headers": {
+            "Cache-Control": "no-store",
+            "Content-Length": "417656",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:46 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "6988.7",
+          "encodedDataLength": 417841,
+          "stage": "loading"
+        }
+      ],
+      "pw": []
+    },
+    {
+      "framing": "length",
+      "kind": "gltf-plain",
+      "data": {
+        "scene": "Scene",
+        "meshes": 52,
+        "hashes": null
+      },
+      "events": [
+        {
+          "event": "request",
+          "requestId": "7004.7",
+          "url": "http://127.0.0.1:53591/length/table.glb?kind=gltf-plain",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7004.7",
+          "status": 200,
+          "headers": {
+            "Cache-Control": "no-store",
+            "Content-Length": "417656",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:47 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "failed",
+          "requestId": "7004.7",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true,
+          "stage": "loading"
+        }
+      ],
+      "pw": [
+        {
+          "url": "http://127.0.0.1:53591/length/table.glb?kind=gltf-plain",
+          "error": "net::ERR_ABORTED",
+          "stage": "loading"
+        }
+      ]
+    },
+    {
+      "framing": "length",
+      "kind": "gltf-observed",
+      "data": {
+        "scene": "Scene",
+        "meshes": 52,
+        "hashes": {
+          "/length/table.glb": {
+            "bytes": 417656,
+            "ended": true,
+            "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+          }
+        }
+      },
+      "events": [
+        {
+          "event": "request",
+          "requestId": "7020.7",
+          "url": "http://127.0.0.1:53591/length/table.glb?kind=gltf-observed",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7020.7",
+          "status": 200,
+          "headers": {
+            "Cache-Control": "no-store",
+            "Content-Length": "417656",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:49 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "failed",
+          "requestId": "7020.7",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true,
+          "stage": "loading"
+        }
+      ],
+      "pw": [
+        {
+          "url": "http://127.0.0.1:53591/length/table.glb?kind=gltf-observed",
+          "error": "net::ERR_ABORTED",
+          "stage": "loading"
+        }
+      ]
+    }
+  ],
+  "game": [
+    {
+      "observed": false,
+      "readyMs": 9586.925707999999,
+      "hashes": null,
+      "events": [
+        {
+          "event": "request",
+          "requestId": "7055.92",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.93",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.94",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.95",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.93",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:52 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.92",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:52 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.94",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:52 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.95",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:52 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.93",
+          "encodedDataLength": 14834,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.96",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.96",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:52 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.94",
+          "encodedDataLength": 93895,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.97",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.97",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:53 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.95",
+          "encodedDataLength": 120739,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.98",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.98",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:53 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.96",
+          "encodedDataLength": 215499,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.99",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.99",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:54 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.98",
+          "encodedDataLength": 157267,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.100",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.100",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:54 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.97",
+          "encodedDataLength": 269031,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.101",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.101",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:55 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.92",
+          "encodedDataLength": 417859,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.102",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.102",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:55 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.99",
+          "encodedDataLength": 203911,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.103",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.103",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:56 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.101",
+          "encodedDataLength": 128115,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.104",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.104",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:56 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.100",
+          "encodedDataLength": 244583,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.105",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.105",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:56 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.105",
+          "encodedDataLength": 132771,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.106",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.106",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:57 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.103",
+          "encodedDataLength": 262807,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.107",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.102",
+          "encodedDataLength": 324303,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.108",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.107",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:58 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.104",
+          "encodedDataLength": 227835,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7055.109",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.108",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:58 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7055.109",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:34:58 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.106",
+          "encodedDataLength": 223511,
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.108",
+          "encodedDataLength": 170567,
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.109",
+          "encodedDataLength": 213755,
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7055.107",
+          "encodedDataLength": 280155,
+          "stage": "loading"
+        }
+      ],
+      "pw": []
+    },
+    {
+      "observed": true,
+      "readyMs": 9553.019874999998,
+      "hashes": {
+        "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb": {
+          "bytes": 14632,
+          "ended": true,
+          "sha256": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8"
+        },
+        "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb": {
+          "bytes": 93692,
+          "ended": true,
+          "sha256": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732"
+        },
+        "/Blender-3D-Gallery/assets/table-XWseCS4E.glb": {
+          "bytes": 417656,
+          "ended": true,
+          "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+        },
+        "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb": {
+          "bytes": 120536,
+          "ended": true,
+          "sha256": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a"
+        },
+        "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb": {
+          "bytes": 215296,
+          "ended": true,
+          "sha256": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a"
+        },
+        "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb": {
+          "bytes": 268828,
+          "ended": true,
+          "sha256": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352"
+        },
+        "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb": {
+          "bytes": 157064,
+          "ended": true,
+          "sha256": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85"
+        },
+        "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb": {
+          "bytes": 203708,
+          "ended": true,
+          "sha256": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018"
+        },
+        "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb": {
+          "bytes": 244380,
+          "ended": true,
+          "sha256": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50"
+        },
+        "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb": {
+          "bytes": 127912,
+          "ended": true,
+          "sha256": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd"
+        },
+        "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb": {
+          "bytes": 324100,
+          "ended": true,
+          "sha256": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9"
+        },
+        "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb": {
+          "bytes": 262604,
+          "ended": true,
+          "sha256": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af"
+        },
+        "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb": {
+          "bytes": 227632,
+          "ended": true,
+          "sha256": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab"
+        },
+        "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb": {
+          "bytes": 132568,
+          "ended": true,
+          "sha256": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec"
+        },
+        "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb": {
+          "bytes": 223308,
+          "ended": true,
+          "sha256": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149"
+        },
+        "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb": {
+          "bytes": 279952,
+          "ended": true,
+          "sha256": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4"
+        },
+        "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb": {
+          "bytes": 170364,
+          "ended": true,
+          "sha256": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf"
+        },
+        "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb": {
+          "bytes": 213552,
+          "ended": true,
+          "sha256": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296"
+        }
+      },
+      "events": [
+        {
+          "event": "request",
+          "requestId": "7177.92",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.93",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.94",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.95",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.93",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:02 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.94",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:02 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.92",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:02 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.95",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:02 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.93",
+          "encodedDataLength": 14834,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.96",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.96",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:02 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.94",
+          "encodedDataLength": 93895,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.97",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.97",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:03 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.95",
+          "encodedDataLength": 120739,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.98",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.98",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:03 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.96",
+          "encodedDataLength": 215499,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.99",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.99",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:04 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.98",
+          "encodedDataLength": 157267,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.100",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.100",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:04 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.97",
+          "encodedDataLength": 269031,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.101",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.101",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:05 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.92",
+          "encodedDataLength": 417859,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.102",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.102",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:05 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.99",
+          "encodedDataLength": 203911,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.103",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.103",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:06 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.101",
+          "encodedDataLength": 128115,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.104",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.104",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:06 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.100",
+          "encodedDataLength": 244583,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.105",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.105",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:06 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.105",
+          "encodedDataLength": 132771,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.106",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.106",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:07 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.103",
+          "encodedDataLength": 262807,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.107",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.102",
+          "encodedDataLength": 324303,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.108",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.107",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:08 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.104",
+          "encodedDataLength": 227835,
+          "stage": "loading"
+        },
+        {
+          "event": "request",
+          "requestId": "7177.109",
+          "url": "http://127.0.0.1:53592/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.108",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:08 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "response",
+          "requestId": "7177.109",
+          "status": 200,
+          "headers": {
+            "Transfer-Encoding": "chunked",
+            "Cache-Control": "no-store",
+            "Keep-Alive": "timeout=5",
+            "Date": "Thu, 05 Nov 2026 13:35:08 GMT",
+            "Content-Type": "model/gltf-binary",
+            "Connection": "keep-alive"
+          },
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.106",
+          "encodedDataLength": 223511,
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.108",
+          "encodedDataLength": 170567,
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.109",
+          "encodedDataLength": 213755,
+          "stage": "loading"
+        },
+        {
+          "event": "finished",
+          "requestId": "7177.107",
+          "encodedDataLength": 280155,
+          "stage": "loading"
+        }
+      ],
+      "pw": []
+    }
+  ],
+  "errors": [],
+  "browser": "156.0.8078.80",
+  "hashVerification": [
+    {
+      "url": "assets/table-XWseCS4E.glb",
+      "match": true,
+      "captured": {
+        "bytes": 417656,
+        "ended": true,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+      },
+      "local": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+    },
+    {
+      "url": "assets/cue_01-BCqBke_n.glb",
+      "match": true,
+      "captured": {
+        "bytes": 14632,
+        "ended": true,
+        "sha256": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8"
+      },
+      "local": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8"
+    },
+    {
+      "url": "assets/ball_00-BoyXP3PW.glb",
+      "match": true,
+      "captured": {
+        "bytes": 93692,
+        "ended": true,
+        "sha256": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732"
+      },
+      "local": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732"
+    },
+    {
+      "url": "assets/ball_01-CYdwOVaM.glb",
+      "match": true,
+      "captured": {
+        "bytes": 120536,
+        "ended": true,
+        "sha256": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a"
+      },
+      "local": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a"
+    },
+    {
+      "url": "assets/ball_02-DB1WWWFC.glb",
+      "match": true,
+      "captured": {
+        "bytes": 215296,
+        "ended": true,
+        "sha256": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a"
+      },
+      "local": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a"
+    },
+    {
+      "url": "assets/ball_03-CUIVES0h.glb",
+      "match": true,
+      "captured": {
+        "bytes": 268828,
+        "ended": true,
+        "sha256": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352"
+      },
+      "local": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352"
+    },
+    {
+      "url": "assets/ball_04-BBCbhjJU.glb",
+      "match": true,
+      "captured": {
+        "bytes": 157064,
+        "ended": true,
+        "sha256": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85"
+      },
+      "local": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85"
+    },
+    {
+      "url": "assets/ball_05-g8Q6Ow2l.glb",
+      "match": true,
+      "captured": {
+        "bytes": 203708,
+        "ended": true,
+        "sha256": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018"
+      },
+      "local": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018"
+    },
+    {
+      "url": "assets/ball_06-Dx-lGkJH.glb",
+      "match": true,
+      "captured": {
+        "bytes": 244380,
+        "ended": true,
+        "sha256": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50"
+      },
+      "local": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50"
+    },
+    {
+      "url": "assets/ball_07-DTLIzTg4.glb",
+      "match": true,
+      "captured": {
+        "bytes": 127912,
+        "ended": true,
+        "sha256": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd"
+      },
+      "local": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd"
+    },
+    {
+      "url": "assets/ball_08-BGG5JkMB.glb",
+      "match": true,
+      "captured": {
+        "bytes": 324100,
+        "ended": true,
+        "sha256": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9"
+      },
+      "local": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9"
+    },
+    {
+      "url": "assets/ball_09-Bu8fLWw3.glb",
+      "match": true,
+      "captured": {
+        "bytes": 262604,
+        "ended": true,
+        "sha256": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af"
+      },
+      "local": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af"
+    },
+    {
+      "url": "assets/ball_10-Csex90PS.glb",
+      "match": true,
+      "captured": {
+        "bytes": 227632,
+        "ended": true,
+        "sha256": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab"
+      },
+      "local": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab"
+    },
+    {
+      "url": "assets/ball_11-DqkUg1Oy.glb",
+      "match": true,
+      "captured": {
+        "bytes": 132568,
+        "ended": true,
+        "sha256": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec"
+      },
+      "local": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec"
+    },
+    {
+      "url": "assets/ball_12-BBSM0uzd.glb",
+      "match": true,
+      "captured": {
+        "bytes": 223308,
+        "ended": true,
+        "sha256": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149"
+      },
+      "local": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149"
+    },
+    {
+      "url": "assets/ball_13-CbMLTUSR.glb",
+      "match": true,
+      "captured": {
+        "bytes": 279952,
+        "ended": true,
+        "sha256": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4"
+      },
+      "local": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4"
+    },
+    {
+      "url": "assets/ball_14-5cOYbVRY.glb",
+      "match": true,
+      "captured": {
+        "bytes": 170364,
+        "ended": true,
+        "sha256": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf"
+      },
+      "local": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf"
+    },
+    {
+      "url": "assets/ball_15-BhFgOajB.glb",
+      "match": true,
+      "captured": {
+        "bytes": 213552,
+        "ended": true,
+        "sha256": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296"
+      },
+      "local": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296"
+    }
+  ]
+}

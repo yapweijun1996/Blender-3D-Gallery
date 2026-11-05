@@ -1,0 +1,178 @@
+fixture chunked direct
+fixture chunked gltf-plain
+fixture chunked gltf-observed
+fixture length direct
+fixture length gltf-plain
+fixture length gltf-observed
+game observed false
+game observed true
+{
+  "errors": [],
+  "fixture": [
+    {
+      "framing": "chunked",
+      "kind": "direct",
+      "data": {
+        "status": 200,
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+      },
+      "cdp": [
+        {
+          "event": "finished",
+          "requestId": "32823.8",
+          "encodedDataLength": 417859,
+          "stage": "loading"
+        }
+      ],
+      "pw": []
+    },
+    {
+      "framing": "chunked",
+      "kind": "gltf-plain",
+      "data": {
+        "scene": "Scene",
+        "meshes": 52,
+        "hashes": null
+      },
+      "cdp": [
+        {
+          "event": "failed",
+          "requestId": "32844.7",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true,
+          "stage": "loading"
+        }
+      ],
+      "pw": [
+        {
+          "url": "http://127.0.0.1:53265/chunked/table.glb?kind=gltf-plain",
+          "error": "net::ERR_ABORTED",
+          "stage": "loading"
+        }
+      ]
+    },
+    {
+      "framing": "chunked",
+      "kind": "gltf-observed",
+      "data": {
+        "scene": "Scene",
+        "meshes": 52,
+        "hashes": {
+          "/chunked/table.glb": {
+            "bytes": 417656,
+            "ended": true,
+            "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+          }
+        }
+      },
+      "cdp": [
+        {
+          "event": "failed",
+          "requestId": "32855.7",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true,
+          "stage": "loading"
+        }
+      ],
+      "pw": [
+        {
+          "url": "http://127.0.0.1:53265/chunked/table.glb?kind=gltf-observed",
+          "error": "net::ERR_ABORTED",
+          "stage": "loading"
+        }
+      ]
+    },
+    {
+      "framing": "length",
+      "kind": "direct",
+      "data": {
+        "status": 200,
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+      },
+      "cdp": [
+        {
+          "event": "finished",
+          "requestId": "32862.7",
+          "encodedDataLength": 417841,
+          "stage": "loading"
+        }
+      ],
+      "pw": []
+    },
+    {
+      "framing": "length",
+      "kind": "gltf-plain",
+      "data": {
+        "scene": "Scene",
+        "meshes": 52,
+        "hashes": null
+      },
+      "cdp": [
+        {
+          "event": "failed",
+          "requestId": "32868.7",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true,
+          "stage": "loading"
+        }
+      ],
+      "pw": [
+        {
+          "url": "http://127.0.0.1:53265/length/table.glb?kind=gltf-plain",
+          "error": "net::ERR_ABORTED",
+          "stage": "loading"
+        }
+      ]
+    },
+    {
+      "framing": "length",
+      "kind": "gltf-observed",
+      "data": {
+        "scene": "Scene",
+        "meshes": 52,
+        "hashes": {
+          "/length/table.glb": {
+            "bytes": 417656,
+            "ended": true,
+            "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+          }
+        }
+      },
+      "cdp": [
+        {
+          "event": "failed",
+          "requestId": "32875.7",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true,
+          "stage": "loading"
+        }
+      ],
+      "pw": [
+        {
+          "url": "http://127.0.0.1:53265/length/table.glb?kind=gltf-observed",
+          "error": "net::ERR_ABORTED",
+          "stage": "loading"
+        }
+      ]
+    }
+  ],
+  "game": [
+    {
+      "observed": false,
+      "readyMs": 9523.01725,
+      "finished": 18,
+      "failed": 0,
+      "pw": 0
+    },
+    {
+      "observed": true,
+      "readyMs": 9534.318875,
+      "finished": 18,
+      "failed": 0,
+      "pw": 0
+    }
+  ],
+  "hashMatches": 18
+}
