@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
 export default async function createViewer(
   container,
@@ -12,6 +13,7 @@ export default async function createViewer(
   const isVehicle = asset.id === "proton-saga-1985";
   let vehicleToolbar;
   let studio;
+  let environmentTarget;
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x657078);
@@ -118,6 +120,8 @@ export default async function createViewer(
     controls.dispose();
     disposeModel(model);
     disposeModel(studio);
+    scene.environment = null;
+    environmentTarget?.dispose();
     light.shadow.dispose();
     vehicleToolbar?.remove();
     renderer.dispose();
@@ -143,6 +147,19 @@ export default async function createViewer(
       throw new DOMException("Viewer closed", "AbortError");
     }
     model = gltf.scene;
+    if (isVehicle) {
+      // Local studio reflections give metallic paint and steel rims their form.
+      const room = new RoomEnvironment();
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      try {
+        environmentTarget = pmrem.fromScene(room, 0.04);
+        scene.environment = environmentTarget.texture;
+        scene.environmentIntensity = 0.6;
+      } finally {
+        room.dispose();
+        pmrem.dispose();
+      }
+    }
     if (asset.details?.display)
       model.rotation.y = asset.details.display.previewRotationY ?? 0;
     scene.add(model);
@@ -215,8 +232,10 @@ export default async function createViewer(
       light.shadow.mapSize.set(1024, 1024);
       light.shadow.camera.left = light.shadow.camera.bottom = -5;
       light.shadow.camera.right = light.shadow.camera.top = 5;
-      light.shadow.normalBias = 0.025;
-      light.shadow.bias = -0.0001;
+      light.shadow.camera.near = 0.1;
+      light.shadow.camera.far = 30;
+      light.shadow.normalBias = 0.003;
+      light.shadow.bias = -0.00002;
       const fill = new THREE.DirectionalLight(0xdde8ff, 2);
       fill.position.set(-4, 3, -3);
       studio.add(fill);
