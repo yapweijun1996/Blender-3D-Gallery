@@ -1058,3 +1058,46 @@ body.game-page .header{min-height:64px}
 @media (max-width: 500px) and (min-height: 651px) {
   .game-shell.is-playing { padding-top: 2px; }
 }
+
+/* The normal action row and header cannot fit their labels at this width. */
+@media (max-width: 260px) {
+  body.game-page .header { flex-wrap: wrap; gap: 4px; }
+  .game-shell.game-shell .game-table-caption {
+    height: auto;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px 8px;
+  }
+  .game-shell .game-table-caption button { flex: 1 1 calc(50% - 3px); min-width: 44px; }
+  .game-shell.is-playing .game-layout { grid-template-columns: minmax(0, 1fr); }
+  .game-shell.game-shell.is-playing .game-controls { padding-bottom: 108px; }
+  .game-shell.game-shell.is-playing #game-shot-controls,
+  .game-shell.game-shell.is-playing #game-shot-controls .aim-control { display: block; }
+  .game-shell.game-shell.is-playing #game-shot-controls .aim-fine {
+    position: static;
+    width: auto;
+    margin: 4px 0;
+  }
+  .game-shell.game-shell.is-playing #game-placement { display: flex; flex-direction: column; }
+  .game-shell.game-shell.is-playing #game-shot-controls > .primary,
+  .game-shell.game-shell.is-playing #game-placement .primary {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 58px;
+    width: calc(100% - 20px);
+    height: auto;
+    min-height: 44px;
+    margin: 0;
+  }
+  .game-shell.game-shell.is-playing #game-pause {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 8px;
+    width: calc(100% - 20px);
+    height: auto;
+    min-height: 44px;
+    margin: 0;
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "results": [
+    "initial shell and all 18 verified game assets cached",
+    "offline cold start, checkpoint resume, repeated preparation and non-HTML GLB failure",
+    "missing required shell resource rejects candidate and preserves active build",
+    "HTML/worker build identity mismatch rejects installation",
+    "new worker waits without replacing an active game",
+    "another playing tab blocks explicit update",
+    "explicit N to N+1 update reloads once and restores the saved turn",
+    "failed new pack keeps the previous good pack and unrelated project caches",
+    "updated version also starts and resumes offline",
+    "failed stable save refuses activation; retry locks shots, Escape and background menus, then reloads once",
+    "worker activation rejection unlocks loader and permits an explicit successful retry",
+    "request timeout cancels activation; late callbacks cannot reload; retry reloads once",
+    "activation without controllerchange times out recoverably and retries without a duplicate reload",
+    "idle tabs block new demo input during update; duplicate clicks reload once; three-build caches and last good pack retained safely",
+    "a real active shot refuses update; completed-shot retry saves and restores actual stable balls",
+    "blocked IndexedDB save times out visibly; late completion cannot activate; explicit retry preserves checkpoint"
+  ],
+  "errors": [],
+  "builds": {
+    "a": "6e0cfff01dae4ff9",
+    "d": "1e95ebdfdf8f9925"
+  }
+}

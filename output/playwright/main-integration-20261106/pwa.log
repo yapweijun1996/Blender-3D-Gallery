@@ -1,0 +1,20 @@
+
+> blender-3d-gallery@0.1.0 test:pwa
+> node scripts/test-pwa-browser.mjs
+
+PASS initial shell and all 18 verified game assets cached
+PASS offline cold start, checkpoint resume, repeated preparation and non-HTML GLB failure
+PASS missing required shell resource rejects candidate and preserves active build
+PASS HTML/worker build identity mismatch rejects installation
+PASS new worker waits without replacing an active game
+PASS another playing tab blocks explicit update
+PASS explicit N to N+1 update reloads once and restores the saved turn
+PASS failed new pack keeps the previous good pack and unrelated project caches
+PASS updated version also starts and resumes offline
+PASS failed stable save refuses activation; retry locks shots, Escape and background menus, then reloads once
+PASS worker activation rejection unlocks loader and permits an explicit successful retry
+PASS request timeout cancels activation; late callbacks cannot reload; retry reloads once
+PASS activation without controllerchange times out recoverably and retries without a duplicate reload
+PASS idle tabs block new demo input during update; duplicate clicks reload once; three-build caches and last good pack retained safely
+PASS a real active shot refuses update; completed-shot retry saves and restores actual stable balls
+PASS blocked IndexedDB save times out visibly; late completion cannot activate; explicit retry preserves checkpoint

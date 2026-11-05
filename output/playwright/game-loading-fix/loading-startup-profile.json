@@ -1,0 +1,1162 @@
+{
+  "methodology": {
+    "mode": "profile",
+    "order": [
+      "baseline",
+      "candidate"
+    ],
+    "execution": "One system Chrome process and one loopback server, switched between frozen builds only after each fresh context closes.",
+    "cold": "Fresh context per sample; service workers blocked; browser cache disabled; CDP emulates 100ms latency, 4Mbps down and 1Mbps up. CPU is not throttled.",
+    "ready": "Wall time from navigation start to the game's ready signal. Each sample verifies 18 Resource Timing entries with nonzero transfer and manifest-matching byte lengths.",
+    "profile": "Diagnostic only: instrument the final 18/18 progress update, first following WebGL draw and first requestAnimationFrame observing ready. Do not combine these timings with formal paired samples.",
+    "bandwidthFloor": "3,697,784 GLB bytes at 4,000,000 bit/s require about 7.4 seconds of ideal serial transfer, before protocol and processing overhead.",
+    "limitations": [
+      "Loopback CDP throttling is a controlled simulation, not a physical phone or real network.",
+      "Resource Timing byte counts and a ready signal do not prove byte-identical responses; separate passive-stream hash diagnostics cover that claim.",
+      "Five samples per side are descriptive, not a statistical guarantee; other host work can affect results.",
+      "The frozen baseline precedes the final UX CSS commit; any difference is not automatically attributable only to the loader.",
+      "Host CPU counters include the browser and all other processes; they do not isolate unrelated work."
+    ]
+  },
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "osRelease": "27.0.0",
+    "cpu": "Apple M4",
+    "launchOptions": {
+      "channel": "chrome",
+      "headless": true,
+      "ignoreDefaultArgs": [
+        "--enable-unsafe-swiftshader"
+      ]
+    },
+    "buildInfo": {
+      "baseline": {
+        "path": "/tmp/game-loading-diagnostics/baseline-dist",
+        "identity": {
+          "build": "87423ed187d3babe"
+        },
+        "sha256": "cf5a59a38cba913d6a9fd5405db95c1511d90424fc00e65c8583cbcef2d34b90"
+      },
+      "candidate": {
+        "path": "/tmp/game-loading-diagnostics/candidate-dist",
+        "identity": {
+          "build": "df37c64681102b95"
+        },
+        "sha256": "d8570b70bdf6596e0079bda5c40e247abfe1df085586913e73a6065bc4773a19"
+      }
+    },
+    "measuredAt": "2026-11-05T13:36:15.190Z",
+    "browser": "156.0.8078.80",
+    "serverOrigin": "http://127.0.0.1:56333/Blender-3D-Gallery/"
+  },
+  "packIdentity": {
+    "baseline": {
+      "pool-table": {
+        "url": "assets/table-XWseCS4E.glb",
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+      },
+      "cue-stick-01": {
+        "url": "assets/cue_01-BCqBke_n.glb",
+        "bytes": 14632,
+        "sha256": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8"
+      },
+      "cue-ball": {
+        "url": "assets/ball_00-BoyXP3PW.glb",
+        "bytes": 93692,
+        "sha256": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732"
+      },
+      "ball-01": {
+        "url": "assets/ball_01-CYdwOVaM.glb",
+        "bytes": 120536,
+        "sha256": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a"
+      },
+      "ball-02": {
+        "url": "assets/ball_02-DB1WWWFC.glb",
+        "bytes": 215296,
+        "sha256": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a"
+      },
+      "ball-03": {
+        "url": "assets/ball_03-CUIVES0h.glb",
+        "bytes": 268828,
+        "sha256": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352"
+      },
+      "ball-04": {
+        "url": "assets/ball_04-BBCbhjJU.glb",
+        "bytes": 157064,
+        "sha256": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85"
+      },
+      "ball-05": {
+        "url": "assets/ball_05-g8Q6Ow2l.glb",
+        "bytes": 203708,
+        "sha256": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018"
+      },
+      "ball-06": {
+        "url": "assets/ball_06-Dx-lGkJH.glb",
+        "bytes": 244380,
+        "sha256": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50"
+      },
+      "ball-07": {
+        "url": "assets/ball_07-DTLIzTg4.glb",
+        "bytes": 127912,
+        "sha256": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd"
+      },
+      "ball-08": {
+        "url": "assets/ball_08-BGG5JkMB.glb",
+        "bytes": 324100,
+        "sha256": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9"
+      },
+      "ball-09": {
+        "url": "assets/ball_09-Bu8fLWw3.glb",
+        "bytes": 262604,
+        "sha256": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af"
+      },
+      "ball-10": {
+        "url": "assets/ball_10-Csex90PS.glb",
+        "bytes": 227632,
+        "sha256": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab"
+      },
+      "ball-11": {
+        "url": "assets/ball_11-DqkUg1Oy.glb",
+        "bytes": 132568,
+        "sha256": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec"
+      },
+      "ball-12": {
+        "url": "assets/ball_12-BBSM0uzd.glb",
+        "bytes": 223308,
+        "sha256": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149"
+      },
+      "ball-13": {
+        "url": "assets/ball_13-CbMLTUSR.glb",
+        "bytes": 279952,
+        "sha256": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4"
+      },
+      "ball-14": {
+        "url": "assets/ball_14-5cOYbVRY.glb",
+        "bytes": 170364,
+        "sha256": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf"
+      },
+      "ball-15": {
+        "url": "assets/ball_15-BhFgOajB.glb",
+        "bytes": 213552,
+        "sha256": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296"
+      }
+    },
+    "candidate": {
+      "pool-table": {
+        "url": "assets/table-XWseCS4E.glb",
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+      },
+      "cue-stick-01": {
+        "url": "assets/cue_01-BCqBke_n.glb",
+        "bytes": 14632,
+        "sha256": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8"
+      },
+      "cue-ball": {
+        "url": "assets/ball_00-BoyXP3PW.glb",
+        "bytes": 93692,
+        "sha256": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732"
+      },
+      "ball-01": {
+        "url": "assets/ball_01-CYdwOVaM.glb",
+        "bytes": 120536,
+        "sha256": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a"
+      },
+      "ball-02": {
+        "url": "assets/ball_02-DB1WWWFC.glb",
+        "bytes": 215296,
+        "sha256": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a"
+      },
+      "ball-03": {
+        "url": "assets/ball_03-CUIVES0h.glb",
+        "bytes": 268828,
+        "sha256": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352"
+      },
+      "ball-04": {
+        "url": "assets/ball_04-BBCbhjJU.glb",
+        "bytes": 157064,
+        "sha256": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85"
+      },
+      "ball-05": {
+        "url": "assets/ball_05-g8Q6Ow2l.glb",
+        "bytes": 203708,
+        "sha256": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018"
+      },
+      "ball-06": {
+        "url": "assets/ball_06-Dx-lGkJH.glb",
+        "bytes": 244380,
+        "sha256": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50"
+      },
+      "ball-07": {
+        "url": "assets/ball_07-DTLIzTg4.glb",
+        "bytes": 127912,
+        "sha256": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd"
+      },
+      "ball-08": {
+        "url": "assets/ball_08-BGG5JkMB.glb",
+        "bytes": 324100,
+        "sha256": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9"
+      },
+      "ball-09": {
+        "url": "assets/ball_09-Bu8fLWw3.glb",
+        "bytes": 262604,
+        "sha256": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af"
+      },
+      "ball-10": {
+        "url": "assets/ball_10-Csex90PS.glb",
+        "bytes": 227632,
+        "sha256": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab"
+      },
+      "ball-11": {
+        "url": "assets/ball_11-DqkUg1Oy.glb",
+        "bytes": 132568,
+        "sha256": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec"
+      },
+      "ball-12": {
+        "url": "assets/ball_12-BBSM0uzd.glb",
+        "bytes": 223308,
+        "sha256": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149"
+      },
+      "ball-13": {
+        "url": "assets/ball_13-CbMLTUSR.glb",
+        "bytes": 279952,
+        "sha256": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4"
+      },
+      "ball-14": {
+        "url": "assets/ball_14-5cOYbVRY.glb",
+        "bytes": 170364,
+        "sha256": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf"
+      },
+      "ball-15": {
+        "url": "assets/ball_15-BhFgOajB.glb",
+        "bytes": 213552,
+        "sha256": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296"
+      }
+    }
+  },
+  "samples": [
+    {
+      "name": "baseline",
+      "index": 1,
+      "readyMs": 9599.9195,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 2047.4000000059605,
+      "lastGlbResponseEndMs": 9571.10000000894,
+      "profile": {
+        "allParsedMs": 9572.300000011921,
+        "firstCompleteDrawMs": 9574.60000000894,
+        "readyObservedMs": 9590.60000000894
+      },
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 2047.4000000059605,
+          "responseEndMs": 5290.4000000059605,
+          "durationMs": 3243,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 2047.6000000089407,
+          "responseEndMs": 2254.1000000089407,
+          "durationMs": 206.5,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 2047.6000000089407,
+          "responseEndMs": 2866.2000000029802,
+          "durationMs": 818.5999999940395,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 2047.800000011921,
+          "responseEndMs": 3049.1000000089407,
+          "durationMs": 1001.2999999970198,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2258.300000011921,
+          "responseEndMs": 4018.300000011921,
+          "durationMs": 1760,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2867.7000000029802,
+          "responseEndMs": 5026.100000008941,
+          "durationMs": 2158.4000000059605,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 3050.800000011921,
+          "responseEndMs": 4378.300000011921,
+          "durationMs": 1327.5,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 4019.800000011921,
+          "responseEndMs": 5647.20000000298,
+          "durationMs": 1627.3999999910593,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4379.70000000298,
+          "responseEndMs": 6316.20000000298,
+          "durationMs": 1936.5,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 5027.5,
+          "responseEndMs": 6087.800000011921,
+          "durationMs": 1060.300000011921,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5294.5,
+          "responseEndMs": 7840.100000008941,
+          "durationMs": 2545.6000000089407,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5648.5,
+          "responseEndMs": 7758.800000011921,
+          "durationMs": 2110.300000011921,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6089,
+          "responseEndMs": 7891.20000000298,
+          "durationMs": 1802.2000000029802,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6317.300000011921,
+          "responseEndMs": 7483.100000008941,
+          "durationMs": 1165.7999999970198,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7484.100000008941,
+          "responseEndMs": 9247.20000000298,
+          "durationMs": 1763.0999999940395,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7759.70000000298,
+          "responseEndMs": 9571.10000000894,
+          "durationMs": 1811.4000000059605,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7841.100000008941,
+          "responseEndMs": 9280.10000000894,
+          "durationMs": 1439,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7892.100000008941,
+          "responseEndMs": 9490,
+          "durationMs": 1597.8999999910593,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "allResources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/index-DYuHAgIY.js",
+          "initiatorType": "script",
+          "startMs": 113.20000000298023,
+          "responseEndMs": 421.20000000298023,
+          "transferBytes": 83851,
+          "encodedBytes": 83551
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/index-OfeuQ2ab.css",
+          "initiatorType": "link",
+          "startMs": 113.30000001192093,
+          "responseEndMs": 285.70000000298023,
+          "transferBytes": 17283,
+          "encodedBytes": 16983
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/page-DcXPrFH8.js",
+          "initiatorType": "script",
+          "startMs": 444.5,
+          "responseEndMs": 763,
+          "transferBytes": 42905,
+          "encodedBytes": 42605
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/page-BNPOse_d.css",
+          "initiatorType": "link",
+          "startMs": 444.6000000089407,
+          "responseEndMs": 676.1000000089407,
+          "transferBytes": 22413,
+          "encodedBytes": 22113
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/OrbitControls-B4eLhWBK.js",
+          "initiatorType": "script",
+          "startMs": 444.6000000089407,
+          "responseEndMs": 1969.2000000029802,
+          "transferBytes": 639363,
+          "encodedBytes": 639063
+        },
+        {
+          "path": "/Blender-3D-Gallery/icons/icon.svg",
+          "initiatorType": "other",
+          "startMs": 680.1000000089407,
+          "responseEndMs": 784.3000000119209,
+          "transferBytes": 715,
+          "encodedBytes": 415
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "initiatorType": "fetch",
+          "startMs": 2047.4000000059605,
+          "responseEndMs": 5290.4000000059605,
+          "transferBytes": 417956,
+          "encodedBytes": 417656
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "initiatorType": "fetch",
+          "startMs": 2047.6000000089407,
+          "responseEndMs": 2254.1000000089407,
+          "transferBytes": 14932,
+          "encodedBytes": 14632
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "initiatorType": "fetch",
+          "startMs": 2047.6000000089407,
+          "responseEndMs": 2866.2000000029802,
+          "transferBytes": 93992,
+          "encodedBytes": 93692
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "initiatorType": "fetch",
+          "startMs": 2047.800000011921,
+          "responseEndMs": 3049.1000000089407,
+          "transferBytes": 120836,
+          "encodedBytes": 120536
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "initiatorType": "fetch",
+          "startMs": 2258.300000011921,
+          "responseEndMs": 4018.300000011921,
+          "transferBytes": 215596,
+          "encodedBytes": 215296
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "initiatorType": "fetch",
+          "startMs": 2867.7000000029802,
+          "responseEndMs": 5026.100000008941,
+          "transferBytes": 269128,
+          "encodedBytes": 268828
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "initiatorType": "fetch",
+          "startMs": 3050.800000011921,
+          "responseEndMs": 4378.300000011921,
+          "transferBytes": 157364,
+          "encodedBytes": 157064
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "initiatorType": "fetch",
+          "startMs": 4019.800000011921,
+          "responseEndMs": 5647.20000000298,
+          "transferBytes": 204008,
+          "encodedBytes": 203708
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "initiatorType": "fetch",
+          "startMs": 4379.70000000298,
+          "responseEndMs": 6316.20000000298,
+          "transferBytes": 244680,
+          "encodedBytes": 244380
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "initiatorType": "fetch",
+          "startMs": 5027.5,
+          "responseEndMs": 6087.800000011921,
+          "transferBytes": 128212,
+          "encodedBytes": 127912
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "initiatorType": "fetch",
+          "startMs": 5294.5,
+          "responseEndMs": 7840.100000008941,
+          "transferBytes": 324400,
+          "encodedBytes": 324100
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "initiatorType": "fetch",
+          "startMs": 5648.5,
+          "responseEndMs": 7758.800000011921,
+          "transferBytes": 262904,
+          "encodedBytes": 262604
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "initiatorType": "fetch",
+          "startMs": 6089,
+          "responseEndMs": 7891.20000000298,
+          "transferBytes": 227932,
+          "encodedBytes": 227632
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "initiatorType": "fetch",
+          "startMs": 6317.300000011921,
+          "responseEndMs": 7483.100000008941,
+          "transferBytes": 132868,
+          "encodedBytes": 132568
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "initiatorType": "fetch",
+          "startMs": 7484.100000008941,
+          "responseEndMs": 9247.20000000298,
+          "transferBytes": 223608,
+          "encodedBytes": 223308
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "initiatorType": "fetch",
+          "startMs": 7759.70000000298,
+          "responseEndMs": 9571.10000000894,
+          "transferBytes": 280252,
+          "encodedBytes": 279952
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "initiatorType": "fetch",
+          "startMs": 7841.100000008941,
+          "responseEndMs": 9280.10000000894,
+          "transferBytes": 170664,
+          "encodedBytes": 170364
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "initiatorType": "fetch",
+          "startMs": 7892.100000008941,
+          "responseEndMs": 9490,
+          "transferBytes": 213852,
+          "encodedBytes": 213552
+        }
+      ],
+      "errors": [
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "hostLoadBefore": [
+        19.064453125,
+        15.07470703125,
+        16.8369140625
+      ],
+      "hostLoadAfter": [
+        17.3310546875,
+        14.83984375,
+        16.73291015625
+      ],
+      "hostCpuBusyPercent": 77.44337248322147
+    },
+    {
+      "name": "candidate",
+      "index": 2,
+      "readyMs": 9537.85625,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 1982.7000000029802,
+      "lastGlbResponseEndMs": 9511,
+      "profile": {
+        "allParsedMs": 9512.20000000298,
+        "firstCompleteDrawMs": 9515.20000000298,
+        "readyObservedMs": 9532.5
+      },
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 1982.7000000029802,
+          "responseEndMs": 5226.9000000059605,
+          "durationMs": 3244.2000000029802,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 1982.7999999970198,
+          "responseEndMs": 2196.4000000059605,
+          "durationMs": 213.6000000089407,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 1982.9000000059605,
+          "responseEndMs": 2799.6000000089407,
+          "durationMs": 816.7000000029802,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 1982.9000000059605,
+          "responseEndMs": 2991.7999999970198,
+          "durationMs": 1008.8999999910593,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2200.2999999970198,
+          "responseEndMs": 3960.7000000029802,
+          "durationMs": 1760.4000000059605,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2800.7000000029802,
+          "responseEndMs": 4956.5,
+          "durationMs": 2155.7999999970198,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 2993.2000000029802,
+          "responseEndMs": 4320.79999999702,
+          "durationMs": 1327.5999999940395,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 3962.6000000089407,
+          "responseEndMs": 5595.5,
+          "durationMs": 1632.8999999910593,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4322.4000000059605,
+          "responseEndMs": 6255.79999999702,
+          "durationMs": 1933.3999999910593,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 4957.9000000059605,
+          "responseEndMs": 6021.4000000059605,
+          "durationMs": 1063.5,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5230.100000008941,
+          "responseEndMs": 7776.70000000298,
+          "durationMs": 2546.5999999940395,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5596.70000000298,
+          "responseEndMs": 7704.79999999702,
+          "durationMs": 2108.0999999940395,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6022.4000000059605,
+          "responseEndMs": 7824.70000000298,
+          "durationMs": 1802.2999999970198,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6257.20000000298,
+          "responseEndMs": 7425.79999999702,
+          "durationMs": 1168.5999999940395,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7427,
+          "responseEndMs": 9186.40000000596,
+          "durationMs": 1759.4000000059605,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7706.4000000059605,
+          "responseEndMs": 9511,
+          "durationMs": 1804.5999999940395,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7778.29999999702,
+          "responseEndMs": 9219.70000000298,
+          "durationMs": 1441.4000000059605,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7826.100000008941,
+          "responseEndMs": 9426.70000000298,
+          "durationMs": 1600.5999999940395,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "allResources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/index-OfeuQ2ab.css",
+          "initiatorType": "link",
+          "startMs": 111.40000000596046,
+          "responseEndMs": 282.6000000089407,
+          "transferBytes": 17283,
+          "encodedBytes": 16983
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/index-CIQPiWRj.js",
+          "initiatorType": "script",
+          "startMs": 111.40000000596046,
+          "responseEndMs": 417.70000000298023,
+          "transferBytes": 83851,
+          "encodedBytes": 83551
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/page-BYx8d1bg.js",
+          "initiatorType": "script",
+          "startMs": 435.20000000298023,
+          "responseEndMs": 753.7000000029802,
+          "transferBytes": 43328,
+          "encodedBytes": 43028
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/page-CKEo9wFW.css",
+          "initiatorType": "link",
+          "startMs": 435.29999999701977,
+          "responseEndMs": 675.2999999970198,
+          "transferBytes": 23508,
+          "encodedBytes": 23208
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/OrbitControls-D9iAK-Sw.js",
+          "initiatorType": "script",
+          "startMs": 435.29999999701977,
+          "responseEndMs": 1953.7999999970198,
+          "transferBytes": 639386,
+          "encodedBytes": 639086
+        },
+        {
+          "path": "/Blender-3D-Gallery/icons/icon.svg",
+          "initiatorType": "other",
+          "startMs": 677.1000000089407,
+          "responseEndMs": 780.7999999970198,
+          "transferBytes": 715,
+          "encodedBytes": 415
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "initiatorType": "fetch",
+          "startMs": 1982.7000000029802,
+          "responseEndMs": 5226.9000000059605,
+          "transferBytes": 417956,
+          "encodedBytes": 417656
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "initiatorType": "fetch",
+          "startMs": 1982.7999999970198,
+          "responseEndMs": 2196.4000000059605,
+          "transferBytes": 14932,
+          "encodedBytes": 14632
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "initiatorType": "fetch",
+          "startMs": 1982.9000000059605,
+          "responseEndMs": 2799.6000000089407,
+          "transferBytes": 93992,
+          "encodedBytes": 93692
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "initiatorType": "fetch",
+          "startMs": 1982.9000000059605,
+          "responseEndMs": 2991.7999999970198,
+          "transferBytes": 120836,
+          "encodedBytes": 120536
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "initiatorType": "fetch",
+          "startMs": 2200.2999999970198,
+          "responseEndMs": 3960.7000000029802,
+          "transferBytes": 215596,
+          "encodedBytes": 215296
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "initiatorType": "fetch",
+          "startMs": 2800.7000000029802,
+          "responseEndMs": 4956.5,
+          "transferBytes": 269128,
+          "encodedBytes": 268828
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "initiatorType": "fetch",
+          "startMs": 2993.2000000029802,
+          "responseEndMs": 4320.79999999702,
+          "transferBytes": 157364,
+          "encodedBytes": 157064
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "initiatorType": "fetch",
+          "startMs": 3962.6000000089407,
+          "responseEndMs": 5595.5,
+          "transferBytes": 204008,
+          "encodedBytes": 203708
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "initiatorType": "fetch",
+          "startMs": 4322.4000000059605,
+          "responseEndMs": 6255.79999999702,
+          "transferBytes": 244680,
+          "encodedBytes": 244380
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "initiatorType": "fetch",
+          "startMs": 4957.9000000059605,
+          "responseEndMs": 6021.4000000059605,
+          "transferBytes": 128212,
+          "encodedBytes": 127912
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "initiatorType": "fetch",
+          "startMs": 5230.100000008941,
+          "responseEndMs": 7776.70000000298,
+          "transferBytes": 324400,
+          "encodedBytes": 324100
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "initiatorType": "fetch",
+          "startMs": 5596.70000000298,
+          "responseEndMs": 7704.79999999702,
+          "transferBytes": 262904,
+          "encodedBytes": 262604
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "initiatorType": "fetch",
+          "startMs": 6022.4000000059605,
+          "responseEndMs": 7824.70000000298,
+          "transferBytes": 227932,
+          "encodedBytes": 227632
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "initiatorType": "fetch",
+          "startMs": 6257.20000000298,
+          "responseEndMs": 7425.79999999702,
+          "transferBytes": 132868,
+          "encodedBytes": 132568
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "initiatorType": "fetch",
+          "startMs": 7427,
+          "responseEndMs": 9186.40000000596,
+          "transferBytes": 223608,
+          "encodedBytes": 223308
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "initiatorType": "fetch",
+          "startMs": 7706.4000000059605,
+          "responseEndMs": 9511,
+          "transferBytes": 280252,
+          "encodedBytes": 279952
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "initiatorType": "fetch",
+          "startMs": 7778.29999999702,
+          "responseEndMs": 9219.70000000298,
+          "transferBytes": 170664,
+          "encodedBytes": 170364
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "initiatorType": "fetch",
+          "startMs": 7826.100000008941,
+          "responseEndMs": 9426.70000000298,
+          "transferBytes": 213852,
+          "encodedBytes": 213552
+        }
+      ],
+      "errors": [],
+      "hostLoadBefore": [
+        17.3310546875,
+        14.83984375,
+        16.73291015625
+      ],
+      "hostLoadAfter": [
+        15.68115234375,
+        14.5654296875,
+        16.61328125
+      ],
+      "hostCpuBusyPercent": 57.58477729350484
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "renderers": [
+      "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    ],
+    "canvasPixels": [
+      "1020x586"
+    ],
+    "byBuild": {
+      "baseline": {
+        "count": 1,
+        "medianMs": 9599.9195,
+        "minMs": 9599.9195,
+        "maxMs": 9599.9195,
+        "valuesMs": [
+          9599.9195
+        ]
+      },
+      "candidate": {
+        "count": 1,
+        "medianMs": 9537.85625,
+        "minMs": 9537.85625,
+        "maxMs": 9537.85625,
+        "valuesMs": [
+          9537.85625
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+
+> blender-3d-gallery@0.1.0 test:standard
+> node scripts/test-pwa-standard.mjs
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+41 !== 40
+
+    at file:///Users/yapweijun/Documents/GitHub/Blender-3D-Gallery-loading-final/scripts/test-pwa-standard.mjs:241:18
+    at async run (file:///Users/yapweijun/Documents/GitHub/Blender-3D-Gallery-loading-final/scripts/test-pwa-standard.mjs:35:5)
+    at async file:///Users/yapweijun/Documents/GitHub/Blender-3D-Gallery-loading-final/scripts/test-pwa-standard.mjs:207:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 41,
+  expected: 40,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

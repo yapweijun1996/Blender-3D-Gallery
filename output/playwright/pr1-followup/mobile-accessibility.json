@@ -1,0 +1,611 @@
+{
+  "date": "2026-11-05",
+  "node": "v24.21.0",
+  "browser": "156.0.8078.4",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "webgl": "SwiftShader (Playwright launch flags)",
+  "buildInfo": {
+    "build": "7c832c4d674222d3"
+  },
+  "indexSha256": "cdfd0e61b1f9ea041a4e2e4c32b678d0548deb18185c7bfb42cfedb8c4dc8737",
+  "artifacts": "/tmp/game-pr1-followup/mobile-a11y/run-pp3L8k",
+  "results": [
+    {
+      "name": "200-percent-equivalent reflow 320x450",
+      "passed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "requestedViewport": {
+        "width": 320,
+        "height": 450
+      },
+      "layout": {
+        "width": 320,
+        "height": 450,
+        "scrollWidth": 320,
+        "visualViewport": {
+          "width": 320,
+          "height": 450,
+          "scale": 1
+        },
+        "elements": {
+          ".header": {
+            "left": 16,
+            "right": 304,
+            "top": 0,
+            "bottom": 45,
+            "width": 288,
+            "height": 45,
+            "textTop": 0,
+            "textBottom": 44
+          },
+          "#game-title": {
+            "left": 16,
+            "right": 120.203125,
+            "top": 102.5,
+            "bottom": 127.5,
+            "width": 104.203125,
+            "height": 25,
+            "textTop": 100.5,
+            "textBottom": 128.5
+          },
+          ".players": {
+            "left": 16,
+            "right": 304,
+            "top": 145,
+            "bottom": 181,
+            "width": 288,
+            "height": 36,
+            "textTop": 145,
+            "textBottom": 181
+          },
+          "#game-viewport": {
+            "left": 17,
+            "right": 303,
+            "top": 190,
+            "bottom": 380,
+            "width": 286,
+            "height": 190,
+            "textTop": 190,
+            "textBottom": 380
+          },
+          ".control-note": {
+            "left": 27,
+            "right": 292.984375,
+            "top": 593.375,
+            "bottom": 609.5625,
+            "width": 265.984375,
+            "height": 16.1875,
+            "textTop": 593.375,
+            "textBottom": 608.375
+          },
+          "[data-action=\"shoot\"]": {
+            "left": 27,
+            "right": 155,
+            "top": 617.5625,
+            "bottom": 661.5625,
+            "width": 128,
+            "height": 44,
+            "textTop": 631.5625,
+            "textBottom": 647.5625
+          },
+          "[data-action=\"pause\"]": {
+            "left": 165,
+            "right": 293,
+            "top": 617.5625,
+            "bottom": 661.5625,
+            "width": 128,
+            "height": 44,
+            "textTop": 631.5625,
+            "textBottom": 647.5625
+          }
+        }
+      },
+      "screenshot": "/tmp/game-pr1-followup/mobile-a11y/run-pp3L8k/reflow-320x450.png"
+    },
+    {
+      "name": "200-percent-equivalent reflow 195x422",
+      "passed": false,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "requestedViewport": {
+        "width": 195,
+        "height": 422
+      },
+      "layout": {
+        "width": 199,
+        "height": 431,
+        "scrollWidth": 199,
+        "visualViewport": {
+          "width": 195,
+          "height": 422,
+          "scale": 1
+        },
+        "elements": {
+          ".header": {
+            "left": 16,
+            "right": 179,
+            "top": 0,
+            "bottom": 46,
+            "width": 163,
+            "height": 46,
+            "textTop": 0,
+            "textBottom": 45
+          },
+          "#game-title": {
+            "left": 16,
+            "right": 89.703125,
+            "top": 91,
+            "bottom": 141,
+            "width": 73.703125,
+            "height": 50,
+            "textTop": 89,
+            "textBottom": 142
+          },
+          ".players": {
+            "left": 16,
+            "right": 179,
+            "top": 146,
+            "bottom": 188,
+            "width": 163,
+            "height": 42,
+            "textTop": 146,
+            "textBottom": 188
+          },
+          "#game-viewport": {
+            "left": 17,
+            "right": 178,
+            "top": 197,
+            "bottom": 387,
+            "width": 161,
+            "height": 190,
+            "textTop": 197,
+            "textBottom": 387
+          },
+          ".control-note": {
+            "left": 27,
+            "right": 167.984375,
+            "top": 636.5625,
+            "bottom": 668.9375,
+            "width": 140.984375,
+            "height": 32.375,
+            "textTop": 636.5625,
+            "textBottom": 667.75
+          },
+          "[data-action=\"shoot\"]": {
+            "left": 27,
+            "right": 92.5,
+            "top": 676.9375,
+            "bottom": 720.9375,
+            "width": 65.5,
+            "height": 44,
+            "textTop": 690.9375,
+            "textBottom": 706.9375
+          },
+          "[data-action=\"pause\"]": {
+            "left": 102.5,
+            "right": 168,
+            "top": 676.9375,
+            "bottom": 720.9375,
+            "width": 65.5,
+            "height": 44,
+            "textTop": 687.9375,
+            "textBottom": 735.9375
+          }
+        }
+      },
+      "screenshot": "/tmp/game-pr1-followup/mobile-a11y/run-pp3L8k/reflow-195x422.png",
+      "error": "button label extends outside [data-action=\"pause\"]: {\"left\":102.5,\"right\":168,\"top\":676.9375,\"bottom\":720.9375,\"width\":65.5,\"height\":44,\"textTop\":687.9375,\"textBottom\":735.9375}",
+      "failureScreenshot": "/tmp/game-pr1-followup/mobile-a11y/run-pp3L8k/200-percent-equivalent-reflow-195x422-failure.png"
+    },
+    {
+      "name": "touch journey 360x800",
+      "passed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "layout": {
+        "width": 360,
+        "height": 800,
+        "scrollWidth": 360,
+        "controls": {
+          "rules": {
+            "left": 240.375,
+            "top": 97,
+            "right": 344,
+            "bottom": 141,
+            "width": 103.625,
+            "height": 44
+          },
+          "inspect": {
+            "left": 172.09375,
+            "top": 514.5,
+            "right": 252.859375,
+            "bottom": 558.5,
+            "width": 80.765625,
+            "height": 44
+          },
+          "options": {
+            "left": 258.859375,
+            "top": 514.5,
+            "right": 335,
+            "bottom": 558.5,
+            "width": 76.140625,
+            "height": 44
+          },
+          "shoot": {
+            "left": 27,
+            "top": 751.5625,
+            "right": 175,
+            "bottom": 795.5625,
+            "width": 148,
+            "height": 44
+          },
+          "pause": {
+            "left": 185,
+            "top": 751.5625,
+            "right": 333,
+            "bottom": 795.5625,
+            "width": 148,
+            "height": 44
+          }
+        }
+      },
+      "aimingScreenshot": "/tmp/game-pr1-followup/mobile-a11y/run-pp3L8k/touch-360x800-aiming.png",
+      "pausedScreenshot": "/tmp/game-pr1-followup/mobile-a11y/run-pp3L8k/touch-360x800-paused.png",
+      "outcome": {
+        "touchAimChanged": true,
+        "paused": true,
+        "resumed": true,
+        "restartPhase": "placing",
+        "exited": true
+      }
+    },
+    {
+      "name": "touch journey 390x844",
+      "passed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "layout": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "controls": {
+          "rules": {
+            "left": 270.375,
+            "top": 97,
+            "right": 374,
+            "bottom": 141,
+            "width": 103.625,
+            "height": 44
+          },
+          "inspect": {
+            "left": 202.09375,
+            "top": 558.5,
+            "right": 282.859375,
+            "bottom": 602.5,
+            "width": 80.765625,
+            "height": 44
+          },
+          "options": {
+            "left": 288.859375,
+            "top": 558.5,
+            "right": 365,
+            "bottom": 602.5,
+            "width": 76.140625,
+            "height": 44
+          },
+          "shoot": {
+            "left": 27,
+            "top": 795.5625,
+            "right": 190,
+            "bottom": 839.5625,
+            "width": 163,
+            "height": 44
+          },
+          "pause": {
+            "left": 200,
+            "top": 795.5625,
+            "right": 363,
+            "bottom": 839.5625,
+            "width": 163,
+            "height": 44
+          }
+        }
+      },
+      "aimingScreenshot": "/tmp/game-pr1-followup/mobile-a11y/run-pp3L8k/touch-390x844-aiming.png",
+      "pausedScreenshot": "/tmp/game-pr1-followup/mobile-a11y/run-pp3L8k/touch-390x844-paused.png",
+      "outcome": {
+        "touchAimChanged": true,
+        "paused": true,
+        "resumed": true,
+        "restartPhase": "placing",
+        "exited": true
+      }
+    },
+    {
+      "name": "touch journey 768x1024",
+      "passed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "layout": {
+        "width": 768,
+        "height": 1024,
+        "scrollWidth": 768,
+        "controls": {
+          "rules": {
+            "left": 589.25,
+            "top": 124,
+            "right": 720,
+            "bottom": 168,
+            "width": 130.75,
+            "height": 44
+          },
+          "inspect": {
+            "left": 263.546875,
+            "top": 911,
+            "right": 353.75,
+            "bottom": 955,
+            "width": 90.203125,
+            "height": 44
+          },
+          "options": {
+            "left": 361.75,
+            "top": 911,
+            "right": 447,
+            "bottom": 955,
+            "width": 85.25,
+            "height": 44
+          },
+          "shoot": {
+            "left": 497,
+            "top": 630.78125,
+            "right": 703,
+            "bottom": 674.78125,
+            "width": 206,
+            "height": 44
+          },
+          "pause": {
+            "left": 497,
+            "top": 723.96875,
+            "right": 703,
+            "bottom": 767.96875,
+            "width": 206,
+            "height": 44
+          }
+        }
+      },
+      "aimingScreenshot": "/tmp/game-pr1-followup/mobile-a11y/run-pp3L8k/touch-768x1024-aiming.png",
+      "pausedScreenshot": "/tmp/game-pr1-followup/mobile-a11y/run-pp3L8k/touch-768x1024-paused.png",
+      "outcome": {
+        "touchAimChanged": true,
+        "paused": true,
+        "resumed": true,
+        "restartPhase": "placing",
+        "exited": true
+      }
+    },
+    {
+      "name": "keyboard modal focus and restoration",
+      "passed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "focus": [
+        {
+          "dialog": "game-rules",
+          "sequence": [
+            {
+              "tag": "BODY",
+              "id": "",
+              "action": null,
+              "dialog": null
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "close-rules",
+              "dialog": "game-rules"
+            },
+            {
+              "tag": "BODY",
+              "id": "",
+              "action": null,
+              "dialog": null
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "close-rules",
+              "dialog": "game-rules"
+            }
+          ]
+        },
+        {
+          "dialog": "game-options",
+          "sequence": [
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "offline",
+              "dialog": "game-options"
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "install",
+              "dialog": "game-options"
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "fullscreen",
+              "dialog": "game-options"
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "close-options",
+              "dialog": "game-options"
+            },
+            {
+              "tag": "BODY",
+              "id": "",
+              "action": null,
+              "dialog": null
+            },
+            {
+              "tag": "SELECT",
+              "id": "graphics-quality",
+              "action": null,
+              "dialog": "game-options"
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "offline",
+              "dialog": "game-options"
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "install",
+              "dialog": "game-options"
+            }
+          ]
+        },
+        {
+          "dialog": "game-menu",
+          "sequence": [
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "restart",
+              "dialog": "game-menu"
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "leave",
+              "dialog": "game-menu"
+            },
+            {
+              "tag": "BODY",
+              "id": "",
+              "action": null,
+              "dialog": null
+            },
+            {
+              "tag": "DIALOG",
+              "id": "game-menu",
+              "action": null,
+              "dialog": "game-menu"
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "continue",
+              "dialog": "game-menu"
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "restart",
+              "dialog": "game-menu"
+            }
+          ]
+        },
+        {
+          "dialog": "game-confirm",
+          "sequence": [
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "confirm-new",
+              "dialog": "game-confirm"
+            },
+            {
+              "tag": "BODY",
+              "id": "",
+              "action": null,
+              "dialog": null
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "cancel-new",
+              "dialog": "game-confirm"
+            },
+            {
+              "tag": "BUTTON",
+              "id": "",
+              "action": "confirm-new",
+              "dialog": "game-confirm"
+            }
+          ]
+        }
+      ],
+      "outcome": "Rules, Options and nested Pause/Restart focus paths exercised"
+    },
+    {
+      "name": "accessibility tree names, status and actual progress",
+      "passed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "accessibility": {
+        "focusable": [
+          {
+            "role": "button",
+            "name": "Menu ☰"
+          },
+          {
+            "role": "button",
+            "name": "Inspect table"
+          },
+          {
+            "role": "button",
+            "name": "App options"
+          },
+          {
+            "role": "button",
+            "name": "Rules & controls"
+          },
+          {
+            "role": "button",
+            "name": "Pause / menu"
+          },
+          {
+            "role": "slider",
+            "name": "Aim"
+          },
+          {
+            "role": "button",
+            "name": "Aim left one degree"
+          },
+          {
+            "role": "button",
+            "name": "Aim right one degree"
+          },
+          {
+            "role": "slider",
+            "name": "Power"
+          },
+          {
+            "role": "button",
+            "name": "Shoot"
+          }
+        ],
+        "progress": [
+          "solids cleared; 8 ball next.",
+          "stripes remaining: balls 9, 10, 11, 12, 13, 14, 15."
+        ],
+        "status": [
+          {
+            "role": "status",
+            "name": ""
+          }
+        ]
+      },
+      "screenshot": "/tmp/game-pr1-followup/mobile-a11y/run-pp3L8k/accessibility-progress-390.png"
+    }
+  ]
+}

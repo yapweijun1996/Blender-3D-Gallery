@@ -1,0 +1,2780 @@
+{
+  "methodology": {
+    "mode": "paired",
+    "order": [
+      "baseline",
+      "candidate",
+      "baseline",
+      "candidate",
+      "baseline",
+      "candidate",
+      "baseline",
+      "candidate",
+      "baseline",
+      "candidate"
+    ],
+    "execution": "One system Chrome process and one loopback server, switched between frozen builds only after each fresh context closes.",
+    "cold": "Fresh context per sample; service workers blocked; browser cache disabled; CDP emulates 100ms latency, 4Mbps down and 1Mbps up. CPU is not throttled.",
+    "ready": "Wall time from navigation start to the game's ready signal. Each sample verifies 18 Resource Timing entries with nonzero transfer and manifest-matching byte lengths.",
+    "profile": "No parse/draw instrumentation during formal samples.",
+    "bandwidthFloor": "3,697,784 GLB bytes at 4,000,000 bit/s require about 7.4 seconds of ideal serial transfer, before protocol and processing overhead.",
+    "limitations": [
+      "Loopback CDP throttling is a controlled simulation, not a physical phone or real network.",
+      "Resource Timing byte counts and a ready signal do not prove byte-identical responses; separate passive-stream hash diagnostics cover that claim.",
+      "Five samples per side are descriptive, not a statistical guarantee; other host work can affect results.",
+      "The frozen baseline precedes the final UX CSS commit; any difference is not automatically attributable only to the loader.",
+      "Host CPU counters include the browser and all other processes; they do not isolate unrelated work."
+    ]
+  },
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "osRelease": "27.0.0",
+    "cpu": "Apple M4",
+    "launchOptions": {
+      "channel": "chrome",
+      "headless": true,
+      "ignoreDefaultArgs": [
+        "--enable-unsafe-swiftshader"
+      ]
+    },
+    "buildInfo": {
+      "baseline": {
+        "path": "/tmp/game-loading-diagnostics/baseline-dist",
+        "identity": {
+          "build": "87423ed187d3babe"
+        },
+        "sha256": "cf5a59a38cba913d6a9fd5405db95c1511d90424fc00e65c8583cbcef2d34b90"
+      },
+      "candidate": {
+        "path": "/tmp/game-loading-diagnostics/candidate-dist",
+        "identity": {
+          "build": "df37c64681102b95"
+        },
+        "sha256": "d8570b70bdf6596e0079bda5c40e247abfe1df085586913e73a6065bc4773a19"
+      }
+    },
+    "measuredAt": "2026-11-05T13:32:01.281Z",
+    "browser": "156.0.8078.80",
+    "serverOrigin": "http://127.0.0.1:51320/Blender-3D-Gallery/"
+  },
+  "packIdentity": {
+    "baseline": {
+      "pool-table": {
+        "url": "assets/table-XWseCS4E.glb",
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+      },
+      "cue-stick-01": {
+        "url": "assets/cue_01-BCqBke_n.glb",
+        "bytes": 14632,
+        "sha256": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8"
+      },
+      "cue-ball": {
+        "url": "assets/ball_00-BoyXP3PW.glb",
+        "bytes": 93692,
+        "sha256": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732"
+      },
+      "ball-01": {
+        "url": "assets/ball_01-CYdwOVaM.glb",
+        "bytes": 120536,
+        "sha256": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a"
+      },
+      "ball-02": {
+        "url": "assets/ball_02-DB1WWWFC.glb",
+        "bytes": 215296,
+        "sha256": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a"
+      },
+      "ball-03": {
+        "url": "assets/ball_03-CUIVES0h.glb",
+        "bytes": 268828,
+        "sha256": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352"
+      },
+      "ball-04": {
+        "url": "assets/ball_04-BBCbhjJU.glb",
+        "bytes": 157064,
+        "sha256": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85"
+      },
+      "ball-05": {
+        "url": "assets/ball_05-g8Q6Ow2l.glb",
+        "bytes": 203708,
+        "sha256": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018"
+      },
+      "ball-06": {
+        "url": "assets/ball_06-Dx-lGkJH.glb",
+        "bytes": 244380,
+        "sha256": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50"
+      },
+      "ball-07": {
+        "url": "assets/ball_07-DTLIzTg4.glb",
+        "bytes": 127912,
+        "sha256": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd"
+      },
+      "ball-08": {
+        "url": "assets/ball_08-BGG5JkMB.glb",
+        "bytes": 324100,
+        "sha256": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9"
+      },
+      "ball-09": {
+        "url": "assets/ball_09-Bu8fLWw3.glb",
+        "bytes": 262604,
+        "sha256": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af"
+      },
+      "ball-10": {
+        "url": "assets/ball_10-Csex90PS.glb",
+        "bytes": 227632,
+        "sha256": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab"
+      },
+      "ball-11": {
+        "url": "assets/ball_11-DqkUg1Oy.glb",
+        "bytes": 132568,
+        "sha256": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec"
+      },
+      "ball-12": {
+        "url": "assets/ball_12-BBSM0uzd.glb",
+        "bytes": 223308,
+        "sha256": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149"
+      },
+      "ball-13": {
+        "url": "assets/ball_13-CbMLTUSR.glb",
+        "bytes": 279952,
+        "sha256": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4"
+      },
+      "ball-14": {
+        "url": "assets/ball_14-5cOYbVRY.glb",
+        "bytes": 170364,
+        "sha256": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf"
+      },
+      "ball-15": {
+        "url": "assets/ball_15-BhFgOajB.glb",
+        "bytes": 213552,
+        "sha256": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296"
+      }
+    },
+    "candidate": {
+      "pool-table": {
+        "url": "assets/table-XWseCS4E.glb",
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+      },
+      "cue-stick-01": {
+        "url": "assets/cue_01-BCqBke_n.glb",
+        "bytes": 14632,
+        "sha256": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8"
+      },
+      "cue-ball": {
+        "url": "assets/ball_00-BoyXP3PW.glb",
+        "bytes": 93692,
+        "sha256": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732"
+      },
+      "ball-01": {
+        "url": "assets/ball_01-CYdwOVaM.glb",
+        "bytes": 120536,
+        "sha256": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a"
+      },
+      "ball-02": {
+        "url": "assets/ball_02-DB1WWWFC.glb",
+        "bytes": 215296,
+        "sha256": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a"
+      },
+      "ball-03": {
+        "url": "assets/ball_03-CUIVES0h.glb",
+        "bytes": 268828,
+        "sha256": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352"
+      },
+      "ball-04": {
+        "url": "assets/ball_04-BBCbhjJU.glb",
+        "bytes": 157064,
+        "sha256": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85"
+      },
+      "ball-05": {
+        "url": "assets/ball_05-g8Q6Ow2l.glb",
+        "bytes": 203708,
+        "sha256": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018"
+      },
+      "ball-06": {
+        "url": "assets/ball_06-Dx-lGkJH.glb",
+        "bytes": 244380,
+        "sha256": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50"
+      },
+      "ball-07": {
+        "url": "assets/ball_07-DTLIzTg4.glb",
+        "bytes": 127912,
+        "sha256": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd"
+      },
+      "ball-08": {
+        "url": "assets/ball_08-BGG5JkMB.glb",
+        "bytes": 324100,
+        "sha256": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9"
+      },
+      "ball-09": {
+        "url": "assets/ball_09-Bu8fLWw3.glb",
+        "bytes": 262604,
+        "sha256": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af"
+      },
+      "ball-10": {
+        "url": "assets/ball_10-Csex90PS.glb",
+        "bytes": 227632,
+        "sha256": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab"
+      },
+      "ball-11": {
+        "url": "assets/ball_11-DqkUg1Oy.glb",
+        "bytes": 132568,
+        "sha256": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec"
+      },
+      "ball-12": {
+        "url": "assets/ball_12-BBSM0uzd.glb",
+        "bytes": 223308,
+        "sha256": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149"
+      },
+      "ball-13": {
+        "url": "assets/ball_13-CbMLTUSR.glb",
+        "bytes": 279952,
+        "sha256": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4"
+      },
+      "ball-14": {
+        "url": "assets/ball_14-5cOYbVRY.glb",
+        "bytes": 170364,
+        "sha256": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf"
+      },
+      "ball-15": {
+        "url": "assets/ball_15-BhFgOajB.glb",
+        "bytes": 213552,
+        "sha256": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296"
+      }
+    }
+  },
+  "samples": [
+    {
+      "name": "baseline",
+      "index": 1,
+      "readyMs": 9609.881416999999,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 2044,
+      "lastGlbResponseEndMs": 9573.70000000298,
+      "profile": null,
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 2044,
+          "responseEndMs": 5289.5,
+          "durationMs": 3245.5,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 2044.300000011921,
+          "responseEndMs": 2262.6000000089407,
+          "durationMs": 218.29999999701977,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 2044.5,
+          "responseEndMs": 2865,
+          "durationMs": 820.5,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 2044.6000000089407,
+          "responseEndMs": 3054.2000000029802,
+          "durationMs": 1009.5999999940395,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2265.5,
+          "responseEndMs": 4026.5,
+          "durationMs": 1761,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2866.1000000089407,
+          "responseEndMs": 5025.20000000298,
+          "durationMs": 2159.0999999940395,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 3055.4000000059605,
+          "responseEndMs": 4380.20000000298,
+          "durationMs": 1324.7999999970198,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 4027.6000000089407,
+          "responseEndMs": 5658.5,
+          "durationMs": 1630.8999999910593,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4381,
+          "responseEndMs": 6315.5,
+          "durationMs": 1934.5,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 5026.4000000059605,
+          "responseEndMs": 6087.5,
+          "durationMs": 1061.0999999940395,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5292.4000000059605,
+          "responseEndMs": 7842.5,
+          "durationMs": 2550.0999999940395,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5659.5,
+          "responseEndMs": 7770.5,
+          "durationMs": 2111,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6088.4000000059605,
+          "responseEndMs": 7890.600000008941,
+          "durationMs": 1802.2000000029802,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6316.600000008941,
+          "responseEndMs": 7482.100000008941,
+          "durationMs": 1165.5,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7483,
+          "responseEndMs": 9240.300000011921,
+          "durationMs": 1757.300000011921,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7771.600000008941,
+          "responseEndMs": 9573.70000000298,
+          "durationMs": 1802.0999999940395,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7843.5,
+          "responseEndMs": 9279.60000000894,
+          "durationMs": 1436.1000000089407,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7891.600000008941,
+          "responseEndMs": 9489.60000000894,
+          "durationMs": 1598,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "errors": [
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "hostLoadBefore": [
+        5.982421875,
+        10.92138671875,
+        16.35986328125
+      ],
+      "hostLoadAfter": [
+        7.6435546875,
+        11.11962890625,
+        16.36669921875
+      ],
+      "hostCpuBusyPercent": 83.82029531888155
+    },
+    {
+      "name": "candidate",
+      "index": 2,
+      "readyMs": 9529.082665999998,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 1983.7999999970198,
+      "lastGlbResponseEndMs": 9510.39999999106,
+      "profile": null,
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 1983.7999999970198,
+          "responseEndMs": 2198.8999999910593,
+          "durationMs": 215.09999999403954,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 1983.7999999970198,
+          "responseEndMs": 2802.3999999910593,
+          "durationMs": 818.5999999940395,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 1983.7999999970198,
+          "responseEndMs": 5226.0999999940395,
+          "durationMs": 3242.2999999970198,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 1983.8999999910593,
+          "responseEndMs": 2991.3999999910593,
+          "durationMs": 1007.5,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2201.8999999910593,
+          "responseEndMs": 3963.5,
+          "durationMs": 1761.6000000089407,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2803.2999999970198,
+          "responseEndMs": 4962.5,
+          "durationMs": 2159.2000000029802,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 2992.5999999940395,
+          "responseEndMs": 4314.5999999940395,
+          "durationMs": 1322,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 3964.7999999970198,
+          "responseEndMs": 5598.5,
+          "durationMs": 1633.7000000029802,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4315.5999999940395,
+          "responseEndMs": 6249.399999991059,
+          "durationMs": 1933.7999999970198,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 4963.79999999702,
+          "responseEndMs": 6021.399999991059,
+          "durationMs": 1057.5999999940395,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5229.5,
+          "responseEndMs": 7779.29999999702,
+          "durationMs": 2549.7999999970198,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5600.5,
+          "responseEndMs": 7713.29999999702,
+          "durationMs": 2112.7999999970198,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6022.699999988079,
+          "responseEndMs": 7824.29999999702,
+          "durationMs": 1801.6000000089407,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6250.5999999940395,
+          "responseEndMs": 7416.29999999702,
+          "durationMs": 1165.7000000029802,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7417.399999991059,
+          "responseEndMs": 9174.39999999106,
+          "durationMs": 1757,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7714.399999991059,
+          "responseEndMs": 9510.39999999106,
+          "durationMs": 1796,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7780.399999991059,
+          "responseEndMs": 9216.39999999106,
+          "durationMs": 1436,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7825.199999988079,
+          "responseEndMs": 9423.39999999106,
+          "durationMs": 1598.2000000029802,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "errors": [],
+      "hostLoadBefore": [
+        7.6435546875,
+        11.11962890625,
+        16.36669921875
+      ],
+      "hostLoadAfter": [
+        8.60107421875,
+        11.212890625,
+        16.33837890625
+      ],
+      "hostCpuBusyPercent": 67.8556263269639
+    },
+    {
+      "name": "baseline",
+      "index": 3,
+      "readyMs": 9522.640333,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 1969.7999999970198,
+      "lastGlbResponseEndMs": 9495.70000000298,
+      "profile": null,
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 1969.7999999970198,
+          "responseEndMs": 5212.20000000298,
+          "durationMs": 3242.4000000059605,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 1969.9000000059605,
+          "responseEndMs": 2181.7999999970198,
+          "durationMs": 211.8999999910593,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 1969.9000000059605,
+          "responseEndMs": 2791.2999999970198,
+          "durationMs": 821.3999999910593,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 1970,
+          "responseEndMs": 2977.2000000029802,
+          "durationMs": 1007.2000000029802,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2184.4000000059605,
+          "responseEndMs": 3946.2999999970198,
+          "durationMs": 1761.8999999910593,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2792.1000000089407,
+          "responseEndMs": 4951.20000000298,
+          "durationMs": 2159.0999999940395,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 2978.1000000089407,
+          "responseEndMs": 4303,
+          "durationMs": 1324.8999999910593,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 3947.4000000059605,
+          "responseEndMs": 5575.20000000298,
+          "durationMs": 1627.7999999970198,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4303.9000000059605,
+          "responseEndMs": 6238.20000000298,
+          "durationMs": 1934.2999999970198,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 4952.20000000298,
+          "responseEndMs": 6016.100000008941,
+          "durationMs": 1063.9000000059605,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5214,
+          "responseEndMs": 7762.29999999702,
+          "durationMs": 2548.2999999970198,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5576,
+          "responseEndMs": 7687.29999999702,
+          "durationMs": 2111.2999999970198,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6016.9000000059605,
+          "responseEndMs": 7816.20000000298,
+          "durationMs": 1799.2999999970198,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6239,
+          "responseEndMs": 7405.20000000298,
+          "durationMs": 1166.2000000029802,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7406.100000008941,
+          "responseEndMs": 9169.29999999702,
+          "durationMs": 1763.199999988079,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7688.20000000298,
+          "responseEndMs": 9495.70000000298,
+          "durationMs": 1807.5,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7763.20000000298,
+          "responseEndMs": 9199.10000000894,
+          "durationMs": 1435.9000000059605,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7817,
+          "responseEndMs": 9412.29999999702,
+          "durationMs": 1595.2999999970198,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "errors": [
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "hostLoadBefore": [
+        8.60107421875,
+        11.212890625,
+        16.33837890625
+      ],
+      "hostLoadAfter": [
+        7.74609375,
+        10.94189453125,
+        16.181640625
+      ],
+      "hostCpuBusyPercent": 47.06696476099223
+    },
+    {
+      "name": "candidate",
+      "index": 4,
+      "readyMs": 9535.001874999998,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 1986.2999999970198,
+      "lastGlbResponseEndMs": 9513.70000000298,
+      "profile": null,
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 1986.2999999970198,
+          "responseEndMs": 2199.5999999940395,
+          "durationMs": 213.29999999701977,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 1986.2999999970198,
+          "responseEndMs": 5229.5999999940395,
+          "durationMs": 3243.2999999970198,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 1986.4000000059605,
+          "responseEndMs": 2808.2000000029802,
+          "durationMs": 821.7999999970198,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 1986.4000000059605,
+          "responseEndMs": 2994,
+          "durationMs": 1007.5999999940395,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2203,
+          "responseEndMs": 3963.0999999940395,
+          "durationMs": 1760.0999999940395,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2809.2000000029802,
+          "responseEndMs": 4968.0999999940395,
+          "durationMs": 2158.8999999910593,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 2995.7999999970198,
+          "responseEndMs": 4320.5999999940395,
+          "durationMs": 1324.7999999970198,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 3964.9000000059605,
+          "responseEndMs": 5592.5999999940395,
+          "durationMs": 1627.699999988079,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4321.9000000059605,
+          "responseEndMs": 6255.0999999940395,
+          "durationMs": 1933.199999988079,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 4969.5999999940395,
+          "responseEndMs": 6033.5,
+          "durationMs": 1063.9000000059605,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5232.9000000059605,
+          "responseEndMs": 7779.5999999940395,
+          "durationMs": 2546.699999988079,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5593.9000000059605,
+          "responseEndMs": 7704.4000000059605,
+          "durationMs": 2110.5,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6034.5999999940395,
+          "responseEndMs": 7833.5,
+          "durationMs": 1798.9000000059605,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6256.5,
+          "responseEndMs": 7422.0999999940395,
+          "durationMs": 1165.5999999940395,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7423.0999999940395,
+          "responseEndMs": 9186.29999999702,
+          "durationMs": 1763.2000000029802,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7705.70000000298,
+          "responseEndMs": 9513.70000000298,
+          "durationMs": 1808,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7780.9000000059605,
+          "responseEndMs": 9216.5,
+          "durationMs": 1435.5999999940395,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7834.5999999940395,
+          "responseEndMs": 9429.5,
+          "durationMs": 1594.9000000059605,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "errors": [],
+      "hostLoadBefore": [
+        7.74609375,
+        10.94189453125,
+        16.181640625
+      ],
+      "hostLoadAfter": [
+        7.79736328125,
+        10.8447265625,
+        16.08544921875
+      ],
+      "hostCpuBusyPercent": 63.180317392693574
+    },
+    {
+      "name": "baseline",
+      "index": 5,
+      "readyMs": 9527.858,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 1972.2000000029802,
+      "lastGlbResponseEndMs": 9499.09999999404,
+      "profile": null,
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 1972.2000000029802,
+          "responseEndMs": 5221.20000000298,
+          "durationMs": 3249,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 1972.3999999910593,
+          "responseEndMs": 2185.2000000029802,
+          "durationMs": 212.80000001192093,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 1972.3999999910593,
+          "responseEndMs": 2788.5,
+          "durationMs": 816.1000000089407,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 1972.3999999910593,
+          "responseEndMs": 2980.3999999910593,
+          "durationMs": 1008,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2188.2000000029802,
+          "responseEndMs": 3949,
+          "durationMs": 1760.7999999970198,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2789.3999999910593,
+          "responseEndMs": 4945.5,
+          "durationMs": 2156.1000000089407,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 2981.7000000029802,
+          "responseEndMs": 4306.70000000298,
+          "durationMs": 1325,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 3950.2000000029802,
+          "responseEndMs": 5581.399999991059,
+          "durationMs": 1631.199999988079,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4307.79999999702,
+          "responseEndMs": 6238,
+          "durationMs": 1930.2000000029802,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 4946.79999999702,
+          "responseEndMs": 6013.0999999940395,
+          "durationMs": 1066.2999999970198,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5224.79999999702,
+          "responseEndMs": 7771.5,
+          "durationMs": 2546.7000000029802,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5582.20000000298,
+          "responseEndMs": 7693,
+          "durationMs": 2110.7999999970198,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6013.899999991059,
+          "responseEndMs": 7816.5,
+          "durationMs": 1802.6000000089407,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6238.899999991059,
+          "responseEndMs": 7405.5,
+          "durationMs": 1166.6000000089407,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7406.5999999940395,
+          "responseEndMs": 9169,
+          "durationMs": 1762.4000000059605,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7694.20000000298,
+          "responseEndMs": 9499.09999999404,
+          "durationMs": 1804.8999999910593,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7772.5,
+          "responseEndMs": 9208.70000000298,
+          "durationMs": 1436.2000000029802,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7817.5999999940395,
+          "responseEndMs": 9415.20000000298,
+          "durationMs": 1597.6000000089407,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "errors": [
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "hostLoadBefore": [
+        7.79736328125,
+        10.8447265625,
+        16.08544921875
+      ],
+      "hostLoadAfter": [
+        7.76708984375,
+        10.73486328125,
+        15.984375
+      ],
+      "hostCpuBusyPercent": 58.02915824199213
+    },
+    {
+      "name": "candidate",
+      "index": 6,
+      "readyMs": 9565.561291999999,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 2002.5999999940395,
+      "lastGlbResponseEndMs": 9530.5,
+      "profile": null,
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 2002.5999999940395,
+          "responseEndMs": 2216.2000000029802,
+          "durationMs": 213.6000000089407,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 2002.5999999940395,
+          "responseEndMs": 5237.20000000298,
+          "durationMs": 3234.6000000089407,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 2002.7000000029802,
+          "responseEndMs": 2822.4000000059605,
+          "durationMs": 819.7000000029802,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 2002.7999999970198,
+          "responseEndMs": 3011.5,
+          "durationMs": 1008.7000000029802,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2221.2000000029802,
+          "responseEndMs": 3983.5999999940395,
+          "durationMs": 1762.3999999910593,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2823.7000000029802,
+          "responseEndMs": 4982.5,
+          "durationMs": 2158.7999999970198,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 3013.2000000029802,
+          "responseEndMs": 4340.20000000298,
+          "durationMs": 1327,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 3985.2999999970198,
+          "responseEndMs": 5618.70000000298,
+          "durationMs": 1633.4000000059605,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4341.4000000059605,
+          "responseEndMs": 6272.29999999702,
+          "durationMs": 1930.8999999910593,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 4983.79999999702,
+          "responseEndMs": 6047.79999999702,
+          "durationMs": 1064,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5240.70000000298,
+          "responseEndMs": 7790.4000000059605,
+          "durationMs": 2549.7000000029802,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5620,
+          "responseEndMs": 7733.5,
+          "durationMs": 2113.5,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6049.20000000298,
+          "responseEndMs": 7844.29999999702,
+          "durationMs": 1795.0999999940395,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6273.9000000059605,
+          "responseEndMs": 7439.5,
+          "durationMs": 1165.5999999940395,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7440.79999999702,
+          "responseEndMs": 9197.59999999404,
+          "durationMs": 1756.7999999970198,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7734.9000000059605,
+          "responseEndMs": 9530.5,
+          "durationMs": 1795.5999999940395,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7792,
+          "responseEndMs": 9233.59999999404,
+          "durationMs": 1441.5999999940395,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7845.5,
+          "responseEndMs": 9443.59999999404,
+          "durationMs": 1598.0999999940395,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "errors": [],
+      "hostLoadBefore": [
+        7.76708984375,
+        10.73486328125,
+        15.984375
+      ],
+      "hostLoadAfter": [
+        8.64501953125,
+        10.82568359375,
+        15.955078125
+      ],
+      "hostCpuBusyPercent": 65.91609134360064
+    },
+    {
+      "name": "baseline",
+      "index": 7,
+      "readyMs": 9694.095583000002,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 2010.0999999940395,
+      "lastGlbResponseEndMs": 9536,
+      "profile": null,
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 2010.0999999940395,
+          "responseEndMs": 5248.9000000059605,
+          "durationMs": 3238.800000011921,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 2010.4000000059605,
+          "responseEndMs": 2222,
+          "durationMs": 211.59999999403954,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 2010.5,
+          "responseEndMs": 2828.2000000029802,
+          "durationMs": 817.7000000029802,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 2010.5999999940395,
+          "responseEndMs": 3016.9000000059605,
+          "durationMs": 1006.3000000119209,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2227.2999999970198,
+          "responseEndMs": 3987.9000000059605,
+          "durationMs": 1760.6000000089407,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2829.9000000059605,
+          "responseEndMs": 4984.79999999702,
+          "durationMs": 2154.8999999910593,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 3018.7999999970198,
+          "responseEndMs": 4345.5,
+          "durationMs": 1326.7000000029802,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 3989.7000000029802,
+          "responseEndMs": 5621.20000000298,
+          "durationMs": 1631.5,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4347.9000000059605,
+          "responseEndMs": 6283.70000000298,
+          "durationMs": 1935.7999999970198,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 4986.29999999702,
+          "responseEndMs": 6043.9000000059605,
+          "durationMs": 1057.6000000089407,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5252.20000000298,
+          "responseEndMs": 7802,
+          "durationMs": 2549.7999999970198,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5622.79999999702,
+          "responseEndMs": 7732.9000000059605,
+          "durationMs": 2110.1000000089407,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6045.0999999940395,
+          "responseEndMs": 7841.20000000298,
+          "durationMs": 1796.1000000089407,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6285.79999999702,
+          "responseEndMs": 7453.9000000059605,
+          "durationMs": 1168.1000000089407,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7455.29999999702,
+          "responseEndMs": 9188.09999999404,
+          "durationMs": 1732.7999999970198,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7734.4000000059605,
+          "responseEndMs": 9536,
+          "durationMs": 1801.5999999940395,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7803.5,
+          "responseEndMs": 9242,
+          "durationMs": 1438.5,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7842.70000000298,
+          "responseEndMs": 9442.90000000596,
+          "durationMs": 1600.2000000029802,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "errors": [
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "hostLoadBefore": [
+        8.64501953125,
+        10.82568359375,
+        15.955078125
+      ],
+      "hostLoadAfter": [
+        17.6962890625,
+        12.69140625,
+        16.556640625
+      ],
+      "hostCpuBusyPercent": 98.97917096308517
+    },
+    {
+      "name": "candidate",
+      "index": 8,
+      "readyMs": 9626.122374999992,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 2046.2999999970198,
+      "lastGlbResponseEndMs": 9572.09999999404,
+      "profile": null,
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 2046.2999999970198,
+          "responseEndMs": 5281.9000000059605,
+          "durationMs": 3235.6000000089407,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 2046.4000000059605,
+          "responseEndMs": 2257.7999999970198,
+          "durationMs": 211.3999999910593,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 2046.5,
+          "responseEndMs": 2861.2000000029802,
+          "durationMs": 814.7000000029802,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 2046.5999999940395,
+          "responseEndMs": 3053,
+          "durationMs": 1006.4000000059605,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2264.5999999940395,
+          "responseEndMs": 4025,
+          "durationMs": 1760.4000000059605,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2862.5999999940395,
+          "responseEndMs": 5021.29999999702,
+          "durationMs": 2158.7000000029802,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 3055.0999999940395,
+          "responseEndMs": 4381.9000000059605,
+          "durationMs": 1326.800000011921,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 4027.2999999970198,
+          "responseEndMs": 5656.9000000059605,
+          "durationMs": 1629.6000000089407,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4383.9000000059605,
+          "responseEndMs": 6308,
+          "durationMs": 1924.0999999940395,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 5024.0999999940395,
+          "responseEndMs": 6089,
+          "durationMs": 1064.9000000059605,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5287.29999999702,
+          "responseEndMs": 7838,
+          "durationMs": 2550.7000000029802,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5659.20000000298,
+          "responseEndMs": 7771.9000000059605,
+          "durationMs": 2112.7000000029802,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6090.79999999702,
+          "responseEndMs": 7886.0999999940395,
+          "durationMs": 1795.2999999970198,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6310.20000000298,
+          "responseEndMs": 7478,
+          "durationMs": 1167.7999999970198,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7479.5,
+          "responseEndMs": 9233.29999999702,
+          "durationMs": 1753.7999999970198,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7773.9000000059605,
+          "responseEndMs": 9572.09999999404,
+          "durationMs": 1798.199999988079,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7840.20000000298,
+          "responseEndMs": 9278,
+          "durationMs": 1437.7999999970198,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7888.0999999940395,
+          "responseEndMs": 9485,
+          "durationMs": 1596.9000000059605,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "errors": [],
+      "hostLoadBefore": [
+        21.56396484375,
+        13.576171875,
+        16.84619140625
+      ],
+      "hostLoadAfter": [
+        27.9248046875,
+        15.02734375,
+        17.3388671875
+      ],
+      "hostCpuBusyPercent": 99.94807352788452
+    },
+    {
+      "name": "baseline",
+      "index": 9,
+      "readyMs": 9587.105125000002,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 2025.2999999970198,
+      "lastGlbResponseEndMs": 9550.29999999702,
+      "profile": null,
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 2025.2999999970198,
+          "responseEndMs": 5263.0999999940395,
+          "durationMs": 3237.7999999970198,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 2025.3999999910593,
+          "responseEndMs": 2236.7000000029802,
+          "durationMs": 211.30000001192093,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 2025.5999999940395,
+          "responseEndMs": 2845.2000000029802,
+          "durationMs": 819.6000000089407,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 2025.5999999940395,
+          "responseEndMs": 3031.7999999970198,
+          "durationMs": 1006.2000000029802,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2241,
+          "responseEndMs": 4000.0999999940395,
+          "durationMs": 1759.0999999940395,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2846.7000000029802,
+          "responseEndMs": 4999.70000000298,
+          "durationMs": 2153,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 3034.2000000029802,
+          "responseEndMs": 4360.29999999702,
+          "durationMs": 1326.0999999940395,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 4003.2000000029802,
+          "responseEndMs": 5635.70000000298,
+          "durationMs": 1632.5,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4361.79999999702,
+          "responseEndMs": 6289.70000000298,
+          "durationMs": 1927.9000000059605,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 5001.29999999702,
+          "responseEndMs": 6067.5999999940395,
+          "durationMs": 1066.2999999970198,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5266.79999999702,
+          "responseEndMs": 7816.0999999940395,
+          "durationMs": 2549.2999999970198,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5637.20000000298,
+          "responseEndMs": 7750.0999999940395,
+          "durationMs": 2112.8999999910593,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6068.899999991059,
+          "responseEndMs": 7864.79999999702,
+          "durationMs": 1795.9000000059605,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6290.899999991059,
+          "responseEndMs": 7456.5999999940395,
+          "durationMs": 1165.7000000029802,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7457.5999999940395,
+          "responseEndMs": 9220.79999999702,
+          "durationMs": 1763.2000000029802,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7751.5999999940395,
+          "responseEndMs": 9550.29999999702,
+          "durationMs": 1798.7000000029802,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7817.399999991059,
+          "responseEndMs": 9256.59999999404,
+          "durationMs": 1439.2000000029802,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7866,
+          "responseEndMs": 9466.5,
+          "durationMs": 1600.5,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "errors": [
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "stage": "active",
+          "type": "requestfailed",
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "hostLoadBefore": [
+        29.5322265625,
+        15.57470703125,
+        17.51806640625
+      ],
+      "hostLoadAfter": [
+        26.7177734375,
+        15.4384765625,
+        17.44677734375
+      ],
+      "hostCpuBusyPercent": 80.0147726073652
+    },
+    {
+      "name": "candidate",
+      "index": 10,
+      "readyMs": 9546.661833000006,
+      "complete": true,
+      "browser": "156.0.8078.80",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvasPixels": [
+        1020,
+        586
+      ],
+      "canvasCssPixels": [
+        1020,
+        586
+      ],
+      "serviceWorkerControlled": false,
+      "firstGlbStartMs": 1988.5,
+      "lastGlbResponseEndMs": 9519.10000000894,
+      "profile": null,
+      "resources": [
+        {
+          "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 1988.5,
+          "responseEndMs": 5232,
+          "durationMs": 3243.5,
+          "transferBytes": 417956,
+          "encodedBytes": 417656,
+          "file": "table-XWseCS4E.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 1988.6000000089407,
+          "responseEndMs": 2207.9000000059605,
+          "durationMs": 219.29999999701977,
+          "transferBytes": 14932,
+          "encodedBytes": 14632,
+          "file": "cue_01-BCqBke_n.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 1988.7000000029802,
+          "responseEndMs": 2810.9000000059605,
+          "durationMs": 822.2000000029802,
+          "transferBytes": 93992,
+          "encodedBytes": 93692,
+          "file": "ball_00-BoyXP3PW.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 1988.7000000029802,
+          "responseEndMs": 2996.9000000059605,
+          "durationMs": 1008.2000000029802,
+          "transferBytes": 120836,
+          "encodedBytes": 120536,
+          "file": "ball_01-CYdwOVaM.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 2212.5,
+          "responseEndMs": 3971.5,
+          "durationMs": 1759,
+          "transferBytes": 215596,
+          "encodedBytes": 215296,
+          "file": "ball_02-DB1WWWFC.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 2812,
+          "responseEndMs": 4971.100000008941,
+          "durationMs": 2159.1000000089407,
+          "transferBytes": 269128,
+          "encodedBytes": 268828,
+          "file": "ball_03-CUIVES0h.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 2998.4000000059605,
+          "responseEndMs": 4326.20000000298,
+          "durationMs": 1327.7999999970198,
+          "transferBytes": 157364,
+          "encodedBytes": 157064,
+          "file": "ball_04-BBCbhjJU.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 3973.1000000089407,
+          "responseEndMs": 5601.20000000298,
+          "durationMs": 1628.0999999940395,
+          "transferBytes": 204008,
+          "encodedBytes": 203708,
+          "file": "ball_05-g8Q6Ow2l.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 4327.300000011921,
+          "responseEndMs": 6260.9000000059605,
+          "durationMs": 1933.5999999940395,
+          "transferBytes": 244680,
+          "encodedBytes": 244380,
+          "file": "ball_06-Dx-lGkJH.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 4972.70000000298,
+          "responseEndMs": 6035.9000000059605,
+          "durationMs": 1063.2000000029802,
+          "transferBytes": 128212,
+          "encodedBytes": 127912,
+          "file": "ball_07-DTLIzTg4.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 5236.100000008941,
+          "responseEndMs": 7785,
+          "durationMs": 2548.8999999910593,
+          "transferBytes": 324400,
+          "encodedBytes": 324100,
+          "file": "ball_08-BGG5JkMB.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 5602.600000008941,
+          "responseEndMs": 7716,
+          "durationMs": 2113.3999999910593,
+          "transferBytes": 262904,
+          "encodedBytes": 262604,
+          "file": "ball_09-Bu8fLWw3.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 6037.20000000298,
+          "responseEndMs": 7835.800000011921,
+          "durationMs": 1798.6000000089407,
+          "transferBytes": 227932,
+          "encodedBytes": 227632,
+          "file": "ball_10-Csex90PS.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 6262.300000011921,
+          "responseEndMs": 7427.5,
+          "durationMs": 1165.199999988079,
+          "transferBytes": 132868,
+          "encodedBytes": 132568,
+          "file": "ball_11-DqkUg1Oy.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 7428.800000011921,
+          "responseEndMs": 9189.20000000298,
+          "durationMs": 1760.3999999910593,
+          "transferBytes": 223608,
+          "encodedBytes": 223308,
+          "file": "ball_12-BBSM0uzd.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 7717.4000000059605,
+          "responseEndMs": 9519.10000000894,
+          "durationMs": 1801.7000000029802,
+          "transferBytes": 280252,
+          "encodedBytes": 279952,
+          "file": "ball_13-CbMLTUSR.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 7786.600000008941,
+          "responseEndMs": 9225.10000000894,
+          "durationMs": 1438.5,
+          "transferBytes": 170664,
+          "encodedBytes": 170364,
+          "file": "ball_14-5cOYbVRY.glb"
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 7837.100000008941,
+          "responseEndMs": 9435.10000000894,
+          "durationMs": 1598,
+          "transferBytes": 213852,
+          "encodedBytes": 213552,
+          "file": "ball_15-BhFgOajB.glb"
+        }
+      ],
+      "errors": [],
+      "hostLoadBefore": [
+        26.7177734375,
+        15.4384765625,
+        17.44677734375
+      ],
+      "hostLoadAfter": [
+        23.9326171875,
+        15.21044921875,
+        17.341796875
+      ],
+      "hostCpuBusyPercent": 65.10756716258162
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "renderers": [
+      "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    ],
+    "canvasPixels": [
+      "1020x586"
+    ],
+    "byBuild": {
+      "baseline": {
+        "count": 5,
+        "medianMs": 9587.105125000002,
+        "minMs": 9522.640333,
+        "maxMs": 9694.095583000002,
+        "valuesMs": [
+          9609.881416999999,
+          9522.640333,
+          9527.858,
+          9694.095583000002,
+          9587.105125000002
+        ]
+      },
+      "candidate": {
+        "count": 5,
+        "medianMs": 9546.661833000006,
+        "minMs": 9529.082665999998,
+        "maxMs": 9626.122374999992,
+        "valuesMs": [
+          9529.082665999998,
+          9535.001874999998,
+          9565.561291999999,
+          9626.122374999992,
+          9546.661833000006
+        ]
+      }
+    }
+  }
+}
