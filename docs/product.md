@@ -1,6 +1,6 @@
 # Product requirements
 
-Status: broader gallery v1.0 candidate. The individual-asset gallery and local two-player Game/PWA are implemented; see [Game delivery](game-implementation-plan.md). Search and the broader discovery requirements below remain proposals.
+Status: the searchable model library, query-addressed model detail and Interactive Demo Index are implemented in the local IA development branch. Existing Game/PWA and Solar experiences remain available. See [IA delivery](gallery-information-architecture.md) and [executed verification](verification/gallery-ia.md). Licensing and broader curated-publication requirements remain open; implementation is not a production release.
 
 ## Goal and scope
 

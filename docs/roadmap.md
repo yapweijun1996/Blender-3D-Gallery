@@ -1,6 +1,6 @@
 # Roadmap and decision register
 
-Status: the individual billiards gallery, local two-player Game and explicit offline PWA contract are implemented. See [Game delivery](game-implementation-plan.md) and [verification](game-verification.md). Broader curated-catalog milestones remain proposed.
+Status: the individual billiards gallery, local two-player Game and explicit offline PWA contract are implemented. See [Game delivery](game-implementation-plan.md) and [verification](game-verification.md). A searchable model library and Interactive Demo Index have been added in an isolated local branch; see [IA architecture](gallery-information-architecture.md) and [verification](verification/gallery-ia.md). This task does not deploy them. Broader curated-publication milestones remain proposed.
 
 1. **Foundation:** resolve licensing, attribution, visual direction, supported Blender and package versions, hosting and candidate budgets. Record decisions and acceptance criteria.
 2. **Gallery skeleton:** implement a responsive static gallery, base-path-aware links, one real validated GLB fixture, viewer controls and fallback states. Verify desktop and mobile behavior.

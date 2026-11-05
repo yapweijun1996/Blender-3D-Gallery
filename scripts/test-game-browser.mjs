@@ -147,7 +147,7 @@ try {
   await run(
     "one navigation confirmation and repeated Game navigation remains usable",
     async (page) => {
-      await page.goto(server.url);
+      await page.goto(server.url + "?page=demos");
       await page.evaluate(() => {
         document.querySelector("[data-page=game]").click();
         document.querySelector("[data-page=game]").click();
@@ -180,7 +180,24 @@ try {
       `touch layout ${width}x${height}`,
       async (page) => {
         await gameReady(page, server.url);
-        await start(page);
+        const assertControlsInViewport = async (actions, phase) => {
+          // Check the unscrolled viewport before click auto-scroll can hide clipping.
+          await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+          const controls = await page.evaluate((actions) => actions.map(action => {
+            const rect = document.querySelector(`[data-action="${action}"]`).getBoundingClientRect();
+            return { action, top: rect.top, bottom: rect.bottom, width: rect.width, height: rect.height };
+          }), actions);
+          for (const control of controls) {
+            assert.ok(control.width > 0 && control.height > 0, `${phase}: ${JSON.stringify(control)}`);
+            assert.ok(control.top >= 0 && control.bottom <= height, `${phase} ${width}x${height}: ${JSON.stringify(control)}`);
+          }
+        };
+        await page.click("[data-action=new]");
+        await waitPhase(page, "placing");
+        await assertControlsInViewport(["place", "pause"], "placing");
+        await page.click("[data-action=place]");
+        await waitPhase(page, "aiming");
+        await assertControlsInViewport(["shoot", "pause"], "aiming");
         const measured = await page.evaluate(() => {
           const a = document
               .querySelector("#game-viewport")

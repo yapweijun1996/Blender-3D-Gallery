@@ -1,30 +1,38 @@
 import { defineConfig } from 'vite';
 import { loadCatalog } from './scripts/catalog.mjs';
+import { loadDemos } from './scripts/demo-registry.mjs';
 import { pwaBuildPlugin } from './scripts/pwa-build.mjs';
 
 const virtualId = 'virtual:gallery-catalog';
-const resolvedId = '\0' + virtualId;
+const demosId = 'virtual:gallery-demos';
 export default defineConfig({
   base: './',
   build: { assetsInlineLimit: 0 },
   plugins: [pwaBuildPlugin(), {
-    name: 'gallery-catalog',
-    resolveId(id) { return id === virtualId ? resolvedId : null; },
+    name: 'gallery-registries',
+    resolveId(id) { return [virtualId, demosId].includes(id) ? '\0' + id : null; },
     load(id) {
-      if (id !== resolvedId) return null;
+      if (![virtualId, demosId].some(value => id === '\0' + value)) return null;
       const catalog = loadCatalog();
       const imports = [];
       let index = 0;
-      for (const collection of catalog.collections) {
-        for (const asset of collection.assets) {
-          const n = index++;
-          imports.push(`import file${n} from ${JSON.stringify('/' + asset.file + '?url')};`);
-          imports.push(`import image${n} from ${JSON.stringify('/' + asset.thumbnail + '?url')};`);
-          asset.file = `__FILE_${n}__`;
-          asset.thumbnail = `__IMAGE_${n}__`;
+      const assetUrl = (file) => {
+        const name = `asset${index++}`;
+        imports.push(`import ${name} from ${JSON.stringify('/' + file + '?url')};`);
+        return `__GALLERY_URL_${name}__`;
+      };
+      let content;
+      if (id === '\0' + demosId) {
+        content = loadDemos(process.cwd(), catalog);
+        for (const demo of content) demo.thumbnail = assetUrl(demo.thumbnail);
+      } else {
+        content = catalog;
+        for (const collection of catalog.collections) for (const asset of collection.assets) {
+          asset.file = assetUrl(asset.file);
+          asset.thumbnail = assetUrl(asset.thumbnail);
         }
       }
-      const body = JSON.stringify(catalog).replace(/"__FILE_(\d+)__"/g, 'file$1').replace(/"__IMAGE_(\d+)__"/g, 'image$1');
+      const body = JSON.stringify(content).replace(/"__GALLERY_URL_(asset\d+)__"/g, '$1');
       return `${imports.join('\n')}\nexport default ${body};`;
     },
   }],

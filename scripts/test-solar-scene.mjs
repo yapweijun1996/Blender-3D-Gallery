@@ -8,6 +8,11 @@ const artifacts =
   process.env.TEST_ARTIFACT_DIR || "models/solar-system/reports";
 await fs.mkdir(artifacts, { recursive: true });
 const results = [];
+async function returnToModels(page) {
+  if (await page.locator("#menu-trigger").isVisible())
+    await page.locator("#menu-trigger").click();
+  await page.getByRole("link", { name: "3D Models", exact: true }).click();
+}
 try {
   for (const width of [1440, 768, 390, 320]) {
     const page = await browser.newPage({
@@ -121,9 +126,9 @@ try {
     const moving = await page.locator("#solar-canvas canvas").screenshot();
     assert.notDeepEqual(still, moving, "animation changes rendered output");
     await page.selectOption("#solar-speed", "0");
-    await page.getByRole("link", { name: "Gallery", exact: true }).click();
+    await returnToModels(page);
     assert.equal(await page.locator("#solar-page canvas").count(), 0);
-    await page.locator("[data-asset-id=solar-saturn]").click();
+    await page.locator("[data-asset-id=solar-saturn]").first().click();
     await page.waitForFunction(
       () =>
         document.querySelector("#viewport canvas") &&
@@ -161,7 +166,7 @@ try {
   }
   const page = await browser.newPage();
   await page.goto(server.url + "?page=solar");
-  await page.getByRole("link", { name: "Gallery", exact: true }).click();
+  await returnToModels(page);
   await page.waitForTimeout(1000);
   assert.equal(await page.locator("#solar-page canvas").count(), 0);
   await page.close();

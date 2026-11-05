@@ -1,45 +1,276 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#111513">
-  <meta name="description" content="An independent gallery of real 3D works made with Blender.">
-  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="apple-touch-icon" href="/icons/icon-192.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>Blender 3D Gallery</title>
-</head>
-<body>
-  <header class="header shell">
-    <a class="brand" href="./" aria-label="Blender 3D Gallery home"><span class="brand-mark">✳</span><span>BLENDER <i>3D</i> GALLERY<small>OBJECTS &amp; SPACES</small></span></a>
-    <nav aria-label="Main navigation"><a href="./#collection" data-page="gallery">Gallery</a><a href="?page=game" data-page="game">Game</a><a href="?page=solar" data-page="solar">Solar System</a><a class="about-link" href="./#about" data-page="gallery">About</a><a class="source-link" href="https://github.com/yapweijun1996/Blender-3D-Gallery">GitHub <span aria-hidden="true">↗</span></a></nav>
-  </header>
-  <main id="gallery-page" class="shell">
-    <section class="intro" aria-labelledby="intro-title">
-      <div><p class="eyebrow"><span class="dot"></span> A COLLECTION IN THE MAKING</p><h1 id="intro-title">Objects worth<br><em>looking closer.</em></h1></div>
-      <p class="intro-copy">A small collection of original 3D works, made in Blender and ready to explore from every angle.</p>
-    </section>
-    <section id="collection" class="collection" aria-labelledby="collection-title">
-      <div class="section-heading"><div><p class="eyebrow">THE COLLECTION <span class="faint">/ 001</span></p><h2 id="collection-title">The collections<span class="period">.</span></h2></div><p>EXPLORE EACH OBJECT <span aria-hidden="true">↙</span></p></div>
-      <p class="collection-description">Individually modeled objects, made to explore and download.</p>
-      <div id="catalog" class="catalog" aria-live="polite"></div>
-      <noscript><p>Enable JavaScript to explore the 3D asset collection.</p></noscript>
-      <p class="collection-note"><span class="dot"></span> Made in Blender, one object at a time. <span>BUILT WITH CURIOSITY</span></p>
-    </section>
-    <section class="about" id="about"><p class="eyebrow">A NOTE ABOUT THIS SPACE</p><p>Blender 3D Gallery is a growing collection of real, interactive 3D objects. Made in Blender, created with different tools, and shared for the joy of looking closer.</p></section>
-  </main>
-  <main id="game-page" class="shell" hidden></main>
-  <main id="solar-page" class="shell" hidden></main>
-  <footer class="shell footer"><span>✳ &nbsp; BLENDER 3D GALLERY</span><span>AN INDEPENDENT 3D GALLERY</span><a href="https://github.com/yapweijun1996/Blender-3D-Gallery">VIEW SOURCE ↗</a></footer>
-  <dialog id="viewer" aria-labelledby="viewer-title">
-    <div class="viewer-header"><div><p id="viewer-category" class="eyebrow">INTERACTIVE OBJECT</p><h2 id="viewer-title">3D asset</h2></div><button id="close-viewer" class="icon-button" type="button" aria-label="Close 3D viewer">×</button></div>
-    <div id="viewport" class="viewport"><p id="viewer-status" class="viewer-status" role="status">Loading the 3D model…</p></div>
-    <div class="viewer-footer"><p>Drag to rotate · Scroll or pinch to zoom</p><button id="reset-view" type="button">Reset view ↺</button></div>
-    <div class="viewer-details"><p id="viewer-description" class="viewer-description"></p><a id="viewer-download" class="viewer-download" download>Download GLB ↓</a></div>
-  </dialog>
-  <script type="module" src="/src/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#111513" />
+    <meta
+      name="description"
+      content="An independent gallery of real 3D works made with Blender."
+    />
+    <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>Blender 3D Gallery</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="header shell">
+      <a class="brand" href="./" aria-label="Blender 3D Gallery home"
+        ><span class="brand-mark">✳</span
+        ><span
+          >BLENDER <i>3D</i> GALLERY<small>OBJECTS &amp; SPACES</small></span
+        ></a
+      >
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="?page=models" data-page="gallery">3D Models</a
+        ><a href="?page=demos" data-page="demos">Interactive Demos</a
+        ><a href="?page=about" data-page="about">About</a
+        ><a
+          class="source-link"
+          href="https://github.com/yapweijun1996/Blender-3D-Gallery"
+          >GitHub <span aria-hidden="true">↗</span></a
+        >
+      </nav>
+      <button
+        id="menu-trigger"
+        class="outline-button menu-trigger"
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+      >
+        Menu ☰
+      </button>
+    </header>
+    <dialog id="mobile-menu" aria-labelledby="menu-title">
+      <div class="menu-heading">
+        <h2 id="menu-title">Explore the gallery</h2>
+        <button
+          id="close-menu"
+          class="icon-button"
+          aria-label="Close navigation"
+        >
+          ×
+        </button>
+      </div>
+      <nav aria-label="Mobile navigation">
+        <a href="?page=models" data-page="gallery">3D Models</a
+        ><a href="?page=demos" data-page="demos">Interactive Demos</a
+        ><a href="?page=about" data-page="about">About</a
+        ><a href="https://github.com/yapweijun1996/Blender-3D-Gallery"
+          >GitHub ↗</a
+        >
+      </nav>
+    </dialog>
+    <div id="main-content" tabindex="-1"></div>
+    <p id="route-notice" class="shell route-notice" role="status" hidden></p>
+    <main id="gallery-page" class="shell">
+      <section class="intro" aria-labelledby="intro-title">
+        <div>
+          <p class="eyebrow">
+            <span class="dot"></span> A COLLECTION IN THE MAKING
+          </p>
+          <h1 id="intro-title">Objects worth<br /><em>looking closer.</em></h1>
+        </div>
+        <div class="intro-discovery">
+          <p class="intro-copy">
+            Original 3D works, made in Blender and ready to explore from every
+            angle.
+          </p>
+          <div class="explore-links">
+            <a
+              class="outline-button"
+              href="?page=models#collection"
+              data-page="gallery"
+              >Explore 3D Models ↘</a
+            ><a class="text-link" href="?page=demos" data-page="demos"
+              >Explore Interactive Demos ↗</a
+            >
+          </div>
+        </div>
+      </section>
+      <section
+        id="collection"
+        class="collection"
+        aria-labelledby="collection-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">
+              THE COLLECTION <span class="faint">/ 001</span>
+            </p>
+            <h2 id="collection-title">
+              3D Models<span class="period">.</span>
+            </h2>
+          </div>
+          <p>EXPLORE EACH OBJECT <span aria-hidden="true">↙</span></p>
+        </div>
+        <p class="collection-description">
+          Individually modeled objects, made to explore and download.
+        </p>
+        <form
+          id="model-filters"
+          class="browse-controls"
+          role="search"
+          aria-label="Search 3D models"
+        >
+          <label class="search-field" for="model-search"
+            >Search models<input
+              id="model-search"
+              name="q"
+              type="search"
+              placeholder="Name, collection or keyword…"
+              autocomplete="off" /></label
+          ><label for="model-category"
+            >Category<select id="model-category" name="category">
+              <option value="">All categories</option>
+            </select></label
+          ><label for="model-collection"
+            >Collection<select id="model-collection" name="collection">
+              <option value="">All collections</option>
+            </select></label
+          ><button type="reset" class="outline-button">Clear filters</button>
+        </form>
+        <p
+          id="model-count"
+          class="result-count"
+          role="status"
+          aria-live="polite"
+        ></p>
+        <div id="catalog" class="catalog">
+          <p role="status">Loading the model library…</p>
+        </div>
+        <noscript
+          ><p>
+            Enable JavaScript to explore the 3D asset collection.
+          </p></noscript
+        >
+        <p class="collection-note">
+          <span class="dot"></span> Made in Blender, one object at a time.
+          <span>BUILT WITH CURIOSITY</span>
+        </p>
+      </section>
+    </main>
+    <main id="demos-page" class="shell" hidden>
+      <section class="index-intro">
+        <p class="eyebrow">WORLDS TO STEP INTO</p>
+        <h1 tabindex="-1">Interactive Demos<span class="period">.</span></h1>
+        <p>
+          Explore interactive worlds, simulations, and experiments built from 3D
+          assets.
+        </p>
+      </section>
+      <form
+        id="demo-filters"
+        class="browse-controls"
+        role="search"
+        aria-label="Search interactive demos"
+      >
+        <label class="search-field" for="demo-search"
+          >Search demos<input
+            id="demo-search"
+            name="dq"
+            type="search"
+            placeholder="Name, category or keyword…"
+            autocomplete="off" /></label
+        ><label for="demo-category"
+          >Category<select id="demo-category" name="dc">
+            <option value="">All categories</option>
+          </select></label
+        ><button class="outline-button" type="reset">Clear filters</button>
+      </form>
+      <p
+        id="demo-count"
+        class="result-count"
+        role="status"
+        aria-live="polite"
+      ></p>
+      <div id="demo-catalog" class="demo-grid">
+        <p role="status">Loading interactive demos…</p>
+      </div>
+    </main>
+    <main id="about-page" class="shell" hidden>
+      <section id="about" class="index-intro">
+        <p class="eyebrow">A NOTE ABOUT THIS SPACE</p>
+        <h1 tabindex="-1">Made to look closer<span class="period">.</span></h1>
+        <p>
+          Blender 3D Gallery is a growing collection of real 3D objects. Made in
+          Blender, created with different tools, and shared for the joy of
+          looking closer.
+        </p>
+        <p>
+          Explore each object independently in 3D, or step into an interactive
+          experience built with the collection. The games and simulations are
+          browser demonstrations; no Blender installation or account is needed.
+        </p>
+        <p>
+          Artwork redistribution terms remain pending. Source maps retain their
+          credited usage terms; a download does not grant a separate
+          redistribution license.
+        </p>
+        <a class="text-link" href="?page=models" data-page="gallery"
+          >Explore the 3D models ↗</a
+        >
+      </section>
+    </main>
+    <div id="demo-breadcrumb" class="shell demo-breadcrumb" hidden>
+      <a class="text-link" href="?page=demos" data-page="demos"
+        >← Back to Interactive Demos</a
+      >
+    </div>
+    <main id="game-page" class="shell" hidden></main>
+    <main id="solar-page" class="shell" hidden></main>
+    <footer class="shell footer">
+      <span>✳ &nbsp; BLENDER 3D GALLERY</span
+      ><span>AN INDEPENDENT 3D GALLERY</span
+      ><a href="https://github.com/yapweijun1996/Blender-3D-Gallery"
+        >VIEW SOURCE ↗</a
+      >
+    </footer>
+    <dialog id="viewer" aria-labelledby="viewer-title">
+      <div class="viewer-header">
+        <div>
+          <p id="viewer-category" class="eyebrow">INTERACTIVE OBJECT</p>
+          <h2 id="viewer-title">3D asset</h2>
+        </div>
+        <button
+          id="close-viewer"
+          class="icon-button"
+          type="button"
+          aria-label="Close 3D viewer"
+        >
+          ×
+        </button>
+      </div>
+      <div id="viewport" class="viewport">
+        <img id="viewer-poster" class="viewer-poster" alt="" />
+        <p id="viewer-status" class="viewer-status" role="status">
+          Loading the 3D model…
+        </p>
+      </div>
+      <div class="viewer-footer">
+        <p>Drag to rotate · Scroll or pinch to zoom</p>
+        <div class="viewer-actions">
+          <button id="retry-view" type="button" hidden>Retry 3D view</button
+          ><button id="fullscreen-view" type="button" hidden>Fullscreen</button
+          ><button id="reset-view" type="button" disabled>Reset view ↺</button>
+        </div>
+      </div>
+      <dl id="viewer-metadata" class="viewer-metadata"></dl>
+      <div class="viewer-details">
+        <p id="viewer-description" class="viewer-description"></p>
+        <a id="viewer-download" class="viewer-download" download
+          >Download GLB ↓</a
+        >
+      </div>
+      <div id="viewer-related" class="viewer-related"></div>
+    </dialog>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
