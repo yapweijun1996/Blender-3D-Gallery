@@ -20,6 +20,9 @@ async function ready(page) {
     document.querySelector('#viewport canvas') &&
     document.querySelector('#viewer-status')?.textContent === '' && window.sagaDrawCalls > 0,
   null, { timeout: 60000 });
+  // Viewer drawing and browser network completion are distinct milestones.
+  // Settle the document before deliberate navigation/reload can cancel a late response.
+  await page.waitForLoadState('networkidle');
   await page.waitForTimeout(350);
 }
 async function noOverflow(page) {
@@ -38,7 +41,8 @@ async function changedCanvas(page, action, label) {
 
 try {
   for (const [label, width, height, touch] of [
-    ['desktop', 1440, 900, false], ['mobile', 390, 844, true],
+    ['desktop', 1440, 900, false], ['tablet', 768, 1024, true],
+    ['mobile', 390, 844, true], ['narrow', 320, 720, true],
   ]) {
     const context = await browser.newContext({
       viewport: { width, height }, hasTouch: touch, serviceWorkers: 'block',
@@ -56,13 +60,14 @@ try {
       }
     });
     const page = await context.newPage();
-    const failures = [], glbs = [];
+    const failures = [], glbs = [], glbResponses = [];
     page.on('pageerror', error => failures.push(error.message));
     page.on('console', message => {
       if (message.type() === 'error') failures.push(message.text());
     });
     page.on('response', response => {
       if (response.status() >= 400) failures.push(`${response.status()} ${response.url()}`);
+      if (new URL(response.url()).pathname.endsWith('.glb')) glbResponses.push(response);
     });
     page.on('requestfailed', request => failures.push(`${request.url()} ${request.failure()?.errorText}`));
     page.on('request', request => {
@@ -87,6 +92,31 @@ try {
       assert.match(await page.locator('#viewer-metadata').innerText(), /triangles/i);
       await noOverflow(page);
       await page.screenshot({ path: path.join(output, `${label}-viewer.png`) });
+      const viewButtons = page.locator('.vehicle-view-buttons button');
+      assert.equal(await viewButtons.count(), 4);
+      for (const name of ['front', 'rear', 'left', 'right']) {
+        const button = page.locator(`[data-vehicle-view="${name}"]`);
+        const rect = await button.boundingBox();
+        assert.ok(rect.width >= 44 && rect.height >= 44, 'vehicle presets retain touch targets');
+        await changedCanvas(page, async () => button.click(), `${name} preset`);
+        assert.equal(await button.getAttribute('aria-pressed'), 'true');
+        assert.equal(await page.locator('.vehicle-view-buttons [aria-pressed="true"]').count(), 1);
+        await page.screenshot({ path: path.join(output, `${label}-${name}.png`) });
+        await noOverflow(page);
+      }
+      // Native button keyboard activation must operate the same presets.
+      await page.locator('[data-vehicle-view="front"]').focus();
+      await changedCanvas(page, async () => page.keyboard.press('Enter'), 'keyboard front preset');
+      assert.equal(await page.locator('[data-vehicle-view="front"]').getAttribute('aria-pressed'), 'true');
+      const dialog = page.locator('#viewer');
+      for (const fraction of [0, 0.5, 1]) {
+        await dialog.evaluate((element, position) => { element.scrollTop = (element.scrollHeight - element.clientHeight) * position; }, fraction);
+        const close = await page.locator('#close-viewer').boundingBox();
+        assert.ok(close.y >= 0 && close.y + close.height <= height, 'close remains visible throughout dialog scrolling');
+        await noOverflow(page);
+        await page.screenshot({ path: path.join(output, `${label}-scroll-${fraction}.png`) });
+      }
+      await dialog.evaluate(element => { element.scrollTop = 0; });
       await changedCanvas(page, async canvas => {
         const box = await canvas.boundingBox();
         await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
@@ -102,6 +132,7 @@ try {
       await page.locator('#close-viewer').click();
       assert.equal(await page.locator('#viewer').evaluate(element => element.open), false);
       assert.equal(await page.locator('#viewport canvas').count(), 0);
+      assert.equal(await page.locator('.vehicle-views').count(), 0, 'closing disposes vehicle-only controls');
       assert.equal(await opener.evaluate(element => element === document.activeElement), true);
       await page.goto(server.url + '?model=proton-saga-1985');
       await ready(page);
@@ -109,9 +140,10 @@ try {
       await ready(page);
       await noOverflow(page);
       assert.equal(new URL(page.url()).searchParams.get('model'), 'proton-saga-1985');
+      for (const response of glbResponses) assert.equal(await response.finished(), null, 'each GLB response completed before navigation');
       assert.deepEqual(failures, [], 'no browser, network or console errors');
       results.push({ viewport: label, passed: true, glbRequests: glbs.length });
-      console.log(`PASS Saga ${label}: search, lazy load, render, rotate, zoom, reset, focus, direct link and reload`);
+      console.log(`PASS Saga ${label}: search, lazy load, render, four presets, keyboard, scrolling, rotate, zoom, reset, focus, direct link and reload`);
     } catch (error) {
       await page.screenshot({ path: path.join(output, `${label}-failure.png`) }).catch(() => {});
       throw error;

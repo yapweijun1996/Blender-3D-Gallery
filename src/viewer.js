@@ -9,10 +9,20 @@ export default async function createViewer(
   signal,
   asset,
 ) {
+  const isVehicle = asset.id === "proton-saga-1985";
+  let vehicleToolbar;
+  let studio;
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x657078);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  if (isVehicle) {
+    renderer.setClearColor(0x202326);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  }
   if (asset.family === "solar-system") {
     renderer.setClearColor(0x313840);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -29,6 +39,10 @@ export default async function createViewer(
   const camera = new THREE.PerspectiveCamera(35, 1, 0.00001, 1000);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
+  const clearPreset = () => {
+    vehicleToolbar?.querySelectorAll("button").forEach(button => button.setAttribute("aria-pressed", "false"));
+  };
+  controls.addEventListener("start", clearPreset);
   renderer.domElement.addEventListener("keydown", (event) => {
     if (event.ctrlKey || event.metaKey || event.altKey) return;
     const orbit = new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target));
@@ -41,6 +55,7 @@ export default async function createViewer(
     else if (["-", "_", "PageDown"].includes(event.key)) orbit.radius *= 1.15;
     else return;
     event.preventDefault();
+    clearPreset();
     orbit.makeSafe();
     orbit.radius = THREE.MathUtils.clamp(orbit.radius, controls.minDistance, controls.maxDistance);
     camera.position.copy(controls.target).add(new THREE.Vector3().setFromSpherical(orbit));
@@ -102,6 +117,9 @@ export default async function createViewer(
     document.removeEventListener("visibilitychange", visibility);
     controls.dispose();
     disposeModel(model);
+    disposeModel(studio);
+    light.shadow.dispose();
+    vehicleToolbar?.remove();
     renderer.dispose();
     renderer.domElement.remove();
     signal.removeEventListener("abort", dispose);
@@ -138,13 +156,34 @@ export default async function createViewer(
     controls.minDistance = radius * 1.05;
     controls.maxDistance = radius * 20;
     const direction = (
+      isVehicle ? new THREE.Vector3(1, 0.48, 1) :
       asset.family === "solar-system"
         ? new THREE.Vector3(0.55, 0.42, 1)
         : asset.category === "Balls"
           ? new THREE.Vector3(1, 0.3, 0.25)
           : new THREE.Vector3(1, 0.9, 1)
     ).normalize();
+    const frameVehicle = (viewDirection) => {
+      resize();
+      // Fit the actual model in this camera orientation, independently of the studio.
+      const vertical = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+      const horizontal = vertical * camera.aspect;
+      const right = new THREE.Vector3().crossVectors(camera.up, viewDirection).normalize();
+      const up = new THREE.Vector3().crossVectors(viewDirection, right).normalize();
+      let distance = 0;
+      for (const x of [bounds.min.x, bounds.max.x]) for (const y of [bounds.min.y, bounds.max.y]) for (const z of [bounds.min.z, bounds.max.z]) {
+        const offset = new THREE.Vector3(x, y, z).sub(center);
+        const depth = offset.dot(viewDirection);
+        distance = Math.max(distance, depth + Math.abs(offset.dot(right)) / horizontal, depth + Math.abs(offset.dot(up)) / vertical);
+      }
+      controls.target.copy(center);
+      camera.position.copy(center).addScaledVector(viewDirection, Math.max(distance * 1.08, controls.minDistance));
+      controls.update();
+      invalidate();
+    };
     const reset = () => {
+      clearPreset();
+      if (isVehicle) { frameVehicle(direction); return; }
       resize();
       const vertical = THREE.MathUtils.degToRad(camera.fov / 2);
       const horizontal = Math.atan(Math.tan(vertical) * camera.aspect);
@@ -155,6 +194,55 @@ export default async function createViewer(
       controls.update();
       invalidate();
     };
+    const setView = (name) => {
+      const directions = { front: [-1, 0, 0], rear: [1, 0, 0], left: [0, 0, 1], right: [0, 0, -1] };
+      if (!isVehicle || !directions[name]) return;
+      const axis = new THREE.Vector3(...directions[name]).applyEuler(model.rotation).normalize();
+      frameVehicle(axis);
+      vehicleToolbar?.querySelectorAll("button").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.vehicleView === name)));
+    };
+    if (isVehicle) {
+      scene.fog = new THREE.Fog(0x202326, radius * 6, radius * 14);
+      studio = new THREE.Group();
+      scene.add(studio);
+      const floor = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.MeshStandardMaterial({ color: 0x25282b, roughness: 0.85 }));
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = bounds.min.y - 0.005;
+      floor.receiveShadow = true;
+      studio.add(floor);
+      model.traverse(object => { if (object.isMesh) { object.castShadow = true; object.receiveShadow = false; } });
+      light.castShadow = true;
+      light.shadow.mapSize.set(1024, 1024);
+      light.shadow.camera.left = light.shadow.camera.bottom = -5;
+      light.shadow.camera.right = light.shadow.camera.top = 5;
+      light.shadow.normalBias = 0.025;
+      light.shadow.bias = -0.0001;
+      const fill = new THREE.DirectionalLight(0xdde8ff, 2);
+      fill.position.set(-4, 3, -3);
+      studio.add(fill);
+      controls.maxPolarAngle = Math.PI / 2;
+      vehicleToolbar = document.createElement("div");
+      vehicleToolbar.className = "vehicle-views";
+      vehicleToolbar.setAttribute("role", "group");
+      vehicleToolbar.setAttribute("aria-label", "Vehicle views");
+      const title = document.createElement("span");
+      title.className = "vehicle-views-label";
+      title.textContent = "360° Vehicle Showcase";
+      vehicleToolbar.append(title);
+      const buttons = document.createElement("div");
+      buttons.className = "vehicle-view-buttons";
+      for (const name of ["front", "rear", "left", "right"]) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.vehicleView = name;
+        button.textContent = name[0].toUpperCase() + name.slice(1);
+        button.setAttribute("aria-pressed", "false");
+        button.addEventListener("click", () => setView(name));
+        buttons.append(button);
+      }
+      vehicleToolbar.append(buttons);
+      container.insertAdjacentElement("afterend", vehicleToolbar);
+    }
     reset();
     status.textContent = "";
     draw = () => {
@@ -165,7 +253,7 @@ export default async function createViewer(
       if (changed) invalidate();
     };
     invalidate();
-    return { reset, dispose };
+    return { reset, dispose, setView };
   } catch (error) {
     dispose();
     throw error;
