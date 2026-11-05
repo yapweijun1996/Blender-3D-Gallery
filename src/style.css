@@ -1194,3 +1194,36 @@ dialog {
     }
   }
 }
+
+/* Vehicle presets share one contained control row below the 3D stage. */
+.vehicle-views {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: #202326;
+  color: #eee9dc;
+  border-top: 1px solid #54504a;
+  border-bottom: 1px solid var(--line);
+}
+.vehicle-views-label { font-size: 12px; letter-spacing: 0.08em; }
+.vehicle-view-buttons { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.vehicle-view-buttons button {
+  min-height: 44px;
+  min-width: 56px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #eee9dc;
+  border: 1px solid #716b60;
+  border-radius: 2px;
+  background: transparent;
+}
+.vehicle-view-buttons button[aria-pressed="true"] { background: #e1d4b9; color: #202326; border-color: #e1d4b9; }
+.vehicle-view-buttons button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .vehicle-views { padding: 14px; }
+  .vehicle-view-buttons { width: 100%; }
+  .vehicle-view-buttons button { min-width: 0; padding-inline: 8px; }
+}

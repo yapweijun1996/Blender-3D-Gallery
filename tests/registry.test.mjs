@@ -10,11 +10,11 @@ const raw = JSON.parse(fs.readFileSync('models/catalog.json', 'utf8'));
 const demos = JSON.parse(fs.readFileSync('data/demos.json', 'utf8'));
 const mutate = (change) => { const value = structuredClone(raw); change(value); return value; };
 
-test('catalog enrichment preserves all 39 assets and supplies measured metadata', () => {
+test('catalog enrichment preserves every registered asset and supplies measured metadata', () => {
   const catalog = loadCatalog();
   const expected = raw.collections.flatMap(collection => collection.assets);
   const actual = catalog.collections.flatMap(collection => collection.assets);
-  assert.equal(actual.length, 39);
+  assert.equal(actual.length, expected.length);
   assert.deepEqual(actual.map(({ id, file, thumbnail }) => ({ id, file, thumbnail })), expected.map(({ id, file, thumbnail }) => ({ id, file, thumbnail })));
   for (const collection of catalog.collections) for (const asset of collection.assets) {
     assert.equal(asset.slug, asset.id);
@@ -24,10 +24,22 @@ test('catalog enrichment preserves all 39 assets and supplies measured metadata'
     assert.ok(Number.isInteger(asset.materials) && asset.materials > 0);
     assert.ok(Number.isInteger(asset.animations) && asset.animations >= 0);
     assert.equal(asset.format, 'GLB');
-    assert.equal(asset.downloadable, true);
+    assert.equal(asset.downloadable, expected.find(entry => entry.id === asset.id).downloadable ?? true);
     assert.ok(asset.license.length > 0);
   }
   assert.equal(actual.find(asset => asset.id === 'solar-earth').license, actual.find(asset => asset.id === 'solar-earth').details.rights);
+});
+
+test('Saga study retains its identity, provenance and pending redistribution policy', () => {
+  const asset = loadCatalog().collections.flatMap(collection => collection.assets).find(asset => asset.id === 'proton-saga-1985');
+  assert.ok(asset, 'the original Saga is discoverable through the real catalog');
+  assert.equal(asset.collectionId, 'proton-heritage');
+  assert.equal(asset.category, 'Vehicles');
+  assert.equal(asset.downloadable, false);
+  assert.match(asset.license, /redistribution terms pending/i);
+  assert.equal(asset.details.id, asset.id);
+  assert.ok(asset.details.accuracy_notes.length > 0);
+  assert.ok(asset.details.attribution.some(credit => credit.credit.trim().length > 0));
 });
 
 test('catalog rejects duplicate identities and slugs across collections', () => {

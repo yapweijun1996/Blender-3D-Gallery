@@ -224,7 +224,7 @@ try {
       for (const [width, height] of sizes) {
         await page.setViewportSize({ width, height });
         for (const [route, input, count] of [
-          ["", "#model-search", 39],
+          ["", "#model-search", 40],
           ["?page=demos", "#demo-search", 2],
         ]) {
           await page.goto(server.url + route);

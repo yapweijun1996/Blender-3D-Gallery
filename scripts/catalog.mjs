@@ -100,7 +100,7 @@ export function loadCatalog(root = process.cwd()) {
     for (const asset of collection.assets) {
       if (asset.metadata) {
         asset.details = JSON.parse(fs.readFileSync(containedFile(root, asset.metadata), "utf8"));
-        validateMetadata(asset.details, asset.solarId);
+        validateMetadata(asset.details, asset.solarId ?? asset.id);
       }
       containedFile(root, asset.thumbnail);
       const buffer = fs.readFileSync(containedFile(root, asset.file));
