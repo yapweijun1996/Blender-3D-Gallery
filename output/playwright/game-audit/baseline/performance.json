@@ -1,0 +1,629 @@
+{
+  "methodology": {
+    "description": "Chromium headless, software WebGL and loopback production build; mobile is viewport/touch emulation, not a physical device.",
+    "ready": "Wall time from navigation to the game ready signal in a fresh browser context; no network or CPU throttling.",
+    "shot": "Rack seed 42, default cue placement and aim 0 degrees, power 75%; actual game controls and simulation. Six-second requestAnimationFrame intervals are classified by game phase at each callback.",
+    "frameSampling": "An interval on a phase transition can partly belong to the previous phase. Frame pacing is not GPU time; the game renders only when needed.",
+    "drawCalls": "Separate instrumented contexts count native WebGL2 submissions during one synchronous advanceTime(0) render. Draw instrumentation is absent from frame samples.",
+    "lifecycle": "Six Game-to-Gallery cycles in one page, with forced-GC snapshots immediately and 300ms after returning to Gallery.",
+    "limitations": [
+      "SwiftShader, headless execution, OS file cache and unthrottled loopback are not a hardware GPU or realistic mobile network.",
+      "Emulation does not establish physical iOS/Android performance, browser chrome, battery or thermal behavior.",
+      "Draw counts and frame intervals do not measure GPU time, shader stalls, texture allocation or total device memory.",
+      "Six lifecycle cycles and JS heap/DOM/listener snapshots do not prove the absence of sustained leaks, including GPU leaks."
+    ]
+  },
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "osRelease": "27.0.0",
+    "cpu": "Apple M4",
+    "logicalCpuCount": 10,
+    "launchOptions": {
+      "headless": true,
+      "args": [
+        "--use-angle=swiftshader",
+        "--enable-unsafe-swiftshader"
+      ]
+    },
+    "buildDir": "/tmp/blender-gallery-game-audit/node24-baseline/dist",
+    "buildInfo": {
+      "build": "75afc7500ec37f5b"
+    },
+    "buildInfoSha256": "b8d00090912767d469cc49f0bae58d2609a99526e5ec679e26041f0f53560bca",
+    "measuredAt": "2026-11-05T00:02:07.650Z",
+    "browser": "156.0.8078.4"
+  },
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 1,
+      "isMobile": false,
+      "hasTouch": false,
+      "samples": 3,
+      "measurements": [
+        {
+          "sample": 1,
+          "readyMs": 683.0052079999999,
+          "renderer": {
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+            "devicePixelRatio": 1,
+            "hardwareConcurrency": 10,
+            "canvasPixels": [
+              1020,
+              620
+            ],
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "vendor": "Google Inc. (Google)",
+            "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "maxTextureSize": 8192
+          },
+          "rackSignature": "71324b302667c3fe5c78eaa1a7e8ef6c2ba84be839e2547eab97731a66362f12",
+          "intervals": {
+            "moving": {
+              "count": 83,
+              "meanMs": 63.45180722891568,
+              "p50Ms": 66.60000000000036,
+              "p95Ms": 83.30000000000018,
+              "maxMs": 116.60000000000036
+            },
+            "settled": {
+              "count": 32,
+              "meanMs": 21.349999999999994,
+              "p50Ms": 16.699999999999818,
+              "p95Ms": 66.59999999999945,
+              "maxMs": 66.70000000000073
+            },
+            "other": {
+              "count": 1,
+              "meanMs": 66.69999999999982,
+              "p50Ms": 66.69999999999982,
+              "p95Ms": 66.69999999999982,
+              "maxMs": 66.69999999999982
+            }
+          }
+        },
+        {
+          "sample": 2,
+          "readyMs": 269.385624999999,
+          "renderer": {
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+            "devicePixelRatio": 1,
+            "hardwareConcurrency": 10,
+            "canvasPixels": [
+              1020,
+              620
+            ],
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "vendor": "Google Inc. (Google)",
+            "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "maxTextureSize": 8192
+          },
+          "rackSignature": "71324b302667c3fe5c78eaa1a7e8ef6c2ba84be839e2547eab97731a66362f12",
+          "intervals": {
+            "moving": {
+              "count": 89,
+              "meanMs": 60.110112359550584,
+              "p50Ms": 66.59999999999991,
+              "p95Ms": 66.80000000000018,
+              "maxMs": 150.10000000000002
+            },
+            "settled": {
+              "count": 26,
+              "meanMs": 22.43461538461539,
+              "p50Ms": 16.699999999999818,
+              "p95Ms": 66.60000000000036,
+              "maxMs": 66.80000000000018
+            },
+            "other": {
+              "count": 1,
+              "meanMs": 83.29999999999927,
+              "p50Ms": 83.29999999999927,
+              "p95Ms": 83.29999999999927,
+              "maxMs": 83.29999999999927
+            }
+          }
+        },
+        {
+          "sample": 3,
+          "readyMs": 255.81720799999857,
+          "renderer": {
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+            "devicePixelRatio": 1,
+            "hardwareConcurrency": 10,
+            "canvasPixels": [
+              1020,
+              620
+            ],
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "vendor": "Google Inc. (Google)",
+            "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "maxTextureSize": 8192
+          },
+          "rackSignature": "71324b302667c3fe5c78eaa1a7e8ef6c2ba84be839e2547eab97731a66362f12",
+          "intervals": {
+            "moving": {
+              "count": 88,
+              "meanMs": 59.84545454545452,
+              "p50Ms": 66.59999999999991,
+              "p95Ms": 66.79999999999973,
+              "maxMs": 133.39999999999986
+            },
+            "settled": {
+              "count": 34,
+              "meanMs": 20.58529411764705,
+              "p50Ms": 16.699999999999818,
+              "p95Ms": 66.69999999999982,
+              "maxMs": 66.70000000000073
+            },
+            "other": {
+              "count": 1,
+              "meanMs": 50,
+              "p50Ms": 50,
+              "p95Ms": 50,
+              "maxMs": 50
+            }
+          }
+        }
+      ],
+      "drawCalls": {
+        "setup": {
+          "active": false,
+          "calls": 135,
+          "triangles": 97208,
+          "lines": 0
+        },
+        "aiming": {
+          "active": false,
+          "calls": 140,
+          "triangles": 97500,
+          "lines": 1
+        }
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1,
+      "isMobile": true,
+      "hasTouch": true,
+      "samples": 3,
+      "measurements": [
+        {
+          "sample": 1,
+          "readyMs": 340.93845800000054,
+          "renderer": {
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+            "devicePixelRatio": 1,
+            "hardwareConcurrency": 10,
+            "canvasPixels": [
+              348,
+              484
+            ],
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "vendor": "Google Inc. (Google)",
+            "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "maxTextureSize": 8192
+          },
+          "rackSignature": "71324b302667c3fe5c78eaa1a7e8ef6c2ba84be839e2547eab97731a66362f12",
+          "intervals": {
+            "moving": {
+              "count": 129,
+              "meanMs": 40.566666666666684,
+              "p50Ms": 33.40000000000009,
+              "p95Ms": 50.09999999999991,
+              "maxMs": 83.40000000000009
+            },
+            "settled": {
+              "count": 40,
+              "meanMs": 18.332499999999982,
+              "p50Ms": 16.699999999999818,
+              "p95Ms": 33.29999999999927,
+              "maxMs": 50
+            },
+            "other": {
+              "count": 1,
+              "meanMs": 50,
+              "p50Ms": 50,
+              "p95Ms": 50,
+              "maxMs": 50
+            }
+          }
+        },
+        {
+          "sample": 2,
+          "readyMs": 217.3025000000016,
+          "renderer": {
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+            "devicePixelRatio": 1,
+            "hardwareConcurrency": 10,
+            "canvasPixels": [
+              348,
+              484
+            ],
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "vendor": "Google Inc. (Google)",
+            "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "maxTextureSize": 8192
+          },
+          "rackSignature": "71324b302667c3fe5c78eaa1a7e8ef6c2ba84be839e2547eab97731a66362f12",
+          "intervals": {
+            "moving": {
+              "count": 134,
+              "meanMs": 39.176865671641806,
+              "p50Ms": 33.399999999999864,
+              "p95Ms": 50.09999999999991,
+              "maxMs": 99.99999999999989
+            },
+            "settled": {
+              "count": 39,
+              "meanMs": 18.37435897435896,
+              "p50Ms": 16.699999999999818,
+              "p95Ms": 33.400000000000546,
+              "maxMs": 50
+            },
+            "other": {
+              "count": 1,
+              "meanMs": 50.100000000000364,
+              "p50Ms": 50.100000000000364,
+              "p95Ms": 50.100000000000364,
+              "maxMs": 50.100000000000364
+            }
+          }
+        },
+        {
+          "sample": 3,
+          "readyMs": 264.32733400000143,
+          "renderer": {
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+            "devicePixelRatio": 1,
+            "hardwareConcurrency": 10,
+            "canvasPixels": [
+              348,
+              484
+            ],
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "vendor": "Google Inc. (Google)",
+            "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "maxTextureSize": 8192
+          },
+          "rackSignature": "71324b302667c3fe5c78eaa1a7e8ef6c2ba84be839e2547eab97731a66362f12",
+          "intervals": {
+            "moving": {
+              "count": 133,
+              "meanMs": 39.47218045112782,
+              "p50Ms": 33.40000000000009,
+              "p95Ms": 50.09999999999991,
+              "maxMs": 99.89999999999998
+            },
+            "settled": {
+              "count": 39,
+              "meanMs": 18.374358974358984,
+              "p50Ms": 16.699999999999818,
+              "p95Ms": 33.399999999999636,
+              "maxMs": 50
+            },
+            "other": {
+              "count": 1,
+              "meanMs": 50,
+              "p50Ms": 50,
+              "p95Ms": 50,
+              "maxMs": 50
+            }
+          }
+        }
+      ],
+      "drawCalls": {
+        "setup": {
+          "active": false,
+          "calls": 135,
+          "triangles": 97208,
+          "lines": 0
+        },
+        "aiming": {
+          "active": false,
+          "calls": 140,
+          "triangles": 97500,
+          "lines": 1
+        }
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "isMobile": true,
+      "hasTouch": true,
+      "samples": 2,
+      "measurements": [
+        {
+          "sample": 1,
+          "readyMs": 339.0977500000008,
+          "renderer": {
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+            "devicePixelRatio": 3,
+            "hardwareConcurrency": 10,
+            "canvasPixels": [
+              522,
+              726
+            ],
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "vendor": "Google Inc. (Google)",
+            "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "maxTextureSize": 8192
+          },
+          "rackSignature": "71324b302667c3fe5c78eaa1a7e8ef6c2ba84be839e2547eab97731a66362f12",
+          "intervals": {
+            "moving": {
+              "count": 105,
+              "meanMs": 49.52190476190479,
+              "p50Ms": 50,
+              "p95Ms": 66.69999999999982,
+              "maxMs": 66.69999999999982
+            },
+            "settled": {
+              "count": 40,
+              "meanMs": 19.164999999999985,
+              "p50Ms": 16.699999999999818,
+              "p95Ms": 49.899999999999636,
+              "maxMs": 50.100000000000364
+            },
+            "other": {
+              "count": 1,
+              "meanMs": 50,
+              "p50Ms": 50,
+              "p95Ms": 50,
+              "maxMs": 50
+            }
+          }
+        },
+        {
+          "sample": 2,
+          "readyMs": 229.2644999999975,
+          "renderer": {
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+            "devicePixelRatio": 3,
+            "hardwareConcurrency": 10,
+            "canvasPixels": [
+              522,
+              726
+            ],
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "vendor": "Google Inc. (Google)",
+            "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "maxTextureSize": 8192
+          },
+          "rackSignature": "71324b302667c3fe5c78eaa1a7e8ef6c2ba84be839e2547eab97731a66362f12",
+          "intervals": {
+            "moving": {
+              "count": 106,
+              "meanMs": 49.2122641509434,
+              "p50Ms": 50,
+              "p95Ms": 66.59999999999991,
+              "maxMs": 100
+            },
+            "settled": {
+              "count": 39,
+              "meanMs": 19.23076923076923,
+              "p50Ms": 16.699999999999818,
+              "p95Ms": 50,
+              "maxMs": 50
+            },
+            "other": {
+              "count": 1,
+              "meanMs": 49.900000000000546,
+              "p50Ms": 49.900000000000546,
+              "p95Ms": 49.900000000000546,
+              "maxMs": 49.900000000000546
+            }
+          }
+        }
+      ],
+      "drawCalls": {
+        "setup": {
+          "active": false,
+          "calls": 135,
+          "triangles": 97208,
+          "lines": 0
+        },
+        "aiming": {
+          "active": false,
+          "calls": 140,
+          "triangles": 97500,
+          "lines": 1
+        }
+      }
+    }
+  ],
+  "lifecycle": {
+    "cycles": 6,
+    "cdpAvailable": true,
+    "snapshots": [
+      {
+        "label": "initial-gallery",
+        "heap": {
+          "usedSize": 1975172,
+          "totalSize": 3047424,
+          "embedderHeapUsedSize": 1322376,
+          "backingStorageSize": 61744
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 740,
+          "jsEventListeners": 87
+        }
+      },
+      {
+        "label": "gallery-after-cycle-1-immediate",
+        "heap": {
+          "usedSize": 4834656,
+          "totalSize": 6193152,
+          "embedderHeapUsedSize": 1960032,
+          "backingStorageSize": 4315631
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        }
+      },
+      {
+        "label": "gallery-after-cycle-1-settled-300ms",
+        "heap": {
+          "usedSize": 4208968,
+          "totalSize": 5144576,
+          "embedderHeapUsedSize": 1494208,
+          "backingStorageSize": 740523
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        }
+      },
+      {
+        "label": "gallery-after-cycle-2-immediate",
+        "heap": {
+          "usedSize": 4437720,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1786744,
+          "backingStorageSize": 740533
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        }
+      },
+      {
+        "label": "gallery-after-cycle-2-settled-300ms",
+        "heap": {
+          "usedSize": 4437720,
+          "totalSize": 4882432,
+          "embedderHeapUsedSize": 1507248,
+          "backingStorageSize": 740533
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        }
+      },
+      {
+        "label": "gallery-after-cycle-3-immediate",
+        "heap": {
+          "usedSize": 5287672,
+          "totalSize": 6455296,
+          "embedderHeapUsedSize": 1602536,
+          "backingStorageSize": 4315641
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        }
+      },
+      {
+        "label": "gallery-after-cycle-3-settled-300ms",
+        "heap": {
+          "usedSize": 4629548,
+          "totalSize": 5144576,
+          "embedderHeapUsedSize": 1754512,
+          "backingStorageSize": 740533
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        }
+      },
+      {
+        "label": "gallery-after-cycle-4-immediate",
+        "heap": {
+          "usedSize": 5335660,
+          "totalSize": 6717440,
+          "embedderHeapUsedSize": 1776728,
+          "backingStorageSize": 4315641
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        }
+      },
+      {
+        "label": "gallery-after-cycle-4-settled-300ms",
+        "heap": {
+          "usedSize": 4683304,
+          "totalSize": 5406720,
+          "embedderHeapUsedSize": 1539760,
+          "backingStorageSize": 740533
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        }
+      },
+      {
+        "label": "gallery-after-cycle-5-immediate",
+        "heap": {
+          "usedSize": 5415860,
+          "totalSize": 6455296,
+          "embedderHeapUsedSize": 1635816,
+          "backingStorageSize": 4315641
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        }
+      },
+      {
+        "label": "gallery-after-cycle-5-settled-300ms",
+        "heap": {
+          "usedSize": 4755460,
+          "totalSize": 5406720,
+          "embedderHeapUsedSize": 1615944,
+          "backingStorageSize": 740533
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        }
+      },
+      {
+        "label": "gallery-after-cycle-6-immediate",
+        "heap": {
+          "usedSize": 4767560,
+          "totalSize": 6193152,
+          "embedderHeapUsedSize": 1890832,
+          "backingStorageSize": 740533
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        }
+      },
+      {
+        "label": "gallery-after-cycle-6-settled-300ms",
+        "heap": {
+          "usedSize": 4767560,
+          "totalSize": 5406720,
+          "embedderHeapUsedSize": 1576760,
+          "backingStorageSize": 740533
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        }
+      }
+    ]
+  },
+  "errors": []
+}

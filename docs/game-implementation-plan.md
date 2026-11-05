@@ -176,3 +176,7 @@ The Actions workflow runs unit/asset/build and both browser suites before deploy
 ## Remaining validation limits
 
 No physical iPhone, Android phone or tablet was attached for this delivery. Home-screen installation, safe areas with actual browser chrome, storage pressure and sustained thermal/frame-time behavior require those devices. WebKit headless is useful coverage but is not iOS certification. The renderer's shared Three.js chunk still exceeds Vite's 500 kB advisory threshold; it remains lazy and is not a per-card canvas. No unsupported mobile performance score or universal PWA certification is claimed.
+
+## Subsequent game reliability and accessibility work
+
+The 2026-11-05 review preserves the same rules, checkpoint schema and assets. It tightens keyboard and pointer ownership, preserves a pending background pause through asynchronous work, releases late Web Locks after route exit, and keeps recovery available after loading or WebGL failures. Mobile play shows a concise aiming hint and real progress, including numbered remaining balls for assistive technology. App options offers a session-only Performance quality setting that lowers the renderer's pixel-ratio cap; Standard retains the original cap. See the [baseline](audits/game-baseline.md), [gameplay contract](game/gameplay-contract.md) and [release readiness](game/release-readiness.md) for executed evidence and remaining limits.

@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { LoaderUtils } from "three";
 
 const root = process.cwd();
 export function loadCatalog() {
@@ -41,6 +42,22 @@ export function loadCatalog() {
       const data = JSON.parse(
         buffer.subarray(20, 20 + chunkSize).toString("utf8"),
       );
+      for (const kind of ["images", "buffers"]) {
+        const resources = data[kind];
+        if (resources !== undefined && !Array.isArray(resources))
+          throw new Error(`Invalid ${kind} list in ${asset.file}`);
+        for (const resource of resources ?? []) {
+          // A malformed data URI can otherwise be resolved as a relative URL.
+          if (
+            resource?.uri !== undefined &&
+            (typeof resource.uri !== "string" ||
+              !/^data:/i.test(resource.uri) ||
+              /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/.test(resource.uri) ||
+              LoaderUtils.resolveURL(resource.uri, "/catalog-assets/") !== resource.uri)
+          )
+            throw new Error(`External ${kind} URI in ${asset.file}`);
+        }
+      }
       const nodes = data.scenes[data.scene ?? 0].nodes.map(
         (i) => data.nodes[i].name,
       );

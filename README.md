@@ -23,6 +23,7 @@ The gallery is not an online model editor, model-generation service, marketplace
 - [Roadmap and decisions](docs/roadmap.md): milestones, open decisions and status.
 - [Game implementation and delivery](docs/game-implementation-plan.md): game rules, architecture, controls, saved turns and offline/update contract.
 - [Game verification](docs/game-verification.md): executed checks, artifact paths and hardware limits.
+- [Game audit](docs/audits/game-baseline.md) and [gameplay contract](docs/game/gameplay-contract.md): baseline findings, current interaction boundaries and links to this review's release evidence.
 - [Agent guidance](AGENTS.md): repository-specific working rules.
 
 ## Status
