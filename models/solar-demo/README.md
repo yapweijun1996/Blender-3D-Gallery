@@ -1,0 +1,7 @@
+# Optimized Solar System demo models
+
+These GLBs are scene-only derivatives of the gallery assets recorded in `manifest.json`; original models, source credits and individual downloads remain authoritative. The manifest records source and output hashes and byte counts. The demo fetches these files only when the Solar System route opens.
+
+`node scripts/optimize-solar-demo.mjs` regenerates all derivatives on macOS using the system `sips` utility. It reduces images to a maximum dimension of 1024 pixels. Opaque color and emissive maps use JPEG quality 85; normal maps and the transparent Saturn ring remain PNG. Geometry, transforms, materials and animation buffers are unchanged. The Moon retains its source clearcoat and other material extensions. Regeneration overwrites the derived files; use a clean worktree and review results before committing. `node --test tests/solar-demo-assets.test.mjs` validates source/output hashes, GLB correctness, non-image buffers and material structure. Browser tests check the actual optimized requests and interactions.
+
+The 17 source files total 77,037,380 bytes; these derivatives total 12,802,436 bytes. In a single local Chromium mobile emulation (390 CSS px, 40 ms latency and 20 Mbps downstream), scene-ready time was approximately 33.5 seconds before and 7.2 seconds after. This is a controlled comparison, not a guarantee for real mobile devices. Physical-device memory, thermal and network performance have not been measured.

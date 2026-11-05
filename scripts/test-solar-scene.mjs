@@ -58,7 +58,10 @@ try {
       }
     });
     const errors = [],
-      cancellations = [];
+      cancellations = [], modelRequests = [];
+    page.on("request", (request) => {
+      if (new URL(request.url()).pathname.endsWith(".glb")) modelRequests.push(new URL(request.url()).pathname);
+    });
     page.on("requestfailed", (request) => {
       const error = request.failure()?.errorText;
       if (error === "net::ERR_ABORTED") cancellations.push(request.url());
@@ -86,6 +89,10 @@ try {
       throw error;
     }
     assert.equal(await page.locator("#solar-select option").count(), 18);
+    assert.equal(modelRequests.length, 17, "one model request per scene body");
+    for (const id of ["nasa-earth", "nasa-moon", "nasa-saturn", "nasa-vesta", "solar-asteroid-03"]) {
+      assert.ok(modelRequests.some(url => url.includes(`${id}-`)), `optimized model requested: ${id}`);
+    }
     await page.selectOption("#solar-speed", "0");
     await page.waitForTimeout(350);
     const pausedDraws = await page.evaluate(() => window.solarDrawCalls);
@@ -219,6 +226,18 @@ try {
   assert.equal(await page.locator("#solar-page canvas").count(), 0);
   await page.close();
   results.push({ status: "PASS", scenario: "cancel in-flight route load" });
+  server.setFault(({ relative }) => relative.includes("nasa-earth-") && relative.endsWith(".glb") ? { status: 503 } : null);
+  const failurePage = await browser.newPage();
+  await failurePage.goto(server.url + "?page=solar");
+  await failurePage.waitForFunction(() => document.querySelector("#solar-status")?.textContent.includes("could not load"), null, { timeout: 60000 });
+  await returnToModels(failurePage);
+  assert.equal(await failurePage.locator("#solar-page canvas").count(), 0);
+  server.setFault(null);
+  await failurePage.goto(server.url + "?page=solar");
+  await failurePage.waitForFunction(() => document.querySelector("#solar-status")?.textContent === "", null, { timeout: 60000 });
+  assert.equal(await failurePage.locator("#solar-select option").count(), 18);
+  await failurePage.close();
+  results.push({ status: "PASS", scenario: "optimized model failure and route retry" });
   await fs.writeFile(
     `${artifacts}/scene-validation.json`,
     JSON.stringify(results, null, 2) + "\n",

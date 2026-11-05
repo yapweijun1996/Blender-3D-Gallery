@@ -2,7 +2,19 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import "./style.css";
-export { solarSceneAssets } from "./assets.js";
+import { solarSceneAssets as buildSolarSceneAssets } from "./assets.js";
+
+// URL imports remain lazy: the browser fetches each GLB only when the scene loads.
+const demoUrls = import.meta.glob('/models/solar-demo/*.glb', {
+  eager: true, query: '?url', import: 'default',
+});
+export function solarSceneAssets(assets) {
+  return buildSolarSceneAssets(assets).map(asset => {
+    const url = demoUrls[`/models/solar-demo/${asset.id}.glb`];
+    if (!url) throw new Error(`Missing optimized solar model: ${asset.id}`);
+    return { ...asset, file: url };
+  });
+}
 
 /** Independent GLBs remain authoritative. This scene only owns display transforms. */
 export async function mountSolar(root, assets, signal) {
