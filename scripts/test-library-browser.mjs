@@ -70,8 +70,9 @@ try {
   await run('model search, combined filters, empty state and clear preserve URL state', async page => {
     await page.goto(server.url);
     await page.locator('#model-search').fill('  eArTh  ');
-    assert.equal(await page.locator('#catalog .asset-card').count(),1);
-    assert.match(await page.locator('#catalog').innerText(), /Earth/);
+    assert.equal(await page.locator('#catalog .asset-card').count(),2);
+    assert.ok(await page.locator('[data-asset-id=solar-earth]').count());
+    assert.ok(await page.locator('[data-asset-id=nasa-earth]').count());
     await page.locator('#model-category').selectOption('Planets');
     await page.locator('#model-collection').selectOption('billiards');
     assert.equal(await page.locator('#catalog .asset-card').count(),0);
