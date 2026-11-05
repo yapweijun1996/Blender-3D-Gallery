@@ -738,7 +738,7 @@ body.game-page .header{min-height:64px}
  .game-shell:not(.is-playing) .game-start p{display:none}
  .game-shell:not(.is-playing) .save-status{font-size:10px;margin:6px 0 0}
  .game-shell:not(.is-playing) .game-board{width:100%}
- .game-shell:not(.is-playing) #game-viewport{height:calc(100dvh - 316px - var(--demo-navigation-height, 0px) - var(--safe-top) - var(--safe-bottom));min-height:190px;max-height:560px}
+ .game-shell:not(.is-playing) #game-viewport{height:calc(100dvh - 334px - var(--demo-navigation-height, 0px) - var(--safe-top) - var(--safe-bottom));min-height:190px;max-height:560px}
  .game-shell:not(.is-playing) .game-table-caption{height:44px;padding:0 8px}
 }
 
@@ -956,12 +956,18 @@ body.game-page .header{min-height:64px}
     min-height: 0; max-height: none; margin-inline: auto;
   }
   .game-shell:not(.is-playing) .game-layout:not(:fullscreen) #game-viewport {
-    width: min(100%, calc((100dvh - 340px) * 1.62 / 2.82));
+    width: min(100%, calc((100dvh - 372px) * 1.62 / 2.82));
   }
 }
 @media (min-width: 901px) and (min-height: 501px) {
   .game-shell.game-shell .game-layout:not(:fullscreen) #game-viewport {
     height: auto; min-height: 0; max-height: none; aspect-ratio: 2.82 / 1.62;
+  }
+  /* Setup also reserves room for the shell, player cards and table actions. */
+  .game-shell:not(.is-playing) .game-board {
+    width: 100%;
+    max-width: calc((100dvh - 330px - var(--safe-top) - var(--safe-bottom)) * 2.82 / 1.62);
+    justify-self: center;
   }
 }
 @media (min-width: 901px) and (min-height: 501px) {
@@ -973,18 +979,22 @@ body.game-page .header{min-height:64px}
   .game-shell.is-playing .game-controls { min-height: 242px; position: relative; padding: 8px 10px 60px; }
   .game-shell.is-playing #game-shot-controls { display: grid; grid-template-columns: 1.4fr 1fr; gap: 0 12px; }
   .game-shell.is-playing #game-shot-controls .aim-control { display: contents; }
-  .game-shell.is-playing .aim-control > label { grid-column: 1; grid-row: 1; }
-  .game-shell.is-playing .aim-control > input { grid-column: 1; grid-row: 2; }
-  .game-shell.is-playing .power-control { grid-column: 2; grid-row: 1 / 3; }
+  /* Labels sit above the track inside its 44px target; pointer events still reach the range. */
+  .game-shell.is-playing #game-shot-controls .aim-control > label { grid-column: 1; grid-row: 2; align-self: start; z-index: 1; pointer-events: none; }
+  .game-shell.is-playing #game-shot-controls .aim-control > input { grid-column: 1; grid-row: 2; }
+  .game-shell.is-playing #game-shot-controls .power-control { grid-column: 2; grid-row: 2; position: relative; display: grid; }
+  .game-shell.is-playing .power-control > label { position: absolute; inset: 0 0 auto; pointer-events: none; }
   .game-shell.is-playing #game-shot-controls .aim-fine { display: flex; grid-column: 1 / -1; grid-row: 3; gap: 8px; margin: 0; }
   .game-shell.is-playing .aim-fine button { flex: 1; min-height: 44px; }
-  .game-shell.is-playing #game-shot-controls .control-note { grid-column: 1 / -1; grid-row: auto; font-size: 11px; line-height: 15px; margin: 2px 0 0; }
+  .game-shell.is-playing #game-shot-controls .control-note { grid-column: 1 / -1; grid-row: 4; font-size: 11px; line-height: 15px; margin: 2px 0 0; }
   .game-shell.is-playing #game-shot-controls > .primary,
   .game-shell.is-playing #game-placement .primary { position: absolute; bottom: 8px; left: 10px; width: calc(50% - 15px); height: 44px; margin: 0; }
   .game-shell.is-playing #game-pause { position: absolute; bottom: 8px; right: 10px; width: calc(50% - 15px); height: 44px; margin: 0; }
   .game-shell.is-playing .save-status:not(.is-warning) { display: none; }
   .game-shell.is-playing #game-status { min-height: 30px; margin: 0 0 2px; font-size: 12px; line-height: 15px; }
   .game-shell.is-playing .game-controls input[type="range"] { height: 44px; min-height: 44px; margin: 0; }
+  .game-shell.is-playing #game-shot-controls input[type="range"] { padding-top: 16px; }
+  .game-shell.is-playing #aim-contact { grid-row: 5; }
   .game-shell.is-playing .game-controls label { margin: 2px 0 0; }
   .game-shell.is-playing .game-turn { font-size: 18px; line-height: 22px; margin: 0; }
 }
@@ -1025,7 +1035,7 @@ body.game-page .header{min-height:64px}
   .game-shell.is-playing .game-turn { display: none; }
   .game-shell.is-playing .game-table-caption > span { display: none; }
   .game-shell.is-playing .game-table-caption { justify-content: space-between; }
-  .game-shell.is-playing .game-controls { min-height: 180px; }
+  .game-shell.is-playing .game-controls { min-height: 160px; }
   .game-shell.is-playing #game-shot-controls .aim-fine {
     position: absolute; left: 10px; bottom: 8px; width: calc(50% - 15px);
   }

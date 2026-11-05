@@ -7,19 +7,40 @@ const artifacts = process.env.TEST_ARTIFACT_DIR || '/tmp/blender-gallery-game-ex
 await fs.mkdir(artifacts, {recursive:true});
 const errors = [], results = [];
 try {
-  for (const [width,height] of [[390,844],[617,827],[1440,900]]) {
+  for (const [width,height,fontMetrics] of [[360,800,true],[360,800],[390,844],[617,827],[1440,900]]) {
     const context = await browser.newContext({viewport:{width,height},hasTouch:true,serviceWorkers:'block'});
     const page = await context.newPage(); page.on('pageerror', e => errors.push(e.message));
     await gameReady(page,server.url);
-    await page.screenshot({path:`${artifacts}/${width}-entry.png`});
+    if (fontMetrics) await page.evaluate(() => { document.body.style.fontFamily="Arial, sans-serif"; document.body.style.lineHeight="1.8"; });
+    const prefix = `${width}${fontMetrics ? "-font-metrics" : ""}`;
+    await page.screenshot({path:`${artifacts}/${prefix}-entry.png`});
     await page.locator('[data-action=new]').first().click();
     await page.waitForFunction(() => !document.querySelector('[data-action=place]').disabled);
     await page.locator('[data-action=place]').click();
     await page.waitForFunction(() => !document.querySelector('[data-action=shoot]').disabled);
+    if (width <= 900) {
+      for (const [id, initial] of [['aim-angle',0],['shot-power',45]]) {
+        const input = page.locator(`#${id}`), bounds = await input.boundingBox();
+        assert.ok(bounds.height >= 44, 'range retains a full touch target');
+        assert.equal(await page.locator(`label[for="${id}"]`).count(),1,'label association remains intact');
+        await page.touchscreen.tap(bounds.x+bounds.width*0.8,bounds.y+6);
+        assert.notEqual(Number(await input.inputValue()),initial,'label/readout area passes taps to the slider');
+        await input.evaluate((element,value)=>{element.value=value;element.dispatchEvent(new Event('input',{bubbles:true}));},String(initial));
+      }
+    }
     const before = await readGame(page);
     assert.equal(before.guide.kind,'ball'); assert.ok(before.guide.distance > 0.65);
     await page.evaluate(() => window.scrollTo(0,0));
-    await page.screenshot({path:`${artifacts}/${width}-aiming-top.png`});
+    await page.screenshot({path:`${artifacts}/${prefix}-aiming-top.png`});
+    const firstScreen = await page.evaluate(() => {
+      const rect = action => { const r = document.querySelector(`[data-action=${action}]`).getBoundingClientRect(); return {top:r.top,bottom:r.bottom,width:r.width,height:r.height}; };
+      return {shoot:rect('shoot'),pause:rect('pause'),scrollY};
+    });
+    assert.equal(firstScreen.scrollY,0,'first-screen check must precede auto scrolling');
+    for (const target of [firstScreen.shoot,firstScreen.pause]) {
+      assert.ok(target.width>=44 && target.height>=44,'primary targets remain touch sized');
+      assert.ok(target.top>=0 && target.bottom<=height-(width<=900 ? 12 : 0),`primary actions need vertical slack before auto-scroll: ${JSON.stringify({width,height,fontMetrics,firstScreen})}`);
+    }
     await page.locator('[data-action=shoot]').scrollIntoViewIfNeeded();
     const rectangles = await page.evaluate(() => {
       const box = s => {const r=document.querySelector(s).getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,bottom:r.bottom};};
@@ -27,9 +48,9 @@ try {
     });
     assert.equal(rectangles.overflow,false);
     const r = rectangles.canvas;
-    assert.ok(Math.abs(r.width/r.height - (width===390 ? 1.62/2.82 : 2.82/1.62)) < 0.02);
+    assert.ok(Math.abs(r.width/r.height - (width<=500 ? 1.62/2.82 : 2.82/1.62)) < 0.02);
     if(width===390) assert.ok(r.height >= 484-1,'phone table size preserves previous projected ball diameter');
-    await page.screenshot({path:`${artifacts}/${width}-aiming.png`});
+    await page.screenshot({path:`${artifacts}/${prefix}-aiming.png`});
     // Hold a real IndexedDB completion to reproduce pause while shot startup is pending.
     await page.evaluate(() => {
       const descriptor = Object.getOwnPropertyDescriptor(IDBTransaction.prototype,'oncomplete');
@@ -48,30 +69,48 @@ try {
     await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).phase==='paused');
     assert.deepEqual((await readGame(page)).balls,before.balls,'pause before delivery cannot apply impulse');
     await page.locator('[data-action=continue]').click();
-    // Freeze frame progression via the existing stepping hook, then inspect delivery.
-    await page.evaluate(() => window.advanceTime(0));
+    // Hold natural animation callbacks while driving the existing stepping hook.
+    // A wall-time freeze alone can expire during slow CI keyboard/screenshot calls.
+    await page.evaluate(() => {
+      const original = window.requestAnimationFrame, queued = [];
+      window.requestAnimationFrame = callback => { queued.push(callback); return 0; };
+      window.restoreGameFrames = () => {
+        window.requestAnimationFrame = original;
+        for (const callback of queued) original(callback);
+        delete window.restoreGameFrames;
+      };
+      window.advanceTime(0);
+    });
+    await page.waitForTimeout(100);
     await page.locator('[data-action=shoot]').click();
-    await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).delivery);
+    await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).delivery, null, {polling:50});
     assert.deepEqual((await readGame(page)).balls,before.balls,'delivery is presentation only');
     await page.locator('#game-viewport').focus();
     await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowUp');
     const locked=await readGame(page);
     assert.equal(locked.aim,before.aim); assert.equal(locked.power,before.power,'startup locks keyboard aim and power');
     await page.locator('[data-action=shoot]').evaluate(el=>el.click());
-    await page.evaluate(() => window.advanceTime(150));
-    await page.screenshot({path:`${artifacts}/${width}-delivery.png`});
-    await page.evaluate(() => window.advanceTime(150));
-    await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).phase==='moving');
+    await page.evaluate(() => window.advanceTime(100));
+    await page.screenshot({path:`${artifacts}/${prefix}-delivery.png`});
+    // Startup may already have consumed a frame before the wall-time freeze.
+    // Stop stepping at the first impulse instead of advancing physics afterward.
+    for (let step=0; step<6 && (await readGame(page)).delivery; step++)
+      await page.evaluate(() => window.advanceTime(50));
+    await page.waitForFunction(() => {
+      if (JSON.parse(window.render_game_to_text()).phase!=='moving') return false;
+      window.advanceTime(0);
+      return true;
+    }, null, {polling:50});
     const moving = await readGame(page);
-    assert.ok(Math.abs(Math.hypot(moving.balls[0].vx,moving.balls[0].vz)-(0.18+0.45*2.8))<1e-6,'exactly one unchanged impulse');
+    assert.ok(Math.abs(Math.hypot(moving.balls[0].vx,moving.balls[0].vz)-(0.18+0.45*2.8))<1e-6,`exactly one unchanged impulse: ${JSON.stringify({width,height,fontMetrics,beforePower:before.power,movingPower:moving.power,cue:moving.balls[0]})}`);
     const movingBox = await page.locator('.game-controls').boundingBox();
     assert.ok(Math.abs(movingBox.height-rectangles.controls.height)<1,'controls do not jump during motion');
-    await page.evaluate(()=>window.advanceTime(26000));
+    await page.evaluate(()=>{window.advanceTime(26000);window.restoreGameFrames();});
     await page.waitForFunction(()=>!['moving','adjudicating'].includes(JSON.parse(window.render_game_to_text()).phase));
     assert.match((await readGame(page)).lastResult,/Player [12]/);
-    await page.screenshot({path:`${artifacts}/${width}-result.png`});
-    results.push({width,height,...rectangles});
-    console.log(`PASS experience ${width}x${height}: framing, pending-pause, cue delivery, single impulse, stable HUD, factual result`);
+    await page.screenshot({path:`${artifacts}/${prefix}-result.png`});
+    results.push({width,height,fontMetrics:!!fontMetrics,firstScreen,...rectangles});
+    console.log(`PASS experience ${width}x${height}${fontMetrics ? " font-metrics" : ""}: framing, pending-pause, cue delivery, single impulse, stable HUD, factual result`);
     await context.close();
   }
   for (const reducedMotion of ['reduce','no-preference']) {
