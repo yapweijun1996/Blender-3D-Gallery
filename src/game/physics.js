@@ -81,6 +81,39 @@ function hasEarlierObstacle(starts, ends, i, time) {
   );
 }
 
+// Earliest entry into the cushion's capsule (segment plus round ends).
+function railImpact(x, z, dx, dz) {
+  let first = null;
+  const consider = (time, nx, nz) => {
+    if (time < 0 || time > 1 || dx * nx + dz * nz >= -1e-12) return;
+    if (!first || time < first.time) first = { time, nx, nz };
+  };
+  for (const rail of RAILS) {
+    if (Math.max(x, x + dx) + R < Math.min(rail.ax, rail.bx) ||
+        Math.min(x, x + dx) - R > Math.max(rail.ax, rail.bx) ||
+        Math.max(z, z + dz) + R < Math.min(rail.az, rail.bz) ||
+        Math.min(z, z + dz) - R > Math.max(rail.az, rail.bz)) continue;
+    const ex = rail.bx - rail.ax, ez = rail.bz - rail.az;
+    const length = Math.hypot(ex, ez), tx = ex / length, tz = ez / length;
+    const nx = -tz, nz = tx;
+    const distance = (x - rail.ax) * nx + (z - rail.az) * nz;
+    const speed = dx * nx + dz * nz;
+    if (Math.abs(speed) > 1e-12) for (const sign of [-1, 1]) {
+      const time = (sign * R - distance) / speed;
+      const along = (x + dx * time - rail.ax) * tx + (z + dz * time - rail.az) * tz;
+      if (along >= 0 && along <= length) consider(time, sign * nx, sign * nz);
+    }
+    for (const [px, pz] of [[rail.ax, rail.az], [rail.bx, rail.bz]]) {
+      const time = impactFraction(x - px, z - pz, dx, dz, R);
+      if (time === null) continue;
+      const rx = x + dx * time - px, rz = z + dz * time - pz;
+      const radius = Math.hypot(rx, rz);
+      if (radius > 1e-9) consider(time, rx / radius, rz / radius);
+    }
+  }
+  return first;
+}
+
 function rollBall(ball, mx, mz) {
   const travel = Math.hypot(mx, mz);
   if (!ball.q || !travel) return;
@@ -193,6 +226,7 @@ export function stepPhysics(balls, shot, dt = TABLE.step) {
       return pocketOnPath(starts[i * 2], starts[i * 2 + 1], ball.x, ball.z);
     });
     const redirectedPaths = new Map();
+    const railRedirected = new Set();
     const railBeforePocket = (i, time) => {
       const path = redirectedPaths.get(i);
       if (!path || time <= path.time)
@@ -358,8 +392,39 @@ export function stepPhysics(balls, shot, dt = TABLE.step) {
         }
       }
       if (iteration === 0) flushPockets(1);
-      for (const b of ordered) {
+      for (let i = 0; i < ordered.length; i++) {
+        const b = ordered[i];
         if (b.pocketed) continue;
+        // On the first pass, resolve a cushion at its actual contact time. The
+        // endpoint projection below remains the fallback for dense contacts.
+        if (iteration === 0 && !redirected.has(i) &&
+            Math.abs(b.x - ends[2 * i]) < 1e-10 &&
+            Math.abs(b.z - ends[2 * i + 1]) < 1e-10) {
+          const x = starts[2 * i], z = starts[2 * i + 1];
+          const mx = b.x - x, mz = b.z - z;
+          const hit = (mx || mz) && railImpact(x, z, mx, mz);
+          if (hit) {
+            const { time, nx, nz } = hit;
+            const remaining = 1 - time, normalMove = mx * nx + mz * nz;
+            const postX = (mx - 1.82 * normalMove * nx) * remaining;
+            const postZ = (mz - 1.82 * normalMove * nz) * remaining;
+            const hitX = x + mx * time, hitZ = z + mz * time;
+            b.x = hitX + postX;
+            b.z = hitZ + postZ;
+            const normalVelocity = b.vx * nx + b.vz * nz;
+            if (normalVelocity < 0) {
+              b.vx -= 1.82 * normalVelocity * nx;
+              b.vz -= 1.82 * normalVelocity * nz;
+            }
+            rollBall(b, -mx, -mz);
+            rollBall(b, mx * time, mz * time);
+            rollBall(b, postX, postZ);
+            redirectedPaths.set(i, { time, x: hitX, z: hitZ });
+            pendingPockets[i] = pocketOnPath(hitX, hitZ, b.x, b.z, time);
+            redirected.add(i);
+            railRedirected.add(i);
+          }
+        }
         for (const rail of RAILS) {
           const dx = rail.bx - rail.ax,
             dz = rail.bz - rail.az;
@@ -400,7 +465,11 @@ export function stepPhysics(balls, shot, dt = TABLE.step) {
           const event = pendingPockets[i],
             ball = ordered[i];
           if (!event || ball.pocketed) continue;
-          const pocket = POCKETS.find(
+          const path = redirectedPaths.get(i);
+          const sweptPocket = railRedirected.has(i) && path && event.time >= path.time &&
+            !segmentReachesRail(path.x, path.z, ball.x, ball.z)
+            ? POCKETS.find((p) => p.id === event.pocket) : null;
+          const pocket = sweptPocket || POCKETS.find(
             (p) => Math.hypot(ball.x - p.x, ball.z - p.z) < TABLE.pocketRadius,
           );
           if (pocket) {

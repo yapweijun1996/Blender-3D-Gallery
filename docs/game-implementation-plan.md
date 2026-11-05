@@ -93,6 +93,7 @@ A small analytical disk solver is used instead of adding a WASM rigid-body engin
 - Swept contact checks improve the order of ball impacts and pocket entries within a substep, including fast grazing contacts. When an earlier collision redirects a ball, its remaining path and pocket entry are reconsidered.
 - Equal-mass impulses, ball/cushion restitution and rolling deceleration provide casual pool motion.
 - Rolling quaternions follow displacement so the actual numbered ball meshes rotate.
+- For an unobstructed cushion impact, the solver follows the path up to the contact and the rebound for the remainder of the substep, including the matching visual rotation. Dense or repeated contacts still use the bounded approximations below.
 - Each pocket capture is recorded once, with tick and substep identity.
 - Low-speed settling requires a sustained quiet interval; adjudication does not run after a single quiet frame.
 - Nonfinite positions, escape bounds or excessive shot duration trigger explicit recovery.
