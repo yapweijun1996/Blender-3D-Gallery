@@ -4,6 +4,8 @@ import path from 'node:path';
 import { chromium } from 'playwright';
 import { serveBuild, launchOptions } from './browser-test-utils.mjs';
 
+const catalog = JSON.parse(await fs.readFile(new URL('../models/catalog.json', import.meta.url), 'utf8'));
+const expectedAssetCount = catalog.collections.reduce((count, collection) => count + collection.assets.length, 0);
 const server = await serveBuild();
 const browser = await chromium.launch(launchOptions);
 const artifacts = process.env.TEST_ARTIFACT_DIR || '/tmp/blender-gallery-library-qa';
@@ -52,7 +54,7 @@ try {
     for(const [width,height] of viewports) {
       await page.setViewportSize({width,height});
       await page.goto(server.url);
-      assert.equal(await page.locator('#catalog .asset-card').count(),39);
+      assert.equal(await page.locator('#catalog .asset-card').count(),expectedAssetCount);
       await noOverflow(page);
       await page.screenshot({path:path.join(artifacts,`models-${width}.png`)});
       await page.goto(server.url+'?page=demos');
@@ -74,8 +76,8 @@ try {
     await page.locator('#model-collection').selectOption('billiards');
     assert.equal(await page.locator('#catalog .asset-card').count(),0);
     await page.getByRole('button',{name:/clear filters/i}).first().click();
-    await page.waitForFunction(()=>document.querySelectorAll('#catalog .asset-card').length===39);
-    assert.equal(await page.locator('#catalog .asset-card').count(),39);
+    await page.waitForFunction(count=>document.querySelectorAll('#catalog .asset-card').length===count,expectedAssetCount);
+    assert.equal(await page.locator('#catalog .asset-card').count(),expectedAssetCount);
     await page.locator('#model-search').fill('  cue   stick ');
     assert.equal(await page.locator('#catalog .asset-card').count(),2);
     const searchUrl=page.url();
