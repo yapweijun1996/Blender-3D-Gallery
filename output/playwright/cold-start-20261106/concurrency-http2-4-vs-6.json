@@ -1,0 +1,5198 @@
+{
+  "methodology": {
+    "source": "Frozen same-source builds differ only in Game worker concurrency: four vs six. Both use unchanged, identical 18 GLBs.",
+    "execution": "Five strictly alternating four/six fresh contexts in one system Chrome process, one locally generated self-signed HTTPS/HTTP2 server, gzip level 6. Browser cache disabled; service workers blocked; 100ms latency, 4Mbps down, 1Mbps up page CDP throttle; CPU not throttled.",
+    "ready": "Wall clock from page.goto start to Game ready; host CPU counters and load averages bracket this interval only, with the counters including browser plus any other host work.",
+    "assets": "File and pack hashes are verified before sampling; each sample requires 18 status-200 HTTP/2 gzip responses with matching encoded and decoded byte lengths, successful Game ready and no page/GLB failures. No response-body hashing or extra instrumentation occurs during timing.",
+    "limitations": [
+      "This is local representative HTTPS/HTTP2 and gzip, not a production candidate deployment or a physical phone.",
+      "TLS certificates are temporary self-signed test certificates, trusted only through the test context's ignoreHTTPSErrors option.",
+      "Local gzip output is not guaranteed byte-identical to the CDN's gzip; encoded totals are compared against the recorded production response.",
+      "Five paired observations are descriptive; host CPU counters include the browser and external host workloads may affect results.",
+      "Service workers are blocked in every sample, so this does not evaluate installation contention or the offline pack."
+    ],
+    "order": [
+      "four",
+      "six",
+      "four",
+      "six",
+      "four",
+      "six",
+      "four",
+      "six",
+      "four",
+      "six"
+    ]
+  },
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "osRelease": "27.0.0",
+    "cpu": "Apple M4",
+    "timestamp": "2026-11-05T22:38:01.245Z",
+    "chrome": {
+      "channel": "chrome",
+      "headless": true,
+      "ignoreDefaultArgs": [
+        "--enable-unsafe-swiftshader"
+      ]
+    },
+    "browser": "156.0.8078.80"
+  },
+  "builds": {
+    "four": {
+      "build": "d5a0777b42aace5e",
+      "root": "<baseline-dist>",
+      "pack": {
+        "pool-table": {
+          "url": "assets/table-XWseCS4E.glb",
+          "bytes": 417656,
+          "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+          "gzipBytes": 37865
+        },
+        "cue-stick-01": {
+          "url": "assets/cue_01-BCqBke_n.glb",
+          "bytes": 14632,
+          "sha256": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8",
+          "gzipBytes": 3790
+        },
+        "cue-ball": {
+          "url": "assets/ball_00-BoyXP3PW.glb",
+          "bytes": 93692,
+          "sha256": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732",
+          "gzipBytes": 40072
+        },
+        "ball-01": {
+          "url": "assets/ball_01-CYdwOVaM.glb",
+          "bytes": 120536,
+          "sha256": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a",
+          "gzipBytes": 49447
+        },
+        "ball-02": {
+          "url": "assets/ball_02-DB1WWWFC.glb",
+          "bytes": 215296,
+          "sha256": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a",
+          "gzipBytes": 76801
+        },
+        "ball-03": {
+          "url": "assets/ball_03-CUIVES0h.glb",
+          "bytes": 268828,
+          "sha256": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352",
+          "gzipBytes": 92002
+        },
+        "ball-04": {
+          "url": "assets/ball_04-BBCbhjJU.glb",
+          "bytes": 157064,
+          "sha256": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85",
+          "gzipBytes": 57548
+        },
+        "ball-05": {
+          "url": "assets/ball_05-g8Q6Ow2l.glb",
+          "bytes": 203708,
+          "sha256": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018",
+          "gzipBytes": 73517
+        },
+        "ball-06": {
+          "url": "assets/ball_06-Dx-lGkJH.glb",
+          "bytes": 244380,
+          "sha256": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50",
+          "gzipBytes": 85059
+        },
+        "ball-07": {
+          "url": "assets/ball_07-DTLIzTg4.glb",
+          "bytes": 127912,
+          "sha256": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd",
+          "gzipBytes": 51368
+        },
+        "ball-08": {
+          "url": "assets/ball_08-BGG5JkMB.glb",
+          "bytes": 324100,
+          "sha256": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9",
+          "gzipBytes": 108144
+        },
+        "ball-09": {
+          "url": "assets/ball_09-Bu8fLWw3.glb",
+          "bytes": 262604,
+          "sha256": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af",
+          "gzipBytes": 90191
+        },
+        "ball-10": {
+          "url": "assets/ball_10-Csex90PS.glb",
+          "bytes": 227632,
+          "sha256": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab",
+          "gzipBytes": 79994
+        },
+        "ball-11": {
+          "url": "assets/ball_11-DqkUg1Oy.glb",
+          "bytes": 132568,
+          "sha256": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec",
+          "gzipBytes": 52216
+        },
+        "ball-12": {
+          "url": "assets/ball_12-BBSM0uzd.glb",
+          "bytes": 223308,
+          "sha256": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149",
+          "gzipBytes": 78871
+        },
+        "ball-13": {
+          "url": "assets/ball_13-CbMLTUSR.glb",
+          "bytes": 279952,
+          "sha256": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4",
+          "gzipBytes": 94747
+        },
+        "ball-14": {
+          "url": "assets/ball_14-5cOYbVRY.glb",
+          "bytes": 170364,
+          "sha256": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf",
+          "gzipBytes": 61769
+        },
+        "ball-15": {
+          "url": "assets/ball_15-BhFgOajB.glb",
+          "bytes": 213552,
+          "sha256": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296",
+          "gzipBytes": 76579
+        }
+      }
+    },
+    "six": {
+      "build": "4e37e843b4b1ee65",
+      "root": "<candidate-dist>",
+      "pack": {
+        "pool-table": {
+          "url": "assets/table-XWseCS4E.glb",
+          "bytes": 417656,
+          "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+          "gzipBytes": 37865
+        },
+        "cue-stick-01": {
+          "url": "assets/cue_01-BCqBke_n.glb",
+          "bytes": 14632,
+          "sha256": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8",
+          "gzipBytes": 3790
+        },
+        "cue-ball": {
+          "url": "assets/ball_00-BoyXP3PW.glb",
+          "bytes": 93692,
+          "sha256": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732",
+          "gzipBytes": 40072
+        },
+        "ball-01": {
+          "url": "assets/ball_01-CYdwOVaM.glb",
+          "bytes": 120536,
+          "sha256": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a",
+          "gzipBytes": 49447
+        },
+        "ball-02": {
+          "url": "assets/ball_02-DB1WWWFC.glb",
+          "bytes": 215296,
+          "sha256": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a",
+          "gzipBytes": 76801
+        },
+        "ball-03": {
+          "url": "assets/ball_03-CUIVES0h.glb",
+          "bytes": 268828,
+          "sha256": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352",
+          "gzipBytes": 92002
+        },
+        "ball-04": {
+          "url": "assets/ball_04-BBCbhjJU.glb",
+          "bytes": 157064,
+          "sha256": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85",
+          "gzipBytes": 57548
+        },
+        "ball-05": {
+          "url": "assets/ball_05-g8Q6Ow2l.glb",
+          "bytes": 203708,
+          "sha256": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018",
+          "gzipBytes": 73517
+        },
+        "ball-06": {
+          "url": "assets/ball_06-Dx-lGkJH.glb",
+          "bytes": 244380,
+          "sha256": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50",
+          "gzipBytes": 85059
+        },
+        "ball-07": {
+          "url": "assets/ball_07-DTLIzTg4.glb",
+          "bytes": 127912,
+          "sha256": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd",
+          "gzipBytes": 51368
+        },
+        "ball-08": {
+          "url": "assets/ball_08-BGG5JkMB.glb",
+          "bytes": 324100,
+          "sha256": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9",
+          "gzipBytes": 108144
+        },
+        "ball-09": {
+          "url": "assets/ball_09-Bu8fLWw3.glb",
+          "bytes": 262604,
+          "sha256": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af",
+          "gzipBytes": 90191
+        },
+        "ball-10": {
+          "url": "assets/ball_10-Csex90PS.glb",
+          "bytes": 227632,
+          "sha256": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab",
+          "gzipBytes": 79994
+        },
+        "ball-11": {
+          "url": "assets/ball_11-DqkUg1Oy.glb",
+          "bytes": 132568,
+          "sha256": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec",
+          "gzipBytes": 52216
+        },
+        "ball-12": {
+          "url": "assets/ball_12-BBSM0uzd.glb",
+          "bytes": 223308,
+          "sha256": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149",
+          "gzipBytes": 78871
+        },
+        "ball-13": {
+          "url": "assets/ball_13-CbMLTUSR.glb",
+          "bytes": 279952,
+          "sha256": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4",
+          "gzipBytes": 94747
+        },
+        "ball-14": {
+          "url": "assets/ball_14-5cOYbVRY.glb",
+          "bytes": 170364,
+          "sha256": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf",
+          "gzipBytes": 61769
+        },
+        "ball-15": {
+          "url": "assets/ball_15-BhFgOajB.glb",
+          "bytes": 213552,
+          "sha256": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296",
+          "gzipBytes": 76579
+        }
+      }
+    }
+  },
+  "gzipComparison": {
+    "productionBuild": "d5a0777b42aace5e",
+    "localTotal": 1209980,
+    "productionTotal": 1220024,
+    "differenceBytes": -10044,
+    "differencePercent": -0.8232624931968552,
+    "files": [
+      {
+        "path": "assets/table-XWseCS4E.glb",
+        "localEncoded": 37865,
+        "productionEncoded": 41893
+      },
+      {
+        "path": "assets/cue_01-BCqBke_n.glb",
+        "localEncoded": 3790,
+        "productionEncoded": 3798
+      },
+      {
+        "path": "assets/ball_00-BoyXP3PW.glb",
+        "localEncoded": 40072,
+        "productionEncoded": 40142
+      },
+      {
+        "path": "assets/ball_01-CYdwOVaM.glb",
+        "localEncoded": 49447,
+        "productionEncoded": 49564
+      },
+      {
+        "path": "assets/ball_02-DB1WWWFC.glb",
+        "localEncoded": 76801,
+        "productionEncoded": 77270
+      },
+      {
+        "path": "assets/ball_03-CUIVES0h.glb",
+        "localEncoded": 92002,
+        "productionEncoded": 92552
+      },
+      {
+        "path": "assets/ball_04-BBCbhjJU.glb",
+        "localEncoded": 57548,
+        "productionEncoded": 57698
+      },
+      {
+        "path": "assets/ball_05-g8Q6Ow2l.glb",
+        "localEncoded": 73517,
+        "productionEncoded": 73824
+      },
+      {
+        "path": "assets/ball_06-Dx-lGkJH.glb",
+        "localEncoded": 85059,
+        "productionEncoded": 85634
+      },
+      {
+        "path": "assets/ball_07-DTLIzTg4.glb",
+        "localEncoded": 51368,
+        "productionEncoded": 51493
+      },
+      {
+        "path": "assets/ball_08-BGG5JkMB.glb",
+        "localEncoded": 108144,
+        "productionEncoded": 108835
+      },
+      {
+        "path": "assets/ball_09-Bu8fLWw3.glb",
+        "localEncoded": 90191,
+        "productionEncoded": 90825
+      },
+      {
+        "path": "assets/ball_10-Csex90PS.glb",
+        "localEncoded": 79994,
+        "productionEncoded": 80419
+      },
+      {
+        "path": "assets/ball_11-DqkUg1Oy.glb",
+        "localEncoded": 52216,
+        "productionEncoded": 52445
+      },
+      {
+        "path": "assets/ball_12-BBSM0uzd.glb",
+        "localEncoded": 78871,
+        "productionEncoded": 79232
+      },
+      {
+        "path": "assets/ball_13-CbMLTUSR.glb",
+        "localEncoded": 94747,
+        "productionEncoded": 95403
+      },
+      {
+        "path": "assets/ball_14-5cOYbVRY.glb",
+        "localEncoded": 61769,
+        "productionEncoded": 62017
+      },
+      {
+        "path": "assets/ball_15-BhFgOajB.glb",
+        "localEncoded": 76579,
+        "productionEncoded": 76980
+      }
+    ]
+  },
+  "samples": [
+    {
+      "index": 1,
+      "name": "four",
+      "errors": [],
+      "readyMs": 3390.9255000000003,
+      "hostCpuBusyPercent": 65.72020112392784,
+      "hostLoadBefore": [
+        8.17822265625,
+        7.9287109375,
+        7.30029296875
+      ],
+      "hostLoadAfter": [
+        10.00537109375,
+        8.3115234375,
+        7.43896484375
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvas": [
+        990,
+        569
+      ],
+      "controller": false,
+      "resources": [
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 777.2999999970198,
+          "responseEndMs": 1154.2999999970198,
+          "encodedBytes": 37865,
+          "decodedBytes": 417656,
+          "transferBytes": 38165,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 777.4000000059605,
+          "responseEndMs": 914.9000000059605,
+          "encodedBytes": 3790,
+          "decodedBytes": 14632,
+          "transferBytes": 4090,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 777.4000000059605,
+          "responseEndMs": 1166.4000000059605,
+          "encodedBytes": 40072,
+          "decodedBytes": 93692,
+          "transferBytes": 40372,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 777.4000000059605,
+          "responseEndMs": 1208.4000000059605,
+          "encodedBytes": 49447,
+          "decodedBytes": 120536,
+          "transferBytes": 49747,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 917.7000000029802,
+          "responseEndMs": 1424.7999999970198,
+          "encodedBytes": 76801,
+          "decodedBytes": 215296,
+          "transferBytes": 77101,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 1157,
+          "responseEndMs": 1892.4000000059605,
+          "encodedBytes": 92002,
+          "decodedBytes": 268828,
+          "transferBytes": 92302,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 1167.2999999970198,
+          "responseEndMs": 1685.4000000059605,
+          "encodedBytes": 57548,
+          "decodedBytes": 157064,
+          "transferBytes": 57848,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 1209.2000000029802,
+          "responseEndMs": 1841.4000000059605,
+          "encodedBytes": 73517,
+          "decodedBytes": 203708,
+          "transferBytes": 73817,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 1425.7000000029802,
+          "responseEndMs": 2092.7999999970198,
+          "encodedBytes": 85059,
+          "decodedBytes": 244380,
+          "transferBytes": 85359,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 1686.4000000059605,
+          "responseEndMs": 2113.5,
+          "encodedBytes": 51368,
+          "decodedBytes": 127912,
+          "transferBytes": 51668,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 1842.4000000059605,
+          "responseEndMs": 2672.4000000059605,
+          "encodedBytes": 108144,
+          "decodedBytes": 324100,
+          "transferBytes": 108444,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 1893.4000000059605,
+          "responseEndMs": 2630.4000000059605,
+          "encodedBytes": 90191,
+          "decodedBytes": 262604,
+          "transferBytes": 90491,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 2093.7999999970198,
+          "responseEndMs": 2705.5,
+          "encodedBytes": 79994,
+          "decodedBytes": 227632,
+          "transferBytes": 80294,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 2114.2000000029802,
+          "responseEndMs": 2633.4000000059605,
+          "encodedBytes": 52216,
+          "decodedBytes": 132568,
+          "transferBytes": 52516,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 2631.4000000059605,
+          "responseEndMs": 3305.2999999970198,
+          "encodedBytes": 78871,
+          "decodedBytes": 223308,
+          "transferBytes": 79171,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 2634,
+          "responseEndMs": 3371.5,
+          "encodedBytes": 94747,
+          "decodedBytes": 279952,
+          "transferBytes": 95047,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 2673.4000000059605,
+          "responseEndMs": 3263.2999999970198,
+          "encodedBytes": 61769,
+          "decodedBytes": 170364,
+          "transferBytes": 62069,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 2706.2999999970198,
+          "responseEndMs": 3361.9000000059605,
+          "encodedBytes": 76579,
+          "decodedBytes": 213552,
+          "transferBytes": 76879,
+          "protocol": "h2"
+        }
+      ],
+      "cdpGlbs": [
+        {
+          "requestId": "33848.120",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "37865",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:03 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 37951
+        },
+        {
+          "requestId": "33848.121",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "3790",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:03 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 3820
+        },
+        {
+          "requestId": "33848.122",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "40072",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:03 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 40121
+        },
+        {
+          "requestId": "33848.123",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "49447",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:03 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 49505
+        },
+        {
+          "requestId": "33848.124",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76801",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:03 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76868
+        },
+        {
+          "requestId": "33848.125",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "92002",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:03 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 92078
+        },
+        {
+          "requestId": "33848.126",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "57548",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:03 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 57606
+        },
+        {
+          "requestId": "33848.127",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "73517",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:03 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 73584
+        },
+        {
+          "requestId": "33848.128",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "85059",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:03 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 85135
+        },
+        {
+          "requestId": "33848.129",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "51368",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:04 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 51449
+        },
+        {
+          "requestId": "33848.130",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "108144",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:04 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 108230
+        },
+        {
+          "requestId": "33848.131",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "90191",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:04 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 90267
+        },
+        {
+          "requestId": "33848.132",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "79994",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:04 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 80061
+        },
+        {
+          "requestId": "33848.133",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "52216",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:04 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 52274
+        },
+        {
+          "requestId": "33848.134",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "78871",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:05 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 78961
+        },
+        {
+          "requestId": "33848.135",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "94747",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:05 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 94823
+        },
+        {
+          "requestId": "33848.136",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "61769",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:05 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 61827
+        },
+        {
+          "requestId": "33848.137",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76579",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:05 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76646
+        }
+      ],
+      "complete": true
+    },
+    {
+      "index": 2,
+      "name": "six",
+      "errors": [],
+      "readyMs": 3367.5003749999996,
+      "hostCpuBusyPercent": 64.03823178016727,
+      "hostLoadBefore": [
+        10.00537109375,
+        8.3115234375,
+        7.43896484375
+      ],
+      "hostLoadAfter": [
+        10.00537109375,
+        8.3115234375,
+        7.43896484375
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvas": [
+        990,
+        569
+      ],
+      "controller": false,
+      "resources": [
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 790.7000000029802,
+          "responseEndMs": 937.2999999970198,
+          "encodedBytes": 3790,
+          "decodedBytes": 14632,
+          "transferBytes": 4090,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 790.7000000029802,
+          "responseEndMs": 1330,
+          "encodedBytes": 37865,
+          "decodedBytes": 417656,
+          "transferBytes": 38165,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 790.7000000029802,
+          "responseEndMs": 1348.0999999940395,
+          "encodedBytes": 40072,
+          "decodedBytes": 93692,
+          "transferBytes": 40372,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 790.7999999970198,
+          "responseEndMs": 1423.2999999970198,
+          "encodedBytes": 49447,
+          "decodedBytes": 120536,
+          "transferBytes": 49747,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 790.7999999970198,
+          "responseEndMs": 1723.3999999910593,
+          "encodedBytes": 76801,
+          "decodedBytes": 215296,
+          "transferBytes": 77101,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 790.7999999970198,
+          "responseEndMs": 1879.2999999970198,
+          "encodedBytes": 92002,
+          "decodedBytes": 268828,
+          "transferBytes": 92302,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 939.7999999970198,
+          "responseEndMs": 1672.0999999940395,
+          "encodedBytes": 57548,
+          "decodedBytes": 157064,
+          "transferBytes": 57848,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 1332.7000000029802,
+          "responseEndMs": 2218.3999999910593,
+          "encodedBytes": 73517,
+          "decodedBytes": 203708,
+          "transferBytes": 73817,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 1348.7000000029802,
+          "responseEndMs": 2350.5,
+          "encodedBytes": 85059,
+          "decodedBytes": 244380,
+          "transferBytes": 85359,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 1424.0999999940395,
+          "responseEndMs": 2088.7999999970198,
+          "encodedBytes": 51368,
+          "decodedBytes": 127912,
+          "transferBytes": 51668,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 1672.7999999970198,
+          "responseEndMs": 2929.2999999970198,
+          "encodedBytes": 108144,
+          "decodedBytes": 324100,
+          "transferBytes": 108444,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 1724.2999999970198,
+          "responseEndMs": 2833.7000000029802,
+          "encodedBytes": 90191,
+          "decodedBytes": 262604,
+          "transferBytes": 90491,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 1880.5,
+          "responseEndMs": 2869.2999999970198,
+          "encodedBytes": 79994,
+          "decodedBytes": 227632,
+          "transferBytes": 80294,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 2089.7000000029802,
+          "responseEndMs": 2778.5,
+          "encodedBytes": 52216,
+          "decodedBytes": 132568,
+          "transferBytes": 52516,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 2220,
+          "responseEndMs": 3103.2000000029802,
+          "encodedBytes": 78871,
+          "decodedBytes": 223308,
+          "transferBytes": 79171,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 2351.7000000029802,
+          "responseEndMs": 3280.5,
+          "encodedBytes": 94747,
+          "decodedBytes": 279952,
+          "transferBytes": 95047,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 2779.5,
+          "responseEndMs": 3304.7000000029802,
+          "encodedBytes": 61769,
+          "decodedBytes": 170364,
+          "transferBytes": 62069,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 2834.7999999970198,
+          "responseEndMs": 3349.3999999910593,
+          "encodedBytes": 76579,
+          "decodedBytes": 213552,
+          "transferBytes": 76879,
+          "protocol": "h2"
+        }
+      ],
+      "cdpGlbs": [
+        {
+          "requestId": "33879.120",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "37865",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:06 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 37928
+        },
+        {
+          "requestId": "33879.121",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "3790",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:06 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 3820
+        },
+        {
+          "requestId": "33879.122",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "40072",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:06 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 40121
+        },
+        {
+          "requestId": "33879.123",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "49447",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:06 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 49505
+        },
+        {
+          "requestId": "33879.124",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76801",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:06 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76868
+        },
+        {
+          "requestId": "33879.125",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "92002",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:06 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 92078
+        },
+        {
+          "requestId": "33879.126",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "57548",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:07 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 57629
+        },
+        {
+          "requestId": "33879.127",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "73517",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:07 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 73584
+        },
+        {
+          "requestId": "33879.128",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "85059",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:07 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 85135
+        },
+        {
+          "requestId": "33879.129",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "51368",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:07 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 51426
+        },
+        {
+          "requestId": "33879.130",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "108144",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:07 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 108230
+        },
+        {
+          "requestId": "33879.131",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "90191",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:07 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 90267
+        },
+        {
+          "requestId": "33879.132",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "79994",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:08 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 80084
+        },
+        {
+          "requestId": "33879.133",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "52216",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:08 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 52274
+        },
+        {
+          "requestId": "33879.134",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "78871",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:08 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 78938
+        },
+        {
+          "requestId": "33879.135",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "94747",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:08 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 94823
+        },
+        {
+          "requestId": "33879.136",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "61769",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:08 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 61827
+        },
+        {
+          "requestId": "33879.137",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76579",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:08 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76646
+        }
+      ],
+      "complete": true
+    },
+    {
+      "index": 3,
+      "name": "four",
+      "errors": [],
+      "readyMs": 3392.3907500000005,
+      "hostCpuBusyPercent": 77.40213523131672,
+      "hostLoadBefore": [
+        10.8056640625,
+        8.50537109375,
+        7.51220703125
+      ],
+      "hostLoadAfter": [
+        10.8056640625,
+        8.50537109375,
+        7.51220703125
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvas": [
+        990,
+        569
+      ],
+      "controller": false,
+      "resources": [
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 780.5,
+          "responseEndMs": 1159.2999999970198,
+          "encodedBytes": 37865,
+          "decodedBytes": 417656,
+          "transferBytes": 38165,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 780.7000000029802,
+          "responseEndMs": 919.8999999910593,
+          "encodedBytes": 3790,
+          "decodedBytes": 14632,
+          "transferBytes": 4090,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 780.7000000029802,
+          "responseEndMs": 1172.2000000029802,
+          "encodedBytes": 40072,
+          "decodedBytes": 93692,
+          "transferBytes": 40372,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 780.7000000029802,
+          "responseEndMs": 1214,
+          "encodedBytes": 49447,
+          "decodedBytes": 120536,
+          "transferBytes": 49747,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 922.7999999970198,
+          "responseEndMs": 1429.8999999910593,
+          "encodedBytes": 76801,
+          "decodedBytes": 215296,
+          "transferBytes": 77101,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 1162.5999999940395,
+          "responseEndMs": 1894.8999999910593,
+          "encodedBytes": 92002,
+          "decodedBytes": 268828,
+          "transferBytes": 92302,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 1173.7000000029802,
+          "responseEndMs": 1694.3999999910593,
+          "encodedBytes": 57548,
+          "decodedBytes": 157064,
+          "transferBytes": 57848,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 1214.8999999910593,
+          "responseEndMs": 1847,
+          "encodedBytes": 73517,
+          "decodedBytes": 203708,
+          "transferBytes": 73817,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 1430.8999999910593,
+          "responseEndMs": 2098.8999999910593,
+          "encodedBytes": 85059,
+          "decodedBytes": 244380,
+          "transferBytes": 85359,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 1695.2000000029802,
+          "responseEndMs": 2123,
+          "encodedBytes": 51368,
+          "decodedBytes": 127912,
+          "transferBytes": 51668,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 1848,
+          "responseEndMs": 2678,
+          "encodedBytes": 108144,
+          "decodedBytes": 324100,
+          "transferBytes": 108444,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 1896.2000000029802,
+          "responseEndMs": 2635.2000000029802,
+          "encodedBytes": 90191,
+          "decodedBytes": 262604,
+          "transferBytes": 90491,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 2100.0999999940395,
+          "responseEndMs": 2710.3999999910593,
+          "encodedBytes": 79994,
+          "decodedBytes": 227632,
+          "transferBytes": 80294,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 2123.7999999970198,
+          "responseEndMs": 2642.0999999940395,
+          "encodedBytes": 52216,
+          "decodedBytes": 132568,
+          "transferBytes": 52516,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 2636.2999999970198,
+          "responseEndMs": 3308,
+          "encodedBytes": 78871,
+          "decodedBytes": 223308,
+          "transferBytes": 79171,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 2643,
+          "responseEndMs": 3373.2999999970198,
+          "encodedBytes": 94747,
+          "decodedBytes": 279952,
+          "transferBytes": 95047,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 2679.0999999940395,
+          "responseEndMs": 3268.0999999940395,
+          "encodedBytes": 61769,
+          "decodedBytes": 170364,
+          "transferBytes": 62069,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 2711.5999999940395,
+          "responseEndMs": 3367.5999999940395,
+          "encodedBytes": 76579,
+          "decodedBytes": 213552,
+          "transferBytes": 76879,
+          "protocol": "h2"
+        }
+      ],
+      "cdpGlbs": [
+        {
+          "requestId": "33891.120",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "37865",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:10 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 37928
+        },
+        {
+          "requestId": "33891.121",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "3790",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:10 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 3820
+        },
+        {
+          "requestId": "33891.122",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "40072",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:10 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 40121
+        },
+        {
+          "requestId": "33891.123",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "49447",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:10 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 49505
+        },
+        {
+          "requestId": "33891.124",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76801",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:10 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76868
+        },
+        {
+          "requestId": "33891.125",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "92002",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:11 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 92101
+        },
+        {
+          "requestId": "33891.126",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "57548",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:11 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 57606
+        },
+        {
+          "requestId": "33891.127",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "73517",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:11 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 73584
+        },
+        {
+          "requestId": "33891.128",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "85059",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:11 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 85135
+        },
+        {
+          "requestId": "33891.129",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "51368",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:11 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 51426
+        },
+        {
+          "requestId": "33891.130",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "108144",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:11 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 108230
+        },
+        {
+          "requestId": "33891.131",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "90191",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:11 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 90267
+        },
+        {
+          "requestId": "33891.132",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "79994",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:12 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 80084
+        },
+        {
+          "requestId": "33891.133",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "52216",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:12 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 52274
+        },
+        {
+          "requestId": "33891.134",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "78871",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:12 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 78938
+        },
+        {
+          "requestId": "33891.135",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "94747",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:12 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 94823
+        },
+        {
+          "requestId": "33891.136",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "61769",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:12 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 61827
+        },
+        {
+          "requestId": "33891.137",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76579",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:12 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76646
+        }
+      ],
+      "complete": true
+    },
+    {
+      "index": 4,
+      "name": "six",
+      "errors": [],
+      "readyMs": 3363.2891249999993,
+      "hostCpuBusyPercent": 57.03125,
+      "hostLoadBefore": [
+        10.8056640625,
+        8.50537109375,
+        7.51220703125
+      ],
+      "hostLoadAfter": [
+        10.74072265625,
+        8.52978515625,
+        7.5263671875
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvas": [
+        990,
+        569
+      ],
+      "controller": false,
+      "resources": [
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 788,
+          "responseEndMs": 1327.4000000059605,
+          "encodedBytes": 37865,
+          "decodedBytes": 417656,
+          "transferBytes": 38165,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 788.1000000089407,
+          "responseEndMs": 933.7000000029802,
+          "encodedBytes": 3790,
+          "decodedBytes": 14632,
+          "transferBytes": 4090,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 788.1000000089407,
+          "responseEndMs": 1345.1000000089407,
+          "encodedBytes": 40072,
+          "decodedBytes": 93692,
+          "transferBytes": 40372,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 788.2000000029802,
+          "responseEndMs": 1420.6000000089407,
+          "encodedBytes": 49447,
+          "decodedBytes": 120536,
+          "transferBytes": 49747,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 788.2000000029802,
+          "responseEndMs": 1720,
+          "encodedBytes": 76801,
+          "decodedBytes": 215296,
+          "transferBytes": 77101,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 788.2999999970198,
+          "responseEndMs": 1870.5,
+          "encodedBytes": 92002,
+          "decodedBytes": 268828,
+          "transferBytes": 92302,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 936.9000000059605,
+          "responseEndMs": 1669.9000000059605,
+          "encodedBytes": 57548,
+          "decodedBytes": 157064,
+          "transferBytes": 57848,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 1330.7000000029802,
+          "responseEndMs": 2215.6000000089407,
+          "encodedBytes": 73517,
+          "decodedBytes": 203708,
+          "transferBytes": 73817,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 1345.7999999970198,
+          "responseEndMs": 2341.6000000089407,
+          "encodedBytes": 85059,
+          "decodedBytes": 244380,
+          "transferBytes": 85359,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 1421.5,
+          "responseEndMs": 2089.5,
+          "encodedBytes": 51368,
+          "decodedBytes": 127912,
+          "transferBytes": 51668,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 1670.7999999970198,
+          "responseEndMs": 2935.4000000059605,
+          "encodedBytes": 108144,
+          "decodedBytes": 324100,
+          "transferBytes": 108444,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 1721.2999999970198,
+          "responseEndMs": 2833.5,
+          "encodedBytes": 90191,
+          "decodedBytes": 262604,
+          "transferBytes": 90491,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 1871.6000000089407,
+          "responseEndMs": 2860.5,
+          "encodedBytes": 79994,
+          "decodedBytes": 227632,
+          "transferBytes": 80294,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 2090.4000000059605,
+          "responseEndMs": 2776.7999999970198,
+          "encodedBytes": 52216,
+          "decodedBytes": 132568,
+          "transferBytes": 52516,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 2216.6000000089407,
+          "responseEndMs": 3097.5,
+          "encodedBytes": 78871,
+          "decodedBytes": 223308,
+          "transferBytes": 79171,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 2342.5,
+          "responseEndMs": 3271.2999999970198,
+          "encodedBytes": 94747,
+          "decodedBytes": 279952,
+          "transferBytes": 95047,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 2777.6000000089407,
+          "responseEndMs": 3300.7999999970198,
+          "encodedBytes": 61769,
+          "decodedBytes": 170364,
+          "transferBytes": 62069,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 2834.4000000059605,
+          "responseEndMs": 3346.4000000059605,
+          "encodedBytes": 76579,
+          "decodedBytes": 213552,
+          "transferBytes": 76879,
+          "protocol": "h2"
+        }
+      ],
+      "cdpGlbs": [
+        {
+          "requestId": "33921.120",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "37865",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:14 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 37928
+        },
+        {
+          "requestId": "33921.121",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "3790",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:14 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 3820
+        },
+        {
+          "requestId": "33921.122",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "40072",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:14 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 40121
+        },
+        {
+          "requestId": "33921.123",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "49447",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:14 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 49505
+        },
+        {
+          "requestId": "33921.124",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76801",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:14 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76868
+        },
+        {
+          "requestId": "33921.125",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "92002",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:14 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 92078
+        },
+        {
+          "requestId": "33921.126",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "57548",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:14 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 57606
+        },
+        {
+          "requestId": "33921.127",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "73517",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:14 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 73584
+        },
+        {
+          "requestId": "33921.128",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "85059",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:14 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 85135
+        },
+        {
+          "requestId": "33921.129",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "51368",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:15 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 51449
+        },
+        {
+          "requestId": "33921.130",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "108144",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:15 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 108230
+        },
+        {
+          "requestId": "33921.131",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "90191",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:15 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 90267
+        },
+        {
+          "requestId": "33921.132",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "79994",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:15 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 80061
+        },
+        {
+          "requestId": "33921.133",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "52216",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:15 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 52274
+        },
+        {
+          "requestId": "33921.134",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "78871",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:15 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 78938
+        },
+        {
+          "requestId": "33921.135",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "94747",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:15 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 94823
+        },
+        {
+          "requestId": "33921.136",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "61769",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:16 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 61850
+        },
+        {
+          "requestId": "33921.137",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76579",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:16 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76646
+        }
+      ],
+      "complete": true
+    },
+    {
+      "index": 5,
+      "name": "four",
+      "errors": [],
+      "readyMs": 3383.3728329999994,
+      "hostCpuBusyPercent": 39.856158225951454,
+      "hostLoadBefore": [
+        10.74072265625,
+        8.52978515625,
+        7.5263671875
+      ],
+      "hostLoadAfter": [
+        10.12060546875,
+        8.4375,
+        7.49951171875
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvas": [
+        990,
+        569
+      ],
+      "controller": false,
+      "resources": [
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 775,
+          "responseEndMs": 1150.7000000029802,
+          "encodedBytes": 37865,
+          "decodedBytes": 417656,
+          "transferBytes": 38165,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 775.1000000089407,
+          "responseEndMs": 910.6000000089407,
+          "encodedBytes": 3790,
+          "decodedBytes": 14632,
+          "transferBytes": 4090,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 775.1000000089407,
+          "responseEndMs": 1163,
+          "encodedBytes": 40072,
+          "decodedBytes": 93692,
+          "transferBytes": 40372,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 775.2000000029802,
+          "responseEndMs": 1205.1000000089407,
+          "encodedBytes": 49447,
+          "decodedBytes": 120536,
+          "transferBytes": 49747,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 913,
+          "responseEndMs": 1420.7000000029802,
+          "encodedBytes": 76801,
+          "decodedBytes": 215296,
+          "transferBytes": 77101,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 1153.1000000089407,
+          "responseEndMs": 1885.300000011921,
+          "encodedBytes": 92002,
+          "decodedBytes": 268828,
+          "transferBytes": 92302,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 1164.1000000089407,
+          "responseEndMs": 1685,
+          "encodedBytes": 57548,
+          "decodedBytes": 157064,
+          "transferBytes": 57848,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 1205.9000000059605,
+          "responseEndMs": 1837.7000000029802,
+          "encodedBytes": 73517,
+          "decodedBytes": 203708,
+          "transferBytes": 73817,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 1421.7000000029802,
+          "responseEndMs": 2089.9000000059605,
+          "encodedBytes": 85059,
+          "decodedBytes": 244380,
+          "transferBytes": 85359,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 1685.800000011921,
+          "responseEndMs": 2113.6000000089407,
+          "encodedBytes": 51368,
+          "decodedBytes": 127912,
+          "transferBytes": 51668,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 1838.6000000089407,
+          "responseEndMs": 2668.7000000029802,
+          "encodedBytes": 108144,
+          "decodedBytes": 324100,
+          "transferBytes": 108444,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 1886.4000000059605,
+          "responseEndMs": 2626.6000000089407,
+          "encodedBytes": 90191,
+          "decodedBytes": 262604,
+          "transferBytes": 90491,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 2091,
+          "responseEndMs": 2702,
+          "encodedBytes": 79994,
+          "decodedBytes": 227632,
+          "transferBytes": 80294,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 2114.4000000059605,
+          "responseEndMs": 2633.1000000089407,
+          "encodedBytes": 52216,
+          "decodedBytes": 132568,
+          "transferBytes": 52516,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 2627.5,
+          "responseEndMs": 3298.800000011921,
+          "encodedBytes": 78871,
+          "decodedBytes": 223308,
+          "transferBytes": 79171,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 2633.800000011921,
+          "responseEndMs": 3364.2000000029802,
+          "encodedBytes": 94747,
+          "decodedBytes": 279952,
+          "transferBytes": 95047,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 2669.6000000089407,
+          "responseEndMs": 3259.6000000089407,
+          "encodedBytes": 61769,
+          "decodedBytes": 170364,
+          "transferBytes": 62069,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 2702.800000011921,
+          "responseEndMs": 3358.6000000089407,
+          "encodedBytes": 76579,
+          "decodedBytes": 213552,
+          "transferBytes": 76879,
+          "protocol": "h2"
+        }
+      ],
+      "cdpGlbs": [
+        {
+          "requestId": "33945.120",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "37865",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:18 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 37951
+        },
+        {
+          "requestId": "33945.121",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "3790",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:18 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 3820
+        },
+        {
+          "requestId": "33945.122",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "40072",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:18 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 40121
+        },
+        {
+          "requestId": "33945.123",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "49447",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:18 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 49505
+        },
+        {
+          "requestId": "33945.124",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76801",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:18 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76868
+        },
+        {
+          "requestId": "33945.125",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "92002",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:18 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 92078
+        },
+        {
+          "requestId": "33945.126",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "57548",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:18 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 57606
+        },
+        {
+          "requestId": "33945.127",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "73517",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:18 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 73584
+        },
+        {
+          "requestId": "33945.128",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "85059",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:18 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 85135
+        },
+        {
+          "requestId": "33945.129",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "51368",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:19 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 51449
+        },
+        {
+          "requestId": "33945.130",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "108144",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:19 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 108230
+        },
+        {
+          "requestId": "33945.131",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "90191",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:19 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 90267
+        },
+        {
+          "requestId": "33945.132",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "79994",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:19 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 80061
+        },
+        {
+          "requestId": "33945.133",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "52216",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:19 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 52274
+        },
+        {
+          "requestId": "33945.134",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "78871",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:19 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 78938
+        },
+        {
+          "requestId": "33945.135",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "94747",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:19 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 94823
+        },
+        {
+          "requestId": "33945.136",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "61769",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:20 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 61850
+        },
+        {
+          "requestId": "33945.137",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76579",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:20 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76646
+        }
+      ],
+      "complete": true
+    },
+    {
+      "index": 6,
+      "name": "six",
+      "errors": [],
+      "readyMs": 3353.092208000002,
+      "hostCpuBusyPercent": 34.285714285714285,
+      "hostLoadBefore": [
+        10.12060546875,
+        8.4375,
+        7.49951171875
+      ],
+      "hostLoadAfter": [
+        10.12060546875,
+        8.4375,
+        7.49951171875
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvas": [
+        990,
+        569
+      ],
+      "controller": false,
+      "resources": [
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 778.5999999940395,
+          "responseEndMs": 924.8999999910593,
+          "encodedBytes": 3790,
+          "decodedBytes": 14632,
+          "transferBytes": 4090,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 778.5999999940395,
+          "responseEndMs": 1318.8999999910593,
+          "encodedBytes": 37865,
+          "decodedBytes": 417656,
+          "transferBytes": 38165,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 778.7000000029802,
+          "responseEndMs": 1337.0999999940395,
+          "encodedBytes": 40072,
+          "decodedBytes": 93692,
+          "transferBytes": 40372,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 778.7000000029802,
+          "responseEndMs": 1412.0999999940395,
+          "encodedBytes": 49447,
+          "decodedBytes": 120536,
+          "transferBytes": 49747,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 778.7999999970198,
+          "responseEndMs": 1711.8999999910593,
+          "encodedBytes": 76801,
+          "decodedBytes": 215296,
+          "transferBytes": 77101,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 778.7999999970198,
+          "responseEndMs": 1867.0999999940395,
+          "encodedBytes": 92002,
+          "decodedBytes": 268828,
+          "transferBytes": 92302,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 927.5,
+          "responseEndMs": 1660.8999999910593,
+          "encodedBytes": 57548,
+          "decodedBytes": 157064,
+          "transferBytes": 57848,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 1321.2999999970198,
+          "responseEndMs": 2206.7999999970198,
+          "encodedBytes": 73517,
+          "decodedBytes": 203708,
+          "transferBytes": 73817,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 1337.7999999970198,
+          "responseEndMs": 2339.3999999910593,
+          "encodedBytes": 85059,
+          "decodedBytes": 244380,
+          "transferBytes": 85359,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 1412.7999999970198,
+          "responseEndMs": 2077.7000000029802,
+          "encodedBytes": 51368,
+          "decodedBytes": 127912,
+          "transferBytes": 51668,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 1661.7000000029802,
+          "responseEndMs": 2917.2000000029802,
+          "encodedBytes": 108144,
+          "decodedBytes": 324100,
+          "transferBytes": 108444,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 1712.7000000029802,
+          "responseEndMs": 2822,
+          "encodedBytes": 90191,
+          "decodedBytes": 262604,
+          "transferBytes": 90491,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 1868.0999999940395,
+          "responseEndMs": 2857.7000000029802,
+          "encodedBytes": 79994,
+          "decodedBytes": 227632,
+          "transferBytes": 80294,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 2078.5,
+          "responseEndMs": 2767.5999999940395,
+          "encodedBytes": 52216,
+          "decodedBytes": 132568,
+          "transferBytes": 52516,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 2207.7000000029802,
+          "responseEndMs": 3091.8999999910593,
+          "encodedBytes": 78871,
+          "decodedBytes": 223308,
+          "transferBytes": 79171,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 2340.2999999970198,
+          "responseEndMs": 3269.2000000029802,
+          "encodedBytes": 94747,
+          "decodedBytes": 279952,
+          "transferBytes": 95047,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 2768.3999999910593,
+          "responseEndMs": 3292.8999999910593,
+          "encodedBytes": 61769,
+          "decodedBytes": 170364,
+          "transferBytes": 62069,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 2822.7999999970198,
+          "responseEndMs": 3337.8999999910593,
+          "encodedBytes": 76579,
+          "decodedBytes": 213552,
+          "transferBytes": 76879,
+          "protocol": "h2"
+        }
+      ],
+      "cdpGlbs": [
+        {
+          "requestId": "33981.120",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "37865",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:21 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 37928
+        },
+        {
+          "requestId": "33981.121",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "3790",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:21 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 3820
+        },
+        {
+          "requestId": "33981.122",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "40072",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:21 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 40121
+        },
+        {
+          "requestId": "33981.123",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "49447",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:21 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 49505
+        },
+        {
+          "requestId": "33981.124",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76801",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:21 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76868
+        },
+        {
+          "requestId": "33981.125",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "92002",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:21 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 92078
+        },
+        {
+          "requestId": "33981.126",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "57548",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:21 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 57606
+        },
+        {
+          "requestId": "33981.127",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "73517",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:22 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 73607
+        },
+        {
+          "requestId": "33981.128",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "85059",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:22 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 85135
+        },
+        {
+          "requestId": "33981.129",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "51368",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:22 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 51426
+        },
+        {
+          "requestId": "33981.130",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "108144",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:22 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 108230
+        },
+        {
+          "requestId": "33981.131",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "90191",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:22 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 90267
+        },
+        {
+          "requestId": "33981.132",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "79994",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:22 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 80061
+        },
+        {
+          "requestId": "33981.133",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "52216",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:23 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 52297
+        },
+        {
+          "requestId": "33981.134",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "78871",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:23 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 78938
+        },
+        {
+          "requestId": "33981.135",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "94747",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:23 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 94823
+        },
+        {
+          "requestId": "33981.136",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "61769",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:23 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 61827
+        },
+        {
+          "requestId": "33981.137",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76579",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:23 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76646
+        }
+      ],
+      "complete": true
+    },
+    {
+      "index": 7,
+      "name": "four",
+      "errors": [],
+      "readyMs": 3383.6287090000005,
+      "hostCpuBusyPercent": 34.088200238379024,
+      "hostLoadBefore": [
+        10.12060546875,
+        8.4375,
+        7.49951171875
+      ],
+      "hostLoadAfter": [
+        9.55029296875,
+        8.34716796875,
+        7.47314453125
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvas": [
+        990,
+        569
+      ],
+      "controller": false,
+      "resources": [
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 776.5,
+          "responseEndMs": 1147.7999999970198,
+          "encodedBytes": 37865,
+          "decodedBytes": 417656,
+          "transferBytes": 38165,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 776.5999999940395,
+          "responseEndMs": 907.2999999970198,
+          "encodedBytes": 3790,
+          "decodedBytes": 14632,
+          "transferBytes": 4090,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 776.5999999940395,
+          "responseEndMs": 1160,
+          "encodedBytes": 40072,
+          "decodedBytes": 93692,
+          "transferBytes": 40372,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 776.5999999940395,
+          "responseEndMs": 1201.7999999970198,
+          "encodedBytes": 49447,
+          "decodedBytes": 120536,
+          "transferBytes": 49747,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 909.7999999970198,
+          "responseEndMs": 1417.7999999970198,
+          "encodedBytes": 76801,
+          "decodedBytes": 215296,
+          "transferBytes": 77101,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 1150.5,
+          "responseEndMs": 1885.7999999970198,
+          "encodedBytes": 92002,
+          "decodedBytes": 268828,
+          "transferBytes": 92302,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 1160.7000000029802,
+          "responseEndMs": 1678.7000000029802,
+          "encodedBytes": 57548,
+          "decodedBytes": 157064,
+          "transferBytes": 57848,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 1202.5,
+          "responseEndMs": 1834.7999999970198,
+          "encodedBytes": 73517,
+          "decodedBytes": 203708,
+          "transferBytes": 73817,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 1418.7000000029802,
+          "responseEndMs": 2086.7999999970198,
+          "encodedBytes": 85059,
+          "decodedBytes": 244380,
+          "transferBytes": 85359,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 1679.5,
+          "responseEndMs": 2107.2000000029802,
+          "encodedBytes": 51368,
+          "decodedBytes": 127912,
+          "transferBytes": 51668,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 1835.7000000029802,
+          "responseEndMs": 2665.7999999970198,
+          "encodedBytes": 108144,
+          "decodedBytes": 324100,
+          "transferBytes": 108444,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 1886.7000000029802,
+          "responseEndMs": 2623.7000000029802,
+          "encodedBytes": 90191,
+          "decodedBytes": 262604,
+          "transferBytes": 90491,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 2087.7999999970198,
+          "responseEndMs": 2698.7999999970198,
+          "encodedBytes": 79994,
+          "decodedBytes": 227632,
+          "transferBytes": 80294,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 2108,
+          "responseEndMs": 2625.8999999910593,
+          "encodedBytes": 52216,
+          "decodedBytes": 132568,
+          "transferBytes": 52516,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 2624.5999999940395,
+          "responseEndMs": 3304.7999999970198,
+          "encodedBytes": 78871,
+          "decodedBytes": 223308,
+          "transferBytes": 79171,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 2626.5999999940395,
+          "responseEndMs": 3367.8999999910593,
+          "encodedBytes": 94747,
+          "decodedBytes": 279952,
+          "transferBytes": 95047,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 2666.5999999940395,
+          "responseEndMs": 3256.8999999910593,
+          "encodedBytes": 61769,
+          "decodedBytes": 170364,
+          "transferBytes": 62069,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 2699.7000000029802,
+          "responseEndMs": 3357.8999999910593,
+          "encodedBytes": 76579,
+          "decodedBytes": 213552,
+          "transferBytes": 76879,
+          "protocol": "h2"
+        }
+      ],
+      "cdpGlbs": [
+        {
+          "requestId": "34023.120",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "37865",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:25 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 37928
+        },
+        {
+          "requestId": "34023.121",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "3790",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:25 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 3820
+        },
+        {
+          "requestId": "34023.122",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "40072",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:25 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 40121
+        },
+        {
+          "requestId": "34023.123",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "49447",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:25 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 49505
+        },
+        {
+          "requestId": "34023.124",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76801",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:25 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76868
+        },
+        {
+          "requestId": "34023.125",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "92002",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:25 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 92078
+        },
+        {
+          "requestId": "34023.126",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "57548",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:25 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 57606
+        },
+        {
+          "requestId": "34023.127",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "73517",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:25 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 73584
+        },
+        {
+          "requestId": "34023.128",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "85059",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:26 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 85158
+        },
+        {
+          "requestId": "34023.129",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "51368",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:26 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 51426
+        },
+        {
+          "requestId": "34023.130",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "108144",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:26 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 108230
+        },
+        {
+          "requestId": "34023.131",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "90191",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:26 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 90267
+        },
+        {
+          "requestId": "34023.132",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "79994",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:26 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 80061
+        },
+        {
+          "requestId": "34023.133",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "52216",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:26 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 52274
+        },
+        {
+          "requestId": "34023.134",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "78871",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:27 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 78961
+        },
+        {
+          "requestId": "34023.135",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "94747",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:27 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 94823
+        },
+        {
+          "requestId": "34023.136",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "61769",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:27 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 61827
+        },
+        {
+          "requestId": "34023.137",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76579",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:27 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76646
+        }
+      ],
+      "complete": true
+    },
+    {
+      "index": 8,
+      "name": "six",
+      "errors": [],
+      "readyMs": 3349.2371249999997,
+      "hostCpuBusyPercent": 43.80664652567976,
+      "hostLoadBefore": [
+        9.55029296875,
+        8.34716796875,
+        7.47314453125
+      ],
+      "hostLoadAfter": [
+        9.185546875,
+        8.29150390625,
+        7.45849609375
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvas": [
+        990,
+        569
+      ],
+      "controller": false,
+      "resources": [
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 772.7999999970198,
+          "responseEndMs": 920,
+          "encodedBytes": 3790,
+          "decodedBytes": 14632,
+          "transferBytes": 4090,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 772.7999999970198,
+          "responseEndMs": 1312.5,
+          "encodedBytes": 37865,
+          "decodedBytes": 417656,
+          "transferBytes": 38165,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 772.7999999970198,
+          "responseEndMs": 1331,
+          "encodedBytes": 40072,
+          "decodedBytes": 93692,
+          "transferBytes": 40372,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 772.9000000059605,
+          "responseEndMs": 1406.2999999970198,
+          "encodedBytes": 49447,
+          "decodedBytes": 120536,
+          "transferBytes": 49747,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 772.9000000059605,
+          "responseEndMs": 1706.0999999940395,
+          "encodedBytes": 76801,
+          "decodedBytes": 215296,
+          "transferBytes": 77101,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 772.9000000059605,
+          "responseEndMs": 1861.5999999940395,
+          "encodedBytes": 92002,
+          "decodedBytes": 268828,
+          "transferBytes": 92302,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 922.4000000059605,
+          "responseEndMs": 1654.2000000029802,
+          "encodedBytes": 57548,
+          "decodedBytes": 157064,
+          "transferBytes": 57848,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 1314.9000000059605,
+          "responseEndMs": 2201,
+          "encodedBytes": 73517,
+          "decodedBytes": 203708,
+          "transferBytes": 73817,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 1331.7999999970198,
+          "responseEndMs": 2332.7000000029802,
+          "encodedBytes": 85059,
+          "decodedBytes": 244380,
+          "transferBytes": 85359,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 1407.0999999940395,
+          "responseEndMs": 2071.9000000059605,
+          "encodedBytes": 51368,
+          "decodedBytes": 127912,
+          "transferBytes": 51668,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 1655.2000000029802,
+          "responseEndMs": 2914.2000000029802,
+          "encodedBytes": 108144,
+          "decodedBytes": 324100,
+          "transferBytes": 108444,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 1706.9000000059605,
+          "responseEndMs": 2816,
+          "encodedBytes": 90191,
+          "decodedBytes": 262604,
+          "transferBytes": 90491,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 1862.5,
+          "responseEndMs": 2851.9000000059605,
+          "encodedBytes": 79994,
+          "decodedBytes": 227632,
+          "transferBytes": 80294,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 2072.7000000029802,
+          "responseEndMs": 2761.5999999940395,
+          "encodedBytes": 52216,
+          "decodedBytes": 132568,
+          "transferBytes": 52516,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 2202,
+          "responseEndMs": 3086.4000000059605,
+          "encodedBytes": 78871,
+          "decodedBytes": 223308,
+          "transferBytes": 79171,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 2333.7999999970198,
+          "responseEndMs": 3263.2000000029802,
+          "encodedBytes": 94747,
+          "decodedBytes": 279952,
+          "transferBytes": 95047,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 2762.5,
+          "responseEndMs": 3286.9000000059605,
+          "encodedBytes": 61769,
+          "decodedBytes": 170364,
+          "transferBytes": 62069,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 2817,
+          "responseEndMs": 3331.5,
+          "encodedBytes": 76579,
+          "decodedBytes": 213552,
+          "transferBytes": 76879,
+          "protocol": "h2"
+        }
+      ],
+      "cdpGlbs": [
+        {
+          "requestId": "34036.120",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "37865",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:29 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 37951
+        },
+        {
+          "requestId": "34036.121",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "3790",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:29 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 3820
+        },
+        {
+          "requestId": "34036.122",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "40072",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:29 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 40121
+        },
+        {
+          "requestId": "34036.123",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "49447",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:29 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 49505
+        },
+        {
+          "requestId": "34036.124",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76801",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:29 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76868
+        },
+        {
+          "requestId": "34036.125",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "92002",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:29 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 92078
+        },
+        {
+          "requestId": "34036.126",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "57548",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:29 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 57606
+        },
+        {
+          "requestId": "34036.127",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "73517",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:29 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 73584
+        },
+        {
+          "requestId": "34036.128",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "85059",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:29 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 85135
+        },
+        {
+          "requestId": "34036.129",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "51368",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:29 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 51426
+        },
+        {
+          "requestId": "34036.130",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "108144",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:30 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 108253
+        },
+        {
+          "requestId": "34036.131",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "90191",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:30 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 90267
+        },
+        {
+          "requestId": "34036.132",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "79994",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:30 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 80061
+        },
+        {
+          "requestId": "34036.133",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "52216",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:30 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 52274
+        },
+        {
+          "requestId": "34036.134",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "78871",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:30 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 78938
+        },
+        {
+          "requestId": "34036.135",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "94747",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:30 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 94823
+        },
+        {
+          "requestId": "34036.136",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "61769",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:31 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 61850
+        },
+        {
+          "requestId": "34036.137",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76579",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:31 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76646
+        }
+      ],
+      "complete": true
+    },
+    {
+      "index": 9,
+      "name": "four",
+      "errors": [],
+      "readyMs": 3392.6549589999995,
+      "hostCpuBusyPercent": 46.58514762898896,
+      "hostLoadBefore": [
+        9.185546875,
+        8.29150390625,
+        7.45849609375
+      ],
+      "hostLoadAfter": [
+        8.77001953125,
+        8.22021484375,
+        7.43798828125
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvas": [
+        990,
+        569
+      ],
+      "controller": false,
+      "resources": [
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 782.3999999910593,
+          "responseEndMs": 919,
+          "encodedBytes": 3790,
+          "decodedBytes": 14632,
+          "transferBytes": 4090,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 782.3999999910593,
+          "responseEndMs": 1158.5999999940395,
+          "encodedBytes": 37865,
+          "decodedBytes": 417656,
+          "transferBytes": 38165,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 782.3999999910593,
+          "responseEndMs": 1171.2000000029802,
+          "encodedBytes": 40072,
+          "decodedBytes": 93692,
+          "transferBytes": 40372,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 782.5,
+          "responseEndMs": 1213.8999999910593,
+          "encodedBytes": 49447,
+          "decodedBytes": 120536,
+          "transferBytes": 49747,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 921.3999999910593,
+          "responseEndMs": 1428.5999999940395,
+          "encodedBytes": 76801,
+          "decodedBytes": 215296,
+          "transferBytes": 77101,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 1161.8999999910593,
+          "responseEndMs": 1897.3999999910593,
+          "encodedBytes": 92002,
+          "decodedBytes": 268828,
+          "transferBytes": 92302,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 1171.8999999910593,
+          "responseEndMs": 1689.7000000029802,
+          "encodedBytes": 57548,
+          "decodedBytes": 157064,
+          "transferBytes": 57848,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 1214.7000000029802,
+          "responseEndMs": 1845.5,
+          "encodedBytes": 73517,
+          "decodedBytes": 203708,
+          "transferBytes": 73817,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 1429.7000000029802,
+          "responseEndMs": 2097.7999999970198,
+          "encodedBytes": 85059,
+          "decodedBytes": 244380,
+          "transferBytes": 85359,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 1690.5999999940395,
+          "responseEndMs": 2119.3999999910593,
+          "encodedBytes": 51368,
+          "decodedBytes": 127912,
+          "transferBytes": 51668,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 1846.2999999970198,
+          "responseEndMs": 2677.3999999910593,
+          "encodedBytes": 108144,
+          "decodedBytes": 324100,
+          "transferBytes": 108444,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 1898.3999999910593,
+          "responseEndMs": 2640.5999999940395,
+          "encodedBytes": 90191,
+          "decodedBytes": 262604,
+          "transferBytes": 90491,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 2098.7000000029802,
+          "responseEndMs": 2710.5999999940395,
+          "encodedBytes": 79994,
+          "decodedBytes": 227632,
+          "transferBytes": 80294,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 2120.2000000029802,
+          "responseEndMs": 2638.5,
+          "encodedBytes": 52216,
+          "decodedBytes": 132568,
+          "transferBytes": 52516,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 2639.2999999970198,
+          "responseEndMs": 3310.3999999910593,
+          "encodedBytes": 78871,
+          "decodedBytes": 223308,
+          "transferBytes": 79171,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 2641.2999999970198,
+          "responseEndMs": 3376.5,
+          "encodedBytes": 94747,
+          "decodedBytes": 279952,
+          "transferBytes": 95047,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 2678.2999999970198,
+          "responseEndMs": 3268.2999999970198,
+          "encodedBytes": 61769,
+          "decodedBytes": 170364,
+          "transferBytes": 62069,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 2711.5,
+          "responseEndMs": 3367.3999999910593,
+          "encodedBytes": 76579,
+          "decodedBytes": 213552,
+          "transferBytes": 76879,
+          "protocol": "h2"
+        }
+      ],
+      "cdpGlbs": [
+        {
+          "requestId": "34052.120",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "37865",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:32 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 37928
+        },
+        {
+          "requestId": "34052.121",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "3790",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:32 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 3820
+        },
+        {
+          "requestId": "34052.122",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "40072",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:32 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 40121
+        },
+        {
+          "requestId": "34052.123",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "49447",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:32 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 49505
+        },
+        {
+          "requestId": "34052.124",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76801",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:33 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76892
+        },
+        {
+          "requestId": "34052.125",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "92002",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:33 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 92078
+        },
+        {
+          "requestId": "34052.126",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "57548",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:33 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 57606
+        },
+        {
+          "requestId": "34052.127",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "73517",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:33 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 73584
+        },
+        {
+          "requestId": "34052.128",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "85059",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:33 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 85135
+        },
+        {
+          "requestId": "34052.129",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "51368",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:33 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 51426
+        },
+        {
+          "requestId": "34052.130",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "108144",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:33 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 108230
+        },
+        {
+          "requestId": "34052.131",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "90191",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:34 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 90291
+        },
+        {
+          "requestId": "34052.132",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "79994",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:34 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 80061
+        },
+        {
+          "requestId": "34052.133",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "52216",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:34 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 52274
+        },
+        {
+          "requestId": "34052.134",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "78871",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:34 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 78938
+        },
+        {
+          "requestId": "34052.135",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "94747",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:34 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 94823
+        },
+        {
+          "requestId": "34052.136",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "61769",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:34 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 61827
+        },
+        {
+          "requestId": "34052.137",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76579",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:34 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76646
+        }
+      ],
+      "complete": true
+    },
+    {
+      "index": 10,
+      "name": "six",
+      "errors": [],
+      "readyMs": 3347.732916000001,
+      "hostCpuBusyPercent": 46.37462235649547,
+      "hostLoadBefore": [
+        8.77001953125,
+        8.22021484375,
+        7.43798828125
+      ],
+      "hostLoadAfter": [
+        8.77001953125,
+        8.22021484375,
+        7.43798828125
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "canvas": [
+        990,
+        569
+      ],
+      "controller": false,
+      "resources": [
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "startMs": 771.2000000029802,
+          "responseEndMs": 919.4000000059605,
+          "encodedBytes": 3790,
+          "decodedBytes": 14632,
+          "transferBytes": 4090,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "startMs": 771.2000000029802,
+          "responseEndMs": 1312.7999999970198,
+          "encodedBytes": 37865,
+          "decodedBytes": 417656,
+          "transferBytes": 38165,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "startMs": 771.2000000029802,
+          "responseEndMs": 1330.5,
+          "encodedBytes": 40072,
+          "decodedBytes": 93692,
+          "transferBytes": 40372,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "startMs": 771.2000000029802,
+          "responseEndMs": 1405.7999999970198,
+          "encodedBytes": 49447,
+          "decodedBytes": 120536,
+          "transferBytes": 49747,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "startMs": 771.2000000029802,
+          "responseEndMs": 1705.7000000029802,
+          "encodedBytes": 76801,
+          "decodedBytes": 215296,
+          "transferBytes": 77101,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "startMs": 771.2999999970198,
+          "responseEndMs": 1861.5999999940395,
+          "encodedBytes": 92002,
+          "decodedBytes": 268828,
+          "transferBytes": 92302,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "startMs": 921.9000000059605,
+          "responseEndMs": 1654.7999999970198,
+          "encodedBytes": 57548,
+          "decodedBytes": 157064,
+          "transferBytes": 57848,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "startMs": 1315.2999999970198,
+          "responseEndMs": 2200.5,
+          "encodedBytes": 73517,
+          "decodedBytes": 203708,
+          "transferBytes": 73817,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "startMs": 1331.2999999970198,
+          "responseEndMs": 2326.0999999940395,
+          "encodedBytes": 85059,
+          "decodedBytes": 244380,
+          "transferBytes": 85359,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "startMs": 1406.5999999940395,
+          "responseEndMs": 2071.5,
+          "encodedBytes": 51368,
+          "decodedBytes": 127912,
+          "transferBytes": 51668,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "startMs": 1655.5999999940395,
+          "responseEndMs": 2914,
+          "encodedBytes": 108144,
+          "decodedBytes": 324100,
+          "transferBytes": 108444,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "startMs": 1706.7999999970198,
+          "responseEndMs": 2818.5999999940395,
+          "encodedBytes": 90191,
+          "decodedBytes": 262604,
+          "transferBytes": 90491,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "startMs": 1862.5999999940395,
+          "responseEndMs": 2855.2999999970198,
+          "encodedBytes": 79994,
+          "decodedBytes": 227632,
+          "transferBytes": 80294,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "startMs": 2072.2999999970198,
+          "responseEndMs": 2759.0999999940395,
+          "encodedBytes": 52216,
+          "decodedBytes": 132568,
+          "transferBytes": 52516,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "startMs": 2201.4000000059605,
+          "responseEndMs": 3082.7000000029802,
+          "encodedBytes": 78871,
+          "decodedBytes": 223308,
+          "transferBytes": 79171,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "startMs": 2326.9000000059605,
+          "responseEndMs": 3262.7000000029802,
+          "encodedBytes": 94747,
+          "decodedBytes": 279952,
+          "transferBytes": 95047,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "startMs": 2760,
+          "responseEndMs": 3286.5999999940395,
+          "encodedBytes": 61769,
+          "decodedBytes": 170364,
+          "transferBytes": 62069,
+          "protocol": "h2"
+        },
+        {
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "startMs": 2819.5999999940395,
+          "responseEndMs": 3331.7999999970198,
+          "encodedBytes": 76579,
+          "decodedBytes": 213552,
+          "transferBytes": 76879,
+          "protocol": "h2"
+        }
+      ],
+      "cdpGlbs": [
+        {
+          "requestId": "34064.120",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "37865",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:36 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 37928
+        },
+        {
+          "requestId": "34064.121",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "3790",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:36 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 3820
+        },
+        {
+          "requestId": "34064.122",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "40072",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:36 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 40121
+        },
+        {
+          "requestId": "34064.123",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "49447",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:36 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 49505
+        },
+        {
+          "requestId": "34064.124",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76801",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:36 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76868
+        },
+        {
+          "requestId": "34064.125",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "92002",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:36 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 92078
+        },
+        {
+          "requestId": "34064.126",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "57548",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:36 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 57606
+        },
+        {
+          "requestId": "34064.127",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "73517",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:37 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 73608
+        },
+        {
+          "requestId": "34064.128",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "85059",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:37 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 85135
+        },
+        {
+          "requestId": "34064.129",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "51368",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:37 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 51426
+        },
+        {
+          "requestId": "34064.130",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "108144",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:37 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 108230
+        },
+        {
+          "requestId": "34064.131",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "90191",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:37 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 90267
+        },
+        {
+          "requestId": "34064.132",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "79994",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:37 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 80061
+        },
+        {
+          "requestId": "34064.133",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "52216",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:37 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 52274
+        },
+        {
+          "requestId": "34064.134",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "78871",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:38 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 78962
+        },
+        {
+          "requestId": "34064.135",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "94747",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:38 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 94823
+        },
+        {
+          "requestId": "34064.136",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "61769",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:38 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 61827
+        },
+        {
+          "requestId": "34064.137",
+          "url": "https://127.0.0.1:59457/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "status": 200,
+          "protocol": "h2",
+          "headers": {
+            "cache-control": "no-store",
+            "content-length": "76579",
+            "content-encoding": "gzip",
+            "date": "Thu, 05 Nov 2026 22:38:38 GMT",
+            "content-type": "model/gltf-binary",
+            "vary": "Accept-Encoding"
+          },
+          "finished": true,
+          "encodedDataLength": 76646
+        }
+      ],
+      "complete": true
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "renderers": [
+      "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    ],
+    "canvases": [
+      "990x569"
+    ],
+    "byBuild": {
+      "four": {
+        "count": 5,
+        "medianMs": 3390.9255000000003,
+        "minMs": 3383.3728329999994,
+        "maxMs": 3392.6549589999995,
+        "valuesMs": [
+          3390.9255000000003,
+          3392.3907500000005,
+          3383.3728329999994,
+          3383.6287090000005,
+          3392.6549589999995
+        ]
+      },
+      "six": {
+        "count": 5,
+        "medianMs": 3353.092208000002,
+        "minMs": 3347.732916000001,
+        "maxMs": 3367.5003749999996,
+        "valuesMs": [
+          3367.5003749999996,
+          3363.2891249999993,
+          3353.092208000002,
+          3349.2371249999997,
+          3347.732916000001
+        ]
+      }
+    },
+    "pairedDeltaMs": [
+      -23.425125000000662,
+      -29.10162500000115,
+      -30.2806249999976,
+      -34.391584000000876,
+      -44.922042999998666
+    ]
+  }
+}

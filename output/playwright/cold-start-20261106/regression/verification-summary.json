@@ -1,0 +1,66 @@
+{
+  "baselineCommit": "d932f985c01dbdca69f2ef651f00937522986808",
+  "finalBuild": "d5a0777b42aace5e",
+  "runtimeDiff": "",
+  "checks": {
+    "build": {
+      "exitCode": 0,
+      "emittedFilesCompared": 123,
+      "allBaselineHashesMatch": true
+    },
+    "unit": {
+      "exitCode": 0,
+      "pass": 79,
+      "fail": 0,
+      "skipped": 0
+    },
+    "loading": {
+      "exitCode": 0,
+      "cases": 5
+    },
+    "responsive": {
+      "exitCode": 0,
+      "cases": 20,
+      "errors": []
+    },
+    "gameBrowser": {
+      "exitCode": 0,
+      "groups": 45,
+      "errors": []
+    }
+  },
+  "pairedRecomputed": {
+    "concurrency-http2-4-vs-6.json": {
+      "four": {
+        "medianMs": 3390.9255000000003,
+        "rangeMs": [
+          3383.3728329999994,
+          3392.6549589999995
+        ]
+      },
+      "six": {
+        "medianMs": 3353.092208000002,
+        "rangeMs": [
+          3347.732916000001,
+          3367.5003749999996
+        ]
+      }
+    },
+    "concurrency-http2-6-vs-4.json": {
+      "four": {
+        "medianMs": 3380.470416999997,
+        "rangeMs": [
+          3365.788333999999,
+          3392.0260419999977
+        ]
+      },
+      "six": {
+        "medianMs": 3353.744375000002,
+        "rangeMs": [
+          3344.1624999999985,
+          3431.70925
+        ]
+      }
+    }
+  }
+}
