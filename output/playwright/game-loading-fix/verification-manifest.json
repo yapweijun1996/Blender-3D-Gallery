@@ -1,0 +1,38 @@
+{
+  "baseRevision": "2581395a7d8c4d475eb558f431f211745fb4617a",
+  "codeRevision": "92bed5048fececfed4f4aff64bddfaa8fe5c98cd",
+  "branch": "codex/game-loading-reliability-latest",
+  "build": "042c99b1e32521a0",
+  "sourceFilesSha256": {
+    "src/game/scene.js": "a2c2c433c03e78d3339d671a7073514cf5a9523f2307b9e26daa91c786016ed5",
+    "src/game/style.css": "525aab60acab0f8de0cea038187191a2d7a5eba616862ad6131016d3c6504688",
+    "package-lock.json": "7a11ce0fb783f95f40313cceebdf75a055d9042c3a0cfd5a58cf6545d72dee7f"
+  },
+  "baseSynchronization": "Main advanced from31e5475 to2581395 only in two test-count fixtures. Adopted upstream versions, rebuilt the identical042c99b1e32521a0 runtime, reran Game45 and standard9. Other suites tested the same runtime and unchanged unit sources.",
+  "finalResults": {
+    "unit": 77,
+    "gameBrowserIncludingWebKit": 45,
+    "loading": 5,
+    "mobileAccessibility": 20,
+    "responsive": 20,
+    "experience": 5,
+    "pwa": 16,
+    "standard": 9,
+    "library": 9,
+    "usability": 7,
+    "reviewed": 8
+  },
+  "runnerSkippedCases": 0,
+  "nativeDiagnostic": {
+    "observedFinished": 18,
+    "unobservedFinished": 18,
+    "loadingFailed": 0,
+    "consumedHashesMatched": 18
+  },
+  "notRun": {
+    "physicalMobileScreenReadersZoom": "No physical-device/reader session was available; emulation is not certification.",
+    "sustainedGpuMemory": "No long-duration GPU-retention/thermal measurement.",
+    "fullSolarSagaSuites": "No patch to those assets, generators or scene logic; build and Gallery/navigation checks remain bounded evidence."
+  },
+  "textLogNormalization": "Only trailing spaces in the two retained Vite build logs were removed to meet repository whitespace checks; original stdout remains in /tmp/game-loading-latest-build.log and /tmp/game-loading-synced-build.log. JSON/PNG evidence copied without modification."
+}

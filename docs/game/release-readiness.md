@@ -4,27 +4,27 @@
 
 ## Final source and scope
 
-- Branch: `codex/game-loading-reliability-latest`, based on main snapshot `31e5475e51135544c074976373da18f2bee7548b`.
+- Branch: `codex/game-loading-reliability-latest`, based on main snapshot `2581395a7d8c4d475eb558f431f211745fb4617a`.
 - Tested production-format build: `042c99b1e32521a0`; Node 24.21.0, macOS Apple M4. Test runtime details are retained with each diagnostic.
 - Application changes: `src/game/scene.js` reads native responses and uses the same GLTF parser/URL base, with scene-owned request cancellation and stopped queues; `src/game/style.css` reflows Game controls only at <=260px.
 - Preserved: concurrent main Gallery/viewer/model and viewport work, all GLBs, lighting/camera/materials, rules/physics, save schema, downloads, PWA cache/update policy, dependency pins and deployment workflow. The final diff contains no changes to those protected paths.
-- Two test-maintenance fixes replace obsolete catalog counts of 40 with the authoritative catalog length. Both initial failures were `41 !== 40`; strict equality and per-model preview/download coverage remain. The first failure logs are retained below, not erased.
+- Validation found two obsolete catalog counts of40 (`41 !== 40`). Main subsequently fixed these in `2581395`; the branch adopts those upstream fixtures rather than duplicating the patch. App/dependency sources did not change between main snapshots31e5475 and2581395, and rebuilding produced the identical tested build. The two affected suites were rerun after synchronization. Strict equality and per-model preview/download coverage remain; first failure logs are retained.
 
 ## Executed verification
 
-All final commands below exited 0. No runner case was marked skipped. Browser probes are actual browser interaction, not static markup tests.
+All final commands below exited 0. The [verification manifest](../../output/playwright/game-loading-fix/verification-manifest.json) records the exact code/base identities and the fixture-only synchronization; retained build logs normalize trailing spaces only. No runner case was marked skipped. Browser probes are actual browser interaction, not static markup tests.
 
 | Command or probe | Final result | Retained evidence |
 | --- | --- | --- |
-| `npm run build` | Pass; asset validation and Vite build. Existing 639kB lazy Three.js chunk advisory remains. | [build log](../../output/playwright/game-loading-fix/build-latest.log) |
+| `npm run build` | Pass; asset validation and Vite build. Existing 639kB lazy Three.js chunk advisory remains. | [build log](../../output/playwright/game-loading-fix/build-synced.log) |
 | `npm test` | 77 passed, 0 failed/skipped | [unit log](../../output/playwright/game-loading-fix/unit-latest.log) |
-| `npm run test:browser` | 45 groups passed, including WebKit shot smoke and every gallery asset preview/download | [JSON](../../output/playwright/game-loading-fix/game-browser-latest-results.json), [log](../../output/playwright/game-loading-fix/game-browser-final.log) |
+| `npm run test:browser` | 45 groups passed, including WebKit shot smoke and every gallery asset preview/download | [JSON](../../output/playwright/game-loading-fix/game-browser-synced-results.json), [log](../../output/playwright/game-loading-fix/game-browser-synced.log) |
 | `node scripts/test-game-loading.mjs` | 5 passed: interrupted/truncated recovery, valid extras, held-request route cleanup, partial-transfer network cancellation | [log and CDP cancellation bytes](../../output/playwright/game-loading-fix/loading-final.log) |
 | `node scripts/test-game-review-followup.mjs` | 20 passed; primary independently reran the final latest-main adaptation | [JSON](../../output/playwright/game-loading-fix/mobile-latest-results.json), [mobile review](mobile-accessibility-followup.md) |
 | `npm run test:game-responsive` | 20 groups passed | [JSON](../../output/playwright/game-loading-fix/responsive-latest-results.json) |
 | `npm run test:game-experience` | 5 groups passed | [JSON](../../output/playwright/game-loading-fix/experience-latest-results.json) |
 | `npm run test:pwa` | 16 passed, including offline Game and safe updates | [JSON](../../output/playwright/game-loading-fix/pwa-latest-results.json) |
-| `npm run test:standard` | 9 passed | [JSON](../../output/playwright/game-loading-fix/standard-latest-results.json) |
+| `npm run test:standard` | 9 passed | [JSON](../../output/playwright/game-loading-fix/standard-synced-results.json) |
 | `npm run test:library` | 9 passed | [JSON](../../output/playwright/game-loading-fix/library-latest-results.json) |
 | `npm run test:game-ux` | 7 passed | [stdout log](../../output/playwright/game-loading-fix/ux-final.log) |
 | `npm run test:reviewed` | 8 passed | [stdout log](../../output/playwright/game-loading-fix/reviewed-final.log) |
