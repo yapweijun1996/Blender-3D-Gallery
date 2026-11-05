@@ -4,6 +4,31 @@ import { TABLE, makeRack } from "../src/game/table.js";
 import { createShot, stepPhysics } from "../src/game/physics.js";
 const DIAMETER_FOR_TEST = TABLE.radius * 2;
 
+for (const [firstX, firstZ, secondX, secondZ] of [
+  [0.14044842518866063, -0.02005101595306769, 0.14610487448158133, -0.07704996681630183],
+  [0.09708761543035507, 0.01605177638819441, 0.13964106692616657, -0.02314025576614221],
+  [0.13475384443998337, 0.000933465042617172, 0.18388931568931582, -0.029076944186777524],
+]) test(`a close three-ball chain tracks a finer timestep near ${firstX}`, () => {
+  function simulate(dt) {
+    const balls = makeRack();
+    for (const ball of balls) ball.pocketed = ball.id > 2;
+    Object.assign(balls[0], { x: 0, z: 0, pocketed: false });
+    Object.assign(balls[1], { x: firstX, z: firstZ, pocketed: false });
+    Object.assign(balls[2], { x: secondX, z: secondZ, pocketed: false });
+    const shot = createShot(balls, { x: 1, z: 0 }, 1);
+    for (let t = 0; t < 0.1 - dt / 2; t += dt) stepPhysics(balls, shot, dt);
+    assert.equal(shot.invalid, null);
+    return { balls, shot };
+  }
+  const actual = simulate(TABLE.step), reference = simulate(TABLE.step / 200);
+  assert.equal(actual.shot.firstContact, 1);
+  assert.equal(reference.shot.firstContact, 1);
+  for (let i = 0; i < 3; i++) {
+    const error = Math.hypot(actual.balls[i].x - reference.balls[i].x, actual.balls[i].z - reference.balls[i].z);
+    assert.ok(error < 0.006, `ball ${i} differs by ${error} m`);
+  }
+});
+
 function contestedContact(
   firstX,
   secondX,

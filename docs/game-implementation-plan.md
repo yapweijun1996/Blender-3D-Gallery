@@ -70,7 +70,7 @@ The asset pack remains a simplified untextured design. UV layers exist, but a ne
 | Break | Groups remain open; a legal object pot keeps the turn |
 | Eight on break | Re-spot the eight; a simultaneous scratch gives the opponent ball in hand |
 | Open table | First legal post-break object pot assigns solids/stripes |
-| Mixed pots | Sort by simulation tick, substep and then ball ID; input array order cannot choose the group |
+| Mixed pots | Sort by simulation tick, substep and measured entry time; ball ID breaks simultaneous ties |
 | Assigned group | First contact must be an active own-group ball, or the eight if the group was already cleared before the shot |
 | Scratch, wrong contact, no contact | Opponent gets ball in hand; already pocketed object balls stay pocketed |
 | Legal own pot | Same player continues |
@@ -89,12 +89,12 @@ A shot resolves once after every ball settles. The shot ID prevents duplicate ad
 A small analytical disk solver is used instead of adding a WASM rigid-body engine. Sixteen equal-radius balls on one fixed plane need circle contacts, cushion segments and pocket capture; a standalone solver keeps these boundaries inspectable and testable without coupling gameplay to rendering. This is a deliberate implementation change from the plan's physics-library exploration; no head-to-head Rapier performance benchmark is claimed.
 
 - Fixed simulation step: `1/120 s`, independent of render rate.
-- Adaptive substeps bound travel relative to ball radius. Repeated contact iterations resolve crowded racks and rail endpoints.
+- Adaptive substeps bound travel relative to ball radius; a fast approach to a nearby cluster temporarily uses finer substeps. Repeated contact iterations resolve crowded racks and rail endpoints.
 - Swept contact checks improve the order of ball impacts and pocket entries within a substep, including fast grazing contacts. When an earlier collision redirects a ball, its remaining path and pocket entry are reconsidered.
 - Equal-mass impulses, ball/cushion restitution and rolling deceleration provide casual pool motion.
-- Rolling quaternions follow displacement so the actual numbered ball meshes rotate.
+- Rolling quaternions follow displacement so the actual numbered ball meshes rotate in the direction of travel; a contact-point test checks the no-slip direction independently of the quaternion implementation.
 - For an unobstructed cushion impact, the solver follows the path up to the contact and the rebound for the remainder of the substep, including the matching visual rotation. Dense or repeated contacts still use the bounded approximations below.
-- Each pocket capture is recorded once, with tick and substep identity.
+- Each pocket capture is recorded once, with tick, substep and available entry time for ordering.
 - Low-speed settling requires a sustained quiet interval; adjudication does not run after a single quiet frame.
 - Nonfinite positions, escape bounds or excessive shot duration trigger explicit recovery.
 - Backgrounding pauses the match and clears accumulated wall time. Returning does not simulate a long hidden interval.

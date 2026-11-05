@@ -119,8 +119,10 @@ function rollBall(ball, mx, mz) {
   if (!ball.q || !travel) return;
   const half = travel / R / 2,
     s = Math.sin(half) / travel;
-  const ax = -mz * s,
-    az = mx * s,
+  // For Y-up coordinates, the rotation at the cloth contact must oppose
+  // translation: omega cross (0, -R, 0) = (-vx, 0, -vz).
+  const ax = mz * s,
+    az = -mx * s,
     w = Math.cos(half);
   const [qx, qy, qz, qw] = ball.q;
   const q = [
@@ -181,6 +183,32 @@ export function createShot(balls, direction, power) {
     invalid: null,
   };
 }
+
+// A fast ball arriving at a cluster can trigger several impacts in one step.
+// Give only those steps a smaller travel bound, so a redirected ball has time
+// to encounter its next neighbour instead of using a deep endpoint overlap.
+function hasCrowdedApproach(balls, dt) {
+  for (const a of balls) {
+    if (a.pocketed) continue;
+    const speedA = Math.hypot(a.vx, a.vz);
+    if (speedA < 0.15) continue;
+    for (const b of balls) {
+      if (a === b || b.pocketed) continue;
+      const dx = b.x - a.x, dz = b.z - a.z;
+      const reach = DIAMETER + (speedA + Math.hypot(b.vx, b.vz)) * dt;
+      if (dx * dx + dz * dz > reach * reach ||
+          dx * (b.vx - a.vx) + dz * (b.vz - a.vz) >= 0) continue;
+      for (const c of balls) {
+        if (c === a || c === b || c.pocketed) continue;
+        const bx = c.x - b.x, bz = c.z - b.z;
+        const ax = c.x - a.x, az = c.z - a.z;
+        const limit = DIAMETER + (speedA + Math.hypot(b.vx, b.vz) + Math.hypot(c.vx, c.vz)) * dt;
+        if (bx * bx + bz * bz <= limit * limit || ax * ax + az * az <= limit * limit) return true;
+      }
+    }
+  }
+  return false;
+}
 // Sixteen equal disks: bounded adaptive substeps, impulse contacts and explicit pocket sensors.
 // No spin/jump simulation is claimed. Rendering never feeds positions back into this solver.
 export function stepPhysics(balls, shot, dt = TABLE.step) {
@@ -190,11 +218,12 @@ export function stepPhysics(balls, shot, dt = TABLE.step) {
     ? balls
     : [...balls].sort((a, b) => a.id - b.id);
   const maxSpeed = Math.max(...balls.map((b) => Math.hypot(b.vx, b.vz)));
-  const substeps = Math.max(2, Math.ceil((maxSpeed * dt) / (R / 2)));
+  let substeps = Math.max(2, Math.ceil((maxSpeed * dt) / (R / 2)));
   if (substeps > 16) {
     shot.invalid = "Simulation speed exceeded safe bounds";
     return;
   }
+  if (hasCrowdedApproach(ordered, dt)) substeps = 16;
   const h = dt / substeps;
   const starts = new Float64Array(ordered.length * 2);
   const ends = new Float64Array(ordered.length * 2);
@@ -261,6 +290,7 @@ export function stepPhysics(balls, shot, dt = TABLE.step) {
           pocket: event.pocket,
           tick: shot.tick,
           sub,
+          time: event.time,
         });
         pendingPockets[i] = null;
       }
@@ -480,6 +510,7 @@ export function stepPhysics(balls, shot, dt = TABLE.step) {
               pocket: pocket.id,
               tick: shot.tick,
               sub,
+              time: sweptPocket ? event.time : 1,
             });
           }
           pendingPockets[i] = null;

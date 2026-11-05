@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { TABLE, makeRack } from '../src/game/table.js';
 import { createShot, stepPhysics } from '../src/game/physics.js';
+import { Euler, Quaternion, Vector3 } from 'three';
 
 function rollAgainstRail(direction, dt, start = { x: -0.4, z: 0.46 }) {
   const balls = makeRack();
@@ -52,9 +53,25 @@ for (const direction of [{ x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: 1 }, { x: 0
   const shot = createShot(balls, direction, 0.1);
   stepPhysics(balls, shot);
   const distance = Math.hypot(ball.x, ball.z);
-  const half = distance / (2 * TABLE.radius), scale = Math.sin(half) / distance;
-  assert.ok(Math.abs(ball.q[0] + ball.z * scale) < 1e-10);
-  assert.ok(Math.abs(ball.q[1]) < 1e-10);
-  assert.ok(Math.abs(ball.q[2] - ball.x * scale) < 1e-10);
-  assert.ok(Math.abs(ball.q[3] - Math.cos(half)) < 1e-10);
+  // A marked point at the bottom of the stationary ball moves backwards
+  // relative to the centre when the ball rolls forwards without slipping.
+  const contact = new Vector3(0, -TABLE.radius, 0)
+    .applyQuaternion(new Quaternion(...ball.q));
+  const scale = -TABLE.radius * Math.sin(distance / TABLE.radius) / distance;
+  assert.ok(Math.abs(contact.x - ball.x * scale) < 1e-10, `contact x ${contact.x}`);
+  assert.ok(Math.abs(contact.z - ball.z * scale) < 1e-10, `contact z ${contact.z}`);
+  assert.ok(Math.abs(contact.y + TABLE.radius * Math.cos(distance / TABLE.radius)) < 1e-10);
+});
+
+test('rolling uses world-space direction after a previous ball rotation', () => {
+  const balls = makeRack();
+  for (const ball of balls) ball.pocketed = ball.id !== 0;
+  const initial = new Quaternion().setFromEuler(new Euler(0.8, -0.6, 0.3));
+  Object.assign(balls[0], { x: 0, z: 0, vx: 0, vz: 0, q: initial.toArray(), pocketed: false });
+  const shot = createShot(balls, { x: 1, z: 1 }, 0.1);
+  stepPhysics(balls, shot);
+  const delta = new Quaternion(...balls[0].q).multiply(initial.clone().invert());
+  const contact = new Vector3(0, -TABLE.radius, 0).applyQuaternion(delta);
+  assert.ok(contact.x < 0 && contact.z < 0, 'the contact point moves opposite the ball');
+  assert.ok(Math.abs(contact.x - contact.z) < 1e-10);
 });

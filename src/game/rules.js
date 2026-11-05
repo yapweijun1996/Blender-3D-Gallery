@@ -66,6 +66,7 @@ export function adjudicate(before, balls, shot) {
       (a, b) =>
         (a.tick ?? 0) - (b.tick ?? 0) ||
         (a.sub ?? 0) - (b.sub ?? 0) ||
+        (a.time ?? 1) - (b.time ?? 1) ||
         a.id - b.id,
     );
   if (!foul && !before.break && !own && objectPots.length) {

@@ -103,6 +103,27 @@ test("mixed pots sort by event time, with ball number breaking simultaneous ties
     "solids",
   ]);
   assert.deepEqual(decide([{ ...a, sub: 1 }, b]).groups, ["stripes", "solids"]);
+  assert.deepEqual(decide([{ ...a, time: 0.1 }, { ...b, time: 0.9 }]).groups, ["stripes", "solids"]);
+  assert.deepEqual(decide([{ ...a, time: 0.4 }, { ...b, time: 0.4 }]).groups, ["solids", "stripes"]);
+});
+test("open-table group follows the first actual pot within a substep", () => {
+  const before = match();
+  const balls = structuredClone(before.balls);
+  for (const ball of balls) ball.pocketed = ![0, 1, 9].includes(ball.id);
+  Object.assign(balls[1], { x: 0, z: 0.512, vx: 0, vz: 1, pocketed: false });
+  Object.assign(balls[9], { x: 0, z: -0.511, vx: 0, vz: -2.8, pocketed: false });
+  before.balls = structuredClone(balls);
+  const shot = createShot(balls, { x: 1, z: 0 }, 0.05);
+  shot.id = "same-substep-pots";
+  stepPhysics(balls, shot);
+  const solid = shot.pockets.find((event) => event.id === 1);
+  const stripe = shot.pockets.find((event) => event.id === 9);
+  assert.ok(solid && stripe, "both balls enter a pocket");
+  assert.equal(stripe.tick, solid.tick);
+  assert.equal(stripe.sub, solid.sub);
+  assert.ok(stripe.time < solid.time, "stripe enters before solid");
+  shot.firstContact = 1;
+  assert.deepEqual(adjudicate(before, balls, shot).groups, ["stripes", "solids"]);
 });
 test("break never allocates groups, eight is re-spotted and scratch gives ball in hand", () => {
   const m = match();
