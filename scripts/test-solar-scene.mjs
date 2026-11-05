@@ -39,6 +39,8 @@ try {
     const page = await browser.newPage({
       viewport: { width, height: width === 1440 ? 1000 : 844 },
     });
+    // Software WebGL screenshots can take longer under shared runner load.
+    page.setDefaultTimeout(90000);
     await page.addInitScript(() => {
       window.solarDrawCalls = 0;
       for (const context of [WebGLRenderingContext, WebGL2RenderingContext]) {
@@ -157,6 +159,7 @@ try {
     await page.click("#solar-overview");
     await page.selectOption("#solar-scale", "presentation");
     const animationDrawsBefore = await waitForPausedDraws(page);
+    await page.locator("#solar-canvas canvas").evaluate((canvas) => canvas.scrollIntoView({ behavior: "instant", block: "start" }));
     const still = await page.locator("#solar-canvas canvas").screenshot();
     await page.selectOption("#solar-speed", "100");
     await page.waitForFunction(
@@ -172,6 +175,7 @@ try {
       animationDrawsAfter > animationDrawsBefore,
       "animation advances GPU draw calls",
     );
+    await page.locator("#solar-canvas canvas").evaluate((canvas) => canvas.scrollIntoView({ behavior: "instant", block: "start" }));
     const moving = await page.locator("#solar-canvas canvas").screenshot();
     assert.notDeepEqual(still, moving, "animation changes rendered output");
     assert.equal(
