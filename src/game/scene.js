@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { TABLE } from "./table.js";
+import { aimContact } from "./presentation.js";
 export async function createGameScene(container, assets, signal, progress) {
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
@@ -193,7 +194,7 @@ export async function createGameScene(container, assets, signal, progress) {
       renderer.setPixelRatio(Math.min(devicePixelRatio, cap));
       resize();
     },
-    update(state, angle, power, candidate) {
+    update(state, angle, power, candidate, deliveryProgress) {
       const y = TABLE.bedHeight + TABLE.radius;
       for (const b of state.balls) {
         const obj = balls.get(b.id);
@@ -211,32 +212,18 @@ export async function createGameScene(container, assets, signal, progress) {
       cue.visible = aim;
       line.visible = ghost.visible = aim;
       if (aim) {
+        // Presentation offset only: page.js owns the single accepted impulse.
+        const t = Math.min(1, deliveryProgress ?? 0);
+        const stroke = deliveryProgress === undefined ? 0
+          : t < 0.55 ? (t / 0.55) * 0.12
+          : 0.12 - ((t - 0.55) / 0.45) * (0.15 + power * 0.06);
         cue.position.set(
-          cb.x - dx * (0.735 + TABLE.radius + 0.03 + power * 0.06),
+          cb.x - dx * (0.735 + TABLE.radius + 0.03 + power * 0.06 + stroke),
           y + 0.005,
-          cb.z - dz * (0.735 + TABLE.radius + 0.03 + power * 0.06),
+          cb.z - dz * (0.735 + TABLE.radius + 0.03 + power * 0.06 + stroke),
         );
         cue.rotation.y = -angle;
-        let distance = 0.65;
-        for (const b of state.balls) {
-          if (!b.id || b.pocketed) continue;
-          const x = b.x - cb.x,
-            z = b.z - cb.z,
-            t = x * dx + z * dz,
-            perp = x * x + z * z - t * t;
-          if (t > 0 && perp < (TABLE.radius * 2) ** 2) {
-            const hit = t - Math.sqrt((TABLE.radius * 2) ** 2 - perp);
-            if (hit > 0) distance = Math.min(distance, hit);
-          }
-        }
-        for (const [position, direction, bound] of [
-          [cb.x, dx, TABLE.halfLength - TABLE.radius],
-          [cb.z, dz, TABLE.halfWidth - TABLE.radius],
-        ])
-          if (Math.abs(direction) > 1e-8) {
-            const t = ((direction > 0 ? bound : -bound) - position) / direction;
-            if (t > 0) distance = Math.min(distance, t);
-          }
+        const { distance } = aimContact(state.balls, angle);
         const positions = line.geometry.attributes.position;
         positions.setXYZ(0, cb.x, y + 0.002, cb.z);
         positions.setXYZ(

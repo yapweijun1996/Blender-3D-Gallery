@@ -187,7 +187,7 @@ try {
     await waitPhase(page, "moving");
     assert.ok(await page.evaluate(() => window.__gameTransactionCount) >= 2, "focused Space renews ownership and saves the pending shot");
   });
-  await run("backgrounding during a pending shot pauses after the save", async (page, context) => {
+  await run("backgrounding during shot startup cancels the impulse after the save", async (page, context) => {
     await context.addInitScript(delayTransactionCompletion);
     await gameReady(page, server.url);
     await start(page);
@@ -209,6 +209,9 @@ try {
     assert.deepEqual((await readGame(page)).balls, paused.balls);
     assert.equal(await page.locator("#game-menu").isVisible(), true);
     await page.click('[data-action="continue"]');
+    await waitPhase(page, "aiming");
+    assert.deepEqual((await readGame(page)).balls, paused.balls, "resume does not fire a canceled shot");
+    await page.click('[data-action="shoot"]');
     await waitPhase(page, "moving");
   });
   for (const stage of ["renew", "checkpoint", "adjudication"]) {

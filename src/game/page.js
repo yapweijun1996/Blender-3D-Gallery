@@ -4,17 +4,18 @@ import { createShot, stepPhysics } from "./physics.js";
 import { adjudicate, RULES_VERSION } from "./rules.js";
 import { openGameStore } from "./storage.js";
 import { createGameScene } from "./scene.js";
+import { aimContact, shotFeedback } from "./presentation.js";
 
 export async function mountGame(root, assets, signal, onLeave) {
   root.innerHTML = `<section class="game-shell" aria-labelledby="game-title">
-    <div class="game-heading"><div><p class="eyebrow">PLAY THE COLLECTION</p><h1 id="game-title">Eight-ball<span>.</span></h1></div><div class="game-heading-actions"><span class="game-mode">LOCAL TWO-PLAYER</span><button type="button" data-action="rules">Rules & controls</button></div></div>
+    <div class="game-heading"><div><p class="eyebrow">PLAY THE COLLECTION</p><h1 id="game-title">Eight-ball<span>.</span></h1></div><div class="game-heading-actions"><span class="game-mode">LOCAL TWO-PLAYER</span></div></div>
     <div class="players"><div id="player-0" class="player-card"><span class="player-index">01</span><div><strong>Player 1</strong><span class="player-group">Open table</span></div><div class="remaining"><span class="remaining-full" aria-hidden="true"></span><span class="remaining-compact" aria-hidden="true"></span><span class="game-sr-only remaining-accessible"></span></div></div><div id="player-1" class="player-card"><span class="player-index">02</span><div><strong>Player 2</strong><span class="player-group">Open table</span></div><div class="remaining"><span class="remaining-full" aria-hidden="true"></span><span class="remaining-compact" aria-hidden="true"></span><span class="game-sr-only remaining-accessible"></span></div></div></div>
-    <div class="game-layout"><div class="game-board"><div id="game-viewport" tabindex="0" aria-label="Pool table. Arrow keys adjust aim or cue placement."><div id="game-loading" role="status">Preparing your table…</div></div><div class="game-table-caption"><span>CASUAL EIGHT-BALL</span><button type="button" data-action="inspect" disabled>Inspect table</button><button type="button" data-action="options">App options</button></div></div>
+    <div class="game-layout"><div class="game-board"><div id="game-viewport" tabindex="0" aria-label="Pool table. Arrow keys adjust aim or cue placement."><div id="game-loading" role="status">Preparing your table…</div></div><div class="game-table-caption"><span>CASUAL EIGHT-BALL</span><button type="button" data-action="inspect" disabled>Inspect table</button><button type="button" data-action="options">App options</button><button type="button" data-action="rules">Rules & controls</button></div></div>
     <aside class="game-controls" aria-label="Game controls"><div id="game-turn" class="game-turn">Your table is waiting.</div><p id="game-status" role="status" aria-live="polite">Load the table, then start a local match.</p>
       <div id="game-start" class="game-start"><button class="primary" data-action="new" disabled>New two-player match</button><button data-action="resume" disabled>Resume saved match</button><p>Pass the device between turns. No account needed.</p></div>
       <div id="game-load-error" role="alert" hidden><p>Check your connection and browser 3D support, then try again.</p><button data-action="retry-load" class="primary">Retry loading</button><button data-action="back-to-gallery">Back to Gallery</button></div>
       <div id="game-shot-controls" hidden><div class="aim-control"><label for="aim-angle">Aim <output id="angle-output">0°</output></label><input id="aim-angle" type="range" min="-180" max="180" step="0.25" value="0"><div class="aim-fine"><button data-action="aim-left" aria-label="Aim left one degree">−1°</button><button data-action="aim-right" aria-label="Aim right one degree">+1°</button></div></div>
-        <div class="power-control"><label for="shot-power">Power <output id="power-output">45%</output></label><input id="shot-power" type="range" min="5" max="100" value="45"></div><button data-action="shoot" class="primary">Shoot</button><p class="control-note">Drag to aim; press Shoot to strike.</p></div>
+        <div class="power-control"><label for="shot-power">Power <output id="power-output">45%</output></label><input id="shot-power" type="range" min="5" max="100" value="45"></div><button data-action="shoot" class="primary">Shoot</button><p class="control-note">Drag to aim; Shoot to strike.</p><p id="aim-contact"></p></div>
       <div id="game-placement" hidden><strong>Ball in hand</strong><p id="placement-hint">Tap or drag on the table to place the cue ball.</p><label for="place-x">Along the table</label><input id="place-x" type="range" min="-1.076" max="1.076" step="0.005" value="-0.7"><label for="place-z">Across the table</label><input id="place-z" type="range" min="-0.492" max="0.492" step="0.005" value="0"><button data-action="place" class="primary">Confirm cue position</button></div>
       <div id="game-finish" hidden><button data-action="new" class="primary">Play again</button></div><div id="game-recovery" hidden><button data-action="restore" class="primary">Restore last turn</button></div>
       <button data-action="pause" id="game-pause" hidden>Pause / menu</button><p id="save-status" class="save-status" role="status">Checking local save…</p>
@@ -46,7 +47,9 @@ export async function mountGame(root, assets, signal, onLeave) {
     pauseRequested = false,
     loadFailed = false,
     ready = false,
-    disposed = false;
+    disposed = false,
+    delivery = null,
+    lastResult = "";
   let frame = 0,
     lastTime = performance.now(),
     accumulator = 0,
@@ -99,7 +102,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     root.querySelector(".game-shell").dataset.phase = phase || "setup";
     $("#game-start").hidden = !!state || loadFailed;
     $("#game-load-error").hidden = !loadFailed;
-    $("#game-shot-controls").hidden = phase !== "aiming" || contextLost;
+    $("#game-shot-controls").hidden = !["aiming", "moving", "adjudicating"].includes(phase) || contextLost;
     $("#game-placement").hidden = phase !== "placing" || contextLost;
     $("#game-finish").hidden = phase !== "finished" || contextLost;
     $("#game-recovery").hidden = phase !== "recovery" && !contextLost;
@@ -113,26 +116,29 @@ export async function mountGame(root, assets, signal, onLeave) {
           : phase === "paused"
             ? "Game paused."
             : `Player ${state.player + 1} · ${state.groups[state.player] || "Open table"}`;
-    status.textContent = contextLost
+    $("#aim-contact").textContent = phase === "aiming" && !inspection
+      ? aimContact(state.balls, angle).label + " · initial path only" : "";
+    status.textContent = delivery ? "Cue delivery…" : contextLost
       ? "3D view interrupted. Reload the table to continue."
       : loadFailed
         ? "The 3D table could not load."
         : inspection && ["placing", "aiming"].includes(phase)
           ? `Inspect mode. Select ${returnAction} to continue.`
-        : state?.message ||
+        : lastResult && ["aiming", "placing", "finished"].includes(phase) ? lastResult : state?.message ||
           "Clear your group, then pocket the eight. Two players share this device.";
     viewport.setAttribute("aria-label", inspection
       ? `Inspection view. Use arrow keys to orbit and plus or minus to zoom. Select ${returnAction} to continue.`
       : "Pool table. Arrow keys adjust aim or cue placement.");
     $(".control-note").textContent = inspection
       ? "Inspect mode. Return to aim before shooting."
-      : "Drag to aim; press Shoot to strike.";
+      : "Drag to aim; Shoot to strike.";
     for (let i = 0; i < 2; i++) {
       const c = $(`#player-${i}`);
       c.classList.toggle(
         "active",
         !!state && state.player === i && phase !== "finished",
       );
+      c.querySelector("strong").textContent = `Player ${i + 1}${state && state.player === i && phase !== "finished" ? " · Turn" : ""}`;
       c.querySelector(".player-group").textContent =
         state?.groups[i] || "Open table";
       const remain = state?.groups[i]
@@ -217,11 +223,12 @@ export async function mountGame(root, assets, signal, onLeave) {
   }
   const previewState = { phase: "preview", balls: makeRack(42) };
   function draw() {
-    if (!contextLost) view?.update(state || previewState, angle, power, candidate);
+    if (!contextLost) view?.update(state || previewState, angle, power, candidate, delivery ? delivery.elapsed / 0.28 : undefined);
   }
   async function startNew() {
     if (!ready || !ownership) return;
     busy = true;
+    lastResult = "";
     state = {
       schema: 1,
       rulesVersion: RULES_VERSION,
@@ -292,6 +299,20 @@ export async function mountGame(root, assets, signal, onLeave) {
       ui();
       return;
     }
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const completed = await new Promise((resolve) => {
+        delivery = { elapsed: 0, resolve };
+        ui();
+        draw();
+      });
+      if (!completed || !canContinueShot()) {
+        finishBusy();
+        ui();
+        draw();
+        return;
+      }
+    }
+    lastResult = "";
     try {
       shot = createShot(
         state.balls,
@@ -312,11 +333,26 @@ export async function mountGame(root, assets, signal, onLeave) {
     draw();
   }
   function canContinueShot() {
-    if (!disposed && !contextLost && state?.phase === "aiming") return true;
-    busy = false;
-    pauseRequested = false;
+    if (!disposed && !contextLost && state?.phase === "aiming" && !pauseRequested && !document.hidden) return true;
+    finishBusy();
     ui();
     return false;
+  }
+  function cancelDelivery() {
+    if (!delivery) return;
+    const pending = delivery;
+    delivery = null;
+    pending.resolve(false);
+  }
+  function animateDelivery(dt) {
+    if (!delivery || document.hidden) return;
+    delivery.elapsed += dt;
+    draw();
+    if (delivery.elapsed >= 0.28) {
+      const pending = delivery;
+      delivery = null;
+      pending.resolve(true);
+    }
   }
   async function completeShot() {
     if (busy) return;
@@ -324,6 +360,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     state.phase = "adjudicating";
     ui();
     const next = adjudicate(before, state.balls, shot);
+    lastResult = shotFeedback(before, next, shot);
     shot = null;
     if (next.phase === "recovery") {
       state = next;
@@ -356,6 +393,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     if (!state || contextLost || ["finished", "paused"].includes(state.phase)) return;
     if (busy) {
       pauseRequested = true;
+      cancelDelivery();
       return;
     }
     pauseRequested = false;
@@ -666,6 +704,7 @@ export async function mountGame(root, assets, signal, onLeave) {
   viewport.addEventListener(
     "game-context-lost",
     () => {
+      cancelDelivery();
       contextLost = true;
       pauseRequested = false;
       pausedPhase = null;
@@ -724,7 +763,7 @@ export async function mountGame(root, assets, signal, onLeave) {
         e.preventDefault();
         ui();
         draw();
-      } else if (state?.phase === "aiming" && !inspection) {
+      } else if (state?.phase === "aiming" && !inspection && !busy && ownership && !contextLost) {
         if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
           angle +=
             ((e.key === "ArrowLeft" ? -1 : 1) *
@@ -826,6 +865,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     const elapsed = Math.min((now - lastTime) / 1000, 0.08);
     lastTime = now;
     if (!document.hidden && now > manualUntil) {
+      animateDelivery(elapsed);
       accumulator += elapsed;
       let n = 0;
       while (accumulator >= TABLE.step && n++ < 12) {
@@ -862,16 +902,20 @@ export async function mountGame(root, assets, signal, onLeave) {
       ownership,
       saveFailed,
       inspection,
+      delivery: !!delivery,
+      guide: state?.phase === "aiming" ? aimContact(state.balls, angle) : null,
+      lastResult,
     });
   window.advanceTime = (ms) => {
     manualUntil = performance.now() + 1000;
     for (let n = 0; n < Math.ceil(ms / (TABLE.step * 1000)); n++)
-      simulate(TABLE.step);
+      { animateDelivery(TABLE.step); simulate(TABLE.step); }
     draw();
   };
   const dispose = () => {
     if (disposed) return;
     disposed = true;
+    cancelDelivery();
     cancelAnimationFrame(frame);
     clearInterval(heartbeat);
     view?.dispose();
