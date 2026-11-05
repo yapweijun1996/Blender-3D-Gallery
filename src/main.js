@@ -479,7 +479,7 @@ async function syncRoute() {
             )
           : await module.mountSolar(
               root,
-              assets.filter((a) => a.family === "solar-system"),
+              module.solarSceneAssets(assets),
               controller.signal,
             );
       if (controller.signal.aborted) {

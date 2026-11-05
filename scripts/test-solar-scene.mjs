@@ -132,6 +132,14 @@ try {
         fullPage: false,
       });
     }
+    for (const [id, linkId] of [["sun", "nasa-sun"], ["earth", "nasa-earth"], ["saturn", "nasa-saturn"], ["moon", "nasa-moon"], ["asteroid-01", "nasa-vesta"], ["asteroid-02", "nasa-eros"], ["comet", "nasa-tempel-1"]]) {
+      await page.selectOption("#solar-select", id);
+      assert.equal(await page.locator("#solar-model-link").getAttribute("href"), `?model=${linkId}`);
+      assert.match(await page.locator("#solar-accuracy").innerText(), /NASA/);
+    }
+    await page.selectOption("#solar-select", "comet");
+    assert.match(await page.locator("#solar-name").innerText(), /Tempel 1/);
+    assert.match(await page.locator("#solar-facts").innerText(), /Illustrative/);
     await page.selectOption("#solar-scale", "realistic");
     assert.match(await page.textContent("#solar-scale-note"), /one shared/);
     await page.selectOption("#solar-select", "earth");

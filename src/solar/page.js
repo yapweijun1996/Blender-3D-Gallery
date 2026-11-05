@@ -2,13 +2,14 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import "./style.css";
+export { solarSceneAssets } from "./assets.js";
 
 /** Independent GLBs remain authoritative. This scene only owns display transforms. */
 export async function mountSolar(root, assets, signal) {
-  root.innerHTML = `<section class="solar-heading"><div><p class="eyebrow">AN ATLAS IN MOTION</p><h1>Solar System<span class="period">.</span></h1></div><p>17 Blender assets · One connected view</p></section>
+  root.innerHTML = `<section class="solar-heading"><div><p class="eyebrow">AN ATLAS IN MOTION</p><h1>Solar System<span class="period">.</span></h1></div><p>NASA models and original asteroids · One connected view</p></section>
   <div class="solar-toolbar"><label>Time speed <select id="solar-speed"><option value="0">Paused</option><option value="1">1 day / second</option><option value="10" selected>10 days / second</option><option value="100">100 days / second</option></select></label><label>Scale <select id="solar-scale"><option value="presentation">Presentation</option><option value="realistic">Realistic ratios</option></select></label><label>Explore <select id="solar-select"><option value="">Choose a body</option></select></label><button id="solar-overview" type="button">Overview ↺</button></div>
-  <p class="solar-note" id="solar-scale-note">Presentation mode enlarges bodies and compresses distances. Circular orbits illustrate relative periods; positions are not an ephemeris.</p>
-  <div class="solar-layout"><div class="solar-canvas" id="solar-canvas"><p role="status" id="solar-status">Loading 17 independent models…</p></div><aside class="solar-info" aria-live="polite"><p class="eyebrow">FIELD NOTES</p><h2 id="solar-name">Our planetary neighborhood</h2><p id="solar-facts">Drag to orbit · Scroll or pinch to zoom. Select a body to inspect it.</p><p id="solar-accuracy">Planet dimensions, periods and tilts use NASA reference fact sheets. The surfaces mix source imagery and clearly identified procedural approximations.</p><a id="solar-model-link" hidden>Open individual model ↗</a><p class="solar-small">Sun illumination and star positions are illustrative. The 240 instanced belt rocks and comet trajectory are fictional. This demo is available online; it is not part of the prepared offline Game pack.</p></aside></div>`;
+  <p class="solar-note" id="solar-scale-note">Presentation mode enlarges bodies and compresses distances. Planetary orbits illustrate relative periods; small-body paths and all positions are illustrative.</p>
+  <div class="solar-layout"><div class="solar-canvas" id="solar-canvas"><p role="status" id="solar-status">Loading 17 independent models…</p></div><aside class="solar-info" aria-live="polite"><p class="eyebrow">FIELD NOTES</p><h2 id="solar-name">Our planetary neighborhood</h2><p id="solar-facts">Drag to orbit · Scroll or pinch to zoom. Select a body to inspect it.</p><p id="solar-accuracy">Planet dimensions, periods and tilts use NASA reference fact sheets. Models include NASA resources and original procedural asteroids; select a body for credits and limitations.</p><a id="solar-model-link" hidden>Open individual model ↗</a><p class="solar-small">Sun illumination and star positions are illustrative. The asteroid belt and comet trajectory are illustrative, not actual positions. This demo is available online; it is not part of the prepared offline Game pack.</p></aside></div>`;
   const $ = (s) => root.querySelector(s),
     container = $("#solar-canvas"),
     status = $("#solar-status");
@@ -134,8 +135,8 @@ export async function mountSolar(root, assets, signal) {
     $("#solar-name").textContent = a.name;
     $("#solar-facts").textContent = f
       ? `Diameter ${f.diameter_km.toLocaleString()} km · ${f.orbital_period_days === null ? "No heliocentric orbital period" : `Orbit ${f.orbital_period_days.toLocaleString()} days${id === "moon" ? " around Earth" : ""}`} · Axial tilt ${f.axial_tilt_degrees}°`
-      : "Fictional small body. No measured diameter, orbit or axial tilt is assigned.";
-    $("#solar-accuracy").textContent = a.details.accuracy_notes;
+      : "Illustrative orbit and scale; physical properties are not modeled.";
+    $("#solar-accuracy").textContent = [a.details.accuracy_notes, ...(a.details.attribution ?? []).map((item) => item.credit)].filter(Boolean).join(" ");
     const link = $("#solar-model-link");
     link.hidden = false;
     link.href = `?model=${a.id}`;
@@ -338,7 +339,7 @@ export async function mountSolar(root, assets, signal) {
                           : id === "pluto"
                             ? 0.24
                             : 0.35;
-        e.model.scale.setScalar(e.radius);
+        e.model.scale.setScalar(e.radius * (e.asset.modelScale ?? 1));
         e.distance =
           mode === "realistic"
             ? f
@@ -420,8 +421,8 @@ export async function mountSolar(root, assets, signal) {
       mode = $("#solar-scale").value;
       $("#solar-scale-note").textContent =
         mode === "realistic"
-          ? "Realistic ratios: one shared distance and radius scale. Planets are very small; use Explore to focus. Circular orbits and phases remain illustrative."
-          : "Presentation mode enlarges bodies and compresses distances. Circular orbits illustrate relative periods; positions are not an ephemeris.";
+          ? "Realistic ratios: planets use one shared distance and radius scale. Planets are very small; use Explore to focus. Small bodies, circular orbits and phases are illustrative."
+          : "Presentation mode enlarges bodies and compresses distances. Planetary orbits illustrate relative periods; small-body paths and all positions are illustrative.";
       scales();
     };
     $("#solar-select").onchange = () => {
