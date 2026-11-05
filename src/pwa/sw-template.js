@@ -46,25 +46,11 @@ self.addEventListener("install", (event) =>
     })(),
   ),
 );
-// Preserve the previous usable build while returning tabs finish their explicit update.
-self.addEventListener("activate", (event) =>
-  event.waitUntil(
-    (async () => {
-      const names = (await caches.keys()).filter((n) => n.startsWith(PREFIX));
-      const builds = [
-        ...new Set(names.map((n) => n.slice(n.lastIndexOf("-") + 1))),
-      ];
-      if (builds.length > 2) {
-        const clients = await self.clients.matchAll({
-          type: "window",
-          includeUncontrolled: true,
-        });
-        if (!clients.some((c) => c.url.startsWith(SCOPE)))
-          for (const n of names) if (!n.endsWith(BUILD)) await caches.delete(n);
-      }
-    })(),
-  ),
-);
+// Retention exception: an old/suspended tab can still request its hashed modules,
+// and the last complete pack may belong to an older build after a failed update.
+// CacheStorage has no durable proof that either is unused. Retain complete scoped
+// builds rather than deleting by cache count; only each preparation job deletes
+// its own temporary candidate. Users may clear site storage explicitly.
 async function packReady(name = PACK_CACHE) {
   const cache = await caches.open(name);
   if (!(await cache.match(marker)) || PACK.files.length !== 18) return false;
@@ -120,17 +106,33 @@ async function prepareGame(progress) {
   })();
   return preparing;
 }
-const challenges = new Map();
+const challenges = new Map(),
+  activations = new Map();
 self.addEventListener("message", (event) => {
+  if (event.data?.type === "CANCEL_UPDATE") {
+    const activation = activations.get(event.data.activationId);
+    if (activation && activation.source === event.source?.id)
+      activation.cancelled = true;
+    return;
+  }
   if (event.data?.type === "UPDATE_READY_REPLY") {
     const challenge = challenges.get(event.data.challenge);
     if (challenge && event.source?.id)
-      challenge.answers.set(event.source.id, event.data.ready === true);
+      challenge.answers.set(
+        event.source.id,
+        event.data.ready === true && event.data.protocol === 2,
+      );
     return;
   }
   const port = event.ports[0];
   if (!port) return;
-  const reply = (message) => port.postMessage(message);
+  const reply = (message) => {
+    try {
+      port.postMessage(message);
+    } catch {
+      /* Requester closed. */
+    }
+  };
   if (event.data?.type === "PACK_STATUS") {
     event.waitUntil(
       packReady().then((ready) => reply({ ok: true, ready, build: BUILD })),
@@ -144,29 +146,83 @@ self.addEventListener("message", (event) => {
   if (event.data?.type === "ACTIVATE_UPDATE") {
     event.waitUntil(
       (async () => {
-        const clients = (
-          await self.clients.matchAll({
-            type: "window",
-            includeUncontrolled: true,
-          })
-        ).filter((c) => c.url.startsWith(SCOPE));
-        const id = crypto.randomUUID(),
-          answers = new Map();
-        challenges.set(id, { answers });
-        for (const c of clients)
-          c.postMessage({ type: "CAN_UPDATE", challenge: id });
-        await new Promise((r) => setTimeout(r, 1200));
-        challenges.delete(id);
-        if (clients.some((c) => answers.get(c.id) !== true)) {
+        const activationId = event.data.activationId;
+        if (
+          typeof activationId !== "string" ||
+          !event.source?.id ||
+          !Number.isFinite(event.data.expiresAt)
+        ) {
           reply({
             ok: false,
             error:
-              "Another tab is playing or is not ready. Finish or close it, then retry.",
+              "This tab uses an older update interface. Save your turn, then close all gallery tabs and reopen the gallery.",
           });
           return;
         }
-        reply({ ok: true });
-        await self.skipWaiting();
+        const activation = { source: event.source.id, cancelled: false };
+        activations.set(activationId, activation);
+        const deadline = Math.min(event.data.expiresAt, Date.now() + 15000);
+        const windows = async () =>
+          (
+            await self.clients.matchAll({
+              type: "window",
+              includeUncontrolled: true,
+            })
+          ).filter((client) => client.url.startsWith(SCOPE));
+        let clients = [];
+        const id = crypto.randomUUID(),
+          answers = new Map();
+        const notify = (client, message) => {
+          try {
+            client.postMessage(message);
+          } catch {
+            /* Tab closed. */
+          }
+        };
+        challenges.set(id, { answers });
+        let accepted = false;
+        try {
+          clients = await windows();
+          for (const client of clients)
+            notify(client, { type: "CAN_UPDATE", challenge: id });
+          await new Promise((resolve) => setTimeout(resolve, 1200));
+          const current = await windows();
+          const original = new Set(clients.map((client) => client.id));
+          if (
+            activation.cancelled ||
+            Date.now() >= deadline ||
+            !current.some((client) => client.id === activation.source)
+          )
+            throw new Error(
+              "Update request expired. Your current version is preserved. Retry.",
+            );
+          if (
+            current.some(
+              (client) =>
+                !original.has(client.id) || answers.get(client.id) !== true,
+            )
+          )
+            throw new Error(
+              "Another tab is playing or is not ready. Finish or close it, then retry.",
+            );
+          await self.skipWaiting();
+          accepted = true;
+          reply({ ok: true });
+        } catch (error) {
+          reply({
+            ok: false,
+            error: error.message || "Update could not activate. Retry.",
+          });
+        } finally {
+          for (const client of clients)
+            notify(client, {
+              type: "UPDATE_DECISION",
+              challenge: id,
+              accepted,
+            });
+          challenges.delete(id);
+          activations.delete(activationId);
+        }
       })(),
     );
   }

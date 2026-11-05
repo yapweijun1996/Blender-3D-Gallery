@@ -3,6 +3,7 @@ import catalog from "virtual:gallery-catalog";
 import demos from "virtual:gallery-demos";
 import { setupPwa } from "./pwa/register.js";
 import { setupMenu } from "./navigation.js";
+import { setupScrollToTop } from "./scroll-to-top.js";
 import {
   element,
   poster,
@@ -34,6 +35,21 @@ let gamePage = null,
 let lastRouteUrl = location.href;
 let modelReturnUrl = null;
 const notice = $("#route-notice");
+let pwaState = null;
+const refreshScrollToTop = setupScrollToTop(route);
+
+function refreshDemoOfflineStatus() {
+  for (const badge of document.querySelectorAll(".demo-offline-status")) {
+    const isGame = badge.dataset.demoId === "game";
+    badge.textContent = !isGame
+      ? "Requires an online connection · not included in the offline Game pack"
+      : pwaState?.offlinePack === "ready"
+        ? "Offline ready · verified Game pack saved on this device"
+        : pwaState?.offlinePack === "preparing"
+          ? "Preparing the offline Game pack…"
+          : "Offline Game pack not ready · prepare it in Game while connected";
+  }
+}
 
 function createCard(asset) {
   const card = element("article", "asset-card");
@@ -123,6 +139,7 @@ function renderDemos() {
     `${filtered.length} ${filtered.length === 1 ? "demo" : "demos"} · ${demos.length} to explore`;
   const cards = filtered.map((demo) => {
     const card = element("article", "demo-card");
+    card.dataset.demoId = demo.id;
     const image = element("a", "asset-image demo-image");
     image.href = demo.route;
     image.dataset.page = new URL(demo.route, location.href).searchParams.get(
@@ -153,6 +170,9 @@ function renderDemos() {
           : "Currently unavailable",
       ),
     );
+    const offlineStatus = element("p", "demo-offline-status");
+    offlineStatus.dataset.demoId = demo.id;
+    body.append(offlineStatus);
     if (demo.status === "available") {
       const launch = element("a", "outline-button", `Launch ${demo.title} ↗`);
       launch.href = demo.route;
@@ -178,6 +198,7 @@ function renderDemos() {
           ),
         ]),
   );
+  refreshDemoOfflineStatus();
 }
 options(
   $("#model-category"),
@@ -380,7 +401,14 @@ function syncModelUrl() {
   }
 }
 
-setupPwa(() => gamePage);
+const pwaRuntime = setupPwa(() => gamePage);
+pwaState = pwaRuntime.getState?.() ?? null;
+refreshDemoOfflineStatus();
+window.addEventListener("pwa-state-change", (event) => {
+  pwaState = event.detail;
+  refreshDemoOfflineStatus();
+  refreshScrollToTop();
+});
 function route() {
   const url = new URL(location.href);
   const page = url.searchParams.get("page");
@@ -390,6 +418,7 @@ function route() {
 async function syncRoute() {
   const page = route(),
     previous = mountedRoute;
+  refreshScrollToTop();
   if (page !== "game" && gamePage && !gamePage.beforeLeave()) {
     history.replaceState({}, "", lastRouteUrl);
     return;

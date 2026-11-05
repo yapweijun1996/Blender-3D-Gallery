@@ -139,7 +139,7 @@ The build emits `build-info.json`, `game-pack.json` and `sw.js`. The pack contai
 5. A new worker waits. Update now first saves a stable match; an unfinished shot blocks activation.
 6. Every scoped tab must acknowledge readiness. Another playing or unresponsive tab blocks activation.
 7. Successful activation reloads the requesting page once. Saved stable checkpoints survive compatible releases.
-8. Cache names include the project scope. Cleanup affects only this project's caches and conservatively retains usable versions while tabs exist. Multiple explicit updates with old tabs open may retain extra scoped caches until a later safe cleanup; browser quota is not guaranteed.
+8. Cache names include the project scope. Cleanup affects only this project's caches and conservatively retains usable versions while tabs exist. Complete scoped versions are retained even after tabs close; automatic eviction is deliberately deferred to protect suspended clients and previous complete packs. Browser quota is not guaranteed. See the authoritative [PWA amendment contract](pwa-standard.md) for retention and legacy-client migration exceptions.
 
 The implementation follows the browser's [service-worker lifecycle](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers), [Web Locks coordination model](https://developer.mozilla.org/en-US/docs/Web/API/Web_Locks_API), and the relevant [Web Application Manifest fields](https://www.w3.org/TR/appmanifest/). These references describe APIs; they do not certify the application or replace device testing.
 

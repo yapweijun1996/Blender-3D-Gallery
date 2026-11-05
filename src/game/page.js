@@ -322,6 +322,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     stepPhysics(state.balls, shot, dt);
     if (shot.invalid || shot.done) void completeShot();
   }
+  let deferredUpdateMenu = false;
   function pause() {
     if (!state || contextLost || ["finished", "paused"].includes(state.phase)) return;
     if (busy) {
@@ -334,9 +335,19 @@ export async function mountGame(root, assets, signal, onLeave) {
     state.phase = "paused";
     state.message = "Take your time. Continue when ready.";
     ui();
+    if (document.querySelector('#pwa-update-dialog')?.open) {
+      deferredUpdateMenu = true;
+      return;
+    }
     $("#game-menu").showModal();
     $('#game-menu [data-action="continue"]').focus();
   }
+  document.querySelector('#pwa-update-dialog')?.addEventListener('close', () => {
+    if (!deferredUpdateMenu || disposed || contextLost || state?.phase !== 'paused') return;
+    deferredUpdateMenu = false;
+    if (!$('#game-menu').open) $('#game-menu').showModal();
+    $('#game-menu [data-action="continue"]').focus();
+  }, {signal});
   function finishBusy() {
     busy = false;
     if (pauseRequested) {
