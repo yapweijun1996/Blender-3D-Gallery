@@ -8,6 +8,27 @@ const artifacts =
   process.env.TEST_ARTIFACT_DIR || "models/solar-system/reports";
 await fs.mkdir(artifacts, { recursive: true });
 const results = [];
+async function waitForPausedDraws(page) {
+  await page.evaluate(() => {
+    window.solarDrawSample = {
+      count: window.solarDrawCalls,
+      since: performance.now(),
+    };
+  });
+  await page.waitForFunction(
+    () => {
+      const sample = window.solarDrawSample;
+      if (sample.count !== window.solarDrawCalls) {
+        sample.count = window.solarDrawCalls;
+        sample.since = performance.now();
+      }
+      return performance.now() - sample.since >= 200;
+    },
+    null,
+    { polling: 100 },
+  );
+  return page.evaluate(() => window.solarDrawCalls);
+}
 async function returnToModels(page) {
   if (await page.locator("#menu-trigger").isVisible())
     await page.locator("#menu-trigger").click();
@@ -120,12 +141,29 @@ try {
     });
     await page.click("#solar-overview");
     await page.selectOption("#solar-scale", "presentation");
+    const animationDrawsBefore = await waitForPausedDraws(page);
     const still = await page.locator("#solar-canvas canvas").screenshot();
     await page.selectOption("#solar-speed", "100");
-    await page.waitForTimeout(400);
+    await page.waitForFunction(
+      (previous) => window.solarDrawCalls > previous,
+      animationDrawsBefore,
+      { polling: 100 },
+    );
+    // Pause after verified animation progress so screenshot stability checks
+    // do not run alongside the continuous render loop.
+    await page.selectOption("#solar-speed", "0");
+    const animationDrawsAfter = await waitForPausedDraws(page);
+    assert.ok(
+      animationDrawsAfter > animationDrawsBefore,
+      "animation advances GPU draw calls",
+    );
     const moving = await page.locator("#solar-canvas canvas").screenshot();
     assert.notDeepEqual(still, moving, "animation changes rendered output");
-    await page.selectOption("#solar-speed", "0");
+    assert.equal(
+      await page.evaluate(() => window.solarDrawCalls),
+      animationDrawsAfter,
+      "paused animation remains settled during capture",
+    );
     await returnToModels(page);
     assert.equal(await page.locator("#solar-page canvas").count(), 0);
     await page.locator("[data-asset-id=solar-saturn]").first().click();
@@ -145,6 +183,8 @@ try {
     results.push({
       width,
       transportCancellations: cancellations,
+      animationDrawsBefore,
+      animationDrawsAfter,
       status: "PASS",
       scenarios: [
         "direct route",

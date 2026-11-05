@@ -61,6 +61,12 @@ The existing main-push Pages workflow now additionally gates deployment on model
 
 Complete caches are deliberately retained to protect suspended clients and the last good pack. Temporary candidates are cleaned, but automatic complete-version eviction is deferred; storage quota is not guaranteed. Production Core Web Vitals, actual browser zoom and sustained mobile GPU/memory behavior were not measured. No dependency, lockfile, model/source asset, Game rules or checkpoint schema change is introduced. KB remains read-only.
 
+## CI screenshot stabilization
+
+The [first CI run](https://github.com/yapweijun1996/Blender-3D-Gallery/actions/runs/41969282134) passed unit/build/17 Solar asset checks and the1440px Solar scene, then failed while Playwright waited for a moving768px canvas element to become stable before its screenshot. This stack establishes the capture failure; it does not establish a measured GPU bottleneck or an application assertion failure.
+
+The Solar harness now confirms actual draw-count advancement at speed100, pauses, waits for draws to settle, then compares the two real rendered images. Existing pixel-change, pause, overflow, disposal and error assertions remain. The new capture also asserts draws stay settled. No retry, timeout increase or skipped check was added. The corrected harness passed all4 local widths; evidence: `/tmp/b3g-pwa-solar-ci-fix.log` and `/tmp/b3g-pwa-solar-ci-fix/scene-validation.json`. Application sources and build identity remain unchanged. The subsequent successful remote run is required before treating release as complete.
+
 ## Physical-device checklist
 
 Record device, OS/browser version, browser versus installed mode, orientation, network/cache state, screenshot and outcome. All entries remain UNVERIFIED until executed.
