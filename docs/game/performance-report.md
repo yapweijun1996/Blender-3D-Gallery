@@ -45,3 +45,7 @@ For a broader lifecycle observation, 30 Game→Gallery cycles completed before a
 ## Remaining work
 
 Physical iOS/Android frame pacing, GPU timing and memory, thermal behavior, network-constrained loading, shader stalls and longer repeated-session tests remain unverified. No instancing, LOD, compression or asset alteration is justified solely by the software-renderer measurements.
+
+## Loading follow-up, 2026-11-05
+
+See [Game loading diagnosis](loading-root-cause.md) for the isolated stream-wrapper reproduction, actual GLB byte hashes, client cancellation repair, startup segmentation and five-per-side alternating cold-start comparison. Baseline/candidate medians were 9,587/9,547ms under 100ms / 4Mbps loopback emulation, with overlapping ranges and substantial host load; no speedup is established. That comparison is pinned to its frozen builds, while final main-snapshot `31e5475` correctness uses build `042c99b1e32521a0`. Existing assets and appearance were preserved. Physical-mobile performance and sustained GPU-memory acceptance remain open.

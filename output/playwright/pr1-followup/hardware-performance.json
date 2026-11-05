@@ -1,0 +1,1249 @@
+{
+  "methodology": {
+    "gpuProbe": "Unforced Chromium profiles remove Playwright's default --enable-unsafe-swiftshader and pass no GPU-forcing flags. WebGL2 renderer strings, failIfMajorPerformanceCaveat and browser GPU metadata are recorded; browser-reported hardware is not a direct GPU timing measurement.",
+    "sampling": "At most three fresh-context samples each at 1440x900 DPR1 and touch-emulated 390x844 DPR1, only when unforced WebGL reports a hardware renderer. Rack seed 42, cue at default placement, aim 0 and a real 75% shot. Six seconds of requestAnimationFrame intervals are classified by game phase.",
+    "network": "Three fresh contexts with service workers blocked and browser cache disabled; Chrome DevTools Protocol network emulation applies 100ms latency, 4,000,000 bit/s down and 1,000,000 bit/s up. CPU is not throttled. Ready is measured from navigation start until the game's ready signal.",
+    "fallback": "If unforced browsers cannot render the game, the existing explicit SwiftShader configuration is used only for the new network-throttled loading test, not to claim hardware gameplay performance.",
+    "limitations": [
+      "Mobile is a viewport/touch emulation on the host, not a physical Android/iOS device.",
+      "Loopback CDP network throttling is a controlled simulation, not field latency or a mobile-network measurement.",
+      "Frame intervals measure browser pacing, not GPU frame time, total GPU memory, battery use or sustained thermal behavior.",
+      "Three samples are descriptive and cannot establish statistically reliable distributions or sustained leak freedom."
+    ]
+  },
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "osRelease": "27.0.0",
+    "cpu": "Apple M4",
+    "logicalCpuCount": 10,
+    "buildDir": "/Users/yapweijun/Documents/GitHub/Blender-3D-Gallery-review-followup/dist",
+    "buildInfo": {
+      "build": "7c832c4d674222d3"
+    },
+    "buildInfoSha256": "6f3b58262b9fd82655a4d0687f65a65e054a9683f3da31d7a7a0b145a1eeec50",
+    "measuredAt": "2026-11-05T12:44:35.096Z",
+    "hardwareProfile": "system-chrome-headless",
+    "networkProfile": "system-chrome-headless"
+  },
+  "probes": [
+    {
+      "name": "playwright-chromium-headless",
+      "launchOptions": {
+        "headless": true,
+        "ignoreDefaultArgs": [
+          "--enable-unsafe-swiftshader"
+        ]
+      },
+      "browser": "156.0.8078.4",
+      "gpuFlags": [],
+      "commandLineAvailable": false,
+      "commandLineError": "cdpSession.send: Protocol error (Browser.getBrowserCommandLine): Command line not returned because --enable-automation not set.",
+      "featureStatus": {
+        "2d_canvas": "unavailable_software",
+        "direct_rendering_display_compositor": "disabled_off_ok",
+        "gpu_compositing": "disabled_software",
+        "multiple_raster_threads": "enabled_on",
+        "opengl": "disabled_off",
+        "rasterization": "disabled_software",
+        "raw_draw": "disabled_off_ok",
+        "skia_graphite": "disabled_off",
+        "trees_in_viz": "disabled_off",
+        "video_decode": "disabled_software",
+        "video_encode": "disabled_software",
+        "webgl": "unavailable_software",
+        "webgpu": "unavailable_software",
+        "webnn": "unavailable_software"
+      },
+      "devices": [
+        {
+          "vendorString": "Google Inc. (Google)",
+          "deviceString": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver-5.0.0)",
+          "driverVendor": "SwANGLE",
+          "driverVersion": "5.0.0"
+        }
+      ],
+      "auxAttributes": {
+        "glRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver-5.0.0)",
+        "glVendor": "Google Inc. (Google)",
+        "glVersion": "OpenGL ES 3.0 (ANGLE 2.1.28967 git hash: dfeede58b618)",
+        "inProcessGpu": false
+      },
+      "webgl2": {
+        "available": true,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Google)",
+        "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "maxTextureSize": 8192
+      },
+      "strictWebgl2": {
+        "available": true,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Google)",
+        "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "maxTextureSize": 8192
+      },
+      "classification": "software"
+    },
+    {
+      "name": "system-chrome-headless",
+      "launchOptions": {
+        "headless": true,
+        "ignoreDefaultArgs": [
+          "--enable-unsafe-swiftshader"
+        ],
+        "channel": "chrome"
+      },
+      "browser": "156.0.8078.80",
+      "gpuFlags": [],
+      "commandLineAvailable": false,
+      "commandLineError": "cdpSession.send: Protocol error (Browser.getBrowserCommandLine): Command line not returned because --enable-automation not set.",
+      "featureStatus": {
+        "2d_canvas": "enabled",
+        "direct_rendering_display_compositor": "disabled_off_ok",
+        "gpu_compositing": "enabled",
+        "multiple_raster_threads": "enabled_on",
+        "opengl": "enabled_on",
+        "rasterization": "enabled",
+        "raw_draw": "disabled_off_ok",
+        "skia_graphite": "enabled_on",
+        "trees_in_viz": "disabled_off",
+        "video_decode": "enabled",
+        "video_encode": "enabled",
+        "webgl": "enabled",
+        "webgpu": "enabled",
+        "webnn": "disabled_off"
+      },
+      "devices": [
+        {
+          "vendorString": "Google Inc. (Apple)",
+          "deviceString": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Version 27.0.1 (Build 26A434))",
+          "driverVendor": "Apple",
+          "driverVersion": "27.0.1"
+        }
+      ],
+      "auxAttributes": {
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Version 27.0.1 (Build 26A434))",
+        "glVendor": "Google Inc. (Apple)",
+        "glVersion": "OpenGL ES 3.0 (ANGLE 2.1.28975 git hash: 127e783de334)",
+        "inProcessGpu": false
+      },
+      "webgl2": {
+        "available": true,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "maxTextureSize": 16384
+      },
+      "strictWebgl2": {
+        "available": true,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "maxTextureSize": 16384
+      },
+      "classification": "reported-hardware"
+    }
+  ],
+  "hardwareSamples": [
+    {
+      "profile": "system-chrome-headless",
+      "size": {
+        "label": "desktop",
+        "width": 1440,
+        "height": 900,
+        "deviceScaleFactor": 1,
+        "isMobile": false,
+        "hasTouch": false
+      },
+      "sample": 1,
+      "readyMs": 483.14658299999974,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "available": true,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          576
+        ],
+        "canvasCssPixels": [
+          1020,
+          576
+        ],
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "visibility": "visible"
+      },
+      "intervals": {
+        "moving": {
+          "count": 357,
+          "meanMs": 16.665826330532227,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.700000000000728,
+          "maxMs": 16.800000000000182
+        },
+        "settled": {
+          "count": 3,
+          "meanMs": 16.666666666666668,
+          "p50Ms": 16.600000000000364,
+          "p95Ms": 16.800000000000182,
+          "maxMs": 16.800000000000182
+        },
+        "other": {
+          "count": 1,
+          "meanMs": 16.699999999999818,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.699999999999818,
+          "maxMs": 16.699999999999818
+        }
+      },
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ]
+    },
+    {
+      "profile": "system-chrome-headless",
+      "size": {
+        "label": "desktop",
+        "width": 1440,
+        "height": 900,
+        "deviceScaleFactor": 1,
+        "isMobile": false,
+        "hasTouch": false
+      },
+      "sample": 2,
+      "readyMs": 403.0481249999975,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "available": true,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          576
+        ],
+        "canvasCssPixels": [
+          1020,
+          576
+        ],
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "visibility": "visible"
+      },
+      "intervals": {
+        "moving": {
+          "count": 357,
+          "meanMs": 16.666106442577043,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.799999999999727,
+          "maxMs": 16.800000000000182
+        },
+        "settled": {
+          "count": 0,
+          "meanMs": null,
+          "p50Ms": null,
+          "p95Ms": null,
+          "maxMs": null
+        },
+        "other": {
+          "count": 4,
+          "meanMs": 16.674999999999955,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.700000000000728,
+          "maxMs": 16.700000000000728
+        }
+      },
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ]
+    },
+    {
+      "profile": "system-chrome-headless",
+      "size": {
+        "label": "desktop",
+        "width": 1440,
+        "height": 900,
+        "deviceScaleFactor": 1,
+        "isMobile": false,
+        "hasTouch": false
+      },
+      "sample": 3,
+      "readyMs": 260.213667,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "available": true,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          576
+        ],
+        "canvasCssPixels": [
+          1020,
+          576
+        ],
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "visibility": "visible"
+      },
+      "intervals": {
+        "moving": {
+          "count": 357,
+          "meanMs": 16.665826330532223,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.700000000000728,
+          "maxMs": 16.800000000000182
+        },
+        "settled": {
+          "count": 3,
+          "meanMs": 16.666666666666668,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.699999999999818,
+          "maxMs": 16.699999999999818
+        },
+        "other": {
+          "count": 1,
+          "meanMs": 16.699999999999818,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.699999999999818,
+          "maxMs": 16.699999999999818
+        }
+      },
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ]
+    },
+    {
+      "profile": "system-chrome-headless",
+      "size": {
+        "label": "mobile-emulated",
+        "width": 390,
+        "height": 844,
+        "deviceScaleFactor": 1,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "sample": 1,
+      "readyMs": 249.96824999999808,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "available": true,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          356,
+          364
+        ],
+        "canvasCssPixels": [
+          356,
+          364
+        ],
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "visibility": "visible"
+      },
+      "intervals": {
+        "moving": {
+          "count": 357,
+          "meanMs": 16.66582633053222,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.799999999999272,
+          "maxMs": 16.800000000000182
+        },
+        "settled": {
+          "count": 3,
+          "meanMs": 16.633333333333212,
+          "p50Ms": 16.600000000000364,
+          "p95Ms": 16.699999999999818,
+          "maxMs": 16.699999999999818
+        },
+        "other": {
+          "count": 1,
+          "meanMs": 16.699999999999818,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.699999999999818,
+          "maxMs": 16.699999999999818
+        }
+      },
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ]
+    },
+    {
+      "profile": "system-chrome-headless",
+      "size": {
+        "label": "mobile-emulated",
+        "width": 390,
+        "height": 844,
+        "deviceScaleFactor": 1,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "sample": 2,
+      "readyMs": 236.96195799999987,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "available": true,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          356,
+          364
+        ],
+        "canvasCssPixels": [
+          356,
+          364
+        ],
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "visibility": "visible"
+      },
+      "intervals": {
+        "moving": {
+          "count": 357,
+          "meanMs": 16.666106442577018,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.799999999999727,
+          "maxMs": 16.800000000000182
+        },
+        "settled": {
+          "count": 3,
+          "meanMs": 16.666666666666668,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.699999999999818,
+          "maxMs": 16.699999999999818
+        },
+        "other": {
+          "count": 1,
+          "meanMs": 16.600000000000364,
+          "p50Ms": 16.600000000000364,
+          "p95Ms": 16.600000000000364,
+          "maxMs": 16.600000000000364
+        }
+      },
+      "errors": []
+    },
+    {
+      "profile": "system-chrome-headless",
+      "size": {
+        "label": "mobile-emulated",
+        "width": 390,
+        "height": 844,
+        "deviceScaleFactor": 1,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "sample": 3,
+      "readyMs": 306.5244160000002,
+      "rackSignature": "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44",
+      "renderer": {
+        "available": true,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          356,
+          364
+        ],
+        "canvasCssPixels": [
+          356,
+          364
+        ],
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "visibility": "visible"
+      },
+      "intervals": {
+        "moving": {
+          "count": 357,
+          "meanMs": 16.666106442577025,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.700000000000728,
+          "maxMs": 16.800000000000182
+        },
+        "settled": {
+          "count": 3,
+          "meanMs": 16.666666666666668,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.699999999999818,
+          "maxMs": 16.699999999999818
+        },
+        "other": {
+          "count": 1,
+          "meanMs": 16.699999999999818,
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 16.699999999999818,
+          "maxMs": 16.699999999999818
+        }
+      },
+      "errors": []
+    }
+  ],
+  "networkSamples": [
+    {
+      "profile": "system-chrome-headless",
+      "sample": 1,
+      "readyMs": 9555.493082999994,
+      "renderer": {
+        "available": true,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          576
+        ],
+        "canvasCssPixels": [
+          1020,
+          576
+        ],
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "visibility": "visible"
+      },
+      "validColdObservation": true,
+      "coldEvidence": {
+        "serviceWorkersBlocked": true,
+        "browserCacheDisabled": true,
+        "serviceWorkerControlled": false,
+        "glbRequests": 18,
+        "glbsWithNonzeroTransfer": 18,
+        "encodedGlbBytes": 3697784
+      },
+      "resources": {
+        "serviceWorkerControlled": false,
+        "glbs": [
+          {
+            "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+            "durationMs": 3239.7000000029802,
+            "transferBytes": 417956,
+            "encodedBytes": 417656
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+            "durationMs": 213,
+            "transferBytes": 14932,
+            "encodedBytes": 14632
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+            "durationMs": 818.7000000029802,
+            "transferBytes": 93992,
+            "encodedBytes": 93692
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+            "durationMs": 1007.7999999970198,
+            "transferBytes": 120836,
+            "encodedBytes": 120536
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+            "durationMs": 1758.8999999910593,
+            "transferBytes": 215596,
+            "encodedBytes": 215296
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+            "durationMs": 2161.5,
+            "transferBytes": 269128,
+            "encodedBytes": 268828
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+            "durationMs": 1327.2999999970198,
+            "transferBytes": 157364,
+            "encodedBytes": 157064
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+            "durationMs": 1624.6000000089407,
+            "transferBytes": 204008,
+            "encodedBytes": 203708
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+            "durationMs": 1935.4000000059605,
+            "transferBytes": 244680,
+            "encodedBytes": 244380
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+            "durationMs": 1063.5,
+            "transferBytes": 128212,
+            "encodedBytes": 127912
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+            "durationMs": 2546.5,
+            "transferBytes": 324400,
+            "encodedBytes": 324100
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+            "durationMs": 2107.7999999970198,
+            "transferBytes": 262904,
+            "encodedBytes": 262604
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+            "durationMs": 1799,
+            "transferBytes": 227932,
+            "encodedBytes": 227632
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+            "durationMs": 1166.199999988079,
+            "transferBytes": 132868,
+            "encodedBytes": 132568
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+            "durationMs": 1762.5,
+            "transferBytes": 223608,
+            "encodedBytes": 223308
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+            "durationMs": 1813.7999999970198,
+            "transferBytes": 280252,
+            "encodedBytes": 279952
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+            "durationMs": 1439,
+            "transferBytes": 170664,
+            "encodedBytes": 170364
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+            "durationMs": 1597.699999988079,
+            "transferBytes": 213852,
+            "encodedBytes": 213552
+          }
+        ],
+        "navigation": [
+          {
+            "responseStartMs": 4.700000002980232,
+            "domContentLoadedMs": 435.20000000298023,
+            "loadEventEndMs": 643.9000000059605
+          }
+        ]
+      },
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ]
+    },
+    {
+      "profile": "system-chrome-headless",
+      "sample": 2,
+      "readyMs": 9549.334374999991,
+      "renderer": {
+        "available": true,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          576
+        ],
+        "canvasCssPixels": [
+          1020,
+          576
+        ],
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "visibility": "visible"
+      },
+      "validColdObservation": true,
+      "coldEvidence": {
+        "serviceWorkersBlocked": true,
+        "browserCacheDisabled": true,
+        "serviceWorkerControlled": false,
+        "glbRequests": 18,
+        "glbsWithNonzeroTransfer": 18,
+        "encodedGlbBytes": 3697784
+      },
+      "resources": {
+        "serviceWorkerControlled": false,
+        "glbs": [
+          {
+            "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+            "durationMs": 3249.0999999940395,
+            "transferBytes": 417956,
+            "encodedBytes": 417656
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+            "durationMs": 212.90000000596046,
+            "transferBytes": 14932,
+            "encodedBytes": 14632
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+            "durationMs": 815.0999999940395,
+            "transferBytes": 93992,
+            "encodedBytes": 93692
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+            "durationMs": 1001.3999999910593,
+            "transferBytes": 120836,
+            "encodedBytes": 120536
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+            "durationMs": 1757.4000000059605,
+            "transferBytes": 215596,
+            "encodedBytes": 215296
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+            "durationMs": 2159,
+            "transferBytes": 269128,
+            "encodedBytes": 268828
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+            "durationMs": 1327.2999999970198,
+            "transferBytes": 157364,
+            "encodedBytes": 157064
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+            "durationMs": 1627.1000000089407,
+            "transferBytes": 204008,
+            "encodedBytes": 203708
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+            "durationMs": 1933.1000000089407,
+            "transferBytes": 244680,
+            "encodedBytes": 244380
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+            "durationMs": 1066.5,
+            "transferBytes": 128212,
+            "encodedBytes": 127912
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+            "durationMs": 2546.5,
+            "transferBytes": 324400,
+            "encodedBytes": 324100
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+            "durationMs": 2110.7999999970198,
+            "transferBytes": 262904,
+            "encodedBytes": 262604
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+            "durationMs": 1801.7000000029802,
+            "transferBytes": 227932,
+            "encodedBytes": 227632
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+            "durationMs": 1165.7999999970198,
+            "transferBytes": 132868,
+            "encodedBytes": 132568
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+            "durationMs": 1762.8999999910593,
+            "transferBytes": 223608,
+            "encodedBytes": 223308
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+            "durationMs": 1807.5,
+            "transferBytes": 280252,
+            "encodedBytes": 279952
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+            "durationMs": 1435,
+            "transferBytes": 170664,
+            "encodedBytes": 170364
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+            "durationMs": 1597.300000011921,
+            "transferBytes": 213852,
+            "encodedBytes": 213552
+          }
+        ],
+        "navigation": [
+          {
+            "responseStartMs": 2.7000000029802322,
+            "domContentLoadedMs": 438.5,
+            "loadEventEndMs": 645.9000000059605
+          }
+        ]
+      },
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ]
+    },
+    {
+      "profile": "system-chrome-headless",
+      "sample": 3,
+      "readyMs": 9537.764374999999,
+      "renderer": {
+        "available": true,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "devicePixelRatio": 1,
+        "canvasPixels": [
+          1020,
+          576
+        ],
+        "canvasCssPixels": [
+          1020,
+          576
+        ],
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "visibility": "visible"
+      },
+      "validColdObservation": true,
+      "coldEvidence": {
+        "serviceWorkersBlocked": true,
+        "browserCacheDisabled": true,
+        "serviceWorkerControlled": false,
+        "glbRequests": 18,
+        "glbsWithNonzeroTransfer": 18,
+        "encodedGlbBytes": 3697784
+      },
+      "resources": {
+        "serviceWorkerControlled": false,
+        "glbs": [
+          {
+            "path": "/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+            "durationMs": 3239.6000000089407,
+            "transferBytes": 417956,
+            "encodedBytes": 417656
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+            "durationMs": 212.40000000596046,
+            "transferBytes": 14932,
+            "encodedBytes": 14632
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+            "durationMs": 821.2999999970198,
+            "transferBytes": 93992,
+            "encodedBytes": 93692
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+            "durationMs": 1004,
+            "transferBytes": 120836,
+            "encodedBytes": 120536
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+            "durationMs": 1760.0999999940395,
+            "transferBytes": 215596,
+            "encodedBytes": 215296
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+            "durationMs": 2161.3999999910593,
+            "transferBytes": 269128,
+            "encodedBytes": 268828
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_04-BBCbhjJU.glb",
+            "durationMs": 1321.9000000059605,
+            "transferBytes": 157364,
+            "encodedBytes": 157064
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+            "durationMs": 1630.0999999940395,
+            "transferBytes": 204008,
+            "encodedBytes": 203708
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+            "durationMs": 1936.0999999940395,
+            "transferBytes": 244680,
+            "encodedBytes": 244380
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+            "durationMs": 1063.5,
+            "transferBytes": 128212,
+            "encodedBytes": 127912
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+            "durationMs": 2543,
+            "transferBytes": 324400,
+            "encodedBytes": 324100
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+            "durationMs": 2110.699999988079,
+            "transferBytes": 262904,
+            "encodedBytes": 262604
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+            "durationMs": 1795.9000000059605,
+            "transferBytes": 227932,
+            "encodedBytes": 227632
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+            "durationMs": 1168.7000000029802,
+            "transferBytes": 132868,
+            "encodedBytes": 132568
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_12-BBSM0uzd.glb",
+            "durationMs": 1762.6000000089407,
+            "transferBytes": 223608,
+            "encodedBytes": 223308
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_13-CbMLTUSR.glb",
+            "durationMs": 1803.9000000059605,
+            "transferBytes": 280252,
+            "encodedBytes": 279952
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+            "durationMs": 1435.3999999910593,
+            "transferBytes": 170664,
+            "encodedBytes": 170364
+          },
+          {
+            "path": "/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+            "durationMs": 1594.4000000059605,
+            "transferBytes": 213852,
+            "encodedBytes": 213552
+          }
+        ],
+        "navigation": [
+          {
+            "responseStartMs": 2.9000000059604645,
+            "domContentLoadedMs": 440.59999999403954,
+            "loadEventEndMs": 651.2999999970198
+          }
+        ]
+      },
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/cue_01-BCqBke_n.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_01-CYdwOVaM.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_02-DB1WWWFC.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_03-CUIVES0h.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_05-g8Q6Ow2l.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_07-DTLIzTg4.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_06-Dx-lGkJH.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_11-DqkUg1Oy.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_09-Bu8fLWw3.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_08-BGG5JkMB.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_10-Csex90PS.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_14-5cOYbVRY.glb",
+          "message": "net::ERR_ABORTED"
+        },
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:52460/Blender-3D-Gallery/assets/ball_15-BhFgOajB.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "hardwareStatus": "hardware-reported",
+  "summary": {
+    "hardwareProfile": "system-chrome-headless",
+    "hardwareSampleCounts": {
+      "desktop": 3,
+      "mobile-emulated": 3
+    },
+    "rackSignatures": [
+      "69c069be4c56a7489d0f71a91a3c1c031da5a13ade6a38b73c043c687f2d6c44"
+    ],
+    "networkProfile": "system-chrome-headless",
+    "validColdSamples": 3
+  }
+}

@@ -19,3 +19,7 @@ Thirteen separately scoped, read-only reviewer sessions examined the changes fro
 | Creative Director | No additional P0/P1/P2 confirmed. | Inspected actual before/after desktop/mobile screenshots and `style.css`: the table, muted green palette and restrained controls remain visually coherent. Different mobile DPR/quality prevents pixel-identical comparison. |
 
 The initial baseline and its reproducible findings are in [game baseline](../audits/game-baseline.md). Remaining P0/P1/P2 dispositions and release limitations are in [release readiness](release-readiness.md).
+
+## Bounded follow-up review, 2026-11-05
+
+The loading/narrow-layout repair received separate engineering/QA, UI/accessibility and product/static-review work, followed by primary-agent regression on main snapshot `31e5475`. The final static reviewer found no confirmed new P0/P1/P2 in the patch; that review did not independently execute every suite. Actual download/hash/navigation verification was separately executed. See [release readiness](release-readiness.md) for precise commands and evidence. This follow-up is not a newly completed 13-persona independent panel; the original panel above remains historical. Original license decisions and physical-device/performance gaps remain open.

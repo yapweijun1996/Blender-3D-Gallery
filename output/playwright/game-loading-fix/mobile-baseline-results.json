@@ -1,0 +1,203 @@
+{
+  "date": "2026-11-05",
+  "node": "v24.21.0",
+  "browser": "156.0.8078.4",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "webgl": "SwiftShader (Playwright launch flags)",
+  "buildInfo": {
+    "build": "87423ed187d3babe"
+  },
+  "indexSha256": "cee2afc70e7e63213ea4fb0c9b57829718218970ec92dc177c6526a3c2f27f95",
+  "artifacts": "/tmp/game-pr1-followup/mobile-a11y/run-q4uAQj",
+  "results": [
+    {
+      "name": "narrow viewport reflow 320x450",
+      "passed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "requestedViewport": {
+        "width": 320,
+        "height": 450
+      },
+      "layout": {
+        "width": 320,
+        "height": 450,
+        "scrollWidth": 320,
+        "visualViewport": {
+          "width": 320,
+          "height": 450,
+          "scale": 1
+        },
+        "elements": {
+          ".header": {
+            "left": 16,
+            "right": 304,
+            "top": 0,
+            "bottom": 45,
+            "width": 288,
+            "height": 45,
+            "textTop": 0,
+            "textBottom": 44
+          },
+          "#game-title": {
+            "left": 16,
+            "right": 120.203125,
+            "top": 102.5,
+            "bottom": 127.5,
+            "width": 104.203125,
+            "height": 25,
+            "textTop": 100.5,
+            "textBottom": 128.5
+          },
+          ".players": {
+            "left": 16,
+            "right": 304,
+            "top": 145,
+            "bottom": 187,
+            "width": 288,
+            "height": 42,
+            "textTop": 145,
+            "textBottom": 187
+          },
+          "#game-viewport": {
+            "left": 17,
+            "right": 303,
+            "top": 196,
+            "bottom": 386,
+            "width": 286,
+            "height": 190,
+            "textTop": 196,
+            "textBottom": 386
+          },
+          ".control-note": {
+            "left": 27,
+            "right": 292.984375,
+            "top": 599.375,
+            "bottom": 611.375,
+            "width": 265.984375,
+            "height": 12,
+            "textTop": 599.375,
+            "textBottom": 611.375
+          },
+          "[data-action=\"shoot\"]": {
+            "left": 27,
+            "right": 155,
+            "top": 629.375,
+            "bottom": 673.375,
+            "width": 128,
+            "height": 44,
+            "textTop": 643.375,
+            "textBottom": 659.375
+          },
+          "[data-action=\"pause\"]": {
+            "left": 165,
+            "right": 293,
+            "top": 629.375,
+            "bottom": 673.375,
+            "width": 128,
+            "height": 44,
+            "textTop": 643.375,
+            "textBottom": 659.375
+          }
+        }
+      },
+      "screenshot": "/tmp/game-pr1-followup/mobile-a11y/run-q4uAQj/reflow-320x450.png"
+    },
+    {
+      "name": "narrow viewport reflow 195x422",
+      "passed": false,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "requestedViewport": {
+        "width": 195,
+        "height": 422
+      },
+      "layout": {
+        "width": 203,
+        "height": 438,
+        "scrollWidth": 203,
+        "visualViewport": {
+          "width": 195,
+          "height": 422,
+          "scale": 1
+        },
+        "elements": {
+          ".header": {
+            "left": 16,
+            "right": 179,
+            "top": 0,
+            "bottom": 46,
+            "width": 163,
+            "height": 46,
+            "textTop": 0,
+            "textBottom": 45
+          },
+          "#game-title": {
+            "left": 16,
+            "right": 120.203125,
+            "top": 103.5,
+            "bottom": 128.5,
+            "width": 104.203125,
+            "height": 25,
+            "textTop": 101.5,
+            "textBottom": 129.5
+          },
+          ".players": {
+            "left": 16,
+            "right": 179,
+            "top": 146,
+            "bottom": 201,
+            "width": 163,
+            "height": 55,
+            "textTop": 146,
+            "textBottom": 201
+          },
+          "#game-viewport": {
+            "left": 17,
+            "right": 178,
+            "top": 210,
+            "bottom": 400,
+            "width": 161,
+            "height": 190,
+            "textTop": 210,
+            "textBottom": 400
+          },
+          ".control-note": {
+            "left": 27,
+            "right": 167.984375,
+            "top": 649.5625,
+            "bottom": 661.5625,
+            "width": 140.984375,
+            "height": 12,
+            "textTop": 649.5625,
+            "textBottom": 661.5625
+          },
+          "[data-action=\"shoot\"]": {
+            "left": 27,
+            "right": 92.5,
+            "top": 689.5625,
+            "bottom": 733.5625,
+            "width": 65.5,
+            "height": 44,
+            "textTop": 703.5625,
+            "textBottom": 719.5625
+          },
+          "[data-action=\"pause\"]": {
+            "left": 102.5,
+            "right": 168,
+            "top": 689.5625,
+            "bottom": 733.5625,
+            "width": 65.5,
+            "height": 44,
+            "textTop": 700.5625,
+            "textBottom": 748.5625
+          }
+        }
+      },
+      "screenshot": "/tmp/game-pr1-followup/mobile-a11y/run-q4uAQj/reflow-195x422.png",
+      "error": "button label extends outside [data-action=\"pause\"]: {\"left\":102.5,\"right\":168,\"top\":689.5625,\"bottom\":733.5625,\"width\":65.5,\"height\":44,\"textTop\":700.5625,\"textBottom\":748.5625}",
+      "failureScreenshot": "/tmp/game-pr1-followup/mobile-a11y/run-q4uAQj/narrow-viewport-reflow-195x422-failure.png"
+    }
+  ]
+}

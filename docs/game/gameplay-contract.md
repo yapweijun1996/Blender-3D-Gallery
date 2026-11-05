@@ -22,7 +22,7 @@ The table accepts pointer/touch aiming and cue-ball placement; releasing a point
 
 App options offers Standard and Performance graphics quality. Standard keeps the original 1.5 pixel-ratio cap; Performance caps it at 1 until the player leaves Game. The selection changes render resolution, not the simulation, models or saved match.
 
-The game loads its table, cue and sixteen balls from the existing catalog. A failed initial 3D load or unavailable WebGL must leave a clear recovery path. WebGL context loss during a match offers a save/reload path for the last stable turn. No external model code is executed.
+The game loads its table, cue and sixteen balls from the existing catalog. A failed initial 3D load or unavailable WebGL must leave a clear recovery path. Leaving during initialization aborts Game-owned model downloads, stops queued loads and prevents late results from changing the next route; entering Game again creates a fresh scene. The four-worker limit and existing catalog GLBs are preserved. WebGL context loss during a match offers a save/reload path for the last stable turn. No external model code is executed.
 
 ## Acceptance evidence
 

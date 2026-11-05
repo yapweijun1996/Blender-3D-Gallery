@@ -24,6 +24,8 @@ export async function createGameScene(container, assets, signal, progress) {
   key.position.set(-2, 5, 2);
   scene.add(key);
   const balls = new Map();
+  const assetController = new AbortController();
+  const loadingManager = new THREE.LoadingManager();
   let cue,
     disposed = false,
     inspect = false,
@@ -68,6 +70,8 @@ export async function createGameScene(container, assets, signal, progress) {
   const dispose = () => {
     if (disposed) return;
     disposed = true;
+    assetController.abort();
+    loadingManager.abort();
     observer.disconnect();
     controls.dispose();
     disposeObject(scene);
@@ -76,6 +80,10 @@ export async function createGameScene(container, assets, signal, progress) {
     signal.removeEventListener("abort", dispose);
   };
   signal.addEventListener("abort", dispose, { once: true });
+  if (signal.aborted) {
+    dispose();
+    throw new DOMException("Canceled", "AbortError");
+  }
   renderer.domElement.addEventListener("webglcontextlost", (e) => {
     e.preventDefault();
     container.dispatchEvent(new CustomEvent("game-context-lost"));
@@ -117,10 +125,23 @@ export async function createGameScene(container, assets, signal, progress) {
     await Promise.all(
       Array.from({ length: 4 }, async () => {
         while (index < ids.length) {
+          if (disposed || signal.aborted)
+            throw new DOMException("Canceled", "AbortError");
           const id = ids[index++],
             asset = assets.find((a) => a.id === id);
           if (!asset) throw new Error("Missing " + id);
-          const gltf = await new GLTFLoader().loadAsync(asset.file);
+          // We show completed-model progress, not byte progress. The pinned
+          // FileLoader stream wrapper reports ERR_ABORTED in Chromium after a
+          // complete read; see docs/game/loading-root-cause.md.
+          const response = await fetch(asset.file, { signal: assetController.signal });
+          if (!response.ok) throw new Error(`Asset ${id} returned HTTP ${response.status}`);
+          const data = await response.arrayBuffer();
+          if (disposed || signal.aborted)
+            throw new DOMException("Canceled", "AbortError");
+          const gltf = await new GLTFLoader(loadingManager).parseAsync(
+            data,
+            THREE.LoaderUtils.extractUrlBase(asset.file),
+          );
           if (disposed || signal.aborted) {
             disposeObject(gltf.scene);
             throw new DOMException("Canceled", "AbortError");

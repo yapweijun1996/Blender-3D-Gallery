@@ -1,0 +1,70 @@
+
+> blender-3d-gallery@0.1.0 test:browser
+> node scripts/test-game-browser.mjs
+
+PASS gameplay keyboard shortcuts require table focus
+PASS backgrounding during shot startup cancels the impulse after the save
+PASS WebGL loss during renew cannot continue the shot
+PASS WebGL loss during checkpoint cannot continue the shot
+PASS WebGL loss during adjudication cannot continue the shot
+PASS WebGL loss closes blocking game dialogs and exposes recovery
+PASS backgrounding while new is saving preserves the pause
+PASS backgrounding while place is saving preserves the pause
+PASS backgrounding while adjudication is saving preserves the pause
+PASS leaving during a pending hidden shot cannot open a stale dialog
+PASS late Web Lock is released when the game route is abandoned
+PASS IndexedDB lease transfers when Web Locks are unavailable
+PASS mobile storage failure remains visible during play
+PASS restarting resets the match without duplicating its animation loop
+PASS missing game assets show a usable retry
+PASS invalid game assets show a usable retry
+PASS unavailable WebGL offers recovery and a working retry
+PASS graphics quality changes resolution without resetting the match
+PASS desktop graphics options open and close
+PASS touch targets and viewport remain usable at 320x568
+PASS touch targets and viewport remain usable at 360x800
+PASS touch targets and viewport remain usable at 390x844
+PASS touch targets and viewport remain usable at 1440x900
+PASS Game to About and back to Gallery preserves navigation
+PASS resizing an active match preserves state and usable controls
+PASS reduced motion disables smooth scrolling without disabling play
+PASS assigned-group progress is available at 320px
+PASS assigned-group progress is available at 390px
+PASS active touch hands off safely when fingers end or cancel
+PASS late GLB response cannot revive a disposed game route
+PASS WebGL loss during GLB loading leaves a working recovery
+PASS first entry exposes Start and the complete table
+PASS start, invalid placement, single impulse, pause and shot settlement
+PASS interrupted shot restores pre-shot checkpoint
+PASS one navigation confirmation and repeated Game navigation remains usable
+PASS touch layout 320x568
+PASS touch layout 390x844
+PASS touch layout 844x390
+PASS multi-tab ownership transfers after the first tab closes
+PASS storage failure keeps the match until an explicit discard
+PASS corrupt checkpoint falls back to a new match
+PASS eligible eight is physically potted and ends the match once
+PASS WebGL context loss before and during a match offers working reload
+FAILED all gallery assets preview and download independently undefined
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+41 !== 40
+
+    at file:///Users/yapweijun/Documents/GitHub/Blender-3D-Gallery-loading-final/scripts/test-game-browser.mjs:1034:14
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:541:9)
+    at async run (file:///Users/yapweijun/Documents/GitHub/Blender-3D-Gallery-loading-final/scripts/test-game-browser.mjs:31:5)
+    at async file:///Users/yapweijun/Documents/GitHub/Blender-3D-Gallery-loading-final/scripts/test-game-browser.mjs:1026:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 41,
+  expected: 40,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

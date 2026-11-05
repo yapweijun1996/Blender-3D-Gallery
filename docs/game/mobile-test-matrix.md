@@ -11,3 +11,7 @@ All results below are local browser automation on 2026-11-05. Touch, pixel densi
 | 320×568 and 844×390 | Chromium viewport/touch emulation in `npm run test:browser` | Short portrait and landscape layout checks passed; the same active game was also resized 390×844 → 844×390 → 390×844 with state, canvas and controls checked. |
 
 The browser suite also exercises visibility-change injection during pending saves, multiple contacts and cancellation, a local save failure, retries, and leaving Game. Some cancellation is injected as a DOM `pointercancel`; a changed viewport is not a physical orientation event. Real iOS/Android browser chrome, nonzero safe-area insets, OS interruption, actual touch cancellation and hardware performance remain unverified.
+
+## Loading/narrow-layout follow-up, 2026-11-05
+
+Final build `042c99b1e32521a0` on main snapshot `31e5475` passed the independent 20-case [mobile/accessibility follow-up](mobile-accessibility-followup.md), including the four requested dimensions, 195px stress reflow, both sides of the 260px repair breakpoint, short/tall layouts, resize/orientation-like viewport changes and actual touch interaction. Associated range labels remain usable inside their targets; unrelated overlaps still fail. These remain emulated viewports, not physical orientation, safe-area, installed-PWA or screen-reader certification.

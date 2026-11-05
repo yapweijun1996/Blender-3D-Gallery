@@ -20,3 +20,7 @@ The browser stores validated stable match checkpoints locally in IndexedDB and c
 ## Remaining limits
 
 The review did not establish an explicit CSP, exhaustive protection for extension-defined resource references, limits for every future asset, real-device storage eviction behavior, or a complete accessibility/security certification. Do not accept new third-party assets without validating provenance, rights, resource references and size. Release and deployment remain outside this task's authorization.
+
+## Game loader follow-up, 2026-11-05
+
+The patch is limited to native response consumption, existing GLTF parsing and scene-owned cancellation; it adds no dependencies, origins, metadata HTML, credentials, storage schema or download permissions. Existing production CSP remained in place; the nine PWA-standard checks, including actual GLB texture loading and rejection of an untrusted resource, passed on build `042c99b1e32521a0`. Interrupted/truncated GLBs retained recovery and retry in the five-case loader suite. This is a bounded source/regression review, not a new penetration test or license clearance. Asset terms remain pending and downloads are unchanged.
