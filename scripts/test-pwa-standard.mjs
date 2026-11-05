@@ -5,6 +5,8 @@ import os from "node:os";
 import crypto from "node:crypto";
 import { chromium } from "playwright";
 import { serveBuild, launchOptions, gameReady } from "./browser-test-utils.mjs";
+const catalog = JSON.parse(await fs.readFile(new URL("../models/catalog.json", import.meta.url), "utf8"));
+const expectedAssetCount = catalog.collections.reduce((total, collection) => total + collection.assets.length, 0);
 const artifacts =
   process.env.TEST_ARTIFACT_DIR || "/tmp/blender-gallery-pwa-standard";
 await fs.mkdir(artifacts, { recursive: true });
@@ -224,7 +226,7 @@ try {
       for (const [width, height] of sizes) {
         await page.setViewportSize({ width, height });
         for (const [route, input, count] of [
-          ["", "#model-search", 40],
+          ["", "#model-search", expectedAssetCount],
           ["?page=demos", "#demo-search", 2],
         ]) {
           await page.goto(server.url + route);

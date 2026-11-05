@@ -12,6 +12,8 @@ import {
 import { makeRack, TABLE, groupOf } from "../src/game/table.js";
 import { RULES_VERSION } from "../src/game/rules.js";
 
+const catalog = JSON.parse(await fs.readFile(new URL("../models/catalog.json", import.meta.url), "utf8"));
+const expectedAssetCount = catalog.collections.reduce((total, collection) => total + collection.assets.length, 0);
 const server = await serveBuild(),
   artifacts = process.env.TEST_ARTIFACT_DIR || "/tmp/blender-gallery-game-qa",
   qualityArtifacts = path.join(artifacts, "quality");
@@ -1031,7 +1033,7 @@ try {
         if (r.url().endsWith(".glb")) glbs.push(r.url());
       });
       await page.goto(server.url);
-      assert.equal(await page.locator(".asset-card").count(), 40);
+      assert.equal(await page.locator(".asset-card").count(), expectedAssetCount);
       assert.equal(glbs.length, 0);
       const ids = await page
         .locator("[data-asset-id]")
