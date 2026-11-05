@@ -8,17 +8,18 @@ import { createGameScene } from "./scene.js";
 export async function mountGame(root, assets, signal, onLeave) {
   root.innerHTML = `<section class="game-shell" aria-labelledby="game-title">
     <div class="game-heading"><div><p class="eyebrow">PLAY THE COLLECTION</p><h1 id="game-title">Eight-ball<span>.</span></h1></div><div class="game-heading-actions"><span class="game-mode">LOCAL TWO-PLAYER</span><button type="button" data-action="rules">Rules & controls</button></div></div>
-    <div class="players"><div id="player-0" class="player-card"><span class="player-index">01</span><div><strong>Player 1</strong><span class="player-group">Open table</span></div><div class="remaining"></div></div><div id="player-1" class="player-card"><span class="player-index">02</span><div><strong>Player 2</strong><span class="player-group">Open table</span></div><div class="remaining"></div></div></div>
+    <div class="players"><div id="player-0" class="player-card"><span class="player-index">01</span><div><strong>Player 1</strong><span class="player-group">Open table</span></div><div class="remaining"><span class="remaining-full" aria-hidden="true"></span><span class="remaining-compact" aria-hidden="true"></span><span class="game-sr-only remaining-accessible"></span></div></div><div id="player-1" class="player-card"><span class="player-index">02</span><div><strong>Player 2</strong><span class="player-group">Open table</span></div><div class="remaining"><span class="remaining-full" aria-hidden="true"></span><span class="remaining-compact" aria-hidden="true"></span><span class="game-sr-only remaining-accessible"></span></div></div></div>
     <div class="game-layout"><div class="game-board"><div id="game-viewport" tabindex="0" aria-label="Pool table. Arrow keys adjust aim or cue placement."><div id="game-loading" role="status">Preparing your table…</div></div><div class="game-table-caption"><span>CASUAL EIGHT-BALL</span><button type="button" data-action="inspect" disabled>Inspect table</button><button type="button" data-action="options">App options</button></div></div>
     <aside class="game-controls" aria-label="Game controls"><div id="game-turn" class="game-turn">Your table is waiting.</div><p id="game-status" role="status" aria-live="polite">Load the table, then start a local match.</p>
       <div id="game-start" class="game-start"><button class="primary" data-action="new" disabled>New two-player match</button><button data-action="resume" disabled>Resume saved match</button><p>Pass the device between turns. No account needed.</p></div>
+      <div id="game-load-error" role="alert" hidden><p>Check your connection and browser 3D support, then try again.</p><button data-action="retry-load" class="primary">Retry loading</button><button data-action="back-to-gallery">Back to Gallery</button></div>
       <div id="game-shot-controls" hidden><div class="aim-control"><label for="aim-angle">Aim <output id="angle-output">0°</output></label><input id="aim-angle" type="range" min="-180" max="180" step="0.25" value="0"><div class="aim-fine"><button data-action="aim-left" aria-label="Aim left one degree">−1°</button><button data-action="aim-right" aria-label="Aim right one degree">+1°</button></div></div>
-        <div class="power-control"><label for="shot-power">Power <output id="power-output">45%</output></label><input id="shot-power" type="range" min="5" max="100" value="45"></div><button data-action="shoot" class="primary">Shoot</button><p class="control-note">Drag on the table to aim. Release to set; press Shoot to strike.</p></div>
+        <div class="power-control"><label for="shot-power">Power <output id="power-output">45%</output></label><input id="shot-power" type="range" min="5" max="100" value="45"></div><button data-action="shoot" class="primary">Shoot</button><p class="control-note">Drag to aim; press Shoot to strike.</p></div>
       <div id="game-placement" hidden><strong>Ball in hand</strong><p id="placement-hint">Tap or drag on the table to place the cue ball.</p><label for="place-x">Along the table</label><input id="place-x" type="range" min="-1.076" max="1.076" step="0.005" value="-0.7"><label for="place-z">Across the table</label><input id="place-z" type="range" min="-0.492" max="0.492" step="0.005" value="0"><button data-action="place" class="primary">Confirm cue position</button></div>
       <div id="game-finish" hidden><button data-action="new" class="primary">Play again</button></div><div id="game-recovery" hidden><button data-action="restore" class="primary">Restore last turn</button></div>
       <button data-action="pause" id="game-pause" hidden>Pause / menu</button><p id="save-status" class="save-status" role="status">Checking local save…</p>
     </aside></div>
-    <dialog id="game-options" aria-labelledby="game-options-title"><h2 id="game-options-title">Your app.</h2><div class="offline-box"><span id="game-offline-status">Online play available</span><button data-action="offline">Make available offline</button><button data-action="install">Install app / help</button></div><button data-action="fullscreen">Fullscreen</button><button data-action="close-options" class="primary">Back to the table</button></dialog>
+    <dialog id="game-options" aria-labelledby="game-options-title"><h2 id="game-options-title">Your app.</h2><label for="graphics-quality">Graphics quality</label><select id="graphics-quality" aria-describedby="graphics-quality-note" disabled><option value="standard">Standard</option><option value="performance">Performance</option></select><p id="graphics-quality-note">Performance lowers rendering resolution until you leave Game.</p><div class="offline-box"><span id="game-offline-status">Online play available</span><button data-action="offline">Make available offline</button><button data-action="install">Install app / help</button></div><button data-action="fullscreen">Fullscreen</button><button data-action="close-options" class="primary">Back to the table</button></dialog>
     <dialog id="game-menu" aria-labelledby="game-menu-title"><h2 id="game-menu-title">Take a break.</h2><p id="menu-save-message" role="status">Your last complete turn is saved when local storage is available.</p><button data-action="continue" class="primary">Continue game</button><button data-action="restart">Restart match</button><button data-action="leave">Save & return to Gallery</button><button data-action="discard" hidden>Leave without saving</button></dialog>
     <dialog id="game-rules" aria-labelledby="game-rules-title"><h2 id="game-rules-title">Casual Eight-Ball</h2><p>Two people, one device. Player 1 breaks. Drag to aim, set power, then press Shoot. Arrow keys adjust aim (Shift for fine aim); Enter confirms cue placement; Space shoots when the table is focused. Labeled sliders and buttons also work with a keyboard.</p><ul><li>Groups stay open on the break. The first legal post-break pot assigns solids or stripes. Simultaneous pots are ordered by simulation tick, substep, then ball number.</li><li>First contact must be your group. When your group is cleared, hit the eight first. If every group ball has gone while the table is still open, either player may play the eight.</li><li>A scratch, wrong first contact or no contact gives your opponent ball in hand.</li><li>Clear your group before the shot that pockets the eight. An early eight, or an eight with a foul, loses.</li><li>Eight on the break is re-spotted. Eight + scratch on the break is a foul, not an instant loss.</li><li>No called pockets, four-rail break requirement, spin or jump shots. This is a casual ruleset, not competition rules.</li></ul><p>Inspection mode is for looking around; return to Aim before shooting. The guide estimates initial contact, not a guaranteed pot. Backgrounding pauses play. After a killed or interrupted shot, Resume restores its pre-shot checkpoint.</p><button data-action="close-rules" class="primary">Back to the table</button></dialog>
     <dialog id="game-confirm" aria-labelledby="game-confirm-title"><h2 id="game-confirm-title">Start a new match?</h2><p>This replaces the current match. Your gallery assets are unaffected.</p><div><button data-action="cancel-new">Keep current match</button><button data-action="confirm-new" class="primary">Start new match</button></div></dialog>
@@ -42,6 +43,8 @@ export async function mountGame(root, assets, signal, onLeave) {
     shot = null,
     before = null,
     busy = false,
+    pauseRequested = false,
+    loadFailed = false,
     ready = false,
     disposed = false;
   let frame = 0,
@@ -53,21 +56,26 @@ export async function mountGame(root, assets, signal, onLeave) {
     contextLost = false;
   const uuid = () => crypto.randomUUID();
   const stableCopy = (s) => structuredClone(s);
+  function setSaveStatus(message, warning = false) {
+    if (disposed) return;
+    saveStatus.textContent = message;
+    saveStatus.classList.toggle("is-warning", warning);
+  }
   async function persist(s, pending = null) {
     if (!store) {
-      saveStatus.textContent = "Autosave unavailable. Keep this tab open.";
+      setSaveStatus("Autosave unavailable. Keep this tab open.", true);
       saveFailed = true;
       return false;
     }
     try {
       await store.save(s, pending);
-      saveStatus.textContent = pending
-        ? "Previous turn saved. Shot in progress."
-        : "Turn saved on this device.";
+      setSaveStatus(
+        pending ? "Previous turn saved. Shot in progress." : "Turn saved on this device.",
+      );
       saveFailed = false;
       return true;
     } catch (e) {
-      saveStatus.textContent = e.message;
+      setSaveStatus(e.message, true);
       saveFailed = true;
       if (e.message.includes("another tab")) ownership = false;
       return false;
@@ -78,7 +86,8 @@ export async function mountGame(root, assets, signal, onLeave) {
     const phase = state?.phase;
     root.querySelector(".game-shell").classList.toggle("is-playing", !!state);
     root.querySelector(".game-shell").dataset.phase = phase || "setup";
-    $("#game-start").hidden = !!state;
+    $("#game-start").hidden = !!state || loadFailed;
+    $("#game-load-error").hidden = !loadFailed;
     $("#game-shot-controls").hidden = phase !== "aiming" || contextLost;
     $("#game-placement").hidden = phase !== "placing" || contextLost;
     $("#game-finish").hidden = phase !== "finished" || contextLost;
@@ -95,8 +104,10 @@ export async function mountGame(root, assets, signal, onLeave) {
             : `Player ${state.player + 1} · ${state.groups[state.player] || "Open table"}`;
     status.textContent = contextLost
       ? "3D view interrupted. Reload the table to continue."
-      : state?.message ||
-        "Clear your group, then pocket the eight. Two players share this device.";
+      : loadFailed
+        ? "The 3D table could not load."
+        : state?.message ||
+          "Clear your group, then pocket the eight. Two players share this device.";
     for (let i = 0; i < 2; i++) {
       const c = $(`#player-${i}`);
       c.classList.toggle(
@@ -110,11 +121,25 @@ export async function mountGame(root, assets, signal, onLeave) {
             (b) => !b.pocketed && groupOf(b.id) === state.groups[i],
           )
         : [];
-      c.querySelector(".remaining").textContent = remain.length
+      c.querySelector(".remaining-full").textContent = remain.length
         ? remain.map((b) => String(b.id).padStart(2, "0")).join(" · ")
         : state?.groups[i]
           ? "8 BALL"
           : "";
+      c.querySelector(".remaining-compact").textContent = !state?.groups[i]
+        ? ""
+        : remain.length
+          ? `${remain.length} left`
+          : state.balls[8].pocketed
+            ? "Cleared"
+            : "8 ball next";
+      c.querySelector(".remaining-accessible").textContent = !state?.groups[i]
+        ? ""
+        : remain.length
+          ? `${state.groups[i]} remaining: balls ${remain.map((b) => b.id).join(", ")}.`
+          : state.balls[8].pocketed
+            ? `${state.groups[i]} cleared.`
+            : `${state.groups[i]} cleared; 8 ball next.`;
     }
     const disabled =
       busy || !ownership || inspection || contextLost || phase !== "aiming";
@@ -160,10 +185,11 @@ export async function mountGame(root, assets, signal, onLeave) {
     );
     $('[data-action="resume"]').disabled =
       !ready || !saved || !ownership || contextLost;
+    $("#graphics-quality").disabled = !ready || contextLost || loadFailed;
   }
   const previewState = { phase: "preview", balls: makeRack(42) };
   function draw() {
-    view?.update(state || previewState, angle, power, candidate);
+    if (!contextLost) view?.update(state || previewState, angle, power, candidate);
   }
   async function startNew() {
     if (!ready) return;
@@ -193,7 +219,8 @@ export async function mountGame(root, assets, signal, onLeave) {
     pausedPhase = null;
     stable = stableCopy(state);
     await persist(stable);
-    busy = false;
+    if (disposed) return;
+    finishBusy();
     ui();
     draw();
     viewport.focus({ preventScroll: true });
@@ -212,11 +239,13 @@ export async function mountGame(root, assets, signal, onLeave) {
     ui();
     if (store) {
       try {
-        if (!(await store.renew())) {
+        const renewed = await store.renew();
+        if (!canContinueShot()) return;
+        if (!renewed) {
           ownership = false;
           state.message =
             "Another tab owns this match. Pause and return when it is closed.";
-          busy = false;
+          finishBusy();
           ui();
           return;
         }
@@ -224,15 +253,13 @@ export async function mountGame(root, assets, signal, onLeave) {
         saveFailed = true;
       }
     }
+    if (!canContinueShot()) return;
     before = stableCopy(state);
     const id = uuid();
     await persist(before, { id });
-    if (disposed) {
-      busy = false;
-      return;
-    }
+    if (!canContinueShot()) return;
     if (!ownership) {
-      busy = false;
+      finishBusy();
       ui();
       return;
     }
@@ -251,9 +278,16 @@ export async function mountGame(root, assets, signal, onLeave) {
       state.phase = "recovery";
       state.message = e.message;
     }
-    busy = false;
+    finishBusy();
     ui();
     draw();
+  }
+  function canContinueShot() {
+    if (!disposed && !contextLost && state?.phase === "aiming") return true;
+    busy = false;
+    pauseRequested = false;
+    ui();
+    return false;
   }
   async function completeShot() {
     if (busy) return;
@@ -264,7 +298,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     shot = null;
     if (next.phase === "recovery") {
       state = next;
-      busy = false;
+      finishBusy();
       ui();
       draw();
       return;
@@ -273,8 +307,13 @@ export async function mountGame(root, assets, signal, onLeave) {
     if (disposed) return;
     state = next;
     stable = stableCopy(next);
+    if (contextLost) {
+      state.phase = "recovery";
+      state.message =
+        "3D view interrupted. Save and reload to restore the last complete turn.";
+    }
     candidate = { x: -0.7, z: 0 };
-    busy = false;
+    finishBusy();
     ui();
     draw();
   }
@@ -284,13 +323,26 @@ export async function mountGame(root, assets, signal, onLeave) {
     if (shot.invalid || shot.done) void completeShot();
   }
   function pause() {
-    if (!state || ["finished", "paused"].includes(state.phase) || busy) return;
+    if (!state || contextLost || ["finished", "paused"].includes(state.phase)) return;
+    if (busy) {
+      pauseRequested = true;
+      return;
+    }
+    pauseRequested = false;
+    clearPointers();
     pausedPhase = state.phase;
     state.phase = "paused";
     state.message = "Take your time. Continue when ready.";
     ui();
     $("#game-menu").showModal();
     $('#game-menu [data-action="continue"]').focus();
+  }
+  function finishBusy() {
+    busy = false;
+    if (pauseRequested) {
+      pauseRequested = false;
+      if (!disposed && !contextLost) pause();
+    }
   }
   function resume() {
     if (state?.phase !== "paused") return;
@@ -320,12 +372,23 @@ export async function mountGame(root, assets, signal, onLeave) {
     draw();
   };
   let pointer = null;
+  const pointers = new Set();
+  function clearPointers() {
+    pointer = null;
+    pointers.clear();
+  }
   viewport.addEventListener(
     "pointerdown",
     (e) => {
-      if (e.target.tagName !== "CANVAS" || inspection) return;
-      pointer = e.pointerId;
+      if (
+        e.target.tagName !== "CANVAS" || inspection || busy || contextLost ||
+        !state || !["aiming", "placing"].includes(state.phase)
+      ) return;
+      pointers.add(e.pointerId);
       e.target.setPointerCapture(e.pointerId);
+      if (pointer !== null) return;
+      viewport.focus({ preventScroll: true });
+      pointer = e.pointerId;
       selectPoint(e);
     },
     { signal },
@@ -340,8 +403,10 @@ export async function mountGame(root, assets, signal, onLeave) {
   for (const event of ["pointerup", "pointercancel", "lostpointercapture"])
     viewport.addEventListener(
       event,
-      () => {
-        pointer = null;
+      (e) => {
+        pointers.delete(e.pointerId);
+        if (pointer === e.pointerId)
+          pointer = pointers.keys().next().value ?? null;
       },
       { signal },
     );
@@ -361,6 +426,11 @@ export async function mountGame(root, assets, signal, onLeave) {
       ui();
       draw();
     },
+    { signal },
+  );
+  $("#graphics-quality").addEventListener(
+    "change",
+    (e) => view?.setQuality(e.target.value),
     { signal },
   );
   for (const axis of ["x", "z"])
@@ -426,7 +496,8 @@ export async function mountGame(root, assets, signal, onLeave) {
             busy = true;
             stable = stableCopy(state);
             await persist(stable);
-            busy = false;
+            if (disposed) return;
+            finishBusy();
             ui();
             draw();
           }
@@ -506,8 +577,15 @@ export async function mountGame(root, assets, signal, onLeave) {
         case "close-options":
           $("#game-options").close();
           break;
+        case "retry-load":
+          location.reload();
+          break;
+        case "back-to-gallery":
+          onLeave();
+          break;
         case "inspect":
           inspection = !inspection;
+          if (inspection) clearPointers();
           view.setInspection(inspection);
           ui();
           draw();
@@ -538,12 +616,17 @@ export async function mountGame(root, assets, signal, onLeave) {
     "game-context-lost",
     () => {
       contextLost = true;
+      pauseRequested = false;
+      pausedPhase = null;
+      clearPointers();
+      for (const dialog of all("dialog[open]")) dialog.close();
       if (state) {
         state.phase = "recovery";
         state.message =
           "3D view interrupted. Save and reload to restore the last complete turn.";
       }
       ui();
+      $('[data-action="restore"]').focus({ preventScroll: true });
     },
     { signal },
   );
@@ -560,6 +643,7 @@ export async function mountGame(root, assets, signal, onLeave) {
         pause();
         return;
       }
+      if (e.target !== viewport) return;
       if (e.key.toLowerCase() === "f") {
         e.preventDefault();
         $('[data-action="fullscreen"]').click();
@@ -606,7 +690,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     "visibilitychange",
     () => {
       if (document.hidden) {
-        pointer = null;
+        clearPointers();
         pause();
       }
       lastTime = performance.now();
@@ -619,19 +703,22 @@ export async function mountGame(root, assets, signal, onLeave) {
     try {
       const wasOwner = ownership;
       ownership = ownership ? await store.renew() : await store.claim();
+      if (disposed) return;
       if (ownership && !wasOwner) {
         saved = await store.load();
-        saveStatus.textContent =
-          "Local save ready. This tab now owns the match.";
+        if (disposed) return;
+        setSaveStatus("Local save ready. This tab now owns the match.");
         ui();
       } else if (!ownership && state) {
         pause();
-        saveStatus.textContent =
-          "Another tab owns this match. Waiting for it to close…";
+        setSaveStatus(
+          "Another tab owns this match. Waiting for it to close…",
+          true,
+        );
         ui();
       }
     } catch {
-      saveStatus.textContent = "Local save is unavailable.";
+      setSaveStatus("Local save is unavailable.", true);
     }
   }, 5000);
   const frameLoop = (now) => {
@@ -704,16 +791,24 @@ export async function mountGame(root, assets, signal, onLeave) {
       }
       store = opened;
       ownership = await store.claim();
+      if (signal.aborted) return { dispose };
       saved = await store.load();
-      saveStatus.textContent = !ownership
-        ? "Another session may be active. Waiting for ownership…"
-        : saved?.corrupt
-          ? "Saved data is incompatible. A new match will replace it."
-          : "Local save ready.";
+      if (signal.aborted) return { dispose };
+      setSaveStatus(
+        !ownership
+          ? "Another session may be active. Waiting for ownership…"
+          : saved?.corrupt
+            ? "Saved data is incompatible. A new match will replace it."
+            : "Local save ready.",
+        !ownership || !!saved?.corrupt,
+      );
       if (saved?.corrupt) saved = null;
     } catch {
-      saveStatus.textContent =
-        "Autosave unavailable. This game will stay in this tab only.";
+      if (signal.aborted) return { dispose };
+      setSaveStatus(
+        "Autosave unavailable. This game will stay in this tab only.",
+        true,
+      );
     }
     if (signal.aborted) return { dispose };
     view = await createGameScene(
@@ -733,11 +828,11 @@ export async function mountGame(root, assets, signal, onLeave) {
     $('[data-action="resume"]').disabled = !saved || !ownership;
     ui();
     draw();
-  } catch (e) {
+  } catch {
     if (!signal.aborted) {
-      loading.textContent =
-        "The 3D table could not load. Reconnect and reopen Game to retry.";
-      saveStatus.textContent = e.message;
+      loadFailed = true;
+      loading.textContent = "The 3D table could not load.";
+      ui();
     }
   }
   return {

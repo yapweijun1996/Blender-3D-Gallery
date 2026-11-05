@@ -1,0 +1,1368 @@
+{
+  "methodology": {
+    "description": "Chromium headless, software WebGL and loopback production build; mobile is viewport/touch emulation, not a physical device.",
+    "ready": "Not sampled in this lifecycle-only mode.",
+    "shot": "Not sampled in this lifecycle-only mode.",
+    "frameSampling": "Not sampled in this lifecycle-only mode.",
+    "drawCalls": "Not sampled in this lifecycle-only mode.",
+    "lifecycle": "Thirty Game-to-Gallery cycles in one Chromium page, with forced-GC heap/DOM/listener and owner-lock snapshots immediately and 300ms after each return.",
+    "limitations": [
+      "SwiftShader, headless execution, OS file cache and unthrottled loopback are not a hardware GPU or realistic mobile network.",
+      "Emulation does not establish physical iOS/Android performance, browser chrome, battery or thermal behavior.",
+      "Draw counts and frame intervals do not measure GPU time, shader stalls, texture allocation or total device memory.",
+      "Thirty lifecycle cycles and JS heap/DOM/listener snapshots do not prove the absence of sustained leaks, including GPU leaks."
+    ]
+  },
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "osRelease": "27.0.0",
+    "cpu": "Apple M4",
+    "logicalCpuCount": 10,
+    "launchOptions": {
+      "headless": true,
+      "args": [
+        "--use-angle=swiftshader",
+        "--enable-unsafe-swiftshader"
+      ]
+    },
+    "buildDir": "/tmp/blender-gallery-game-audit/node24-baseline/dist",
+    "buildInfo": {
+      "build": "75afc7500ec37f5b"
+    },
+    "buildInfoSha256": "b8d00090912767d469cc49f0bae58d2609a99526e5ec679e26041f0f53560bca",
+    "measuredAt": "2026-11-05T00:29:03.635Z",
+    "browser": "156.0.8078.4"
+  },
+  "viewports": [],
+  "lifecycle": {
+    "cycles": 30,
+    "cdpAvailable": true,
+    "snapshots": [
+      {
+        "label": "initial-gallery",
+        "heap": {
+          "usedSize": 1975172,
+          "totalSize": 3047424,
+          "embedderHeapUsedSize": 1758096,
+          "backingStorageSize": 61744
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 740,
+          "jsEventListeners": 87
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-1-immediate",
+        "heap": {
+          "usedSize": 4837572,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1566456,
+          "backingStorageSize": 4315631
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-1-settled-300ms",
+        "heap": {
+          "usedSize": 4214580,
+          "totalSize": 4882432,
+          "embedderHeapUsedSize": 1496272,
+          "backingStorageSize": 740523
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-2-immediate",
+        "heap": {
+          "usedSize": 4439896,
+          "totalSize": 5931008,
+          "embedderHeapUsedSize": 1715920,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-2-settled-300ms",
+        "heap": {
+          "usedSize": 4439932,
+          "totalSize": 5144576,
+          "embedderHeapUsedSize": 1514808,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-3-immediate",
+        "heap": {
+          "usedSize": 5292092,
+          "totalSize": 6717440,
+          "embedderHeapUsedSize": 1606008,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-3-settled-300ms",
+        "heap": {
+          "usedSize": 4632232,
+          "totalSize": 5406720,
+          "embedderHeapUsedSize": 1526112,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-4-immediate",
+        "heap": {
+          "usedSize": 5334020,
+          "totalSize": 6455296,
+          "embedderHeapUsedSize": 1620552,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-4-settled-300ms",
+        "heap": {
+          "usedSize": 4684120,
+          "totalSize": 5406720,
+          "embedderHeapUsedSize": 1714264,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-5-immediate",
+        "heap": {
+          "usedSize": 5417252,
+          "totalSize": 6717440,
+          "embedderHeapUsedSize": 1635288,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-5-settled-300ms",
+        "heap": {
+          "usedSize": 4756216,
+          "totalSize": 5406720,
+          "embedderHeapUsedSize": 1555536,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-6-immediate",
+        "heap": {
+          "usedSize": 5419512,
+          "totalSize": 6193152,
+          "embedderHeapUsedSize": 1653744,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-6-settled-300ms",
+        "heap": {
+          "usedSize": 4769056,
+          "totalSize": 5406720,
+          "embedderHeapUsedSize": 1838392,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-7-immediate",
+        "heap": {
+          "usedSize": 5443904,
+          "totalSize": 6717440,
+          "embedderHeapUsedSize": 1668384,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-7-settled-300ms",
+        "heap": {
+          "usedSize": 4778172,
+          "totalSize": 5406720,
+          "embedderHeapUsedSize": 1765472,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-8-immediate",
+        "heap": {
+          "usedSize": 5445452,
+          "totalSize": 5931008,
+          "embedderHeapUsedSize": 1675288,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-8-settled-300ms",
+        "heap": {
+          "usedSize": 4792316,
+          "totalSize": 5406720,
+          "embedderHeapUsedSize": 1601248,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-9-immediate",
+        "heap": {
+          "usedSize": 5819192,
+          "totalSize": 6717440,
+          "embedderHeapUsedSize": 1697272,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-9-settled-300ms",
+        "heap": {
+          "usedSize": 5105076,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1618296,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-10-immediate",
+        "heap": {
+          "usedSize": 5822268,
+          "totalSize": 7241728,
+          "embedderHeapUsedSize": 1712112,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-10-settled-300ms",
+        "heap": {
+          "usedSize": 5117984,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1632224,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-11-immediate",
+        "heap": {
+          "usedSize": 5856148,
+          "totalSize": 6979584,
+          "embedderHeapUsedSize": 1726232,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-11-settled-300ms",
+        "heap": {
+          "usedSize": 5139376,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1646984,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-12-immediate",
+        "heap": {
+          "usedSize": 5833152,
+          "totalSize": 7241728,
+          "embedderHeapUsedSize": 1743224,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-12-settled-300ms",
+        "heap": {
+          "usedSize": 5144008,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1660400,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-13-immediate",
+        "heap": {
+          "usedSize": 5841612,
+          "totalSize": 6979584,
+          "embedderHeapUsedSize": 1764208,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-13-settled-300ms",
+        "heap": {
+          "usedSize": 5144424,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1681760,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-14-immediate",
+        "heap": {
+          "usedSize": 5837924,
+          "totalSize": 6979584,
+          "embedderHeapUsedSize": 1941312,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-14-settled-300ms",
+        "heap": {
+          "usedSize": 5148044,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1692488,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-15-immediate",
+        "heap": {
+          "usedSize": 5151100,
+          "totalSize": 6193152,
+          "embedderHeapUsedSize": 1973416,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-15-settled-300ms",
+        "heap": {
+          "usedSize": 5150940,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1688824,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-16-immediate",
+        "heap": {
+          "usedSize": 5840932,
+          "totalSize": 6979584,
+          "embedderHeapUsedSize": 1780832,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-16-settled-300ms",
+        "heap": {
+          "usedSize": 5151900,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1693632,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-17-immediate",
+        "heap": {
+          "usedSize": 5851084,
+          "totalSize": 6979584,
+          "embedderHeapUsedSize": 1790488,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-17-settled-300ms",
+        "heap": {
+          "usedSize": 5154792,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1702648,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-18-immediate",
+        "heap": {
+          "usedSize": 5844364,
+          "totalSize": 7241728,
+          "embedderHeapUsedSize": 1799664,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-18-settled-300ms",
+        "heap": {
+          "usedSize": 5154680,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1712232,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-19-immediate",
+        "heap": {
+          "usedSize": 5859772,
+          "totalSize": 6979584,
+          "embedderHeapUsedSize": 1989512,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-19-settled-300ms",
+        "heap": {
+          "usedSize": 5158800,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1721000,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-20-immediate",
+        "heap": {
+          "usedSize": 5847704,
+          "totalSize": 6717440,
+          "embedderHeapUsedSize": 1817936,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-20-settled-300ms",
+        "heap": {
+          "usedSize": 5158800,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1730560,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-21-immediate",
+        "heap": {
+          "usedSize": 5863360,
+          "totalSize": 6979584,
+          "embedderHeapUsedSize": 1960768,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-21-settled-300ms",
+        "heap": {
+          "usedSize": 5165992,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1738680,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-22-immediate",
+        "heap": {
+          "usedSize": 5860432,
+          "totalSize": 6717440,
+          "embedderHeapUsedSize": 1838416,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-22-settled-300ms",
+        "heap": {
+          "usedSize": 5169120,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1747984,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-23-immediate",
+        "heap": {
+          "usedSize": 5872596,
+          "totalSize": 7241728,
+          "embedderHeapUsedSize": 1845392,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-23-settled-300ms",
+        "heap": {
+          "usedSize": 5172592,
+          "totalSize": 5931008,
+          "embedderHeapUsedSize": 1757576,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-24-immediate",
+        "heap": {
+          "usedSize": 5866108,
+          "totalSize": 6717440,
+          "embedderHeapUsedSize": 2013336,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-24-settled-300ms",
+        "heap": {
+          "usedSize": 5175844,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1767176,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-25-immediate",
+        "heap": {
+          "usedSize": 5197084,
+          "totalSize": 6193152,
+          "embedderHeapUsedSize": 2040832,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-25-settled-300ms",
+        "heap": {
+          "usedSize": 5196924,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1781472,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-26-immediate",
+        "heap": {
+          "usedSize": 5887188,
+          "totalSize": 7241728,
+          "embedderHeapUsedSize": 1998464,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-26-settled-300ms",
+        "heap": {
+          "usedSize": 5196912,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1783144,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-27-immediate",
+        "heap": {
+          "usedSize": 5897532,
+          "totalSize": 6979584,
+          "embedderHeapUsedSize": 1897360,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-27-settled-300ms",
+        "heap": {
+          "usedSize": 5197576,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1805936,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-28-immediate",
+        "heap": {
+          "usedSize": 5887244,
+          "totalSize": 6979584,
+          "embedderHeapUsedSize": 1902016,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-28-settled-300ms",
+        "heap": {
+          "usedSize": 5197436,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1813152,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-29-immediate",
+        "heap": {
+          "usedSize": 5901728,
+          "totalSize": 6979584,
+          "embedderHeapUsedSize": 1908360,
+          "backingStorageSize": 4315647
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 943,
+          "jsEventListeners": 95
+        },
+        "locks": {
+          "available": true,
+          "held": [
+            {
+              "name": "blender-gallery-game-owner",
+              "mode": "exclusive"
+            }
+          ],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-29-settled-300ms",
+        "heap": {
+          "usedSize": 5202608,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1819904,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-30-immediate",
+        "heap": {
+          "usedSize": 5202064,
+          "totalSize": 5931008,
+          "embedderHeapUsedSize": 2039136,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      },
+      {
+        "label": "gallery-after-cycle-30-settled-300ms",
+        "heap": {
+          "usedSize": 5201904,
+          "totalSize": 5668864,
+          "embedderHeapUsedSize": 1831912,
+          "backingStorageSize": 740539
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 749,
+          "jsEventListeners": 90
+        },
+        "locks": {
+          "available": true,
+          "held": [],
+          "pending": []
+        },
+        "errorsSoFar": []
+      }
+    ],
+    "completedCycles": 30,
+    "errors": []
+  },
+  "errors": []
+}
