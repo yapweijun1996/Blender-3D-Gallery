@@ -173,7 +173,7 @@ export default async function createViewer(
     controls.minDistance = radius * 1.05;
     controls.maxDistance = radius * 20;
     const direction = (
-      isVehicle ? new THREE.Vector3(1, 0.48, 1) :
+      isVehicle ? new THREE.Vector3(1, 0.35, -0.75) :
       asset.family === "solar-system"
         ? new THREE.Vector3(0.55, 0.42, 1)
         : asset.category === "Balls"

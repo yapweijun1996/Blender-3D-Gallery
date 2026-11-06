@@ -7,7 +7,7 @@ This project is a public gallery for real Blender-created 3D works, independent 
 ## Working practices
 
 - Keep changes focused and preserve unrelated work. Document material changes to behavior, contracts and workflows.
-- Treat metadata and third-party models as untrusted. Do not run downloaded Blender scripts without review, expose secrets, or publish assets without verified rights and attribution.
+- Treat metadata and third-party models as untrusted. Do not run downloaded Blender scripts without review or expose secrets.
 - Preserve model sources and reproducibility information where available. Do not claim a model is interactive until its real GLB has been validated and tested.
 - Keep gallery cards lightweight; the proposed viewer loads 3D only when needed and provides loading, error and accessibility fallbacks.
 - For changes, run checks appropriate to the affected behavior and report what was verified and what was not. Do not claim a deployment or release without verifying it.

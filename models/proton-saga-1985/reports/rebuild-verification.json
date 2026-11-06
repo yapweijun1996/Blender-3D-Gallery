@@ -1,0 +1,135 @@
+{
+  "created_utc": "2026-11-06T05:02:12.666421+00:00",
+  "asset_id": "proton-saga-1985",
+  "status": "draft",
+  "glb_sha256": "4252cfa04407e48cb2b2c7e89df3829d8701d8381975b688e73519ce2e22817d",
+  "metrics": {
+    "glb_bytes": 4184100,
+    "triangles": 107578,
+    "vertices": 97576,
+    "materials": 25,
+    "animation_clips": 0
+  },
+  "gltf_validator": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "source": {
+    "root": "ASSET_Proton_Saga_1985",
+    "separate_panels": [
+      "Left Front wing panel",
+      "Left Front door panel",
+      "Left Rear door panel",
+      "Left Rear quarter panel",
+      "Right Front wing panel",
+      "Right Front door panel",
+      "Right Rear door panel",
+      "Right Rear quarter panel"
+    ],
+    "tires": 4,
+    "wheelhouse_liners": 4,
+    "tire_ground_z": 0.0004999972879886627,
+    "roof_top_z": 1.3989999294281006,
+    "images": [
+      {
+        "name": "heritage-front-reference.png",
+        "packed": true,
+        "source": "FILE"
+      },
+      {
+        "name": "heritage-multiview-reference.png",
+        "packed": true,
+        "source": "FILE"
+      },
+      {
+        "name": "studio.exr",
+        "packed": true,
+        "source": "FILE"
+      }
+    ],
+    "render_resolution": [
+      1536,
+      1024
+    ],
+    "cycles_samples": 48
+  },
+  "rendered_views": {
+    "preview.webp": {
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "0d5cf78337e2a06a5a1b9abcd2b50a64440b6e7850e62bd6ef73796e9ffa5881"
+    },
+    "view-front.webp": {
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "ec2e1bbd09abdbeefeaf140ab622dff9b0172d1ec9af108815207653d4fa0695"
+    },
+    "view-rear.webp": {
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "4fa295bfe8d8a7c4b3386aecad96b42f0c2f8d84d155282da086aed724563327"
+    },
+    "view-left.webp": {
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "0c72dd87f2233167e2586a32845220cd960b0f32570a190fe62bc84cb87607f5"
+    },
+    "view-right.webp": {
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "8c2a05fad52af4afd9deb598d70356209042f55693005e2e3d4192991b9f9bdc"
+    }
+  },
+  "browser": {
+    "environment": "Headless Chromium via Playwright, production Vite build served locally; no physical devices tested.",
+    "current_gallery_initial_open": {
+      "desktop_1440x900": "passed",
+      "tablet_768x1024": "passed",
+      "mobile_390x844": "passed",
+      "scope": "Search and focus, lazy loading, real GLB render, four presets and their selected states, keyboard activation, scrolling, rotate, zoom, reset, close and focus restoration; no horizontal overflow or reported errors for these three viewport runs."
+    },
+    "narrow_320x720": "Rendered and reached the end of the same functional assertions, but the run failed on a GLB request reported as net::ERR_ABORTED and a response-completion timeout.",
+    "navigation_reload": "A separate current-build run displayed the model after direct navigation and reload, but failed its GLB network-completion check after one request was reported net::ERR_ABORTED. In a diagnostic, the browser performance entry reported all 4184100 bytes for that request and the model rendered; the cause of the contradictory network event was not established.",
+    "review_page": "Local review.html tested at 1440x900 and 390x844: ten SVG images loaded, all three file links resolved, no page errors or horizontal overflow."
+  },
+  "rebuild": {
+    "independent_glb_sha256": "4252cfa04407e48cb2b2c7e89df3829d8701d8381975b688e73519ce2e22817d",
+    "byte_identical": true,
+    "note": "Independent no-render rebuild after UV quantization; render images from the same unchanged scene geometry."
+  },
+  "references": [
+    {
+      "path": "textures/heritage-front-reference.png",
+      "sha256": "ef38a08942144236053fc60e3a93bd2270cbeed6911362967e10b043ebbd9e23",
+      "embedded_in_glb": true
+    },
+    {
+      "path": "textures/heritage-multiview-reference.png",
+      "sha256": "f4b7ddc11304d4c715542a3d2f0cae38b2f8490cc040711619ef24ae4a6ba3de",
+      "embedded_in_glb": true
+    }
+  ],
+  "limits": [
+    "Artistic reconstruction; no 100% or factory-dimensional match verified.",
+    "Body and cabin geometry and realistic reflections remain simplified.",
+    "Reference image redistribution rights are unverified; public release is not approved by this report.",
+    "Triangle count exceeds the 100000 target; the GLB is below 5 MiB.",
+    "Intermittent Chromium/Playwright GLB network-abort reporting leaves the narrow-viewport and full navigation/reload checks unresolved; physical devices were not tested."
+  ],
+  "checks": {
+    "unit_tests": "npm test: 77 passed, 0 failed.",
+    "asset_validation": "npm run validate:assets: completed; Saga GLB 0 errors and 0 warnings.",
+    "production_build": "Vite production build in an empty temporary output directory completed. The built Saga GLB SHA-256 matches this report. Vite warned about an existing shared JavaScript chunk larger than 500 kB.",
+    "browser_evidence": "Initial-open checks passed on desktop, tablet and emulated mobile. Narrow and navigation/reload network checks remained unresolved as detailed under browser."
+  }
+}

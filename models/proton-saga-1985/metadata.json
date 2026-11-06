@@ -2,10 +2,10 @@
   "id": "proton-saga-1985",
   "name": "Proton Saga (1985)",
   "category": "Vehicles",
-  "status": "validated",
+  "status": "draft",
   "created": "2026-11-05",
   "blender_version": "5.1.2",
-  "creation_method": "Original procedural Blender Python authored with Codex",
+  "creation_method": "Original Blender procedural panel meshes with user-supplied reference-image textures",
   "generator": "generate.py",
   "paths": {
     "glb": "exports/proton-saga-1985.glb",
@@ -23,29 +23,29 @@
     "units": "meters; approximate proportions",
     "front_axis": "Blender -X"
   },
-  "accuracy_notes": "Reference-led silver interpretation of the original 1985 four-door Saga sedan. Formed body shoulders and continuous surface-fitted door seams, connected screen/pillar reveals, lightly bowed rounded glazing and flush roof headers follow owner-supplied images. The small pressed-steel wheels have flatter centers and actual oval ventilation openings within high-profile tires. Recessed headlamp bowls and small bulbs sit beneath fine rectangular lens fluting; richer amber/red segmented lamps, a rear plate panel between the tail lamps, true front apron intakes and black connected underside faces refine the classic appearance. A basic right-hand-drive cabin is visible; no engine, opening panels, exact factory trim or paint match is claimed. The sun-and-shield detail is an original simplified crest. Reference-image specifications were not independently verified. This is an artistic reconstruction, not a scanned or engineering-accurate replica.",
+  "accuracy_notes": "Reconstructed as separate left and right front-wing, door and rear-quarter meshes with a lower cabin and proportioned wheels, using the supplied 1985 Saga images as visual guides. The headlamps, indicators, tail lamps and wheel surfaces use local image-derived textures. The reference images are embedded in the GLB in compressed form. The geometry, reflections, cabin and trim remain approximations: it is not a factory scan, a dimensionally certified vehicle or a 100% photographic match.",
   "attribution": [
     {
-      "credit": "Original procedural geometry and materials for Blender-3D-Gallery; no third-party meshes, textures or photographs embedded."
+      "credit": "Original procedural vehicle meshes and scene created for Blender-3D-Gallery."
     },
     {
-      "credit": "PROTON corporate milestones: historical reference for 1985 Saga launch.",
+      "credit": "User-provided Proton Saga 1985 Heritage Showcase and 1985 Proton Saga Heritage Showcase: image-derived lamp and wheel textures; compressed full reference images are embedded in the GLB."
+    },
+    {
+      "credit": "Blender-bundled Studio HDRI by Greg Zaal / Poly Haven, CC0, used for Blender scene lighting only.",
+      "url": "https://polyhaven.com/"
+    },
+    {
+      "credit": "PROTON corporate milestones, historical context for the 1985 Saga.",
       "url": "https://www.proton.com/corporate/milestones"
-    },
-    {
-      "credit": "PROTON Gallery of Inspiration 1985 Saga exhibit: visual reference only; photograph not redistributed.",
-      "url": "https://www.proton.com/happenings/2021/november/proton-unveils-new-brand-gallery"
-    },
-    {
-      "credit": "Owner-supplied Proton Saga 1985 Heritage Showcase and 1985 Proton Saga Heritage Showcase images: visual references only; no image pixels or specification text redistributed."
     }
   ],
-  "rights": "Original asset redistribution terms pending owner decision. Proton and Saga identify the depicted vehicle; no affiliation or endorsement. No official logo artwork or reference photographs included.",
+  "rights": "Original mesh. User-provided reference images are embedded in the GLB; permission and redistribution rights for those images must be verified before public release. Proton and Saga identify the depicted car and imply no endorsement.",
   "metrics": {
-    "glb_bytes": 2983952,
-    "triangles": 84080,
-    "vertices": 77352,
-    "materials": 16,
+    "glb_bytes": 4184100,
+    "triangles": 107578,
+    "vertices": 97576,
+    "materials": 25,
     "animation_clips": 0
   }
 }

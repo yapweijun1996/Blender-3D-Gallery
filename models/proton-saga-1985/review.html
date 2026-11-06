@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proton Saga (1985) — 参考图与模型对照</title>
+<style>
+:root { color-scheme: dark; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background: #11151a; color: #edf0f2; }
+body { max-width: 1480px; margin: auto; padding: 32px 24px 64px; }
+h1 { font-size: clamp(28px,4vw,46px); margin: 0 0 16px; }
+h2 { margin: 36px 0 12px; font-size: 21px; }
+p { color: #c4cbd2; line-height: 1.6; max-width: 980px; }
+nav { display: flex; flex-wrap: wrap; gap: 20px; margin: 25px 0 12px; }
+a { color: #a2d2fc; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+figure { margin: 0; background: #090b0d; border: 1px solid #3a4149; border-radius: 10px; overflow: hidden; }
+figure img,figure svg { display: block; width: 100%; height: 340px; object-fit: contain; overflow: hidden; }
+figcaption { padding: 12px 16px; color: #cdd4db; font-size: 14px; }
+footer { margin-top: 44px; border-top: 1px solid #3a4149; padding-top: 14px; }
+@media (max-width: 700px) { body { padding: 20px 12px; } .pair { grid-template-columns: 1fr; } figure img,figure svg { height: 260px; } }
+</style>
+</head>
+<body>
+<header>
+<p>1985 · 第一代 · 模型对照</p>
+<h1>Proton Saga</h1>
+<p>左侧是你提供的参考图；右侧是同一个 Blender 模型的实际渲染。车型按图片重建，仍不是实车扫描或完全一致的照片级模型。大灯、尾灯与轮圈使用参考图局部纹理。</p>
+<nav><a href="scene.blend">Blender 源文件</a><a href="exports/proton-saga-1985.glb">GLB 模型</a><a href="README.md">制作与验证说明</a></nav>
+</header>
+<section><h2>前侧视角</h2><div class="pair">
+<figure><svg viewBox="25 85 1630 850" role="img" aria-label="用户提供的 Proton Saga 前侧参考图"><defs><clipPath id="crop1"><rect x="25" y="85" width="1630" height="850"/></clipPath></defs><image href="textures/heritage-front-reference.png" width="1672" height="941" clip-path="url(#crop1)"/></svg><figcaption>参考图 · 前侧</figcaption></figure>
+<figure><svg viewBox="115 220 1350 770" role="img" aria-label="Blender 模型前侧渲染"><defs><clipPath id="crop2"><rect x="115" y="220" width="1350" height="770"/></clipPath></defs><image href="preview.webp" width="1536" height="1024" clip-path="url(#crop2)"/></svg><figcaption>模型渲染 · 前侧</figcaption></figure>
+</div></section>
+<section><h2>前视角</h2><div class="pair">
+<figure><svg viewBox="35 590 335 280" role="img" aria-label="参考图前视局部"><defs><clipPath id="crop3"><rect x="35" y="590" width="335" height="280"/></clipPath></defs><image href="textures/heritage-multiview-reference.png" width="1672" height="941" clip-path="url(#crop3)"/></svg><figcaption>参考图 · 前视局部</figcaption></figure>
+<figure><svg viewBox="300 270 940 690" role="img" aria-label="Blender 模型前视渲染"><defs><clipPath id="crop4"><rect x="300" y="270" width="940" height="690"/></clipPath></defs><image href="view-front.webp" width="1536" height="1024" clip-path="url(#crop4)"/></svg><figcaption>模型渲染 · 前视</figcaption></figure>
+</div></section>
+<section><h2>后视角</h2><div class="pair">
+<figure><svg viewBox="395 590 310 280" role="img" aria-label="参考图后视局部"><defs><clipPath id="crop5"><rect x="395" y="590" width="310" height="280"/></clipPath></defs><image href="textures/heritage-multiview-reference.png" width="1672" height="941" clip-path="url(#crop5)"/></svg><figcaption>参考图 · 后视局部</figcaption></figure>
+<figure><svg viewBox="300 260 940 700" role="img" aria-label="Blender 模型后视渲染"><defs><clipPath id="crop6"><rect x="300" y="260" width="940" height="700"/></clipPath></defs><image href="view-rear.webp" width="1536" height="1024" clip-path="url(#crop6)"/></svg><figcaption>模型渲染 · 后视</figcaption></figure>
+</div></section>
+<section><h2>左侧视角</h2><div class="pair">
+<figure><svg viewBox="745 573 480 168" role="img" aria-label="参考图左侧局部"><defs><clipPath id="crop7"><rect x="745" y="573" width="480" height="168"/></clipPath></defs><image href="textures/heritage-multiview-reference.png" width="1672" height="941" clip-path="url(#crop7)"/></svg><figcaption>参考图 · 左侧局部</figcaption></figure>
+<figure><svg viewBox="75 315 1380 500" role="img" aria-label="Blender 模型左侧渲染"><defs><clipPath id="crop8"><rect x="75" y="315" width="1380" height="500"/></clipPath></defs><image href="view-left.webp" width="1536" height="1024" clip-path="url(#crop8)"/></svg><figcaption>模型渲染 · 左侧</figcaption></figure>
+</div></section>
+<section><h2>右侧视角</h2><div class="pair">
+<figure><svg viewBox="762 743 480 185" role="img" aria-label="参考图右侧局部"><defs><clipPath id="crop9"><rect x="762" y="743" width="480" height="185"/></clipPath></defs><image href="textures/heritage-multiview-reference.png" width="1672" height="941" clip-path="url(#crop9)"/></svg><figcaption>参考图 · 右侧局部</figcaption></figure>
+<figure><svg viewBox="75 315 1380 500" role="img" aria-label="Blender 模型右侧渲染"><defs><clipPath id="crop10"><rect x="75" y="315" width="1380" height="500"/></clipPath></defs><image href="view-right.webp" width="1536" height="1024" clip-path="url(#crop10)"/></svg><figcaption>模型渲染 · 右侧</figcaption></figure>
+</div></section>
+<footer><p>灯具和车轮为三维几何，并使用参考图片局部纹理。车身、内饰与材质仍存在简化；不同角度的参考图也未必完全一致。</p></footer>
+</body></html>
