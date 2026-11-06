@@ -41,8 +41,13 @@ async function viewerReady(page) {
   await page.evaluate(()=>window.qaReadyDraws=window.qaDrawCalls);
 }
 async function demoReady(page, kind) {
-  if (kind === 'game') await page.waitForFunction(()=>window.render_game_to_text && JSON.parse(window.render_game_to_text()).ready,null,{timeout:60000});
-  else await page.waitForFunction(()=>document.querySelector('#solar-status')?.textContent === '',null,{timeout:60000});
+  await page.waitForFunction(kind => {
+    const canvas = document.querySelector(kind === 'game' ? '#game-viewport canvas' : '#solar-canvas canvas');
+    const ready = kind === 'game'
+      ? window.render_game_to_text && JSON.parse(window.render_game_to_text()).ready
+      : document.querySelector('#solar-status')?.textContent === '';
+    return canvas && ready && window.qaDrawCalls > 0;
+  },kind,{timeout:60000});
 }
 try {
   await run('static indexes preserve all assets and never download GLBs or create WebGL', async page => {
@@ -197,18 +202,24 @@ try {
   },{viewport:{width:390,height:844},hasTouch:true});
   await run('legacy demos launch, refresh, return to index and release canvas', async page => {
     for(const kind of ['game','solar']) {
-      await page.goto(server.url+'?page='+kind);
+      // Navigation establishes the document; demoReady verifies the actual
+      // renderer separately, without waiting for unrelated resource load events.
+      await page.goto(server.url+'?page='+kind,{waitUntil:'domcontentloaded'});
       await demoReady(page,kind);
       assert.equal(await page.locator('canvas').count(),1);
-      await page.reload();
+      const previousDocument = await page.evaluate(()=>performance.timeOrigin);
+      await page.reload({waitUntil:'domcontentloaded'});
       await demoReady(page,kind);
+      assert.notEqual(await page.evaluate(()=>performance.timeOrigin),previousDocument,'reload creates a fresh document');
+      assert.equal(await page.locator('canvas').count(),1);
+      assert.ok(await page.evaluate(()=>window.qaDrawCalls > 0),'reloaded demo draws real frames');
       await page.getByRole('link',{name:/back to.*demos/i}).click();
       await page.getByRole('heading',{name:/^Interactive Demos/}).waitFor();
       assert.equal(await page.locator('canvas').count(),0);
       const draws=await page.evaluate(()=>window.qaDrawCalls);
       await page.waitForTimeout(250);
       assert.equal(await page.evaluate(()=>window.qaDrawCalls),draws,'demo draw calls stop after leaving');
-      await page.goBack();
+      await page.goBack({waitUntil:'domcontentloaded'});
       await demoReady(page,kind);
       assert.equal(await page.locator('canvas').count(),1);
     }
