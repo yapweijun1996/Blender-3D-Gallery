@@ -5,7 +5,7 @@ import { adjudicate, RULES_VERSION } from "./rules.js";
 import { openGameStore } from "./storage.js";
 import { createGameScene } from "./scene.js";
 import { aimContact, shotFeedback } from "./presentation.js";
-import { PULL, pullRatio as ratioFromPointer, shotStrength, aimAngle, strikeOffset } from "./interaction.js";
+import { PULL, pullRatio as ratioFromPointer, shotStrength, aimAngle, dragAngle, hitsCue, strikeOffset } from "./interaction.js";
 
 export async function mountGame(root, assets, signal, onLeave) {
   root.innerHTML = `<section class="game-shell" aria-labelledby="game-title">
@@ -474,11 +474,11 @@ export async function mountGame(root, assets, signal, onLeave) {
       candidate = { x: p.x, z: p.z };
       if (legalPlacement(state.balls, candidate.x, candidate.z, state.break)) lastValidCandidate = { ...candidate };
     }
-    else if (!charge && !intent) angle = aimAngle(state.balls[0], p, angle);
+    else if (!charge && !intent) angle = (aimMode === "cue" ? dragAngle : aimAngle)(state.balls[0], p, angle);
     ui();
     draw();
   };
-  let pointer = null;
+  let pointer = null, aimMode = "point";
   function clearPointers() { pointer = null; placementDrag = false; }
   function canCharge() { return !root.querySelector("dialog[open]") && pointer === null && ready && state?.phase === "aiming" && !busy && !inspection && !contextLost && ownership && !intent; }
   function cancelCharge() { charge = null; pull = 0; }
@@ -527,11 +527,12 @@ export async function mountGame(root, assets, signal, onLeave) {
     const point = view.point(e.clientX, e.clientY);
     if (state.phase === "placing" && (!point || Math.hypot(point.x - candidate.x, point.z - candidate.z) > TABLE.radius * 2.5)) return;
     pointer = e.pointerId; placementDrag = state.phase === "placing";
+    aimMode = state.phase === "aiming" && point && hitsCue(state.balls[0], angle, point, TABLE.radius) ? "cue" : "point";
     if (placementDrag) lastValidCandidate = { ...candidate };
-    e.target.setPointerCapture(e.pointerId); viewport.focus({ preventScroll: true }); selectPoint(e);
+    e.target.setPointerCapture(e.pointerId); viewport.focus({ preventScroll: true }); if (placementDrag) selectPoint(e);
   }, { signal });
   viewport.addEventListener("pointermove", (e) => {
-    if (pointer === e.pointerId || (pointer === null && e.pointerType === "mouse" && state?.phase === "aiming")) selectPoint(e);
+    if (pointer === e.pointerId) selectPoint(e);
   }, { signal });
   for (const name of ["pointerup", "pointercancel", "lostpointercapture"]) viewport.addEventListener(name, (e) => {
     if (pointer !== e.pointerId) return;
