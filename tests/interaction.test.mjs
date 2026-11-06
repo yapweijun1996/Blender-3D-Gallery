@@ -31,3 +31,15 @@ test('cue hit test covers the shaft behind the ball only', () => {
  assert.ok(!hitsCue(c,0,{x:-.5,z:.2},r));
  assert.ok(!hitsCue(c,0,{x:-2,z:0},r));
 });
+import { postContact } from '../src/game/presentation.js';
+test('post-contact estimate: head-on sends the object ball straight and leaves no cue tangent', () => {
+ const balls=[{id:0,x:0,z:0},{id:3,x:1,z:0}];
+ const r=postContact(balls,0,{kind:'ball',id:3,x:1-.0571,z:0});
+ assert.ok(Math.abs(r.object.x-1)<1e-9 && Math.abs(r.object.z)<1e-9); assert.equal(r.cue,null);
+ assert.equal(postContact(balls,0,{kind:'cushion'}),null);
+});
+test('post-contact estimate: cut shot splits object and cue directions at right angles', () => {
+ const balls=[{id:0,x:0,z:0},{id:3,x:1,z:.03}];
+ const r=postContact(balls,0,{kind:'ball',id:3,x:.95,z:0});
+ assert.ok(Math.abs(r.object.x*r.cue.x+r.object.z*r.cue.z)<1e-9); assert.ok(r.cue.scale>0);
+});

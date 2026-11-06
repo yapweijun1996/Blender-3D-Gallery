@@ -44,6 +44,23 @@ export function aimContact(balls, angle) {
   return { ...result, x: cue.x + result.distance*dx, z: cue.z + result.distance*dz };
 }
 
+// Frictionless equal-mass estimate for the first ball contact: the object ball leaves along the
+// line of centers and the cue ball along the tangent. Spin, friction and later collisions are ignored.
+export function postContact(balls, angle, contact) {
+  if (contact.kind !== "ball") return null;
+  const target = balls.find((b) => b.id === contact.id);
+  if (!target) return null;
+  const dx = Math.cos(angle), dz = Math.sin(angle), nx = target.x - contact.x, nz = target.z - contact.z;
+  const length = Math.hypot(nx, nz);
+  if (length < 1e-9) return null;
+  const ux = nx / length, uz = nz / length, dot = dx * ux + dz * uz;
+  const tx = dx - dot * ux, tz = dz - dot * uz, tangent = Math.hypot(tx, tz);
+  return {
+    object: { x: ux, z: uz, scale: Math.max(0, dot) },
+    cue: tangent > 1e-6 ? { x: tx / tangent, z: tz / tangent, scale: tangent } : null,
+  };
+}
+
 export function shotFeedback(before, next, shot) {
   if (next.phase === "recovery") return next.message;
   const potted = shot.pockets.filter((p) => p.id !== 0).map((p) => p.id);

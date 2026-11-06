@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { legalPlacement, TABLE } from "./table.js";
-import { aimContact } from "./presentation.js";
+import { aimContact, postContact } from "./presentation.js";
 export async function createGameScene(container, assets, signal, progress) {
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
@@ -108,6 +108,24 @@ export async function createGameScene(container, assets, signal, progress) {
   );
   line.frustumCulled = false;
   scene.add(line);
+  const makePreview = () => {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(6), 3));
+    const preview = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85 }));
+    preview.frustumCulled = false;
+    preview.visible = false;
+    scene.add(preview);
+    return preview;
+  };
+  const objectPreview = makePreview(), cuePreview = makePreview();
+  const setPreview = (preview, x, y, z, direction, length) => {
+    preview.visible = !!direction && length > 0.005;
+    if (!preview.visible) return;
+    const positions = preview.geometry.attributes.position;
+    positions.setXYZ(0, x, y, z);
+    positions.setXYZ(1, x + direction.x * length, y, z + direction.z * length);
+    positions.needsUpdate = true;
+  };
   controls.addEventListener("change", render);
   const ghost = new THREE.Mesh(
     new THREE.RingGeometry(TABLE.radius - 0.001, TABLE.radius, 48),
@@ -252,6 +270,7 @@ export async function createGameScene(container, assets, signal, progress) {
         dz = Math.sin(angle);
       cue.visible = aim;
       line.visible = aim;
+      objectPreview.visible = cuePreview.visible = false;
       ghost.visible = aim || (state.phase === "placing" && !inspect);
       if (aim) ghost.material.color.setHex(0xd6e9b9);
       if (aim) {
@@ -261,7 +280,13 @@ export async function createGameScene(container, assets, signal, progress) {
           cb.z - dz * (cueTip + TABLE.radius + cuePullOffset),
         );
         cue.rotation.y = -angle;
-        const { distance } = aimContact(state.balls, angle);
+        const contact = aimContact(state.balls, angle), { distance } = contact;
+        const after = postContact(state.balls, angle, contact);
+        if (after) {
+          const target = balls.get(contact.id);
+          setPreview(objectPreview, target.position.x, y + 0.002, target.position.z, after.object, 0.1 + 0.3 * after.object.scale);
+          setPreview(cuePreview, contact.x, y + 0.002, contact.z, after.cue, 0.25 * (after.cue?.scale ?? 0));
+        }
         const positions = line.geometry.attributes.position;
         positions.setXYZ(0, cb.x, y + 0.002, cb.z);
         positions.setXYZ(
