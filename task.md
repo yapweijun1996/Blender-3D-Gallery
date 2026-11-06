@@ -1,6 +1,6 @@
 # Eight-Ball Shooting Interaction — Task & Acceptance Tracker (v1.1 Left-side Pull & Release)
 
-> **Status:** `Verified Complete — Local Acceptance 16/16` — the subsequent CI layout defect has a locally verified repair. Successful remote CI and live publication verification remain separate pending release gates; the first failed run and corrective evidence are recorded below.
+> **Status:** `Remote Verified Complete — Acceptance 16/16` — the full CI build/deploy succeeded and the matching production build passed a cold offline touch-shot check. The application release is verified; a subsequent runner mirror-configuration follow-up remains pending. See the final release record below; prior failure notes are preserved.
 > **Core flow:** `Aim → Hold Left Power Handle → Drag Down → Cue Pulls Back → Release → Cue Strikes → Balls Move`
 > **Spec:** [docs/game/gameplay-contract.md](docs/game/gameplay-contract.md) — "Left-side Pull & Release Shooting Specification v1.1" (supersedes v1.0 §4.3/§5/§6 on-table cue grab)
 > **Branch / worktree:** `feat/eight-ball-left-pull-release`, isolated from the original dirty checkout; baseline `39615f7`; full feature acceptance build `66837cb8b2817ced`; initial Saga-integrated build `7a61e8ae1a814835`; current corrective application build `0473d7f6bfac8301`.
@@ -67,7 +67,7 @@ The original checkout remains on `codex/game-experience` with unrelated tracked 
 
 ## 7. Local Verification Record
 
-- Saga-integrated application build: `7a61e8ae1a814835` at merge `4b54607`; current corrective application build: `e641654ce031dfd9` (see CI follow-up below). Full feature acceptance was executed on build `66837cb8b2817ced`; implementation baseline: `39615f7`. See the integration record below for the exact final-tree checks.
+- Saga-integrated application build: `7a61e8ae1a814835` at merge `4b54607`; current released application build: `0473d7f6bfac8301` (see final release record below). Full feature acceptance was executed on build `66837cb8b2817ced`; implementation baseline: `39615f7`. See the integration record below for the exact final-tree checks.
 - Environment: macOS arm64, Node 24.21.0, pinned Playwright 1.64.1; Chromium/SwiftShader and WebKit where recorded. Mobile touch, viewport and safe-area checks are emulated, not physical-device certification.
 - `npm test`: 85 passed. Production build passed; the existing shared Three.js chunk-size advisory remains.
 - The full Game browser regression passed 45 groups and UX passed 7 groups on `c111bb7a831289f9`. Subsequent runtime changes were confined to narrow-screen framing, spacing and placement-button text; existing physics, input and storage logic remained the same. The affected final-build checks below were rerun separately.
@@ -86,7 +86,7 @@ Local logs and artifacts: `/tmp/left-pull-manager-final-unit.log`, `/tmp/left-pu
 - The head-string visual guide remains explicitly deferred, as recorded above; the existing legal head-string placement rule remains active.
 - Physical iOS/Android, actual installed-PWA/browser-chrome behavior, VoiceOver/TalkBack and sustained device GPU/thermal performance remain unverified.
 - Existing asset-redistribution decisions remain owner-deferred. This task changes neither licensing nor asset/download policy.
-- Local regression acceptance is complete. No production release is established by these local results; record the remote commit, workflow and matching live build separately.
+- Local regression acceptance is complete. These local results alone did not establish a production release; the later final release record supplies the remote workflow and matching live evidence.
 
 ## 9. Post-Commit Main Integration
 
@@ -100,9 +100,11 @@ The primary manager independently executed these checks on that merged tree with
 | `npm run build` | Passed; final build `7a61e8ae1a814835` | `/tmp/left-pull-merged-build.log` |
 | `npm run test:library` | All 9 groups passed in isolation, including the updated catalog assets | `/tmp/left-pull-merged-library.log` |
 
-The full Game/PWA/pull-acceptance evidence above remains pinned to the feature builds and unchanged Game sources; it is not a claim that every Game suite was executed again after the Saga-only merge. Publication and live build identity are still recorded separately after remote verification.
+The full Game/PWA/pull-acceptance evidence above remains pinned to the feature builds and unchanged Game sources; it is not a claim that every Game suite was executed again after the Saga-only merge. Publication and live build identity are recorded in the later final release record.
 
 ## CI follow-up — historical failure and locally verified repair
+
+All pending, under-review and incomplete-verification statements in this chronological section describe their recorded checkpoint, not the current release status. The final release record supersedes those gate states while preserving the failures and their evidence.
 
 - GitHub Actions run `42196409550` failed the strict mobile layout assertion: the Pause button bottom was `807.984px` at a viewport height of `800px`. This is a confirmed platform-dependent layout regression, despite the earlier local acceptance evidence. No successful publication or live verification is claimed.
 - The repair increases the tall-portrait viewport height reserve by 30px, preserving its aspect ratio, control sizes and existing ball-size/framing guards. Regression coverage includes 360×800 first-fold checks with multiple font families and a 360×651 safe-area boundary case. A 142px viewport-width floor preserves ball visibility at that boundary. Independent macOS Chromium repair checks passed on build `e6f5639e278e005c`: at 360×800 the Pause bottom is `767.984px` (32.016px spare), with zero scrolling/overflow under Arial, Verdana and system-ui controls; 44px targets and full cabinet/pocket visibility remain intact. Actual projected balls measure `8.29254px` at 360×800 and `4.944047px` at 568×320, retaining the strict 4.9px guard. Raw evidence: `/tmp/left-pull-ci-review.json`; the 360px screenshot was inspected. These local checks do not establish Linux success: the successful remote CI rerun remains pending.
@@ -132,3 +134,15 @@ The full Game/PWA/pull-acceptance evidence above remains pinned to the feature b
 - CI run `42207787440` did not reach application/browser checks in its first attempt: Azure Ubuntu APT dependency downloads (43 packages) stalled for approximately 16 minutes before cancellation. Its second attempt on runner/job `127865876182` again remained in dependency installation after approximately 12 minutes. These are runner package-delivery delays, not application test failures. A narrowly scoped mirror correction is being reviewed; no checks are removed and remote/live gates remain pending.
 
 - Infrastructure correction adds a single pre-Playwright workflow step that rewrites only the exact Azure Ubuntu archive HTTP URL to `https://archive.ubuntu.com/ubuntu` in existing Ubuntu `.list`/deb822 source files. Suites, components, signing-key configuration, security URLs, dependency commands and every test remain unchanged. Fixture checks preserve neighboring/nonmatching URLs and source metadata; Bash syntax validation passed; four Noble `InRelease` URLs returned HTTP 200. Evidence: `/tmp/left-pull-apt-mirror-proof.log`. These checks establish syntax and endpoint reachability, not verified runner download speed or successful APT installation; the next CI run must establish those outcomes.
+
+## 10. Final Release Verification — 2026-11-06 UTC
+
+- **Remote commit:** `d0289febcded6b868a20b9580a7cfab0832f6da5`; application build **`0473d7f6bfac8301`**. [GitHub Actions run 42211833153](https://github.com/yapweijun1996/Blender-3D-Gallery/actions/runs/42211833153) completed the full build and GitHub Pages deployment successfully; run updated at `2026-11-06T11:54:25Z`. Deployment success is recorded in `/tmp/left-pull-ci-release-final.log`.
+- **CI gates:** unit 85; Game/browser 76 (46 main plus 30 pull acceptance); PWA 16; library 9; standard 9; reviewed 8; UX 7; responsive 12 viewport journeys with the underlying font assertions; Solar asset 17 and scene checks at four viewports. All workflow checks passed with their existing limits.
+- **Runner dependencies — corrected attribution:** dependency installation completed in this run (12.9 MB fetched in 1s and 114 MB in 8s), but the actual source was still Azure HTTP via `file:/etc/apt/apt-mirrors.txt`. The two-file rewrite did not reach that runner configuration and was a no-op. The recovered downloads cannot be attributed to the proposed mirror change. The application build/deployment and live evidence remain valid; the mirror-configuration follow-up is not yet verified.
+- **Production verification:** the manager ran `/tmp/left-pull-live-check.mjs` against [the live site](https://yapweijun1996.github.io/Blender-3D-Gallery/) with expected build `0473d7f6bfac8301`; exit status was zero. In a fresh 320×568 touch context, the prepared Game pack was loaded, the browser switched offline, the page was closed, and a new page cold-started offline. A real CDP touch pull measured `0.6000000635782877`; holding caused no impulse or gesture scroll, release committed exactly once at measured GLB contact gap `1.734723475976807e-17m`, and the game settled to `aiming`, revision `2`, with `errors: []`. No horizontal overflow or obsolete Shoot/`#shot-power` control was found. Raw result: `/tmp/left-pull-live-final.log`; the manager inspected `/tmp/left-pull-live-charging.png`.
+- **Limits preserved:** this is emulated Chromium touch/offline evidence, not physical iOS/Android installation or screen-reader certification. The head-string visual guide remains deferred; no prototype cleanup or licensing change was authorized. Active Solar software-WebGL backpressure remains an observed unresolved performance risk; the passing CI does not establish that its root cause is fixed.
+
+## 11. Runner Mirror Configuration Follow-up — Pending
+
+The final CI log exposed a previously missed source file, `/etc/apt/apt-mirrors.txt`. The next focused workflow correction includes this file in the same exact URL replacement and extends its fixture checks. Closing this configuration gate requires a fresh CI log showing actual Ubuntu downloads from the official HTTPS archive, plus successful unchanged checks. Until that evidence exists, no effective mirror switch or resulting speed improvement is claimed. This follow-up changes no application/runtime source and does not invalidate the already verified `d0289feb` / `0473d7f6bfac8301` application release.

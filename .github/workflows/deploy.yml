@@ -24,7 +24,7 @@ jobs:
         shell: bash
         run: |
           # Repeated Azure mirror downloads were slow; keep Ubuntu suites and signing unchanged.
-          for apt_source in /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources; do
+          for apt_source in /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources /etc/apt/apt-mirrors.txt; do
             if [ -f "$apt_source" ]; then
               sudo sed -i -E 's#http://azure\.archive\.ubuntu\.com/ubuntu(/?)([[:space:]]|$)#https://archive.ubuntu.com/ubuntu\1\2#g' "$apt_source"
             fi
