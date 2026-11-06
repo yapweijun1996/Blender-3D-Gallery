@@ -3,7 +3,7 @@
 > **Status:** `Verified Complete — Local Acceptance 16/16` — implementation and local acceptance are complete. Publication is recorded separately after remote/live verification.
 > **Core flow:** `Aim → Hold Left Power Handle → Drag Down → Cue Pulls Back → Release → Cue Strikes → Balls Move`
 > **Spec:** [docs/game/gameplay-contract.md](docs/game/gameplay-contract.md) — "Left-side Pull & Release Shooting Specification v1.1" (supersedes v1.0 §4.3/§5/§6 on-table cue grab)
-> **Branch / worktree:** `feat/eight-ball-left-pull-release`, isolated from the original dirty checkout; baseline `39615f7`, current tested application build `66837cb8b2817ced`.
+> **Branch / worktree:** `feat/eight-ball-left-pull-release`, isolated from the original dirty checkout; baseline `39615f7`; full feature acceptance build `66837cb8b2817ced`; final integrated build `7a61e8ae1a814835` after preserving the latest Saga assets.
 
 ---
 
@@ -67,7 +67,7 @@ The original checkout remains on `codex/game-experience` with unrelated tracked 
 
 ## 7. Local Verification Record
 
-- Application build: `66837cb8b2817ced`; implementation baseline: `39615f7`.
+- Final integrated application build: `7a61e8ae1a814835` at merge `4b54607`. Full feature acceptance was executed on build `66837cb8b2817ced`; implementation baseline: `39615f7`. See the integration record below for the exact final-tree checks.
 - Environment: macOS arm64, Node 24.21.0, pinned Playwright 1.64.1; Chromium/SwiftShader and WebKit where recorded. Mobile touch, viewport and safe-area checks are emulated, not physical-device certification.
 - `npm test`: 85 passed. Production build passed; the existing shared Three.js chunk-size advisory remains.
 - The full Game browser regression passed 45 groups and UX passed 7 groups on `c111bb7a831289f9`. Subsequent runtime changes were confined to narrow-screen framing, spacing and placement-button text; existing physics, input and storage logic remained the same. The affected final-build checks below were rerun separately.
@@ -87,3 +87,17 @@ Local logs and artifacts: `/tmp/left-pull-manager-final-unit.log`, `/tmp/left-pu
 - Physical iOS/Android, actual installed-PWA/browser-chrome behavior, VoiceOver/TalkBack and sustained device GPU/thermal performance remain unverified.
 - Existing asset-redistribution decisions remain owner-deferred. This task changes neither licensing nor asset/download policy.
 - Local regression acceptance is complete. No production release is established by these local results; record the remote commit, workflow and matching live build separately.
+
+## 9. Post-Commit Main Integration
+
+Feature commit `17e7639` was merged with the newly fetched `origin/main` revision `d3055c5` in isolated merge `4b54607`. The upstream change contains only 15 Proton Saga asset/source/preview files. All Game source, Game model bytes, shared application source, dependency manifests and the migrated test sources are unchanged from the accepted feature commit; no Saga work was overwritten.
+
+The primary manager independently executed these checks on that merged tree with Node 24.21.0:
+
+| Check | Observed result | Local evidence |
+| --- | --- | --- |
+| `npm test` | 85 passed, zero failed | `/tmp/left-pull-merged-unit.log` |
+| `npm run build` | Passed; final build `7a61e8ae1a814835` | `/tmp/left-pull-merged-build.log` |
+| `npm run test:library` | All 9 groups passed in isolation, including the updated catalog assets | `/tmp/left-pull-merged-library.log` |
+
+The full Game/PWA/pull-acceptance evidence above remains pinned to the feature builds and unchanged Game sources; it is not a claim that every Game suite was executed again after the Saga-only merge. Publication and live build identity are still recorded separately after remote verification.
