@@ -1,3 +1,4 @@
+import { pullShot, chargePull, releasePull, setPullRatio } from "./browser-test-utils.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -168,7 +169,7 @@ try {
   await page.click("[data-action=new]");
   await page.click("[data-action=place]");
   await page.waitForFunction(
-    () => !document.querySelector("[data-action=shoot]").disabled,
+    () => !document.querySelector("#power-handle").disabled,
   );
   const checkpoint = await readGame(page);
   await page.evaluate(() => caches.open("sibling-app-keep-me"));
@@ -327,9 +328,11 @@ try {
       await tab.locator("[data-action=new]").first().click();
       await tab.locator("[data-action=place]").click();
       await tab.waitForFunction(
-        () => !document.querySelector("[data-action=shoot]").disabled,
+        () => !document.querySelector("#power-handle").disabled,
       );
       const before = await readGame(tab);
+      await chargePull(tab, .6);
+      assert.equal((await readGame(tab)).interaction, "charging");
       await tab.evaluate(() => {
         window.originalPwaTransaction = IDBDatabase.prototype.transaction;
         IDBDatabase.prototype.transaction = function (...args) {
@@ -344,8 +347,16 @@ try {
           return window.originalPwaTransaction.apply(this, args);
         };
       });
-      await clickUpdate(tab);
+      // Keep the real pointer held while keyboard activation initiates update.
+      // A late release after the update preparation must not become a shot.
+      await tab.locator(".pwa-notice button").first().focus();
+      await tab.keyboard.press("Enter");
       await updateError(tab);
+      await releasePull(tab);
+      assert.equal((await readGame(tab)).committedShots, 0);
+      assert.equal((await readGame(tab)).interaction, "idle");
+      assert.notEqual((await readGame(tab)).phase, "moving");
+      assert.deepEqual((await readGame(tab)).balls, before.balls);
       assert.match(
         await tab.locator("#pwa-update-status").innerText(),
         /save your turn/i,
@@ -391,7 +402,7 @@ try {
         false,
       );
       await assert.rejects(
-        tab.locator("[data-action=shoot]").click({ timeout: 200 }),
+        tab.locator("#power-handle").click({ timeout: 200 }),
         /Timeout/,
       );
       assert.notEqual((await readGame(tab)).phase, "moving");
@@ -617,9 +628,9 @@ try {
     async (tab) => {
       await tab.locator("[data-action=new]").first().click();
       await tab.locator("[data-action=place]").click();
-      await tab.locator("#shot-power").focus();
+      await tab.locator("#power-handle").focus();
       await tab.keyboard.press("Home");
-      await tab.locator("[data-action=shoot]").click();
+      await pullShot(tab);
       await tab.waitForFunction(
         () => JSON.parse(window.render_game_to_text()).phase === "moving",
       );
@@ -655,7 +666,7 @@ try {
       await tab.locator("[data-action=new]").first().click();
       await tab.locator("[data-action=place]").click();
       await tab.waitForFunction(
-        () => !document.querySelector("[data-action=shoot]").disabled,
+        () => !document.querySelector("#power-handle").disabled,
       );
       const before = await readGame(tab);
       await tab.evaluate(
@@ -735,7 +746,7 @@ try {
       await old.locator("[data-action=new]").first().click();
       await old.locator("[data-action=place]").click();
       await old.waitForFunction(
-        () => !document.querySelector("[data-action=shoot]").disabled,
+        () => !document.querySelector("#power-handle").disabled,
       );
       const saved = await readGame(old);
       server.setRoot(latest.root);

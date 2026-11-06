@@ -1,3 +1,4 @@
+import { pullShot, chargePull, releasePull, setPullRatio } from "./browser-test-utils.mjs";
 import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import { chromium } from "playwright";
@@ -52,7 +53,8 @@ try {
       if (await page.evaluate(() => !!document.fullscreenElement)) await page.evaluate(() => document.exitFullscreen());
       await page.waitForFunction(() => !document.fullscreenElement);
     }
-    const beforeInspection = digest(await canvas.screenshot());
+    await page.evaluate(() => scrollTo(0, 0));
+    const beforeInspection = digest(await canvas.screenshot({path:`/tmp/left-pull-inspect-before-${width}.png`}));
     await act('[data-action="inspect"]');
     assert.equal((await readGame(page)).inspection, true);
     assert.equal(await page.locator('[data-action="place"]').isDisabled(), true);
@@ -99,11 +101,12 @@ try {
     await act('[data-action="inspect"]');
     assert.equal((await readGame(page)).inspection, false);
     assert.equal(await page.locator('[data-action="place"]').isEnabled(), true);
-    assert.equal(digest(await canvas.screenshot()), beforeInspection, 'return to aim resets camera rotation and zoom');
+    await page.evaluate(() => scrollTo(0, 0));
+    assert.equal(digest(await canvas.screenshot({path:`/tmp/left-pull-inspect-after-${width}.png`})), beforeInspection, 'return to aim resets camera rotation and zoom');
     await act('[data-action="place"]');
-    await page.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
+    await page.waitForFunction(() => !document.querySelector('#power-handle').disabled);
     await act('[data-action="inspect"]');
-    assert.equal(await page.locator('[data-action="shoot"]').isDisabled(), true);
+    assert.equal(await page.locator('#power-handle').isDisabled(), true);
     assert.equal(await page.locator('[data-action="inspect"]').innerText(), 'Return to aim');
     assert.match(await page.locator('.control-note').innerText(), /return to aim before shooting/i);
     await page.locator('#game-viewport').focus();
@@ -115,10 +118,10 @@ try {
     await page.locator('#game-menu').waitFor({ state: 'visible' });
     await act('[data-action="continue"]');
     assert.equal((await readGame(page)).inspection, true);
-    assert.equal(await page.locator('[data-action="shoot"]').isDisabled(), true);
+    assert.equal(await page.locator('#power-handle').isDisabled(), true);
     await act('[data-action="inspect"]');
-    assert.equal(await page.locator('[data-action="shoot"]').isEnabled(), true);
-    await act('[data-action="shoot"]');
+    assert.equal(await page.locator('#power-handle').isEnabled(), true);
+    await pullShot(page);
     await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).phase === 'moving');
     assert.equal(await page.locator('[data-action="inspect"]').isDisabled(), true, 'inspection cannot interrupt a moving shot');
     await page.evaluate(() => window.advanceTime(26000));
@@ -195,20 +198,23 @@ try {
     const { tableWidth, tableHeight, point } = geometry(box);
     assert.ok(tableWidth <= box.width + 1 && tableHeight <= box.height + 1, 'full authored table fits in the canvas');
     const placement = point(-0.8, 0.2);
-    await page.touchscreen.tap(placement.x, placement.y);
+    const origin = point(-0.7, 0), cdpPlacement = await context.newCDPSession(page);
+    await cdpPlacement.send('Input.dispatchTouchEvent', {type:'touchStart',touchPoints:[{x:origin.x,y:origin.y,id:1}]});
+    await cdpPlacement.send('Input.dispatchTouchEvent', {type:'touchMove',touchPoints:[{x:placement.x,y:placement.y,id:1}]});
+    await cdpPlacement.send('Input.dispatchTouchEvent', {type:'touchEnd',touchPoints:[]});
+    await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).phase === 'aiming');
     const selected = await viewportState(page);
     assert.ok(Math.abs(Number(selected.x) + 0.8) < 0.015 && Math.abs(Number(selected.z) - 0.2) < 0.015,
       `touch placement maps to table coordinates: ${JSON.stringify(selected)}`);
-    assert.equal(selected.phase, 'placing', 'a touch does not confirm or shoot');
-    await page.locator('[data-action="place"]').tap();
-    await page.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
+    assert.equal(selected.phase, 'aiming', 'valid whiteball drag commits placement without shooting');
+    await page.waitForFunction(() => !document.querySelector('#power-handle').disabled);
     await canvas.scrollIntoViewIfNeeded();
     const nextBox = await canvas.boundingBox();
     const aim = geometry(nextBox).point(0.3, -0.1);
     await page.touchscreen.tap(aim.x, aim.y);
     const state = await readGame(page);
     assert.equal(state.phase, 'aiming', 'aiming does not shoot');
-    assert.ok(Math.abs(state.aim - Math.atan2(-0.3, 1.1)) < 0.03, `touch aim follows the selected point: ${state.aim}`);
+    assert.ok(Math.abs(state.aim - Math.atan2(0.3, -1.1)) < 0.03, `touch aim follows the selected point: ${state.aim}`);
     const left = page.locator('[data-action="aim-left"]'), right = page.locator('[data-action="aim-right"]');
     assert.equal(await left.isVisible(), true, 'fine aim is visible during touch play');
     for (const button of [left, right]) {

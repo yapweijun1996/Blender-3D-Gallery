@@ -1,9 +1,10 @@
+import { pullShot, chargePull, releasePull, setPullRatio } from "./browser-test-utils.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";
 import { serveBuild, launchOptions, gameReady, readGame } from "./browser-test-utils.mjs";
-import { TABLE } from "../src/game/table.js";
+import { TABLE, POCKETS } from "../src/game/table.js";
 const server = process.env.B3G_GAME_TEST_URL
   ? { url: process.env.B3G_GAME_TEST_URL, close: async () => {} }
   : await serveBuild();
@@ -18,23 +19,33 @@ assert.ok(selected.length, `Unknown viewport: ${requested}`);
 async function reveal(page, phase) {
   await page.evaluate(({ phase, insets }) => {
     window.scrollTo({ top:0, behavior:"instant" });
-    const selectors = ["#game-viewport", ".game-table-caption", "#game-pause", phase === "placing" ? '[data-action="place"]' : '[data-action="shoot"]'];
+    const selectors = ["#game-viewport", ".game-table-caption", "#game-pause", phase === "placing" ? '[data-action="place"]' : '#power-handle'];
     const bottom = Math.max(...selectors.map((selector) => document.querySelector(selector).getBoundingClientRect().bottom));
     window.scrollBy({ top:Math.max(0, bottom-innerHeight+insets.bottom+4), behavior:"instant" });
   }, { phase, insets });
 }
 async function snapshot(page, phase) {
+  // Phase changes alter the layout before ResizeObserver updates the renderer.
+  // Measure projection only once its backing canvas uses the current bounds.
+  await page.waitForFunction(() => {
+    const viewport = document.querySelector("#game-viewport");
+    const canvas = viewport?.querySelector("canvas");
+    // Every context in this viewport matrix uses deviceScaleFactor: 1.
+    return canvas && canvas.width === viewport.clientWidth &&
+      canvas.height === viewport.clientHeight;
+  });
   return page.evaluate((phase) => {
     const rect = (selector) => {
       const r = document.querySelector(selector).getBoundingClientRect();
       return { x:r.x, y:r.y, width:r.width, height:r.height, right:r.right, bottom:r.bottom };
     };
     return { scrollY, scrollWidth:document.documentElement.scrollWidth,
+      cameraSpan: JSON.parse(window.render_game_to_text()).cameraSpan,
       canvas:rect("#game-viewport"), caption:rect(".game-table-caption"),
-      action:rect(phase === "placing" ? '[data-action="place"]' : '[data-action="shoot"]'),
+      action:rect(phase === "placing" ? '[data-action="place"]' : '#power-handle'),
       pause:rect("#game-pause"), inspect:rect('[data-action="inspect"]'), options:rect('[data-action="options"]'),
       status:rect("#game-status"), input1:rect(phase === "placing" ? "#place-x" : "#aim-angle"),
-      input2:rect(phase === "placing" ? "#place-z" : "#shot-power"),
+      input2:rect(phase === "placing" ? "#place-z" : "#power-handle"),
       fineLeft:phase === "aiming" ? rect('[data-action="aim-left"]') : null,
       fineRight:phase === "aiming" ? rect('[data-action="aim-right"]') : null,
       pointerCoarse:matchMedia("(pointer: coarse)").matches,
@@ -62,11 +73,21 @@ function verifyLayout(data, width, height, phase) {
     assert.ok(data.input1.height >= 44 && data.input2.height >= 44, `${width}x${height} ${phase}: range touch targets`);
   if (width === 320 && height === 568) assert.ok(data.canvas.height >= 190, "small portrait table must remain playable");
   if (width === 844 && height === 390) assert.ok(data.canvas.height >= 180, "short landscape table must remain playable with insets");
-  // Scene framing uses a 2.82 x 1.62 m envelope. This estimates projected
-  // physical ball diameter, not individual texture detail.
-  const scale = data.canvas.width >= data.canvas.height
-    ? Math.min(data.canvas.width / 2.82, data.canvas.height / 1.62)
-    : Math.min(data.canvas.width / 1.62, data.canvas.height / 2.82);
+  // Read the actual orthographic camera projection rather than assume a
+  // fixed envelope after responsive framing changes. Preserve cabinet fit
+  // and the existing minimum projected ball diameter independently.
+  const span = data.cameraSpan;
+  assert.ok(span && Number.isFinite(span.width) && Number.isFinite(span.height));
+  const portrait = data.canvas.width < data.canvas.height;
+  assert.ok(span.width >= (portrait ? 1.4 : 2.54), "full cabinet width stays in frame");
+  assert.ok(span.height >= (portrait ? 2.54 : 1.4), "full cabinet height stays in frame");
+  for (const pocket of POCKETS) {
+    const horizontal = portrait ? pocket.z : pocket.x;
+    const vertical = portrait ? pocket.x : pocket.z;
+    assert.ok(Math.abs(horizontal) + TABLE.pocketRadius < span.width / 2, `pocket ${pocket.id} horizontally clipped`);
+    assert.ok(Math.abs(vertical) + TABLE.pocketRadius < span.height / 2, `pocket ${pocket.id} vertically clipped`);
+  }
+  const scale = Math.min(data.canvas.width / span.width, data.canvas.height / span.height);
   const projectedBall = 2 * TABLE.radius * scale;
   if (width <= 900) assert.ok(projectedBall >= 4.9, `${width}x${height} ${phase}: projected ball ${projectedBall}px`);
   return projectedBall;
@@ -88,7 +109,7 @@ try {
       for (const phase of ["placing", "aiming"]) {
         if (phase === "aiming") {
           await page.locator('[data-action="place"]').tap();
-          await page.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
+          await page.waitForFunction(() => !document.querySelector('#power-handle').disabled);
         }
         await reveal(page, phase);
         const data = await snapshot(page, phase), projectedBall = verifyLayout(data,width,height,phase);
@@ -111,7 +132,7 @@ try {
           assert.ok(Math.abs(delta-Math.PI/180) < 1e-6, `${width}x${height}: fine aim did not move one degree`);
           await page.touchscreen.tap(r.x + r.width * 0.78, r.y + r.height * 0.35);
           assert.notEqual((await readGame(page)).aim, adjusted.aim, `${width}x${height}: touch aiming did not change`);
-          await page.locator('[data-action="shoot"]').tap();
+          await pullShot(page);
           await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).phase === 'moving');
           const shot = await readGame(page);
           await page.waitForFunction((cue) => {

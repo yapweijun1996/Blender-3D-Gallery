@@ -1,3 +1,4 @@
+import { pullShot, chargePull, releasePull, setPullRatio } from "./browser-test-utils.mjs";
 import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
@@ -117,10 +118,7 @@ async function startFixedMatch(page) {
   await page.evaluate(() => delete crypto.getRandomValues);
   await page.locator('[data-action="place"]').click();
   await waitForPhase(page, "aiming");
-  await page.locator("#shot-power").evaluate((input) => {
-    input.value = "75";
-    input.dispatchEvent(new Event("input", { bubbles: true }));
-  });
+  setPullRatio(page, Math.pow(0.75, 2 / 3));
 }
 async function rendererInfo(page) {
   return page.evaluate(() => {
@@ -317,8 +315,9 @@ try {
         if (fixedRackSignature === undefined) fixedRackSignature = rackSignature;
         assert.equal(rackSignature, fixedRackSignature, "Rack must be identical across samples");
         if (sample === 1) await page.screenshot({ path: path.join(outputDir, `aiming-${prefix}.png`), fullPage: true });
-        await page.locator('[data-action="shoot"]').click();
+        await pullShot(page);
         await waitForPhase(page, "moving");
+        assert.ok(Math.abs(await page.evaluate(() => JSON.parse(window.render_game_to_text()).power) - .75) < 1e-5, "benchmark preserves75% physical strength");
         measurements.push({ sample, readyMs, renderer, rackSignature, intervals: await frameIntervals(page), ...(quality ? { quality } : {}) });
       } finally { await context.close(); }
     }

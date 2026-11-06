@@ -98,3 +98,36 @@ export async function writeCheckpoint(page, checkpoint) {
     checkpoint,
   );
 }
+
+// Configure the next real test gesture; this never writes application state.
+const pullRatios = new WeakMap();
+export function setPullRatio(page, ratio) {
+  pullRatios.set(page, ratio);
+}
+export async function chargePull(page, ratio = pullRatios.get(page) ?? 0.45) {
+  const handle = page.locator("#power-handle");
+  await handle.scrollIntoViewIfNeeded();
+  const box = await handle.boundingBox();
+  if (!box) throw new Error("Power handle is not visible");
+  const distance = await page
+    .locator("#power-track")
+    .evaluate(
+      (track) =>
+        track.clientHeight -
+        document.querySelector("#power-handle").offsetHeight,
+    );
+  if (!(distance > 0)) throw new Error("Power track has no travel");
+  const x = box.x + box.width / 2,
+    y = box.y + box.height / 2;
+  await page.mouse.move(x, y);
+  await page.mouse.down();
+  await page.mouse.move(x, y + distance * ratio, { steps: 5 });
+  return { x, y, distance };
+}
+export async function releasePull(page) {
+  await page.mouse.up();
+}
+export async function pullShot(page, ratio = pullRatios.get(page) ?? 0.45) {
+  await chargePull(page, ratio);
+  await releasePull(page);
+}

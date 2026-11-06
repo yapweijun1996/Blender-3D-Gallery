@@ -1,3 +1,4 @@
+import { pullShot, chargePull, releasePull, setPullRatio } from "./browser-test-utils.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -22,7 +23,11 @@ await fs.mkdir(qualityArtifacts, { recursive: true });
 const browser = await chromium.launch(launchOptions),
   results = [],
   errors = [];
+let selectedSuffixStarted = !process.env.B3G_GAME_FROM;
 const run = async (name, fn, options = {}) => {
+  if (!selectedSuffixStarted) selectedSuffixStarted = name.includes(process.env.B3G_GAME_FROM);
+  if (!selectedSuffixStarted) return;
+  if (process.env.B3G_GAME_CASE && !name.includes(process.env.B3G_GAME_CASE)) return;
   const context = await browser.newContext({
     viewport: { width: 1280, height: 900 },
     ...options,
@@ -60,7 +65,7 @@ const start = async (page) => {
   await page.click("[data-action=place]");
   await waitPhase(page, "aiming");
   await page.waitForFunction(() => {
-    const shoot = document.querySelector('[data-action="shoot"]');
+    const shoot = document.querySelector('#power-handle');
     return shoot && shoot.getClientRects().length > 0 && !shoot.disabled;
   });
 };
@@ -70,7 +75,7 @@ const revealShortScreen = async (page, width, height, actions) => {
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
   if (width <= 650 && height <= 650) {
     await page.evaluate((actions) => {
-      const selectors = ["#game-viewport", ...actions.map((action) => `[data-action="${action}"]`)];
+      const selectors = ["#game-viewport", ...actions.map((action) => action === "shoot" ? "#power-handle" : `[data-action="${action}"]`)];
       const bottom = Math.max(...selectors.map((selector) => document.querySelector(selector).getBoundingClientRect().bottom));
       window.scrollBy({ top: Math.max(0, bottom - innerHeight + 8), behavior: "instant" });
     }, actions);
@@ -157,7 +162,7 @@ try {
     });
     await gameReady(page, server.url);
     await start(page);
-    await page.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
+    await page.waitForFunction(() => !document.querySelector('#power-handle').disabled);
     await page.locator("#game-title").click();
     const initial = await readGame(page);
     await page.evaluate(() => { window.__gameTransactionCount = 0; window.__trackGameTransactions = true; });
@@ -185,18 +190,21 @@ try {
     await page.keyboard.press("ArrowLeft");
     assert.notEqual((await readGame(page)).aim, before.aim);
     await page.evaluate(() => { window.__gameTransactionCount = 0; window.__trackGameTransactions = true; });
-    await page.keyboard.press("Space");
+    await page.locator("#power-handle").focus();
+    for (let i=0;i<9;i++) await page.keyboard.press("ArrowDown");
+    await page.keyboard.press("Enter");
     await waitPhase(page, "moving");
-    assert.ok(await page.evaluate(() => window.__gameTransactionCount) >= 2, "focused Space renews ownership and saves the pending shot");
+    assert.ok(await page.evaluate(() => window.__gameTransactionCount) >= 2, "focused handle release renews ownership and saves the pending shot");
   });
   await run("backgrounding during shot startup cancels the impulse after the save", async (page, context) => {
     await context.addInitScript(delayTransactionCompletion);
     await gameReady(page, server.url);
     await start(page);
-    await page.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
+    await page.waitForFunction(() => !document.querySelector('#power-handle').disabled);
+    await chargePull(page);
+    await page.evaluate(() => { window.__delaySave = true; });
+    await releasePull(page);
     await page.evaluate(() => {
-      window.__delaySave = true;
-      document.querySelector('[data-action="shoot"]').click();
       window.__hiddenForTest = true;
       document.dispatchEvent(new Event("visibilitychange"));
     });
@@ -213,7 +221,7 @@ try {
     await page.click('[data-action="continue"]');
     await waitPhase(page, "aiming");
     assert.deepEqual((await readGame(page)).balls, paused.balls, "resume does not fire a canceled shot");
-    await page.click('[data-action="shoot"]');
+    await pullShot(page);
     await waitPhase(page, "moving");
   });
   for (const stage of ["renew", "checkpoint", "adjudication"]) {
@@ -221,24 +229,25 @@ try {
       await context.addInitScript(delayTransactionCompletion);
       await gameReady(page, server.url);
       await start(page);
-      await page.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
+      await page.waitForFunction(() => !document.querySelector('#power-handle').disabled);
       if (stage === "adjudication") {
-        await page.click('[data-action="shoot"]');
+        await pullShot(page);
         await waitPhase(page, "moving");
       }
       await page.evaluate(stage => {
         window.__delaySave = true;
         window.__skipCompletions = stage === "checkpoint" ? 1 : 0;
         if (stage === "adjudication") window.advanceTime(26000);
-        else document.querySelector('[data-action="shoot"]').click();
+
       }, stage);
+      if (stage !== "adjudication") await pullShot(page);
       await page.waitForFunction(() => window.__saveDelayed);
       await page.evaluate(() => document.querySelector('#game-viewport canvas').getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
       await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).contextLost);
       await page.waitForTimeout(800);
       const lost = await readGame(page);
       assert.equal(lost.phase, 'recovery');
-      assert.equal(await page.locator('[data-action="shoot"]').isVisible(), false);
+      assert.equal(await page.locator('#power-handle').isDisabled(), true);
       await page.click('[data-action="restore"]');
       await page.waitForFunction(() => window.render_game_to_text && JSON.parse(window.render_game_to_text()).ready && !JSON.parse(window.render_game_to_text()).contextLost);
       await page.click('[data-action="resume"]');
@@ -276,8 +285,8 @@ try {
       }
       if (operation === "adjudication") {
         await page.click('[data-action="place"]');
-        await page.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
-        await page.click('[data-action="shoot"]');
+        await page.waitForFunction(() => !document.querySelector('#power-handle').disabled);
+        await pullShot(page);
         await waitPhase(page, "moving");
       }
       await page.evaluate(operation => {
@@ -302,10 +311,11 @@ try {
     await context.addInitScript(delayTransactionCompletion);
     await gameReady(page, server.url);
     await start(page);
-    await page.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
+    await page.waitForFunction(() => !document.querySelector('#power-handle').disabled);
+    await chargePull(page);
+    await page.evaluate(() => { window.__delaySave = true; });
+    await releasePull(page);
     await page.evaluate(() => {
-      window.__delaySave = true;
-      document.querySelector('[data-action="shoot"]').click();
       window.__hiddenForTest = true;
       document.dispatchEvent(new Event("visibilitychange"));
       document.querySelector('[data-page="gallery"]').click();
@@ -380,7 +390,7 @@ try {
     await gameReady(page, server.url);
     await start(page);
     await setRange(page, "#aim-angle", 37);
-    await setRange(page, "#shot-power", 75);
+    await setPullRatio(page, 0.75);
     for (let i = 0; i < 3; i++) {
       await page.click('[data-action="pause"]');
       await page.click('[data-action="restart"]');
@@ -391,7 +401,7 @@ try {
       assert.equal(state.revision, 0);
       assert.deepEqual(state.groups, [null, null]);
       assert.equal(state.aim, 0);
-      assert.equal(state.power, 0.45);
+      assert.equal(state.pullRatio, 0);
       assert.deepEqual(state.balls.filter(ball => ball.pocketed).map(ball => ball.id), [0]);
     }
     assert.equal(await page.evaluate(() => window.__gameFrames.max), 1);
@@ -479,7 +489,7 @@ try {
           return {top:r.top,bottom:r.bottom,width:r.width,height:r.height};
         };
         return { width:innerWidth, height:innerHeight, scrollWidth:document.documentElement.scrollWidth,
-          board:rect('#game-viewport'), shoot:rect('[data-action="shoot"]'), pause:rect('[data-action="pause"]'),
+          board:rect('#game-viewport'), shoot:rect('#power-handle'), pause:rect('[data-action="pause"]'),
           rules:rect('[data-action="rules"]'), inspect:rect('[data-action="inspect"]'), options:rect('[data-action="options"]'),
           hint:rect('.control-note') };
       });
@@ -491,8 +501,8 @@ try {
       if (width === 320 && height === 568) assert.ok(layout.board.height >= 190, JSON.stringify(layout));
       if (width < 600) {
         assert.equal(await page.locator('.control-note').isVisible(), true);
-        assert.match(await page.locator('.control-note').innerText(), /Drag to aim.*Shoot/);
-        assert.ok(layout.hint.bottom <= layout.shoot.top, JSON.stringify(layout));
+        assert.match(await page.locator('.control-note').innerText(), /aim.*(?:pull|handle)/i);
+        assert.ok(layout.hint.bottom <= height, JSON.stringify(layout));
       }
       await page.screenshot({path:path.join(artifacts, `targets-${width}x${height}.png`)});
     }, { viewport: {width,height}, hasTouch: width < 600, isMobile: width < 600 });
@@ -516,7 +526,7 @@ try {
   await run("resizing an active match preserves state and usable controls", async page => {
     await gameReady(page, server.url);
     await start(page);
-    await page.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
+    await page.waitForFunction(() => !document.querySelector('#power-handle').disabled);
     const matchId = () => page.evaluate(() => new Promise((resolve, reject) => {
       const request = indexedDB.open('blender-gallery-game-v1', 1);
       request.onerror = () => reject(request.error);
@@ -539,7 +549,7 @@ try {
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width);
       assert.equal(await page.locator('.control-note').isVisible(), true);
       for (const action of ['shoot','pause']) {
-        const button = page.locator(`[data-action="${action}"]`);
+        const button = page.locator(action === "shoot" ? "#power-handle" : `[data-action="${action}"]`);
         assert.equal(await button.isEnabled(), true);
         await button.scrollIntoViewIfNeeded();
         const box = await button.boundingBox();
@@ -566,12 +576,14 @@ try {
     assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior), 'smooth');
     await page.emulateMedia({reducedMotion:'reduce'});
     await start(page);
-    await page.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
+    await page.waitForFunction(() => !document.querySelector('#power-handle').disabled);
     await page.locator('#game-viewport').focus();
     const before = await readGame(page);
     await page.keyboard.press('ArrowRight');
     assert.notEqual((await readGame(page)).aim, before.aim);
-    await page.keyboard.press('Space');
+    await page.locator('#power-handle').focus();
+    for (let i=0;i<9;i++) await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Enter');
     await waitPhase(page, 'moving');
     await page.click('[data-action="pause"]');
     const paused = await readGame(page);
@@ -609,10 +621,10 @@ try {
       await page.screenshot({path:path.join(artifacts, `progress-${width}.png`)});
     }, { viewport:{width,height:width===320?568:844}, hasTouch:true, isMobile:true });
   }
-  await run("active touch hands off safely when fingers end or cancel", async (page, context) => {
+  await run("secondary touch stays ignored after primary end or cancel; new gesture works", async (page, context) => {
     await gameReady(page, server.url);
     await start(page);
-    await page.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
+    await page.waitForFunction(() => !document.querySelector('#power-handle').disabled);
     await page.evaluate(() => scrollTo(0, 0));
     const cdp = await context.newCDPSession(page), rect = await page.locator('#game-viewport canvas').boundingBox();
     const point = (id, x, y) => ({id, x:rect.x + rect.width*x, y:rect.y + rect.height*y});
@@ -621,16 +633,12 @@ try {
     const initial = (await readGame(page)).aim;
     await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[a,b]});
     assert.equal((await readGame(page)).aim, initial);
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[a2,b]});
+    const active = (await readGame(page)).aim;
+    assert.notEqual(active, initial, 'original active pointer can still aim');
     await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[b]});
-    await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[a2]});
-    assert.notEqual((await readGame(page)).aim, initial);
-    await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
-    await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[a]});
-    await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[a,b]});
-    await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[a]});
-    const handoff = (await readGame(page)).aim;
     await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[b2]});
-    assert.notEqual((await readGame(page)).aim, handoff);
+    assert.equal((await readGame(page)).aim, active, 'secondary pointer is not promoted after primary release');
     await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
     await page.evaluate(() => {
       window.__touchPointerIds = [];
@@ -642,13 +650,14 @@ try {
     await page.locator('#game-viewport canvas').dispatchEvent('pointercancel', {bubbles:true,pointerType:'touch',pointerId:firstPointer});
     const canceled = (await readGame(page)).aim;
     await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[a,b2]});
-    assert.notEqual((await readGame(page)).aim, canceled);
+    assert.equal((await readGame(page)).aim, canceled, "secondary pointer is not promoted after cancel");
     await cdp.send('Input.dispatchTouchEvent',{type:'touchCancel',touchPoints:[]});
     await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[c]});
     const next = (await readGame(page)).aim;
     await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[c2]});
     assert.notEqual((await readGame(page)).aim, next);
     await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+    assert.equal((await readGame(page)).committedShots, 0, 'table gestures never shoot');
   }, {viewport:{width:390,height:844}, hasTouch:true, isMobile:true});
   await run("late GLB response cannot revive a disposed game route", async page => {
     const gate = await holdGameTableResponse(page), pageErrors = [];
@@ -740,15 +749,12 @@ try {
       await setRange(page, "#place-x", -0.7);
       await page.click("[data-action=place]");
       const before = await readGame(page);
-      await setRange(page, "#shot-power", 75);
+      await setPullRatio(page, 0.75);
       await page.waitForFunction(
-        () => !document.querySelector("[data-action=shoot]").disabled,
+        () => !document.querySelector("#power-handle").disabled,
       );
-      await page.evaluate(() => {
-        const b = document.querySelector("[data-action=shoot]");
-        b.click();
-        b.click();
-      });
+      await pullShot(page);
+      await page.locator("#power-handle").dispatchEvent("pointerup", {pointerId:1});
       await waitPhase(page, "moving");
       await page.click("[data-action=pause]");
       const paused = await readGame(page);
@@ -784,7 +790,7 @@ try {
     await gameReady(page, server.url);
     await start(page);
     const before = await readGame(page);
-    await page.click("[data-action=shoot]");
+    await pullShot(page);
     await waitPhase(page, "moving");
     await page.reload();
     await page.waitForFunction(
@@ -812,7 +818,7 @@ try {
           JSON.parse(window.render_game_to_text()).ready,
       );
       await start(page);
-      await page.click("[data-action=shoot]");
+      await pullShot(page);
       await waitPhase(page, "moving");
       let dialogs = 0;
       page.on("dialog", async (d) => {
@@ -836,12 +842,12 @@ try {
         await gameReady(page, server.url);
         const assertControlsInViewport = async (actions, phase) => {
           for (const action of actions) {
-            await page.locator(`[data-action="${action}"]`).waitFor({ state: "visible" });
+            await page.locator(action === "shoot" ? "#power-handle" : `[data-action="${action}"]`).waitFor({ state: "visible" });
           }
           // Check the explicitly positioned viewport before click auto-scroll can hide clipping.
           await revealShortScreen(page, width, height, actions);
           const controls = await page.evaluate((actions) => actions.map(action => {
-            const rect = document.querySelector(`[data-action="${action}"]`).getBoundingClientRect();
+            const rect = document.querySelector(action === "shoot" ? "#power-handle" : `[data-action="${action}"]`).getBoundingClientRect();
             return { action, top: rect.top, bottom: rect.bottom, width: rect.width, height: rect.height };
           }), actions);
           for (const control of controls) {
@@ -864,7 +870,7 @@ try {
               .querySelector("#game-viewport")
               .getBoundingClientRect(),
             b = document
-              .querySelector("[data-action=shoot]")
+              .querySelector("#power-handle")
               .getBoundingClientRect();
           return {
             top: Math.min(a.top, b.top),
@@ -972,8 +978,8 @@ try {
       await gameReady(page, server.url);
       await page.click("[data-action=resume]");
       await setRange(page, "#aim-angle", 90);
-      await setRange(page, "#shot-power", 25);
-      await page.click("[data-action=shoot]");
+      await setPullRatio(page, 0.25);
+      await pullShot(page);
       await waitPhase(page, "moving");
       await page.evaluate(() => window.advanceTime(26000));
       await waitPhase(page, "finished");
@@ -1013,7 +1019,7 @@ try {
       await page.waitForFunction(
         () => JSON.parse(window.render_game_to_text()).contextLost,
       );
-      assert.equal(await page.isVisible("[data-action=shoot]"), false);
+      assert.equal(await page.isDisabled("#power-handle"), true);
       await page.click("[data-action=restore]");
       await page.waitForFunction(
         () =>
@@ -1074,7 +1080,7 @@ try {
       const p = await wk.newPage({ viewport: { width: 390, height: 844 } });
       await gameReady(p, server.url);
       await start(p);
-      await p.click("[data-action=shoot]");
+      await pullShot(p);
       await waitPhase(p, "moving");
       await p.evaluate(() => window.advanceTime(26000));
       await p.waitForFunction(
@@ -1097,7 +1103,7 @@ try {
   }
   await fs.writeFile(
     path.join(artifacts, "results.json"),
-    JSON.stringify({ results, errors }, null, 2),
+    JSON.stringify({ results, errors, selection: { from: process.env.B3G_GAME_FROM || null, case: process.env.B3G_GAME_CASE || null } }, null, 2),
   );
 } finally {
   await browser.close();

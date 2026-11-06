@@ -41,7 +41,7 @@ To roll back, revert the problematic commit on `main` and let the same workflow 
 
 ## Play and test
 
-Open **Interactive Demos → Game** or `?page=game`, start a two-player match, place the cue ball, aim and press Shoot. See Rules & controls for the casual ruleset. App options contains installation help and Make available offline; install alone does not download the game pack.
+Open **Interactive Demos → Game** or `?page=game`, start a two-player match, drag the cue ball to a legal position, aim, then pull the left handle down and release. The handle also supports keyboard charging with arrows and release with Space/Enter. See Rules & controls for the casual ruleset. App options contains installation help and Make available offline; install alone does not download the game pack.
 
 After `npm run build`, run `npx playwright install --with-deps chromium webkit`, `npm run test:browser`, `npm run test:pwa`, `npm run test:library`, `npm run test:standard` and `npm run test:reviewed`. Run `npm run test:game-ux` for inspection, touch and keyboard interactions, and `npm run test:game-responsive` for viewport and safe-area layout coverage. Each game test independently serves the existing production build. Browser artifacts are written to `/tmp/` by default. Real-device installation and performance checks are recorded as limits in the verification document.
 

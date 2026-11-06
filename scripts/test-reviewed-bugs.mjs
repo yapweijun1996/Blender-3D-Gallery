@@ -1,3 +1,4 @@
+import { pullShot, chargePull, releasePull, setPullRatio } from "./browser-test-utils.mjs";
 import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import { chromium } from "playwright";
@@ -37,7 +38,7 @@ try {
     assert.equal(reclaimed.balls[0].x, latest.balls[0].x);
     await a.locator('[data-action="continue"]').click();
     assert.equal((await readGame(a)).phase, "aiming");
-    await a.locator('[data-action="shoot"]').click();
+    await pullShot(a);
     await a.waitForFunction(() => JSON.parse(window.render_game_to_text()).phase === "moving");
     const checkpoint = await a.evaluate(() => new Promise((resolve, reject) => {
       const db = indexedDB.open("blender-gallery-game-v1");
@@ -100,8 +101,8 @@ try {
     await gameReady(a, server.url);
     await a.locator('[data-action="new"]').first().click();
     await a.locator('[data-action="place"]').click();
-    await a.waitForFunction(() => !document.querySelector('[data-action="shoot"]').disabled);
-    await a.locator('[data-action="shoot"]').click();
+    await a.waitForFunction(() => !document.querySelector('#power-handle').disabled);
+    await pullShot(a);
     await a.waitForFunction(() => JSON.parse(window.render_game_to_text()).phase === "moving");
     await a.evaluate(() => {
       const descriptor = Object.getOwnPropertyDescriptor(IDBTransaction.prototype, "oncomplete");

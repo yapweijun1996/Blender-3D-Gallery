@@ -1,3 +1,4 @@
+import { pullShot, chargePull, releasePull, setPullRatio } from "./browser-test-utils.mjs";
 import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
@@ -23,7 +24,7 @@ const waitPhase = (page, phase) => page.waitForFunction(
   { timeout: 20000 },
 );
 const waitReadyToShoot = page => page.waitForFunction(() => {
-  const button = document.querySelector('[data-action="shoot"]');
+  const button = document.querySelector('#power-handle');
   return button && !button.disabled && button.getClientRects().length;
 });
 const tap = async (page, selector) => {
@@ -104,7 +105,7 @@ const assertLayout = layout => {
   const overlap = (a, b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1 &&
     Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1;
   const associatedRangeLabel = (control, message) => control.tag === 'INPUT' && control.type === 'range' &&
-    ['aim-angle', 'shot-power'].includes(control.id) && message.tag === 'LABEL' &&
+    ['aim-angle'].includes(control.id) && message.tag === 'LABEL' &&
     message.labelFor === control.id && message.labelControlId === control.id && message.pointerEvents === 'none' &&
     control.paddingTop >= 16 && message.textLeft >= control.left - 1 && message.textRight <= control.right + 1 &&
     message.textTop >= control.top - 1 && message.textBottom <= control.top + control.paddingTop + 3;
@@ -187,9 +188,9 @@ try {
       await waitPhase(page, 'aiming');
       await waitReadyToShoot(page);
       await checkStage('aiming');
-      for (const selector of ['[data-action="aim-left"]','[data-action="aim-right"]','[data-action="shoot"]','[data-action="pause"]']) await assertHit(page, selector);
+      for (const selector of ['[data-action="aim-left"]','[data-action="aim-right"]','#power-handle','[data-action="pause"]']) await assertHit(page, selector);
       record.ranges = [];
-      for (const id of ['aim-angle', 'shot-power']) record.ranges.push(await touchRange(page, id));
+      for (const id of ['aim-angle']) record.ranges.push(await touchRange(page, id));
       await tap(page, '[data-action="pause"]');
       await waitPhase(page, 'paused');
       await checkStage('paused');
@@ -197,7 +198,7 @@ try {
       await tap(page, '[data-action="continue"]');
       await waitPhase(page, 'aiming');
       if (width === 320 && height === 450) {
-        await tap(page, '[data-action="shoot"]');
+        await pullShot(page);
         await waitPhase(page, 'moving');
         await tap(page, '[data-action="pause"]');
         await waitPhase(page, 'paused');
@@ -242,7 +243,7 @@ try {
           return {left:r.left, right:r.right, top:r.top, bottom:r.bottom, width:r.width, height:r.height,
             textTop:t.top, textBottom:t.bottom};
         };
-        const selectors = ['.header', '#game-title', '.players', '#game-viewport', '.control-note', '[data-action="shoot"]', '[data-action="pause"]'];
+        const selectors = ['.header', '#game-title', '.players', '#game-viewport', '.control-note', '#power-handle', '[data-action="pause"]'];
         return {width:innerWidth, height:innerHeight, scrollWidth:document.documentElement.scrollWidth,
           visualViewport:visualViewport ? {width:visualViewport.width, height:visualViewport.height, scale:visualViewport.scale} : null,
           elements:Object.fromEntries(selectors.map(selector => [selector, rect(document.querySelector(selector))]))};
@@ -250,7 +251,7 @@ try {
       record.screenshot = path.join(artifacts, `reflow-${width}x${height}.png`);
       await page.screenshot({path:record.screenshot, fullPage:true});
       assert.equal(record.layout.scrollWidth, record.layout.width, `document horizontal overflow: ${JSON.stringify(record.layout)}`);
-      for (const selector of ['[data-action="shoot"]', '[data-action="pause"]']) {
+      for (const selector of ['#power-handle', '[data-action="pause"]']) {
         const r = record.layout.elements[selector];
         assert.ok(r.left >= 0 && r.right <= record.layout.width && r.width >= 44 && r.height >= 44,
           `clipped or undersized ${selector}: ${JSON.stringify(r)}`);
@@ -284,7 +285,7 @@ try {
           return {left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height};
         };
         return {width:innerWidth, height:innerHeight, scrollWidth:document.documentElement.scrollWidth,
-          controls:Object.fromEntries(['rules','inspect','options','shoot','pause'].map(action => [action, rect(`[data-action="${action}"]`)]))};
+          controls:Object.fromEntries(['rules','inspect','options','shoot','pause'].map(action => [action, rect(action === "shoot" ? "#power-handle" : `[data-action="${action}"]`)]))};
       });
       record.aimingScreenshot = path.join(artifacts, `touch-${width}x${height}-aiming.png`);
       await page.screenshot({path:record.aimingScreenshot, fullPage:true});
@@ -390,9 +391,9 @@ try {
       progress: staticText.filter(text => /solids cleared|stripes remaining/i.test(text)),
     };
     const names = record.accessibility.focusable.map(node => node.name);
-    for (const label of ['Shoot','Pause / menu']) assert.ok(names.includes(label), `missing accessible button ${label}`);
+    for (const label of ['Pause / menu']) assert.ok(names.includes(label), `missing accessible button ${label}`);
     assert.ok(names.some(name => /^Aim\b/.test(name)), 'Aim slider accessible name');
-    assert.ok(names.some(name => /^Power\b/.test(name)), 'Power slider accessible name');
+    assert.ok(names.some(name => /^Pull to shoot\b/.test(name)), 'Power handle accessible name');
     assert.equal(staticText.filter(text => text === 'solids cleared; 8 ball next.').length, 1);
     assert.equal(staticText.filter(text => text === 'stripes remaining: balls 9, 10, 11, 12, 13, 14, 15.').length, 1);
     assert.equal(staticText.includes('7 left'), false, 'visual summary is not announced twice');

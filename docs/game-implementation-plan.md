@@ -103,11 +103,11 @@ This is a bounded continuous approximation, not a complete continuous-event solv
 
 ## Interaction and responsive layout
 
-Desktop uses a table plus controls sidebar. Portrait phones put the table above a compact aiming/power and Shoot/menu area. Short screens can scroll to reach the controls while preserving a usable table size. No forced device orientation is required.
+Desktop uses a table with a left pull handle and controls sidebar. Portrait phones put the table and handle above compact aiming and menu controls. Short screens can scroll to reach the controls while preserving a usable table size. No forced device orientation is required.
 
-- Drag/tap on the table to aim or position the cue. Releasing the pointer sets the aim; it never shoots.
-- Aim and power ranges provide alternatives to dragging. One-degree aim adjustment buttons are available on mobile as well as desktop; mobile buttons have at least a 44 × 44 CSS-pixel target.
-- When the table is focused, arrows change aim or placement, Shift makes finer changes, Enter confirms placement, Space shoots and F toggles fullscreen.
+- Mouse hover or one-finger table drag aims using the direction from the pointer to the cue ball. Dragging the cue ball commits a legal placement on release; invalid release restores the last valid candidate. Table gestures never shoot.
+- The aim range and one-degree buttons provide alternatives to table aiming. The custom power handle uses captured pointer input or keyboard charging and release; mobile targets remain at least 44 × 44 CSS pixels.
+- When the table is focused, arrows change aim or placement, Shift makes finer changes, Enter confirms placement, Space focuses the power handle and F toggles fullscreen. On the handle, arrows charge and Space/Enter releases.
 - Inspection explicitly enables orbit and zoom. Shooting is disabled until returning to Aim.
 - Pause, restart confirmation, rules, app options and installation help use native dialogs.
 - Touch handling uses pointer capture; cancellation stops dragging. The aim guide estimates initial contact only.

@@ -1,3 +1,4 @@
+import { pullShot, chargePull, releasePull, setPullRatio } from "./browser-test-utils.mjs";
 import { chromium } from 'playwright';
 import { serveBuild, launchOptions } from './browser-test-utils.mjs';
 import fs from 'node:fs/promises';
@@ -93,7 +94,7 @@ try {
     const startTime=Date.now(); await ready(page); const readyMs=Date.now()-startTime;
     await start(page);
     const gl=await page.evaluate(() => { const c=document.querySelector('canvas'); const gl=c.getContext('webgl2') || c.getContext('webgl'); const ext=gl?.getExtension('WEBGL_debug_renderer_info'); return {renderer:ext?gl.getParameter(ext.UNMASKED_RENDERER_WEBGL):'unavailable',vendor:ext?gl.getParameter(ext.UNMASKED_VENDOR_WEBGL):'unavailable',canvas:[c.width,c.height],devicePixelRatio}; });
-    await page.locator('[data-action=shoot]').click();
+    await pullShot(page);
     const timing=await page.evaluate(() => new Promise(resolve => { let last, values=[], start=performance.now(); function tick(t){ if(last!==undefined)values.push(t-last); last=t; if(t-start < 5000) requestAnimationFrame(tick); else {values.sort((a,b)=>a-b); resolve({n:values.length,median:values[Math.floor(values.length*.5)],p95:values[Math.min(values.length-1,Math.floor(values.length*.95))],average:values.reduce((a,b)=>a+b,0)/values.length,phase:JSON.parse(window.render_game_to_text()).phase});}} requestAnimationFrame(tick); }));
     report.performance.push({sample:sample+1,readyMs,gl,timing});
     await context.close();

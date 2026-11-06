@@ -1,3 +1,4 @@
+import { pullShot, chargePull, releasePull, setPullRatio } from "./browser-test-utils.mjs";
 import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
@@ -83,13 +84,10 @@ async function startShot(page) {
   await page.evaluate(() => delete crypto.getRandomValues);
   await page.locator('[data-action="place"]').click();
   await phase(page, "aiming");
-  await page.locator("#shot-power").evaluate((input) => {
-    input.value = "75";
-    input.dispatchEvent(new Event("input", { bubbles: true }));
-  });
+  setPullRatio(page, Math.pow(0.75, 2 / 3));
   const state = await page.evaluate(() => JSON.parse(window.render_game_to_text()));
   assert.equal(state.aim, 0);
-  assert.equal(state.power, 0.75);
+  assert.equal(state.pullRatio, 0);
   assert.equal(state.balls[0].x, -0.7);
   assert.equal(state.balls[0].z, 0);
   const balls = state.balls.map(({ id, x, z, pocketed }) => ({ id, x, z, pocketed }));
@@ -108,8 +106,9 @@ async function startShot(page) {
       webglVersion: gl?.getParameter(gl.VERSION),
     };
   });
-  await page.locator('[data-action="shoot"]').click();
+  await pullShot(page);
   await phase(page, "moving");
+  assert.ok(Math.abs(await page.evaluate(() => JSON.parse(window.render_game_to_text()).power) - .75) < 1e-5, "benchmark preserves75% physical strength");
   return { signature, renderer };
 }
 

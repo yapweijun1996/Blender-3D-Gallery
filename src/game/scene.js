@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { TABLE } from "./table.js";
+import { legalPlacement, TABLE } from "./table.js";
 import { aimContact } from "./presentation.js";
 export async function createGameScene(container, assets, signal, progress) {
   const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -11,7 +11,7 @@ export async function createGameScene(container, assets, signal, progress) {
   renderer.domElement.setAttribute("role", "img");
   renderer.domElement.setAttribute(
     "aria-label",
-    "3D billiards table. Use the angle and power controls, then Shoot.",
+    "3D billiards table. Aim on the table, then pull the left handle down and release.",
   );
   container.append(renderer.domElement);
   const scene = new THREE.Scene(),
@@ -27,6 +27,8 @@ export async function createGameScene(container, assets, signal, progress) {
   const assetController = new AbortController();
   const loadingManager = new THREE.LoadingManager();
   let cue,
+    cueTip = 0.735,
+    tableWidth = 2.54,
     disposed = false,
     inspect = false,
     portrait = false;
@@ -47,9 +49,12 @@ export async function createGameScene(container, assets, signal, progress) {
     renderer.setSize(w, h, false);
     const a = w / h;
     portrait = a < 1;
+    const compactLandscape = innerWidth <= 650 && innerHeight <= 500 && innerWidth > innerHeight;
+    // Retain 4 cm beyond each measured cabinet edge on short landscape phones.
+    const tableEnvelope = compactLandscape ? tableWidth + 0.08 : 2.82;
     const height = portrait
       ? Math.max(2.82, 1.62 / a)
-      : Math.max(1.62, 2.82 / a);
+      : Math.max(1.62, tableEnvelope / a);
     camera.left = (-height * a) / 2;
     camera.right = (height * a) / 2;
     camera.top = height / 2;
@@ -148,8 +153,11 @@ export async function createGameScene(container, assets, signal, progress) {
           }
           const obj = gltf.scene;
           scene.add(obj);
-          if (id === "cue-stick-01") cue = obj;
-          else if (id !== "pool-table")
+          if (id === "cue-stick-01") { cue = obj; cueTip = new THREE.Box3().setFromObject(obj).max.x; }
+          else if (id === "pool-table") {
+            const bounds = new THREE.Box3().setFromObject(obj);
+            tableWidth = bounds.max.x - bounds.min.x;
+          } else
             balls.set(id === "cue-ball" ? 0 : Number(id.slice(-2)), obj);
           progress(++done, ids.length);
         }
@@ -167,6 +175,13 @@ export async function createGameScene(container, assets, signal, progress) {
     );
   return {
     canvas: renderer.domElement,
+    cameraSpan: () => ({ width: (camera.right - camera.left) / camera.zoom, height: (camera.top - camera.bottom) / camera.zoom }),
+    cueTipDistance(ball) {
+      if (!cue || !ball) return null;
+      cue.updateMatrixWorld(true);
+      const tip = cue.localToWorld(new THREE.Vector3(cueTip, 0, 0));
+      return tip.distanceTo(new THREE.Vector3(ball.x, TABLE.bedHeight + TABLE.radius, ball.z)) - TABLE.radius;
+    },
     render,
     dispose,
     point(clientX, clientY) {
@@ -215,7 +230,7 @@ export async function createGameScene(container, assets, signal, progress) {
       renderer.setPixelRatio(Math.min(devicePixelRatio, cap));
       resize();
     },
-    update(state, angle, power, candidate, deliveryProgress) {
+    update(state, angle, power, candidate, cuePullOffset = 0) {
       const y = TABLE.bedHeight + TABLE.radius;
       for (const b of state.balls) {
         const obj = balls.get(b.id);
@@ -225,23 +240,25 @@ export async function createGameScene(container, assets, signal, progress) {
           obj.position.set(candidate.x, y, candidate.z);
         } else obj.position.set(b.x, y, b.z);
         obj.quaternion.fromArray(b.q);
+        if (b.id === 0 && state.phase === "placing" && candidate) {
+          ghost.visible = true;
+          ghost.material.color.setHex(legalPlacement(state.balls, candidate.x, candidate.z, state.break) ? 0xd6e9b9 : 0xff665e);
+          ghost.position.set(candidate.x, y + 0.002, candidate.z);
+        }
       }
       const cb = state.balls[0],
         aim = state.phase === "aiming" && !inspect,
         dx = Math.cos(angle),
         dz = Math.sin(angle);
       cue.visible = aim;
-      line.visible = ghost.visible = aim;
+      line.visible = aim;
+      ghost.visible = aim || (state.phase === "placing" && !inspect);
+      if (aim) ghost.material.color.setHex(0xd6e9b9);
       if (aim) {
-        // Presentation offset only: page.js owns the single accepted impulse.
-        const t = Math.min(1, deliveryProgress ?? 0);
-        const stroke = deliveryProgress === undefined ? 0
-          : t < 0.55 ? (t / 0.55) * 0.12
-          : 0.12 - ((t - 0.55) / 0.45) * (0.15 + power * 0.06);
         cue.position.set(
-          cb.x - dx * (0.735 + TABLE.radius + 0.03 + power * 0.06 + stroke),
-          y + 0.005,
-          cb.z - dz * (0.735 + TABLE.radius + 0.03 + power * 0.06 + stroke),
+          cb.x - dx * (cueTip + TABLE.radius + cuePullOffset),
+          y,
+          cb.z - dz * (cueTip + TABLE.radius + cuePullOffset),
         );
         cue.rotation.y = -angle;
         const { distance } = aimContact(state.balls, angle);

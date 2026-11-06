@@ -5,24 +5,25 @@ import { adjudicate, RULES_VERSION } from "./rules.js";
 import { openGameStore } from "./storage.js";
 import { createGameScene } from "./scene.js";
 import { aimContact, shotFeedback } from "./presentation.js";
+import { PULL, pullRatio as ratioFromPointer, shotStrength, aimAngle, strikeOffset } from "./interaction.js";
 
 export async function mountGame(root, assets, signal, onLeave) {
   root.innerHTML = `<section class="game-shell" aria-labelledby="game-title">
     <div class="game-heading"><div><p class="eyebrow">PLAY THE COLLECTION</p><h1 id="game-title">Eight-ball<span>.</span></h1></div><div class="game-heading-actions"><span class="game-mode">LOCAL TWO-PLAYER</span></div></div>
     <div class="players"><div id="player-0" class="player-card"><span class="player-index">01</span><div><strong>Player 1</strong><span class="player-group">Open table</span></div><div class="remaining"><span class="remaining-full" aria-hidden="true"></span><span class="remaining-compact" aria-hidden="true"></span><span class="game-sr-only remaining-accessible"></span></div></div><div id="player-1" class="player-card"><span class="player-index">02</span><div><strong>Player 2</strong><span class="player-group">Open table</span></div><div class="remaining"><span class="remaining-full" aria-hidden="true"></span><span class="remaining-compact" aria-hidden="true"></span><span class="game-sr-only remaining-accessible"></span></div></div></div>
-    <div class="game-layout"><div class="game-board"><div id="game-viewport" tabindex="0" aria-label="Pool table. Arrow keys adjust aim or cue placement."><div id="game-loading" role="status">Preparing your table…</div></div><div class="game-table-caption"><span>CASUAL EIGHT-BALL</span><button type="button" data-action="inspect" disabled>Inspect table</button><button type="button" data-action="options">App options</button><button type="button" data-action="rules">Rules & controls</button></div></div>
+    <div class="game-layout"><div class="game-board"><div class="game-table-row"><div id="power-controller"><label id="power-label">Pull to shoot <output id="power-output">0%</output></label><div id="power-track"><div id="power-fill"></div><button type="button" id="power-handle" role="slider" aria-labelledby="power-label" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" disabled><span aria-hidden="true">↓</span></button></div></div><div id="game-viewport" tabindex="0" aria-label="Pool table. Arrow keys adjust aim or cue placement."><div id="game-loading" role="status">Preparing your table…</div></div></div><div class="game-table-caption"><span>CASUAL EIGHT-BALL</span><button type="button" data-action="inspect" disabled>Inspect table</button><button type="button" data-action="options">App options</button><button type="button" data-action="rules">Rules & controls</button></div></div>
     <aside class="game-controls" aria-label="Game controls"><div id="game-turn" class="game-turn">Your table is waiting.</div><p id="game-status" role="status" aria-live="polite">Load the table, then start a local match.</p>
       <div id="game-start" class="game-start"><button class="primary" data-action="new" disabled>New two-player match</button><button data-action="resume" disabled>Resume saved match</button><p>Pass the device between turns. No account needed.</p></div>
       <div id="game-load-error" role="alert" hidden><p>Check your connection and browser 3D support, then try again.</p><button data-action="retry-load" class="primary">Retry loading</button><button data-action="back-to-gallery">Back to Gallery</button></div>
       <div id="game-shot-controls" hidden><div class="aim-control"><label for="aim-angle">Aim <output id="angle-output">0°</output></label><input id="aim-angle" type="range" min="-180" max="180" step="0.25" value="0"><div class="aim-fine"><button data-action="aim-left" aria-label="Aim left one degree">−1°</button><button data-action="aim-right" aria-label="Aim right one degree">+1°</button></div></div>
-        <div class="power-control"><label for="shot-power">Power <output id="power-output">45%</output></label><input id="shot-power" type="range" min="5" max="100" value="45"></div><button data-action="shoot" class="primary">Shoot</button><p class="control-note">Drag to aim; Shoot to strike.</p><p id="aim-contact"></p></div>
-      <div id="game-placement" hidden><strong>Ball in hand</strong><p id="placement-hint">Tap or drag on the table to place the cue ball.</p><label for="place-x">Along the table</label><input id="place-x" type="range" min="-1.076" max="1.076" step="0.005" value="-0.7"><label for="place-z">Across the table</label><input id="place-z" type="range" min="-0.492" max="0.492" step="0.005" value="0"><button data-action="place" class="primary">Confirm cue position</button></div>
+        <p class="control-note">Aim; pull the left handle and release.</p><p id="aim-contact"></p></div>
+      <div id="game-placement" hidden><strong>Ball in hand</strong><p id="placement-hint">Tap or drag on the table to place the cue ball.</p><label for="place-x">Along the table</label><input id="place-x" type="range" min="-1.076" max="1.076" step="0.005" value="-0.7"><label for="place-z">Across the table</label><input id="place-z" type="range" min="-0.492" max="0.492" step="0.005" value="0"><div class="placement-actions"><button type="button" data-action="reset-placement" aria-label="Reset cue position">Reset</button><button data-action="place" class="primary" aria-label="Confirm cue position">Place</button></div></div>
       <div id="game-finish" hidden><button data-action="new" class="primary">Play again</button></div><div id="game-recovery" hidden><button data-action="restore" class="primary">Restore last turn</button></div>
       <button data-action="pause" id="game-pause" hidden>Pause / menu</button><p id="save-status" class="save-status" role="status">Checking local save…</p>
     </aside></div>
     <dialog id="game-options" aria-labelledby="game-options-title"><h2 id="game-options-title">Your app.</h2><label for="graphics-quality">Graphics quality</label><select id="graphics-quality" aria-describedby="graphics-quality-note" disabled><option value="standard">Standard</option><option value="performance">Performance</option></select><p id="graphics-quality-note">Performance lowers rendering resolution until you leave Game.</p><div class="offline-box"><span id="game-offline-status">Online play available</span><button data-action="offline">Make available offline</button><button data-action="install">Install app / help</button></div><button data-action="fullscreen">Fullscreen</button><button data-action="close-options" class="primary">Back to the table</button></dialog>
     <dialog id="game-menu" aria-labelledby="game-menu-title"><h2 id="game-menu-title">Take a break.</h2><p id="menu-save-message" role="status">Your last complete turn is saved when local storage is available.</p><button data-action="continue" class="primary">Continue game</button><button data-action="restart">Restart match</button><button data-action="leave">Save & return to Gallery</button><button data-action="discard" hidden>Leave without saving</button></dialog>
-    <dialog id="game-rules" aria-labelledby="game-rules-title"><h2 id="game-rules-title">Casual Eight-Ball</h2><p>Two people, one device. Player 1 breaks. Drag to aim, set power, then press Shoot. Arrow keys adjust aim (Shift for fine aim); Enter confirms cue placement; Space shoots when the table is focused. Labeled sliders and buttons also work with a keyboard.</p><ul><li>Groups stay open on the break. The first legal post-break pot assigns solids or stripes. Pots are ordered by when they enter a pocket; simultaneous pots use ball number to break the tie.</li><li>First contact must be your group. When your group is cleared, hit the eight first. If every group ball has gone while the table is still open, either player may play the eight.</li><li>A scratch, wrong first contact or no contact gives your opponent ball in hand.</li><li>Clear your group before the shot that pockets the eight. An early eight, or an eight with a foul, loses.</li><li>Eight on the break is re-spotted. Eight + scratch on the break is a foul, not an instant loss.</li><li>No called pockets, four-rail break requirement, spin or jump shots. This is a casual ruleset, not competition rules.</li></ul><p>In inspection mode, drag or use the table-focused arrow keys to orbit, and use + or − to zoom. Use the return button to leave inspection. The guide estimates initial contact, not a guaranteed pot. Backgrounding pauses play. After a killed or interrupted shot, Resume restores its pre-shot checkpoint.</p><button data-action="close-rules" class="primary">Back to the table</button></dialog>
+    <dialog id="game-rules" aria-labelledby="game-rules-title"><h2 id="game-rules-title">Casual Eight-Ball</h2><p>Two people, one device. Player 1 breaks. Aim on the table, pull the left handle down and release to strike. Arrow keys adjust aim (Shift for fine aim); Enter confirms cue placement. Focus the power handle, use arrows to charge, then Space or Enter to release. Escape cancels charging.</p><ul><li>Groups stay open on the break. The first legal post-break pot assigns solids or stripes. Pots are ordered by when they enter a pocket; simultaneous pots use ball number to break the tie.</li><li>First contact must be your group. When your group is cleared, hit the eight first. If every group ball has gone while the table is still open, either player may play the eight.</li><li>A scratch, wrong first contact or no contact gives your opponent ball in hand.</li><li>Clear your group before the shot that pockets the eight. An early eight, or an eight with a foul, loses.</li><li>Eight on the break is re-spotted. Eight + scratch on the break is a foul, not an instant loss.</li><li>No called pockets, four-rail break requirement, spin or jump shots. This is a casual ruleset, not competition rules.</li></ul><p>In inspection mode, drag or use the table-focused arrow keys to orbit, and use + or − to zoom. Use the return button to leave inspection. The guide estimates initial contact, not a guaranteed pot. Backgrounding pauses play. After a killed or interrupted shot, Resume restores its pre-shot checkpoint.</p><button data-action="close-rules" class="primary">Back to the table</button></dialog>
     <dialog id="game-confirm" aria-labelledby="game-confirm-title"><h2 id="game-confirm-title">Start a new match?</h2><p>This replaces the current match. Your gallery assets are unaffected.</p><div><button data-action="cancel-new">Keep current match</button><button data-action="confirm-new" class="primary">Start new match</button></div></dialog>
   </section>`;
   const $ = (s) => root.querySelector(s),
@@ -37,7 +38,14 @@ export async function mountGame(root, assets, signal, onLeave) {
     store = null,
     view = null,
     angle = 0,
-    power = 0.45,
+    power = 0,
+    pull = 0,
+    charge = null,
+    intent = null,
+    committedShots = 0,
+    lastContactTipDistance = null,
+    placementDrag = false,
+    lastValidCandidate = { x: -0.7, z: 0 },
     candidate = { x: -0.7, z: 0 },
     pausedPhase = null,
     inspection = false,
@@ -101,6 +109,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     root.querySelector(".game-shell").classList.toggle("is-playing", !!state);
     root.querySelector(".game-shell").dataset.phase = phase || "setup";
     $("#game-start").hidden = !!state || loadFailed;
+    $("#power-controller").hidden = !state || phase === "placing";
     $("#game-load-error").hidden = !loadFailed;
     $("#game-shot-controls").hidden = !["aiming", "moving", "adjudicating"].includes(phase) || contextLost;
     $("#game-placement").hidden = phase !== "placing" || contextLost;
@@ -131,7 +140,7 @@ export async function mountGame(root, assets, signal, onLeave) {
       : "Pool table. Arrow keys adjust aim or cue placement.");
     $(".control-note").textContent = inspection
       ? "Inspect mode. Return to aim before shooting."
-      : "Drag to aim; Shoot to strike.";
+      : "Aim; pull the left handle and release.";
     for (let i = 0; i < 2; i++) {
       const c = $(`#player-${i}`);
       c.classList.toggle(
@@ -167,7 +176,7 @@ export async function mountGame(root, assets, signal, onLeave) {
             : `${state.groups[i]} cleared; 8 ball next.`;
     }
     const disabled =
-      busy || !ownership || inspection || contextLost || phase !== "aiming";
+      busy || !!charge || !ownership || inspection || contextLost || phase !== "aiming";
     all("#game-shot-controls button, #game-shot-controls input").forEach(
       (b) => (b.disabled = disabled),
     );
@@ -187,6 +196,7 @@ export async function mountGame(root, assets, signal, onLeave) {
       contextLost ||
       !state ||
       !legalPlacement(state.balls, candidate.x, candidate.z, state.break);
+    $('[data-action="reset-placement"]').disabled = busy || !ownership || inspection || contextLost || phase !== "placing";
     all('#game-placement input').forEach((input) => {
       input.disabled = busy || !ownership || inspection || contextLost || phase !== "placing";
     });
@@ -202,8 +212,12 @@ export async function mountGame(root, assets, signal, onLeave) {
     }
     $("#angle-output").value = `${Math.round((angle * 180) / Math.PI)}°`;
     $("#aim-angle").value = (angle * 180) / Math.PI;
-    $("#power-output").value = `${Math.round(power * 100)}%`;
-    $("#shot-power").value = power * 100;
+    $("#power-output").value = `${Math.round(pull * 100)}%`;
+    const handle = $("#power-handle");
+    handle.disabled = busy || !ownership || inspection || contextLost || phase !== "aiming";
+    handle.setAttribute("aria-valuenow", String(Math.round(pull * 100)));
+    handle.setAttribute("aria-valuetext", `${Math.round(pull * 100)} percent. Arrow keys charge; Space or Enter releases.`);
+    $("#power-track").style.setProperty("--pull", String(pull));
     $("#place-x").value = candidate.x;
     $("#place-z").value = candidate.z;
     $('[data-action="restore"]').textContent = contextLost
@@ -223,7 +237,7 @@ export async function mountGame(root, assets, signal, onLeave) {
   }
   const previewState = { phase: "preview", balls: makeRack(42) };
   function draw() {
-    if (!contextLost) view?.update(state || previewState, angle, power, candidate, delivery ? delivery.elapsed / 0.28 : undefined);
+    if (!contextLost) view?.update(state || previewState, angle, power, candidate, delivery ? strikeOffset(delivery.ratio, delivery.elapsed) : pull * PULL.distance);
   }
   async function startNew() {
     if (!ready || !ownership) return;
@@ -247,7 +261,8 @@ export async function mountGame(root, assets, signal, onLeave) {
     state.balls[0].pocketed = true;
     candidate = { x: -0.7, z: 0 };
     angle = 0;
-    power = 0.45;
+    power = 0;
+    cancelCharge();
     inspection = false;
     view.setInspection(false);
     shot = null;
@@ -261,7 +276,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     draw();
     viewport.focus({ preventScroll: true });
   }
-  async function shoot() {
+  async function shoot(frozen) {
     if (
       !state ||
       state.phase !== "aiming" ||
@@ -271,14 +286,16 @@ export async function mountGame(root, assets, signal, onLeave) {
       !ownership
     )
       return;
+    intent = frozen;
     busy = true;
     ui();
     if (store) {
       try {
         const renewed = await store.renew();
-        if (!canContinueShot()) return;
+        if (!canContinueShot(frozen)) return;
         if (!renewed) {
           ownership = false;
+          cancelDelivery();
           state.message =
             "Another tab owns this match. Pause and return when it is closed.";
           finishBusy();
@@ -289,42 +306,46 @@ export async function mountGame(root, assets, signal, onLeave) {
         saveFailed = true;
       }
     }
-    if (!canContinueShot()) return;
+    if (!canContinueShot(frozen)) return;
     before = stableCopy(state);
-    const id = uuid();
+    const id = frozen.id;
     await persist(before, { id });
-    if (!canContinueShot()) return;
+    if (!canContinueShot(frozen)) return;
     if (!ownership) {
       finishBusy();
       ui();
       return;
     }
     if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      const completed = await new Promise((resolve) => {
-        delivery = { elapsed: 0, resolve };
-        ui();
-        draw();
-      });
-      if (!completed || !canContinueShot()) {
-        finishBusy();
-        ui();
-        draw();
-        return;
-      }
+      delivery = { elapsed: 0, ratio: frozen.ratio, frozen };
+      pull = 0;
+      ui(); draw();
+      return;
     }
+    commitIntent(frozen);
+  }
+  function commitIntent(frozen) {
+    if (!canContinueShot(frozen)) return;
+    const id = frozen.id;
+    pull = 0;
     lastResult = "";
+    draw();
+    lastContactTipDistance = view?.cueTipDistance(state.balls[0]);
     try {
       shot = createShot(
         state.balls,
-        { x: Math.cos(angle), z: Math.sin(angle) },
-        power,
+        { x: Math.cos(frozen.angle), z: Math.sin(frozen.angle) },
+        frozen.strength,
       );
       shot.id = id;
+      committedShots++;
+      intent = null;
+      pull = 0;
+      power = frozen.strength;
       state.phase = "moving";
       state.message = "Balls are moving…";
-      accumulator = 0;
-      lastTime = performance.now();
     } catch (e) {
+      intent = null;
       state.phase = "recovery";
       state.message = e.message;
     }
@@ -332,26 +353,30 @@ export async function mountGame(root, assets, signal, onLeave) {
     ui();
     draw();
   }
-  function canContinueShot() {
-    if (!disposed && !contextLost && state?.phase === "aiming" && !pauseRequested && !document.hidden) return true;
+  function canContinueShot(frozen) {
+    if (intent && intent !== frozen) return false;
+    if (intent === frozen && ownership && !disposed && !contextLost && state?.phase === "aiming" && !pauseRequested && !document.hidden) return true;
+    if (intent === frozen) intent = null;
     finishBusy();
     ui();
     return false;
   }
   function cancelDelivery() {
-    if (!delivery) return;
-    const pending = delivery;
-    delivery = null;
-    pending.resolve(false);
+    intent = null;
+    cancelCharge();
+    if (delivery) {
+      delivery = null;
+      finishBusy();
+    }
   }
   function animateDelivery(dt) {
     if (!delivery || document.hidden) return;
     delivery.elapsed += dt;
     draw();
-    if (delivery.elapsed >= 0.28) {
-      const pending = delivery;
+    if (delivery.elapsed >= PULL.strikeSeconds) {
+      const frozen = delivery.frozen;
       delivery = null;
-      pending.resolve(true);
+      commitIntent(frozen);
     }
   }
   async function completeShot() {
@@ -397,6 +422,7 @@ export async function mountGame(root, assets, signal, onLeave) {
       return;
     }
     pauseRequested = false;
+    cancelCharge();
     clearPointers();
     pausedPhase = state.phase;
     state.phase = "paused";
@@ -438,69 +464,90 @@ export async function mountGame(root, assets, signal, onLeave) {
     if (
       !state ||
       inspection ||
-      busy ||
+      busy || charge || intent ||
       !["aiming", "placing"].includes(state.phase)
     )
       return;
     const p = view.point(e.clientX, e.clientY);
     if (!p) return;
-    if (state.phase === "placing") candidate = { x: p.x, z: p.z };
-    else angle = Math.atan2(p.z - state.balls[0].z, p.x - state.balls[0].x);
+    if (state.phase === "placing") {
+      candidate = { x: p.x, z: p.z };
+      if (legalPlacement(state.balls, candidate.x, candidate.z, state.break)) lastValidCandidate = { ...candidate };
+    }
+    else if (!charge && !intent) angle = aimAngle(state.balls[0], p, angle);
     ui();
     draw();
   };
   let pointer = null;
-  const pointers = new Set();
-  function clearPointers() {
-    pointer = null;
-    pointers.clear();
+  function clearPointers() { pointer = null; placementDrag = false; }
+  function canCharge() { return !root.querySelector("dialog[open]") && pointer === null && ready && state?.phase === "aiming" && !busy && !inspection && !contextLost && ownership && !intent; }
+  function cancelCharge() { charge = null; pull = 0; }
+  function releaseCharge() {
+    if (!charge || !canCharge()) { cancelCharge(); ui(); draw(); return; }
+    const ratio = pull;
+    charge = null;
+    if (ratio < PULL.min) { cancelCharge(); ui(); draw(); return; }
+    void shoot({ id: uuid(), angle, ratio, strength: shotStrength(ratio) });
   }
-  viewport.addEventListener(
-    "pointerdown",
-    (e) => {
-      if (
-        e.target.tagName !== "CANVAS" || inspection || busy || contextLost ||
-        !state || !["aiming", "placing"].includes(state.phase)
-      ) return;
-      pointers.add(e.pointerId);
-      e.target.setPointerCapture(e.pointerId);
-      if (pointer !== null) return;
-      viewport.focus({ preventScroll: true });
-      pointer = e.pointerId;
-      selectPoint(e);
-    },
-    { signal },
-  );
-  viewport.addEventListener(
-    "pointermove",
-    (e) => {
-      if (pointer === e.pointerId) selectPoint(e);
-    },
-    { signal },
-  );
-  for (const event of ["pointerup", "pointercancel", "lostpointercapture"])
-    viewport.addEventListener(
-      event,
-      (e) => {
-        pointers.delete(e.pointerId);
-        if (pointer === e.pointerId)
-          pointer = pointers.keys().next().value ?? null;
-      },
-      { signal },
-    );
+  const handle = $("#power-handle");
+  handle.addEventListener("pointerdown", (e) => {
+    if (!canCharge() || charge || e.button !== 0) return;
+    e.preventDefault(); handle.focus();
+    charge = { pointer: e.pointerId, y: e.clientY, distance: Math.max(1, $("#power-track").clientHeight - handle.offsetHeight) };
+    pull = 0; handle.setPointerCapture(e.pointerId); ui(); draw();
+  }, { signal });
+  handle.addEventListener("pointermove", (e) => {
+    if (charge?.pointer !== e.pointerId || !canCharge()) return;
+    pull = ratioFromPointer(charge.y, e.clientY, charge.distance); ui(); draw();
+  }, { signal });
+  handle.addEventListener("pointerup", (e) => {
+    if (charge?.pointer !== e.pointerId) return;
+    pull = ratioFromPointer(charge.y, e.clientY, charge.distance);
+    releaseCharge();
+  }, { signal });
+  for (const name of ["pointercancel", "lostpointercapture"]) handle.addEventListener(name, (e) => {
+    if (charge?.pointer !== e.pointerId) return;
+    cancelCharge(); ui(); draw();
+  }, { signal });
+  handle.addEventListener("keydown", (e) => {
+    if (!canCharge()) return;
+    if (charge && charge.pointer !== null && e.key !== "Escape") { e.preventDefault(); return; }
+    if (e.key === "Escape") { e.preventDefault(); cancelCharge(); }
+    else if (["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"].includes(e.key)) {
+      e.preventDefault(); charge ||= { pointer: null };
+      pull = Math.max(0, Math.min(1, pull + (["ArrowDown", "ArrowRight"].includes(e.key) ? 1 : -1) * (e.shiftKey ? .01 : .05)));
+    } else if ([" ", "Enter"].includes(e.key)) { e.preventDefault(); if (!e.repeat) releaseCharge(); }
+    ui(); draw();
+  }, { signal });
+  handle.addEventListener("blur", () => { if (charge?.pointer === null) { cancelCharge(); ui(); draw(); } }, { signal });
+  window.addEventListener("blur", () => { cancelCharge(); cancelDelivery(); ui(); draw(); }, { signal });
+  window.addEventListener("resize", () => { cancelDelivery(); cancelCharge(); clearPointers(); ui(); draw(); }, { signal });
+  viewport.addEventListener("pointerdown", (e) => {
+    if (e.target.tagName !== "CANVAS" || pointer !== null || charge || intent || busy || inspection || contextLost || !ownership || !state || !["aiming", "placing"].includes(state.phase)) return;
+    const point = view.point(e.clientX, e.clientY);
+    if (state.phase === "placing" && (!point || Math.hypot(point.x - candidate.x, point.z - candidate.z) > TABLE.radius * 2.5)) return;
+    pointer = e.pointerId; placementDrag = state.phase === "placing";
+    if (placementDrag) lastValidCandidate = { ...candidate };
+    e.target.setPointerCapture(e.pointerId); viewport.focus({ preventScroll: true }); selectPoint(e);
+  }, { signal });
+  viewport.addEventListener("pointermove", (e) => {
+    if (pointer === e.pointerId || (pointer === null && e.pointerType === "mouse" && state?.phase === "aiming")) selectPoint(e);
+  }, { signal });
+  for (const name of ["pointerup", "pointercancel", "lostpointercapture"]) viewport.addEventListener(name, (e) => {
+    if (pointer !== e.pointerId) return;
+    const placing = placementDrag;
+    if (placing && name === "pointerup") selectPoint(e);
+    clearPointers();
+    if (placing) {
+      if (name === "pointerup" && legalPlacement(state.balls, candidate.x, candidate.z, state.break)) $('[data-action="place"]').click();
+      else candidate = { ...lastValidCandidate };
+    }
+    ui(); draw();
+  }, { signal });
   $("#aim-angle").addEventListener(
     "input",
     (e) => {
       angle = (Number(e.target.value) * Math.PI) / 180;
-      ui();
-      draw();
-    },
-    { signal },
-  );
-  $("#shot-power").addEventListener(
-    "input",
-    (e) => {
-      power = Number(e.target.value) / 100;
       ui();
       draw();
     },
@@ -526,6 +573,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     async (e) => {
       const b = e.target.closest("button[data-action]");
       if (!b || b.disabled) return;
+      if (["options", "rules", "inspect", "restart", "new"].includes(b.dataset.action)) { cancelCharge(); clearPointers(); }
       switch (b.dataset.action) {
         case "new":
           if (saved || state) {
@@ -554,8 +602,13 @@ export async function mountGame(root, assets, signal, onLeave) {
             draw();
           }
           break;
-        case "shoot":
-          await shoot();
+
+        case "reset-placement":
+          if (state?.phase === "placing" && !busy && ownership && !inspection && !contextLost) {
+            candidate = { x: -0.7, z: 0 };
+            lastValidCandidate = { ...candidate };
+            ui(); draw();
+          }
           break;
         case "place":
           if (
@@ -574,7 +627,7 @@ export async function mountGame(root, assets, signal, onLeave) {
             state.phase = "aiming";
             state.ballInHand = false;
             state.revision++;
-            state.message = "Aim, set power, then Shoot.";
+            state.message = "Aim, pull the left handle down, then release.";
             busy = true;
             stable = stableCopy(state);
             ui();
@@ -723,6 +776,9 @@ export async function mountGame(root, assets, signal, onLeave) {
   window.addEventListener(
     "keydown",
     (e) => {
+      if (e.key === "Escape" && (charge || intent)) {
+        e.preventDefault(); cancelDelivery(); ui(); draw(); return;
+      }
       if (
         root.hidden ||
         e.target.matches("input,button,a") ||
@@ -730,6 +786,7 @@ export async function mountGame(root, assets, signal, onLeave) {
       )
         return;
       if (e.key === "Escape") {
+        if (charge) { e.preventDefault(); cancelCharge(); ui(); draw(); return; }
         // Fullscreen owns Escape; let the browser leave fullscreen first.
         if (document.fullscreenElement) return;
         if (state && !contextLost && !["finished", "paused"].includes(state.phase)) {
@@ -772,15 +829,8 @@ export async function mountGame(root, assets, signal, onLeave) {
             180;
           angle = Math.atan2(Math.sin(angle), Math.cos(angle));
           e.preventDefault();
-        } else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-          power = Math.max(
-            0.05,
-            Math.min(1, power + (e.key === "ArrowUp" ? 0.05 : -0.05)),
-          );
-          e.preventDefault();
-        } else if (e.code === "Space" && !e.repeat) {
-          e.preventDefault();
-          void shoot();
+        } else if (e.code === "Space") {
+          e.preventDefault(); handle.focus();
         }
         ui();
         draw();
@@ -865,10 +915,11 @@ export async function mountGame(root, assets, signal, onLeave) {
     const elapsed = Math.min((now - lastTime) / 1000, 0.08);
     lastTime = now;
     if (!document.hidden && now > manualUntil) {
-      animateDelivery(elapsed);
+
       accumulator += elapsed;
       let n = 0;
       while (accumulator >= TABLE.step && n++ < 12) {
+        animateDelivery(TABLE.step);
         simulate(TABLE.step);
         accumulator -= TABLE.step;
       }
@@ -896,6 +947,19 @@ export async function mountGame(root, assets, signal, onLeave) {
       })),
       aim: angle,
       power,
+      pullRatio: pull,
+      interaction: delivery ? "striking" : charge ? "charging" : intent ? "preparing" : "idle",
+      charging: !!charge,
+      striking: !!delivery,
+      shotId: intent?.id || shot?.id || null,
+      committedShots,
+      lastContactTipDistance,
+      maxDragDistance: Math.max(1, $("#power-track").clientHeight - $("#power-handle").offsetHeight),
+      cueTipDistance: view?.cueTipDistance(state?.balls[0]),
+      cameraSpan: view?.cameraSpan(),
+      intentRatio: intent?.ratio ?? null,
+      cueOffset: delivery ? strikeOffset(delivery.ratio, delivery.elapsed) : pull * PULL.distance,
+      strikeElapsed: delivery?.elapsed || 0,
       message: state?.message,
       ready,
       contextLost,
@@ -991,13 +1055,16 @@ export async function mountGame(root, assets, signal, onLeave) {
         (state?.phase === "paused" && pausedPhase === "moving")
       )
         return false;
+      cancelCharge(); clearPointers();
       if (state) {
-        await persist(stable);
-        return !saveFailed;
+        busy = true; ui(); draw();
+        try { await persist(stable); return !saveFailed; }
+        finally { finishBusy(); ui(); draw(); }
       }
       return true;
     },
     beforeLeave() {
+      cancelCharge(); clearPointers();
       if (
         shot &&
         !confirm("Discard this unfinished shot and return to Gallery?")

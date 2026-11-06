@@ -4,33 +4,33 @@ This is a concise description of the existing game, not a new ruleset. The detai
 
 ## Player journey
 
-Two people share one device. A new match starts with Player 1 placing the cue ball behind the head string. Players aim, set power and explicitly shoot. Groups remain open on the break; the first legal post-break pot assigns solids and stripes. A foul gives the opponent ball in hand. Once a player's group was cleared before the shot, a legal eight-ball pot wins; an early or fouled eight loses. There is no score, AI opponent, spin, called pocket or claim of tournament rules.
+Two people share one device. A new match starts with Player 1 placing the cue ball behind the head string. Players aim, pull the left handle down and release to strike. Groups remain open on the break; the first legal post-break pot assigns solids and stripes. A foul gives the opponent ball in hand. Once a player's group was cleared before the shot, a legal eight-ball pot wins; an early or fouled eight loses. There is no score, AI opponent, spin, called pocket or claim of tournament rules.
 
 The UI exposes the active player, groups, remaining balls and current instruction. The aiming guide labels the first ball, authored cushion segment or pocket opening along the initial straight path; its ring marks the cue-ball center there, not a guaranteed pot or post-impact trajectory. The settled-shot message reports observed object-ball pots, the next player and the existing rule result. Remaining-ball information reflects the game state; it is not a synthetic score.
 
 ## State and ownership
 
-`src/game/page.js` coordinates the existing phases: setup/loading, `placing`, `aiming`, `moving`, `adjudicating`, `paused`, `finished` and `recovery`. A pause remembers the prior playable phase; resuming a moving shot continues it. Restart requires confirmation and starts a fresh rack, Player 1, placement, default aim and power. A completed match can be played again. An invalid simulation restores a previous stable turn rather than inventing a result.
+`src/game/page.js` coordinates the existing phases: setup/loading, `placing`, `aiming`, `moving`, `adjudicating`, `paused`, `finished` and `recovery`. A pause remembers the prior playable phase; resuming a moving shot continues it. Restart requires confirmation and starts a fresh rack, Player 1, placement, default aim and zero charge. A completed match can be played again. An invalid simulation restores a previous stable turn rather than inventing a result.
 
-`src/game/physics.js` advances a 1/120-second fixed simulation step. `rules.js` owns shot adjudication; `scene.js` displays state and does not decide outcomes. A single page-owned animation loop is canceled on disposal. A 280 ms cue delivery is presentation only: balls remain still until the existing single impulse starts the shot. Reduced motion skips cue travel. Pausing or backgrounding during startup or delivery cancels that unstarted shot; resuming returns to aiming and requires another explicit Shoot. Navigating away disposes a pending delivery. Backgrounding requests a pause and clears accumulated wall time; an interrupted shot is not fast-forwarded on return.
+`src/game/physics.js` advances a 1/120-second fixed simulation step. `rules.js` owns shot adjudication; `scene.js` displays state and does not decide outcomes. A single page-owned animation loop is canceled on disposal. A 110 ms cue strike uses the existing fixed-step clock: balls remain still until the measured GLB cue tip reaches the white ball, then the existing single impulse starts the shot synchronously in that step. Reduced motion skips cue travel. Pausing or backgrounding during startup or delivery cancels that unstarted shot; resuming returns to aiming and requires another pull and release. Navigating away disposes a pending delivery. Backgrounding requests a pause and clears accumulated wall time; an interrupted shot is not fast-forwarded on return.
 
 `storage.js` validates stable checkpoints and uses Web Locks with an IndexedDB lease fallback to prevent concurrent writers. A pending-shot marker permits recovery of the last complete turn. When storage is unavailable, play can continue in memory with an explicit warning; leaving without saving requires a deliberate choice. Exiting Game releases its listeners, renderer and ownership. Existing checkpoints retain their original schema and rules/table version checks.
 
 ## Inputs and recovery
 
-The table accepts pointer/touch aiming and cue-ball placement; releasing a pointer never shoots. Accessible range inputs and buttons provide alternatives. With the table focused, arrows adjust aim or placement, Shift makes finer adjustments, Enter confirms placement, Space shoots, and F toggles fullscreen. Escape opens the pause menu where applicable. Inspect mode is separate from aiming and cannot shoot.
+The table accepts mouse hover or one-finger drag for aiming, using the owner-confirmed direction from pointer to white ball (`C - P`). The cue remains behind the white ball. A drag beginning on the white ball places it; legal release commits, while invalid release returns to the last valid candidate. Reset returns the placement preview to its default position without confirming it. Placement sliders and confirmation remain keyboard alternatives. Table gestures use one active pointer; an ignored second touch does not take over when the first touch ends. A new pointer-down starts a fresh gesture. Table gestures never shoot. Only a captured drag starting on the left power handle, or its keyboard equivalent, may release a shot. The handle shares one normalized pull ratio across its position, fill, percentage and cue retraction; the existing solver receives `pullRatio ** 1.5` after a minimum 5% pull. With the table focused, arrows adjust aim or placement, Shift makes finer adjustments, Enter confirms placement, Space focuses the handle, and F toggles fullscreen. With the handle focused, arrows charge, Space/Enter releases, and Escape cancels. Cancellation, second pointers and duplicate releases cannot apply an extra impulse. Inspect mode is separate from aiming and cannot shoot.
 
 App options offers Standard and Performance graphics quality. Standard keeps the original 1.5 pixel-ratio cap; Performance caps it at 1 until the player leaves Game. The selection changes render resolution, not the simulation, models or saved match.
 
-The game loads its table, cue and sixteen balls from the existing catalog. A failed initial 3D load or unavailable WebGL must leave a clear recovery path. Leaving during initialization aborts Game-owned model downloads, stops queued loads and prevents late results from changing the next route; entering Game again creates a fresh scene. The four-worker limit and existing catalog GLBs are preserved. WebGL context loss during a match offers a save/reload path for the last stable turn. No external model code is executed.
+The game loads its table, cue and sixteen balls from the existing catalog. A failed initial 3D load or unavailable WebGL must leave a clear recovery path. Leaving during initialization aborts Game-owned model downloads, stops queued loads and prevents late results from changing the next route; entering Game again creates a fresh scene. The four-worker limit and existing catalog GLBs are preserved. Short landscape phones use the measured table cabinet width plus 0.08 meters of framing margin, keeping the complete cabinet and pockets in view while preserving the tested minimum projected ball size. Other viewports retain their existing framing envelope. WebGL context loss during a match offers a save/reload path for the last stable turn. No external model code is executed.
 
 ## Acceptance evidence
 
-The baseline and findings are recorded in [game baseline](../audits/game-baseline.md). The final executed checks and remaining device limitations are recorded in [release readiness](release-readiness.md); an unexecuted scenario is not a passing result.
+The v1.1 local delivery and its 16-item acceptance record are in [task tracker](../../task.md). The baseline and findings are recorded in [game baseline](../audits/game-baseline.md). The final executed checks and remaining device limitations are recorded in [release readiness](release-readiness.md); an unexecuted scenario is not a passing result.
 
-## Proposed Next-Iteration Gameplay & UX Improvements (2026-11-06 Backlog)
+## Historical Next-Iteration Gameplay & UX Improvements (2026-11-06 Backlog)
 
-The following improvements are proposed based on live review of `?page=game` and are tracked in [task.md](../../task.md). They represent the target interaction design and are not yet implemented in the current build:
+The following improvements are proposed based on live review of `?page=game` and are tracked in [task.md](../../task.md). This historical backlog motivated the v1.1 implementation below. Direct placement and left-handle shooting are implemented; the head-string visual guide remains deferred, and the broader HUD redesign is not part of this delivery:
 
 ### 1. Target 5-Step Tabletop Gameplay Flow
 1. **Ball Placement:** The player drags the cue ball directly on the table within the legal placement zone. The table renders real-time boundary lines (such as the head string on break) and collision/overlap constraints.
@@ -70,7 +70,7 @@ The following improvements are proposed based on live review of `?page=game` and
 
 ## Eight-ball Gameplay Interaction Specification v1.0 (Technical Design)
 
-> **Specification Status:** Design Complete / Implementation Not Started. No runtime code, KB, or production environment has been modified for this specification yet.
+> **Specification Status:** Historical v1.0 design. Its on-table cue-grab shooting model is superseded by v1.1 below. Placement and aiming semantics are retained; the head-string visual guide is explicitly deferred by task.md.
 
 ### 1. Core Interaction Principles
 
@@ -173,7 +173,7 @@ Upon pointer release with $p \ge 0.05$:
 
 ## Left-side Pull & Release Shooting Specification v1.1 (Supersedes v1.0 §4.3, §5, §6)
 
-> **Status:** Design Complete / Implementation Not Started. No runtime code has been changed for v1.1. v1.0 sections on cue-ball placement (§3), aiming geometry (§4.1–4.2), physics decoupling (§8) and rack setup remain valid. v1.1 replaces the "grab the cue stick on the table" pull model with a **vertical power handle on the left side of the table**. The player does not need to grab the cue stick directly.
+> **Status:** Implemented and locally verified against all 16 acceptance items; exact build/test evidence and publication status are tracked in task.md. v1.0 sections on cue-ball placement (§3), aiming geometry (§4.1–4.2), physics decoupling (§8) and rack setup remain valid. v1.1 replaces the "grab the cue stick on the table" pull model with a **vertical power handle on the left side of the table**. The player does not need to grab the cue stick directly.
 
 ### 1. Core Interaction
 
