@@ -52,11 +52,11 @@ optical_gradient = material('Continuously shaded optical reflector', (.37, .39, 
 vertex_color = optical_gradient.node_tree.nodes.new('ShaderNodeVertexColor')
 vertex_color.layer_name = 'ReflectorTone'
 optical_gradient.node_tree.links.new(vertex_color.outputs['Color'], optical_gradient.node_tree.nodes['Principled BSDF'].inputs['Base Color'])
-lens = material('Fluted headlamp glass', (.45, .49, .50), .05, .15, .17)
+lens = material('Fluted headlamp glass', (.72, .75, .77), .02, .09, .06)
 lens_rib = material('Fine lens prism', (.40, .43, .44), .15, .35, .35)
 red = material('Red rear lens', (.19, .002, .004), .16, .21)
 amber = material('Amber corner lens', (.40, .064, .001), .12, .27)
-amber_prism = material('Amber lens internal facets', (.16, .020, .001), .15, .38)
+amber_prism = material('Amber lens internal facets', (.30, .065, .004), .12, .36)
 stripe = material('Thin red pinstripe', (.52, .012, .018), .2, .33)
 fabric = material('Dark woven seat cloth', (.042, .05, .057), 0, .95)
 white = material('Plate lettering', (.8, .83, .84), .1, .4)
@@ -172,7 +172,7 @@ plate_black.node_tree.nodes['Principled BSDF'].inputs['Specular IOR Level'].defa
 
 # Reference landmarks are an artistic fit to the approved four-view image set.
 # X points rearward, Y right, Z up; no factory dimensions are implied.
-AXLES = (-1.31, 1.22)
+AXLES = (-1.31, 1.17)
 WHEEL_Z = .359
 ARCH_RX, ARCH_RZ = .323, .322
 BODY_LOWERING = .075
@@ -189,7 +189,7 @@ def interp(knots, x):
 
 
 def crown_height(x):
-    return interp([(-2.065,.87),(-1.98,.887),(-1.65,.928),(-1.15,.976),
+    return interp([(-2.065,.87),(-1.98,.895),(-1.65,.945),(-1.15,.981),
                    (-.87,.988),(.6,.988),(1.43,.988),(1.85,.974),(2.065,.956)], x)
 
 
@@ -742,6 +742,12 @@ for side in [-1,1]:
             bottom=bottom_left+(bottom_right-bottom_left)*across
             lamp_uv.data[li].uv=(px/iw,1-(bottom+(top-bottom)*up)/ih)
 
+    # A shallow clear cover and a fine rim give the reference-mapped reflector
+    # physical highlights when the vehicle is turned in the 3D viewer.
+    cover_border=[(x-.0015,y,z) for x,y,z in border]
+    surface_disk('Clear molded headlamp cover',cover_border,(-1,0,0),lens,.003,4)
+    line('Headlamp narrow silver rim',cover_border+[cover_border[0]],chrome,.0009)
+
     for j in range(43):
         y=yc-.150+j*.300/42
         line('Headlight vertical optical flute',[(front_x(y)-.003,y,.673),(front_x(y)-.003,y,.849)],lens_rib,.00036)
@@ -764,19 +770,20 @@ for side in [-1,1]:
 
     indicator_side=[side_point(-2.084+i*.119/6,.668+j*.189/6,side,.014) for i in range(7) for j in range(7)]
     mesh('Contoured amber corner return',indicator_side,[(i*7+j,(i+1)*7+j,(i+1)*7+j+1,i*7+j+1) for i in range(6) for j in range(6)],amber,smooth=True)
-    for j in range(11):
-        y=side*(.706+j*.008)
-        line('Amber front vertical flute',[(-2.089,y,.68),(-2.089,y,.844)],amber_prism,.0012)
-    for j in range(5):
-        z=.687+j*.036
-        line('Amber lens horizontal prism',[(-2.089,side*.716,z),(-2.089,side*.786,z)],amber_prism,.00045)
+    # The reference indicator has fine lens ribs rather than a dark grille.
+    for j in range(15):
+        y=side*(.706+j*.0057)
+        line('Amber front vertical flute',[(-2.089,y,.68),(-2.089,y,.844)],amber_prism,.00028)
+    for j in range(3):
+        z=.704+j*.055
+        line('Amber lens horizontal prism',[(-2.089,side*.716,z),(-2.089,side*.786,z)],amber_prism,.00022)
     # Four columns: red / clear / red / outer amber, divided into two rows.
-    box('Rear lamp recessed gasket',(2.071,side*.573,.759),(.022,.438,.207),black,.008)
+    box('Rear lamp recessed gasket',(2.071,side*.581,.759),(.022,.456,.207),black,.008)
     for col,y in enumerate([.412,.516,.620,.742]):
         for row,z in enumerate([.712,.809]):
             mat=amber if col==3 else reverse_lens if col==1 and row==1 else red
-            width=.115 if col==3 else .098
-            cell=box('Segmented rear optical cell',(2.085,side*y,z),(.017,width,.087),mat,.005)
+            width=.125 if col==3 else .102
+            cell=box('Segmented rear optical cell',(2.085,side*y,z),(.017,width,.093),mat,.002)
             cell.data.materials.append(rear_reference_lens)
             while cell.data.uv_layers:
                 cell.data.uv_layers.remove(cell.data.uv_layers[0])
@@ -794,25 +801,21 @@ for side in [-1,1]:
                     up=max(0,min(1,(zz-.668)/.185))
                     cell_uv.data[li].uv=((left_px+(right_px-left_px)*across)/iw,1-(bottom+(top-bottom)*up)/ih)
 
-            for j in range(6):
-                yy=side*(y-width*.42+j*width*.84/5)
-                line('Rear lens vertical prisms',[(2.095,yy,z-.036),(2.095,yy,z+.036)],mat,.00065)
-            for dz in [-.022,0,.022]:line('Rear lens horizontal prisms',[(2.096,side*(y-width*.44),z+dz),(2.096,side*(y+width*.44),z+dz)],mat,.00065)
     mesh('Rear lamp amber corner return',[(2.08,side*.809,.67),(2.08,side*.809,.85),side_point(1.997,.85,side,.006),side_point(1.997,.67,side,.006)],[(0,1,2,3)],amber,.003)
 
 box('Deep black front grille',(-2.035,0,.761),(.035,.73,.189),black,.008)
-for z in [.674,.716,.758,.800,.842]:
+for z in [.687,.758,.829]:
     box('Grille black horizontal rail',(-2.067,0,z),(.02,.729,.015),black,.003)
-    box('Grille narrow bright leading edge',(-2.078,0,z+.004),(.003,.723,.003),chrome,.0008)
+    box('Grille narrow bright leading edge',(-2.078,0,z+.004),(.003,.723,.004),chrome,.0008)
 for y in [-.30,-.15,0,.15,.30]:box('Grille recessed vertical support',(-2.045,y,.756),(.008,.007,.172),black,.001)
 
-shield=[(-2.089,-.038,.799),(-2.089,.038,.799),(-2.090,.032,.755),(-2.091,0,.730),(-2.090,-.032,.755)]
+shield=[(-2.089,-.050,.815),(-2.089,.050,.815),(-2.090,.042,.754),(-2.091,0,.711),(-2.090,-.042,.754)]
 mesh('Heritage shield silver edge',shield,[tuple(range(5))],chrome)
-mesh('Heritage shield navy enamel',[(x-.002,y*.84,.768+(z-.768)*.84) for x,y,z in shield],[tuple(range(5))],navy)
+mesh('Heritage shield navy enamel',[(x-.002,y*.84,.763+(z-.763)*.84) for x,y,z in shield],[tuple(range(5))],navy)
 star=[]
 for j in range(32):
-    t=j*math.tau/32;r=.026 if j%2==0 else .010
-    star.append((-2.094,math.sin(t)*r,.770+math.cos(t)*r))
+    t=j*math.tau/32;r=.032 if j%2==0 else .012
+    star.append((-2.094,math.sin(t)*r,.766+math.cos(t)*r))
 mesh('Heritage sun emblem',star,[tuple(range(32))],gold)
 
 box('Recessed rear plate panel',(2.068,0,.760),(.033,.705,.207),black,.008)
@@ -872,6 +875,29 @@ box('Antenna mounting foot',(-.29,0,1.478),(.065,.026,.022),black,.01)
 line('Underbody exhaust pipe',[(1.42,-.35,.34),(1.68,-.35,.34),(1.86,-.35,.38)],underseal,.018)
 cylinder('Exhaust outlet',(1.99,-.35,.39),.025,.12,steel,32,(0,math.pi/2,0))
 cylinder('Exhaust dark bore',(2.052,-.35,.39),.021,.006,black,32,(0,math.pi/2,0))
+
+# The front and rear reference views have a narrower roof than the original
+# study. Deform all cabin pieces together so adjoining glass, pillars and trim
+# retain the same joins; taper from the beltline to avoid changing body width.
+# The rear roof edge also moves slightly forward to shorten the roof profile.
+def smooth_unit(value):
+    value=max(0,min(1,value))
+    return value*value*(3-2*value)
+
+
+bpy.context.view_layer.update()
+for part in root.children:
+    if part.type!='MESH':continue
+    world=part.matrix_world.copy()
+    inverse=world.inverted_safe()
+    for vertex in part.data.vertices:
+        point=world @ vertex.co
+        height=smooth_unit((point.z-.988)/.458)
+        rear=smooth_unit((point.x-.24)/.80)
+        point.x -= .052*height*rear
+        point.y *= 1-.10*height
+        vertex.co=inverse @ point
+    part.data.update()
 
 # Shift the complete upper structure relative to the contact patch. Wheel hubs
 # and openings were modeled on the same pre-shift center, so they remain aligned.
@@ -992,14 +1018,14 @@ scene.render.resolution_y=640 if QUICK else 1024
 scene.render.resolution_percentage=100
 scene.view_settings.view_transform='AgX'
 scene.render.image_settings.file_format='PNG'
-views={'preview':(-9,-4,1.95),'view-front':(-9.5,0,1.12),'view-rear':(9.5,0,1.12),'view-left':(0,-30,2.4),'view-right':(0,30,2.4)}
+views={'preview':(-9,-4,1.95),'view-rear-3q':(9,4,1.95),'view-front':(-9.5,0,1.12),'view-rear':(9.5,0,1.12),'view-left':(0,-30,2.4),'view-right':(0,30,2.4)}
 selected=None
 if '--views' in sys.argv:
     selected=sys.argv[sys.argv.index('--views')+1].split(',')
 for name,location in views.items():
     if selected and name not in selected:continue
     camera.data.type='ORTHO' if name in ['view-left','view-right'] else 'PERSP'
-    camera.data.lens=94
+    camera.data.lens=75 if name=='view-rear-3q' else 94
     camera.data.ortho_scale=3.0 if name in ['view-front','view-rear'] else 4.85
     camera.location=location
     target=Vector((0,.35,.78)) if name=='preview' else Vector((0,0,.86))
