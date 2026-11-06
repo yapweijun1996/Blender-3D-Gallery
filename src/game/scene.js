@@ -101,9 +101,9 @@ export async function createGameScene(container, assets, signal, progress) {
   const line = new THREE.Line(
     lineGeometry,
     new THREE.LineBasicMaterial({
-      color: 0xd6e9b9,
+      color: 0xf4fbe8,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.95,
     }),
   );
   line.frustumCulled = false;
@@ -128,7 +128,7 @@ export async function createGameScene(container, assets, signal, progress) {
   };
   controls.addEventListener("change", render);
   const ghost = new THREE.Mesh(
-    new THREE.RingGeometry(TABLE.radius - 0.001, TABLE.radius, 48),
+    new THREE.RingGeometry(TABLE.radius - 0.004, TABLE.radius, 48),
     new THREE.MeshBasicMaterial({ color: 0xd6e9b9, side: THREE.DoubleSide }),
   );
   ghost.rotation.x = -Math.PI / 2;
@@ -171,7 +171,7 @@ export async function createGameScene(container, assets, signal, progress) {
           }
           const obj = gltf.scene;
           scene.add(obj);
-          if (id === "cue-stick-01") { cue = obj; cueTip = new THREE.Box3().setFromObject(obj).max.x; }
+          if (id === "cue-stick-01") { cue = obj; cueTip = new THREE.Box3().setFromObject(obj).max.x; obj.scale.set(1, 0.75, 0.75); }
           else if (id === "pool-table") {
             const bounds = new THREE.Box3().setFromObject(obj);
             tableWidth = bounds.max.x - bounds.min.x;
