@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Proton Saga — 车轮 Pivot 实验</title>
+<style>
+body{margin:0;background:#171a1d;color:#edf0f2;font:16px system-ui,sans-serif}main{max-width:1100px;margin:auto;padding:18px}h1{font-size:24px}p{color:#cbd1d6;line-height:1.5}.stage{height:min(62vh,560px);min-height:320px;background:#262a2e}canvas{display:block;width:100%;height:100%}.controls{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:16px}label{display:flex;align-items:center;gap:8px}select,button{font:inherit;padding:8px}input{width:180px}#status{min-height:1.5em}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #f2c45d}
+</style></head><body><main><h1>Proton Saga（1985）— 车轮控制实验</h1><p>拖动模型旋转视角。选择一个车轮后，分别调整滚动和前轮转向；复位可恢复所有车轮。</p><div class="stage" id="stage"></div><p id="status">正在加载模型…</p><div class="controls"><label>车轮 <select id="wheel"><option value="FL">左前</option><option value="FR">右前</option><option value="RL">左后</option><option value="RR">右后</option></select></label><label>滚动 <input id="roll" type="range" min="-180" max="180" value="0"></label><label>转向 <input id="steer" type="range" min="-30" max="30" value="0"></label><button id="reset" type="button">复位全部</button></div></main>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const stage=document.querySelector('#stage'), status=document.querySelector('#status');
+const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setPixelRatio(1);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0x262a2e);stage.append(renderer.domElement);
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(35,1,.01,100);camera.position.set(-4.8,2.35,4.1);const controls=new OrbitControls(camera,renderer.domElement);controls.target.set(0,.7,0);controls.update();
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;const room=new RoomEnvironment(),pmrem=new THREE.PMREMGenerator(renderer);const environment=pmrem.fromScene(room,.04);scene.environment=environment.texture;scene.environmentIntensity=.6;room.dispose();pmrem.dispose();
+scene.add(new THREE.HemisphereLight(0xffffff,0x535b53,2));const light=new THREE.DirectionalLight(0xffffff,2.1);light.position.set(4,7,5);scene.add(light);
+let framing=1;function resize(){const w=stage.clientWidth,h=stage.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;const next=Math.max(1,1.15/camera.aspect);camera.position.sub(controls.target).multiplyScalar(next/framing).add(controls.target);framing=next;camera.updateProjectionMatrix();controls.update()}new ResizeObserver(resize).observe(stage);resize();
+const loader=new GLTFLoader();
+try {
+ const gltf=await loader.loadAsync('./exports/proton-saga-1985.glb');const model=gltf.scene;scene.add(model);
+ const wheels={};for(const id of ['FL','FR','RL','RR']){const roll=model.getObjectByName(`Wheel_${id}_Roll`),steer=model.getObjectByName(`Wheel_${id}_Steer`);if(!roll||(id.startsWith('F')&&!steer))throw Error(`Missing wheel ${id}`);wheels[id]={roll,steer}}
+ const select=document.querySelector('#wheel'),rollInput=document.querySelector('#roll'),steerInput=document.querySelector('#steer');
+ function sync(){const w=wheels[select.value];rollInput.value=Math.round(THREE.MathUtils.radToDeg(w.roll.rotation.z));steerInput.disabled=!w.steer;steerInput.value=w.steer?Math.round(THREE.MathUtils.radToDeg(w.steer.rotation.y)):0}
+ rollInput.addEventListener('input',()=>{wheels[select.value].roll.rotation.z=THREE.MathUtils.degToRad(Number(rollInput.value))});
+ steerInput.addEventListener('input',()=>{const w=wheels[select.value];if(w.steer)w.steer.rotation.y=THREE.MathUtils.degToRad(Number(steerInput.value))});
+ select.addEventListener('change',sync);document.querySelector('#reset').addEventListener('click',()=>{for(const w of Object.values(wheels)){w.roll.rotation.z=0;if(w.steer)w.steer.rotation.y=0}sync()});sync();status.textContent='模型已加载';
+ window.sagaRig={THREE,renderer,scene,camera,model,wheels,loader};
+ renderer.setAnimationLoop(()=>{controls.update();renderer.render(scene,camera)});
+}catch(error){status.textContent='模型加载失败';console.error(error)}
+</script></body></html>

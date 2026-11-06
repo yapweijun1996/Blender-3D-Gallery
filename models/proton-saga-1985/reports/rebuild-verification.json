@@ -1,13 +1,13 @@
 {
-  "created_utc": "2026-11-06T09:22:54.037930+00:00",
+  "created_utc": "2026-11-06T11:13:58.384713+00:00",
   "asset_id": "proton-saga-1985",
   "status": "draft",
-  "glb_sha256": "7309d5926bf190aa34f2241451710612502158b73d974ea00c9668c89845b2d4",
+  "glb_sha256": "6f33fffdb254c86c6139f78eec76625a6df851d768db49d5b8e819f93d4bd756",
   "metrics": {
-    "glb_bytes": 4090992,
-    "triangles": 106834,
-    "vertices": 94871,
-    "materials": 26,
+    "glb_bytes": 4010024,
+    "triangles": 107218,
+    "vertices": 95063,
+    "materials": 28,
     "animation_clips": 0
   },
   "gltf_validator": {
@@ -15,7 +15,6 @@
     "warnings": 0
   },
   "source": {
-    "root": "ASSET_Proton_Saga_1985",
     "separate_panels": [
       "Left Front wing panel",
       "Left Front door panel",
@@ -26,7 +25,12 @@
       "Right Rear door panel",
       "Right Rear quarter panel"
     ],
+    "headlamp_covers": 2,
+    "grille_rails": 3,
+    "root": "ASSET_Proton_Saga_1985",
     "tires": 4,
+    "steel_rims": 4,
+    "domed_covers": 4,
     "wheelhouse_liners": 4,
     "wheel_centers_x": [
       -1.31,
@@ -35,39 +39,8 @@
       1.17
     ],
     "tire_ground_z": 0.0004999972879886627,
-    "roof_bounds": {
-      "min": [
-        -0.3449999988079071,
-        -0.5625,
-        1.362025499343872
-      ],
-      "max": [
-        0.9879999756813049,
-        0.5625,
-        1.3989999294281006
-      ]
-    },
-    "headlamp_covers": 2,
-    "headlamp_rims": 2,
-    "rear_lamp_cells": 16,
-    "grille_rails": 3,
-    "images": [
-      {
-        "name": "heritage-front-reference.png",
-        "packed": true,
-        "source": "FILE"
-      },
-      {
-        "name": "heritage-multiview-reference.png",
-        "packed": true,
-        "source": "FILE"
-      },
-      {
-        "name": "studio.exr",
-        "packed": true,
-        "source": "FILE"
-      }
-    ],
+    "rim_material": "Silver pressed wheel rim",
+    "cap_material": "Silver domed wheel cover",
     "render_resolution": [
       1536,
       1024
@@ -101,42 +74,42 @@
         1536,
         1024
       ],
-      "sha256": "13fa37e929fb46493cd570eacde2873d65f8b7a7a0a6a4813fb103c7095567f3"
+      "sha256": "9119c116c90a4ea896e59cf1aa96b0df91aafc497cb0b578e9319a9013485d4a"
     },
     "view-rear-3q.webp": {
       "dimensions": [
         1536,
         1024
       ],
-      "sha256": "fb5899c05bbc5bb3217da7caea7dd4c700deaa999ef7389fd84cff9a40260262"
+      "sha256": "dcd552a6f6448e30e9dd2fd2c1ac0cd4f1291cd6a02f663dc436da495c72a2f5"
     },
     "view-front.webp": {
       "dimensions": [
         1536,
         1024
       ],
-      "sha256": "e2db25a1c84fec225e84dedaa47cc956ba85bdb56a55095190fdb62c9b119d12"
+      "sha256": "efce73f3b84f4b47da59675a6693771dd2425ae6d89a3e590d717fe15985007f"
     },
     "view-rear.webp": {
       "dimensions": [
         1536,
         1024
       ],
-      "sha256": "70c6fd0d106e1355cdf8fd7c2ca8438e6fb272f717597f68e0af099dc8ed436c"
+      "sha256": "49f7a61b887e5af6976731c0a62b4f70202206786208d9709377297d50178189"
     },
     "view-left.webp": {
       "dimensions": [
         1536,
         1024
       ],
-      "sha256": "7034c1994a4793a1b54a9f4df5f074619efbc942ca46f48389fa6a56553781e9"
+      "sha256": "9ce69dff0066fde4b36b69d9501b5d13a175034f2256e8638a096cd1bcac828a"
     },
     "view-right.webp": {
       "dimensions": [
         1536,
         1024
       ],
-      "sha256": "79e70f717f300a4f24db95c640a101381252a603e79b4059a856a2fa1acc45ea"
+      "sha256": "b8b01686839f8f3d4ac8635e337400e10ad39390514befa469fd60e829ef15a9"
     }
   },
   "references": [
@@ -152,125 +125,76 @@
     }
   ],
   "browser": {
-    "environment": "Headless Chromium via Playwright against a current production build.",
-    "desktop_initial": {
-      "viewport": {
-        "width": 1440,
-        "height": 900
+    "initial_viewer_with_injected_glb": {
+      "desktop": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "glb_sha256": "6f33fffdb254c86c6139f78eec76625a6df851d768db49d5b8e819f93d4bd756",
+        "views": {
+          "front": {
+            "changed": true,
+            "selected": true
+          },
+          "rear": {
+            "changed": true,
+            "selected": true
+          },
+          "left": {
+            "changed": true,
+            "selected": true
+          },
+          "right": {
+            "changed": true,
+            "selected": true
+          }
+        },
+        "errors": [],
+        "passed": true
       },
-      "glb_sha256": "7309d5926bf190aa34f2241451710612502158b73d974ea00c9668c89845b2d4",
-      "completed_requests": 1,
-      "views": {
-        "front": {
-          "changed": true,
-          "selected": true
+      "mobile": {
+        "viewport": {
+          "width": 390,
+          "height": 844
         },
-        "rear": {
-          "changed": true,
-          "selected": true
+        "glb_sha256": "6f33fffdb254c86c6139f78eec76625a6df851d768db49d5b8e819f93d4bd756",
+        "views": {
+          "front": {
+            "changed": true,
+            "selected": true
+          },
+          "rear": {
+            "changed": true,
+            "selected": true
+          },
+          "left": {
+            "changed": true,
+            "selected": true
+          },
+          "right": {
+            "changed": true,
+            "selected": true
+          }
         },
-        "left": {
-          "changed": true,
-          "selected": true
-        },
-        "right": {
-          "changed": true,
-          "selected": true
-        }
-      },
-      "horizontal_overflow": false,
-      "errors": [],
-      "passed": true,
-      "rendered": true
+        "errors": [],
+        "passed": true
+      }
     },
-    "mobile_test_server_initial": {
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "glb_sha256": "7309d5926bf190aa34f2241451710612502158b73d974ea00c9668c89845b2d4",
-      "completed_requests": 0,
-      "views": {
-        "front": {
-          "changed": true,
-          "selected": true
-        },
-        "rear": {
-          "changed": true,
-          "selected": true
-        },
-        "left": {
-          "changed": true,
-          "selected": true
-        },
-        "right": {
-          "changed": true,
-          "selected": true
-        }
-      },
-      "horizontal_overflow": false,
-      "errors": [
-        "http://127.0.0.1:62475/Blender-3D-Gallery/assets/proton-saga-1985-DpwzNjZh.glb net::ERR_ABORTED"
-      ],
-      "passed": false,
-      "rendered": true
-    },
-    "mobile_vite_preview_initial": {
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "glb_sha256": "7309d5926bf190aa34f2241451710612502158b73d974ea00c9668c89845b2d4",
-      "completed_requests": 1,
-      "views": {
-        "front": {
-          "changed": true,
-          "selected": true
-        },
-        "rear": {
-          "changed": true,
-          "selected": true
-        },
-        "left": {
-          "changed": true,
-          "selected": true
-        },
-        "right": {
-          "changed": true,
-          "selected": true
-        }
-      },
-      "horizontal_overflow": false,
-      "errors": [],
-      "passed": true,
-      "rendered": true,
-      "resource_entries": [
-        {
-          "responseEnd": 689.1000000238419,
-          "encodedBodySize": 4090992,
-          "decodedBodySize": 4090992,
-          "transferSize": 4091292
-        }
-      ]
-    },
-    "review_page": "At 1440x900 and 390x844, 12 SVG images loaded, all three file links resolved, and no horizontal overflow or page errors were observed.",
-    "scope": "Initial GLB load and four preset interactions. Mobile on the first test server rendered all four views but recorded net::ERR_ABORTED; the separate Vite preview run completed and reported 4090992 decoded bytes. This does not establish the cause or prove that the intermittent failure is fixed. No physical device or current reload flow was tested."
+    "scope": "A previously built isolated gallery viewer served the exact candidate GLB through a local response override. Desktop and emulated mobile initial loads and four views were checked; current production build, reload behavior and physical devices were not tested."
   },
   "limits": [
-    "Reconstruction remains approximate and is not a 100% or factory-dimensional match.",
-    "User-provided reference images are embedded in the GLB.",
-    "The GLB exceeds the 100000 triangle target.",
-    "The preceding proportion-only GLB was not byte-identical across independent rebuilds; this revision has not yet been checked for byte identity.",
-    "One current mobile test-server run reported a GLB request abort despite rendering all views. A separate Vite preview run passed; the intermittent cause remains unknown."
+    "Reference-based approximation; not a 100% or factory-dimensional match.",
+    "GLB batches opaque geometry by material; there are no independent wheel pivots or animations.",
+    "GLB exceeds the 100000 triangle target.",
+    "Prior intermittent Chromium/Playwright GLB request-abort reports remain unresolved; this revision was not tested on physical devices."
   ],
   "checks": {
-    "blender_source": "Eight individual side panels, four wheel/tire assemblies and wheelhouse liners, tire ground clearance, roof bounds, two headlamp covers, two headlamp surrounds, sixteen rear lens cells, three grille rails, packed references and full render settings checked.",
-    "gltf": "Khronos validation found 0 errors and 0 warnings; headlamp cover material exports as BLEND.",
-    "visual_inspection": "Compared front and rear images and both oblique views with the supplied references; this is a qualitative review, not proof of exact likeness.",
-    "unit_tests": "81 passed, 0 failed in an isolated worktree based on origin/main.",
-    "production_build": "npm run build passed, including asset validation; Vite reported a shared JavaScript chunk larger than 500 kB.",
-    "browser": "Desktop initial load and all four presets passed. Mobile rendered all four presets but failed one test-server request check; a separate Vite preview run passed.",
-    "original_workspace": "77 tests passed and catalog asset validation reported 0 Saga GLB errors or warnings."
+    "gltf": "0 errors and 0 warnings; modeled rim and cap materials are present.",
+    "blender_source": "Four tires, rims, covers, liners, axle centers, ground clearance and eight body panels checked.",
+    "visual_inspection": "Left and right full-resolution renders compared with the supplied references; appearance remains approximate.",
+    "workspace": "77 tests passed; catalog asset validation reported 0 Saga GLB errors and warnings.",
+    "review_page": "Desktop and emulated mobile comparison page loaded all 12 image elements and three local links without overflow or page errors."
   },
   "lamp_grille_pass": {
     "headlamps": "Two separate transparent, bowed covers and fine silver surrounds; image-derived reflector textures remain.",
@@ -278,5 +202,11 @@
     "rear_lamps": "Sixteen red, clear and amber cells with narrower gaps; removed the former heavy cross-hatched prism lines.",
     "grille": "Three bright-edged horizontal rails and a resized heritage shield.",
     "additional_view": "view-rear-3q.webp"
+  },
+  "wheel_pass": {
+    "rim": "Four modeled silver pressed rims with cut ventilation openings.",
+    "cover": "Four separate domed covers and center details in the editable Blender source.",
+    "tires": "Tire dimensions, axle locations and wheelhouse geometry retained.",
+    "export": "Opaque meshes are batched by material; independent wheel pivots are not provided in the GLB."
   }
 }

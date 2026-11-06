@@ -10,9 +10,13 @@ This revision moves the rear axle and its wheel opening forward by 0.05 model un
 
 The front grille now has three bright-edged horizontal rails and a larger heritage shield. The headlights have separate, shallow clear covers and fine surrounds; the front indicator ribs are lighter. The rear lamps retain red, clear and amber sections with narrower gaps and without the former dark cross-hatching. `view-rear-3q.webp` adds a rear three-quarter inspection render. These features remain artistic approximations using the supplied reference photographs.
 
+## Wheel pass
+
+The four rims now use modeled silver pressed metal with actual ventilation openings and separate gently domed covers. The wheel assemblies retain their previous tire dimensions, axle positions and arch clearances. This is a visual reconstruction; the GLB batches opaque pieces and does not provide independent wheel pivots.
+
 ## Materials and provenance
 
-The two images in `textures/` are the user-provided reference images. Their pixels are used in the front lamps, indicators, rear-lamp faces and steel wheel surfaces; the original images are packed into the Blender source and compressed full-image copies are embedded in the GLB. This is a real 3D model with image-based surface textures. **Rights to redistribute those reference images publicly have not been verified; verify them before any public release.** No third-party mesh is included.
+The two images in `textures/` are the user-provided reference images. Their pixels are used in the front lamps, indicators and rear-lamp faces; the original images are packed into the Blender source and compressed full-image copies are embedded in the GLB. This is a real 3D model with image-based surface textures. **Rights to redistribute those reference images publicly have not been verified; verify them before any public release.** No third-party mesh is included.
 
 The Blender presentation uses the bundled Studio environment image. Blender's `datafiles/studiolights/world/license.txt` identifies its bundled HDRIs as CC0, created by Greg Zaal / Poly Haven. It is packed in `scene.blend` for the render and is not part of the GLB. The browser viewer has its own lighting and therefore looks different from the Blender renders.
 

@@ -1,0 +1,108 @@
+{
+  "created_utc": "2026-11-06T11:58:46.874038+00:00",
+  "scope": "isolated wheel pivot prototype; not integrated or deployed",
+  "baseline_glb_sha256": "6f33fffdb254c86c6139f78eec76625a6df851d768db49d5b8e819f93d4bd756",
+  "candidate_glb_sha256": "4b1f1aca5e8488061d4baaf24191e5034d806d5567d714b2bf1faa677f07da58",
+  "source_blend_sha256": "8dc00caf0904f79b05681f6c140b58942e9af0e767589a4683d01e701cdf0211",
+  "generator_sha256": "e4e63fbdba21c8ea9c4f3240859fa6e4cc668ed21924b32b5130488ec3ebd24a",
+  "gltf_validation": {
+    "errors": 0,
+    "warnings": 0,
+    "nodes": 67,
+    "meshes": 60,
+    "primitives": 69,
+    "materials": 28,
+    "animation_clips": 0
+  },
+  "baseline": {
+    "nodes": 37,
+    "meshes": 36,
+    "primitives": 42
+  },
+  "blender_hierarchy": "Four roll pivots centered on wheel hubs; two front steer pivots; four tire/rim/cover assemblies retained; front brake backing steers without rolling.",
+  "browser_rest_comparison": {
+    "dimensions": [
+      1100,
+      558
+    ],
+    "pixels": 613800,
+    "changedOver5": 5,
+    "changedFraction": 8.145975887911372e-06,
+    "meanMaxChannelDifference": 0.00023949169110459433,
+    "maxDifference": 27,
+    "oldBounds": {
+      "min": [
+        -2.1592500047700014,
+        -0.0006605386734008789,
+        -0.9519087672233582
+      ],
+      "max": [
+        2.148699998855591,
+        1.7462021112442017,
+        0.9519087672233582
+      ]
+    },
+    "newBounds": {
+      "min": [
+        -2.1592500047700014,
+        -0.0006605362330385778,
+        -0.9519087672233582
+      ],
+      "max": [
+        2.148699998855591,
+        1.7462021112442017,
+        0.9519087672233582
+      ]
+    }
+  },
+  "browser_pivot_checks": {
+    "results": {
+      "FL": {
+        "roll_independent": true,
+        "rear_steering_disabled": null,
+        "steering_independent": true,
+        "brake_stationary_when_rolling": true
+      },
+      "FR": {
+        "roll_independent": true,
+        "rear_steering_disabled": null,
+        "steering_independent": true,
+        "brake_stationary_when_rolling": true
+      },
+      "RL": {
+        "roll_independent": true,
+        "rear_steering_disabled": true
+      },
+      "RR": {
+        "roll_independent": true,
+        "rear_steering_disabled": true
+      }
+    },
+    "reset": {
+      "FL": {
+        "roll": 0,
+        "steer": 0
+      },
+      "FR": {
+        "roll": 0,
+        "steer": 0
+      },
+      "RL": {
+        "roll": 0,
+        "steer": 0
+      },
+      "RR": {
+        "roll": 0,
+        "steer": 0
+      }
+    },
+    "errors": []
+  },
+  "mobile_checks": "Simulated 390x844 and 320x720: no horizontal overflow; rear steer disabled; rear roll, front steer and reset passed.",
+  "limits": [
+    "No wheel physics, suspension, ground-contact or fender-collision checks.",
+    "No production gallery integration, no deployment and no animation clips; interaction uses the separate prototype page.",
+    "Mesh primitives increased from 42 to 69; runtime performance is not profiled.",
+    "Physical mobile devices and other browsers were not tested."
+  ]
+}

@@ -44,6 +44,8 @@ rubber = material('Tire sidewall', (.012, .014, .017), 0, .88)
 glass = material('Neutral smoky glazing', (.022, .028, .034), 0, .10, .36)
 glass.node_tree.nodes['Principled BSDF'].inputs['Specular IOR Level'].default_value=.10
 steel = material('Satin pressed steel', (.39, .41, .42), .78, .28)
+wheel_steel = material('Silver pressed wheel rim', (.56, .58, .60), .72, .30)
+wheel_cap = material('Silver domed wheel cover', (.62, .64, .66), .70, .27)
 chrome = material('Polished narrow trim', (.52, .55, .57), .85, .22)
 reflector = material('Aluminized lamp reflector', (.31, .33, .34), .55, .48)
 reflector_light = material('Reflector fine facets', (.42, .44, .45), .50, .42)
@@ -594,7 +596,7 @@ for side in [-1,1]:
                     radius=.315 if abs(offset)<.04 else .310
                     points.append((axle+math.sin(t+dt)*radius,side*(.709+offset),WHEEL_Z+math.cos(t+dt)*radius))
                 line('Tire tread channel',points,black,.0013)
-        rim=lathe('Pressed steel wheel with punched vents',axle,side,[(.001,.037),(.102,.037),(.131,.044),(.158,.057),(.181,.068),(.190,.075),(.191,.082),(.187,.086),(.178,.084),(.155,.073),(.125,.058),(.001,.058)],steel,64)
+        rim=lathe('Pressed steel wheel with punched vents',axle,side,[(.001,.037),(.102,.037),(.131,.044),(.158,.057),(.181,.068),(.190,.075),(.191,.082),(.187,.086),(.178,.084),(.155,.073),(.125,.058),(.001,.058)],wheel_steel,64)
         for j in range(12):
             t=j*math.tau/12;verts=[]
             for offset in [-.04,.15]:
@@ -609,23 +611,11 @@ for side in [-1,1]:
             mod=rim.modifiers.new('Pressed oval ventilation','BOOLEAN');mod.object=cutter;mod.operation='DIFFERENCE'
             bpy.ops.object.modifier_apply(modifier=mod.name)
             bpy.data.objects.remove(cutter,do_unlink=True)
-        # The pressed rim retains real apertures and dish geometry. UVs sample
-        # the near steel wheel from the supplied reference for its finish.
-        cover=lathe('Shallow silver wheel cover',axle,side,[(.001,.059),(.10,.059),(.127,.064),(.132,.069),(.131,.074),(.123,.079),(.108,.081),(.001,.081)],steel,48)
-        for part in [rim,cover]:
-            part.data.materials.clear();part.data.materials.append(reference_lens)
-            while part.data.uv_layers:part.data.uv_layers.remove(part.data.uv_layers[0])
-            uv=part.data.uv_layers.new(name='UVMap')
-            iw,ih=reference_image.size
-            for polygon in part.data.polygons:
-                for li in polygon.loop_indices:
-                    point=part.data.vertices[part.data.loops[li].vertex_index].co
-                    across=max(0,min(1,.5+(point.x-axle)/.382))
-                    up=max(0,min(1,.5+(point.z-WHEEL_Z)/.382))
-                    uv.data[li].uv=((1058+(1126-1058)*across)/iw,1-(870+(650-870)*up)/ih)
-
+        # The pressed rim retains real apertures and a separate domed cover.
+        cover=lathe('Shallow silver wheel cover',axle,side,[(.001,.059),(.10,.059),(.127,.064),(.132,.069),(.131,.074),(.123,.079),(.108,.081),(.075,.087),(.001,.091)],wheel_cap,48)
+        # The rim apertures and domed center use actual geometry and metal.
         lathe('Wheel cover narrow rolled edge',axle,side,[(.123,.080),(.126,.083),(.128,.081)],chrome,64)
-        cylinder('Small wheel cover center',(axle,side*.792,WHEEL_Z),.026,.004,steel,32)
+        cylinder('Small wheel cover center',(axle,side*.806,WHEEL_Z),.026,.004,steel,32)
         cylinder('Dark brake backing',(axle,side*.736,WHEEL_Z),.180,.012,black,24)
         t=.78
         cylinder('Rubber tire valve',(axle+math.sin(t)*.177,side*.799,WHEEL_Z+math.cos(t)*.177),.004,.012,black,12)
