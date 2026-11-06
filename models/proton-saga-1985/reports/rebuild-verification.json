@@ -1,13 +1,13 @@
 {
-  "created_utc": "2026-11-06T05:02:12.666421+00:00",
+  "created_utc": "2026-11-06T09:22:54.037930+00:00",
   "asset_id": "proton-saga-1985",
   "status": "draft",
-  "glb_sha256": "4252cfa04407e48cb2b2c7e89df3829d8701d8381975b688e73519ce2e22817d",
+  "glb_sha256": "7309d5926bf190aa34f2241451710612502158b73d974ea00c9668c89845b2d4",
   "metrics": {
-    "glb_bytes": 4184100,
-    "triangles": 107578,
-    "vertices": 97576,
-    "materials": 25,
+    "glb_bytes": 4090992,
+    "triangles": 106834,
+    "vertices": 94871,
+    "materials": 26,
     "animation_clips": 0
   },
   "gltf_validator": {
@@ -28,8 +28,29 @@
     ],
     "tires": 4,
     "wheelhouse_liners": 4,
+    "wheel_centers_x": [
+      -1.31,
+      -1.31,
+      1.17,
+      1.17
+    ],
     "tire_ground_z": 0.0004999972879886627,
-    "roof_top_z": 1.3989999294281006,
+    "roof_bounds": {
+      "min": [
+        -0.3449999988079071,
+        -0.5625,
+        1.362025499343872
+      ],
+      "max": [
+        0.9879999756813049,
+        0.5625,
+        1.3989999294281006
+      ]
+    },
+    "headlamp_covers": 2,
+    "headlamp_rims": 2,
+    "rear_lamp_cells": 16,
+    "grille_rails": 3,
     "images": [
       {
         "name": "heritage-front-reference.png",
@@ -53,59 +74,70 @@
     ],
     "cycles_samples": 48
   },
+  "proportion_pass": {
+    "model_space_changes": {
+      "rear_axle_x": {
+        "before": 1.22,
+        "after": 1.17
+      },
+      "rear_roof_edge_x": {
+        "before": 1.04,
+        "after": 0.988
+      },
+      "roof_width": {
+        "before": 1.25,
+        "after": 1.125
+      },
+      "bonnet_crown_z_at_x_minus_1_65": {
+        "before": 0.928,
+        "after": 0.945
+      }
+    },
+    "reference_note": "The provided small side views suggest a rear wheel center near 77% of the front-to-rear length and roof rear edge near 73%; these are approximate visual estimates, not measured factory specifications."
+  },
   "rendered_views": {
     "preview.webp": {
       "dimensions": [
         1536,
         1024
       ],
-      "sha256": "0d5cf78337e2a06a5a1b9abcd2b50a64440b6e7850e62bd6ef73796e9ffa5881"
+      "sha256": "13fa37e929fb46493cd570eacde2873d65f8b7a7a0a6a4813fb103c7095567f3"
+    },
+    "view-rear-3q.webp": {
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "fb5899c05bbc5bb3217da7caea7dd4c700deaa999ef7389fd84cff9a40260262"
     },
     "view-front.webp": {
       "dimensions": [
         1536,
         1024
       ],
-      "sha256": "ec2e1bbd09abdbeefeaf140ab622dff9b0172d1ec9af108815207653d4fa0695"
+      "sha256": "e2db25a1c84fec225e84dedaa47cc956ba85bdb56a55095190fdb62c9b119d12"
     },
     "view-rear.webp": {
       "dimensions": [
         1536,
         1024
       ],
-      "sha256": "4fa295bfe8d8a7c4b3386aecad96b42f0c2f8d84d155282da086aed724563327"
+      "sha256": "70c6fd0d106e1355cdf8fd7c2ca8438e6fb272f717597f68e0af099dc8ed436c"
     },
     "view-left.webp": {
       "dimensions": [
         1536,
         1024
       ],
-      "sha256": "0c72dd87f2233167e2586a32845220cd960b0f32570a190fe62bc84cb87607f5"
+      "sha256": "7034c1994a4793a1b54a9f4df5f074619efbc942ca46f48389fa6a56553781e9"
     },
     "view-right.webp": {
       "dimensions": [
         1536,
         1024
       ],
-      "sha256": "8c2a05fad52af4afd9deb598d70356209042f55693005e2e3d4192991b9f9bdc"
+      "sha256": "79e70f717f300a4f24db95c640a101381252a603e79b4059a856a2fa1acc45ea"
     }
-  },
-  "browser": {
-    "environment": "Headless Chromium via Playwright, production Vite build served locally; no physical devices tested.",
-    "current_gallery_initial_open": {
-      "desktop_1440x900": "passed",
-      "tablet_768x1024": "passed",
-      "mobile_390x844": "passed",
-      "scope": "Search and focus, lazy loading, real GLB render, four presets and their selected states, keyboard activation, scrolling, rotate, zoom, reset, close and focus restoration; no horizontal overflow or reported errors for these three viewport runs."
-    },
-    "narrow_320x720": "Rendered and reached the end of the same functional assertions, but the run failed on a GLB request reported as net::ERR_ABORTED and a response-completion timeout.",
-    "navigation_reload": "A separate current-build run displayed the model after direct navigation and reload, but failed its GLB network-completion check after one request was reported net::ERR_ABORTED. In a diagnostic, the browser performance entry reported all 4184100 bytes for that request and the model rendered; the cause of the contradictory network event was not established.",
-    "review_page": "Local review.html tested at 1440x900 and 390x844: ten SVG images loaded, all three file links resolved, no page errors or horizontal overflow."
-  },
-  "rebuild": {
-    "independent_glb_sha256": "4252cfa04407e48cb2b2c7e89df3829d8701d8381975b688e73519ce2e22817d",
-    "byte_identical": true,
-    "note": "Independent no-render rebuild after UV quantization; render images from the same unchanged scene geometry."
   },
   "references": [
     {
@@ -119,17 +151,132 @@
       "embedded_in_glb": true
     }
   ],
+  "browser": {
+    "environment": "Headless Chromium via Playwright against a current production build.",
+    "desktop_initial": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "glb_sha256": "7309d5926bf190aa34f2241451710612502158b73d974ea00c9668c89845b2d4",
+      "completed_requests": 1,
+      "views": {
+        "front": {
+          "changed": true,
+          "selected": true
+        },
+        "rear": {
+          "changed": true,
+          "selected": true
+        },
+        "left": {
+          "changed": true,
+          "selected": true
+        },
+        "right": {
+          "changed": true,
+          "selected": true
+        }
+      },
+      "horizontal_overflow": false,
+      "errors": [],
+      "passed": true,
+      "rendered": true
+    },
+    "mobile_test_server_initial": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "glb_sha256": "7309d5926bf190aa34f2241451710612502158b73d974ea00c9668c89845b2d4",
+      "completed_requests": 0,
+      "views": {
+        "front": {
+          "changed": true,
+          "selected": true
+        },
+        "rear": {
+          "changed": true,
+          "selected": true
+        },
+        "left": {
+          "changed": true,
+          "selected": true
+        },
+        "right": {
+          "changed": true,
+          "selected": true
+        }
+      },
+      "horizontal_overflow": false,
+      "errors": [
+        "http://127.0.0.1:62475/Blender-3D-Gallery/assets/proton-saga-1985-DpwzNjZh.glb net::ERR_ABORTED"
+      ],
+      "passed": false,
+      "rendered": true
+    },
+    "mobile_vite_preview_initial": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "glb_sha256": "7309d5926bf190aa34f2241451710612502158b73d974ea00c9668c89845b2d4",
+      "completed_requests": 1,
+      "views": {
+        "front": {
+          "changed": true,
+          "selected": true
+        },
+        "rear": {
+          "changed": true,
+          "selected": true
+        },
+        "left": {
+          "changed": true,
+          "selected": true
+        },
+        "right": {
+          "changed": true,
+          "selected": true
+        }
+      },
+      "horizontal_overflow": false,
+      "errors": [],
+      "passed": true,
+      "rendered": true,
+      "resource_entries": [
+        {
+          "responseEnd": 689.1000000238419,
+          "encodedBodySize": 4090992,
+          "decodedBodySize": 4090992,
+          "transferSize": 4091292
+        }
+      ]
+    },
+    "review_page": "At 1440x900 and 390x844, 12 SVG images loaded, all three file links resolved, and no horizontal overflow or page errors were observed.",
+    "scope": "Initial GLB load and four preset interactions. Mobile on the first test server rendered all four views but recorded net::ERR_ABORTED; the separate Vite preview run completed and reported 4090992 decoded bytes. This does not establish the cause or prove that the intermittent failure is fixed. No physical device or current reload flow was tested."
+  },
   "limits": [
-    "Artistic reconstruction; no 100% or factory-dimensional match verified.",
-    "Body and cabin geometry and realistic reflections remain simplified.",
-    "Reference image redistribution rights are unverified; public release is not approved by this report.",
-    "Triangle count exceeds the 100000 target; the GLB is below 5 MiB.",
-    "Intermittent Chromium/Playwright GLB network-abort reporting leaves the narrow-viewport and full navigation/reload checks unresolved; physical devices were not tested."
+    "Reconstruction remains approximate and is not a 100% or factory-dimensional match.",
+    "User-provided reference images are embedded in the GLB.",
+    "The GLB exceeds the 100000 triangle target.",
+    "The preceding proportion-only GLB was not byte-identical across independent rebuilds; this revision has not yet been checked for byte identity.",
+    "One current mobile test-server run reported a GLB request abort despite rendering all views. A separate Vite preview run passed; the intermittent cause remains unknown."
   ],
   "checks": {
-    "unit_tests": "npm test: 77 passed, 0 failed.",
-    "asset_validation": "npm run validate:assets: completed; Saga GLB 0 errors and 0 warnings.",
-    "production_build": "Vite production build in an empty temporary output directory completed. The built Saga GLB SHA-256 matches this report. Vite warned about an existing shared JavaScript chunk larger than 500 kB.",
-    "browser_evidence": "Initial-open checks passed on desktop, tablet and emulated mobile. Narrow and navigation/reload network checks remained unresolved as detailed under browser."
+    "blender_source": "Eight individual side panels, four wheel/tire assemblies and wheelhouse liners, tire ground clearance, roof bounds, two headlamp covers, two headlamp surrounds, sixteen rear lens cells, three grille rails, packed references and full render settings checked.",
+    "gltf": "Khronos validation found 0 errors and 0 warnings; headlamp cover material exports as BLEND.",
+    "visual_inspection": "Compared front and rear images and both oblique views with the supplied references; this is a qualitative review, not proof of exact likeness.",
+    "unit_tests": "81 passed, 0 failed in an isolated worktree based on origin/main.",
+    "production_build": "npm run build passed, including asset validation; Vite reported a shared JavaScript chunk larger than 500 kB.",
+    "browser": "Desktop initial load and all four presets passed. Mobile rendered all four presets but failed one test-server request check; a separate Vite preview run passed.",
+    "original_workspace": "77 tests passed and catalog asset validation reported 0 Saga GLB errors or warnings."
+  },
+  "lamp_grille_pass": {
+    "headlamps": "Two separate transparent, bowed covers and fine silver surrounds; image-derived reflector textures remain.",
+    "front_indicators": "Reduced prominence of molded vertical and horizontal rib lines.",
+    "rear_lamps": "Sixteen red, clear and amber cells with narrower gaps; removed the former heavy cross-hatched prism lines.",
+    "grille": "Three bright-edged horizontal rails and a resized heritage shield.",
+    "additional_view": "view-rear-3q.webp"
   }
 }

@@ -15,7 +15,8 @@
       "front": "view-front.webp",
       "rear": "view-rear.webp",
       "left": "view-left.webp",
-      "right": "view-right.webp"
+      "right": "view-right.webp",
+      "rear_3q": "view-rear-3q.webp"
     }
   },
   "display": {
@@ -23,7 +24,7 @@
     "units": "meters; approximate proportions",
     "front_axis": "Blender -X"
   },
-  "accuracy_notes": "Reconstructed as separate left and right front-wing, door and rear-quarter meshes with a lower cabin and proportioned wheels, using the supplied 1985 Saga images as visual guides. The headlamps, indicators, tail lamps and wheel surfaces use local image-derived textures. The reference images are embedded in the GLB in compressed form. The geometry, reflections, cabin and trim remain approximations: it is not a factory scan, a dimensionally certified vehicle or a 100% photographic match.",
+  "accuracy_notes": "Reference-led panel reconstruction with adjusted axle and roof proportions, three grille rails, clear headlamp covers, and red/clear/amber rear lamp sections. Headlamps, indicators, tail lamps and wheel surfaces use image-derived textures; compressed full reference images are embedded in the GLB. Geometry, reflections, cabin and trim remain approximate; this is not a factory scan, dimensionally certified vehicle or a 100% photographic match.",
   "attribution": [
     {
       "credit": "Original procedural vehicle meshes and scene created for Blender-3D-Gallery."
@@ -42,10 +43,10 @@
   ],
   "rights": "Original mesh. User-provided reference images are embedded in the GLB; permission and redistribution rights for those images must be verified before public release. Proton and Saga identify the depicted car and imply no endorsement.",
   "metrics": {
-    "glb_bytes": 4184100,
-    "triangles": 107578,
-    "vertices": 97576,
-    "materials": 25,
+    "glb_bytes": 4090992,
+    "triangles": 106834,
+    "vertices": 94871,
+    "materials": 26,
     "animation_clips": 0
   }
 }
