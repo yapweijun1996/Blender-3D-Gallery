@@ -1,9 +1,9 @@
 # Eight-Ball Shooting Interaction — Task & Acceptance Tracker (v1.1 Left-side Pull & Release)
 
-> **Status:** `Verified Complete — Local Acceptance 16/16` — implementation and local acceptance are complete. Publication is recorded separately after remote/live verification.
+> **Status:** `Verified Complete — Local Acceptance 16/16` — the subsequent CI layout defect has a locally verified repair. Successful remote CI and live publication verification remain separate pending release gates; the first failed run and corrective evidence are recorded below.
 > **Core flow:** `Aim → Hold Left Power Handle → Drag Down → Cue Pulls Back → Release → Cue Strikes → Balls Move`
 > **Spec:** [docs/game/gameplay-contract.md](docs/game/gameplay-contract.md) — "Left-side Pull & Release Shooting Specification v1.1" (supersedes v1.0 §4.3/§5/§6 on-table cue grab)
-> **Branch / worktree:** `feat/eight-ball-left-pull-release`, isolated from the original dirty checkout; baseline `39615f7`; full feature acceptance build `66837cb8b2817ced`; final integrated build `7a61e8ae1a814835` after preserving the latest Saga assets.
+> **Branch / worktree:** `feat/eight-ball-left-pull-release`, isolated from the original dirty checkout; baseline `39615f7`; full feature acceptance build `66837cb8b2817ced`; initial Saga-integrated build `7a61e8ae1a814835`; current corrective application build `e641654ce031dfd9`.
 
 ---
 
@@ -67,7 +67,7 @@ The original checkout remains on `codex/game-experience` with unrelated tracked 
 
 ## 7. Local Verification Record
 
-- Final integrated application build: `7a61e8ae1a814835` at merge `4b54607`. Full feature acceptance was executed on build `66837cb8b2817ced`; implementation baseline: `39615f7`. See the integration record below for the exact final-tree checks.
+- Saga-integrated application build: `7a61e8ae1a814835` at merge `4b54607`; current corrective application build: `e641654ce031dfd9` (see CI follow-up below). Full feature acceptance was executed on build `66837cb8b2817ced`; implementation baseline: `39615f7`. See the integration record below for the exact final-tree checks.
 - Environment: macOS arm64, Node 24.21.0, pinned Playwright 1.64.1; Chromium/SwiftShader and WebKit where recorded. Mobile touch, viewport and safe-area checks are emulated, not physical-device certification.
 - `npm test`: 85 passed. Production build passed; the existing shared Three.js chunk-size advisory remains.
 - The full Game browser regression passed 45 groups and UX passed 7 groups on `c111bb7a831289f9`. Subsequent runtime changes were confined to narrow-screen framing, spacing and placement-button text; existing physics, input and storage logic remained the same. The affected final-build checks below were rerun separately.
@@ -101,3 +101,13 @@ The primary manager independently executed these checks on that merged tree with
 | `npm run test:library` | All 9 groups passed in isolation, including the updated catalog assets | `/tmp/left-pull-merged-library.log` |
 
 The full Game/PWA/pull-acceptance evidence above remains pinned to the feature builds and unchanged Game sources; it is not a claim that every Game suite was executed again after the Saga-only merge. Publication and live build identity are still recorded separately after remote verification.
+
+## CI follow-up — historical failure and locally verified repair
+
+- GitHub Actions run `42196409550` failed the strict mobile layout assertion: the Pause button bottom was `807.984px` at a viewport height of `800px`. This is a confirmed platform-dependent layout regression, despite the earlier local acceptance evidence. No successful publication or live verification is claimed.
+- The repair increases the tall-portrait viewport height reserve by 30px, preserving its aspect ratio, control sizes and existing ball-size/framing guards. Regression coverage includes 360×800 first-fold checks with multiple font families and a 360×651 safe-area boundary case. A 142px viewport-width floor preserves ball visibility at that boundary. Independent macOS Chromium repair checks passed on build `e6f5639e278e005c`: at 360×800 the Pause bottom is `767.984px` (32.016px spare), with zero scrolling/overflow under Arial, Verdana and system-ui controls; 44px targets and full cabinet/pocket visibility remain intact. Actual projected balls measure `8.29254px` at 360×800 and `4.944047px` at 568×320, retaining the strict 4.9px guard. Raw evidence: `/tmp/left-pull-ci-review.json`; the 360px screenshot was inspected. These local checks do not establish Linux success: the successful remote CI rerun remains pending.
+
+- Final corrective application build `e641654ce031dfd9`: full responsive 12 journeys/24 placement and aiming states passed with no recorded errors; minimum projected ball `4.944047px`. At 360×651 with simulated safe areas, the 142×247.172px viewport yields `5.005691px` balls; bounded scrolling of 11px/20px keeps the controls inside safe bounds. Three font-family first-fold checks, the WebKit check and 20 mobile/accessibility follow-up cases passed. Logs: `/tmp/left-pull-ci-layout-651-final.log`, `/tmp/left-pull-ci-layout-fonts-final.log`, `/tmp/left-pull-ci-layout-responsive-final.log`, `/tmp/left-pull-ci-layout-followup-final.log`.
+- Independent final-build checks reconfirmed 360×800 first-fold controls with 32.016px bottom margin and 360×651 actual frustum/cabinet/pocket visibility, retaining 44px targets and the 4.9px ball guard. The final 651px screenshot was inspected. Raw evidence: `/tmp/left-pull-ci-review-final.json`. These are local corrective checks; a successful Linux CI rerun and live build identity are not claimed here.
+
+- The manager independently reran all 85 unit tests (0 failures) and the production build on the final corrective source; the application build identity remains `e641654ce031dfd9`. Execution logs: `/tmp/left-pull-ci-manager-unit.log`, `/tmp/left-pull-ci-manager-build.log`.

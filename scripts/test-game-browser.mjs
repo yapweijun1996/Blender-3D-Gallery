@@ -507,6 +507,38 @@ try {
       await page.screenshot({path:path.join(artifacts, `targets-${width}x${height}.png`)});
     }, { viewport: {width,height}, hasTouch: width < 600, isMobile: width < 600 });
   }
+  await run("tall portrait first fold survives platform font metrics", async (page) => {
+    await gameReady(page, server.url);
+    await start(page);
+    for (const family of ["Arial, sans-serif", "Verdana, sans-serif", "system-ui, sans-serif"]) {
+      await page.locator(".game-controls").evaluate((controls, family) => {
+        for (const element of [controls, ...controls.querySelectorAll("button, input")])
+          element.style.fontFamily = family;
+      }, family);
+      await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+      await page.waitForFunction(() => {
+        const viewport = document.querySelector("#game-viewport");
+        const canvas = viewport.querySelector("canvas");
+        return canvas.width === viewport.clientWidth && canvas.height === viewport.clientHeight;
+      });
+      const layout = await page.evaluate(() => {
+        const bounds = (selector) => {
+          const r = document.querySelector(selector).getBoundingClientRect();
+          return { top: r.top, bottom: r.bottom, width: r.width, height: r.height };
+        };
+        return { scrollY, width: innerWidth, height: innerHeight, scrollWidth: document.documentElement.scrollWidth,
+          board: bounds("#game-viewport"), handle: bounds("#power-handle"),
+          pause: bounds('[data-action="pause"]'), hint: bounds(".control-note") };
+      });
+      assert.equal(layout.scrollY, 0, `${family}: first fold must not rely on auto-scroll`);
+      assert.equal(layout.scrollWidth, layout.width, JSON.stringify({ family, layout }));
+      for (const key of ["board", "handle", "pause", "hint"])
+        assert.ok(layout[key].top >= 0 && layout[key].bottom <= layout.height, JSON.stringify({ family, layout }));
+      for (const key of ["handle", "pause"])
+        assert.ok(layout[key].width >= 44 && layout[key].height >= 44, JSON.stringify({ family, layout }));
+      assert.ok(layout.board.height >= 246, JSON.stringify({ family, layout }));
+    }
+  }, { viewport: { width: 360, height: 800 }, deviceScaleFactor: 1, hasTouch: true, isMobile: true });
   await run("Game to About and back to Gallery preserves navigation", async page => {
     await gameReady(page, server.url);
     await start(page);

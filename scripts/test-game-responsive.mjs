@@ -12,7 +12,7 @@ const browser = await chromium.launch(launchOptions);
 const artifacts = process.env.TEST_ARTIFACT_DIR || "/tmp/blender-gallery-game-responsive";
 await fs.mkdir(artifacts, { recursive: true });
 const insets = { top:24, right:18, bottom:28, left:14 }, results = [], errors = [];
-const sizes = [[320,568],[360,640],[390,844],[430,932],[568,320],[640,360],[844,390],[768,1024],[1024,768],[1440,900]];
+const sizes = [[320,568],[360,640],[360,651],[360,800],[390,844],[430,932],[568,320],[640,360],[844,390],[768,1024],[1024,768],[1440,900]];
 const requested = process.env.B3G_GAME_VIEWPORT;
 const selected = requested ? sizes.filter(([width,height]) => `${width}x${height}` === requested) : sizes;
 assert.ok(selected.length, `Unknown viewport: ${requested}`);

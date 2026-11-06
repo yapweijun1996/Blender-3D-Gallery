@@ -951,7 +951,7 @@ body.game-page .header{min-height:64px}
 @media (max-width: 500px) and (min-height: 651px) {
   .game-shell .game-board { background: #111e18; }
   .game-shell.game-shell .game-layout:not(:fullscreen) #game-viewport {
-    width: min(100%, calc((100dvh - 360px) * 1.62 / 2.82));
+    width: min(100%, max(142px, calc((100dvh - 390px) * 1.62 / 2.82)));
     height: auto; aspect-ratio: 1.62 / 2.82;
     min-height: 0; max-height: none; margin-inline: auto;
   }
@@ -1007,7 +1007,7 @@ body.game-page .header{min-height:64px}
 }
 @media (max-width: 500px) and (min-height: 651px) {
   .game-shell.game-shell.is-playing .game-layout:not(:fullscreen) #game-viewport {
-    width: min(100%, calc((100dvh - 360px - var(--safe-top) - var(--safe-bottom)) * 1.62 / 2.82));
+    width: min(100%, max(142px, calc((100dvh - 390px - var(--safe-top) - var(--safe-bottom)) * 1.62 / 2.82)));
   }
 }
 @media (max-width: 500px) and (max-height: 650px) {
