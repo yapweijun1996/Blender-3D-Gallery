@@ -1150,3 +1150,12 @@ body.game-page .header{min-height:64px}
   /* The player cards already identify the active turn above the table. */
   .game-shell.is-playing:not([data-phase="placing"]) .game-turn { display: none; }
 }
+
+/* Gameplay layout polish: the power meter spans the table height, and the three
+   table actions share the caption row evenly instead of floating apart. */
+#power-track { flex: 1 1 auto; height: auto; min-height: clamp(100px, 25vh, 200px); }
+@media (max-height: 450px) { #power-track { min-height: 110px; } }
+@media (min-width: 261px) {
+  .game-shell .game-table-caption { gap: 8px; }
+  .game-shell .game-table-caption button { flex: 1 1 0; min-width: 0; }
+}
