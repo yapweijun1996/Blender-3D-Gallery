@@ -11,7 +11,7 @@ const server = process.env.B3G_GAME_TEST_URL
 const browser = await chromium.launch(launchOptions);
 const artifacts = process.env.TEST_ARTIFACT_DIR || "/tmp/blender-gallery-game-responsive";
 await fs.mkdir(artifacts, { recursive: true });
-const insets = { top:24, right:18, bottom:28, left:14 }, results = [], errors = [];
+const insets = { top:24, right:18, bottom:28, left:14 }, results = [], fontChecks = [], errors = [];
 const sizes = [[320,568],[360,640],[360,651],[360,800],[390,844],[430,932],[568,320],[640,360],[844,390],[768,1024],[1024,768],[1440,900]];
 const requested = process.env.B3G_GAME_VIEWPORT;
 const selected = requested ? sizes.filter(([width,height]) => `${width}x${height}` === requested) : sizes;
@@ -113,6 +113,30 @@ try {
         }
         await reveal(page, phase);
         const data = await snapshot(page, phase), projectedBall = verifyLayout(data,width,height,phase);
+        if (width <= 650 && height <= 500) {
+          for (const family of ["Arial, sans-serif", "Verdana, sans-serif", "system-ui, sans-serif"]) {
+            await page.locator(".game-controls").evaluate((controls, family) => {
+              for (const element of [controls, ...controls.querySelectorAll("button, input")])
+                element.style.fontFamily = family;
+            }, family);
+            await reveal(page, phase);
+            const fontLayout = await snapshot(page, phase);
+            let fontBall;
+            try {
+              fontBall = verifyLayout(fontLayout, width, height, phase);
+            } catch (error) {
+              error.message = `${family}: ${error.message}`;
+              throw error;
+            }
+            fontChecks.push({ width, height, phase, family, projectedBall: fontBall, ...fontLayout });
+            await page.screenshot({ path: path.join(artifacts, `${width}x${height}-${phase}-${family.split(",")[0]}.png`) });
+          }
+          await page.locator(".game-controls").evaluate((controls) => {
+            for (const element of [controls, ...controls.querySelectorAll("button, input")])
+              element.style.fontFamily = "";
+          });
+          await reveal(page, phase);
+        }
         const status = await page.locator('#game-status').evaluate((el) => ({ font: parseFloat(getComputedStyle(el).fontSize), scroll: el.scrollHeight, client: el.clientHeight }));
         assert.ok(status.font >= 12, `${width}x${height}: status text is too small`);
         assert.ok(status.scroll <= status.client + 1, `${width}x${height}: status is clipped`);
@@ -159,7 +183,7 @@ try {
     } finally { await context.close(); }
   }
 } finally {
-  await fs.writeFile(path.join(artifacts,'results.json'), JSON.stringify({ results,errors,insets,scope:'Headless Chromium viewport and CSS safe-area simulation. Real installed mode, iOS and Android devices are unverified.' },null,2));
+  await fs.writeFile(path.join(artifacts,'results.json'), JSON.stringify({ results,fontChecks,errors,insets,scope:'Headless Chromium viewport and CSS safe-area simulation. Real installed mode, iOS and Android devices are unverified.' },null,2));
   await browser.close();
   await server.close();
 }

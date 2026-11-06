@@ -3,7 +3,7 @@
 > **Status:** `Verified Complete — Local Acceptance 16/16` — the subsequent CI layout defect has a locally verified repair. Successful remote CI and live publication verification remain separate pending release gates; the first failed run and corrective evidence are recorded below.
 > **Core flow:** `Aim → Hold Left Power Handle → Drag Down → Cue Pulls Back → Release → Cue Strikes → Balls Move`
 > **Spec:** [docs/game/gameplay-contract.md](docs/game/gameplay-contract.md) — "Left-side Pull & Release Shooting Specification v1.1" (supersedes v1.0 §4.3/§5/§6 on-table cue grab)
-> **Branch / worktree:** `feat/eight-ball-left-pull-release`, isolated from the original dirty checkout; baseline `39615f7`; full feature acceptance build `66837cb8b2817ced`; initial Saga-integrated build `7a61e8ae1a814835`; current corrective application build `e641654ce031dfd9`.
+> **Branch / worktree:** `feat/eight-ball-left-pull-release`, isolated from the original dirty checkout; baseline `39615f7`; full feature acceptance build `66837cb8b2817ced`; initial Saga-integrated build `7a61e8ae1a814835`; current corrective application build `0473d7f6bfac8301`.
 
 ---
 
@@ -111,3 +111,10 @@ The full Game/PWA/pull-acceptance evidence above remains pinned to the feature b
 - Independent final-build checks reconfirmed 360×800 first-fold controls with 32.016px bottom margin and 360×651 actual frustum/cabinet/pocket visibility, retaining 44px targets and the 4.9px ball guard. The final 651px screenshot was inspected. Raw evidence: `/tmp/left-pull-ci-review-final.json`. These are local corrective checks; a successful Linux CI rerun and live build identity are not claimed here.
 
 - The manager independently reran all 85 unit tests (0 failures) and the production build on the final corrective source; the application build identity remains `e641654ce031dfd9`. Execution logs: `/tmp/left-pull-ci-manager-unit.log`, `/tmp/left-pull-ci-manager-build.log`.
+
+- A second remote run, `42200366667` for `b174850`, passed the earlier CI checks but failed the final responsive 568×320 aiming case: required scroll was `165px`, exceeding the unchanged `160px` guard. The Linux landscape layout needs a further focused repair; remote CI and publication remain unverified. The prior local results above remain scoped to their recorded builds.
+
+- Second CI correction uses CSS only: hide the duplicate sidebar turn label in narrow landscape after placement, retaining the active player/turn in the HUD. Runtime JavaScript, model bytes and table framing are unchanged. Build `0473d7f6bfac8301` passed 12 responsive journeys/24 states plus 12 font-stress cases, four main-layout cases plus WebKit, UX 7 and manager unit 85. Logs: `/tmp/left-pull-ci568-build-final.log`, `/tmp/left-pull-ci568-responsive-final.log`, `/tmp/left-pull-ci568-main-layout-final.log`, `/tmp/left-pull-ci568-ux-final.log`, `/tmp/left-pull-ci568-manager-unit.log`.
+- Independent final-build 568×320 and 640×360 probes with Arial/Verdana/system-ui and simulated safe areas preserve full cabinet/pocket framing, 44px targets and zero horizontal overflow. At 568px, required scroll is 131px/143px (Verdana), below the strict 160px limit; projected ball size remains 4.944047px. At 640px, scroll is 91px and ball size 5.566766px. The active HUD turn label remains visible; the Verdana screenshot was inspected. Raw evidence: `/tmp/left-pull-ci568-review.json`. Remote CI rerun and live verification remain pending.
+
+- Final second-correction mobile/accessibility follow-up also passed all 20 cases on build `0473d7f6bfac8301`; log: `/tmp/left-pull-ci568-followup-final.log`. All selected local corrective gates are complete. Remote CI success and live publication remain separate pending evidence.

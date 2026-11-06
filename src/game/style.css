@@ -1146,3 +1146,7 @@ body.game-page .header{min-height:64px}
   .game-shell.game-shell.is-playing .placement-actions { left: 10px; right: 10px; bottom: 58px; width: calc(100% - 20px); }
 }
 .game-shell.is-playing #game-placement .placement-actions > button { padding-inline: 4px; min-width: 44px; }
+@media (max-width: 650px) and (max-height: 500px) and (orientation: landscape) {
+  /* The player cards already identify the active turn above the table. */
+  .game-shell.is-playing:not([data-phase="placing"]) .game-turn { display: none; }
+}
