@@ -323,7 +323,29 @@ try {
   };
   await scenario(
     "E-save-and-input-guards",
-    (source) => source,
+    (source) => {
+      const target = "await self.skipWaiting();";
+      assert.equal(source.split(target).length, 2, "test barrier must wrap exactly one activation");
+      return `
+        let testActivationReleased = false;
+        let releaseTestActivation;
+        self.addEventListener("message", (event) => {
+          if (event.data?.type !== "TEST_RELEASE_ACTIVATION") return;
+          testActivationReleased = true;
+          releaseTestActivation?.();
+        });
+      ` + source.replace(target, `
+        // Keep the real cross-tab check intact, but let the test finish its
+        // input-lock assertions before the real activation and reload.
+        for (const client of await self.clients.matchAll({type: "window", includeUncontrolled: true}))
+          client.postMessage({type: "TEST_ACTIVATION_HELD"});
+        await new Promise((resolve) => {
+          if (testActivationReleased) resolve();
+          else releaseTestActivation = resolve;
+        });
+        ${target}
+      `);
+    },
     async (tab, isolated) => {
       await tab.locator("[data-action=new]").first().click();
       await tab.locator("[data-action=place]").click();
@@ -376,11 +398,18 @@ try {
         )
           reloads++;
       });
+      await tab.evaluate(() => {
+        window.testActivationHeld = false;
+        navigator.serviceWorker.addEventListener("message", (event) => {
+          if (event.data?.type === "TEST_ACTIVATION_HELD")
+            window.testActivationHeld = true;
+        });
+      });
       await tab.locator("[data-update-action=retry]").click();
       await tab.waitForFunction(
         () =>
           document.querySelector("#pwa-update-dialog")?.dataset.phase ===
-          "checking-tabs",
+            "checking-tabs" && window.testActivationHeld,
       );
       assert.equal(
         await tab
@@ -427,6 +456,13 @@ try {
       await tab.evaluate(() => {
         delete document.hidden;
         document.dispatchEvent(new Event("visibilitychange"));
+      });
+      assert.equal((await request(tab, "PACK_STATUS")).build, a.build, "held activation keeps the old build in control");
+      assert.equal(reloads, 0, "held activation must not reload before release");
+      await tab.evaluate(async () => {
+        const registration = await navigator.serviceWorker.getRegistration();
+        if (!registration?.waiting) throw new Error("Test activation worker is no longer waiting");
+        registration.waiting.postMessage({ type: "TEST_RELEASE_ACTIVATION" });
       });
       await loadedBuild(tab, "E-save-and-input-guards");
       assert.equal(reloads, 1);
