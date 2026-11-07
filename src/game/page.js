@@ -486,7 +486,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     if (!charge || !canCharge()) { cancelCharge(); ui(); draw(); return; }
     const ratio = pull;
     charge = null;
-    if (ratio < PULL.min) { cancelCharge(); ui(); draw(); return; }
+    if (ratio < PULL.min - 1e-9) { cancelCharge(); ui(); draw(); return; }
     void shoot({ id: uuid(), angle, ratio, strength: shotStrength(ratio) });
   }
   const handle = $("#power-handle");
