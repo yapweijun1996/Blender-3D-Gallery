@@ -18,7 +18,7 @@
 
 ## 2. Mandatory Behavior Checklist
 
-- [x] Mouse hover / one-finger table drag rotates aim (360°); cue stays behind cue ball
+- [x] Drag-only aim: dragging the felt aims at the pointer, the cue shaft can be grabbed and dragged; hover and tap never change aim (supersedes the earlier hover-aim behaviour)
 - [x] Pointer down on the **left handle** (only) starts `CHARGING`; aim locked
 - [x] Dragging down moves handle, fills meter, pulls visible cue back along its axis (same `pullRatio`)
 - [x] Release ≥ 5% → forward strike → exactly one impulse at cue contact
