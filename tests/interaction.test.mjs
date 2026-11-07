@@ -1,9 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { pullRatio, shotStrength, aimAngle, dragAngle, hitsCue, strikeOffset, PULL } from '../src/game/interaction.js';
+import { pullRatio, meetsPullThreshold, shotStrength, aimAngle, dragAngle, hitsCue, strikeOffset, PULL } from '../src/game/interaction.js';
 test('pull is relative to origin, clamps and reverses without charging', () => {
  assert.equal(pullRatio(50,50,100),0); assert.equal(pullRatio(50,49,100),0);
  assert.equal(pullRatio(50,100,100),.5); assert.equal(pullRatio(50,500,100),1); assert.equal(pullRatio(0,10,0),0);
+});
+test('release threshold tolerates real pointer-coordinate representation without admitting weak pulls', () => {
+ const actualPointerRatio = pullRatio(313, 332.04998779296875, 381);
+ assert.ok(actualPointerRatio < PULL.min);
+ assert.equal(meetsPullThreshold(actualPointerRatio), true);
+ assert.equal(meetsPullThreshold(PULL.min), true);
+ assert.equal(meetsPullThreshold(0.049), false);
+ assert.equal(meetsPullThreshold(0.04), false);
 });
 test('strength curve preserves threshold and monotonic speed', () => {
  assert.equal(shotStrength(0),0); assert.equal(shotStrength(1),1);

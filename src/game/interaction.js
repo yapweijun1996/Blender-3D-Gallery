@@ -1,5 +1,7 @@
 export const PULL = Object.freeze({ min: 0.05, curve: 1.5, distance: 0.12, strikeSeconds: 0.11 });
 export const pullRatio = (start, current, distance) => distance > 0 ? Math.min(1, Math.max(0, (current - start) / distance)) : 0;
+// Pointer coordinates are float32 in some browsers; allow less than a thousandth of a pixel at normal controller sizes.
+export const meetsPullThreshold = (ratio) => ratio >= PULL.min - 1e-6;
 export const shotStrength = (ratio) => Math.max(0, Math.min(1, ratio)) ** PULL.curve;
 export const CUE = Object.freeze({ length: 1.47, grabRadius: 0.05 });
 // Pointing: the cue aims at the pointer.

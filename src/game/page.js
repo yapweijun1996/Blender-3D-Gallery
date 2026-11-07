@@ -5,7 +5,7 @@ import { adjudicate, RULES_VERSION } from "./rules.js";
 import { openGameStore } from "./storage.js";
 import { createGameScene } from "./scene.js";
 import { aimContact, shotFeedback } from "./presentation.js";
-import { PULL, pullRatio as ratioFromPointer, shotStrength, aimAngle, dragAngle, hitsCue, strikeOffset } from "./interaction.js";
+import { PULL, pullRatio as ratioFromPointer, meetsPullThreshold, shotStrength, aimAngle, dragAngle, hitsCue, strikeOffset } from "./interaction.js";
 
 export async function mountGame(root, assets, signal, onLeave) {
   root.innerHTML = `<section class="game-shell" aria-labelledby="game-title">
@@ -486,7 +486,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     if (!charge || !canCharge()) { cancelCharge(); ui(); draw(); return; }
     const ratio = pull;
     charge = null;
-    if (ratio < PULL.min - 1e-9) { cancelCharge(); ui(); draw(); return; }
+    if (!meetsPullThreshold(ratio)) { cancelCharge(); ui(); draw(); return; }
     void shoot({ id: uuid(), angle, ratio, strength: shotStrength(ratio) });
   }
   const handle = $("#power-handle");

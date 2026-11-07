@@ -526,6 +526,17 @@ try {
     assert.equal((await readGame(p)).committedShots, 0);
     assert.deepEqual((await readGame(p)).balls, before.balls);
   });
+  await test("pull clearly below the minimum release threshold cancels", async (p) => {
+    const before = await readGame(p);
+    await chargePull(p, 0.049);
+    assert.ok(Math.abs((await readGame(p)).pullRatio - 0.049) < 1e-6);
+    await releasePull(p);
+    await p.evaluate(() => window.advanceTime(500));
+    const after = await readGame(p);
+    assert.equal(after.phase, "aiming");
+    assert.equal(after.committedShots, 0);
+    assert.deepEqual(after.balls, before.balls);
+  });
   await test("exact five percent pull reaches the minimum release threshold", async (p) => {
     await chargePull(p, 0.05);
     assert.ok(Math.abs((await readGame(p)).pullRatio - 0.05) < 1e-6);
