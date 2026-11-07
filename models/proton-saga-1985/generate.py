@@ -2,7 +2,6 @@
 import bpy
 import math
 import subprocess
-import shutil
 import sys
 import json
 from pathlib import Path
@@ -12,16 +11,16 @@ OUT = Path(__file__).resolve().parent
 TEXTURES = OUT/'textures'
 TEXTURES.mkdir(exist_ok=True)
 front_reference=TEXTURES/'heritage-front-reference.png'
-if not front_reference.exists():
-    shutil.copy2('/Users/yapweijun/Downloads/1985 Proton Saga Heritage Showcase.png',front_reference)
 rear_reference=TEXTURES/'heritage-multiview-reference.png'
-if not rear_reference.exists():
-    shutil.copy2('/Users/yapweijun/Downloads/Proton Saga 1985 Heritage Showcase.png',rear_reference)
+for reference in (front_reference,rear_reference):
+    if not reference.is_file():
+        raise FileNotFoundError(f'Required reference texture not found: {reference.name}')
 QUICK = '--quick' in sys.argv
 bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete(use_global=False)
 root = bpy.data.objects.new('ASSET_Proton_Saga_1985', None)
 bpy.context.collection.objects.link(root)
+door_components={(end,side):set() for end in ['F','R'] for side in [-1,1]}
 
 
 def material(name, color, metallic=0, roughness=.4, alpha=1):
@@ -61,6 +60,10 @@ amber = material('Amber corner lens', (.40, .064, .001), .12, .27)
 amber_prism = material('Amber lens internal facets', (.30, .065, .004), .12, .36)
 stripe = material('Thin red pinstripe', (.52, .012, .018), .2, .33)
 fabric = material('Dark woven seat cloth', (.042, .05, .057), 0, .95)
+door_vinyl = material('Door charcoal vinyl', (.044, .052, .058), 0, .72)
+door_fabric = material('Door woven fabric insert', (.075, .082, .087), 0, .96)
+door_seam = material('Door stitching', (.092, .099, .102), 0, .93)
+door_pocket = material('Door pocket recess', (.019, .023, .026), 0, .91)
 white = material('Plate lettering', (.8, .83, .84), .1, .4)
 navy = material('Heritage shield navy', (.015, .055, .13), .4, .28)
 gold = material('Heritage shield gold', (.9, .57, .012), .5, .3)
@@ -338,6 +341,7 @@ for side in [-1,1]:
                 if len(polygon)>=3:
                     face=tuple(vertex_index(v) for v in polygon)
                     faces.append(face if side<0 else tuple(reversed(face)))
+        before_door=set(root.children)
         prefix=('Left ' if side<0 else 'Right ')+panel_name
         mesh(prefix+' panel',vertices,faces,paint,smooth=True)
         # Add only the visible turned edges, instead of duplicating an entire
@@ -352,10 +356,15 @@ for side in [-1,1]:
         for edge in edges.values():
             if edge is None:continue
             a,b=edge;p=Vector(vertices[a]);q=Vector(vertices[b])
+            # The rear door's hidden leading return is omitted at the B-pillar
+            # so its inward hinge can clear the adjacent front panel.
+            if panel_name=='Rear door' and p.x<.257 and q.x<.257:continue
             inward=Vector((0,-side*.004,0));i=len(edge_vertices)
             edge_vertices.extend([tuple(p),tuple(q),tuple(q+inward),tuple(p+inward)])
             edge_faces.append((i,i+1,i+2,i+3))
         if edge_faces:mesh(prefix+' folded edge',edge_vertices,edge_faces,paint)
+        if panel_name in ('Front door','Rear door'):
+            door_components[('F' if panel_name=='Front door' else 'R',side)].update(set(root.children)-before_door)
     # Return the lips into the wheel wells so openings have real thickness.
     for axle in AXLES:
         vertices=[]
@@ -372,7 +381,13 @@ for side in [-1,1]:
         arch.data.materials.append(paint)
         for face in arch.data.polygons:
             if face.index%2==0:face.material_index=1
-    box('Pressed rocker sill',(-.03,side*.765,.263),(1.82,.038,.052),paint,.014)
+    box('Pressed rocker sill',(-.03,side*.71,.263),(1.82,.038,.052),paint,.014)
+    # Static thresholds and opening seals become visible as the separate door moves away.
+    for end,xa,xb in [('Front',-.77,.24),('Rear',.26,.85)]:
+        box(end+' door opening threshold',((xa+xb)/2,side*.665,.34),(xb-xa,.04,.035),paint,.008)
+        line(end+' door opening lower seal',[(xa,side*.683,.365),(xb,side*.683,.365)],black,.006)
+    for x in [-.82,.25,1.29]:
+        line('Door opening upright seal',[(x,side*.69,.38),(x,side*.69,.95)],black,.006)
     box('Black sill lower seam',(-.03,side*.748,.232),(1.9,.032,.02),black,.007)
 
 
@@ -447,12 +462,20 @@ for side in [-1,1]:
     rear=[(.284,1.008),(.284,1.424),(.825,1.424),(.850,1.008)]
     quarter=[(.875,1.008),(.848,1.424),(.895,1.424),(1.300,1.008)]
     for name,outline in [('Front door window',front),('Rear door window',rear),('Fixed rear quarterlight',quarter)]:
+        before_door=set(root.children)
         glazing(name,[cabin_point(x,z,side) for x,z in outline],(0,side,.28),.012,.005)
-    pillars=[('Slender A pillar',[(-.86,.989),(-.355,1.448),(-.302,1.433),(-.815,.995)]),
-             ('Painted B pillar',[(.235,.986),(.235,1.447),(.274,1.447),(.274,.986)]),
+        # The reference shows the triangular light within the rear door frame.
+        # Treat it as part of the door in this prototype rather than leaving it floating on the body.
+        end='F' if name=='Front door window' else 'R'
+        line(name+' structural frame',[cabin_point(x,z,side,.001) for x,z in outline+[outline[0]]],black,.009)
+        door_components[(end,side)].update(set(root.children)-before_door)
+    pillars=[('Slender A pillar',[(-.86,1.005),(-.355,1.448),(-.302,1.433),(-.815,1.005)]),
+             ('Painted B pillar',[(.235,1.005),(.235,1.447),(.274,1.447),(.274,1.005)]),
              ('Formed C pillar',[(1.438,.985),(1.052,1.448),(.902,1.435),(1.315,.989)])]
     for name,outline in pillars:
         points=[cabin_point(x,z,side,.002) for x,z in outline]
+        if name=='Slender A pillar':
+            points=[(x,y-side*.005,z) for x,y,z in points]
         normal=(Vector(points[1])-Vector(points[0])).cross(Vector(points[2])-Vector(points[0]))
         face=(0,1,2,3) if normal.y*side>0 else (3,2,1,0)
         obj=mesh(name,points,[face],paint,.003,smooth=True)
@@ -471,22 +494,42 @@ for side in [-1,1]:
         solid.material_offset=1;solid.material_offset_rim=1
     # Roof rail and lower window ledge close the narrow gaps around the glass.
     mesh('Roof rail', [cabin_point(-.34,1.443,side),cabin_point(1.04,1.443,side),cabin_point(1.01,1.43,side),cabin_point(-.32,1.43,side)],[(0,1,2,3)],paint,smooth=True)
-    mesh('Window belt ledge',[side_point(-.91,.988,side),side_point(1.438,.988,side),cabin_point(1.35,1.006,side),cabin_point(-.805,1.006,side)],[(0,1,2,3)],paint,smooth=True)
+    # Segment the ledge with the doors, avoiding a fixed strip crossing their window frames.
+    for end,bottom_a,bottom_b,top_a,top_b in [('F',-.91,.25,-.805,.25),('R',.29,1.375,.29,1.31)]:
+        ledge=mesh(('Front' if end=='F' else 'Rear')+' door window belt ledge',[side_point(bottom_a,.988,side),side_point(bottom_b,.988,side),cabin_point(top_b,1.006,side),cabin_point(top_a,1.006,side)],[(0,1,2,3)],paint,smooth=True)
+        door_components[(end,side)].add(ledge)
+    mesh('Rear quarter window belt ledge',[side_point(1.375,.988,side),side_point(1.438,.988,side),cabin_point(1.35,1.006,side),cabin_point(1.31,1.006,side)],[(0,1,2,3)],paint,smooth=True)
     line('Rain gutter bead',[(-.345,side*.628,1.445),(-.1,side*.629,1.45),(.7,side*.629,1.45),(1.04,side*.628,1.445)],chrome,.0023)
-    line('Lower window weatherstrip',[cabin_point(-.84,1.000,side,.004),cabin_point(1.38,1.000,side,.004)],black,.005)
-    surface_path('Front door shutline',[(-.89,.984),(-.86,.89),(-.83,.70),(-.81,.49),(-.77,.31),(.25,.31),(.25,.985)],side)
+    # Each door carries its own belt seal; only the short rear end remains fixed.
+    for end,xa,xb in [('F',-.84,.225),('R',.284,1.30)]:
+        weatherstrip=line(('Front' if end=='F' else 'Rear')+' door lower window weatherstrip',[cabin_point(xa,1.000,side,.004),cabin_point(xb,1.000,side,.004)],black,.005)
+        door_components[(end,side)].add(weatherstrip)
+    line('Rear quarter lower window weatherstrip',[cabin_point(1.30,1.000,side,.004),cabin_point(1.38,1.000,side,.004)],black,.005)
+    before_door=set(root.children)
+    surface_path('Front door shutline',[(-.89,.984),(-.86,.89),(-.83,.70),(-.81,.49),(-.77,.31),(.25,.31)],side)
+    door_components[('F',side)].update(set(root.children)-before_door)
+    before_door=set(root.children)
     # The door seam ends on the wheel opening; it cannot continue across air.
     surface_path('Rear door shutline',[(.25,.31),(.847,.31)],side)
     surface_path('Rear door upper shutline',[(1.31,arch_bottom(1.31)+.004),(1.355,.82),(1.375,.985)],side)
-    surface_path('Door lower pressed contour',[(-.77,.322),(.85,.322)],side,paint,.0022,.002)
+    door_components[('R',side)].update(set(root.children)-before_door)
+    before_door=set(root.children)
+    surface_path('Front door lower pressed contour',[(-.77,.322),(.25,.322)],side,paint,.0022,.002)
+    door_components[('F',side)].update(set(root.children)-before_door)
+    before_door=set(root.children)
+    surface_path('Rear door lower pressed contour',[(.25,.322),(.85,.322)],side,paint,.0022,.002)
+    door_components[('R',side)].update(set(root.children)-before_door)
     for index,x in enumerate([.09,1.06]):
+        before_door=set(root.children)
         y=side_width(x,.907)
         box('Door handle recess',(x,side*(y+.002),.907),(.165,.009,.064),black,.014)
         box('Black lift handle',(x,side*(y+.014),.919),(.152,.024,.036),black,.009)
         if index==0:
             cylinder('Front door lock',(x+.055,side*(y+.018),.851),.009,.005,chrome,24)
             cylinder('Lock key slot',(x+.055,side*(y+.021),.851),.004,.005,black,12)
+        door_components[('F' if index==0 else 'R',side)].update(set(root.children)-before_door)
     for xa,xb in [(-2.055,-.86),(-.845,.238),(.263,1.31),(1.33,2.055)]:
+        before_door=set(root.children)
         points=[]
         for j in range(31):
             x=xa+(xb-xa)*j/30
@@ -505,6 +548,8 @@ for side in [-1,1]:
                 if len(run)>1:surface_path('Red side molding insert',run,side,stripe,.0025,.013)
                 run=[]
         if len(run)>1:surface_path('Red side molding insert',run,side,stripe,.0025,.013)
+        if xa in (-.845,.263):
+            door_components[('F' if xa==-.845 else 'R',side)].update(set(root.children)-before_door)
     # The bumper end wraps across the small panel area immediately ahead of
     # the wheel opening, avoiding an exposed painted wedge below the moulding.
     start,end=-1.645,-1.595
@@ -520,12 +565,14 @@ for side in [-1,1]:
             faces.append(face if side<0 else tuple(reversed(face)))
     if faces:mesh('Moulded front bumper arch transition',vertices,faces,black,smooth=True)
     # A tapered housing with a small fitted sail panel replaces the old cube.
+    before_door=set(root.children)
     mount=[cabin_point(-.82,1.006,side,.002),cabin_point(-.66,1.006,side,.002),cabin_point(-.67,1.128,side,.002)]
     mesh('Mirror sail panel',mount,[(0,1,2)],black,.006)
     housing=[(-.83,side*.787,1.015),(-.64,side*.787,1.015),(-.63,side*.958,1.025),(-.82,side*.946,1.025),
              (-.82,side*.791,1.119),(-.66,side*.791,1.126),(-.64,side*.948,1.118),(-.81,side*.94,1.118)]
     mesh('Tapered black door mirror',housing,[(0,3,2,1),(4,5,6,7),(0,1,5,4),(3,7,6,2),(0,4,7,3),(1,2,6,5)],black,.013,smooth=True)
     mesh('Inset mirror glass',[(-.625,side*.81,1.033),(-.625,side*.935,1.036),(-.635,side*.936,1.106),(-.65,side*.81,1.113)],[(0,1,2,3)],chrome,.004)
+    door_components[('F',side)].update(set(root.children)-before_door)
     box('Amber wing repeater',(-1.01,side*(side_width(-1.01,.728)+.006),.728),(.063,.012,.025),amber,.006)
     for axle in AXLES:
         box('Flexible black mud flap',(axle+.367,side*.758,.306),(.016,.14,.22),black,.015)
@@ -581,6 +628,7 @@ for side in [-1,1]:
         mesh('Dark recessed wheelhouse liner',vertices,faces,underseal)
 
 
+wheel_components={}
 for side in [-1,1]:
     for axle in AXLES:
         before_wheel=set(root.children)
@@ -624,8 +672,11 @@ for side in [-1,1]:
         wheel_scale=(Matrix.Translation((axle,0,WHEEL_Z)) @
                      Matrix.Diagonal((WHEEL_RADIUS_SCALE,1,WHEEL_RADIUS_SCALE,1)) @
                      Matrix.Translation((-axle,0,-WHEEL_Z)))
-        for part in set(root.children)-before_wheel:
+        parts=set(root.children)-before_wheel
+        for part in parts:
             part.matrix_world=wheel_scale @ part.matrix_world
+        wheel_id=('F' if axle==AXLES[0] else 'R')+('L' if side<0 else 'R')
+        wheel_components[wheel_id]={'axle':axle,'side':side,'parts':parts}
 
 
 
@@ -837,9 +888,61 @@ for side in [-1,1]:
         bolster=box('Front seat side bolster',(.055,side*.34+dy,.875),(.17,.07,.29),fabric,.034)
         bolster.rotation_euler.y=-.12
     for dy in [-.10,0,.10]:line('Seat upholstery stitch',[(-.004,side*.34+dy,.76),(-.03,side*.34+dy,1.06)],fabric_seam,.0012)
-    box('Inner door upholstery',(.22,side*.716,.797),(1.94,.04,.28),fabric,.022)
-    box('Door armrest',(.12,side*.678,.823),(.35,.075,.052),black,.014)
-    line('Visible front seat belt',[(.24,side*.68,1.28),(.2,side*.56,.75)],black,.009)
+    # The previous single long upholstery object crossed both doors. Replace it
+    # with separate fitted door cards so the cabin side travels with each hinge.
+    for end,outline,armx in [
+        ('F',[(-.755,.345),(.19,.345),(.19,.975),(-.84,.975)],-.16),
+        ('R',[(.27,.345),(.825,.345),(.90,.43),(1.15,.59),(1.29,.72),(1.34,.975),(.27,.975)],.76)]:
+        before_door=set(root.children)
+        points=[(x,side*.716,z) for x,z in outline]
+        face=tuple(reversed(range(len(points)))) if side<0 else tuple(range(len(points)))
+        card=mesh(('Front' if end=='F' else 'Rear')+' fitted inner door card',points,[face],fabric,.006)
+        solid=card.modifiers.new('Door card thickness','SOLIDIFY');solid.thickness=.018
+        box(('Front' if end=='F' else 'Rear')+' interior armrest',(armx,side*.678,.82),(.32,.075,.052),black,.014)
+        box(('Front' if end=='F' else 'Rear')+' interior door pull',(armx+.15,side*.681,.906),(.12,.025,.035),black,.008)
+        part_name='Front' if end=='F' else 'Rear'
+        # Layered vinyl and fabric surfaces give the door a readable period-like
+        # construction; original 1985 interior trim is not pictured in the reference.
+        rail_left,rail_right=(-.77,.22) if end=='F' else (.29,1.32)
+        box(part_name+' padded upper vinyl rail',((rail_left+rail_right)/2,side*.694,.945),(rail_right-rail_left,.028,.052),door_vinyl,.014)
+        panel_width=.61 if end=='F' else .58
+        box(part_name+' woven door insert',(armx,side*.700,.735),(panel_width,.012,.168),door_fabric,.014)
+        for z in (.674,.697,.720,.743,.766,.789):
+            line(part_name+' woven insert pleat',[(armx-panel_width*.46,side*.691,z),(armx+panel_width*.46,side*.691,z)],door_seam,.00065)
+        border=[(armx-panel_width*.48,side*.690,.656),(armx+panel_width*.48,side*.690,.656),(armx+panel_width*.48,side*.690,.814),(armx-panel_width*.48,side*.690,.814)]
+        line(part_name+' insert stitched piping',border+[border[0]],door_vinyl,.0024)
+        box(part_name+' armrest padded cap',(armx,side*.662,.846),(.29,.040,.014),door_vinyl,.006)
+        line(part_name+' armrest stitch',[(armx-.115,side*.644,.851),(armx+.115,side*.644,.851)],door_seam,.001)
+        box(part_name+' interior release lever',(armx+.15,side*.663,.906),(.077,.011,.013),chrome,.003)
+        for x in (armx-.18,armx+.18):
+            cylinder(part_name+' pocket fastening',(x,side*.664,.56),.0035,.006,steel,12)
+        line(part_name+' inner door card upper edge',[(outline[-1][0],side*.697,.965),(outline[-2][0],side*.697,.965)],black,.004)
+        # Simplified period-style fittings: their exact production trim is unverified.
+        box(part_name+' lower interior storage pocket',(armx,side*.688,.56),(.43,.034,.095),door_vinyl,.012)
+        # A shallow dark center and padded lip suggest the storage recess without
+        # a boolean cut through the lightweight, single-skin door card.
+        box(part_name+' pocket recessed face',(armx,side*.668,.56),(.385,.006,.064),door_pocket,.009)
+        line(part_name+' pocket upper welt',[(armx-.18,side*.662,.602),(armx+.18,side*.662,.602)],door_vinyl,.003)
+        kick_left,kick_right=(-.75,.225) if end=='F' else (.275,.82)
+        box(part_name+' lower kick panel',((kick_left+kick_right)/2,side*.743,.298),(kick_right-kick_left,.012,.094),door_vinyl,.008)
+        cylinder(part_name+' manual window crank boss',(armx+.14,side*.672,.76),.018,.018,chrome,20)
+        line(part_name+' manual window crank arm',[(armx+.14,side*.66,.76),(armx+.205,side*.66,.70)],chrome,.006)
+        cylinder(part_name+' manual window crank knob',(armx+.205,side*.655,.70),.012,.022,black,20)
+        latch_x=.175 if end=='F' else 1.275
+        box(part_name+' door latch plate',(latch_x,side*.726,.72),(.011 if end=='F' else .022,.045,.070),steel,.004)
+        hinge_x=-.90 if end=='F' else .22
+        for z in (.46,.83):
+            # Door-side hinge leaf moves with the door. The body-side pin and
+            # bracket are created separately below and stay with the body.
+            box(part_name+' door hinge leaf',(hinge_x+.006,side*(.78 if end=='F' else .76),z),(.012,.0196,.038),steel,.003)
+        door_components[(end,side)].update(set(root.children)-before_door)
+    line('Visible front seat belt',[(.24,side*.645,1.28),(.2,side*.525,.75)],black,.009)
+    for end,hinge_x,latch_x in [('Front',-.90,.20),('Rear',.22,1.275)]:
+        for z in (.46,.83):
+            box(end+' body hinge bracket',(hinge_x-.025,side*(.755 if end=='Front' else .735),z+(0 if end=='Front' else .03)),(.055,.034,.042 if end=='Front' else .021),steel,.005)
+            cylinder(end+' body hinge pin',(hinge_x,side*(.78 if end=='Front' else .76),z),.011,.06,steel,20,(0,0,0))
+        box(end+' body striker plate',(latch_x,side*.714,.72),(.045,.018,.085),steel,.006)
+        line(end+' body latch striker',[(latch_x-.012,side*.7,.70),(latch_x+.012,side*.7,.70),(latch_x+.012,side*.7,.74),(latch_x-.012,side*.7,.74)],chrome,.004)
 box('Rear seat cushion',(1.0,0,.68),(.43,1.23,.13),fabric,.05)
 rearback=box('Rear seat upholstered back',(1.21,0,.90),(.14,1.23,.40),fabric,.052)
 rearback.rotation_euler.y=-.1
@@ -894,6 +997,41 @@ for part in root.children:
 for part in root.children:
     part.location.z -= BODY_LOWERING
 
+# Place movable pivots after the body is lowered and preserve every part's
+# world transform while parenting. Brake backings steer but do not roll.
+bpy.context.view_layer.update()
+for wheel_id,info in wheel_components.items():
+    center=(info['axle'],info['side']*.709,WHEEL_Z-BODY_LOWERING)
+    parent=root
+    if wheel_id.startswith('F'):
+        steer=bpy.data.objects.new('PIVOT_Wheel_'+wheel_id+'_Steer',None)
+        bpy.context.collection.objects.link(steer);steer.parent=root;steer.location=center
+        parent=steer
+    roll=bpy.data.objects.new('PIVOT_Wheel_'+wheel_id+'_Roll',None)
+    bpy.context.collection.objects.link(roll);roll.parent=parent
+    roll.location=(0,0,0) if parent!=root else center
+    bpy.context.view_layer.update()
+    for part in info['parts']:
+        matrix=part.matrix_world.copy()
+        part.parent=parent if part.name.startswith('Dark brake backing') else roll
+        part.matrix_world=matrix
+    bpy.context.view_layer.update()
+
+# Approximate hinge axes are placed at the leading shutline of each door.
+# They are construction estimates, not measured factory hinge positions.
+for (end,side),parts in door_components.items():
+    door_id=end+('L' if side<0 else 'R')
+    hinge=bpy.data.objects.new('PIVOT_Door_'+door_id+'_Hinge',None)
+    bpy.context.collection.objects.link(hinge)
+    hinge.parent=root
+    hinge.location=(-.90 if end=='F' else .22,side*(.78 if end=='F' else .76),.55)
+    bpy.context.view_layer.update()
+    for part in parts:
+        matrix=part.matrix_world.copy()
+        part.parent=hinge
+        part.matrix_world=matrix
+    bpy.context.view_layer.update()
+
 # Batch evaluated export copies by opaque material, retaining editable source parts.
 # Transparent windows stay separate; tiny coplanar prisms batch only within one lamp.
 def export_vehicle():
@@ -902,32 +1040,37 @@ def export_vehicle():
     root.name=source_name+'_SOURCE'
     export_root=bpy.data.objects.new(source_name,None)
     bpy.context.collection.objects.link(export_root)
+    pivot_map={root:export_root}
     groups={}
-    temporary=[]
-    for original in list(root.children):
+    def clone_parent(source):
+        if source in pivot_map:return pivot_map[source]
+        parent=clone_parent(source.parent)
+        name=source.name.removeprefix('PIVOT_')
+        obj=bpy.data.objects.new(name,None)
+        bpy.context.collection.objects.link(obj)
+        obj.parent=parent
+        obj.matrix_world=source.matrix_world.copy()
+        pivot_map[source]=obj
+        return obj
+    for original in list(root.children_recursive):
         if original.type!='MESH':continue
         evaluated=original.evaluated_get(depsgraph)
         data=bpy.data.meshes.new_from_object(evaluated,preserve_all_data_layers=True,depsgraph=depsgraph)
-        # Evaluated bevel UVs can vary by a float ULP across Blender processes.
-        # Quantize only exported UVs; 1e-6 is below 0.002 reference-image pixels.
         for uv_layer in data.uv_layers:
             for item in uv_layer.data:
                 item.uv=(round(item.uv.x,6),round(item.uv.y,6))
         copy=bpy.data.objects.new(original.name+'_EXPORT',data)
         bpy.context.collection.objects.link(copy)
+        copy.parent=clone_parent(original.parent)
         copy.matrix_world=original.matrix_world.copy()
-        copy.parent=export_root
-        temporary.append(copy)
         mat=original.data.materials[0]
         alpha=mat.diffuse_color[3]
         if alpha>=1:
-            key=('opaque',mat.name)
+            key=(copy.parent.name,'opaque',mat.name)
         elif mat==lens_rib:
             center=sum((copy.matrix_world@Vector(corner) for corner in copy.bound_box),Vector())/8
-            if center.x < -1.9:
-                key=('lamp-prisms','left' if center.y<0 else 'right')
-            else:key=('transparent-pane',original.name)
-        else:key=('transparent-pane',original.name)
+            key=(copy.parent.name,'lamp-prisms','left' if center.x < -1.9 and center.y<0 else 'right' if center.x < -1.9 else original.name)
+        else:key=(copy.parent.name,'transparent-pane',original.name)
         groups.setdefault(key,[]).append(copy)
     for key,copies in groups.items():
         if len(copies)<2:continue
@@ -935,15 +1078,15 @@ def export_vehicle():
         for copy in copies:copy.select_set(True)
         bpy.context.view_layer.objects.active=copies[0]
         bpy.ops.object.join()
-        copies[0].name='Export '+str(key[1])
+        copies[0].name='Export '+str(key[-1])
     bpy.ops.object.select_all(action='DESELECT')
     export_root.select_set(True)
-    for copy in export_root.children:copy.select_set(True)
+    for copy in export_root.children_recursive:copy.select_set(True)
     bpy.ops.export_scene.gltf(filepath=str(OUT/'exports/proton-saga-1985.glb'),export_format='GLB',use_selection=True,export_apply=True,export_image_format='JPEG',export_jpeg_quality=94)
-    for copy in list(export_root.children):
+    for copy in list(export_root.children_recursive):
         data=copy.data
         bpy.data.objects.remove(copy,do_unlink=True)
-        if data.users==0:bpy.data.meshes.remove(data)
+        if data and data.users==0:bpy.data.meshes.remove(data)
     bpy.data.objects.remove(export_root,do_unlink=True)
     root.name=source_name
 

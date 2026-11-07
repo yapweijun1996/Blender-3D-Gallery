@@ -42,7 +42,7 @@ export default async function createViewer(
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   const clearPreset = () => {
-    vehicleToolbar?.querySelectorAll("button").forEach(button => button.setAttribute("aria-pressed", "false"));
+    vehicleToolbar?.querySelectorAll("[data-vehicle-view]").forEach(button => button.setAttribute("aria-pressed", "false"));
   };
   controls.addEventListener("start", clearPreset);
   renderer.domElement.addEventListener("keydown", (event) => {
@@ -136,17 +136,36 @@ export default async function createViewer(
         "The 3D view was interrupted. Close and reopen it to retry.";
   });
   try {
-    const gltf = await new GLTFLoader().loadAsync(url, (event) => {
-      if (!disposed)
-        status.textContent = event.total
-          ? `Loading the 3D model… ${Math.round((event.loaded / event.total) * 100)}%`
-          : "Loading the 3D model…";
-    });
+    let gltf;
+    if (isVehicle) {
+      // Consume the self-contained GLB before parsing, while retaining the
+      // viewer's abort signal for an in-flight request.
+      const response = await fetch(url, { signal });
+      if (!response.ok) throw new Error(`Model request failed: ${response.status}`);
+      const buffer = await response.arrayBuffer();
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+      const base = THREE.LoaderUtils.extractUrlBase(new URL(url, document.baseURI).href);
+      gltf = await new GLTFLoader().parseAsync(buffer, base);
+    } else {
+      gltf = await new GLTFLoader().loadAsync(url, (event) => {
+        if (!disposed)
+          status.textContent = event.total
+            ? `Loading the 3D model… ${Math.round((event.loaded / event.total) * 100)}%`
+            : "Loading the 3D model…";
+      });
+    }
     if (disposed || signal.aborted) {
       disposeModel(gltf.scene);
       throw new DOMException("Viewer closed", "AbortError");
     }
     model = gltf.scene;
+    const doorCodes = ["FL", "FR", "RL", "RR"];
+    const candidates = isVehicle ? doorCodes.map(code => model.getObjectByName(`Door_${code}_Hinge`)) : [];
+    // Door controls only operate when the real model has all four independent pivots.
+    const doorRig = candidates.length === 4 && candidates.every(node => node && node.children.length)
+      ? Object.fromEntries(doorCodes.map((code, index) => [code, { node: candidates[index], closed: candidates[index].rotation.y }]))
+      : null;
+    const doorButtons = new Map();
     if (isVehicle) {
       // Local studio reflections give metallic paint and steel rims their form.
       const room = new RoomEnvironment();
@@ -182,24 +201,30 @@ export default async function createViewer(
     ).normalize();
     const frameVehicle = (viewDirection) => {
       resize();
-      // Fit the actual model in this camera orientation, independently of the studio.
+      // Include open doors in the bounds so a preset never cuts them off.
+      const visibleBounds = new THREE.Box3().setFromObject(model);
+      const visibleCenter = visibleBounds.getCenter(new THREE.Vector3());
       const vertical = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
       const horizontal = vertical * camera.aspect;
       const right = new THREE.Vector3().crossVectors(camera.up, viewDirection).normalize();
       const up = new THREE.Vector3().crossVectors(viewDirection, right).normalize();
       let distance = 0;
-      for (const x of [bounds.min.x, bounds.max.x]) for (const y of [bounds.min.y, bounds.max.y]) for (const z of [bounds.min.z, bounds.max.z]) {
-        const offset = new THREE.Vector3(x, y, z).sub(center);
+      for (const x of [visibleBounds.min.x, visibleBounds.max.x]) for (const y of [visibleBounds.min.y, visibleBounds.max.y]) for (const z of [visibleBounds.min.z, visibleBounds.max.z]) {
+        const offset = new THREE.Vector3(x, y, z).sub(visibleCenter);
         const depth = offset.dot(viewDirection);
         distance = Math.max(distance, depth + Math.abs(offset.dot(right)) / horizontal, depth + Math.abs(offset.dot(up)) / vertical);
       }
-      controls.target.copy(center);
-      camera.position.copy(center).addScaledVector(viewDirection, Math.max(distance * 1.08, controls.minDistance));
+      controls.target.copy(visibleCenter);
+      camera.position.copy(visibleCenter).addScaledVector(viewDirection, Math.max(distance * 1.08, controls.minDistance));
       controls.update();
       invalidate();
     };
     const reset = () => {
       clearPreset();
+      if (doorRig) for (const [code, door] of Object.entries(doorRig)) {
+        door.node.rotation.y = door.closed;
+        doorButtons.get(code)?.setAttribute("aria-pressed", "false");
+      }
       if (isVehicle) { frameVehicle(direction); return; }
       resize();
       const vertical = THREE.MathUtils.degToRad(camera.fov / 2);
@@ -216,7 +241,7 @@ export default async function createViewer(
       if (!isVehicle || !directions[name]) return;
       const axis = new THREE.Vector3(...directions[name]).applyEuler(model.rotation).normalize();
       frameVehicle(axis);
-      vehicleToolbar?.querySelectorAll("button").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.vehicleView === name)));
+      vehicleToolbar?.querySelectorAll("[data-vehicle-view]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.vehicleView === name)));
     };
     if (isVehicle) {
       scene.fog = new THREE.Fog(0x202326, radius * 6, radius * 14);
@@ -243,7 +268,7 @@ export default async function createViewer(
       vehicleToolbar = document.createElement("div");
       vehicleToolbar.className = "vehicle-views";
       vehicleToolbar.setAttribute("role", "group");
-      vehicleToolbar.setAttribute("aria-label", "Vehicle views");
+      vehicleToolbar.setAttribute("aria-label", "Vehicle showcase controls");
       const title = document.createElement("span");
       title.className = "vehicle-views-label";
       title.textContent = "360° Vehicle Showcase";
@@ -260,6 +285,40 @@ export default async function createViewer(
         buttons.append(button);
       }
       vehicleToolbar.append(buttons);
+      const doorControls = document.createElement("div");
+      doorControls.className = "vehicle-door-controls";
+      if (doorRig) {
+        const label = document.createElement("span");
+        label.className = "vehicle-views-label";
+        label.textContent = "Open or close doors";
+        const group = document.createElement("div");
+        group.className = "vehicle-door-buttons";
+        group.setAttribute("role", "group");
+        group.setAttribute("aria-label", "Open or close doors");
+        for (const [code, labelText] of [["FL", "Front left"], ["FR", "Front right"], ["RL", "Rear left"], ["RR", "Rear right"]]) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.dataset.vehicleDoor = code;
+          button.textContent = labelText;
+          button.setAttribute("aria-label", `${labelText} door`);
+          button.setAttribute("aria-pressed", "false");
+          button.addEventListener("click", () => {
+            const opening = button.getAttribute("aria-pressed") !== "true";
+            const door = doorRig[code];
+            door.node.rotation.y = door.closed + (opening ? (code.endsWith("L") ? -1 : 1) * Math.PI / 3 : 0);
+            button.setAttribute("aria-pressed", String(opening));
+            const currentDirection = camera.position.clone().sub(controls.target).normalize();
+            frameVehicle(currentDirection);
+          });
+          doorButtons.set(code, button);
+          group.append(button);
+        }
+        doorControls.append(label, group);
+      } else {
+        doorControls.classList.add("vehicle-door-unavailable");
+        doorControls.textContent = "Door controls are unavailable for this model.";
+      }
+      vehicleToolbar.append(doorControls);
       container.insertAdjacentElement("afterend", vehicleToolbar);
     }
     reset();

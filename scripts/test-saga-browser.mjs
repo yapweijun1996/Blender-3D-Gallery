@@ -60,19 +60,54 @@ try {
       }
     });
     const page = await context.newPage();
-    const failures = [], glbs = [], glbResponses = [];
+    const failures = [], glbs = [], glbRequests = new Map();
     page.on('pageerror', error => failures.push(error.message));
     page.on('console', message => {
       if (message.type() === 'error') failures.push(message.text());
     });
+    page.on('request', request => {
+      if (new URL(request.url()).pathname.endsWith('.glb')) {
+        let settle;
+        const settled = new Promise(resolve => { settle = resolve; });
+        glbs.push(request.url());
+        glbRequests.set(request, { request, settled, settle, response: null, finished: false, failure: null });
+      }
+    });
     page.on('response', response => {
       if (response.status() >= 400) failures.push(`${response.status()} ${response.url()}`);
-      if (new URL(response.url()).pathname.endsWith('.glb')) glbResponses.push(response);
+      const record = glbRequests.get(response.request());
+      if (record) record.response = response;
     });
-    page.on('requestfailed', request => failures.push(`${request.url()} ${request.failure()?.errorText}`));
-    page.on('request', request => {
-      if (new URL(request.url()).pathname.endsWith('.glb')) glbs.push(request.url());
+    page.on('requestfinished', request => {
+      const record = glbRequests.get(request);
+      if (record) { record.finished = true; record.settle(); }
     });
+    page.on('requestfailed', request => {
+      failures.push(`${request.url()} ${request.failure()?.errorText}`);
+      const record = glbRequests.get(request);
+      if (record) { record.failure = request.failure()?.errorText ?? 'unknown failure'; record.settle(); }
+    });
+    let checkedResponses = 0;
+    const verifyResponses = async () => {
+      const records = [...glbRequests.values()];
+      assert.ok(records.length > 0, 'at least one GLB request was observed');
+      while (checkedResponses < records.length) {
+        const record = records[checkedResponses];
+        let timer;
+        try {
+          await Promise.race([
+            record.settled,
+            new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(`GLB request did not finish: ${record.request.url()}`)), 10000); }),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+        assert.equal(record.failure, null, 'GLB request must not fail');
+        assert.ok(record.response && record.response.status() >= 200 && record.response.status() < 300, 'GLB response must succeed');
+        assert.ok(record.finished, 'GLB response body completed before navigation');
+        checkedResponses++;
+      }
+    };
     try {
       await page.goto(server.url);
       assert.equal(await page.locator('#catalog .asset-card').count(), assets.length);
@@ -85,6 +120,7 @@ try {
       assert.equal(await page.locator('#catalog .asset-download').count(), 0);
       await opener.click();
       await ready(page);
+      await verifyResponses();
       assert.ok(glbs.some(url => /proton-saga-1985/.test(url)), 'viewer requests the real Saga GLB');
       assert.equal(await page.locator('#viewer-title').innerText(), saga.name);
       assert.equal(await page.locator('#viewer-download').isVisible(), false);
@@ -129,18 +165,25 @@ try {
         await page.mouse.wheel(0, -240);
       }, 'wheel zoom');
       await changedCanvas(page, async () => page.locator('#reset-view').click(), 'reset');
+      await verifyResponses();
       await page.locator('#close-viewer').click();
       assert.equal(await page.locator('#viewer').evaluate(element => element.open), false);
       assert.equal(await page.locator('#viewport canvas').count(), 0);
       assert.equal(await page.locator('.vehicle-views').count(), 0, 'closing disposes vehicle-only controls');
       assert.equal(await opener.evaluate(element => element === document.activeElement), true);
+      const beforeDirectLink = glbRequests.size;
       await page.goto(server.url + '?model=proton-saga-1985');
       await ready(page);
+      assert.ok(glbRequests.size > beforeDirectLink, 'direct link requests a fresh GLB');
+      await verifyResponses();
+      const beforeReload = glbRequests.size;
       await page.reload();
       await ready(page);
+      assert.ok(glbRequests.size > beforeReload, 'reload requests a fresh GLB');
+      await verifyResponses();
       await noOverflow(page);
       assert.equal(new URL(page.url()).searchParams.get('model'), 'proton-saga-1985');
-      for (const response of glbResponses) assert.equal(await response.finished(), null, 'each GLB response completed before navigation');
+      assert.equal(checkedResponses, glbRequests.size, 'all observed GLB requests were checked');
       assert.deepEqual(failures, [], 'no browser, network or console errors');
       results.push({ viewport: label, passed: true, glbRequests: glbs.length });
       console.log(`PASS Saga ${label}: search, lazy load, render, four presets, keyboard, scrolling, rotate, zoom, reset, focus, direct link and reload`);
