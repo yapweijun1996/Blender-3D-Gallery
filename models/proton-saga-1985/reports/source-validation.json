@@ -1,33 +1,61 @@
 {
-  "separate_panels": [
-    "Left Front wing panel",
-    "Left Front door panel",
-    "Left Rear door panel",
-    "Left Rear quarter panel",
-    "Right Front wing panel",
-    "Right Front door panel",
-    "Right Rear door panel",
-    "Right Rear quarter panel"
-  ],
-  "headlamp_covers": 2,
-  "grille_rails": 3,
   "root": "ASSET_Proton_Saga_1985",
-  "tires": 4,
-  "steel_rims": 4,
-  "domed_covers": 4,
-  "wheelhouse_liners": 4,
-  "wheel_centers_x": [
-    -1.31,
-    -1.31,
-    1.17,
-    1.17
-  ],
-  "tire_ground_z": 0.0004999972879886627,
-  "rim_material": "Silver pressed wheel rim",
-  "cap_material": "Silver domed wheel cover",
-  "render_resolution": [
-    1536,
-    1024
-  ],
-  "cycles_samples": 48
+  "mesh_objects": 1012,
+  "door_pivots": {
+    "FL": {
+      "name": "PIVOT_Door_FL_Hinge",
+      "children": 47,
+      "location": [
+        -0.8999999761581421,
+        -0.7799999713897705,
+        0.550000011920929
+      ]
+    },
+    "FR": {
+      "name": "PIVOT_Door_FR_Hinge",
+      "children": 47,
+      "location": [
+        -0.8999999761581421,
+        0.7799999713897705,
+        0.550000011920929
+      ]
+    },
+    "RL": {
+      "name": "PIVOT_Door_RL_Hinge",
+      "children": 47,
+      "location": [
+        0.2199999988079071,
+        -0.7599999904632568,
+        0.550000011920929
+      ]
+    },
+    "RR": {
+      "name": "PIVOT_Door_RR_Hinge",
+      "children": 47,
+      "location": [
+        0.2199999988079071,
+        0.7599999904632568,
+        0.550000011920929
+      ]
+    }
+  },
+  "wheel_pivots": {
+    "FL": {
+      "name": "PIVOT_Wheel_FL_Roll",
+      "parent": "PIVOT_Wheel_FL_Steer"
+    },
+    "FR": {
+      "name": "PIVOT_Wheel_FR_Roll",
+      "parent": "PIVOT_Wheel_FR_Steer"
+    },
+    "RL": {
+      "name": "PIVOT_Wheel_RL_Roll",
+      "parent": "ASSET_Proton_Saga_1985"
+    },
+    "RR": {
+      "name": "PIVOT_Wheel_RR_Roll",
+      "parent": "ASSET_Proton_Saga_1985"
+    }
+  },
+  "method": "Actual Blender source hierarchy; visual and clearance limitations described in README."
 }
