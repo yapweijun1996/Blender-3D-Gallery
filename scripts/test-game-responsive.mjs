@@ -154,7 +154,16 @@ try {
           const adjusted = await readGame(page);
           const delta = Math.atan2(Math.sin(adjusted.aim-before.aim), Math.cos(adjusted.aim-before.aim));
           assert.ok(Math.abs(delta-Math.PI/180) < 1e-6, `${width}x${height}: fine aim did not move one degree`);
-          await page.touchscreen.tap(r.x + r.width * 0.78, r.y + r.height * 0.35);
+          const aimTarget = {x:r.x + r.width * 0.78, y:r.y + r.height * 0.35};
+          const aimStart = {x:r.x + r.width * 0.73, y:r.y + r.height * 0.40};
+          await page.touchscreen.tap(aimTarget.x, aimTarget.y);
+          assert.equal((await readGame(page)).aim, adjusted.aim, `${width}x${height}: a tap must not change aim`);
+          assert.equal(await page.evaluate(({x,y}) => document.elementFromPoint(x,y)?.tagName, aimStart), 'CANVAS', `${width}x${height}: drag must start on the canvas`);
+          const cdp = await context.newCDPSession(page);
+          await cdp.send('Input.dispatchTouchEvent', {type:'touchStart',touchPoints:[{...aimStart,id:1}]});
+          await cdp.send('Input.dispatchTouchEvent', {type:'touchMove',touchPoints:[{...aimTarget,id:1}]});
+          await cdp.send('Input.dispatchTouchEvent', {type:'touchEnd',touchPoints:[]});
+          await cdp.detach();
           assert.notEqual((await readGame(page)).aim, adjusted.aim, `${width}x${height}: touch aiming did not change`);
           await pullShot(page);
           await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).phase === 'moving');

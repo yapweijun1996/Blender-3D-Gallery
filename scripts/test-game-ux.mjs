@@ -211,10 +211,18 @@ try {
     await canvas.scrollIntoViewIfNeeded();
     const nextBox = await canvas.boundingBox();
     const aim = geometry(nextBox).point(0.3, -0.1);
+    const aimStart = geometry(nextBox).point(0.1, -0.1);
+    const beforeAim = await readGame(page);
     await page.touchscreen.tap(aim.x, aim.y);
+    assert.equal((await readGame(page)).aim, beforeAim.aim, 'a plain tap does not change aim');
+    assert.equal(await page.evaluate(({x,y}) => document.elementFromPoint(x,y)?.tagName, aimStart), 'CANVAS', 'touch drag starts on the table');
+    await cdpPlacement.send('Input.dispatchTouchEvent', {type:'touchStart',touchPoints:[{x:aimStart.x,y:aimStart.y,id:2}]});
+    await cdpPlacement.send('Input.dispatchTouchEvent', {type:'touchMove',touchPoints:[{x:aim.x,y:aim.y,id:2}]});
+    await cdpPlacement.send('Input.dispatchTouchEvent', {type:'touchEnd',touchPoints:[]});
     const state = await readGame(page);
     assert.equal(state.phase, 'aiming', 'aiming does not shoot');
-    assert.ok(Math.abs(state.aim - Math.atan2(0.3, -1.1)) < 0.03, `touch aim follows the selected point: ${state.aim}`);
+    assert.equal(state.committedShots, beforeAim.committedShots, 'touch aiming does not commit a shot');
+    assert.ok(Math.abs(state.aim - Math.atan2(-0.3, 1.1)) < 0.03, `touch drag aims from the cue ball toward the selected felt point: ${state.aim}`);
     const left = page.locator('[data-action="aim-left"]'), right = page.locator('[data-action="aim-right"]');
     assert.equal(await left.isVisible(), true, 'fine aim is visible during touch play');
     for (const button of [left, right]) {
