@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "edit": "Dining -> Gourmet in an isolated copy of the saved Blender source",
+  "exportMode": "generate.py -- --export-source",
+  "changedGroups": [
+    "DirectionDining"
+  ],
+  "unchangedGroups": [
+    "SignStructure",
+    "FloorIdentity",
+    "DirectionShops",
+    "DirectionCinema",
+    "DirectionFacilities"
+  ],
+  "originalAssetUnchanged": true,
+  "results": [
+    {
+      "file": "repo/models/mall-floor-direction-sign/exports/mall-floor-direction-sign.glb",
+      "sha256": "4c1f7edd051597ed4aae918d891051ed4da1d7cc5a2e5d70da84f55c8732fea6",
+      "groupHashes": {
+        "SignStructure": "cdd87b40c07e2ac9bd1d9dea088081058112141e54a79397a5ff89d886d07620",
+        "FloorIdentity": "52f39afad7ee1b21cb3449859541b004f7b4f63ce2a6eba38d046f8441f489f0",
+        "DirectionDining": "83bbf7876634b35e6af5fd61a135c863aafd24252b40e5a8a6cfe91f4897676d",
+        "DirectionShops": "5be646e89056a407e0e8277e2a42aee5ae651ff145f9942c365fbcb99b559e21",
+        "DirectionCinema": "45f348605f7883c806d75bfaf0eb7def5a0a47bc53f016957c9fd1f14b00995c",
+        "DirectionFacilities": "ca93cdfdfa136360d8f6f95d7006313175c8f89422efdbeffbef6464dbbfe28f"
+      },
+      "validation": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "file": "source-edit-check/exports/mall-floor-direction-sign.glb",
+      "sha256": "c899cd51a016f8a8af471ba5f9ea9b2c6ea51d40e2122f85799d223d49ee7744",
+      "groupHashes": {
+        "SignStructure": "cdd87b40c07e2ac9bd1d9dea088081058112141e54a79397a5ff89d886d07620",
+        "FloorIdentity": "52f39afad7ee1b21cb3449859541b004f7b4f63ce2a6eba38d046f8441f489f0",
+        "DirectionDining": "c26cce98734565d6ae3c7254f1b41934d448ab59ba078d08553f50d0ebbc27d4",
+        "DirectionShops": "5be646e89056a407e0e8277e2a42aee5ae651ff145f9942c365fbcb99b559e21",
+        "DirectionCinema": "45f348605f7883c806d75bfaf0eb7def5a0a47bc53f016957c9fd1f14b00995c",
+        "DirectionFacilities": "ca93cdfdfa136360d8f6f95d7006313175c8f89422efdbeffbef6464dbbfe28f"
+      },
+      "validation": {
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  ]
+}
