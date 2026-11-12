@@ -19,3 +19,11 @@ test('light fits every real ceiling bay and quarter-turn without erasing other p
  for(const a of assembly){assert.equal(a.result,'PASS');assert.equal(a.retainedPanels,3);assert.equal(a.retainedMeshes,24);assert.equal(a.retainedTransformsUnchanged,true);assert.equal(a.undersideVisible,true);assert.ok(a.maxAabbOverlapMetres<1e-6);}
  assert.equal(report.textures,0);assert.equal(report.animations,0);assert.deepEqual(report.emissiveFactor.map(v=>Number(v.toFixed(2))),[.8,.73,.55]);assert.match(m.accuracy_notes,/does not illuminate/);
 });
+
+test('ceiling light opts into approved underside preview without changing geometry or emission',()=>{
+ assert.deepEqual(m.display.previewCameraDirection,[1,-1.4,1]);
+ assert.deepEqual(m.display.previewLighting,{directionalPosition:[4,-7,5]});
+ assert.equal(report.sha256,'b8b0b31c7657028dff44f8c04ba7e65b07feac892b4849b81bb0a1fd78432cf8');
+ assert.equal(JSON.parse(fs.readFileSync(root+'/reports/sources.json')).source_sha256,'881ff73ec593c8c96bc19e3eebf0a7f4f085fe43655304cd0788abdf977e68bd');
+ assert.deepEqual(report.emissiveFactor.map(v=>Number(v.toFixed(2))),[.8,.73,.55]);assert.equal(asset.downloadable,false);
+});

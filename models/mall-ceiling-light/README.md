@@ -10,7 +10,7 @@ Selected backlog V2.1, P0 item 423. **One logical asset**, batch item 4/10. A si
 
 The opal diffuser has a **static emissive PBR material**, not a functional switch, punctual light or photometric model. It stays visible in a dark view but **does not illuminate neighbouring geometry in the Three.js gallery**. No electrical, fire, acoustic, structural, installation, lighting-performance or building-code compliance is claimed.
 
-**Overall: NEEDS REVIEW.** Current gallery camera starts above the correctly oriented light, showing its rear. Eight down-arrow orbit steps expose the diffuser, with the existing upper-biased lighting still affecting the surrounding frame. A separate approved viewer-configuration task is not part of this asset commit. Physical Android/iOS remains untested.
+**Overall: NEEDS REVIEW.** The approved per-model preview now starts below the correctly oriented light, with the existing key light repositioned below it. The original source, GLB and emission stay unchanged. See [integration verification](preview-config-verification.md). Pre-configuration rear/underside evidence remains preserved. Physical Android/iOS remains untested.
 
 ## Mount into ceiling kit 422
 

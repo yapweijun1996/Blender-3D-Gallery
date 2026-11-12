@@ -38,7 +38,19 @@
     "units": "metres",
     "up_axis": "Blender +Z / glTF +Y",
     "origin": "centre of bezel underside, with fastener heads 1 mm below",
-    "front_axis": "Diffuser faces Blender -Z / glTF -Y"
+    "front_axis": "Diffuser faces Blender -Z / glTF -Y",
+    "previewCameraDirection": [
+      1,
+      -1.4,
+      1
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        -7,
+        5
+      ]
+    }
   },
   "assembly": {
     "panel_size_gltf_m": [
@@ -91,6 +103,6 @@
   },
   "quality_gate": {
     "overall": "NEEDS REVIEW",
-    "scope": "Local artifact only. Current gallery camera starts above the correctly oriented fixture and shows its rear; use underside orbit. Static emission stays visible without physical scene illumination. Desktop narrow viewports are not Android/iOS verification."
+    "scope": "Local artifact. Approved per-model underside camera and lower key-light position improve gallery presentation without changing source, GLB or emission. Static emission does not illuminate the scene. Physical Android/iOS remain untested."
   }
 }

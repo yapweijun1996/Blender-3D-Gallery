@@ -1,3 +1,5 @@
+> Historical pre-configuration report. For the approved underside preview integration and latest tests, see [preview-config-verification.md](preview-config-verification.md). Original measurements and evidence below are retained.
+
 # Mall Ceiling Light verification, 2026-11-12
 
 ## Result

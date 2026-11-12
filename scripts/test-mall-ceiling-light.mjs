@@ -6,7 +6,7 @@ import {chromium} from 'playwright';
 import {serveBuild,launchOptions} from './browser-test-utils.mjs';
 const catalog=JSON.parse(await fs.readFile(new URL('../models/catalog.json',import.meta.url),'utf8'));
 const assets=catalog.collections.find(c=>c.id==='mall-ceiling-light').assets;
-const out=process.env.MALL_QA_DIR||'/tmp/blender-mall-ceiling-light-qa';await fs.mkdir(out,{recursive:true});
+const out=process.env.MALL_QA_DIR||'/tmp/blender-mall-ceiling-light-config-qa';await fs.mkdir(out,{recursive:true});
 const server=await serveBuild(),browser=await chromium.launch(launchOptions),results=[];
 try{
 for(const asset of assets)for(const [width,height] of [[1440,900],[768,1024],[390,844]]){
@@ -25,18 +25,24 @@ for(const asset of assets)for(const [width,height] of [[1440,900],[768,1024],[39
   await page.goto(server.url+'?model='+asset.id,{waitUntil:'networkidle'});
   await page.waitForFunction(()=>document.querySelector('#viewer')?.open&&document.querySelector('#viewport canvas')&&document.querySelector('#viewer-status')?.textContent===''&&window.mallDraws>0,null,{timeout:60000});
   assert.equal(await page.locator('#viewer-title').innerText(),asset.name);assert.equal(await page.locator('#viewer-download').isVisible(),false);
-  const canvas=page.locator('#viewport canvas');await canvas.focus();const shot=async(label)=>createHash('sha256').update(await canvas.screenshot({path:path.join(out,asset.id+'-'+width+'-'+label+'.png')})).digest('hex');
+  const canvas=page.locator('#viewport canvas');await canvas.focus();const shot=async(label)=>{await canvas.evaluate(el=>el.blur());await page.waitForTimeout(350);return createHash('sha256').update(await canvas.screenshot({path:path.join(out,asset.id+'-'+width+'-'+label+'.png')})).digest('hex');}; // Same focus/modality for every complete screenshot; no masking.
   const initial=await shot('initial');
   let draws=await page.evaluate(()=>window.mallDraws);await canvas.press('ArrowRight');await page.waitForFunction(n=>window.mallDraws>n,draws);const orbit=await shot('orbit');assert.notEqual(orbit,initial);
   draws=await page.evaluate(()=>window.mallDraws);await canvas.press('PageUp');await page.waitForFunction(n=>window.mallDraws>n,draws);const zoom=await shot('zoom');assert.notEqual(zoom,orbit);
-  await page.locator('#reset-view').click();const reset=await shot('reset');assert.notEqual(reset,zoom);
+  await page.locator('#reset-view').click();const reset=await shot('reset');assert.equal(reset,initial,'reset restores configured underside initial view');
   for(let i=0;i<8;i++)await canvas.press('ArrowDown');const underside=await shot('underside');assert.notEqual(underside,initial);
-  await page.locator('#reset-view').click();await shot('final-reset');
+  await page.locator('#reset-view').click();assert.equal(await shot('final-reset'),initial);
+  result.initialConsumed=await page.evaluate(()=>window.mallConsumedGlbs);assert.ok(result.initialConsumed.some(x=>x.bytes===bytes.length&&x.sha256===sha256));
+  await page.locator('#close-viewer').click();assert.equal(await canvas.count(),0);
+  await page.goto(server.url+'?model='+asset.id,{waitUntil:'networkidle'});
+  await page.waitForFunction(()=>document.querySelector('#viewer')?.open&&document.querySelector('#viewport canvas')&&document.querySelector('#viewer-status')?.textContent===''&&window.mallDraws>0,null,{timeout:60000});
+  const reopened=await shot('reopened');assert.equal(reopened,initial,'reopen restores configured underside initial view');
+  result.pixels={initial,orbit,zoom,reset,underside,reopened};result.resetMatchesInitial=true;result.reopenMatchesInitial=true;
   await page.screenshot({path:path.join(out,asset.id+'-'+width+'-page.png')});
   result.consumed=await page.evaluate(()=>window.mallConsumedGlbs);assert.ok(result.consumed.some(x=>x.bytes===bytes.length&&x.sha256===sha256));
   result.glbResponses=responses.map(r=>({path:new URL(r.url()).pathname,status:r.status()}));assert.ok(responses.length>0);for(const r of responses)assert.equal(r.status(),200);
   result.horizontalOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);assert.equal(result.horizontalOverflow,false);
-  result.renderDrawCalls=await page.evaluate(()=>window.mallDraws);result.controls=['orbit','zoom','reset','underside orbit'];result.defaultView='Existing elevated camera shows rear; underside requires orbit (NEEDS REVIEW)';
+  result.renderDrawCalls=await page.evaluate(()=>window.mallDraws);result.controls=['orbit','zoom','exact reset','additional orbit','close and exact reopen'];result.defaultView='Configured underside camera [1,-1.4,1] and lower key position [4,-7,5]; no geometry inversion or physical emission lighting';
   assert.deepEqual(errors,[]);result.passed=true;console.log('PASS',asset.id,width);
  }catch(e){result.failure=e.message;await page.screenshot({path:path.join(out,asset.id+'-'+width+'-failure.png')}).catch(()=>{});console.error('FAIL',asset.id,width,e.message);}
  finally{results.push(result);await context.close();}
