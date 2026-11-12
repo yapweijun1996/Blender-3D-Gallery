@@ -1,0 +1,170 @@
+{
+  "units": "metres",
+  "up_axis": "+Y",
+  "post_asset": "mall-glass-railing-post",
+  "post_module": "MODULE_Post",
+  "connector": {
+    "post_face_offset_m": 0.026,
+    "handrail_centre_height_m": 1.095,
+    "panel_thickness_m": 0.012
+  },
+  "examples": [
+    {
+      "name": "repeated-1m",
+      "posts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          0
+        ]
+      ],
+      "infills": [
+        {
+          "asset": "mall-glass-railing-1m",
+          "module": "MODULE_Infill",
+          "posts": [
+            0,
+            1
+          ],
+          "position": [
+            0.5,
+            0.0,
+            0.0
+          ],
+          "rotationY": -0.0
+        },
+        {
+          "asset": "mall-glass-railing-1m",
+          "module": "MODULE_Infill",
+          "posts": [
+            1,
+            2
+          ],
+          "position": [
+            1.5,
+            0.0,
+            0.0
+          ],
+          "rotationY": -0.0
+        },
+        {
+          "asset": "mall-glass-railing-1m",
+          "module": "MODULE_Infill",
+          "posts": [
+            2,
+            3
+          ],
+          "position": [
+            2.5,
+            0.0,
+            0.0
+          ],
+          "rotationY": -0.0
+        }
+      ]
+    },
+    {
+      "name": "mixed-right-angle",
+      "posts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          2
+        ],
+        [
+          3,
+          0,
+          3
+        ]
+      ],
+      "infills": [
+        {
+          "asset": "mall-glass-railing-2m",
+          "module": "MODULE_Infill",
+          "posts": [
+            0,
+            1
+          ],
+          "position": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "rotationY": -0.0
+        },
+        {
+          "asset": "mall-glass-railing-1m",
+          "module": "MODULE_Infill",
+          "posts": [
+            1,
+            2
+          ],
+          "position": [
+            2.5,
+            0.0,
+            0.0
+          ],
+          "rotationY": -0.0
+        },
+        {
+          "asset": "mall-glass-railing-2m",
+          "module": "MODULE_Infill",
+          "posts": [
+            2,
+            3
+          ],
+          "position": [
+            3.0,
+            0.0,
+            1.0
+          ],
+          "rotationY": -1.5707963267948966
+        },
+        {
+          "asset": "mall-glass-railing-1m",
+          "module": "MODULE_Infill",
+          "posts": [
+            3,
+            4
+          ],
+          "position": [
+            3.0,
+            0.0,
+            2.5
+          ],
+          "rotationY": -1.5707963267948966
+        }
+      ]
+    }
+  ]
+}

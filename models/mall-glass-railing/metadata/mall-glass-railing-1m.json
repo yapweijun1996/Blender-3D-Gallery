@@ -1,0 +1,93 @@
+{
+  "id": "mall-glass-railing-1m",
+  "name": "Glass Railing Bay · 1 m",
+  "summary": "1 m centre-spaced glass railing bay with graphite posts, continuous handrail and transparent sea-green panel.",
+  "description": "1 m centre-spaced glass railing bay with graphite posts, continuous handrail and transparent sea-green panel.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "railing",
+    "glass",
+    "modular",
+    "architecture",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled BSDF materials. No external models or textures.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-glass-railing-1m.glb",
+    "source": "sources/mall-glass-railing-1m.blend",
+    "preview": "previews/mall-glass-railing-1m.webp",
+    "render": "previews/mall-glass-railing-1m.png",
+    "additional_previews": [
+      "previews/mall-glass-railing-1m-front.webp",
+      "previews/mall-glass-railing-1m-rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor centre",
+    "front_axis": "Blender -Y / glTF +Z; visually symmetric"
+  },
+  "assembly": {
+    "centre_spacing_m": 1,
+    "modules": [
+      "MODULE_Post_Left",
+      "MODULE_Post_Right",
+      "MODULE_Infill"
+    ],
+    "layouts": "layouts.json",
+    "connectors": "Post faces at 0.026 m offset; handrail centre at 1.095 m. Use one post at each unique joint and extract only MODULE_Infill for repeated bays."
+  },
+  "material_notes": "Sea-green glass uses glTF BLEND alpha 0.28 with double-sided surfaces, not refraction/transmission. Thin edge tint makes the glass readable. Original source geometry/materials remain individually editable.",
+  "accuracy_notes": "Static decorative concept only. Not building-code compliance, a structural engineering design, fabrication instructions, physics simulation or a safety-certified barrier.",
+  "attribution": [
+    {
+      "credit": "Original geometry and materials authored for Blender-3D-Gallery; no external artwork."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 175864,
+    "triangles": 3236,
+    "vertices": 6456,
+    "primitives": 10,
+    "materials": 5,
+    "animations": 0,
+    "dimensions": [
+      1.1599999964237213,
+      1.1209999322891235,
+      0.1599999964237213
+    ],
+    "bounds": {
+      "min": [
+        -0.5799999982118607,
+        0,
+        -0.07999999821186066
+      ],
+      "max": [
+        0.5799999982118607,
+        1.1209999322891235,
+        0.07999999821186066
+      ]
+    },
+    "sha256": "556cfc03f38a0cb0c21a125a318c5dc251976e18598f3d15f3e0979dc2dfd49d"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Local asset structure/source/visual checks passed. Strict gallery gate has one unresolved request failure; Android and iOS untested. See verification.md."
+  }
+}
