@@ -25,18 +25,18 @@ for(const asset of assets)for(const [width,height] of [[1440,900],[768,1024],[39
   await page.goto(server.url+'?model='+asset.id,{waitUntil:'networkidle'});
   await page.waitForFunction(()=>document.querySelector('#viewer')?.open&&document.querySelector('#viewport canvas')&&document.querySelector('#viewer-status')?.textContent===''&&window.mallDraws>0,null,{timeout:60000});
   assert.equal(await page.locator('#viewer-title').innerText(),asset.name);assert.equal(await page.locator('#viewer-download').isVisible(),false);
-  const canvas=page.locator('#viewport canvas');await canvas.focus();const shot=async(label)=>createHash('sha256').update(await canvas.screenshot({path:path.join(out,asset.id+'-'+width+'-'+label+'.png')})).digest('hex');
+  const canvas=page.locator('#viewport canvas');await canvas.focus();const shot=async(label)=>{await canvas.evaluate(el=>el.blur());return createHash('sha256').update(await canvas.screenshot({path:path.join(out,asset.id+'-'+width+'-'+label+'.png')})).digest('hex');}; // Blur consistently: :focus-visible differs after keyboard vs pointer controls. No screenshot masking.
   const initial=await shot('initial');
   let draws=await page.evaluate(()=>window.mallDraws);await canvas.press('ArrowRight');await page.waitForFunction(n=>window.mallDraws>n,draws);const orbit=await shot('orbit');assert.notEqual(orbit,initial);
   draws=await page.evaluate(()=>window.mallDraws);await canvas.press('PageUp');await page.waitForFunction(n=>window.mallDraws>n,draws);const zoom=await shot('zoom');assert.notEqual(zoom,orbit);
-  await page.locator('#reset-view').click();const reset=await shot('reset');assert.notEqual(reset,zoom);
+  await page.locator('#reset-view').click();const reset=await shot('reset');assert.equal(reset,initial,'reset returns to configured initial underside');
   for(let i=0;i<8;i++)await canvas.press('ArrowDown');const underside=await shot('underside');assert.notEqual(underside,initial);
   await page.locator('#reset-view').click();await shot('final-reset');
   await page.screenshot({path:path.join(out,asset.id+'-'+width+'-page.png')});
   result.consumed=await page.evaluate(()=>window.mallConsumedGlbs);assert.ok(result.consumed.some(x=>x.bytes===bytes.length&&x.sha256===sha256));
   result.glbResponses=responses.map(r=>({path:new URL(r.url()).pathname,status:r.status()}));assert.ok(responses.length>0);for(const r of responses)assert.equal(r.status(),200);
   result.horizontalOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);assert.equal(result.horizontalOverflow,false);
-  result.renderDrawCalls=await page.evaluate(()=>window.mallDraws);result.controls=['orbit','zoom','reset','underside orbit'];result.defaultView='Existing elevated camera shows rear; underside requires orbit (NEEDS REVIEW)';
+  result.renderDrawCalls=await page.evaluate(()=>window.mallDraws);result.controls=['orbit','zoom','reset','underside orbit'];result.defaultView='Configured underside camera and lower directional light; see visual inspection evidence';
   assert.deepEqual(errors,[]);result.passed=true;console.log('PASS',asset.id,width);
  }catch(e){result.failure=e.message;await page.screenshot({path:path.join(out,asset.id+'-'+width+'-failure.png')}).catch(()=>{});console.error('FAIL',asset.id,width,e.message);}
  finally{results.push(result);await context.close();}

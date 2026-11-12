@@ -4,7 +4,7 @@ Selected backlog V2.1, item 422, P0. **One logical ceiling kit**, not a separate
 
 A 1.2 m × 1.2 m suspended ceiling cassette for generic Singapore/Malaysia mall interiors: four recessed mineral-fibre-style panels, an ivory T-grid and steel suspension pieces. Source uses metres with Blender +Z up; the GLB uses metres with +Y up. The origin is the centre of the visible grid underside. Hangers extend 0.36 m above it.
 
-**Overall: NEEDS REVIEW.** See [verification.md](verification.md). The existing gallery camera starts above every ordinary asset, so this correctly upright ceiling initially shows its rear. The supplied thumbnail/multi-angle renders show the underside; use the gallery's existing down-arrow orbit control eight times to inspect it. No viewer code, UI or metadata-schema extension was made. Physical Android/iOS validation remains untested.
+**Overall: NEEDS REVIEW.** The Gallery now starts at the decorative underside using optional per-model camera and light settings, without rotating or changing geometry. Reset returns to this view. See the [preview configuration verification](../../docs/verification/preview-config.md) for current evidence; [verification.md](verification.md) retains the original asset checks and pre-fix observations. No visible UI redesign. Physical Android/iOS validation remains untested.
 
 ## Editable components and repeat rules
 

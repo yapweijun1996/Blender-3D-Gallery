@@ -1,3 +1,5 @@
+> Update: the initial rear/dark-underside presentation described below is the original baseline. Optional camera/light configuration now addresses it; see [current viewer verification](../../docs/verification/preview-config.md). Original observations are retained.
+
 # Mall Ceiling Panel verification, 2026-11-12
 
 ## Result

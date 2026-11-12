@@ -39,7 +39,19 @@
     "units": "metres",
     "up_axis": "Blender +Z / glTF +Y",
     "origin": "centre of visible grid underside",
-    "front_axis": "Square ceiling; decorative face points toward Blender -Z / glTF -Y"
+    "front_axis": "Square ceiling; decorative face points toward Blender -Z / glTF -Y",
+    "previewCameraDirection": [
+      1,
+      -1.4,
+      1
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        -7,
+        5
+      ]
+    }
   },
   "assembly": {
     "repeat_pitch_m": 1.2,
@@ -124,6 +136,6 @@
   },
   "quality_gate": {
     "overall": "NEEDS REVIEW",
-    "scope": "Local artifact. Existing elevated gallery camera initially shows the rear; underside is inspectable with orbit controls and supplied underside previews. No app UI or metadata schema extension. Desktop viewport evidence is not physical Android/iOS coverage."
+    "scope": "Local artifact. Optional per-model Gallery camera and light settings show the decorative underside initially; geometry is unchanged. Desktop Chromium viewport evidence is not physical Android/iOS coverage. Publication and overall visual approval remain separate."
   }
 }

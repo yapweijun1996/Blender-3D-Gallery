@@ -67,9 +67,29 @@ export function validateCatalog(input) {
   }
   return catalog;
 }
+function previewVector(value, label, camera = false) {
+  // Bound authoring mistakes; reject degenerate directions before Three.js sees them.
+  if (!Array.isArray(value) || value.length !== 3 ||
+      !Array.from(value).every(component => Number.isFinite(component) && Math.abs(component) <= 100) ||
+      Math.hypot(...value) < 0.000001 ||
+      (camera && Math.hypot(value[0], value[2]) < 0.000001))
+    throw new Error(`Invalid metadata ${label}`);
+}
+
 export function validateMetadata(input, expectedId) {
   if (!isObject(input) || input.id !== expectedId) throw new Error("Mismatched model metadata");
   if (!isObject(input.display) || !Number.isFinite(input.display.previewRotationY)) throw new Error("Invalid metadata display");
+  const { previewCameraDirection, previewLighting } = input.display;
+  if (previewCameraDirection !== undefined) previewVector(previewCameraDirection, "previewCameraDirection", true);
+  if (previewLighting !== undefined) {
+    if (!isObject(previewLighting)) throw new Error("Invalid metadata previewLighting");
+    if (previewLighting.directionalPosition !== undefined)
+      previewVector(previewLighting.directionalPosition, "previewLighting.directionalPosition");
+    for (const field of ["hemisphereIntensity", "directionalIntensity"])
+      if (previewLighting[field] !== undefined &&
+          (!Number.isFinite(previewLighting[field]) || previewLighting[field] < 0 || previewLighting[field] > 10))
+        throw new Error(`Invalid metadata previewLighting.${field}`);
+  }
   textField(input.accuracy_notes, "metadata accuracy notes");
   if (!Array.isArray(input.attribution)) throw new Error("Invalid metadata attribution");
   for (const credit of input.attribution) {

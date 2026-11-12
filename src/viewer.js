@@ -11,6 +11,10 @@ export default async function createViewer(
   asset,
 ) {
   const isVehicle = asset.id === "proton-saga-1985";
+  // Optional metadata is validated during catalog loading/build. Omitting each
+  // override retains the original viewer defaults, including special families.
+  const display = asset.details?.display;
+  const lighting = display?.previewLighting;
   let vehicleToolbar;
   let studio;
   let environmentTarget;
@@ -64,9 +68,9 @@ export default async function createViewer(
     controls.update();
     invalidate();
   });
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x535b53, 2));
-  const light = new THREE.DirectionalLight(0xffffff, 2.1);
-  light.position.set(4, 7, 5);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x535b53, lighting?.hemisphereIntensity ?? 2));
+  const light = new THREE.DirectionalLight(0xffffff, lighting?.directionalIntensity ?? 2.1);
+  light.position.fromArray(lighting?.directionalPosition ?? [4, 7, 5]);
   scene.add(light);
   let frame = 0;
   let model;
@@ -171,8 +175,8 @@ export default async function createViewer(
         pmrem.dispose();
       }
     }
-    if (asset.details?.display)
-      model.rotation.y = asset.details.display.previewRotationY ?? 0;
+    if (display)
+      model.rotation.y = display.previewRotationY ?? 0;
     scene.add(model);
     const bounds = new THREE.Box3().setFromObject(model);
     if (bounds.isEmpty()) throw new Error("Model has no visible bounds");
@@ -184,6 +188,7 @@ export default async function createViewer(
     controls.minDistance = radius * 1.05;
     controls.maxDistance = radius * 20;
     const direction = (
+      display?.previewCameraDirection ? new THREE.Vector3().fromArray(display.previewCameraDirection) :
       isVehicle ? new THREE.Vector3(1, 0.35, -0.75) :
       asset.family === "solar-system"
         ? new THREE.Vector3(0.55, 0.42, 1)
