@@ -1,0 +1,1220 @@
+
+> blender-3d-gallery@0.1.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: catalog rejects external core image and buffer URIs
+ok 1 - catalog rejects external core image and buffer URIs
+  ---
+  duration_ms: 36.753333
+  type: 'test'
+  ...
+# Subtest: catalog accepts embedded core resources and self-contained data URIs
+ok 2 - catalog accepts embedded core resources and self-contained data URIs
+  ---
+  duration_ms: 492.731514
+  type: 'test'
+  ...
+# Subtest: billiards catalog includes each physical asset and the legacy scene
+ok 3 - billiards catalog includes each physical asset and the legacy scene
+  ---
+  duration_ms: 104.548469
+  type: 'test'
+  ...
+# Subtest: individual GLBs have only their own root and a zero origin
+ok 4 - individual GLBs have only their own root and a zero origin
+  ---
+  duration_ms: 68.697906
+  type: 'test'
+  ...
+# Subtest: assembled scene retains all 21 roots at their assembled locations
+ok 5 - assembled scene retains all 21 roots at their assembled locations
+  ---
+  duration_ms: 55.963001
+  type: 'test'
+  ...
+# Subtest: number marks follow the ball surface on opposite sides
+ok 6 - number marks follow the ball surface on opposite sides
+  ---
+  duration_ms: 75.18171
+  type: 'test'
+  ...
+# Subtest: break guide reaches the rack beyond the former artificial range
+ok 7 - break guide reaches the rack beyond the former artificial range
+  ---
+  duration_ms: 1.315343
+  type: 'test'
+  ...
+# Subtest: guide picks nearest ball and clears a near miss to the actual cushion
+ok 8 - guide picks nearest ball and clears a near miss to the actual cushion
+  ---
+  duration_ms: 0.231453
+  type: 'test'
+  ...
+# Subtest: guide distinguishes side pocket opening and handles touching cushion
+ok 9 - guide distinguishes side pocket opening and handles touching cushion
+  ---
+  duration_ms: 0.186745
+  type: 'test'
+  ...
+# Subtest: feedback reports observed pots and authoritative turn/rule result
+ok 10 - feedback reports observed pots and authoritative turn/rule result
+  ---
+  duration_ms: 0.103331
+  type: 'test'
+  ...
+# Subtest: guide handles legal near-touching placements without claiming separating contact
+ok 11 - guide handles legal near-touching placements without claiming separating contact
+  ---
+  duration_ms: 0.280285
+  type: 'test'
+  ...
+# Subtest: rack is seeded, complete, eight centered, opposite rear groups and non-overlapping
+ok 12 - rack is seeded, complete, eight centered, opposite rear groups and non-overlapping
+  ---
+  duration_ms: 1.468007
+  type: 'test'
+  ...
+# Subtest: placement respects head string, overlaps, table and pocket limits
+ok 13 - placement respects head string, overlaps, table and pocket limits
+  ---
+  duration_ms: 0.174829
+  type: 'test'
+  ...
+# Subtest: legal pot allocates group and continues; miss passes turn
+ok 14 - legal pot allocates group and continues; miss passes turn
+  ---
+  duration_ms: 0.485614
+  type: 'test'
+  ...
+# Subtest: foul does not allocate group and pockets stay pocketed
+ok 15 - foul does not allocate group and pockets stay pocketed
+  ---
+  duration_ms: 0.153788
+  type: 'test'
+  ...
+# Subtest: mixed pots sort by event time, with ball number breaking simultaneous ties
+ok 16 - mixed pots sort by event time, with ball number breaking simultaneous ties
+  ---
+  duration_ms: 1.22297
+  type: 'test'
+  ...
+# Subtest: open-table group follows the first actual pot within a substep
+ok 17 - open-table group follows the first actual pot within a substep
+  ---
+  duration_ms: 2.284737
+  type: 'test'
+  ...
+# Subtest: break never allocates groups, eight is re-spotted and scratch gives ball in hand
+ok 18 - break never allocates groups, eight is re-spotted and scratch gives ball in hand
+  ---
+  duration_ms: 0.227953
+  type: 'test'
+  ...
+# Subtest: break pot continues, miss changes turn, no contact is a foul
+ok 19 - break pot continues, miss changes turn, no contact is a foul
+  ---
+  duration_ms: 0.195579
+  type: 'test'
+  ...
+# Subtest: early eight and last own ball plus eight lose
+ok 20 - early eight and last own ball plus eight lose
+  ---
+  duration_ms: 0.49878
+  type: 'test'
+  ...
+# Subtest: eligible eight wins unless any foul occurs in the same shot
+ok 21 - eligible eight wins unless any foul occurs in the same shot
+  ---
+  duration_ms: 0.562612
+  type: 'test'
+  ...
+# Subtest: wrong first contact and open-table eight contact are fouls
+ok 22 - wrong first contact and open-table eight contact are fouls
+  ---
+  duration_ms: 0.256827
+  type: 'test'
+  ...
+# Subtest: an open table with all group balls gone can finish, but a partly cleared open table cannot play eight
+ok 23 - an open table with all group balls gone can finish, but a partly cleared open table cannot play eight
+  ---
+  duration_ms: 0.580444
+  type: 'test'
+  ...
+# Subtest: opponent-only pots pass turn and mixed own pots continue
+ok 24 - opponent-only pots pass turn and mixed own pots continue
+  ---
+  duration_ms: 0.139872
+  type: 'test'
+  ...
+# Subtest: duplicate and finished shot resolution is rejected
+ok 25 - duplicate and finished shot resolution is rejected
+  ---
+  duration_ms: 0.221286
+  type: 'test'
+  ...
+# Subtest: invalid physical outcome restores pre-shot state in recovery
+ok 26 - invalid physical outcome restores pre-shot state in recovery
+  ---
+  duration_ms: 0.113539
+  type: 'test'
+  ...
+# Subtest: stable schema rejects corruption, motion, shuffled IDs and contradictory results
+ok 27 - stable schema rejects corruption, motion, shuffled IDs and contradictory results
+  ---
+  duration_ms: 0.485864
+  type: 'test'
+  ...
+# Subtest: fixed-step rack break settles without escape, preserves identity and repeats
+ok 28 - fixed-step rack break settles without escape, preserves identity and repeats
+  ---
+  duration_ms: 608.581422
+  type: 'test'
+  ...
+# Subtest: malformed save entries are rejected without throwing
+ok 29 - malformed save entries are rejected without throwing
+  ---
+  duration_ms: 0.253952
+  type: 'test'
+  ...
+# Subtest: all six pocket approach fixtures capture exactly once
+ok 30 - all six pocket approach fixtures capture exactly once
+  ---
+  duration_ms: 21.642276
+  type: 'test'
+  ...
+# Subtest: cushion reflects, low power stops, and high power cannot tunnel
+ok 31 - cushion reflects, low power stops, and high power cannot tunnel
+  ---
+  duration_ms: 32.708054
+  type: 'test'
+  ...
+# Subtest: pull is relative to origin, clamps and reverses without charging
+ok 32 - pull is relative to origin, clamps and reverses without charging
+  ---
+  duration_ms: 1.114432
+  type: 'test'
+  ...
+# Subtest: release threshold tolerates real pointer-coordinate representation without admitting weak pulls
+ok 33 - release threshold tolerates real pointer-coordinate representation without admitting weak pulls
+  ---
+  duration_ms: 0.129789
+  type: 'test'
+  ...
+# Subtest: strength curve preserves threshold and monotonic speed
+ok 34 - strength curve preserves threshold and monotonic speed
+  ---
+  duration_ms: 0.06804
+  type: 'test'
+  ...
+# Subtest: cue retraction follows pull and reaches real contact on timeline
+ok 35 - cue retraction follows pull and reaches real contact on timeline
+  ---
+  duration_ms: 0.078998
+  type: 'test'
+  ...
+# Subtest: aim points from the white ball toward the pointer and retains angle at zero-length
+ok 36 - aim points from the white ball toward the pointer and retains angle at zero-length
+  ---
+  duration_ms: 0.06879
+  type: 'test'
+  ...
+# Subtest: dragging the cue butt aims away from the pointer
+ok 37 - dragging the cue butt aims away from the pointer
+  ---
+  duration_ms: 0.057415
+  type: 'test'
+  ...
+# Subtest: cue hit test covers the shaft behind the ball only
+ok 38 - cue hit test covers the shaft behind the ball only
+  ---
+  duration_ms: 0.101873
+  type: 'test'
+  ...
+# Subtest: post-contact estimate: head-on sends the object ball straight and leaves no cue tangent
+ok 39 - post-contact estimate: head-on sends the object ball straight and leaves no cue tangent
+  ---
+  duration_ms: 0.095123
+  type: 'test'
+  ...
+# Subtest: post-contact estimate: cut shot splits object and cue directions at right angles
+ok 40 - post-contact estimate: cut shot splits object and cue directions at right angles
+  ---
+  duration_ms: 0.452197
+  type: 'test'
+  ...
+# Subtest: mall essentials registers exactly the four requested fixtures
+ok 41 - mall essentials registers exactly the four requested fixtures
+  ---
+  duration_ms: 0.588736
+  type: 'test'
+  ...
+# Subtest: mall-directory-kiosk preserves provenance, measured export, source and thumbnail
+ok 42 - mall-directory-kiosk preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.640985
+  type: 'test'
+  ...
+# Subtest: mall-advertising-lightbox preserves provenance, measured export, source and thumbnail
+ok 43 - mall-advertising-lightbox preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.26691
+  type: 'test'
+  ...
+# Subtest: mall-trash-bin preserves provenance, measured export, source and thumbnail
+ok 44 - mall-trash-bin preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.39299
+  type: 'test'
+  ...
+# Subtest: mall-display-shelf preserves provenance, measured export, source and thumbnail
+ok 45 - mall-display-shelf preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.303784
+  type: 'test'
+  ...
+# Subtest: event booth is registered and measured metadata is synchronized
+ok 46 - event booth is registered and measured metadata is synchronized
+  ---
+  duration_ms: 0.88677
+  type: 'test'
+  ...
+# Subtest: poster and display are real independent mesh-bearing groups
+ok 47 - poster and display are real independent mesh-bearing groups
+  ---
+  duration_ms: 0.20212
+  type: 'test'
+  ...
+# Subtest: hiding/replacing either module leaves the other and booth structure intact
+ok 48 - hiding/replacing either module leaves the other and booth structure intact
+  ---
+  duration_ms: 0.886979
+  type: 'test'
+  ...
+# Subtest: floor direction sign is registered before queue kit with synchronized measured metadata
+ok 49 - floor direction sign is registered before queue kit with synchronized measured metadata
+  ---
+  duration_ms: 1.25422
+  type: 'test'
+  ...
+# Subtest: floor-centred, metre-scale GLB has six independent mesh-bearing modules
+ok 50 - floor-centred, metre-scale GLB has six independent mesh-bearing modules
+  ---
+  duration_ms: 0.795815
+  type: 'test'
+  ...
+# Subtest: each label cartridge can be removed and replaced without changing the structure or other labels
+ok 51 - each label cartridge can be removed and replaced without changing the structure or other labels
+  ---
+  duration_ms: 1.397341
+  type: 'test'
+  ...
+# Subtest: reopened source retains editable text and original destination labels, with no live editing claim
+ok 52 - reopened source retains editable text and original destination labels, with no live editing claim
+  ---
+  duration_ms: 0.181371
+  type: 'test'
+  ...
+# {
+#   "asset": {
+#     "id": "mall-floor-tile-module",
+#     "surfaceChecks": [
+#       {
+#         "x": 0,
+#         "z": 0,
+#         "expectedHeight": 0.029,
+#         "measuredHeight": 0.028999999165535084
+#       },
+#       {
+#         "x": 0.3,
+#         "z": 0,
+#         "expectedHeight": 0.029,
+#         "measuredHeight": 0.028999999165534973
+#       },
+#       {
+#         "x": 0,
+#         "z": 0.3,
+#         "expectedHeight": 0.029,
+#         "measuredHeight": 0.028999999165534973
+#       },
+#       {
+#         "x": 0.599,
+#         "z": 0,
+#         "expectedHeight": 0.029,
+#         "measuredHeight": 0.028999999165534973
+#       },
+#       {
+#         "x": 0.3,
+#         "z": 0.3,
+#         "expectedHeight": 0.03,
+#         "measuredHeight": 0.029999999329447746
+#       },
+#       {
+#         "x": -0.3,
+#         "z": -0.3,
+#         "expectedHeight": 0.03,
+#         "measuredHeight": 0.029999999329447746
+#       }
+#     ],
+#     "glb_bytes": 155964,
+#     "triangles": 604,
+#     "vertices": 1064,
+#     "primitives": 9,
+#     "materials": 3,
+#     "textures": 1,
+#     "texture_dimensions": [
+#       512,
+#       512
+#     ],
+#     "animations": 0,
+#     "dimensions": [
+#       1.2000000476837158,
+#       0.029999999329447746,
+#       1.2000000476837158
+#     ],
+#     "bounds": {
+#       "min": [
+#         -0.6000000238418579,
+#         0,
+#         -0.6000000238418579
+#       ],
+#       "max": [
+#         0.6000000238418579,
+#         0.029999999329447746,
+#         0.6000000238418579
+#       ]
+#     },
+#     "parts": {
+#       "MODULE_GroutBed": {
+#         "min": [
+#           -0.6000000238418579,
+#           0,
+#           -0.6000000238418579
+#         ],
+#         "max": [
+#           0.6000000238418579,
+#           0.028999999165534973,
+#           0.6000000238418579
+#         ],
+#         "dimensions": [
+#           1.2000000476837158,
+#           0.028999999165534973,
+#           1.2000000476837158
+#         ]
+#       },
+#       "MODULE_Tile_1": {
+#         "min": [
+#           -0.5980000197887421,
+#           0.012000000104308128,
+#           0.0020000040531158447
+#         ],
+#         "max": [
+#           -0.0020000040531158447,
+#           0.029999999329447746,
+#           0.5980000197887421
+#         ],
+#         "dimensions": [
+#           0.5960000157356262,
+#           0.017999999225139618,
+#           0.5960000157356262
+#         ]
+#       },
+#       "MODULE_Tile_2": {
+#         "min": [
+#           0.0020000040531158447,
+#           0.012000000104308128,
+#           0.0020000040531158447
+#         ],
+#         "max": [
+#           0.5980000197887421,
+#           0.029999999329447746,
+#           0.5980000197887421
+#         ],
+#         "dimensions": [
+#           0.5960000157356262,
+#           0.017999999225139618,
+#           0.5960000157356262
+#         ]
+#       },
+#       "MODULE_Tile_3": {
+#         "min": [
+#           -0.5980000197887421,
+#           0.012000000104308128,
+#           -0.5980000197887421
+#         ],
+#         "max": [
+#           -0.0020000040531158447,
+#           0.029999999329447746,
+#           -0.0020000040531158447
+#         ],
+#         "dimensions": [
+#           0.5960000157356262,
+#           0.017999999225139618,
+#           0.5960000157356262
+#         ]
+#       },
+#       "MODULE_Tile_4": {
+#         "min": [
+#           0.0020000040531158447,
+#           0.012000000104308128,
+#           -0.5980000197887421
+#         ],
+#         "max": [
+#           0.5980000197887421,
+#           0.029999999329447746,
+#           -0.0020000040531158447
+#         ],
+#         "dimensions": [
+#           0.5960000157356262,
+#           0.017999999225139618,
+#           0.5960000157356262
+#         ]
+#       }
+#     },
+#     "sha256": "328a091a1372b0246694484d0cea05319bad032cfa603ed030b69ef87153c305",
+#     "validation": {
+#       "errors": 0,
+#       "warnings": 0,
+#       "validator": "2.0.0-dev.3.10"
+#     }
+#   },
+#   "assembly": [
+#     {
+#       "name": "3x3-repeat",
+#       "modules": 9,
+#       "tiles": 36,
+#       "modulePairs": 36,
+#       "jointsMeasured": 60,
+#       "nominalGroutMetres": 0.004,
+#       "maxGroutErrorMetres": 3.957748417535156e-8,
+#       "maxModuleAabbOverlapMetres": 4.768371586472142e-8,
+#       "dimensions": [
+#         3.6000000476837157,
+#         0.029999999329447746,
+#         3.6000000476837157
+#       ],
+#       "result": "PASS"
+#     },
+#     {
+#       "name": "3x3-alternating-quarter-turns",
+#       "modules": 9,
+#       "tiles": 36,
+#       "modulePairs": 36,
+#       "jointsMeasured": 60,
+#       "nominalGroutMetres": 0.004,
+#       "maxGroutErrorMetres": 3.9577484286373865e-8,
+#       "maxModuleAabbOverlapMetres": 4.7683716086766026e-8,
+#       "dimensions": [
+#         3.6000000476837157,
+#         0.029999999329447746,
+#         3.6000000476837157
+#       ],
+#       "result": "PASS"
+#     }
+#   ]
+# }
+# Subtest: mall tile is one logical repeat module, with unchanged public download restriction
+ok 53 - mall tile is one logical repeat module, with unchanged public download restriction
+  ---
+  duration_ms: 0.435823
+  type: 'test'
+  ...
+# Subtest: mall tile source remains editable, packed and correctly measured
+ok 54 - mall tile source remains editable, packed and correctly measured
+  ---
+  duration_ms: 0.773732
+  type: 'test'
+  ...
+# Subtest: mall tile previews include perspective, top, edge and actual-GLB repeat assembly
+ok 55 - mall tile previews include perspective, top, edge and actual-GLB repeat assembly
+  ---
+  duration_ms: 1.302636
+  type: 'test'
+  ...
+# Subtest: mall tile actual exported repeated and quarter-turned modules keep every joint
+ok 56 - mall tile actual exported repeated and quarter-turned modules keep every joint
+  ---
+  duration_ms: 0.079831
+  type: 'test'
+  ...
+# {
+#   "assets": [
+#     {
+#       "id": "mall-glass-railing-post",
+#       "spacing": 0,
+#       "modules": {
+#         "MODULE_Post": {
+#           "origin": [
+#             0,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             -0.07999999821186066,
+#             0,
+#             -0.07999999821186066
+#           ],
+#           "max": [
+#             0.07999999821186066,
+#             1.1200000047683716,
+#             0.07999999821186066
+#           ],
+#           "connectedPieces": 16
+#         }
+#       },
+#       "glb_bytes": 57548,
+#       "triangles": 1024,
+#       "vertices": 2016,
+#       "primitives": 3,
+#       "materials": 3,
+#       "animations": 0,
+#       "dimensions": [
+#         0.1599999964237213,
+#         1.1200000047683716,
+#         0.1599999964237213
+#       ],
+#       "bounds": {
+#         "min": [
+#           -0.07999999821186066,
+#           0,
+#           -0.07999999821186066
+#         ],
+#         "max": [
+#           0.07999999821186066,
+#           1.1200000047683716,
+#           0.07999999821186066
+#         ]
+#       },
+#       "sha256": "4104d29b95e1e8b82c1e4db8a4e00437aaf60e01c7e8e0b503fcd7c17586dd69",
+#       "glass": null,
+#       "validation": {
+#         "errors": 0,
+#         "warnings": 0,
+#         "validator": "2.0.0-dev.3.10"
+#       }
+#     },
+#     {
+#       "id": "mall-glass-railing-1m",
+#       "spacing": 1,
+#       "modules": {
+#         "MODULE_Post_Left": {
+#           "origin": [
+#             -0.5,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             -0.5799999982118607,
+#             0,
+#             -0.07999999821186066
+#           ],
+#           "max": [
+#             -0.42000000178813934,
+#             1.1200000047683716,
+#             0.07999999821186066
+#           ],
+#           "connectedPieces": 16
+#         },
+#         "MODULE_Post_Right": {
+#           "origin": [
+#             0.5,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             0.42000000178813934,
+#             0,
+#             -0.07999999821186066
+#           ],
+#           "max": [
+#             0.5799999982118607,
+#             1.1200000047683716,
+#             0.07999999821186066
+#           ],
+#           "connectedPieces": 16
+#         },
+#         "MODULE_Infill": {
+#           "origin": [
+#             0,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             -0.4740000069141388,
+#             0.11499994993209839,
+#             -0.02199999988079071
+#           ],
+#           "max": [
+#             0.4740000069141388,
+#             1.1209999322891235,
+#             0.02199999988079071
+#           ],
+#           "connectedPieces": 9
+#         }
+#       },
+#       "glb_bytes": 175864,
+#       "triangles": 3236,
+#       "vertices": 6456,
+#       "primitives": 10,
+#       "materials": 5,
+#       "animations": 0,
+#       "dimensions": [
+#         1.1599999964237213,
+#         1.1209999322891235,
+#         0.1599999964237213
+#       ],
+#       "bounds": {
+#         "min": [
+#           -0.5799999982118607,
+#           0,
+#           -0.07999999821186066
+#         ],
+#         "max": [
+#           0.5799999982118607,
+#           1.1209999322891235,
+#           0.07999999821186066
+#         ]
+#       },
+#       "sha256": "556cfc03f38a0cb0c21a125a318c5dc251976e18598f3d15f3e0979dc2dfd49d",
+#       "glass": {
+#         "material": "GLASS sea-green transparent alpha 0.28",
+#         "alphaMode": "BLEND",
+#         "alpha": 0.2800000011920929,
+#         "doubleSided": true
+#       },
+#       "validation": {
+#         "errors": 0,
+#         "warnings": 0,
+#         "validator": "2.0.0-dev.3.10"
+#       }
+#     },
+#     {
+#       "id": "mall-glass-railing-2m",
+#       "spacing": 2,
+#       "modules": {
+#         "MODULE_Post_Left": {
+#           "origin": [
+#             -1,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             -1.0799999982118607,
+#             0,
+#             -0.07999999821186066
+#           ],
+#           "max": [
+#             -0.9200000017881393,
+#             1.1200000047683716,
+#             0.07999999821186066
+#           ],
+#           "connectedPieces": 16
+#         },
+#         "MODULE_Post_Right": {
+#           "origin": [
+#             1,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             0.9200000017881393,
+#             0,
+#             -0.07999999821186066
+#           ],
+#           "max": [
+#             1.0799999982118607,
+#             1.1200000047683716,
+#             0.07999999821186066
+#           ],
+#           "connectedPieces": 16
+#         },
+#         "MODULE_Infill": {
+#           "origin": [
+#             0,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             -0.9739999771118164,
+#             0.11499994993209839,
+#             -0.02199999988079071
+#           ],
+#           "max": [
+#             0.9739999771118164,
+#             1.1209999322891235,
+#             0.02199999988079071
+#           ],
+#           "connectedPieces": 9
+#         }
+#       },
+#       "glb_bytes": 175864,
+#       "triangles": 3236,
+#       "vertices": 6456,
+#       "primitives": 10,
+#       "materials": 5,
+#       "animations": 0,
+#       "dimensions": [
+#         2.1599999964237213,
+#         1.1209999322891235,
+#         0.1599999964237213
+#       ],
+#       "bounds": {
+#         "min": [
+#           -1.0799999982118607,
+#           0,
+#           -0.07999999821186066
+#         ],
+#         "max": [
+#           1.0799999982118607,
+#           1.1209999322891235,
+#           0.07999999821186066
+#         ]
+#       },
+#       "sha256": "037b734e7285961e93a75184f7aab28f4a20498fbac5639ed2cd0fab0958c6c5",
+#       "glass": {
+#         "material": "GLASS sea-green transparent alpha 0.28",
+#         "alphaMode": "BLEND",
+#         "alpha": 0.2800000011920929,
+#         "doubleSided": true
+#       },
+#       "validation": {
+#         "errors": 0,
+#         "warnings": 0,
+#         "validator": "2.0.0-dev.3.10"
+#       }
+#     }
+#   ],
+#   "assembly": [
+#     {
+#       "name": "repeated-1m",
+#       "uniquePosts": 4,
+#       "infills": 3,
+#       "actualExportedConnectedPiecePairsTested": 3507,
+#       "maxConnectorErrorMetres": 6.914138817037951e-9,
+#       "maxIntermoduleAabbPenetrationMetres": 0.0005000084638595581,
+#       "allowanceMetres": 0.00051,
+#       "result": "PASS"
+#     },
+#     {
+#       "name": "mixed-right-angle",
+#       "uniquePosts": 5,
+#       "infills": 4,
+#       "actualExportedConnectedPiecePairsTested": 5926,
+#       "maxConnectorErrorMetres": 2.288818359494349e-8,
+#       "maxIntermoduleAabbPenetrationMetres": 0.0005000084638595581,
+#       "allowanceMetres": 0.00051,
+#       "result": "PASS"
+#     }
+#   ]
+# }
+# Subtest: glass railing collection has exactly the three distinct reusable modules
+ok 57 - glass railing collection has exactly the three distinct reusable modules
+  ---
+  duration_ms: 0.871813
+  type: 'test'
+  ...
+# Subtest: mall-glass-railing-post source, rights, metrics and glass contract
+ok 58 - mall-glass-railing-post source, rights, metrics and glass contract
+  ---
+  duration_ms: 1.304552
+  type: 'test'
+  ...
+# Subtest: mall-glass-railing-1m source, rights, metrics and glass contract
+ok 59 - mall-glass-railing-1m source, rights, metrics and glass contract
+  ---
+  duration_ms: 1.392092
+  type: 'test'
+  ...
+# Subtest: mall-glass-railing-2m source, rights, metrics and glass contract
+ok 60 - mall-glass-railing-2m source, rights, metrics and glass contract
+  ---
+  duration_ms: 0.964602
+  type: 'test'
+  ...
+# Subtest: real exported components pass repeated and orthogonal assembly clearance checks
+ok 61 - real exported components pass repeated and orthogonal assembly clearance checks
+  ---
+  duration_ms: 0.136538
+  type: 'test'
+  ...
+# Subtest: queue kit registers independent post and short/long bays
+ok 62 - queue kit registers independent post and short/long bays
+  ---
+  duration_ms: 1.466965
+  type: 'test'
+  ...
+# Subtest: mall-queue-post preserves provenance, measured export, source and thumbnail
+ok 63 - mall-queue-post preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.876812
+  type: 'test'
+  ...
+# Subtest: mall-queue-short preserves provenance, measured export, source and thumbnail
+ok 64 - mall-queue-short preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 2.092033
+  type: 'test'
+  ...
+# Subtest: mall-queue-long preserves provenance, measured export, source and thumbnail
+ok 65 - mall-queue-long preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.446448
+  type: 'test'
+  ...
+# Subtest: short, long and turned layouts align measured belt endpoints with post sockets
+ok 66 - short, long and turned layouts align measured belt endpoints with post sockets
+  ---
+  duration_ms: 0.568236
+  type: 'test'
+  ...
+# Subtest: service desk registers the requested counter and sign
+ok 67 - service desk registers the requested counter and sign
+  ---
+  duration_ms: 0.97606
+  type: 'test'
+  ...
+# Subtest: mall-service-desk preserves provenance, measured export, source and thumbnail
+ok 68 - mall-service-desk preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 2.380027
+  type: 'test'
+  ...
+# Subtest: sorting station is distinct from existing single bin and registered before mall essentials
+ok 69 - sorting station is distinct from existing single bin and registered before mall essentials
+  ---
+  duration_ms: 1.605087
+  type: 'test'
+  ...
+# Subtest: floor-centred metre-scale station retains seven independent mesh-bearing groups
+ok 70 - floor-centred metre-scale station retains seven independent mesh-bearing groups
+  ---
+  duration_ms: 0.759149
+  type: 'test'
+  ...
+# Subtest: all three apertures are genuinely open and lead to separate liner bottoms
+ok 71 - all three apertures are genuinely open and lead to separate liner bottoms
+  ---
+  duration_ms: 12.584034
+  type: 'test'
+  ...
+# Subtest: each compartment or lid can be replaced without touching its siblings
+ok 72 - each compartment or lid can be replaced without touching its siblings
+  ---
+  duration_ms: 2.663645
+  type: 'test'
+  ...
+# Subtest: source reopening and real source-edit export preserve editable labels and isolate changes
+ok 73 - source reopening and real source-edit export preserve editable labels and isolate changes
+  ---
+  duration_ms: 0.188662
+  type: 'test'
+  ...
+# Subtest: NASA Moon and Tempel 1 are distinct, attributed candidates outside the solar demo
+ok 74 - NASA Moon and Tempel 1 are distinct, attributed candidates outside the solar demo
+  ---
+  duration_ms: 56.500157
+  type: 'test'
+  ...
+# Subtest: NASA Saturn remains a distinct attributed candidate outside the solar demo
+ok 75 - NASA Saturn remains a distinct attributed candidate outside the solar demo
+  ---
+  duration_ms: 61.158588
+  type: 'test'
+  ...
+# Subtest: NASA solar candidates are attributed, discoverable and excluded from the solar demo
+ok 76 - NASA solar candidates are attributed, discoverable and excluded from the solar demo
+  ---
+  duration_ms: 57.333678
+  type: 'test'
+  ...
+# Subtest: a close three-ball chain tracks a finer timestep near 0.14044842518866063
+ok 77 - a close three-ball chain tracks a finer timestep near 0.14044842518866063
+  ---
+  duration_ms: 209.533976
+  type: 'test'
+  ...
+# Subtest: a close three-ball chain tracks a finer timestep near 0.09708761543035507
+ok 78 - a close three-ball chain tracks a finer timestep near 0.09708761543035507
+  ---
+  duration_ms: 53.948259
+  type: 'test'
+  ...
+# Subtest: a close three-ball chain tracks a finer timestep near 0.13475384443998337
+ok 79 - a close three-ball chain tracks a finer timestep near 0.13475384443998337
+  ---
+  duration_ms: 55.31856
+  type: 'test'
+  ...
+# Subtest: earliest geometric cue contact receives the first impulse within a substep
+ok 80 - earliest geometric cue contact receives the first impulse within a substep
+  ---
+  duration_ms: 1.926495
+  type: 'test'
+  ...
+# Subtest: moving-target encounter time determines first contact, not array or ID order
+ok 81 - moving-target encounter time determines first contact, not array or ID order
+  ---
+  duration_ms: 4.197651
+  type: 'test'
+  ...
+# Subtest: simultaneous cue contacts use deterministic ball-number tie breaks
+ok 82 - simultaneous cue contacts use deterministic ball-number tie breaks
+  ---
+  duration_ms: 3.678829
+  type: 'test'
+  ...
+# Subtest: ordered contacts do not create kinetic energy
+ok 83 - ordered contacts do not create kinetic energy
+  ---
+  duration_ms: 1.748666
+  type: 'test'
+  ...
+# Subtest: a cue/object collision near a side-pocket jaw settles safely
+ok 84 - a cue/object collision near a side-pocket jaw settles safely
+  ---
+  duration_ms: 6.555385
+  type: 'test'
+  ...
+# Subtest: a shallow high-speed graze produces an actual impulse instead of tunneling
+ok 85 - a shallow high-speed graze produces an actual impulse instead of tunneling
+  ---
+  duration_ms: 0.601986
+  type: 'test'
+  ...
+# Subtest: a near miss is not converted into a phantom collision
+ok 86 - a near miss is not converted into a phantom collision
+  ---
+  duration_ms: 0.488738
+  type: 'test'
+  ...
+# Subtest: swept contact accounts for moving targets
+ok 87 - swept contact accounts for moving targets
+  ---
+  duration_ms: 0.366699
+  type: 'test'
+  ...
+# Subtest: a grazing hit parallel to a cushion is not discarded
+ok 88 - a grazing hit parallel to a cushion is not discarded
+  ---
+  duration_ms: 0.382574
+  type: 'test'
+  ...
+# Subtest: a pocket capture before a predicted graze takes precedence
+ok 89 - a pocket capture before a predicted graze takes precedence
+  ---
+  duration_ms: 0.221078
+  type: 'test'
+  ...
+# Subtest: a graze before pocket entry records the hit and applies its impulse
+ok 90 - a graze before pocket entry records the hit and applies its impulse
+  ---
+  duration_ms: 0.20012
+  type: 'test'
+  ...
+# Subtest: an earlier head-on impact stops the cue before the pocket sensor
+ok 91 - an earlier head-on impact stops the cue before the pocket sensor
+  ---
+  duration_ms: 0.323492
+  type: 'test'
+  ...
+# Subtest: a fast path crossing the pocket sensor cannot tunnel through it
+ok 92 - a fast path crossing the pocket sensor cannot tunnel through it
+  ---
+  duration_ms: 0.14108
+  type: 'test'
+  ...
+# Subtest: a fast path outside the pocket sensor is not a phantom pot
+ok 93 - a fast path outside the pocket sensor is not a phantom pot
+  ---
+  duration_ms: 0.155204
+  type: 'test'
+  ...
+# Subtest: a ball-before-rail path remains bounded and comparable to fine stepping
+ok 94 - a ball-before-rail path remains bounded and comparable to fine stepping
+  ---
+  duration_ms: 34.086147
+  type: 'test'
+  ...
+# Subtest: a rail-before-ball path remains bounded and comparable to fine stepping
+ok 95 - a rail-before-ball path remains bounded and comparable to fine stepping
+  ---
+  duration_ms: 31.554083
+  type: 'test'
+  ...
+# Subtest: a centered equal-mass impact transfers speed without creating energy
+ok 96 - a centered equal-mass impact transfers speed without creating energy
+  ---
+  duration_ms: 0.651193
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":-0.07,"z":0.46}
+ok 97 - rolling agrees with fine stepping near cushion {"x":-0.07,"z":0.46}
+  ---
+  duration_ms: 91.169623
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":0.4,"z":-0.46}
+ok 98 - rolling agrees with fine stepping near cushion {"x":0.4,"z":-0.46}
+  ---
+  duration_ms: 30.725103
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":1.04,"z":0.2}
+ok 99 - rolling agrees with fine stepping near cushion {"x":1.04,"z":0.2}
+  ---
+  duration_ms: 6.883086
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":-1.04,"z":0.2}
+ok 100 - rolling agrees with fine stepping near cushion {"x":-1.04,"z":0.2}
+  ---
+  duration_ms: 6.254476
+  type: 'test'
+  ...
+# Subtest: rolling through a cushion bounce follows the contact path (0, 1)
+ok 101 - rolling through a cushion bounce follows the contact path (0, 1)
+  ---
+  duration_ms: 6.585886
+  type: 'test'
+  ...
+# Subtest: rolling through a cushion bounce follows the contact path (1, 1)
+ok 102 - rolling through a cushion bounce follows the contact path (1, 1)
+  ---
+  duration_ms: 7.22512
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (1, 0)
+ok 103 - free rolling follows travel without slipping (1, 0)
+  ---
+  duration_ms: 0.525487
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (-1, 0)
+ok 104 - free rolling follows travel without slipping (-1, 0)
+  ---
+  duration_ms: 0.17508
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (0, 1)
+ok 105 - free rolling follows travel without slipping (0, 1)
+  ---
+  duration_ms: 0.335158
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (0, -1)
+ok 106 - free rolling follows travel without slipping (0, -1)
+  ---
+  duration_ms: 0.445114
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (1, 1)
+ok 107 - free rolling follows travel without slipping (1, 1)
+  ---
+  duration_ms: 0.21862
+  type: 'test'
+  ...
+# Subtest: rolling uses world-space direction after a previous ball rotation
+ok 108 - rolling uses world-space direction after a previous ball rotation
+  ---
+  duration_ms: 0.294743
+  type: 'test'
+  ...
+# Subtest: catalog enrichment preserves every registered asset and supplies measured metadata
+ok 109 - catalog enrichment preserves every registered asset and supplies measured metadata
+  ---
+  duration_ms: 60.794221
+  type: 'test'
+  ...
+# Subtest: Saga study retains its identity, provenance and pending redistribution policy
+ok 110 - Saga study retains its identity, provenance and pending redistribution policy
+  ---
+  duration_ms: 46.509769
+  type: 'test'
+  ...
+# Subtest: catalog rejects duplicate identities and slugs across collections
+ok 111 - catalog rejects duplicate identities and slugs across collections
+  ---
+  duration_ms: 1.271095
+  type: 'test'
+  ...
+# Subtest: catalog rejects malformed required and optional values before coercion
+ok 112 - catalog rejects malformed required and optional values before coercion
+  ---
+  duration_ms: 6.025731
+  type: 'test'
+  ...
+# Subtest: catalog paths reject traversal, URL schemes, query fragments and encoded separators
+ok 113 - catalog paths reject traversal, URL schemes, query fragments and encoded separators
+  ---
+  duration_ms: 2.630562
+  type: 'test'
+  ...
+# Subtest: optional defaults are explicit and false download permission is retained
+ok 114 - optional defaults are explicit and false download permission is retained
+  ---
+  duration_ms: 1.204305
+  type: 'test'
+  ...
+# Subtest: catalog refuses symlink references outside the model directory
+ok 115 - catalog refuses symlink references outside the model directory
+  ---
+  duration_ms: 0.894646
+  type: 'test'
+  ...
+# Subtest: demo registry resolves verified posters and legacy launch routes
+ok 116 - demo registry resolves verified posters and legacy launch routes
+  ---
+  duration_ms: 39.992591
+  type: 'test'
+  ...
+# Subtest: demo schema rejects duplicates, missing posters, invalid routes and malformed values
+ok 117 - demo schema rejects duplicates, missing posters, invalid routes and malformed values
+  ---
+  duration_ms: 2.854099
+  type: 'test'
+  ...
+# Subtest: legacy IDs cannot be claimed by a different canonical model slug
+ok 118 - legacy IDs cannot be claimed by a different canonical model slug
+  ---
+  duration_ms: 0.664401
+  type: 'test'
+  ...
+# Subtest: metadata validates the display and text fields consumed by existing viewers
+ok 119 - metadata validates the display and text fields consumed by existing viewers
+  ---
+  duration_ms: 0.343659
+  type: 'test'
+  ...
+# Subtest: ball_01 real GLB rolls its contact point against the direction of travel
+ok 120 - ball_01 real GLB rolls its contact point against the direction of travel
+  ---
+  duration_ms: 10.124467
+  type: 'test'
+  ...
+# Subtest: ball_09 real GLB rolls its contact point against the direction of travel
+ok 121 - ball_09 real GLB rolls its contact point against the direction of travel
+  ---
+  duration_ms: 7.062332
+  type: 'test'
+  ...
+# Subtest: optimized solar GLBs match current sources and retain every non-image buffer
+ok 122 - optimized solar GLBs match current sources and retain every non-image buffer
+  ---
+  duration_ms: 258.826186
+  type: 'test'
+  ...
+# Subtest: solar scene uses attributed NASA assets without losing physical facts
+ok 123 - solar scene uses attributed NASA assets without losing physical facts
+  ---
+  duration_ms: 44.498985
+  type: 'test'
+  ...
+1..123
+# tests 123
+# suites 0
+# pass 123
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2548.266327
