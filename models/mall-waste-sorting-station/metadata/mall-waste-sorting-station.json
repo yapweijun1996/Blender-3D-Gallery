@@ -1,0 +1,88 @@
+{
+  "id": "mall-waste-sorting-station",
+  "name": "Mall Waste Sorting Station",
+  "summary": "A three-stream mall sorting station with blue recycling, jade food and slate general-waste modules, genuine open apertures and editable labels.",
+  "description": "An original modular waste sorting station with separate hollow compartments, removable color-coded lids, geometric bottle / leaf / bag pictograms, porcelain service doors and a shared midnight-blue frame.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "waste",
+    "sorting",
+    "recycling",
+    "modular",
+    "editable",
+    "original",
+    "texture-free",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled BSDF materials. Blender bundled Bfont is retained as editable source text and exported as mesh geometry. No external models or textures.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-waste-sorting-station.glb",
+    "source": "sources/mall-waste-sorting-station.blend",
+    "preview": "previews/mall-waste-sorting-station.webp"
+  },
+  "display": {
+    "previewRotationY": 3.141592653589793,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor centre",
+    "front_axis": "Blender +Y / glTF -Z"
+  },
+  "replacement": {
+    "structure_collection": "StationFrame",
+    "compartment_collections": [
+      "RecycleCompartment",
+      "FoodCompartment",
+      "GeneralCompartment"
+    ],
+    "lid_collections": [
+      "RecycleLid",
+      "FoodLid",
+      "GeneralLid"
+    ],
+    "note": "Edit the Blender source text or objects within the named collections, save, then use generate.py -- --export-source. Rebuilding without that option replaces manual edits. No live sorting, label editing or lid animation is offered by the gallery."
+  },
+  "accuracy_notes": "Original decorative concept, not a certified waste system, municipal sorting standard, accessibility specification or fabrication/engineering design. Streams, colors and acceptable items must be adapted to local rules.",
+  "attribution": [
+    {
+      "credit": "Original geometry authored for Blender-3D-Gallery. Labels use bundled Blender Bfont; no external artwork."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 479436,
+    "triangles": 11508,
+    "vertices": 16835,
+    "primitives": 22,
+    "materials": 7,
+    "animations": 0,
+    "dimensions": [
+      1.899999976158142,
+      1.350000012665987,
+      0.6299999952316284
+    ],
+    "bounds": {
+      "min": [
+        -0.949999988079071,
+        0,
+        -0.3149999976158142
+      ],
+      "max": [
+        0.949999988079071,
+        1.350000012665987,
+        0.3149999976158142
+      ]
+    },
+    "sha256": "52a62e5ace403100b7757ac0c4b464272f5d46c79903c69d5d2db75a83a2e4ae"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  }
+}

@@ -1,0 +1,26 @@
+PASS mall-waste-sorting-station 1440x900
+PASS mall-waste-sorting-station 768x1024
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'GET http://127.0.0.1:40913/Blender-3D-Gallery/assets/mall-waste-sorting-station-CQI4TZep.glb net::ERR_ABORTED'
++ ]
+- []
+
+    at file:///srv/agent-workstation/workspaces/blender-sorting-station-20261112/repo/scripts/test-mall-waste-sorting-station.mjs:39:307 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'GET http://127.0.0.1:40913/Blender-3D-Gallery/assets/mall-waste-sorting-station-CQI4TZep.glb net::ERR_ABORTED'
+  ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

@@ -1,0 +1,67 @@
+{
+  "id": "mall-waste-sorting-station",
+  "source_reopened": "PASS",
+  "blender_version": "4.0.2",
+  "origin": "floor centre",
+  "front_axis": "+Y",
+  "groups": {
+    "StationFrame": {
+      "objects": 8,
+      "editable_text": {
+        "Editable station title": "SORT / RETURN",
+        "Editable station subline": "THREE STREAMS. ONE SMALL STEP."
+      }
+    },
+    "RecycleCompartment": {
+      "objects": 11,
+      "editable_text": {
+        "Recycle editable stream detail": "BOTTLES + CANS",
+        "Recycle editable stream number": "01"
+      }
+    },
+    "FoodCompartment": {
+      "objects": 11,
+      "editable_text": {
+        "Food editable stream detail": "FOOD SCRAPS",
+        "Food editable stream number": "02"
+      }
+    },
+    "GeneralCompartment": {
+      "objects": 11,
+      "editable_text": {
+        "General editable stream detail": "OTHER WASTE",
+        "General editable stream number": "03"
+      }
+    },
+    "RecycleLid": {
+      "objects": 6,
+      "editable_text": {
+        "Recycle editable stream label": "RECYCLE"
+      }
+    },
+    "FoodLid": {
+      "objects": 6,
+      "editable_text": {
+        "Food editable stream label": "FOOD"
+      }
+    },
+    "GeneralLid": {
+      "objects": 6,
+      "editable_text": {
+        "General editable stream label": "GENERAL"
+      }
+    }
+  },
+  "source_bounds": {
+    "min": [
+      -0.949999988079071,
+      -0.3149999976158142,
+      0.0
+    ],
+    "max": [
+      0.949999988079071,
+      0.3149999976158142,
+      1.350000023841858
+    ]
+  }
+}
