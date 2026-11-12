@@ -6,7 +6,7 @@ Reviewed implementation: `955bca52d7ca7cbeb5a053b37de0e0e8312c6bd1`, compared wi
 
 ## Count and gates
 
-Exactly **10 logical types and 12 GLB files**: retained 006 counts once despite its three variants; 421–429 each count once. Included floor/railing context in assemblies does not add models. 429 is a landing module, not full escalator 430.
+Exactly **10 logical types and 12 GLB files**: retained 006 counts once despite its three variants; 421–429 each count once. Included floor/railing context in assemblies does not add models. 429 is a landing module; full escalator is 004, while 430 is the separate handrail.
 
 | V2.1 ID | Type | GLBs | Strict browser cases | Local asset gate | Overall / platform gate |
 | --- | --- | ---: | ---: | --- | --- |

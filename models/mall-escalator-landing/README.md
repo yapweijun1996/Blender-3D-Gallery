@@ -1,6 +1,6 @@
 # Mall Escalator Landing
 
-V2.1 P0 item **429**, the tenth logical asset of this batch. A compact static landing threshold/access-plate module, **not full escalator 430** and not moving transport.
+V2.1 P0 item **429**, the tenth logical asset of this batch. A compact static landing threshold/access-plate module, **not full escalator 004 or separate handrail 430** and not moving transport.
 
 **Local checks: PASS. Overall: NEEDS REVIEW.** Physical Android/iOS devices remain untested. No mechanical compatibility, slip resistance, engineering, safety, manufacturer or building-code certification is claimed.
 
@@ -41,7 +41,7 @@ The assembly-floor preview shows the delivered landing beside the **actual origi
 
 ### Future escalator envelope
 
-The layouts.json file documents a provisional 1.2 m outer envelope and 1.08 m central comb interface at glTF Z=-0.6. **No full escalator exists in this contribution, so compatibility is NOT TESTED.** Future item 430 must validate its own mating geometry, tread/comb relationship, elevation and clearances. No animation, balustrade, handrail, motor, runtime transport or complete escalator is supplied.
+The layouts.json file documents a provisional 1.2 m outer envelope and 1.08 m central comb interface at glTF Z=-0.6. **No full escalator exists in this contribution, so compatibility is NOT TESTED.** Full escalator item 004 must validate its own mating geometry, tread/comb relationship, elevation and clearances; item 430 is the separate handrail. No animation, balustrade, handrail, motor, runtime transport or complete escalator is supplied.
 
 ## Artifacts and reproduction
 

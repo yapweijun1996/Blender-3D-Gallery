@@ -18,7 +18,7 @@ Local geometry, source, floor connections, studio and browser visual checks: **P
 
 The live GLB validator checks the 25 rib pairs on each separate plate, 27 comb fingers, plate seam and comb elevation from actual vertex positions. Three tests load the unchanged existing 421 GLB at front/left/right placements. Each tests 72 independent-mesh AABB pairs for volumetric overlap and raycasts four pairs of actual wearing surfaces. All joints align within 1 µm, with no positive-volume intersection; both wearing surfaces are 30 mm high. Original 421 boundary grout remains 1 mm recessed and is measured separately.
 
-Only the floor connections are verified. Future escalator 430 does not exist in this contribution. Its documented connector envelope is **provisional / NOT TESTED**, not evidence of mechanical compatibility or code/safety/manufacturer certification.
+Only the floor connections are verified. Full escalator 004 and separate handrail 430 are not included in this contribution. The landing's documented connector envelope is **provisional / NOT TESTED**, not evidence of mechanical compatibility or code/safety/manufacturer certification.
 
 ## Blender source editing
 
