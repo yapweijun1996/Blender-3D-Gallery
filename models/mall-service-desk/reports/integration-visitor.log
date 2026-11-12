@@ -1,0 +1,14 @@
+PASS visitor gallery 1440
+PASS visitor gallery 768
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+response.body: Protocol error (Network.getResponseBody): No data found for resource with given identifier
+Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.
+    at _Page.<anonymous> (/srv/agent-workstation/workspaces/blender-service-desk-20261112/repo/scripts/test-gjh-visitor.mjs:31:130) {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v22.23.3
