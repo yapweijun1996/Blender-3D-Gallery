@@ -1,0 +1,505 @@
+{
+  "passed": false,
+  "browserVersion": "156.0.8078.4",
+  "environment": "Built deployment subpath, Chromium/SwiftShader, localhost, reduced motion, service workers blocked",
+  "results": [
+    {
+      "test": "discovery",
+      "width": 1440,
+      "passed": true,
+      "decodedThumbnails": 4,
+      "eagerGlbRequests": 0
+    },
+    {
+      "test": "viewer",
+      "id": "mall-directory-kiosk",
+      "width": 1440,
+      "passed": false,
+      "glbSha256": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+      "glbBytes": 178068,
+      "canvasBounds": {
+        "x": 191,
+        "y": 104,
+        "width": 1058,
+        "height": 495
+      },
+      "images": {
+        "initial": "eaa937ff4953d3c49670b2096d721b96596fac89d60a0095b42dcb41c3ab2dc9",
+        "rotated": "e32cfa1a9d6257e169a33b674208351638becd393c786e05c1e285eea1edc82f",
+        "zoomed": "042a389a76de3af23fcee4a5383b5d1f519b9dc779bbfe51dc4ae8b1eca82a78",
+        "reset": "01ed6600528fe368cdbb230d5e4f6d69e48e4f12fd7084f7c322248c4dcdd8dc"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+          "bytes": 178068,
+          "version": 2,
+          "declaredBytes": 178068
+        },
+        {
+          "sha256": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+          "bytes": 178068,
+          "version": 2,
+          "declaredBytes": 178068
+        }
+      ],
+      "errors": [
+        "http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED"
+      ],
+      "interactionChecksPassed": true,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED'\n+ ]\n- []\n"
+    },
+    {
+      "test": "viewer",
+      "id": "mall-advertising-lightbox",
+      "width": 1440,
+      "passed": false,
+      "glbSha256": "d56b65558aef88702e53dba4ef6ebad093bd6bcd760fb420042cd4457d9ce100",
+      "glbBytes": 235832,
+      "canvasBounds": {
+        "x": 191,
+        "y": 104,
+        "width": 1058,
+        "height": 495
+      },
+      "images": {
+        "initial": "9670d26e4014d795c7516c54db03e4d39389d9812225f374aaa0e9eb50004d9a",
+        "rotated": "94e9e7bd0a867bbe5177ce3183cd84a230cb8bf970b97ad5fe227473fa4c8bb2",
+        "zoomed": "860ea7324a3585b7c64d87c309d199bfca70c9b1072c76a1b59b0aa88da27807",
+        "reset": "b91257e102d657f46f69e6fa7b2902c02cacb9bc818c5a81f6021cbbe0c238c6"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "d56b65558aef88702e53dba4ef6ebad093bd6bcd760fb420042cd4457d9ce100",
+          "bytes": 235832,
+          "version": 2,
+          "declaredBytes": 235832
+        },
+        {
+          "sha256": "d56b65558aef88702e53dba4ef6ebad093bd6bcd760fb420042cd4457d9ce100",
+          "bytes": 235832,
+          "version": 2,
+          "declaredBytes": 235832
+        }
+      ],
+      "errors": [
+        "http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-advertising-lightbox-3_IRxLg_.glb: net::ERR_ABORTED"
+      ],
+      "interactionChecksPassed": true,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-advertising-lightbox-3_IRxLg_.glb: net::ERR_ABORTED'\n+ ]\n- []\n"
+    },
+    {
+      "test": "viewer",
+      "id": "mall-trash-bin",
+      "width": 1440,
+      "passed": true,
+      "glbSha256": "11067f6be8acec9d6651afe6f542f9cadc6bcae1e51e6516524190dcc8d0b48c",
+      "glbBytes": 338232,
+      "canvasBounds": {
+        "x": 191,
+        "y": 104,
+        "width": 1058,
+        "height": 495
+      },
+      "images": {
+        "initial": "f75214e0be4a5ca0211510c4b55d17d4b02f27e47f2d96e1dd286142a0392cdd",
+        "rotated": "0dd380bfe3a822714bdbdb95e5f7eb9ed5b067a32fe59451ff31d129c6b279cd",
+        "zoomed": "e40c7c03ded3f3c9b5bd298a09a790652844af9a50f905fd49567d166e36a112",
+        "reset": "3cde41c784e3752d503452903692d1848b2932741bcbb990f73a7fbc95ffe3d7"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "11067f6be8acec9d6651afe6f542f9cadc6bcae1e51e6516524190dcc8d0b48c",
+          "bytes": 338232,
+          "version": 2,
+          "declaredBytes": 338232
+        },
+        {
+          "sha256": "11067f6be8acec9d6651afe6f542f9cadc6bcae1e51e6516524190dcc8d0b48c",
+          "bytes": 338232,
+          "version": 2,
+          "declaredBytes": 338232
+        }
+      ],
+      "errors": [],
+      "interactionChecksPassed": true
+    },
+    {
+      "test": "viewer",
+      "id": "mall-display-shelf",
+      "width": 1440,
+      "passed": false,
+      "glbSha256": "9538cc7b954a1510397e4f1dffc47bbed6c99f7460edfb1e55ef4dc28561966d",
+      "glbBytes": 172420,
+      "canvasBounds": {
+        "x": 191,
+        "y": 104,
+        "width": 1058,
+        "height": 495
+      },
+      "images": {
+        "initial": "905fa1e7f6cd6199e86ea3bb719534cd7b7d769f84ac048a5755c3dd95f2b006",
+        "rotated": "59a71fc46575b4d9181a3c6099ef9fc57dde9b646b6a7e467ca42a2d9a9d6b28",
+        "zoomed": "067a0feb6a3edf51a7d225d81063f895ec24756937d1e93f1a4bc0ecaff7ce69",
+        "reset": "024e40875cbdd202345c0d47053c12bb1f4b22d03d7536e93c955f00fea5590e"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "9538cc7b954a1510397e4f1dffc47bbed6c99f7460edfb1e55ef4dc28561966d",
+          "bytes": 172420,
+          "version": 2,
+          "declaredBytes": 172420
+        },
+        {
+          "sha256": "9538cc7b954a1510397e4f1dffc47bbed6c99f7460edfb1e55ef4dc28561966d",
+          "bytes": 172420,
+          "version": 2,
+          "declaredBytes": 172420
+        }
+      ],
+      "errors": [
+        "http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED"
+      ],
+      "interactionChecksPassed": true,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED'\n+ ]\n- []\n"
+    },
+    {
+      "test": "discovery",
+      "width": 768,
+      "passed": true,
+      "decodedThumbnails": 4,
+      "eagerGlbRequests": 0
+    },
+    {
+      "test": "viewer",
+      "id": "mall-directory-kiosk",
+      "width": 768,
+      "passed": false,
+      "glbSha256": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+      "glbBytes": 178068,
+      "canvasBounds": {
+        "x": 20,
+        "y": 104,
+        "width": 728,
+        "height": 563.1875
+      },
+      "images": {
+        "initial": "423b33417c76ae7e522cb94156889a1a3a21d9559b773980058a03abf0092e0f",
+        "rotated": "8c85348797476daaf0d283b0865bbf7c28731b826207f90501dd6fae17ac9c80",
+        "zoomed": "9804ed8ec1ccac95d6f027da49c6bcab7f8ac52974c06af5faede1c3db13dea7",
+        "reset": "832b7a993f1d3983ea5b46f63ff03375e5a0018bbf546475c19903dde3ea1ced"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+          "bytes": 178068,
+          "version": 2,
+          "declaredBytes": 178068
+        },
+        {
+          "sha256": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+          "bytes": 178068,
+          "version": 2,
+          "declaredBytes": 178068
+        }
+      ],
+      "errors": [
+        "http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED"
+      ],
+      "interactionChecksPassed": true,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED'\n+ ]\n- []\n"
+    },
+    {
+      "test": "viewer",
+      "id": "mall-advertising-lightbox",
+      "width": 768,
+      "passed": false,
+      "glbSha256": "d56b65558aef88702e53dba4ef6ebad093bd6bcd760fb420042cd4457d9ce100",
+      "glbBytes": 235832,
+      "canvasBounds": {
+        "x": 20,
+        "y": 104,
+        "width": 728,
+        "height": 563.1875
+      },
+      "images": {
+        "initial": "d30d6faf6952108cdbced1f40cb4cbb69a55afb82dca3601f7be323b7e2260be",
+        "rotated": "c769938817061d316dc02943c2d0fd4c38a8b715d43b253f4389bcf357853e77",
+        "zoomed": "c24d55babfdcd41599d0c0b340ef80488baa69df86404512fa2a1e1e7d708447",
+        "reset": "e710e8ad7f65199ea812ab1a2c371db39b87c34fc6d8d0317fc8354e3b4359a0"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "d56b65558aef88702e53dba4ef6ebad093bd6bcd760fb420042cd4457d9ce100",
+          "bytes": 235832,
+          "version": 2,
+          "declaredBytes": 235832
+        },
+        {
+          "sha256": "d56b65558aef88702e53dba4ef6ebad093bd6bcd760fb420042cd4457d9ce100",
+          "bytes": 235832,
+          "version": 2,
+          "declaredBytes": 235832
+        }
+      ],
+      "errors": [
+        "http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-advertising-lightbox-3_IRxLg_.glb: net::ERR_ABORTED",
+        "http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-advertising-lightbox-3_IRxLg_.glb: net::ERR_ABORTED"
+      ],
+      "interactionChecksPassed": true,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-advertising-lightbox-3_IRxLg_.glb: net::ERR_ABORTED',\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-advertising-lightbox-3_IRxLg_.glb: net::ERR_ABORTED'\n+ ]\n- []\n"
+    },
+    {
+      "test": "viewer",
+      "id": "mall-trash-bin",
+      "width": 768,
+      "passed": false,
+      "glbSha256": "11067f6be8acec9d6651afe6f542f9cadc6bcae1e51e6516524190dcc8d0b48c",
+      "glbBytes": 338232,
+      "canvasBounds": {
+        "x": 20,
+        "y": 104,
+        "width": 728,
+        "height": 563.1875
+      },
+      "images": {
+        "initial": "60b979d23f0d31c74c527331b6ea83df3e51d2acad8462f4a108a849d0db66b6",
+        "rotated": "7991e38c34bfeb2e6158322bb39652ba6434a666e14e055871305fcc8ebfdb41",
+        "zoomed": "96d9a999bc1705c28eda5657f20f7b45867f741f30e6e348480178ab250c4ee5",
+        "reset": "8603b570b02e66e76b033b590ef01573a07cae0d3febefb2e62f09744870ef1d"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "11067f6be8acec9d6651afe6f542f9cadc6bcae1e51e6516524190dcc8d0b48c",
+          "bytes": 338232,
+          "version": 2,
+          "declaredBytes": 338232
+        },
+        {
+          "sha256": "11067f6be8acec9d6651afe6f542f9cadc6bcae1e51e6516524190dcc8d0b48c",
+          "bytes": 338232,
+          "version": 2,
+          "declaredBytes": 338232
+        }
+      ],
+      "errors": [
+        "http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-trash-bin-BjDumB71.glb: net::ERR_ABORTED"
+      ],
+      "interactionChecksPassed": true,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-trash-bin-BjDumB71.glb: net::ERR_ABORTED'\n+ ]\n- []\n"
+    },
+    {
+      "test": "viewer",
+      "id": "mall-display-shelf",
+      "width": 768,
+      "passed": true,
+      "glbSha256": "9538cc7b954a1510397e4f1dffc47bbed6c99f7460edfb1e55ef4dc28561966d",
+      "glbBytes": 172420,
+      "canvasBounds": {
+        "x": 20,
+        "y": 104,
+        "width": 728,
+        "height": 563.1875
+      },
+      "images": {
+        "initial": "f0989bca8f00250f9585182ed5fe2adb8bdc9d76085c637ae033dd3ffbfe0c38",
+        "rotated": "6db350ae9253b794c2477c7b0f0220c78e3de7249972815890f0c0eb0bca1cc4",
+        "zoomed": "e829fa1ada2d9f4affb7b8179f8eba44c4ad8436d083e467c561f95c333182ed",
+        "reset": "014e96e2f9c4eb6ac5e9b1819c43e215891d84b79fe02da84a2874ca78b99842"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "9538cc7b954a1510397e4f1dffc47bbed6c99f7460edfb1e55ef4dc28561966d",
+          "bytes": 172420,
+          "version": 2,
+          "declaredBytes": 172420
+        },
+        {
+          "sha256": "9538cc7b954a1510397e4f1dffc47bbed6c99f7460edfb1e55ef4dc28561966d",
+          "bytes": 172420,
+          "version": 2,
+          "declaredBytes": 172420
+        }
+      ],
+      "errors": [],
+      "interactionChecksPassed": true
+    },
+    {
+      "test": "discovery",
+      "width": 390,
+      "passed": true,
+      "decodedThumbnails": 4,
+      "eagerGlbRequests": 0
+    },
+    {
+      "test": "viewer",
+      "id": "mall-directory-kiosk",
+      "width": 390,
+      "passed": false,
+      "glbSha256": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+      "glbBytes": 178068,
+      "canvasBounds": {
+        "x": 20,
+        "y": 96,
+        "width": 350,
+        "height": 371.359375
+      },
+      "images": {
+        "initial": "decb7524f03384b14d3e41ad31f188958308e64ca907cba4a670f6c08e06b6e1",
+        "rotated": "cccbd5a05640f5ca410208e8d1c5107036b74b92b8edf327de6d62ff3dcacae3",
+        "zoomed": "e3b94311582c98865af9d4446393d80048e0b02aeafb9207532dead96aa1147a",
+        "reset": "18882cf0eb97beadd18c0738907c7ee2facee2c6058136fa2ce91807f9fea1b8"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+          "bytes": 178068,
+          "version": 2,
+          "declaredBytes": 178068
+        },
+        {
+          "sha256": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+          "bytes": 178068,
+          "version": 2,
+          "declaredBytes": 178068
+        }
+      ],
+      "errors": [
+        "http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED"
+      ],
+      "interactionChecksPassed": true,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED'\n+ ]\n- []\n"
+    },
+    {
+      "test": "viewer",
+      "id": "mall-advertising-lightbox",
+      "width": 390,
+      "passed": true,
+      "glbSha256": "d56b65558aef88702e53dba4ef6ebad093bd6bcd760fb420042cd4457d9ce100",
+      "glbBytes": 235832,
+      "canvasBounds": {
+        "x": 20,
+        "y": 124,
+        "width": 350,
+        "height": 371.359375
+      },
+      "images": {
+        "initial": "3153cf183b19a8c7839380960e0217131b9981578563ceba1f24c6c439ef413a",
+        "rotated": "1da05c7633c780c27b07b1e24f9fec2778e9ea7a808e26a2b224c49488d813c3",
+        "zoomed": "8696534493e660a2a521a03bd1c71f628515afe978decc9dc1184d1acd4777bb",
+        "reset": "3d994a91a6d324850b917cc32e7741cc2384452c0bf26a52ef58190a2cf6052e"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "d56b65558aef88702e53dba4ef6ebad093bd6bcd760fb420042cd4457d9ce100",
+          "bytes": 235832,
+          "version": 2,
+          "declaredBytes": 235832
+        },
+        {
+          "sha256": "d56b65558aef88702e53dba4ef6ebad093bd6bcd760fb420042cd4457d9ce100",
+          "bytes": 235832,
+          "version": 2,
+          "declaredBytes": 235832
+        }
+      ],
+      "errors": [],
+      "interactionChecksPassed": true
+    },
+    {
+      "test": "viewer",
+      "id": "mall-trash-bin",
+      "width": 390,
+      "passed": true,
+      "glbSha256": "11067f6be8acec9d6651afe6f542f9cadc6bcae1e51e6516524190dcc8d0b48c",
+      "glbBytes": 338232,
+      "canvasBounds": {
+        "x": 20,
+        "y": 96,
+        "width": 350,
+        "height": 371.359375
+      },
+      "images": {
+        "initial": "584818f1457ef2a767044db9ae4de441b8cb6dd51e693f619cf7b460057fa76d",
+        "rotated": "a8c7966ed50469dc2a9684ec1b6ddb1d94205be8a0350f1367899d1aa919fb10",
+        "zoomed": "9dcfaa64791d2c5dd1f57b639760de2ba0804ad8800a12a3265e359ae08c3e9e",
+        "reset": "18b89b2528e428135e1ba91f274eac8f553b40035c2a55baf87c4a9c548f8533"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "11067f6be8acec9d6651afe6f542f9cadc6bcae1e51e6516524190dcc8d0b48c",
+          "bytes": 338232,
+          "version": 2,
+          "declaredBytes": 338232
+        },
+        {
+          "sha256": "11067f6be8acec9d6651afe6f542f9cadc6bcae1e51e6516524190dcc8d0b48c",
+          "bytes": 338232,
+          "version": 2,
+          "declaredBytes": 338232
+        }
+      ],
+      "errors": [],
+      "interactionChecksPassed": true
+    },
+    {
+      "test": "viewer",
+      "id": "mall-display-shelf",
+      "width": 390,
+      "passed": false,
+      "glbSha256": "9538cc7b954a1510397e4f1dffc47bbed6c99f7460edfb1e55ef4dc28561966d",
+      "glbBytes": 172420,
+      "canvasBounds": {
+        "x": 20,
+        "y": 96,
+        "width": 350,
+        "height": 371.359375
+      },
+      "images": {
+        "initial": "dc32f0d594a8899a580043fd5286e3b564a1d855725b815bc952feebf40ee6b0",
+        "rotated": "9e07e42f2ddbded6d4a7a83d64e0d5b6172b115379d15bb330dbbce3537ef13a",
+        "zoomed": "40b301b8f432baf6c0423333bd84f3680d632c8cf14cb69dfcd3034f17b48a44",
+        "reset": "8c73de608ab32786a2dc82bad450260a9ba554aebd6b284c83a45a74391253eb"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "9538cc7b954a1510397e4f1dffc47bbed6c99f7460edfb1e55ef4dc28561966d",
+          "bytes": 172420,
+          "version": 2,
+          "declaredBytes": 172420
+        },
+        {
+          "sha256": "9538cc7b954a1510397e4f1dffc47bbed6c99f7460edfb1e55ef4dc28561966d",
+          "bytes": 172420,
+          "version": 2,
+          "declaredBytes": 172420
+        }
+      ],
+      "errors": [
+        "http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED",
+        "http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED",
+        "http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED"
+      ],
+      "interactionChecksPassed": true,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED',\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED',\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED'\n+ ]\n- []\n"
+    }
+  ],
+  "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED'\n+ ]\n- []\n",
+  "limitations": [
+    "Canvas bounds are measured; final artistic framing and clipping require review of the saved model screenshots.",
+    "Keyboard orbit/zoom are exercised; physical touch gestures and mobile GPU performance are not measured.",
+    "Hidden download controls do not prevent retrieval of a publicly rendered GLB or grant redistribution rights."
+  ]
+}

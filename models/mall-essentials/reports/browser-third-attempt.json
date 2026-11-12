@@ -1,0 +1,41 @@
+{
+  "passed": false,
+  "browserVersion": "156.0.8078.4",
+  "environment": "Built deployment subpath, Chromium/SwiftShader, localhost, reduced motion, service workers blocked",
+  "results": [
+    {
+      "test": "discovery",
+      "width": 1440,
+      "passed": true,
+      "decodedThumbnails": 4,
+      "eagerGlbRequests": 0
+    },
+    {
+      "test": "viewer",
+      "id": "mall-directory-kiosk",
+      "width": 1440,
+      "passed": false,
+      "glbSha256": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+      "glbBytes": 178068,
+      "canvasBounds": {
+        "x": 191,
+        "y": 104,
+        "width": 1058,
+        "height": 495
+      },
+      "images": {
+        "initial": "eaa937ff4953d3c49670b2096d721b96596fac89d60a0095b42dcb41c3ab2dc9",
+        "rotated": "e32cfa1a9d6257e169a33b674208351638becd393c786e05c1e285eea1edc82f",
+        "zoomed": "042a389a76de3af23fcee4a5383b5d1f519b9dc779bbfe51dc4ae8b1eca82a78",
+        "reset": "01ed6600528fe368cdbb230d5e4f6d69e48e4f12fd7084f7c322248c4dcdd8dc"
+      },
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:43135/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED'\n+ ]\n- []\n"
+    }
+  ],
+  "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:43135/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED'\n+ ]\n- []\n",
+  "limitations": [
+    "Canvas bounds are measured; final artistic framing and clipping require review of the saved model screenshots.",
+    "Keyboard orbit/zoom are exercised; physical touch gestures and mobile GPU performance are not measured.",
+    "Hidden download controls do not prevent retrieval of a publicly rendered GLB or grant redistribution rights."
+  ]
+}

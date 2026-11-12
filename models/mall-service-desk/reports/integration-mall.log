@@ -1,0 +1,73 @@
+PASS discovery 1440
+FAIL viewer mall-directory-kiosk 1440 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED'
++ ]
+- []
+
+FAIL viewer mall-advertising-lightbox 1440 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-advertising-lightbox-3_IRxLg_.glb: net::ERR_ABORTED'
++ ]
+- []
+
+PASS viewer mall-trash-bin 1440
+FAIL viewer mall-display-shelf 1440 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED'
++ ]
+- []
+
+PASS discovery 768
+FAIL viewer mall-directory-kiosk 768 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED'
++ ]
+- []
+
+FAIL viewer mall-advertising-lightbox 768 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-advertising-lightbox-3_IRxLg_.glb: net::ERR_ABORTED',
++   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-advertising-lightbox-3_IRxLg_.glb: net::ERR_ABORTED'
++ ]
+- []
+
+FAIL viewer mall-trash-bin 768 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-trash-bin-BjDumB71.glb: net::ERR_ABORTED'
++ ]
+- []
+
+PASS viewer mall-display-shelf 768
+PASS discovery 390
+FAIL viewer mall-directory-kiosk 390 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED'
++ ]
+- []
+
+PASS viewer mall-advertising-lightbox 390
+PASS viewer mall-trash-bin 390
+FAIL viewer mall-display-shelf 390 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED',
++   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED',
++   'http://127.0.0.1:40955/Blender-3D-Gallery/assets/mall-display-shelf-BuN5rpce.glb: net::ERR_ABORTED'
++ ]
+- []

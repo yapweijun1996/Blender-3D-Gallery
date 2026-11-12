@@ -1,0 +1,85 @@
+{
+  "passed": false,
+  "browserVersion": "156.0.8078.4",
+  "environment": "Built deployment subpath, Chromium/SwiftShader, localhost, reduced motion, service workers blocked",
+  "results": [
+    {
+      "test": "discovery",
+      "width": 1440,
+      "passed": true,
+      "decodedThumbnails": 4,
+      "eagerGlbRequests": 0
+    },
+    {
+      "test": "viewer",
+      "id": "mall-directory-kiosk",
+      "width": 1440,
+      "passed": true,
+      "glbSha256": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+      "glbBytes": 178068,
+      "canvasBounds": {
+        "x": 191,
+        "y": 104,
+        "width": 1058,
+        "height": 495
+      },
+      "images": {
+        "initial": "eaa937ff4953d3c49670b2096d721b96596fac89d60a0095b42dcb41c3ab2dc9",
+        "rotated": "e32cfa1a9d6257e169a33b674208351638becd393c786e05c1e285eea1edc82f",
+        "zoomed": "042a389a76de3af23fcee4a5383b5d1f519b9dc779bbfe51dc4ae8b1eca82a78",
+        "reset": "01ed6600528fe368cdbb230d5e4f6d69e48e4f12fd7084f7c322248c4dcdd8dc"
+      },
+      "glbResponses": 3,
+      "errors": []
+    },
+    {
+      "test": "viewer",
+      "id": "mall-advertising-lightbox",
+      "width": 1440,
+      "passed": true,
+      "glbSha256": "d56b65558aef88702e53dba4ef6ebad093bd6bcd760fb420042cd4457d9ce100",
+      "glbBytes": 235832,
+      "canvasBounds": {
+        "x": 191,
+        "y": 104,
+        "width": 1058,
+        "height": 495
+      },
+      "images": {
+        "initial": "9670d26e4014d795c7516c54db03e4d39389d9812225f374aaa0e9eb50004d9a",
+        "rotated": "94e9e7bd0a867bbe5177ce3183cd84a230cb8bf970b97ad5fe227473fa4c8bb2",
+        "zoomed": "860ea7324a3585b7c64d87c309d199bfca70c9b1072c76a1b59b0aa88da27807",
+        "reset": "b91257e102d657f46f69e6fa7b2902c02cacb9bc818c5a81f6021cbbe0c238c6"
+      },
+      "glbResponses": 3,
+      "errors": []
+    },
+    {
+      "test": "viewer",
+      "id": "mall-trash-bin",
+      "width": 1440,
+      "passed": false,
+      "glbSha256": "11067f6be8acec9d6651afe6f542f9cadc6bcae1e51e6516524190dcc8d0b48c",
+      "glbBytes": 338232,
+      "canvasBounds": {
+        "x": 191,
+        "y": 104,
+        "width": 1058,
+        "height": 495
+      },
+      "images": {
+        "initial": "f75214e0be4a5ca0211510c4b55d17d4b02f27e47f2d96e1dd286142a0392cdd",
+        "rotated": "0dd380bfe3a822714bdbdb95e5f7eb9ed5b067a32fe59451ff31d129c6b279cd",
+        "zoomed": "e40c7c03ded3f3c9b5bd298a09a790652844af9a50f905fd49567d166e36a112",
+        "reset": "3cde41c784e3752d503452903692d1848b2932741bcbb990f73a7fbc95ffe3d7"
+      },
+      "error": "the GLB response body must finish\n+ actual - expected\n\n+ 'response.body: Protocol error (Network.getResponseBody): No data found for resource with given identifier\\n' +\n+   'Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.'\n- undefined\n"
+    }
+  ],
+  "error": "the GLB response body must finish\n+ actual - expected\n\n+ 'response.body: Protocol error (Network.getResponseBody): No data found for resource with given identifier\\n' +\n+   'Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.'\n- undefined\n",
+  "limitations": [
+    "Canvas bounds are measured; final artistic framing and clipping require review of the saved model screenshots.",
+    "Keyboard orbit/zoom are exercised; physical touch gestures and mobile GPU performance are not measured.",
+    "Hidden download controls do not prevent retrieval of a publicly rendered GLB or grant redistribution rights."
+  ]
+}

@@ -1,0 +1,584 @@
+
+> blender-3d-gallery@0.1.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: catalog rejects external core image and buffer URIs
+ok 1 - catalog rejects external core image and buffer URIs
+  ---
+  duration_ms: 46.583776
+  type: 'test'
+  ...
+# Subtest: catalog accepts embedded core resources and self-contained data URIs
+ok 2 - catalog accepts embedded core resources and self-contained data URIs
+  ---
+  duration_ms: 486.83691
+  type: 'test'
+  ...
+# Subtest: billiards catalog includes each physical asset and the legacy scene
+ok 3 - billiards catalog includes each physical asset and the legacy scene
+  ---
+  duration_ms: 75.335638
+  type: 'test'
+  ...
+# Subtest: individual GLBs have only their own root and a zero origin
+ok 4 - individual GLBs have only their own root and a zero origin
+  ---
+  duration_ms: 45.295115
+  type: 'test'
+  ...
+# Subtest: assembled scene retains all 21 roots at their assembled locations
+ok 5 - assembled scene retains all 21 roots at their assembled locations
+  ---
+  duration_ms: 36.983073
+  type: 'test'
+  ...
+# Subtest: number marks follow the ball surface on opposite sides
+ok 6 - number marks follow the ball surface on opposite sides
+  ---
+  duration_ms: 56.010231
+  type: 'test'
+  ...
+# Subtest: break guide reaches the rack beyond the former artificial range
+ok 7 - break guide reaches the rack beyond the former artificial range
+  ---
+  duration_ms: 2.932111
+  type: 'test'
+  ...
+# Subtest: guide picks nearest ball and clears a near miss to the actual cushion
+ok 8 - guide picks nearest ball and clears a near miss to the actual cushion
+  ---
+  duration_ms: 0.342915
+  type: 'test'
+  ...
+# Subtest: guide distinguishes side pocket opening and handles touching cushion
+ok 9 - guide distinguishes side pocket opening and handles touching cushion
+  ---
+  duration_ms: 0.136541
+  type: 'test'
+  ...
+# Subtest: feedback reports observed pots and authoritative turn/rule result
+ok 10 - feedback reports observed pots and authoritative turn/rule result
+  ---
+  duration_ms: 0.171749
+  type: 'test'
+  ...
+# Subtest: guide handles legal near-touching placements without claiming separating contact
+ok 11 - guide handles legal near-touching placements without claiming separating contact
+  ---
+  duration_ms: 0.424164
+  type: 'test'
+  ...
+# Subtest: rack is seeded, complete, eight centered, opposite rear groups and non-overlapping
+ok 12 - rack is seeded, complete, eight centered, opposite rear groups and non-overlapping
+  ---
+  duration_ms: 1.752992
+  type: 'test'
+  ...
+# Subtest: placement respects head string, overlaps, table and pocket limits
+ok 13 - placement respects head string, overlaps, table and pocket limits
+  ---
+  duration_ms: 0.251666
+  type: 'test'
+  ...
+# Subtest: legal pot allocates group and continues; miss passes turn
+ok 14 - legal pot allocates group and continues; miss passes turn
+  ---
+  duration_ms: 0.619372
+  type: 'test'
+  ...
+# Subtest: foul does not allocate group and pockets stay pocketed
+ok 15 - foul does not allocate group and pockets stay pocketed
+  ---
+  duration_ms: 0.1705
+  type: 'test'
+  ...
+# Subtest: mixed pots sort by event time, with ball number breaking simultaneous ties
+ok 16 - mixed pots sort by event time, with ball number breaking simultaneous ties
+  ---
+  duration_ms: 1.269202
+  type: 'test'
+  ...
+# Subtest: open-table group follows the first actual pot within a substep
+ok 17 - open-table group follows the first actual pot within a substep
+  ---
+  duration_ms: 2.168531
+  type: 'test'
+  ...
+# Subtest: break never allocates groups, eight is re-spotted and scratch gives ball in hand
+ok 18 - break never allocates groups, eight is re-spotted and scratch gives ball in hand
+  ---
+  duration_ms: 0.446039
+  type: 'test'
+  ...
+# Subtest: break pot continues, miss changes turn, no contact is a foul
+ok 19 - break pot continues, miss changes turn, no contact is a foul
+  ---
+  duration_ms: 0.698705
+  type: 'test'
+  ...
+# Subtest: early eight and last own ball plus eight lose
+ok 20 - early eight and last own ball plus eight lose
+  ---
+  duration_ms: 0.722121
+  type: 'test'
+  ...
+# Subtest: eligible eight wins unless any foul occurs in the same shot
+ok 21 - eligible eight wins unless any foul occurs in the same shot
+  ---
+  duration_ms: 0.683705
+  type: 'test'
+  ...
+# Subtest: wrong first contact and open-table eight contact are fouls
+ok 22 - wrong first contact and open-table eight contact are fouls
+  ---
+  duration_ms: 0.851121
+  type: 'test'
+  ...
+# Subtest: an open table with all group balls gone can finish, but a partly cleared open table cannot play eight
+ok 23 - an open table with all group balls gone can finish, but a partly cleared open table cannot play eight
+  ---
+  duration_ms: 0.555539
+  type: 'test'
+  ...
+# Subtest: opponent-only pots pass turn and mixed own pots continue
+ok 24 - opponent-only pots pass turn and mixed own pots continue
+  ---
+  duration_ms: 0.28604
+  type: 'test'
+  ...
+# Subtest: duplicate and finished shot resolution is rejected
+ok 25 - duplicate and finished shot resolution is rejected
+  ---
+  duration_ms: 0.278624
+  type: 'test'
+  ...
+# Subtest: invalid physical outcome restores pre-shot state in recovery
+ok 26 - invalid physical outcome restores pre-shot state in recovery
+  ---
+  duration_ms: 0.187166
+  type: 'test'
+  ...
+# Subtest: stable schema rejects corruption, motion, shuffled IDs and contradictory results
+ok 27 - stable schema rejects corruption, motion, shuffled IDs and contradictory results
+  ---
+  duration_ms: 0.755621
+  type: 'test'
+  ...
+# Subtest: fixed-step rack break settles without escape, preserves identity and repeats
+ok 28 - fixed-step rack break settles without escape, preserves identity and repeats
+  ---
+  duration_ms: 493.589628
+  type: 'test'
+  ...
+# Subtest: malformed save entries are rejected without throwing
+ok 29 - malformed save entries are rejected without throwing
+  ---
+  duration_ms: 0.230083
+  type: 'test'
+  ...
+# Subtest: all six pocket approach fixtures capture exactly once
+ok 30 - all six pocket approach fixtures capture exactly once
+  ---
+  duration_ms: 25.770251
+  type: 'test'
+  ...
+# Subtest: cushion reflects, low power stops, and high power cannot tunnel
+ok 31 - cushion reflects, low power stops, and high power cannot tunnel
+  ---
+  duration_ms: 52.131333
+  type: 'test'
+  ...
+# Subtest: pull is relative to origin, clamps and reverses without charging
+ok 32 - pull is relative to origin, clamps and reverses without charging
+  ---
+  duration_ms: 0.822954
+  type: 'test'
+  ...
+# Subtest: release threshold tolerates real pointer-coordinate representation without admitting weak pulls
+ok 33 - release threshold tolerates real pointer-coordinate representation without admitting weak pulls
+  ---
+  duration_ms: 0.138541
+  type: 'test'
+  ...
+# Subtest: strength curve preserves threshold and monotonic speed
+ok 34 - strength curve preserves threshold and monotonic speed
+  ---
+  duration_ms: 0.060167
+  type: 'test'
+  ...
+# Subtest: cue retraction follows pull and reaches real contact on timeline
+ok 35 - cue retraction follows pull and reaches real contact on timeline
+  ---
+  duration_ms: 0.061083
+  type: 'test'
+  ...
+# Subtest: aim points from the white ball toward the pointer and retains angle at zero-length
+ok 36 - aim points from the white ball toward the pointer and retains angle at zero-length
+  ---
+  duration_ms: 0.068167
+  type: 'test'
+  ...
+# Subtest: dragging the cue butt aims away from the pointer
+ok 37 - dragging the cue butt aims away from the pointer
+  ---
+  duration_ms: 0.056208
+  type: 'test'
+  ...
+# Subtest: cue hit test covers the shaft behind the ball only
+ok 38 - cue hit test covers the shaft behind the ball only
+  ---
+  duration_ms: 0.092499
+  type: 'test'
+  ...
+# Subtest: post-contact estimate: head-on sends the object ball straight and leaves no cue tangent
+ok 39 - post-contact estimate: head-on sends the object ball straight and leaves no cue tangent
+  ---
+  duration_ms: 0.092791
+  type: 'test'
+  ...
+# Subtest: post-contact estimate: cut shot splits object and cue directions at right angles
+ok 40 - post-contact estimate: cut shot splits object and cue directions at right angles
+  ---
+  duration_ms: 0.28104
+  type: 'test'
+  ...
+# Subtest: mall essentials registers exactly the four requested fixtures
+ok 41 - mall essentials registers exactly the four requested fixtures
+  ---
+  duration_ms: 0.785705
+  type: 'test'
+  ...
+# Subtest: mall-directory-kiosk preserves provenance, measured export, source and thumbnail
+ok 42 - mall-directory-kiosk preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.927288
+  type: 'test'
+  ...
+# Subtest: mall-advertising-lightbox preserves provenance, measured export, source and thumbnail
+ok 43 - mall-advertising-lightbox preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.442706
+  type: 'test'
+  ...
+# Subtest: mall-trash-bin preserves provenance, measured export, source and thumbnail
+ok 44 - mall-trash-bin preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.455622
+  type: 'test'
+  ...
+# Subtest: mall-display-shelf preserves provenance, measured export, source and thumbnail
+ok 45 - mall-display-shelf preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.520164
+  type: 'test'
+  ...
+# Subtest: NASA Moon and Tempel 1 are distinct, attributed candidates outside the solar demo
+ok 46 - NASA Moon and Tempel 1 are distinct, attributed candidates outside the solar demo
+  ---
+  duration_ms: 46.778358
+  type: 'test'
+  ...
+# Subtest: NASA Saturn remains a distinct attributed candidate outside the solar demo
+ok 47 - NASA Saturn remains a distinct attributed candidate outside the solar demo
+  ---
+  duration_ms: 44.520911
+  type: 'test'
+  ...
+# Subtest: NASA solar candidates are attributed, discoverable and excluded from the solar demo
+ok 48 - NASA solar candidates are attributed, discoverable and excluded from the solar demo
+  ---
+  duration_ms: 60.692084
+  type: 'test'
+  ...
+# Subtest: a close three-ball chain tracks a finer timestep near 0.14044842518866063
+ok 49 - a close three-ball chain tracks a finer timestep near 0.14044842518866063
+  ---
+  duration_ms: 291.326267
+  type: 'test'
+  ...
+# Subtest: a close three-ball chain tracks a finer timestep near 0.09708761543035507
+ok 50 - a close three-ball chain tracks a finer timestep near 0.09708761543035507
+  ---
+  duration_ms: 64.976022
+  type: 'test'
+  ...
+# Subtest: a close three-ball chain tracks a finer timestep near 0.13475384443998337
+ok 51 - a close three-ball chain tracks a finer timestep near 0.13475384443998337
+  ---
+  duration_ms: 63.570361
+  type: 'test'
+  ...
+# Subtest: earliest geometric cue contact receives the first impulse within a substep
+ok 52 - earliest geometric cue contact receives the first impulse within a substep
+  ---
+  duration_ms: 2.611488
+  type: 'test'
+  ...
+# Subtest: moving-target encounter time determines first contact, not array or ID order
+ok 53 - moving-target encounter time determines first contact, not array or ID order
+  ---
+  duration_ms: 5.354308
+  type: 'test'
+  ...
+# Subtest: simultaneous cue contacts use deterministic ball-number tie breaks
+ok 54 - simultaneous cue contacts use deterministic ball-number tie breaks
+  ---
+  duration_ms: 5.113267
+  type: 'test'
+  ...
+# Subtest: ordered contacts do not create kinetic energy
+ok 55 - ordered contacts do not create kinetic energy
+  ---
+  duration_ms: 2.644612
+  type: 'test'
+  ...
+# Subtest: a cue/object collision near a side-pocket jaw settles safely
+ok 56 - a cue/object collision near a side-pocket jaw settles safely
+  ---
+  duration_ms: 10.398533
+  type: 'test'
+  ...
+# Subtest: a shallow high-speed graze produces an actual impulse instead of tunneling
+ok 57 - a shallow high-speed graze produces an actual impulse instead of tunneling
+  ---
+  duration_ms: 0.774538
+  type: 'test'
+  ...
+# Subtest: a near miss is not converted into a phantom collision
+ok 58 - a near miss is not converted into a phantom collision
+  ---
+  duration_ms: 0.587622
+  type: 'test'
+  ...
+# Subtest: swept contact accounts for moving targets
+ok 59 - swept contact accounts for moving targets
+  ---
+  duration_ms: 0.438498
+  type: 'test'
+  ...
+# Subtest: a grazing hit parallel to a cushion is not discarded
+ok 60 - a grazing hit parallel to a cushion is not discarded
+  ---
+  duration_ms: 0.438123
+  type: 'test'
+  ...
+# Subtest: a pocket capture before a predicted graze takes precedence
+ok 61 - a pocket capture before a predicted graze takes precedence
+  ---
+  duration_ms: 0.214124
+  type: 'test'
+  ...
+# Subtest: a graze before pocket entry records the hit and applies its impulse
+ok 62 - a graze before pocket entry records the hit and applies its impulse
+  ---
+  duration_ms: 0.18925
+  type: 'test'
+  ...
+# Subtest: an earlier head-on impact stops the cue before the pocket sensor
+ok 63 - an earlier head-on impact stops the cue before the pocket sensor
+  ---
+  duration_ms: 0.391248
+  type: 'test'
+  ...
+# Subtest: a fast path crossing the pocket sensor cannot tunnel through it
+ok 64 - a fast path crossing the pocket sensor cannot tunnel through it
+  ---
+  duration_ms: 0.339498
+  type: 'test'
+  ...
+# Subtest: a fast path outside the pocket sensor is not a phantom pot
+ok 65 - a fast path outside the pocket sensor is not a phantom pot
+  ---
+  duration_ms: 0.297957
+  type: 'test'
+  ...
+# Subtest: a ball-before-rail path remains bounded and comparable to fine stepping
+ok 66 - a ball-before-rail path remains bounded and comparable to fine stepping
+  ---
+  duration_ms: 52.555415
+  type: 'test'
+  ...
+# Subtest: a rail-before-ball path remains bounded and comparable to fine stepping
+ok 67 - a rail-before-ball path remains bounded and comparable to fine stepping
+  ---
+  duration_ms: 62.831948
+  type: 'test'
+  ...
+# Subtest: a centered equal-mass impact transfers speed without creating energy
+ok 68 - a centered equal-mass impact transfers speed without creating energy
+  ---
+  duration_ms: 1.098203
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":-0.07,"z":0.46}
+ok 69 - rolling agrees with fine stepping near cushion {"x":-0.07,"z":0.46}
+  ---
+  duration_ms: 123.32999
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":0.4,"z":-0.46}
+ok 70 - rolling agrees with fine stepping near cushion {"x":0.4,"z":-0.46}
+  ---
+  duration_ms: 7.705005
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":1.04,"z":0.2}
+ok 71 - rolling agrees with fine stepping near cushion {"x":1.04,"z":0.2}
+  ---
+  duration_ms: 10.317159
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":-1.04,"z":0.2}
+ok 72 - rolling agrees with fine stepping near cushion {"x":-1.04,"z":0.2}
+  ---
+  duration_ms: 7.198757
+  type: 'test'
+  ...
+# Subtest: rolling through a cushion bounce follows the contact path (0, 1)
+ok 73 - rolling through a cushion bounce follows the contact path (0, 1)
+  ---
+  duration_ms: 7.654046
+  type: 'test'
+  ...
+# Subtest: rolling through a cushion bounce follows the contact path (1, 1)
+ok 74 - rolling through a cushion bounce follows the contact path (1, 1)
+  ---
+  duration_ms: 8.406418
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (1, 0)
+ok 75 - free rolling follows travel without slipping (1, 0)
+  ---
+  duration_ms: 0.524706
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (-1, 0)
+ok 76 - free rolling follows travel without slipping (-1, 0)
+  ---
+  duration_ms: 0.223957
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (0, 1)
+ok 77 - free rolling follows travel without slipping (0, 1)
+  ---
+  duration_ms: 0.455664
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (0, -1)
+ok 78 - free rolling follows travel without slipping (0, -1)
+  ---
+  duration_ms: 1.160912
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (1, 1)
+ok 79 - free rolling follows travel without slipping (1, 1)
+  ---
+  duration_ms: 0.244874
+  type: 'test'
+  ...
+# Subtest: rolling uses world-space direction after a previous ball rotation
+ok 80 - rolling uses world-space direction after a previous ball rotation
+  ---
+  duration_ms: 0.381832
+  type: 'test'
+  ...
+# Subtest: catalog enrichment preserves every registered asset and supplies measured metadata
+ok 81 - catalog enrichment preserves every registered asset and supplies measured metadata
+  ---
+  duration_ms: 85.434339
+  type: 'test'
+  ...
+# Subtest: Saga study retains its identity, provenance and pending redistribution policy
+ok 82 - Saga study retains its identity, provenance and pending redistribution policy
+  ---
+  duration_ms: 83.195767
+  type: 'test'
+  ...
+# Subtest: catalog rejects duplicate identities and slugs across collections
+ok 83 - catalog rejects duplicate identities and slugs across collections
+  ---
+  duration_ms: 3.488025
+  type: 'test'
+  ...
+# Subtest: catalog rejects malformed required and optional values before coercion
+ok 84 - catalog rejects malformed required and optional values before coercion
+  ---
+  duration_ms: 7.396131
+  type: 'test'
+  ...
+# Subtest: catalog paths reject traversal, URL schemes, query fragments and encoded separators
+ok 85 - catalog paths reject traversal, URL schemes, query fragments and encoded separators
+  ---
+  duration_ms: 2.521613
+  type: 'test'
+  ...
+# Subtest: optional defaults are explicit and false download permission is retained
+ok 86 - optional defaults are explicit and false download permission is retained
+  ---
+  duration_ms: 1.063328
+  type: 'test'
+  ...
+# Subtest: catalog refuses symlink references outside the model directory
+ok 87 - catalog refuses symlink references outside the model directory
+  ---
+  duration_ms: 1.245494
+  type: 'test'
+  ...
+# Subtest: demo registry resolves verified posters and legacy launch routes
+ok 88 - demo registry resolves verified posters and legacy launch routes
+  ---
+  duration_ms: 53.515243
+  type: 'test'
+  ...
+# Subtest: demo schema rejects duplicates, missing posters, invalid routes and malformed values
+ok 89 - demo schema rejects duplicates, missing posters, invalid routes and malformed values
+  ---
+  duration_ms: 1.7742
+  type: 'test'
+  ...
+# Subtest: legacy IDs cannot be claimed by a different canonical model slug
+ok 90 - legacy IDs cannot be claimed by a different canonical model slug
+  ---
+  duration_ms: 1.337202
+  type: 'test'
+  ...
+# Subtest: metadata validates the display and text fields consumed by existing viewers
+ok 91 - metadata validates the display and text fields consumed by existing viewers
+  ---
+  duration_ms: 0.794079
+  type: 'test'
+  ...
+# Subtest: ball_01 real GLB rolls its contact point against the direction of travel
+ok 92 - ball_01 real GLB rolls its contact point against the direction of travel
+  ---
+  duration_ms: 29.361942
+  type: 'test'
+  ...
+# Subtest: ball_09 real GLB rolls its contact point against the direction of travel
+ok 93 - ball_09 real GLB rolls its contact point against the direction of travel
+  ---
+  duration_ms: 28.411197
+  type: 'test'
+  ...
+# Subtest: optimized solar GLBs match current sources and retain every non-image buffer
+ok 94 - optimized solar GLBs match current sources and retain every non-image buffer
+  ---
+  duration_ms: 401.305156
+  type: 'test'
+  ...
+# Subtest: solar scene uses attributed NASA assets without losing physical facts
+ok 95 - solar scene uses attributed NASA assets without losing physical facts
+  ---
+  duration_ms: 87.400455
+  type: 'test'
+  ...
+1..95
+# tests 95
+# suites 0
+# pass 95
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2210.440922
