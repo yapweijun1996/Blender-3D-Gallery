@@ -54,3 +54,7 @@ See [asset inventory, validation and scientific limitations](models/solar-system
 ## GJH Mall Furniture collection
 
 Two original, metre-scale models add a lounge bench and an areca-inspired planter for reuse in the owner's GJH virtual mall. Each has an editable Blender source, deterministic generator, self-contained GLB, lightweight preview and measured provenance. The combined GLBs are 354,048 bytes; repeated placements can share their geometry and materials. See [authoring, reuse and rights](models/gjh-mall-furniture/README.md) and [verification](models/gjh-mall-furniture/verification.md). Run `node scripts/test-gjh-furniture.mjs` after building to exercise both actual models at desktop, tablet and mobile sizes. Public redistribution terms remain unspecified and gallery download buttons are disabled for this collection.
+
+## GJH mall visitor
+
+The [GJH Mall Visitor collection](models/gjh-mall-visitor/README.md) adds an original reference-led rounded mascot with editable Blender source and self-contained idle/walk/sprint animation. The gallery viewer presents the model at rest; the consuming GJH V11 mall plays its animation clips. Actual geometry, animation/contact checks and provenance are recorded beside the source. Run `node models/gjh-mall-visitor/validate.mjs` and, after a build, `node scripts/test-gjh-visitor.mjs` for focused verification. Public artwork redistribution terms remain unspecified.
