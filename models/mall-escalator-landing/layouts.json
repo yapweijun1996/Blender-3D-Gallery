@@ -1,0 +1,22 @@
+{
+  "coordinate_system": "glTF metres +Y up",
+  "origin": "underside centre",
+  "nominal_dimensions_m": [1.2, 0.03, 1.2],
+  "floor_top_m": 0.03,
+  "floor_asset": "../mall-floor-tile/exports/mall-floor-tile-module.glb",
+  "floor_connections": [
+    {"name":"front","translation_m":[0,0,1.2],"axis":"z","sign":1},
+    {"name":"left","translation_m":[-1.2,0,0],"axis":"x","sign":-1},
+    {"name":"right","translation_m":[1.2,0,0],"axis":"x","sign":1}
+  ],
+  "future_escalator": {
+    "status": "NOT TESTED: future escalator asset does not exist",
+    "interface_centre_m": [0,0.03,-0.6],
+    "outer_width_m": 1.2,
+    "central_comb_width_m": 1.08,
+    "simplified_tooth_pitch_m": 0.04,
+    "simplified_tooth_count": 27,
+    "comb_top_m": 0.029,
+    "note": "Provisional visual envelope only. No claim of mechanical compatibility, working transport, safety, manufacturer or building-code compliance. Item 430 must validate its own adjoining geometry."
+  }
+}
