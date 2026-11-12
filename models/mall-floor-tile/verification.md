@@ -32,3 +32,14 @@ Gallery WebP previews are about 13–15 KB each. Lossless archival render PNGs a
 The prior glass-railing 8/9 strict browser failure is unchanged in its original reports. This floor asset's passing cases do not establish that the unrelated intermittent loader failure was repaired.
 
 Committed text-log copies normalize trailing whitespace only; raw command logs remain in the isolated workspace. No diagnostic lines or failures were removed.
+
+## Combined loader integration
+
+After committing the floor asset as `4ff7771`, the separately reviewed loader fix `1a049ab` was fetched from the local diagnostic checkout and cherry-picked as `ea397d2`. No remote fetch, push, PR, merge or deployment was performed. The combined runtime tested at `ea397d2144f7fd50528461774d26a65b7b476231` passed:
+
+- Unit tests: **123/123**; build/asset validation: **PASS**.
+- Unchanged strict floor harness: **3/3**; unchanged strict glass harness: **9/9**. Every request/console/page-error array is empty and consumed GLB hashes match.
+- New loading lifecycle regression: **4/4**, covering a real partial-transfer cancellation followed by reopen, HTTP 503 retry, truncated GLB retry and injected transport failure retry. Intentional fault events are explicitly matched; no unexpected error is hidden.
+- General library suite: **9/9**.
+
+Separate evidence, command logs, exact source identity and all twelve initial asset screenshots are under `reports/integration/`. All existing authored assets, the catalog and the floor harness remain unchanged from the asset commit. Original railing 8/9 results and the floor's pre-fix checks are preserved; this new result does not rewrite historical failures. A second reviewer independently inspected the four-angle floor contact sheet and integrated narrow-viewport floor rendering. Physical Android/iOS remains **NEEDS REVIEW**.
