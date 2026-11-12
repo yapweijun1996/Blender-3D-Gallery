@@ -1,0 +1,139 @@
+{
+  "metrics": {
+    "id": "mall-escalator-landing",
+    "glb_bytes": 83352,
+    "triangles": 1616,
+    "vertices": 2616,
+    "primitives": 8,
+    "materials": 5,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      1.1999999843537807,
+      0.03000000020256266,
+      1.2000000476837158
+    ],
+    "bounds": {
+      "min": [
+        -0.5999999921768904,
+        0,
+        -0.6000000238418579
+      ],
+      "max": [
+        0.5999999921768904,
+        0.03000000020256266,
+        0.6000000238418579
+      ]
+    },
+    "ribs_per_plate": 25,
+    "comb_teeth": 27,
+    "source_parts": 8,
+    "sha256": "aa2632a479f3e474b38413667f01c308d0a542325e451660f0e67be5384bc63d",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "validator": "2.0.0-dev.3.10"
+    }
+  },
+  "assemblies": [
+    {
+      "name": "front",
+      "status": "PASS",
+      "floor_sha256": "328a091a1372b0246694484d0cea05319bad032cfa603ed030b69ef87153c305",
+      "translation_m": [
+        0,
+        0,
+        1.2
+      ],
+      "edge_gap_m": 4.768371586472142e-8,
+      "positiveVolumeIntersections": 0,
+      "meshPairChecks": 72,
+      "actualRayHeightSamples": [
+        {
+          "landing": 0.029999999329447746,
+          "floor": 0.029999999329447746
+        },
+        {
+          "landing": 0.029999999329447857,
+          "floor": 0.029999999329447746
+        },
+        {
+          "landing": 0.029999999329447746,
+          "floor": 0.029999999329447857
+        },
+        {
+          "landing": 0.029999999329447857,
+          "floor": 0.029999999329447746
+        }
+      ],
+      "groutSurface_m": 0.028999999165534973,
+      "nominalTop_m": 0.03
+    },
+    {
+      "name": "left",
+      "status": "PASS",
+      "floor_sha256": "328a091a1372b0246694484d0cea05319bad032cfa603ed030b69ef87153c305",
+      "translation_m": [
+        -1.2,
+        0,
+        0
+      ],
+      "edge_gap_m": 1.601874832779515e-8,
+      "positiveVolumeIntersections": 0,
+      "meshPairChecks": 72,
+      "actualRayHeightSamples": [
+        {
+          "landing": 0.029999999329447857,
+          "floor": 0.029999999329447746
+        },
+        {
+          "landing": 0.029999999329447635,
+          "floor": 0.029999999329447746
+        },
+        {
+          "landing": 0.029999999329447635,
+          "floor": 0.029999999329447746
+        },
+        {
+          "landing": 0.029999999329447857,
+          "floor": 0.029999999329447746
+        }
+      ],
+      "groutSurface_m": 0.028999999165534973,
+      "nominalTop_m": 0.03
+    },
+    {
+      "name": "right",
+      "status": "PASS",
+      "floor_sha256": "328a091a1372b0246694484d0cea05319bad032cfa603ed030b69ef87153c305",
+      "translation_m": [
+        1.2,
+        0,
+        0
+      ],
+      "edge_gap_m": 1.601874832779515e-8,
+      "positiveVolumeIntersections": 0,
+      "meshPairChecks": 72,
+      "actualRayHeightSamples": [
+        {
+          "landing": 0.029999999329447635,
+          "floor": 0.029999999329447746
+        },
+        {
+          "landing": 0.029999999329447635,
+          "floor": 0.029999999329447746
+        },
+        {
+          "landing": 0.029999999329447635,
+          "floor": 0.029999999329447857
+        },
+        {
+          "landing": 0.029999999329447857,
+          "floor": 0.029999999329447746
+        }
+      ],
+      "groutSurface_m": 0.028999999165534973,
+      "nominalTop_m": 0.03
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+> Current combined review (2026-11-12): strict Gallery checks now **PASS 9/9**, after the documented native-fetch transport fix. Local asset gate PASS; overall **NEEDS REVIEW**, with physical Android/iOS **NOT TESTED**. See [independent batch verification](../../docs/verification/mall-batch-10.md) and [fresh browser results](../../docs/verification/mall-batch-10/browser-glass-railing.json). The initial failure statements and evidence below are retained as a historical snapshot, not the current unresolved status.
+
 # Glass railing verification · 2026-11-12
 
 ## Gate outcome

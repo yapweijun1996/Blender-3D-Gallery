@@ -1,3 +1,5 @@
+> Final combined review (2026-11-12): configured underside presentation and strict Gallery checks **PASS 3/3** on the final ten-type batch. See [independent batch verification](../../docs/verification/mall-batch-10.md) and [fresh results](../../docs/verification/mall-batch-10/browser-ceiling-light.json). This supersedes only the historical presentation limitation below; overall remains **NEEDS REVIEW** and native Android/iOS remain **NOT TESTED**.
+
 > Historical pre-configuration report. For the approved underside preview integration and latest tests, see [preview-config-verification.md](preview-config-verification.md). Original measurements and evidence below are retained.
 
 # Mall Ceiling Light verification, 2026-11-12

@@ -1,3 +1,5 @@
+> Current combined review (2026-11-12): strict Gallery checks now **PASS 9/9**, after the documented native-fetch transport fix. Local asset gate PASS; overall **NEEDS REVIEW**, with physical Android/iOS **NOT TESTED**. See [independent batch verification](../../docs/verification/mall-batch-10.md) and [fresh browser results](../../docs/verification/mall-batch-10/browser-glass-railing.json). The initial failure statements and evidence below are retained as a historical snapshot, not the current unresolved status.
+
 # Modular glass railing kit
 
 One logical model kit, with three independently usable assets: a standalone post and 1 m / 2 m centre-spaced straight bays. Original graphite aluminium, champagne trim and sea-green glass. Blender 4.0.2, real metre units, Blender +Z up / glTF +Y up, floor-centred origins. Front is Blender -Y / glTF +Z; both faces have symmetric geometry.

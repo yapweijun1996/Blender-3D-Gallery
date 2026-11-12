@@ -1,3 +1,5 @@
+> Final combined review (2026-11-12): configured underside presentation and strict Gallery checks **PASS 3/3** on the final ten-type batch. See [independent batch verification](../../docs/verification/mall-batch-10.md) and [fresh results](../../docs/verification/mall-batch-10/browser-ceiling-panel.json). This supersedes only the historical presentation limitation below; overall remains **NEEDS REVIEW** and native Android/iOS remain **NOT TESTED**.
+
 > Update: the initial rear/dark-underside presentation described below is the original baseline. Optional camera/light configuration now addresses it; see [current viewer verification](../../docs/verification/preview-config.md). Original observations are retained.
 
 # Mall Ceiling Panel verification, 2026-11-12
