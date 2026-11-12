@@ -18,6 +18,7 @@ function meshDescendant(node) { let found = null; node?.traverse(o => { if (o.is
 test('event booth is registered and measured metadata is synchronized', () => {
   assert.ok(asset);
   assert.equal(asset.root, 'ASSET_MallEventBooth');
+  assert.equal(metadata.display.previewRotationY, Math.PI, 'gallery camera faces the poster front');
   assert.equal(metadata.metrics.glb_bytes, bytes.length);
   assert.equal(metadata.metrics.sha256, createHash('sha256').update(bytes).digest('hex'));
   assert.equal(metadata.metrics.sha256, JSON.parse(fs.readFileSync(`${folder}/reports/assets.json`)).sha256);
