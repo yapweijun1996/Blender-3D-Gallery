@@ -1,0 +1,391 @@
+{
+  "browser": "156.0.8078.4",
+  "build": "../evidence/baseline-dist",
+  "environment": "Ubuntu headless Chromium / SwiftShader; 390x844 viewport, CDP 100 ms / 4 Mbps, no service worker/cache; not physical mobile",
+  "results": [
+    {
+      "id": "mall-glass-railing-1m",
+      "observed": false,
+      "expected": {
+        "bytes": 175864,
+        "sha256": "556cfc03f38a0cb0c21a125a318c5dc251976e18598f3d15f3e0979dc2dfd49d"
+      },
+      "requests": [
+        {
+          "id": "1480436.155",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-1m-B9OwfF22.glb",
+          "timestamp": 287466.043796
+        }
+      ],
+      "finished": [],
+      "failed": [
+        {
+          "requestId": "1480436.155",
+          "timestamp": 287466.499075,
+          "type": "Fetch",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-1m-B9OwfF22.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "responses": [
+        {
+          "id": "1480436.155",
+          "status": 200,
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-1m-B9OwfF22.glb"
+        }
+      ],
+      "received": {
+        "1480436.155": 175864
+      },
+      "passed": false,
+      "viewerStillOpen": true,
+      "failure": "no ignored console/page/request failures\n+ actual - expected\n\n+ [\n+   {\n+     message: 'net::ERR_ABORTED',\n+     type: 'requestfailed',\n+     url: 'http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-1m-B9OwfF22.glb'\n+   }\n+ ]\n- []\n"
+    },
+    {
+      "id": "mall-glass-railing-2m",
+      "observed": false,
+      "expected": {
+        "bytes": 175864,
+        "sha256": "037b734e7285961e93a75184f7aab28f4a20498fbac5639ed2cd0fab0958c6c5"
+      },
+      "requests": [
+        {
+          "id": "1481341.155",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-2m-H2JXjHCu.glb",
+          "timestamp": 287469.41877
+        }
+      ],
+      "finished": [],
+      "failed": [
+        {
+          "requestId": "1481341.155",
+          "timestamp": 287469.873829,
+          "type": "Fetch",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-2m-H2JXjHCu.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "responses": [
+        {
+          "id": "1481341.155",
+          "status": 200,
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-2m-H2JXjHCu.glb"
+        }
+      ],
+      "received": {
+        "1481341.155": 175864
+      },
+      "passed": false,
+      "viewerStillOpen": true,
+      "failure": "no ignored console/page/request failures\n+ actual - expected\n\n+ [\n+   {\n+     message: 'net::ERR_ABORTED',\n+     type: 'requestfailed',\n+     url: 'http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-2m-H2JXjHCu.glb'\n+   }\n+ ]\n- []\n"
+    },
+    {
+      "id": "mall-waste-sorting-station",
+      "observed": false,
+      "expected": {
+        "bytes": 479436,
+        "sha256": "52a62e5ace403100b7757ac0c4b464272f5d46c79903c69d5d2db75a83a2e4ae"
+      },
+      "requests": [
+        {
+          "id": "1482372.155",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-waste-sorting-station-CQI4TZep.glb",
+          "timestamp": 287472.636613
+        }
+      ],
+      "finished": [],
+      "failed": [
+        {
+          "requestId": "1482372.155",
+          "timestamp": 287473.699893,
+          "type": "Fetch",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-waste-sorting-station-CQI4TZep.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "responses": [
+        {
+          "id": "1482372.155",
+          "status": 200,
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-waste-sorting-station-CQI4TZep.glb"
+        }
+      ],
+      "received": {
+        "1482372.155": 479436
+      },
+      "passed": false,
+      "viewerStillOpen": true,
+      "failure": "no ignored console/page/request failures\n+ actual - expected\n\n+ [\n+   {\n+     message: 'net::ERR_ABORTED',\n+     type: 'requestfailed',\n+     url: 'http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-waste-sorting-station-CQI4TZep.glb'\n+   }\n+ ]\n- []\n"
+    },
+    {
+      "id": "pool-table",
+      "observed": false,
+      "expected": {
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+      },
+      "requests": [
+        {
+          "id": "1483258.155",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "timestamp": 287476.233584
+        }
+      ],
+      "finished": [],
+      "failed": [
+        {
+          "requestId": "1483258.155",
+          "timestamp": 287477.174779,
+          "type": "Fetch",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "responses": [
+        {
+          "id": "1483258.155",
+          "status": 200,
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/table-XWseCS4E.glb"
+        }
+      ],
+      "received": {
+        "1483258.155": 417656
+      },
+      "passed": false,
+      "viewerStillOpen": true,
+      "failure": "no ignored console/page/request failures\n+ actual - expected\n\n+ [\n+   {\n+     message: 'net::ERR_ABORTED',\n+     type: 'requestfailed',\n+     url: 'http://127.0.0.1:36967/Blender-3D-Gallery/assets/table-XWseCS4E.glb'\n+   }\n+ ]\n- []\n"
+    },
+    {
+      "id": "mall-glass-railing-1m",
+      "observed": true,
+      "expected": {
+        "bytes": 175864,
+        "sha256": "556cfc03f38a0cb0c21a125a318c5dc251976e18598f3d15f3e0979dc2dfd49d"
+      },
+      "requests": [
+        {
+          "id": "1483948.155",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-1m-B9OwfF22.glb",
+          "timestamp": 287479.718873
+        }
+      ],
+      "finished": [],
+      "failed": [
+        {
+          "requestId": "1483948.155",
+          "timestamp": 287480.176183,
+          "type": "Fetch",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-1m-B9OwfF22.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "responses": [
+        {
+          "id": "1483948.155",
+          "status": 200,
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-1m-B9OwfF22.glb"
+        }
+      ],
+      "received": {
+        "1483948.155": 175864
+      },
+      "passed": false,
+      "viewerStillOpen": true,
+      "consumed": [
+        {
+          "bytes": 175864,
+          "sha256": "556cfc03f38a0cb0c21a125a318c5dc251976e18598f3d15f3e0979dc2dfd49d"
+        }
+      ],
+      "failure": "no ignored console/page/request failures\n+ actual - expected\n\n+ [\n+   {\n+     message: 'net::ERR_ABORTED',\n+     type: 'requestfailed',\n+     url: 'http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-1m-B9OwfF22.glb'\n+   }\n+ ]\n- []\n"
+    },
+    {
+      "id": "mall-glass-railing-2m",
+      "observed": true,
+      "expected": {
+        "bytes": 175864,
+        "sha256": "037b734e7285961e93a75184f7aab28f4a20498fbac5639ed2cd0fab0958c6c5"
+      },
+      "requests": [
+        {
+          "id": "1484680.155",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-2m-H2JXjHCu.glb",
+          "timestamp": 287483.004745
+        }
+      ],
+      "finished": [],
+      "failed": [
+        {
+          "requestId": "1484680.155",
+          "timestamp": 287483.458617,
+          "type": "Fetch",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-2m-H2JXjHCu.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "responses": [
+        {
+          "id": "1484680.155",
+          "status": 200,
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-2m-H2JXjHCu.glb"
+        }
+      ],
+      "received": {
+        "1484680.155": 175864
+      },
+      "passed": false,
+      "viewerStillOpen": true,
+      "consumed": [
+        {
+          "bytes": 175864,
+          "sha256": "037b734e7285961e93a75184f7aab28f4a20498fbac5639ed2cd0fab0958c6c5"
+        }
+      ],
+      "failure": "no ignored console/page/request failures\n+ actual - expected\n\n+ [\n+   {\n+     message: 'net::ERR_ABORTED',\n+     type: 'requestfailed',\n+     url: 'http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-glass-railing-2m-H2JXjHCu.glb'\n+   }\n+ ]\n- []\n"
+    },
+    {
+      "id": "mall-waste-sorting-station",
+      "observed": true,
+      "expected": {
+        "bytes": 479436,
+        "sha256": "52a62e5ace403100b7757ac0c4b464272f5d46c79903c69d5d2db75a83a2e4ae"
+      },
+      "requests": [
+        {
+          "id": "1485436.155",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-waste-sorting-station-CQI4TZep.glb",
+          "timestamp": 287486.139436
+        }
+      ],
+      "finished": [],
+      "failed": [
+        {
+          "requestId": "1485436.155",
+          "timestamp": 287487.198446,
+          "type": "Fetch",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-waste-sorting-station-CQI4TZep.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "responses": [
+        {
+          "id": "1485436.155",
+          "status": 200,
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-waste-sorting-station-CQI4TZep.glb"
+        }
+      ],
+      "received": {
+        "1485436.155": 479436
+      },
+      "passed": false,
+      "viewerStillOpen": true,
+      "consumed": [
+        {
+          "bytes": 479436,
+          "sha256": "52a62e5ace403100b7757ac0c4b464272f5d46c79903c69d5d2db75a83a2e4ae"
+        }
+      ],
+      "failure": "no ignored console/page/request failures\n+ actual - expected\n\n+ [\n+   {\n+     message: 'net::ERR_ABORTED',\n+     type: 'requestfailed',\n+     url: 'http://127.0.0.1:36967/Blender-3D-Gallery/assets/mall-waste-sorting-station-CQI4TZep.glb'\n+   }\n+ ]\n- []\n"
+    },
+    {
+      "id": "pool-table",
+      "observed": true,
+      "expected": {
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+      },
+      "requests": [
+        {
+          "id": "1486128.155",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "timestamp": 287489.657698
+        }
+      ],
+      "finished": [],
+      "failed": [
+        {
+          "requestId": "1486128.155",
+          "timestamp": 287490.596893,
+          "type": "Fetch",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "errors": [
+        {
+          "type": "requestfailed",
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "message": "net::ERR_ABORTED"
+        }
+      ],
+      "responses": [
+        {
+          "id": "1486128.155",
+          "status": 200,
+          "url": "http://127.0.0.1:36967/Blender-3D-Gallery/assets/table-XWseCS4E.glb"
+        }
+      ],
+      "received": {
+        "1486128.155": 417656
+      },
+      "passed": false,
+      "viewerStillOpen": true,
+      "consumed": [
+        {
+          "bytes": 417656,
+          "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f"
+        }
+      ],
+      "failure": "no ignored console/page/request failures\n+ actual - expected\n\n+ [\n+   {\n+     message: 'net::ERR_ABORTED',\n+     type: 'requestfailed',\n+     url: 'http://127.0.0.1:36967/Blender-3D-Gallery/assets/table-XWseCS4E.glb'\n+   }\n+ ]\n- []\n"
+    }
+  ]
+}

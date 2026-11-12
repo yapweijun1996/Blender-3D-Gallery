@@ -136,24 +136,16 @@ export default async function createViewer(
         "The 3D view was interrupted. Close and reopen it to retry.";
   });
   try {
-    let gltf;
-    if (isVehicle) {
-      // Consume the self-contained GLB before parsing, while retaining the
-      // viewer's abort signal for an in-flight request.
-      const response = await fetch(url, { signal });
-      if (!response.ok) throw new Error(`Model request failed: ${response.status}`);
-      const buffer = await response.arrayBuffer();
-      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
-      const base = THREE.LoaderUtils.extractUrlBase(new URL(url, document.baseURI).href);
-      gltf = await new GLTFLoader().parseAsync(buffer, base);
-    } else {
-      gltf = await new GLTFLoader().loadAsync(url, (event) => {
-        if (!disposed)
-          status.textContent = event.total
-            ? `Loading the 3D model… ${Math.round((event.loaded / event.total) * 100)}%`
-            : "Loading the 3D model…";
-      });
-    }
+    // Read the native response before parsing. The pinned FileLoader's stream
+    // reader path reports ERR_ABORTED after a complete transfer in Chromium;
+    // see docs/gallery-loading.md. Keep the viewer signal on the real request.
+    const response = await fetch(url, { signal });
+    // Consume error bodies too: retry must not abort a leftover HTTP response.
+    const buffer = await response.arrayBuffer();
+    if (!response.ok) throw new Error(`Model request failed: ${response.status}`);
+    if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+    const base = THREE.LoaderUtils.extractUrlBase(new URL(url, document.baseURI).href);
+    const gltf = await new GLTFLoader().parseAsync(buffer, base);
     if (disposed || signal.aborted) {
       disposeModel(gltf.scene);
       throw new DOMException("Viewer closed", "AbortError");

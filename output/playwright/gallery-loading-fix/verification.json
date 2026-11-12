@@ -1,0 +1,172 @@
+{
+  "baselineCommit": "a1003a9d25149d5a5dc3fa8731d4c58c386c208f",
+  "sourceSha256": {
+    "src/viewer.js": "188a11cbdf6fb7a04a0cd2a80b35d28227285b4a18749966a5769f56f73c3586",
+    "scripts/audit-gallery-loading.mjs": "6d4022eb92147c9cf77c9e6489f81cc171bd66fd8327253d5d7338e49feb4bd9",
+    "scripts/audit-gallery-loading-mechanism.mjs": "84c7824fd07e67e4c42186b11f508140557e9e90fdf5d65977b65af57306de5c",
+    "scripts/test-gallery-loading.mjs": "7f7626e1b10958219de33e6ff67f721f50337dc667b4d252807f6626d340851f"
+  },
+  "browser": "156.0.8078.4",
+  "date": "2026-11-12",
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "warning": "Existing >500 kB shared chunk warning"
+  },
+  "unit": {
+    "command": "npm test",
+    "exitCode": 0,
+    "passed": 119,
+    "failed": 0,
+    "skipped": 0
+  },
+  "audit": {
+    "command": "node scripts/audit-gallery-loading.mjs dist <new-output-dir>",
+    "passed": 8,
+    "failed": 0
+  },
+  "lifecycle": {
+    "command": "node scripts/test-gallery-loading.mjs",
+    "passed": 4,
+    "failed": 0
+  },
+  "strictSuites": {
+    "glass-railing": {
+      "passed": 9,
+      "total": 9,
+      "exitCode": 0
+    },
+    "waste-sorting-station": {
+      "passed": 3,
+      "total": 3,
+      "exitCode": 0
+    },
+    "event-booth": {
+      "passed": 3,
+      "total": 3,
+      "exitCode": 0
+    },
+    "floor-direction-sign": {
+      "passed": 3,
+      "total": 3,
+      "exitCode": 0
+    },
+    "queue-stanchions": {
+      "passed": 12,
+      "total": 12,
+      "exitCode": 0
+    },
+    "service-desk": {
+      "passed": 6,
+      "total": 6,
+      "exitCode": 0
+    },
+    "essentials": {
+      "passed": 15,
+      "total": 15,
+      "exitCode": 0
+    },
+    "library": {
+      "passed": 9,
+      "total": 9,
+      "exitCode": 0
+    }
+  },
+  "identicalBaselineAndCandidateGlbs": 87,
+  "glbSha256": {
+    "ball_15-BhFgOajB.glb": "5c728a899db08e558ab75e624840762c512d41065b40be31e090abba0304d296",
+    "jupiter-jFGUVHEx.glb": "184d526f725944f44e152eeee3768c81b21d05542242254c5a636fb01c139c23",
+    "sun-BGtsjP0U.glb": "87e5326ed9a0239a08709fafb1291fa2a8ea51b5484dcafef82235834aab7119",
+    "pluto-D61XpKqV.glb": "fff5f7fe91e9ac0de01cd0410f36825bcc215472378e6c3623173f5540034d6b",
+    "neptune-Jx-ypfJn.glb": "26314e28d136b2188275677fe01a27c53259cbed96abb80bf36023dcade50b02",
+    "nasa-mercury-CPH7vfvQ.glb": "f9dc39a114d6ac67cae2dac8e3f9f703c3ce7425efd2318708eeff8c82e1df91",
+    "nasa-neptune-B9E-2pTl.glb": "07cc79d8dbebd5700a2234ca7bc1030ae737fc24d6c1bc01b7280dd84d08fbcf",
+    "nasa-eros-C6AuhlUh.glb": "698ea57b59c1cc45de91666084b48b57a69aa91b93bcc22d3d9c432d2956a85c",
+    "model-DSrCvFlX.glb": "ab2217e753062515652bc0cb74138c95369e25ac58c14d51e408cd4293ff01f0",
+    "model-CViB5Gcd.glb": "012b4b0f7053f2647d3822f97675de33cca05181e8a51e17101f654eaaa27bc7",
+    "mall-advertising-lightbox-3_IRxLg_.glb": "d56b65558aef88702e53dba4ef6ebad093bd6bcd760fb420042cd4457d9ce100",
+    "ball_06-Dx-lGkJH.glb": "111f5a5148ac12aa0beaf86c3f9fc7a3eae8bfccdfb9853197dce113780cbf50",
+    "model-B1dV-G9l.glb": "30288182e6e08d13cdd7a76a5b7f8f205a1431248fbe3eac416ee2fb245aac84",
+    "nasa-uranus-Dxk0cZs0.glb": "aa5f238acd139d46e8c8c79dd5b7549086b7ecf0939115e83e6999f7a549aaa4",
+    "ball_14-5cOYbVRY.glb": "2bccdd1def1e1107724d1a57876b3a1c565b49e869030a1be575ff60f7772aaf",
+    "mall-glass-railing-2m-H2JXjHCu.glb": "037b734e7285961e93a75184f7aab28f4a20498fbac5639ed2cd0fab0958c6c5",
+    "asteroid-02-CB2oX6f0.glb": "fcbe558d70037b0b9889e7f972fb70e52cda7ac6aa04c332e0df7fb7fafba2b1",
+    "cue_01-BCqBke_n.glb": "79f618f24174ebc9fed204386ac2519d0335badee5c5064b50d0159fdbdf65e8",
+    "mall-event-booth-CW_fnjqT.glb": "8fda1b51362eb3d11cd3525fb9ae1b3a220da22e745ed8b9af0eb6f0f8e87738",
+    "nasa-venus-D24fL43-.glb": "3fa0a147ec09a4c183b90aa9b6e6554d403f2846e990f326d4fe3d879f12f53e",
+    "nasa-pluto-C1lSaFPX.glb": "be9ca8261bdd4f1c5aeb202686cd52f8d0a790a0513f61c412c0cd782fd944f8",
+    "mall-queue-long-zks1dCgv.glb": "d25b26ba5ee9e39bfa50dc699fb5fa08985c6d7f3bc0594ccf5bf71d63a19609",
+    "ball_03-CUIVES0h.glb": "a78935075c2b991166b60fd9b4fba5248e5baf8c1fefa4ef2eec54a754701352",
+    "nasa-saturn-C-giWn8p.glb": "bc63f6a3ed8027d2f6e1ca498c1d9a1401e940091126ec375ba44211285db502",
+    "cue_02-CqDwPxfC.glb": "da785585ff26a715905b3ead1b6d8136305cf2d37b16cda1e2a8b56cbd1e8cc9",
+    "saturn-normalized-DwntoEAd.glb": "9c708f9b38eed57eecb9f43d426ed386687147570e41582d7e8d98f14bdbf371",
+    "earth-BGRkW6Vc.glb": "73348f42063e499ccae460915de358a0c15a4c404f2fada18cfba3fbbf5117db",
+    "ball_12-BBSM0uzd.glb": "f210dbd0aa7a3db063d500edb0bc51479f457b327683346d47f08d293721b149",
+    "mall-glass-railing-1m-B9OwfF22.glb": "556cfc03f38a0cb0c21a125a318c5dc251976e18598f3d15f3e0979dc2dfd49d",
+    "mall-queue-post-DSlsn9I0.glb": "9025b3a6fbb96e010511aa03df7457a09c019448902260427bdbbb9b646fab60",
+    "ball_01-CYdwOVaM.glb": "3283df10e89d9d37ef384045d45885331b46917253a110175725f16f5bbd897a",
+    "mall-glass-railing-post-Ck-3bmhn.glb": "4104d29b95e1e8b82c1e4db8a4e00437aaf60e01c7e8e0b503fcd7c17586dd69",
+    "gjh-areca-planter-zczeGr9P.glb": "0d1caad269b9838b695924b2b2242277597d304443959394cebeb84a9a675267",
+    "proton-saga-1985-CXH8RZL6.glb": "92840c00e9c3a1f58c50bff6d1e7ff922777f58bf64463d9898b898d3a54c2a8",
+    "mall-display-shelf-BuN5rpce.glb": "9538cc7b954a1510397e4f1dffc47bbed6c99f7460edfb1e55ef4dc28561966d",
+    "model-DwdP0mMv.glb": "1e66077a02a836c6f4ad127991df2b06c34deeb315cc68e8988c5255714b4b6e",
+    "mall-floor-direction-sign-k-1TsLV_.glb": "4c1f7edd051597ed4aae918d891051ed4da1d7cc5a2e5d70da84f55c8732fea6",
+    "nasa-jupiter-CtHL5eZG.glb": "2163aea36b587372671eca348b1ff33efe4343c23d1499799fe1240558d04996",
+    "ball_00-BoyXP3PW.glb": "6fde7586234f2c7d4082a42e72e825aec4dd2205f30b2066c73108651558a732",
+    "mall-service-desk-CdaLmERc.glb": "228c94a05e5c92c94662ebba6a02863b397a4f0f10768c8ce488b8c322cabcd0",
+    "mall-directory-kiosk-BZ2345OX.glb": "ebf658b6d03602e3ebeaf68e1305ce32788bcbbf3c67a10be65a0ed628836914",
+    "comet-CcFD2yDc.glb": "873f858897aa2fd5cfce057c01c4e194168f859283ee486abeef03b5194f8541",
+    "ball_09-Bu8fLWw3.glb": "8e4ff2001567bdb8a92210ff21098ecc22fd4875ebe3b9e31667912f77f309af",
+    "nasa-moon-DS99p6hC.glb": "287bbee03814721710bc6548d6fac9b1dfa6d4ebc7dfe85123690009df000f38",
+    "nasa-mars-CT7kyYEx.glb": "bff068bb21011a38f12dd6e7015c39fcc96e14ea5f652d887fc4ba48f8d5ff31",
+    "model-DKXnAiVz.glb": "3b42427be81be2d53bb722d08265ab820dd8e16ed3fde465f08ddebd72d0e943",
+    "model-BUVXUBGs.glb": "55ed39af8afde97bde7c334da14f633fb9110b099f11cfc0205fae5601bf3faa",
+    "asteroid-03-j8Hw2-II.glb": "19f49975d3eb61c1186014dbca70198e8e66375f157eca469abdf4cb360f40d5",
+    "ball_05-g8Q6Ow2l.glb": "1689feb9bfd1ca1098d4703193a060b308fcb2f21971d89dc9f177ea432bb018",
+    "ball_10-Csex90PS.glb": "b927b71c68bdec084ea44f6c71aafd51046868a151dee5216ae87791433b8aab",
+    "uranus-CsEZcB-8.glb": "99f5a909892eb63b68cc8342533fdb9d4e8e97f61bd2ef8261e9615bc6ac0416",
+    "nasa-sun-Cp6ZQrbU.glb": "f17dc8010c507fcf5ffda846599ef893c808512d5a08d9f3d4d570ebd691e027",
+    "chalk-_1udr_v0.glb": "218bb66d9eb918e0d6131800e5f3446e5820e5c74a2ba4c56840faccdbe25915",
+    "venus-DrnwfAm8.glb": "4c989378f69d3b944263061c94194802375b87eff8656cec1dd61a15105fe0fd",
+    "ball_02-DB1WWWFC.glb": "4c541de60d4d2641a316ca4e635d2329994a45de751e78d06d6cd01a27a7202a",
+    "gjh-mall-visitor-zTmL51eK.glb": "43d08b67f4450b6aac478cfca4ca664044662cd79021ed15d55ef5612e312be2",
+    "model-CUPrH7bG.glb": "56e30b7ca051d2335fe68824db22a2c2c6eb302f4294e51967c98972389be918",
+    "gjh-lounge-bench-jXwJOYcI.glb": "ae13cf00da96d45878d633e8d1d1f6a9bbbf35d0bc89a4a162f055254b3ea442",
+    "ball_13-CbMLTUSR.glb": "1ec784f74d0c8d7f561eb42a37f6282c747d00e3f1ec1a4852be48f137bf45a4",
+    "model-DUZ_drF3.glb": "08c718548009f69dbb56e8e5d60ee7e6e2e5497a959c865175dfecb9538625cb",
+    "mall-trash-bin-BjDumB71.glb": "11067f6be8acec9d6651afe6f542f9cadc6bcae1e51e6516524190dcc8d0b48c",
+    "billiards-scene-Bcf1nHY5.glb": "1e82db9e028abe3b4380840c14d77e345872222bc44ff2893b8a840851f83314",
+    "solar-asteroid-04-omBhJplY.glb": "ed8ca93b3086f52e5111283061b83801c702a23ce5a7fa4b24d01b4bfc10b4ea",
+    "model-B1yNGu3A.glb": "c75a7f4eef782f975bf03656f6bc9d250f131755314144d9cc3b2fb3b11edfbf",
+    "ball_11-DqkUg1Oy.glb": "432ab608a1500b4174d84ad9129b9f0e6c68d0c95dec7a2d717f6c49b09520ec",
+    "ball_04-BBCbhjJU.glb": "f3551b4d3ebd39f8eeb0ac78dc3a83e8742b4e3e5515eaa6db4d456c0bbc8e85",
+    "model-B1xPjyDl.glb": "bd5881eb8e9337d6b4e29d0fe148cd191235a6e9cbd9f2c64ae126d8a8be5543",
+    "asteroid-01-6stIuGOR.glb": "e40c3ef2c37e737f145a0aeb42f2a79545b51d9dac7236b9830414868c460cba",
+    "mars-DXWqbp2w.glb": "4e0113e0d0e96e7ccffdb517906b9a5b8799b87d2b17ceac5ea76067f10db96c",
+    "asteroid-05-e1xn9eK7.glb": "2eaea737f7762c1b165d98340ca77e41b04e9821ed4fa674d48113a0c2a9abd3",
+    "triangle_rack-hH0cnQei.glb": "5c67ba15ddea5740e82b933da4b520c4cdce11e36b46a99b5711bd8cf540fa72",
+    "saturn-B5V8GKrP.glb": "e6921d3af51264f6488b0bfbeb93563b512a99743ec9f154626d3f5a77318836",
+    "ball_08-BGG5JkMB.glb": "5c742cbdc76d69ded785b32d6a2fe69865a6e8b4fd767fbf29f10c0ab52929e9",
+    "asteroid-04-DDMw6aZg.glb": "326590abd442f27f099844c5cd36619912a618828b8e3fea06858df1a3b225bc",
+    "solar-asteroid-03-BFFRkkmZ.glb": "2ac17b026044474b3af4c067ec036dbc9ce7740b800b13c5e2ee1be627c59383",
+    "model-Daw9i--n.glb": "d6b57ab9adeddff678f441a44892caa203cecd8e52dbcbed0a530a5740ac55ef",
+    "mercury-CgwZBZlh.glb": "400abc9fe4b82c810c5578edaceb96155c930496d0e9045826f36d613a544188",
+    "mall-waste-sorting-station-CQI4TZep.glb": "52a62e5ace403100b7757ac0c4b464272f5d46c79903c69d5d2db75a83a2e4ae",
+    "solar-asteroid-05-BiX29w7C.glb": "a48569344a96e8a76d91807781c19eef7c472ab7d2c52b2535faa5aa9624a1df",
+    "table-XWseCS4E.glb": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+    "nasa-vesta-KIdQC40X.glb": "4a1289c880a3b985ef3895ce92d850ca483ab361f6a024a19207823c4aaf6a0b",
+    "mall-queue-short-BzM9SV-Y.glb": "c87362e085c8fd92f82a12bd7340ccf572a007a05189bde9b3e820304790470e",
+    "nasa-earth-C-tkBFxl.glb": "5e9961f4b96fd2d4c78e6366588886d5b7e6f3a4b7baf07332d4f0d410783056",
+    "ball_07-DTLIzTg4.glb": "115c74fca09a85ac3b68aff982d10094e1fb11774b9ba5e1eb9b2d7b22a7b6dd",
+    "moon-QsxmFHLm.glb": "019098c346c85f2bde90fca6dfbf266fd436e1285a17830dfcfd12b41792ae9f",
+    "model-B8PZriti.glb": "cff0a3aac40d2b7fc57aad2ac23f464c4d8e5f90c923c05d621ed3fd842d90ac",
+    "model-Bl20VVMs.glb": "90aa3a14e558b52156df570c8836e37832e54426a1411fa1ec9f6a4249dd721f"
+  },
+  "notTested": [
+    "Physical Android/iOS devices",
+    "Production hosting/network",
+    "Internal Chromium root cause",
+    "Whole-app performance or memory benchmarks"
+  ],
+  "publication": "No push, PR, merge or deployment by this task"
+}

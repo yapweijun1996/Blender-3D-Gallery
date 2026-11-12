@@ -1,0 +1,134 @@
+{
+  "node": "v22.23.3",
+  "browser": "156.0.8078.4",
+  "build": "local baseline build from a1003a9 (machine-local path omitted)",
+  "expected": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+  "cases": [
+    {
+      "name": "fetch-direct",
+      "result": {
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+        "meshes": 0
+      },
+      "events": [
+        {
+          "event": "finished",
+          "id": "1450506.7",
+          "encodedDataLength": 417841
+        }
+      ]
+    },
+    {
+      "name": "fetch-reader",
+      "result": {
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+        "meshes": 0
+      },
+      "events": [
+        {
+          "event": "failed",
+          "id": "1451100.7",
+          "error": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ]
+    },
+    {
+      "name": "wrapped-retained",
+      "result": {
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+        "meshes": 0
+      },
+      "events": [
+        {
+          "event": "failed",
+          "id": "1451111.7",
+          "error": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ]
+    },
+    {
+      "name": "fetch-request-signal",
+      "result": {
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+        "meshes": 0
+      },
+      "events": [
+        {
+          "event": "finished",
+          "id": "1451775.7",
+          "encodedDataLength": 417841
+        }
+      ]
+    },
+    {
+      "name": "wrapped-no-signal",
+      "result": {
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+        "meshes": 0
+      },
+      "events": [
+        {
+          "event": "failed",
+          "id": "1451912.7",
+          "error": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ]
+    },
+    {
+      "name": "wrapped-request-signal",
+      "result": {
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+        "meshes": 0
+      },
+      "events": [
+        {
+          "event": "failed",
+          "id": "1451927.7",
+          "error": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ]
+    },
+    {
+      "name": "fileloader",
+      "result": {
+        "bytes": 417656,
+        "sha256": "078e2645a2ca520b1724d72473d74627aecc94bdf7157f501539c1f0cb1b130f",
+        "meshes": 0
+      },
+      "events": [
+        {
+          "event": "failed",
+          "id": "1452484.7",
+          "error": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ]
+    },
+    {
+      "name": "gltfloader",
+      "result": {
+        "bytes": null,
+        "sha256": null,
+        "meshes": 52
+      },
+      "events": [
+        {
+          "event": "failed",
+          "id": "1452627.7",
+          "error": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ]
+    }
+  ]
+}
