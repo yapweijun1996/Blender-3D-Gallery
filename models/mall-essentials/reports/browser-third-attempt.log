@@ -1,0 +1,25 @@
+PASS discovery 1440
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:43135/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED'
++ ]
+- []
+
+    at file:///srv/agent-workstation/workspaces/blender-mall-four-20261112/repo/scripts/test-mall-essentials.mjs:231:16 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'http://127.0.0.1:43135/Blender-3D-Gallery/assets/mall-directory-kiosk-BZ2345OX.glb: net::ERR_ABORTED'
+  ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.3
