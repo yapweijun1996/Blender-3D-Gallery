@@ -1,0 +1,26 @@
+PASS discovery 1440
+PASS viewer mall-directory-kiosk 1440
+PASS viewer mall-advertising-lightbox 1440
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the GLB response body must finish
++ actual - expected
+
++ 'response.body: Protocol error (Network.getResponseBody): No data found for resource with given identifier\n' +
++   'Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.'
+- undefined
+
+    at actualAssetResponses (file:///srv/agent-workstation/workspaces/blender-mall-four-20261112/repo/scripts/test-mall-essentials.mjs:108:12)
+    at async file:///srv/agent-workstation/workspaces/blender-mall-four-20261112/repo/scripts/test-mall-essentials.mjs:195:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'response.body: Protocol error (Network.getResponseBody): No data found for resource with given identifier\n' +
+    'Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.3
