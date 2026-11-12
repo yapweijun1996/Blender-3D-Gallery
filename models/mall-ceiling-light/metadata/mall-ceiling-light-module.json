@@ -1,0 +1,96 @@
+{
+  "id": "mall-ceiling-light-module",
+  "name": "Mall Ceiling Light Module",
+  "summary": "Recessed 576 mm square ceiling light with an editable opal emissive diffuser, ivory bezel and metal housing.",
+  "description": "Original generic recessed light cassette for modular Singapore/Malaysia mall interiors. Replaces one panel bay in ceiling kit 422 without replacing the remaining ceiling. Static emission only, no light switch or physical scene illumination.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "ceiling",
+    "light",
+    "recessed",
+    "modular",
+    "architecture",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials; no third-party models, artwork, textures or fonts.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-ceiling-light-module.glb",
+    "source": "sources/mall-ceiling-light-module.blend",
+    "preview": "previews/mall-ceiling-light-module.webp",
+    "render": "previews/mall-ceiling-light-module.png",
+    "additional_previews": [
+      "previews/underside.webp",
+      "previews/rear.webp",
+      "previews/edge.webp",
+      "previews/assembly-with-422.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "centre of bezel underside, with fastener heads 1 mm below",
+    "front_axis": "Diffuser faces Blender -Z / glTF -Y"
+  },
+  "assembly": {
+    "panel_size_gltf_m": [
+      0.576,
+      0.016,
+      0.576
+    ],
+    "overall_height_m": 0.065,
+    "instructions": "Use ceiling kit 422. Remove exactly one PANEL_1..4 child only. Keep the ceiling root, the other three panels, nine grid rails and twelve suspension meshes. Place the lamp root at that panel centre X/Z with glTF Y=ceiling root Y+0.008 m. Blender X/Y centre is +/-0.3 m, Z=ceiling root Z+0.008 m. Quarter-turn rotations are supported. Do not leave the removed panel behind the diffuser or replace the entire ceiling kit. This is visualization placement, not a certified installation."
+  },
+  "material_notes": "11 independent closed mesh components, four editable materials. Bezel, annular tray walls, diffuser, rear plate, driver cover, four fasteners and two cable-entry glands. Static warm emissive diffuser; no exported lights, animations, wiring system, switch or photometric model.",
+  "accuracy_notes": "Generic decorative ceiling light concept. Not an electrical, fire, acoustic, structural, lighting performance, installation or building-code specification. Static emissive PBR material does not illuminate neighbouring geometry in the Three.js gallery.",
+  "attribution": [
+    {
+      "credit": "Original geometry and materials authored for Blender-3D-Gallery; no external artwork."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 125008,
+    "triangles": 1900,
+    "vertices": 3624,
+    "primitives": 11,
+    "materials": 4,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      0.5759999752044678,
+      0.06500000122468919,
+      0.5759999752044678
+    ],
+    "bounds": {
+      "min": [
+        -0.2879999876022339,
+        -0.0010000000474974513,
+        -0.2879999876022339
+      ],
+      "max": [
+        0.2879999876022339,
+        0.06400000117719173,
+        0.2879999876022339
+      ]
+    },
+    "sha256": "b8b0b31c7657028dff44f8c04ba7e65b07feac892b4849b81bb0a1fd78432cf8"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Local artifact only. Current gallery camera starts above the correctly oriented fixture and shows its rear; use underside orbit. Static emission stays visible without physical scene illumination. Desktop narrow viewports are not Android/iOS verification."
+  }
+}
