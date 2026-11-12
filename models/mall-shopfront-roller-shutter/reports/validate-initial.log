@@ -1,0 +1,18 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: 4.559999942779541 != 3.338
+    at near (file:///srv/agent-workstation/workspaces/blender-mall-roller-shutter-20261112/repo/models/mall-shopfront-roller-shutter/glb.mjs:11:33)
+    at file:///srv/agent-workstation/workspaces/blender-mall-roller-shutter-20261112/repo/models/mall-shopfront-roller-shutter/validate.mjs:10:123
+    at Array.forEach (<anonymous>)
+    at file:///srv/agent-workstation/workspaces/blender-mall-roller-shutter-20261112/repo/models/mall-shopfront-roller-shutter/validate.mjs:10:108 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3
