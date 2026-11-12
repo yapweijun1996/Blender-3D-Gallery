@@ -1,0 +1,129 @@
+{
+  "id": "mall-queue-long",
+  "name": "Queue Bay \u2014 2.0 m",
+  "summary": "Modular jade-and-brass queue barrier with measured connector alignment.",
+  "description": "Independent stanchion post and named belt modules for repeatable short or long queue layouts.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "furniture",
+    "queue",
+    "barrier",
+    "stanchion",
+    "modular"
+  ],
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender lathed and beveled mesh geometry and PBR materials, with independent post/belt modules. No external assets or textures.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-queue-long.glb",
+    "source": "sources/mall-queue-long.blend",
+    "preview": "previews/mall-queue-long.webp"
+  },
+  "display": {
+    "previewRotationY": 3.141592653589793,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor centre",
+    "front_axis": "Blender +Y / glTF -Z"
+  },
+  "accuracy_notes": "Static decorative queue kit, not a certified crowd-control or safety barrier. No physics, belt retraction or interactive configuration is implemented.",
+  "attribution": [
+    {
+      "credit": "Original geometry authored for Blender-3D-Gallery."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 192444,
+    "triangles": 7252,
+    "vertices": 6796,
+    "primitives": 8,
+    "materials": 3,
+    "animations": 0,
+    "dimensions": [
+      2.3700000047683716,
+      0.9760000109672546,
+      0.3700000047683716
+    ],
+    "bounds": {
+      "min": [
+        -1.1850000023841858,
+        0,
+        -0.1850000023841858
+      ],
+      "max": [
+        1.1850000023841858,
+        0.9760000109672546,
+        0.1850000023841858
+      ]
+    },
+    "sha256": "d25b26ba5ee9e39bfa50dc699fb5fa08985c6d7f3bc0594ccf5bf71d63a19609"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "modularity": {
+    "post_spacing_metres": 2,
+    "socket_height_metres": 0.905,
+    "socket_radius_metres": 0.073,
+    "modules": {
+      "MODULE_Post_Left": {
+        "origin": [
+          -1,
+          0,
+          0
+        ],
+        "min": [
+          -1.1850000023841858,
+          0,
+          -0.1850000023841858
+        ],
+        "max": [
+          -0.8149999976158142,
+          0.9760000109672546,
+          0.1850000023841858
+        ]
+      },
+      "MODULE_Post_Right": {
+        "origin": [
+          1,
+          0,
+          0
+        ],
+        "min": [
+          0.8149999976158142,
+          0,
+          -0.1850000023841858
+        ],
+        "max": [
+          1.1850000023841858,
+          0.9760000109672546,
+          0.1850000023841858
+        ]
+      },
+      "MODULE_Belt": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "min": [
+          -0.9269999861717224,
+          0.8769999742507935,
+          -0.007499999832361937
+        ],
+        "max": [
+          0.9269999861717224,
+          0.9329999685287476,
+          0.007499999832361937
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+PASS discovery 1440
+PASS viewer mall-queue-post 1440
+PASS viewer mall-queue-short 1440
+FAIL viewer mall-queue-long 1440 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:36819/Blender-3D-Gallery/assets/mall-queue-long-zks1dCgv.glb: net::ERR_ABORTED'
++ ]
+- []
+
+PASS discovery 768
+PASS viewer mall-queue-post 768
+PASS viewer mall-queue-short 768
+PASS viewer mall-queue-long 768
+PASS discovery 390
+PASS viewer mall-queue-post 390
+PASS viewer mall-queue-short 390
+FAIL viewer mall-queue-long 390 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:36819/Blender-3D-Gallery/assets/mall-queue-long-zks1dCgv.glb: net::ERR_ABORTED'
++ ]
+- []

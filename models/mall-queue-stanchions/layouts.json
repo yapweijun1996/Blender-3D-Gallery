@@ -1,0 +1,126 @@
+{
+  "units": "metres",
+  "up_axis": "+Y",
+  "post_asset": "mall-queue-post",
+  "examples": [
+    {
+      "name": "short-line",
+      "posts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1.2,
+          0,
+          0
+        ],
+        [
+          2.4,
+          0,
+          0
+        ]
+      ],
+      "belts": [
+        {
+          "variant": "mall-queue-short",
+          "module": "MODULE_Belt",
+          "position": [
+            0.6,
+            0.0,
+            0.0
+          ],
+          "rotationY": -0.0,
+          "posts": [
+            0,
+            1
+          ]
+        },
+        {
+          "variant": "mall-queue-short",
+          "module": "MODULE_Belt",
+          "position": [
+            1.7999999999999998,
+            0.0,
+            0.0
+          ],
+          "rotationY": -0.0,
+          "posts": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mixed-turn",
+      "posts": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1.2,
+          0,
+          0
+        ],
+        [
+          3.2,
+          0,
+          0
+        ],
+        [
+          3.2,
+          0,
+          1.2
+        ]
+      ],
+      "belts": [
+        {
+          "variant": "mall-queue-short",
+          "module": "MODULE_Belt",
+          "position": [
+            0.6,
+            0.0,
+            0.0
+          ],
+          "rotationY": -0.0,
+          "posts": [
+            0,
+            1
+          ]
+        },
+        {
+          "variant": "mall-queue-long",
+          "module": "MODULE_Belt",
+          "position": [
+            2.2,
+            0.0,
+            0.0
+          ],
+          "rotationY": -0.0,
+          "posts": [
+            1,
+            2
+          ]
+        },
+        {
+          "variant": "mall-queue-short",
+          "module": "MODULE_Belt",
+          "position": [
+            3.2,
+            0.0,
+            0.6
+          ],
+          "rotationY": -1.5707963267948966,
+          "posts": [
+            2,
+            3
+          ]
+        }
+      ]
+    }
+  ]
+}

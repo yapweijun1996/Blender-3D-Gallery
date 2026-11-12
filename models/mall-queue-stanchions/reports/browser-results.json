@@ -1,0 +1,373 @@
+{
+  "passed": false,
+  "browserVersion": "156.0.8078.4",
+  "environment": "Built deployment subpath, Chromium/SwiftShader, localhost, reduced motion, service workers blocked",
+  "results": [
+    {
+      "test": "discovery",
+      "width": 1440,
+      "passed": true,
+      "decodedThumbnails": 3,
+      "eagerGlbRequests": 0
+    },
+    {
+      "test": "viewer",
+      "id": "mall-queue-post",
+      "width": 1440,
+      "passed": true,
+      "glbSha256": "9025b3a6fbb96e010511aa03df7457a09c019448902260427bdbbb9b646fab60",
+      "glbBytes": 97912,
+      "canvasBounds": {
+        "x": 191,
+        "y": 104,
+        "width": 1058,
+        "height": 495
+      },
+      "images": {
+        "initial": "f0863fb8b7d376a9295457215d0ab4887cc955f893fca4c983617b312d6c02e7",
+        "rotated": "f2a2c9bbbc83090003922f93b5ed459eaa79a89ac73472371b0bc9af63996167",
+        "zoomed": "034ddf1b52417653764c1462ed3216bd09c0058a3a97c9bc375af16b6593ea82",
+        "reset": "66365f978497720907ffda1840043bccc5480e51e3b1f7ac94f1964d05c5b6bb"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "9025b3a6fbb96e010511aa03df7457a09c019448902260427bdbbb9b646fab60",
+          "bytes": 97912,
+          "version": 2,
+          "declaredBytes": 97912
+        },
+        {
+          "sha256": "9025b3a6fbb96e010511aa03df7457a09c019448902260427bdbbb9b646fab60",
+          "bytes": 97912,
+          "version": 2,
+          "declaredBytes": 97912
+        }
+      ],
+      "errors": [],
+      "interactionChecksPassed": true
+    },
+    {
+      "test": "viewer",
+      "id": "mall-queue-short",
+      "width": 1440,
+      "passed": true,
+      "glbSha256": "c87362e085c8fd92f82a12bd7340ccf572a007a05189bde9b3e820304790470e",
+      "glbBytes": 191180,
+      "canvasBounds": {
+        "x": 191,
+        "y": 104,
+        "width": 1058,
+        "height": 495
+      },
+      "images": {
+        "initial": "3fb06852e44f03d8c5b2ac765a0d70226cb2b1ea510a9322f443a9650566eaee",
+        "rotated": "9cc096047054a989dbe739f420ad7262f9eb695a9205a5ad00c4256166ad2ed1",
+        "zoomed": "07c3fddb436f224a2ef0061bc017476199e6dbbc170f74992a23e58b80eb0cd8",
+        "reset": "71995a2f8623ac11b8227ef17ee926263cb7e084c61c1a70d6c990be7c49750b"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "c87362e085c8fd92f82a12bd7340ccf572a007a05189bde9b3e820304790470e",
+          "bytes": 191180,
+          "version": 2,
+          "declaredBytes": 191180
+        },
+        {
+          "sha256": "c87362e085c8fd92f82a12bd7340ccf572a007a05189bde9b3e820304790470e",
+          "bytes": 191180,
+          "version": 2,
+          "declaredBytes": 191180
+        }
+      ],
+      "errors": [],
+      "interactionChecksPassed": true
+    },
+    {
+      "test": "viewer",
+      "id": "mall-queue-long",
+      "width": 1440,
+      "passed": false,
+      "glbSha256": "d25b26ba5ee9e39bfa50dc699fb5fa08985c6d7f3bc0594ccf5bf71d63a19609",
+      "glbBytes": 192444,
+      "canvasBounds": {
+        "x": 191,
+        "y": 104,
+        "width": 1058,
+        "height": 495
+      },
+      "images": {
+        "initial": "f5989cc88fe1c01dcb7dc0fc81279cf21f429c6968cb21a7d34c270d38ba5c4d",
+        "rotated": "b868f6d52d9000d43c51064d6a8a3475149838b76377dbd5ee3da7de5d34215c",
+        "zoomed": "c5aa0e0c07531e0e43a7443232b7ae86df82e4c6287cc2266513b7363d440a8c",
+        "reset": "027a91bede930682443b2a941be8e06d2e801fa7ca953717ecdf14e59a71f6d1"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "d25b26ba5ee9e39bfa50dc699fb5fa08985c6d7f3bc0594ccf5bf71d63a19609",
+          "bytes": 192444,
+          "version": 2,
+          "declaredBytes": 192444
+        },
+        {
+          "sha256": "d25b26ba5ee9e39bfa50dc699fb5fa08985c6d7f3bc0594ccf5bf71d63a19609",
+          "bytes": 192444,
+          "version": 2,
+          "declaredBytes": 192444
+        }
+      ],
+      "errors": [
+        "http://127.0.0.1:36819/Blender-3D-Gallery/assets/mall-queue-long-zks1dCgv.glb: net::ERR_ABORTED"
+      ],
+      "interactionChecksPassed": true,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:36819/Blender-3D-Gallery/assets/mall-queue-long-zks1dCgv.glb: net::ERR_ABORTED'\n+ ]\n- []\n"
+    },
+    {
+      "test": "discovery",
+      "width": 768,
+      "passed": true,
+      "decodedThumbnails": 3,
+      "eagerGlbRequests": 0
+    },
+    {
+      "test": "viewer",
+      "id": "mall-queue-post",
+      "width": 768,
+      "passed": true,
+      "glbSha256": "9025b3a6fbb96e010511aa03df7457a09c019448902260427bdbbb9b646fab60",
+      "glbBytes": 97912,
+      "canvasBounds": {
+        "x": 20,
+        "y": 104,
+        "width": 728,
+        "height": 563.1875
+      },
+      "images": {
+        "initial": "6e09ef776b194426b9f7906cefe40bb6c11d58230ebd9dbf1e2a60cc829fe434",
+        "rotated": "91471a9753ef701a77bae90ab978d317d0bb65b540d42215424901755bb0eaee",
+        "zoomed": "5654ed035e72426a09291991c576aeabcde7b4ae883d88984f654e215e3a94b4",
+        "reset": "6c3659ffdf6566dee7351371ff3d7838de16faf3a69b7f09db5a6b5b05d371a7"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "9025b3a6fbb96e010511aa03df7457a09c019448902260427bdbbb9b646fab60",
+          "bytes": 97912,
+          "version": 2,
+          "declaredBytes": 97912
+        },
+        {
+          "sha256": "9025b3a6fbb96e010511aa03df7457a09c019448902260427bdbbb9b646fab60",
+          "bytes": 97912,
+          "version": 2,
+          "declaredBytes": 97912
+        }
+      ],
+      "errors": [],
+      "interactionChecksPassed": true
+    },
+    {
+      "test": "viewer",
+      "id": "mall-queue-short",
+      "width": 768,
+      "passed": true,
+      "glbSha256": "c87362e085c8fd92f82a12bd7340ccf572a007a05189bde9b3e820304790470e",
+      "glbBytes": 191180,
+      "canvasBounds": {
+        "x": 20,
+        "y": 104,
+        "width": 728,
+        "height": 563.1875
+      },
+      "images": {
+        "initial": "85458ec99cc82f28df0358325d74fb87d5abf2adfc08cf019f3e14539e6c8d9c",
+        "rotated": "10b204b5aa275804145844e34456a2941b54fc56f4d125dbecf6b5e74e807421",
+        "zoomed": "a4df82b49a62e0599be671178de46dc70b9bd98ba7b005fed316265ad4530ed1",
+        "reset": "52a849e44620f95555e19ed411f1cf32bd3d2d8cf81b054d0fe13f928f0e40f6"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "c87362e085c8fd92f82a12bd7340ccf572a007a05189bde9b3e820304790470e",
+          "bytes": 191180,
+          "version": 2,
+          "declaredBytes": 191180
+        },
+        {
+          "sha256": "c87362e085c8fd92f82a12bd7340ccf572a007a05189bde9b3e820304790470e",
+          "bytes": 191180,
+          "version": 2,
+          "declaredBytes": 191180
+        }
+      ],
+      "errors": [],
+      "interactionChecksPassed": true
+    },
+    {
+      "test": "viewer",
+      "id": "mall-queue-long",
+      "width": 768,
+      "passed": true,
+      "glbSha256": "d25b26ba5ee9e39bfa50dc699fb5fa08985c6d7f3bc0594ccf5bf71d63a19609",
+      "glbBytes": 192444,
+      "canvasBounds": {
+        "x": 20,
+        "y": 104,
+        "width": 728,
+        "height": 563.1875
+      },
+      "images": {
+        "initial": "5a14dcae7baf0e62f83d1181f6c34b348700e4a1ffb53bb3c5c40df302f98225",
+        "rotated": "5352ec3e5e6497a7a801c59a828ddf77954dcdb9e3d703ba47ad42830ea1ea42",
+        "zoomed": "0f3e9ecaf0e3758956e422c677515cdcbfe783cf85d6c9a30e366e5ca38d5f1c",
+        "reset": "9b9018bf9ade39244eb32c60b2bb33982f0a2cc1674b9f93ff66da735c17d55f"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "d25b26ba5ee9e39bfa50dc699fb5fa08985c6d7f3bc0594ccf5bf71d63a19609",
+          "bytes": 192444,
+          "version": 2,
+          "declaredBytes": 192444
+        },
+        {
+          "sha256": "d25b26ba5ee9e39bfa50dc699fb5fa08985c6d7f3bc0594ccf5bf71d63a19609",
+          "bytes": 192444,
+          "version": 2,
+          "declaredBytes": 192444
+        }
+      ],
+      "errors": [],
+      "interactionChecksPassed": true
+    },
+    {
+      "test": "discovery",
+      "width": 390,
+      "passed": true,
+      "decodedThumbnails": 3,
+      "eagerGlbRequests": 0
+    },
+    {
+      "test": "viewer",
+      "id": "mall-queue-post",
+      "width": 390,
+      "passed": true,
+      "glbSha256": "9025b3a6fbb96e010511aa03df7457a09c019448902260427bdbbb9b646fab60",
+      "glbBytes": 97912,
+      "canvasBounds": {
+        "x": 20,
+        "y": 96,
+        "width": 350,
+        "height": 371.359375
+      },
+      "images": {
+        "initial": "b695bff667c78fe0cfa7c432d8b1193a26f97283419b36c3a50aa37fa2b8d4d2",
+        "rotated": "e772fdcd8a565f619f83a98457e938584857493cef21222357b8a7e98bd12454",
+        "zoomed": "b012d0d45c4bd6d66ad8a3fd00ea6c2850a33d4a83aa6dae2c153537270a4f53",
+        "reset": "973286541f9b380ffa8ac3cdfb0c263c112e519551fe27605794b55f2e96112c"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "9025b3a6fbb96e010511aa03df7457a09c019448902260427bdbbb9b646fab60",
+          "bytes": 97912,
+          "version": 2,
+          "declaredBytes": 97912
+        },
+        {
+          "sha256": "9025b3a6fbb96e010511aa03df7457a09c019448902260427bdbbb9b646fab60",
+          "bytes": 97912,
+          "version": 2,
+          "declaredBytes": 97912
+        }
+      ],
+      "errors": [],
+      "interactionChecksPassed": true
+    },
+    {
+      "test": "viewer",
+      "id": "mall-queue-short",
+      "width": 390,
+      "passed": true,
+      "glbSha256": "c87362e085c8fd92f82a12bd7340ccf572a007a05189bde9b3e820304790470e",
+      "glbBytes": 191180,
+      "canvasBounds": {
+        "x": 20,
+        "y": 96,
+        "width": 350,
+        "height": 371.359375
+      },
+      "images": {
+        "initial": "3c20f3ad0abd71b9bc80ee7a1670d782701a5b01a291b8f166b162be4011d195",
+        "rotated": "a0de1c21e56236aa517a73676257f0a2e6565ad87b9733362eb57a3f173cf0da",
+        "zoomed": "0193d7e5504e1885285498130efb2349e77cb79c1de335603529746dcae8189e",
+        "reset": "cea49a9f7e45c1bc5a9852b5a0b1c8bafd03c780c9422b96d0602ef4f7a9e5e0"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "c87362e085c8fd92f82a12bd7340ccf572a007a05189bde9b3e820304790470e",
+          "bytes": 191180,
+          "version": 2,
+          "declaredBytes": 191180
+        },
+        {
+          "sha256": "c87362e085c8fd92f82a12bd7340ccf572a007a05189bde9b3e820304790470e",
+          "bytes": 191180,
+          "version": 2,
+          "declaredBytes": 191180
+        }
+      ],
+      "errors": [],
+      "interactionChecksPassed": true
+    },
+    {
+      "test": "viewer",
+      "id": "mall-queue-long",
+      "width": 390,
+      "passed": false,
+      "glbSha256": "d25b26ba5ee9e39bfa50dc699fb5fa08985c6d7f3bc0594ccf5bf71d63a19609",
+      "glbBytes": 192444,
+      "canvasBounds": {
+        "x": 20,
+        "y": 96,
+        "width": 350,
+        "height": 371.359375
+      },
+      "images": {
+        "initial": "0e2246b514555a7130534bc18bd85f33efdd9817c9150f5f01ca4997809eb629",
+        "rotated": "28091eab5b4dce5912f874a98bfa2954161110728b8151a87334fef7a4c7e2c6",
+        "zoomed": "bc4154b82b4bdff0ce0583627c4d2c05014c73cb2ab85c1aa447bb721dbd432d",
+        "reset": "cf47be04dbd97e762a764d91889adedeb30b31491de550b18062e19323c34638"
+      },
+      "glbResponses": 3,
+      "consumedGlbs": [
+        {
+          "sha256": "d25b26ba5ee9e39bfa50dc699fb5fa08985c6d7f3bc0594ccf5bf71d63a19609",
+          "bytes": 192444,
+          "version": 2,
+          "declaredBytes": 192444
+        },
+        {
+          "sha256": "d25b26ba5ee9e39bfa50dc699fb5fa08985c6d7f3bc0594ccf5bf71d63a19609",
+          "bytes": 192444,
+          "version": 2,
+          "declaredBytes": 192444
+        }
+      ],
+      "errors": [
+        "http://127.0.0.1:36819/Blender-3D-Gallery/assets/mall-queue-long-zks1dCgv.glb: net::ERR_ABORTED"
+      ],
+      "interactionChecksPassed": true,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:36819/Blender-3D-Gallery/assets/mall-queue-long-zks1dCgv.glb: net::ERR_ABORTED'\n+ ]\n- []\n"
+    }
+  ],
+  "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'http://127.0.0.1:36819/Blender-3D-Gallery/assets/mall-queue-long-zks1dCgv.glb: net::ERR_ABORTED'\n+ ]\n- []\n",
+  "limitations": [
+    "Canvas bounds are measured; final artistic framing and clipping require review of the saved model screenshots.",
+    "Keyboard orbit/zoom are exercised; physical touch gestures and mobile GPU performance are not measured.",
+    "Hidden download controls do not prevent retrieval of a publicly rendered GLB or grant redistribution rights."
+  ]
+}
