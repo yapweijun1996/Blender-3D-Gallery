@@ -1,0 +1,85 @@
+{
+  "id": "mall-floor-direction-sign",
+  "name": "Mall Floor Direction Sign",
+  "summary": "A midnight-blue and porcelain modular floor sign with an orange level badge and four replaceable directional cartridges.",
+  "description": "Original freestanding North Walk wayfinding totem with a weighted base, satin aluminium details and independent dining, shopping, cinema and facilities labels.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "wayfinding",
+    "signage",
+    "floor",
+    "modular",
+    "editable",
+    "original",
+    "texture-free",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled BSDF materials. Blender bundled Bfont is retained as editable source text and exported as mesh geometry. No external models or textures.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-floor-direction-sign.glb",
+    "source": "sources/mall-floor-direction-sign.blend",
+    "preview": "previews/mall-floor-direction-sign.webp"
+  },
+  "display": {
+    "previewRotationY": 3.141592653589793,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor centre",
+    "front_axis": "Blender +Y / glTF -Z"
+  },
+  "replacement": {
+    "structure_collection": "SignStructure",
+    "identity_collection": "FloorIdentity",
+    "directional_collections": [
+      "DirectionDining",
+      "DirectionShops",
+      "DirectionCinema",
+      "DirectionFacilities"
+    ],
+    "note": "Edit the Blender source text and arrows within the named collections, save, then use generate.py -- --export-source. Rebuilding without that option replaces manual edits. No live label editing is offered by the gallery."
+  },
+  "accuracy_notes": "Original decorative concept, not an official mall sign, accessibility standard, route plan, fabrication or structural engineering specification.",
+  "attribution": [
+    {
+      "credit": "Original geometry authored for Blender-3D-Gallery. Labels use bundled Blender Bfont; no external artwork."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 561892,
+    "triangles": 13404,
+    "vertices": 19800,
+    "primitives": 19,
+    "materials": 5,
+    "animations": 0,
+    "dimensions": [
+      1.2400000095367432,
+      2.529999887570739,
+      0.5400000214576721
+    ],
+    "bounds": {
+      "min": [
+        -0.6200000047683716,
+        0,
+        -0.27000001072883606
+      ],
+      "max": [
+        0.6200000047683716,
+        2.529999887570739,
+        0.27000001072883606
+      ]
+    },
+    "sha256": "4c1f7edd051597ed4aae918d891051ed4da1d7cc5a2e5d70da84f55c8732fea6"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  }
+}
