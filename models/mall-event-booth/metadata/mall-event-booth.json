@@ -1,0 +1,84 @@
+{
+  "id": "mall-event-booth",
+  "name": "Mall Event Booth",
+  "summary": "A distinctive jade, brass and walnut event booth with replaceable poster and display-content source collections.",
+  "description": "An original mall campaign booth kit with an framed backdrop, framed poster panel, guest counter and small product display vignette.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "event",
+    "booth",
+    "poster",
+    "display",
+    "editable",
+    "original",
+    "texture-free",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled BSDF materials. Blender bundled Bfont labels are retained as editable source text and exported as geometry. No external textures, models, or branded artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-event-booth.glb",
+    "source": "sources/mall-event-booth.blend",
+    "preview": "previews/mall-event-booth.webp"
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor centre",
+    "front_axis": "Blender +Y / glTF -Z"
+  },
+  "replacement": {
+    "poster_collection": "PosterPanel",
+    "display_collection": "DisplayContent",
+    "poster_parts": [
+      "PosterPanel ivory face",
+      "PosterPanel editable headline",
+      "PosterPanel editable subhead"
+    ],
+    "note": "Edit the generator and regenerate, or edit the Blender collections and export those named groups without rerunning the generator. The gallery does not edit content live."
+  },
+  "accuracy_notes": "Original decorative concept, not an official mall product, fabrication, accessibility, or engineering specification. Dimensions are measured from the actual standalone GLB.",
+  "attribution": [
+    {
+      "credit": "Original geometry authored for Blender-3D-Gallery. Labels use Blender bundled Bfont, retained as editable source text and exported as geometry."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 215640,
+    "triangles": 4632,
+    "vertices": 7539,
+    "primitives": 14,
+    "materials": 7,
+    "animations": 0,
+    "dimensions": [
+      2.7200000286102295,
+      2.7299999594688416,
+      1.1799999475479126
+    ],
+    "bounds": {
+      "min": [
+        -1.3600000143051147,
+        0,
+        -0.5899999737739563
+      ],
+      "max": [
+        1.3600000143051147,
+        2.7299999594688416,
+        0.5899999737739563
+      ]
+    },
+    "sha256": "8fda1b51362eb3d11cd3525fb9ae1b3a220da22e745ed8b9af0eb6f0f8e87738"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  }
+}
