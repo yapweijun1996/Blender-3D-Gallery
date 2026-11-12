@@ -2,9 +2,23 @@
 
 Status: four assets implemented and validated; local browser diagnostics have explicit failures. This is a reviewable gallery addition, **not** a fully green browser suite or deployment.
 
-Baseline: main commit 8b21a337f522c12ce4eb1627b4ca7ee2aa0b8fa1. Isolated branch: feat/mall-essentials-four-models. Authoring: Blender 4.0.2 on Ubuntu ARM64, CPU Cycles. Browser: Chromium 156.0.8078.4 with SwiftShader; Node 22.23.3.
+Original baseline: main commit 8b21a337f522c12ce4eb1627b4ca7ee2aa0b8fa1. Current integrated base: **4c9f57eddb25562a50ee1ab171b40e128b403767**. Isolated branch: feat/mall-essentials-four-models. Authoring: Blender 4.0.2 on Ubuntu ARM64, CPU Cycles. Browser: Chromium 156.0.8078.4 with SwiftShader; Node 22.23.3.
 
-## Passed
+## Latest-main reconciliation
+
+The owner approved merging latest main into the feature branch to resolve PR #6's conflict. A normal merge preserves feature commit 51ef7b8f73b56fd228652828d9f038d3e1d11aff and main 4c9f57eddb25562a50ee1ab171b40e128b403767 without rewriting shared history. The only conflict was the catalog append. Every main collection, including the newly merged mascot, is preserved exactly; the four-model collection is appended unchanged. Existing GLB, Blender source and preview bytes are unchanged.
+
+Fresh integrated-tree verification:
+- **95 unit tests passed; production build and all 61 catalog GLBs passed.**
+- Four essentials passed measured validation again with zero errors/warnings.
+- **9 library browser cases and 3 mascot browser cases passed.**
+- Mall matrix completed all **15 cases: 10 fully passed, 5 retained ERR_ABORTED failures**, exit code 1. All 3 discovery cases and all 12 viewer interaction/consumed-byte checks passed. This single integration run is not evidence that the pre-existing diagnostic improved.
+- The previous Game UX failure remains documented below. No Game file changed on either merge side, and no extra Game retry or workaround was applied.
+- No PR merge into main, deployment or force push was performed.
+
+Current evidence: [summary](reports/summary.json), [integration matrix](reports/integration-browser-results.json), [unit log](reports/integration-unit.log), [build log](reports/integration-build.log), [library log](reports/integration-library.log), and [mascot results](reports/integration-visitor-results.json). Original results below are retained as history, not substituted for this run.
+
+## Original pre-reconciliation validation
 
 - Four real glTF 2.0 exports passed Khronos glTF Validator 2.0.0-dev.3.10 with **zero errors and zero warnings**. Each has a floor-centred origin, metre-scale bounds, no external resources, at most six material primitives, and fits the 20,000-triangle / 700,000-byte per-asset budget.
 - Four editable .blend sources were reopened in Blender: 23 kiosk, 18 lightbox, 32 bin and 31 shelf authored parts. Studio objects remain separate from the exported asset. See [source inspection](reports/sources.json).

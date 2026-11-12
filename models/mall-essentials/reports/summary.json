@@ -1,5 +1,5 @@
 {
-  "baseline": "8b21a337f522c12ce4eb1627b4ca7ee2aa0b8fa1",
+  "baseline": "4c9f57eddb25562a50ee1ab171b40e128b403767",
   "branch": "feat/mall-essentials-four-models",
   "blender": "4.0.2 Ubuntu ARM64",
   "node": "22.23.3",
@@ -8,7 +8,7 @@
     "failed": 0
   },
   "build": "PASS",
-  "catalog_glbs": 60,
+  "catalog_glbs": 61,
   "new_glbs": {
     "count": 4,
     "errors": 0,
@@ -23,8 +23,8 @@
   },
   "mall_browser": {
     "cases": 15,
-    "passed": 7,
-    "failed": 8,
+    "passed": 10,
+    "failed": 5,
     "all_12_viewer_interaction_and_consumed_hash_checks_passed": true,
     "failure": "Chromium reports net::ERR_ABORTED for fully consumed, rendered GLBs; assertion retained and suite exits 1."
   },
@@ -33,7 +33,17 @@
     "status": "FAIL",
     "assertion": "fine left adjusts aim by one degree",
     "file_line": "scripts/test-game-ux.mjs:233",
-    "production_or_game_files_changed": false
+    "production_or_game_files_changed": false,
+    "note": "Historical pre-integration diagnostic retained; Game files unchanged on either merge side, no extra retry."
   },
-  "deployment": "NOT_RUN"
+  "deployment": "NOT_RUN",
+  "original_baseline": "8b21a337f522c12ce4eb1627b4ca7ee2aa0b8fa1",
+  "integration": {
+    "strategy": "normal main-to-feature merge, no rebase or force push",
+    "prior_feature_commit": "51ef7b8f73b56fd228652828d9f038d3e1d11aff",
+    "all_main_collections_preserved": true,
+    "four_model_collection_unchanged": true,
+    "mascot_browser_cases_passed": 3,
+    "asset_source_preview_bytes_unchanged": true
+  }
 }

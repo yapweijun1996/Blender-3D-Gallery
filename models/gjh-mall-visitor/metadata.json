@@ -1,0 +1,152 @@
+{
+  "id": "gjh-mall-visitor",
+  "name": "GJH Mall Visitor",
+  "category": "Characters",
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender geometry, native PBR materials and articulated in-place NLA animation; private visual reference not embedded or redistributed.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/gjh-mall-visitor.glb",
+    "source": "sources/gjh-mall-visitor.blend",
+    "preview": "previews/front.webp"
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor centre",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "Original rounded mascot concept with open glasses and GJH concept polo wordmark, not an official spokesperson or endorsed trademark asset. Simplified rigid articulated joints, not cloth simulation. Native 1.72 m; idle/walk/sprint stay horizontally in place.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and animation created for Blender-3D-Gallery; owner-project reuse in Webpage-Design-Gallery GJH V11."
+    },
+    {
+      "credit": "Blender bundled font converted to geometry for the small concept wordmark; no font file redistributed."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "id": "gjh-mall-visitor",
+    "glb_bytes": 369976,
+    "sha256": "43d08b67f4450b6aac478cfca4ca664044662cd79021ed15d55ef5612e312be2",
+    "triangles": 10356,
+    "vertices": 7457,
+    "primitives": 25,
+    "materials": 8,
+    "dimensions": [
+      0.7069495154715217,
+      1.719999952978403,
+      0.43689485464122235
+    ],
+    "bounds": {
+      "min": [
+        -0.35347475773576087,
+        -4.508476703080078e-09,
+        -0.22389347782191038
+      ],
+      "max": [
+        0.35347475773576087,
+        1.7199999484699262,
+        0.21300137681931197
+      ]
+    },
+    "clips": [
+      {
+        "name": "idle",
+        "duration": 2.008333444595337,
+        "tracks": 33,
+        "horizontal_drift": 0,
+        "max_sole_floor_error": 8.472328624775649e-08
+      },
+      {
+        "name": "walk",
+        "duration": 1.0083333253860474,
+        "tracks": 33,
+        "horizontal_drift": 0,
+        "max_sole_floor_error": 0.00019058421243070556
+      },
+      {
+        "name": "sprint",
+        "duration": 0.7416666746139526,
+        "tracks": 33,
+        "horizontal_drift": 0,
+        "max_sole_floor_error": 0.00126020901810249
+      }
+    ],
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "validator": "2.0.0-dev.3.10"
+    }
+  },
+  "source_verification": {
+    "source_reopened": "PASS",
+    "blender_version": "5.2.3 LTS",
+    "source_sha256": "ede51fbfc369d83187edbf1ec07a79565b9ee65a963e84e53d622cf20829a3c8",
+    "editable_meshes": 12,
+    "animation_tracks": {
+      "Body": [
+        "idle",
+        "walk",
+        "sprint"
+      ],
+      "LeftElbow": [
+        "idle",
+        "walk",
+        "sprint"
+      ],
+      "LeftFoot": [
+        "idle",
+        "walk",
+        "sprint"
+      ],
+      "LeftHip": [
+        "idle",
+        "walk",
+        "sprint"
+      ],
+      "LeftKnee": [
+        "idle",
+        "walk",
+        "sprint"
+      ],
+      "LeftShoulder": [
+        "idle",
+        "walk",
+        "sprint"
+      ],
+      "RightElbow": [
+        "idle",
+        "walk",
+        "sprint"
+      ],
+      "RightFoot": [
+        "idle",
+        "walk",
+        "sprint"
+      ],
+      "RightHip": [
+        "idle",
+        "walk",
+        "sprint"
+      ],
+      "RightKnee": [
+        "idle",
+        "walk",
+        "sprint"
+      ],
+      "RightShoulder": [
+        "idle",
+        "walk",
+        "sprint"
+      ]
+    },
+    "generator_sha256": "09f2b2f160100637b9f935af07033a5447c21bb1dddfede0c7e2e36d5211d9ce"
+  },
+  "budget_note": "The reference suggests 2,000\u20135,000 triangles. This model retains modeled glasses, face, hair and articulated limbs within an explicitly reviewed 15,000-triangle / 25-primitive ceiling; actual counts are recorded in metrics."
+}
