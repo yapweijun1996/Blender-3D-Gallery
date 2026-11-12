@@ -10,3 +10,16 @@ Base: main `27321715cda338f22595076bbe7c516c3a10c863`. Work is isolated to this 
 - Studio images for all variants and actual model screenshots at 1440/768/390 were visually inspected: geometry present, upright, in frame, with connected belt and sockets. Selected evidence is in `reports/screenshots/`; all browser measurements and diagnostics are in `reports/browser-results.json` and `reports/browser.log`.
 
 The unrelated game UX suite was not modified or rerun for this kit. Existing failures reported on earlier PRs are not claimed fixed. Asset-level validated metadata describes file/geometry validation, not an all-green application/browser suite. No runtime interaction behavior is claimed.
+
+## PR #8 integration after service desk merge
+
+Owner-approved merge of main `1363d84fc1c6426612bf4b50924f51a058be12c1` into queue feature HEAD `825b196ccb571bc5c04d1fca0e36dd628efc4e59`, 2026-11-12. Only conflict was `models/catalog.json`. Every incoming collection is preserved exactly in parsed data; the queue collection is appended. Total: 65 assets across nine collections. Queue GLBs, Blender sources, metadata, generation and test code are unchanged. No force-push, merge to main or deployment performed.
+
+Integration checks:
+- Unit: 102/102 passed. Build passed with large-chunk advisory. Library: 9/9 passed.
+- Queue real-browser: 9/12 passed. `ERR_ABORTED` occurs for long bay at 1440 and 768, short bay at 768.
+- Service desk real-browser: 4/6 passed. `ERR_ABORTED` at 1440 and 768.
+- Essentials real-browser: 7/15 passed. `ERR_ABORTED` for bin/shelf at 1440; kiosk/lightbox/shelf at 768 and 390.
+- All failures are the unchanged strict no-request-failure assertion after real model rendering/interaction and byte checks. No suppressed errors or green-seeking retries. Browser checks remain non-green.
+
+Integration logs and JSON results are retained as `reports/integration-*`; original generation evidence remains intact. Log trailing whitespace is normalized only. Screenshots from this run remain in the isolated workspace's `integration-1363` directories.
