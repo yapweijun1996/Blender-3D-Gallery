@@ -1,0 +1,114 @@
+{
+  "id": "mall-glass-partition",
+  "name": "Mall Glass Partition",
+  "summary": "Full-height modular glazing bay with charcoal tracks, shared square end posts, centre mullion, transoms and four editable panes.",
+  "description": "Original generic 1.20 m wide by 2.40 m high static mall partition for Singapore/Malaysia scenes. Repeat pitch 1.14 m measured between shared post centres. Distinct from the existing guardrail and hinged door; no opening or runtime interaction.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "glass",
+    "partition",
+    "full-height",
+    "modular",
+    "architecture",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials; no third-party models, artwork, textures or fonts.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-glass-partition.glb",
+    "source": "sources/mall-glass-partition.blend",
+    "preview": "previews/mall-glass-partition.webp",
+    "render": "previews/mall-glass-partition.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/straight-three-bay.webp",
+      "previews/corner-three-bay.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.35,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor midpoint of standalone bay",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "assembly": {
+    "standalone_dimensions_m": [
+      1.2,
+      2.4,
+      0.06
+    ],
+    "repeat_pitch_m": 1.14,
+    "connector_positions_gltf": {
+      "left": [
+        -0.57,
+        0,
+        0
+      ],
+      "right": [
+        0.57,
+        0,
+        0
+      ]
+    },
+    "layouts": "layouts.json",
+    "instructions": "Align CONNECTOR_Right of a placed bay to CONNECTOR_Left of the incoming bay. Remove incoming POST_Left, keeping preceding POST_Right once. For straight runs offset root by 1.14 m. For right-angle joins rotate incoming bay about its left connector by +/-90 degrees. The square 60 mm shared post accepts either direction. layouts.json provides exact glTF +Y-up transforms; Blender positions map (x,y,z) to (x,-z,y) and rotationY maps to rotation Z with unchanged sign."
+  },
+  "material_notes": "15 independently editable closed meshes: two posts, two tracks, centre mullion, two transoms, four 10 mm panes and four visibility bands. Three materials reuse the coherent shopfront charcoal/aqua/frosted palette. Alpha 0.22 blended glass is not physically refractive. No textures, animations or lights exported.",
+  "accuracy_notes": "Generic static visualization only, not structural, safety, fire, accessibility, installation or building-code certification. Not a door or guardrail; no runtime interactions. Post joints and dimensions are scene-layout conventions, not engineering connection details.",
+  "attribution": [
+    {
+      "credit": "Original geometry and materials authored for Blender-3D-Gallery; no external artwork."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 54420,
+    "triangles": 852,
+    "vertices": 1704,
+    "primitives": 15,
+    "materials": 3,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      1.1999999843537807,
+      2.4000000953674316,
+      0.05999999865889549
+    ],
+    "bounds": {
+      "min": [
+        -0.5999999921768904,
+        0,
+        -0.029999999329447746
+      ],
+      "max": [
+        0.5999999921768904,
+        2.4000000953674316,
+        0.029999999329447746
+      ]
+    },
+    "sha256": "115d1e7a4c66d0ac5af08af51627f5d1a04c037156f9c2178b815ce4857ffd7f"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Local asset, source, studio and gallery visual gates PASS, with original/opaque/hidden checker transparency controls inspected. Actual Android/iOS remain NOT TESTED; overall NEEDS REVIEW is distinct from local visual approval. Static viewing only; no runtime interactions."
+  }
+}
