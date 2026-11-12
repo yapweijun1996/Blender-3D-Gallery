@@ -1,0 +1,110 @@
+{
+  "category": "Furniture",
+  "status": "draft",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "generator": "generate.py",
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "id": "mall-atrium-balcony",
+  "name": "Mall Atrium Balcony",
+  "summary": "Two-metre modular balcony edge with ivory terrazzo deck, mineral slab, champagne fascia and existing glass railing.",
+  "description": "A reusable 2 m atrium-edge bay, not a whole mall. Actual project 006 railing and 421 floor source components are assembled with a new independent deck/slab/fascia. End closures are removable for repeated joints.",
+  "tags": [
+    "mall",
+    "atrium",
+    "balcony",
+    "deck",
+    "glass",
+    "modular",
+    "architecture",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "creation_method": "Original Blender Python deck assembly with appended original project 006 railing meshes and 421 tile source meshes/materials. Existing sources and GLBs unchanged. No external models, artwork or fonts.",
+  "paths": {
+    "glb": "exports/mall-atrium-balcony.glb",
+    "source": "sources/mall-atrium-balcony.blend",
+    "preview": "previews/mall-atrium-balcony.webp",
+    "render": "previews/mall-atrium-balcony.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/underside.webp",
+      "previews/assembly-three-bays.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.85,
+      0.65,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "local slab underside centre, not building ground",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "assembly": {
+    "repeat_pitch_m": 2,
+    "deck_dimensions_m": [
+      2,
+      0.25,
+      1.2
+    ],
+    "standalone_dimensions_m": [
+      2.16,
+      1.371,
+      1.22
+    ],
+    "rail_base_height_m": 0.25,
+    "end_closure_width_m": 0.08,
+    "layouts": "layouts.json",
+    "instructions": "Repeat Deck/Infill at 2 m. Keep one post at each unique joint. Keep the left end cap only at first bay, right cap only at last. Translate whole root for elevated installations. Straight runs only. No structural attachment detail."
+  },
+  "material_notes": "57 independent source meshes; 11 materials; exact original 006 railing geometry and alpha glass; eight 421-derived tiles with cropped boundary strips, adapted filled grout and original embedded 512px artwork. No animations, external URLs, runtime interaction or decoder.",
+  "accuracy_notes": "Visual architecture asset only. No structural load, safety, engineering, fabrication, installation or building-code certification. Balcony attachment to a building is not modeled.",
+  "attribution": [
+    {
+      "credit": "Original project 006 railing and 421 floor source assets reused; actual input hashes in provenance.json. New deck, soffit, fascia and end closures. This is one logical asset, not additional railing/floor variants."
+    }
+  ],
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Local source, geometry, joints, rendering and Gallery checks recorded separately. Actual Android and iOS remain NOT TESTED. No deployment/release."
+  },
+  "metrics": {
+    "glb_bytes": 486156,
+    "triangles": 4940,
+    "vertices": 9608,
+    "primitives": 65,
+    "materials": 11,
+    "textures": 1,
+    "animations": 0,
+    "dimensions": [
+      2.1599999964237213,
+      1.3709999685524963,
+      1.2200000379234552
+    ],
+    "bounds": {
+      "min": [
+        -1.0799999982118607,
+        0,
+        -0.6000000238418579
+      ],
+      "max": [
+        1.0799999982118607,
+        1.3709999685524963,
+        0.6200000140815973
+      ]
+    },
+    "sha256": "5d5247640c2a99ab414507cacf2928e954621f3248dc6f42ad90257ee98fbe62"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  }
+}
