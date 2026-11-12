@@ -1,0 +1,107 @@
+{
+  "id": "mall-structural-column",
+  "name": "Mall Structural Column",
+  "summary": "Simple square mall column with warm-ivory cladding, charcoal base and reveals, and an independently editable cap.",
+  "description": "Original generic 3.00 m high visual column for modular Singapore/Malaysia mall scenes. Eight independent cladding panels around a square core; floor and ceiling placement examples use the existing 1.2 m modules.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "column",
+    "structural-column",
+    "cladding",
+    "modular",
+    "architecture",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials; reviewed original project helpers. No third-party models, artwork, textures or fonts.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-structural-column.glb",
+    "source": "sources/mall-structural-column.blend",
+    "preview": "previews/mall-structural-column.webp",
+    "render": "previews/mall-structural-column.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/placement-grid.webp",
+      "previews/assembly-two-columns.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.35,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "bottom centre at finished floor height",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "assembly": {
+    "standalone_dimensions_m": [
+      0.6,
+      3,
+      0.6
+    ],
+    "shaft_width_m": 0.5,
+    "cladding_thickness_m": 0.02,
+    "base_height_m": 0.2,
+    "cap_height_m": 0.16,
+    "ceiling_grid_pitch_m": 1.2,
+    "example_column_pitch_m": 3.6,
+    "layouts": "layouts.json",
+    "instructions": "Root at finished floor Y=0. Floor module roots Y=-0.03 put their tops at 0. Ceiling roots Y=3.0; omit the full 1.2 m module above each column, leaving a 0.30 m clearance around the 0.60 m cap. Placement conventions only, not structural or construction details. glTF position (x,y,z) maps to Blender (x,-z,y)."
+  },
+  "material_notes": "13 independent closed meshes: core, eight cladding panels, plinth, two reveals and cap. Three named materials. Eased edges retain editable Blender modifiers. Embedded geometry only; no textures, animation, lights or compression decoder.",
+  "accuracy_notes": "Visual architecture asset only. No structural load, safety, building-code, engineering, fabrication or installation certification. Not an engineering connection detail; no runtime interaction.",
+  "attribution": [
+    {
+      "credit": "Original geometry and materials authored for Blender-3D-Gallery; no external artwork. Assembly previews use unchanged original project floor and ceiling assets, not additional column variants."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Actual Android/iOS not tested. Local source, geometry, placement, studio and Gallery checks are recorded separately in verification.md. No deployment or release is claimed."
+  },
+  "metrics": {
+    "glb_bytes": 78744,
+    "triangles": 1404,
+    "vertices": 2808,
+    "primitives": 13,
+    "materials": 3,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      0.6000000238418579,
+      3.000000074505806,
+      0.6000000238418579
+    ],
+    "bounds": {
+      "min": [
+        -0.30000001192092896,
+        0,
+        -0.30000001192092896
+      ],
+      "max": [
+        0.30000001192092896,
+        3.000000074505806,
+        0.30000001192092896
+      ]
+    },
+    "sha256": "5a856c9a4e30b7cbde2e99cb50e4e43e9f45a86dd3e504f4dea4708cbe8874aa"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  }
+}
