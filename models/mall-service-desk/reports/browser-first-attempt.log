@@ -1,0 +1,20 @@
+PASS discovery 1440
+FAIL viewer mall-service-desk 1440 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:39679/Blender-3D-Gallery/assets/mall-service-desk-CdaLmERc.glb: net::ERR_ABORTED'
++ ]
+- []
+
+PASS discovery 768
+FAIL viewer mall-service-desk 768 Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'http://127.0.0.1:39679/Blender-3D-Gallery/assets/mall-service-desk-CdaLmERc.glb: net::ERR_ABORTED'
++ ]
+- []
+
+PASS discovery 390
+PASS viewer mall-service-desk 390
