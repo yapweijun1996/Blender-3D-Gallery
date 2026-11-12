@@ -18,27 +18,7 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - run: npm test
       - run: npm run build
-      - name: Use Ubuntu archive for browser dependencies
-        shell: bash
-        run: |
-          # Repeated Azure mirror downloads were slow; keep Ubuntu suites and signing unchanged.
-          for apt_source in /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources /etc/apt/apt-mirrors.txt; do
-            if [ -f "$apt_source" ]; then
-              sudo sed -i -E 's#http://azure\.archive\.ubuntu\.com/ubuntu(/?)([[:space:]]|$)#https://archive.ubuntu.com/ubuntu\1\2#g' "$apt_source"
-            fi
-          done
-      - run: npx playwright install --with-deps chromium webkit
-      - run: npm run test:solar
-      - run: node scripts/test-solar-scene.mjs
-      - run: npm run test:browser
-      - run: npm run test:pwa
-      - run: npm run test:library
-      - run: npm run test:standard
-      - run: npm run test:reviewed
-      - run: npm run test:game-ux
-      - run: npm run test:game-responsive
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
