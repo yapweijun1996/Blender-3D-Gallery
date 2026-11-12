@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "edit": "RECYCLE -> PLASTIC in an isolated copy of the saved Blender source",
+  "exportMode": "generate.py -- --export-source",
+  "changedGroups": [
+    "RecycleLid"
+  ],
+  "unchangedGroups": [
+    "StationFrame",
+    "RecycleCompartment",
+    "FoodCompartment",
+    "GeneralCompartment",
+    "FoodLid",
+    "GeneralLid"
+  ],
+  "originalAssetUnchanged": true,
+  "results": [
+    {
+      "asset": "shipped asset",
+      "sha256": "52a62e5ace403100b7757ac0c4b464272f5d46c79903c69d5d2db75a83a2e4ae",
+      "groupHashes": {
+        "StationFrame": "fef4caa4538d33db418cda1d4424b3c9145bf853414dd7132ca803b5292daa14",
+        "RecycleCompartment": "578345d117cda820187799f79c5bd9734258af8f0a9cbb897cc2a5767092a98c",
+        "FoodCompartment": "4216f04178bfa0ef3e4fecdf8bc447f77ab633b15cc38842f4ddb4f16675d353",
+        "GeneralCompartment": "e8d18f77928deb08c0143af602e175a0ebb552598ac9f1921a1296f9b0094696",
+        "RecycleLid": "1137f9c56b5c985aeaba17304015cbf967fcae7fc171a3662c9a97b77862ca9b",
+        "FoodLid": "40ee45c270870f8774b64067415023f5632ef54a42289d55f5a2c1210146a1af",
+        "GeneralLid": "2e850db84db895e33261e1c91a2fcd00dbd93c01db06827ea4b43d4a09082fd1"
+      },
+      "validation": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "asset": "isolated edited source",
+      "sha256": "0cf484e6dd5b50be051172d0e9e342247190b6a7baee56c0e813e1dcf6e59c52",
+      "groupHashes": {
+        "StationFrame": "fef4caa4538d33db418cda1d4424b3c9145bf853414dd7132ca803b5292daa14",
+        "RecycleCompartment": "578345d117cda820187799f79c5bd9734258af8f0a9cbb897cc2a5767092a98c",
+        "FoodCompartment": "4216f04178bfa0ef3e4fecdf8bc447f77ab633b15cc38842f4ddb4f16675d353",
+        "GeneralCompartment": "e8d18f77928deb08c0143af602e175a0ebb552598ac9f1921a1296f9b0094696",
+        "RecycleLid": "696d1739c69971fc9848f0808dcd9d60e7775eff10e0ee4d245e94c0c65613c6",
+        "FoodLid": "40ee45c270870f8774b64067415023f5632ef54a42289d55f5a2c1210146a1af",
+        "GeneralLid": "2e850db84db895e33261e1c91a2fcd00dbd93c01db06827ea4b43d4a09082fd1"
+      },
+      "validation": {
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  ]
+}
