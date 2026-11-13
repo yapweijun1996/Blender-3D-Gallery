@@ -1,0 +1,951 @@
+{
+  "result": "PASS",
+  "sha256": "381f2a588a25387dbc7ab2065863e95024d3c34ac418fd54ef6fbab8818a4d69",
+  "sample_times": {
+    "closed": 0.041666666666666664,
+    "open": 1.0416666666666667,
+    "reset": 0.041666666666666664
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_ROLL_RL",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    },
+    {
+      "name": "Demonstrate_ROLL_RR",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    },
+    {
+      "name": "Demonstrate_MOVABLE_FrontEntry_A",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    },
+    {
+      "name": "Demonstrate_MOVABLE_FrontEntry_B",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    },
+    {
+      "name": "Demonstrate_MOVABLE_MidEntry_A",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    },
+    {
+      "name": "Demonstrate_MOVABLE_MidEntry_B",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    },
+    {
+      "name": "Demonstrate_STEER_FL",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    },
+    {
+      "name": "Demonstrate_ROLL_FL",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    },
+    {
+      "name": "Demonstrate_STEER_FR",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    },
+    {
+      "name": "Demonstrate_ROLL_FR",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "ROLL_RL.quaternion",
+      "angular_travel": 6.283167369064044,
+      "contract": "Half-turn then reverse, NOT continuous full-spin"
+    },
+    {
+      "track": "ROLL_RL.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mid": 24
+    },
+    {
+      "track": "ROLL_RR.quaternion",
+      "angular_travel": 6.283167369064044,
+      "contract": "Half-turn then reverse, NOT continuous full-spin"
+    },
+    {
+      "track": "ROLL_RR.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mid": 24
+    },
+    {
+      "track": "MOVABLE_FrontEntry_A.position",
+      "first": [
+        -1.309999942779541,
+        0.5799999833106995,
+        5.300000190734863
+      ],
+      "last": [
+        -1.309999942779541,
+        0.5799999833106995,
+        5.300000190734863
+      ],
+      "mid": 24
+    },
+    {
+      "track": "MOVABLE_FrontEntry_B.position",
+      "first": [
+        -1.309999942779541,
+        0.5799999833106995,
+        4.699999809265137
+      ],
+      "last": [
+        -1.309999942779541,
+        0.5799999833106995,
+        4.699999809265137
+      ],
+      "mid": 24
+    },
+    {
+      "track": "MOVABLE_MidEntry_A.position",
+      "first": [
+        -1.309999942779541,
+        0.5799999833106995,
+        -0.10000000149011612
+      ],
+      "last": [
+        -1.309999942779541,
+        0.5799999833106995,
+        -0.10000000149011612
+      ],
+      "mid": 24
+    },
+    {
+      "track": "MOVABLE_MidEntry_B.position",
+      "first": [
+        -1.309999942779541,
+        0.5799999833106995,
+        -0.699999988079071
+      ],
+      "last": [
+        -1.309999942779541,
+        0.5799999833106995,
+        -0.699999988079071
+      ],
+      "mid": 24
+    },
+    {
+      "track": "STEER_FL.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mid": 24
+    },
+    {
+      "track": "ROLL_FL.quaternion",
+      "angular_travel": 6.283165930431357,
+      "contract": "Half-turn then reverse, NOT continuous full-spin"
+    },
+    {
+      "track": "ROLL_FL.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mid": 24
+    },
+    {
+      "track": "STEER_FR.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mid": 24
+    },
+    {
+      "track": "ROLL_FR.quaternion",
+      "angular_travel": 6.283165930431357,
+      "contract": "Half-turn then reverse, NOT continuous full-spin"
+    },
+    {
+      "track": "ROLL_FR.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_FrontEntry_A",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        5.300000190734863
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_FrontEntry_B",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        4.699999809265137
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_MidEntry_A",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        -0.10000000149011612
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_MidEntry_B",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        -0.699999988079071
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "ROLL_FL",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "ROLL_FR",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "ROLL_RL",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "ROLL_RR",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "STEER_FL",
+      "position": [
+        -1,
+        0.5,
+        3.799999952316284
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "STEER_FR",
+      "position": [
+        1,
+        0.5,
+        3.799999952316284
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_FrontEntry_A",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        5.940000031789216
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_FrontEntry_B",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        4.059999968210784
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_MidEntry_A",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        0.5399999960264298
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_MidEntry_B",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        -1.3400000079473589
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "ROLL_FL",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        -1.0000000000000009,
+        4.453591045454989e-16,
+        0,
+        -1.8706318205241785e-8
+      ]
+    },
+    {
+      "name": "ROLL_FR",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        -1.0000000000000009,
+        4.453591045454989e-16,
+        0,
+        -1.8706318205241785e-8
+      ]
+    },
+    {
+      "name": "ROLL_RL",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        -1.0000000000000009,
+        0,
+        0,
+        -1.8706318205241785e-8
+      ]
+    },
+    {
+      "name": "ROLL_RR",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        -1.0000000000000009,
+        0,
+        0,
+        -1.8706318205241785e-8
+      ]
+    },
+    {
+      "name": "STEER_FL",
+      "position": [
+        -1,
+        0.5,
+        3.799999952316284
+      ],
+      "quaternion": [
+        0,
+        0.09983339410527425,
+        0,
+        0.9950041675397251
+      ]
+    },
+    {
+      "name": "STEER_FR",
+      "position": [
+        1,
+        0.5,
+        3.799999952316284
+      ],
+      "quaternion": [
+        0,
+        0.09983339410527425,
+        0,
+        0.9950041675397251
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_FrontEntry_A",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        5.300000190734863
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_FrontEntry_B",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        4.699999809265137
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_MidEntry_A",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        -0.10000000149011612
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_MidEntry_B",
+      "position": [
+        -1.309999942779541,
+        0.5799999833106995,
+        -0.699999988079071
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "ROLL_FL",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "ROLL_FR",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "ROLL_RL",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "ROLL_RR",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "STEER_FL",
+      "position": [
+        -1,
+        0.5,
+        3.799999952316284
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "STEER_FR",
+      "position": [
+        1,
+        0.5,
+        3.799999952316284
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": {
+    "MOVABLE_FrontEntry_A": {
+      "p": [
+        -1.31,
+        0.58,
+        5.3
+      ],
+      "openP": [
+        -1.31,
+        0.58,
+        5.9399999999999995
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openQ": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "MOVABLE_FrontEntry_B": {
+      "p": [
+        -1.31,
+        0.58,
+        4.7
+      ],
+      "openP": [
+        -1.31,
+        0.58,
+        4.0600000000000005
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openQ": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "MOVABLE_MidEntry_A": {
+      "p": [
+        -1.31,
+        0.58,
+        -0.10000000000000003
+      ],
+      "openP": [
+        -1.31,
+        0.58,
+        0.54
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openQ": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "MOVABLE_MidEntry_B": {
+      "p": [
+        -1.31,
+        0.58,
+        -0.7
+      ],
+      "openP": [
+        -1.31,
+        0.58,
+        -1.3399999999999999
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openQ": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "ROLL_FL": {
+      "p": [
+        0,
+        0,
+        0
+      ],
+      "openP": [
+        0,
+        0,
+        0
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openQ": [
+        1,
+        0,
+        0,
+        6.123233995736766e-17
+      ]
+    },
+    "STEER_FL": {
+      "p": [
+        -1,
+        0.5,
+        3.8
+      ],
+      "openP": [
+        -1,
+        0.5,
+        3.8
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openQ": [
+        0,
+        0.09983341664682815,
+        0,
+        0.9950041652780257
+      ]
+    },
+    "ROLL_FR": {
+      "p": [
+        0,
+        0,
+        0
+      ],
+      "openP": [
+        0,
+        0,
+        0
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openQ": [
+        1,
+        0,
+        0,
+        6.123233995736766e-17
+      ]
+    },
+    "STEER_FR": {
+      "p": [
+        1,
+        0.5,
+        3.8
+      ],
+      "openP": [
+        1,
+        0.5,
+        3.8
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openQ": [
+        0,
+        0.09983341664682815,
+        0,
+        0.9950041652780257
+      ]
+    },
+    "ROLL_RL": {
+      "p": [
+        0,
+        0,
+        0
+      ],
+      "openP": [
+        0,
+        0,
+        0
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openQ": [
+        1,
+        0,
+        0,
+        6.123233995736766e-17
+      ]
+    },
+    "ROLL_RR": {
+      "p": [
+        0,
+        0,
+        0
+      ],
+      "openP": [
+        0,
+        0,
+        0
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openQ": [
+        1,
+        0,
+        0,
+        6.123233995736766e-17
+      ]
+    }
+  },
+  "wheel_contracts": [
+    {
+      "name": "FL",
+      "p": [
+        -1,
+        0.5,
+        3.8
+      ],
+      "r": 0.5,
+      "parent": "STEER_FL"
+    },
+    {
+      "name": "FR",
+      "p": [
+        1,
+        0.5,
+        3.8
+      ],
+      "r": 0.5,
+      "parent": "STEER_FR"
+    },
+    {
+      "name": "RL",
+      "p": [
+        -1,
+        0.5,
+        -3.7
+      ],
+      "r": 0.5,
+      "parent": "AXLE_RL"
+    },
+    {
+      "name": "RR",
+      "p": [
+        1,
+        0.5,
+        -3.7
+      ],
+      "r": 0.5,
+      "parent": "AXLE_RR"
+    }
+  ],
+  "max_tyre_ground_error_m": 0.002097551703329259,
+  "sweep_samples": 61,
+  "primitives": 140,
+  "primitive_budget": 240,
+  "clearance": "Every tire and moving door mesh AABB excludes all fixed mesh AABBs at61 samples; contact tolerance derived upfront from32-sided tire geometry",
+  "limitations": "Illustrative articulated asset, half-turn wheel demonstration not driving physics or continuous wheel spin. No Gallery playback controls or engineering/accessibility certification."
+}

@@ -1,0 +1,45 @@
+{
+  "id": 219,
+  "title": "Ambulance",
+  "slug": "ambulance",
+  "root": "ASSET_Ambulance",
+  "dimensions": [
+    2.44,
+    5.7,
+    3.05
+  ],
+  "scale": 8,
+  "features": [
+    "CHASSIS",
+    "CABIN",
+    "PATIENT",
+    "REAR",
+    "TYRE"
+  ],
+  "animation": {
+    "kind": "vehicle",
+    "wheel_radius": 0.38,
+    "track": 1.85,
+    "axles": [
+      -1.72,
+      1.68
+    ],
+    "doors": [
+      {
+        "node": "MOVABLE_RearLeft",
+        "kind": "rotation",
+        "angle": 1.1
+      },
+      {
+        "node": "MOVABLE_RearRight",
+        "kind": "rotation",
+        "angle": 1.1
+      }
+    ]
+  },
+  "budget": {
+    "triangles": 60000,
+    "bytes": 3500000,
+    "mesh_primitives": 180
+  }
+}

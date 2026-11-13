@@ -1,0 +1,1 @@
+Initial validation failed fixed depth envelope:0.3275m. Corrected over-protruding lock geometry (offset -.03 to-.015m; depth .045 to .025m) to fit the original .25m nominal envelope. Budget, dimensions and validator unchanged. Initial source/export/render/logs retained.

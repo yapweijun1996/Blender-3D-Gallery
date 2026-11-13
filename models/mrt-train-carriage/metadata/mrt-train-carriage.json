@@ -1,0 +1,216 @@
+{
+  "id": "mrt-train-carriage",
+  "name": "MRT Train Carriage",
+  "summary": "MRT Train Carriage reusable original asset.",
+  "description": "Original Singapore/Malaysia city, commercial and architectural illustrative asset with independently editable components. No commercial or official logos, real personal data, or engineering certification.",
+  "category": "Vehicles",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "city-shells",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry; reviewed repository helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mrt-train-carriage.glb",
+    "source": "sources/mrt-train-carriage.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.55,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 103,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. Not a medical, accessibility, engineering or safety certification.",
+  "attribution": [
+    {
+      "credit": "Original geometry; repository material/export helpers. Generic labels use Blender bundled Bfont converted to editable mesh. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. AnimationMixer clips where listed, no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative scene prop only. Not operational fuel, ticketing or security equipment; no accessibility, structural, electrical, traffic or safety certification. Not a real landmark or branded building.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "semantic_geometry": "PASS: independent prop/shell contracts, vehicle radius/axle/contact/aperture/sweep checks and visual review",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "PASS: independent raw endpoints, expected Mixer poses and clearance",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "animations": {
+    "authoring": [
+      [
+        "MOVABLE_LeftFront_A",
+        "location",
+        1,
+        -0.74
+      ],
+      [
+        "MOVABLE_LeftFront_B",
+        "location",
+        1,
+        0.74
+      ],
+      [
+        "MOVABLE_LeftRear_A",
+        "location",
+        1,
+        -0.74
+      ],
+      [
+        "MOVABLE_LeftRear_B",
+        "location",
+        1,
+        0.74
+      ],
+      [
+        "MOVABLE_RightFront_A",
+        "location",
+        1,
+        -0.74
+      ],
+      [
+        "MOVABLE_RightFront_B",
+        "location",
+        1,
+        0.74
+      ],
+      [
+        "MOVABLE_RightRear_A",
+        "location",
+        1,
+        -0.74
+      ],
+      [
+        "MOVABLE_RightRear_B",
+        "location",
+        1,
+        0.74
+      ],
+      [
+        "ROLL_L00",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_R00",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_L01",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_R01",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_L10",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_R10",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_L11",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_R11",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ]
+    ],
+    "cycle_seconds": 2,
+    "start_seconds": 0.041666666666666664,
+    "end_seconds": 2.0416666666666665,
+    "runtime": "Requires host AnimationMixer; Gallery component UI not implemented"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "mrt-train-carriage",
+    "backlog_id": 103,
+    "glb_bytes": 1215260,
+    "triangles": 22540,
+    "vertices": 44744,
+    "meshes": 185,
+    "materials": 4,
+    "dimensions": [
+      3.0749999806284904,
+      3.6999999576683145,
+      20.48000031709671
+    ],
+    "bounds": {
+      "min": [
+        -1.5374999903142452,
+        -7.389737166629828e-08,
+        -10.240000158548355
+      ],
+      "max": [
+        1.5374999903142452,
+        3.6999998837709427,
+        10.240000158548355
+      ]
+    },
+    "sha256": "17ec895df170d124314afa77ed4ec27ebe3666092cac8424fcc9bcd35f19f479",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 5000000,
+    "budget_triangles": 80000,
+    "animation_clips": 16
+  }
+}

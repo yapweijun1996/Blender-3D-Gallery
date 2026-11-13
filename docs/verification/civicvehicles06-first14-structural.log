@@ -1,0 +1,24 @@
+PASS 97 food-tray 48376 864 [ 0.36000001430511475, 0.030000001192092896, 0.27000001072883606 ]
+PASS 98 chopstick-holder 92580 1768 [ 0.12999999523162842, 0.2551238697660642, 0.12999999523162842 ]
+PASS 143 plastic-pallet 250708 4644 [ 1.2000000476837158, 0.1500000050291419, 1 ]
+PASS 185 blackboard 97752 1920 [ 2.1600000858306885, 2.099999964237213, 0.5 ]
+PASS 242 jogging-path 32820 784 [ 5, 0.14000000059604645, 5 ]
+PASS 252 flower-bed 650444 11340 [ 2.3999999538064003, 0.7030000016093254, 1.2000000476837158 ]
+PASS 290 wet-market-fish-counter 347556 6210 [ 1.600000023841858, 1.0999999940395355, 0.8485000028740615 ]
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Dimension mismatch 152 axis2
+    at file:///srv/agent-workstation/workspaces/blender-fifty06-civicvehicles-20261113/repo/scripts/validate-civicvehicles06.mjs:10:221
+    at Array.forEach (<anonymous>)
+    at file:///srv/agent-workstation/workspaces/blender-fifty06-civicvehicles-20261113/repo/scripts/validate-civicvehicles06.mjs:10:199 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

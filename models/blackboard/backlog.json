@@ -1,0 +1,31 @@
+{
+  "id": 185,
+  "slug": "blackboard",
+  "title": "Blackboard",
+  "root": "ASSET_Blackboard",
+  "required_nodes": [
+    "Fixed_Chalk_Panel",
+    "MOVABLE_Sliding_Panel",
+    "Eraser_Shelf"
+  ],
+  "budget_bytes": 800000,
+  "budget_triangles": 18000,
+  "max_dimension_m": 10,
+  "expected_dimensions_m": [
+    2.16,
+    2.1,
+    0.5
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Sliding_Panel"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Sliding_Panel",
+      "location",
+      0,
+      0.9
+    ]
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "results": [
+    {
+      "name": "static indexes preserve all assets and never download GLBs or create WebGL",
+      "passed": true
+    },
+    {
+      "name": "model search, combined filters, empty state and clear preserve URL state",
+      "passed": true
+    },
+    {
+      "name": "demo search/category combine and clear",
+      "passed": true
+    },
+    {
+      "name": "legacy model detail direct link, refresh, metadata, related and history",
+      "passed": true
+    },
+    {
+      "name": "failed model load retains fallback and can retry",
+      "passed": true
+    },
+    {
+      "name": "unknown model and unavailable WebGL provide useful recovery",
+      "passed": true
+    },
+    {
+      "name": "mobile menu supports keyboard dismissal, focus return and navigation",
+      "passed": true
+    },
+    {
+      "name": "legacy demos launch, refresh, return to index and release canvas",
+      "passed": true
+    },
+    {
+      "name": "reduced motion and equivalent 200 percent reflow remain usable",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "environment": {
+    "browser": "Chromium",
+    "device": "macOS headless / SwiftShader",
+    "network": "localhost, unthrottled",
+    "cache": "fresh context, service worker blocked"
+  },
+  "limits": [
+    "Viewport reflow is not real browser zoom",
+    "Physical mobile GPU, real installation and production Core Web Vitals not measured"
+  ]
+}

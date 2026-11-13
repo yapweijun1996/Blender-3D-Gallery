@@ -1,0 +1,62 @@
+{
+  "id": "motorcycle",
+  "name": "Motorcycle",
+  "summary": "Original independent motorcycle with editable metric components.",
+  "description": "Original two-wheel motorcycle chassis, fork, tank, seat, engine and wheels; editable steering/wheel parts, no physics claim.",
+  "category": "Transport",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "metres"
+  ],
+  "status": "verified-local-needs-device-review",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/motorcycle.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "Original generic illustrative proportions, not a surveyed building, landmark, operator installation, engineering/accessibility/safety certification or functioning payment, cooking, vehicle or access-control system. Asset-level clips only; no gallery playback UI. Physical mobile/WebKit NOT TESTED.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "budget": {
+      "triangles": 50000,
+      "bytes": 3000000,
+      "mesh_primitives": 160
+    },
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "local": "PASS",
+    "source_edit": "PASS: saved copy mesh/material edit, reopen and export without regeneration",
+    "khronos": "PASS",
+    "browser": "PASS: Chromium 1440x900,768x1024,390x844; final SHA evidence",
+    "visual": "PASS: all4 final studio and3 final browser images actually inspected",
+    "animation": "PASS: raw first/end values and duration; all60 sampled frames clearance/contact; intended midpoint and restoration. Not physics/security/operational simulation",
+    "source_sha256": "c60fa2364a205f6a6f8924cc08513f89d0eaff48519c0806383a62fd46049654",
+    "glb_sha256": "97f7066f720c2c83f616c6646ffeb5fadbbdaaa9bb38df92e7ae75466967f5bd"
+  },
+  "novelty_contract": "Original two-wheel motorcycle chassis, fork, tank, seat, engine and wheels; editable steering/wheel parts, no physics claim."
+}

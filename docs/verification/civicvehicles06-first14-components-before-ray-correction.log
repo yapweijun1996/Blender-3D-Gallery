@@ -1,0 +1,20 @@
+COMPONENT_PASS 97 1
+COMPONENT_PASS 98 1
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(Math.abs(ray(.058,1,-.06).point.y-.024)<1e-5)
+
+    at file:///srv/agent-workstation/workspaces/blender-fifty06-civicvehicles-20261113/repo/scripts/test-civicvehicles06-components.mjs:5:107 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

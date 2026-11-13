@@ -1,0 +1,138 @@
+{
+  "id": 103,
+  "slug": "mrt-train-carriage",
+  "title": "MRT Train Carriage",
+  "root": "ASSET_MRTTrainCarriage",
+  "required_nodes": [
+    "Carriage_Floor",
+    "Bogie_Frame",
+    "Grab_Pole",
+    "MOVABLE_LeftFront_A"
+  ],
+  "budget_bytes": 5000000,
+  "budget_triangles": 80000,
+  "budget_primitives": 320,
+  "max_dimension_m": 40,
+  "expected_dimensions_m": [
+    3.075,
+    3.7,
+    20.48
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_LeftFront_A",
+    "MOVABLE_LeftFront_B",
+    "MOVABLE_LeftRear_A",
+    "MOVABLE_LeftRear_B",
+    "MOVABLE_RightFront_A",
+    "MOVABLE_RightFront_B",
+    "MOVABLE_RightRear_A",
+    "MOVABLE_RightRear_B",
+    "ROLL_L00",
+    "ROLL_R00",
+    "ROLL_L01",
+    "ROLL_R01",
+    "ROLL_L10",
+    "ROLL_R10",
+    "ROLL_L11",
+    "ROLL_R11"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_LeftFront_A",
+      "location",
+      1,
+      -0.74
+    ],
+    [
+      "MOVABLE_LeftFront_B",
+      "location",
+      1,
+      0.74
+    ],
+    [
+      "MOVABLE_LeftRear_A",
+      "location",
+      1,
+      -0.74
+    ],
+    [
+      "MOVABLE_LeftRear_B",
+      "location",
+      1,
+      0.74
+    ],
+    [
+      "MOVABLE_RightFront_A",
+      "location",
+      1,
+      -0.74
+    ],
+    [
+      "MOVABLE_RightFront_B",
+      "location",
+      1,
+      0.74
+    ],
+    [
+      "MOVABLE_RightRear_A",
+      "location",
+      1,
+      -0.74
+    ],
+    [
+      "MOVABLE_RightRear_B",
+      "location",
+      1,
+      0.74
+    ],
+    [
+      "ROLL_L00",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_R00",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_L01",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_R01",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_L10",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_R10",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_L11",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_R11",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ]
+  ]
+}

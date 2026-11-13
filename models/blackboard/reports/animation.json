@@ -1,0 +1,97 @@
+{
+  "result": "PASS",
+  "sha256": "f0082a9e218233499cd333d5c05c57e0e7b69ecaa7b76e06dba291fb973a6928",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416666666666667,
+    "reset": 0.0416666679084301
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_MOVABLE_Sliding_Panel",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "MOVABLE_Sliding_Panel.position",
+      "first": [
+        -0.47999998927116394,
+        1.399999976158142,
+        0.03500000014901161
+      ],
+      "last": [
+        -0.47999998927116394,
+        1.399999976158142,
+        0.03500000014901161
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Sliding_Panel",
+      "position": [
+        -0.47999998927116394,
+        1.399999976158142,
+        0.03500000014901161
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Sliding_Panel",
+      "position": [
+        0.4199999809265875,
+        1.399999976158142,
+        0.03500000014901161
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Sliding_Panel",
+      "position": [
+        -0.47999998927116394,
+        1.399999976158142,
+        0.03500000014901161
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        -0.48,
+        1.4,
+        0.035
+      ],
+      "openP": [
+        0.42,
+        1.4,
+        0.035
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "clearance": "900mm horizontal slide, inside frame with separate depth plane and >15mm panel separation at17 samples",
+  "verification": "Independent raw track endpoints and Three.js Mixer poses; no Gallery component-control UI"
+}
