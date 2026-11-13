@@ -1,0 +1,97 @@
+{
+  "id": "satay-skewer-display",
+  "name": "Satay Skewer Display",
+  "summary": "Six independently editable grilled-skewer assemblies arranged on a reused original project tray; no dietary or cooking simulation claims.",
+  "description": "Six independently editable grilled-skewer assemblies arranged on a reused original project tray; no dietary or cooking simulation claims. Generic food-court visual prop without product branding or certification.",
+  "category": "Equipment",
+  "tags": [
+    "mamak",
+    "food-court",
+    "singapore",
+    "malaysia",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials; reviewed original project helpers. No third-party models, textures, fonts, logos or artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/satay-skewer-display.glb",
+    "source": "sources/satay-skewer-display.blend",
+    "preview": "previews/satay-skewer-display.webp",
+    "render": "previews/satay-skewer-display.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.8,
+      0.55,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "base at ground plane",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "backlog_id": 379,
+  "material_notes": "Independent named editable mesh components and materials. No animations or runtime interaction. Geometric pictograms use original primitives, not text/font artwork.",
+  "accuracy_notes": "Static illustrative asset only. No food-contact, hygiene, thermal or electrical safety certification; no cooking or liquid simulation.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using reviewed original project helpers; no third-party assets."
+    },
+    {
+      "credit": "Original hollow tray profile reused from models/mall-food-court-tray-station/generate.py (439), without bevel; assembly context, not an additional new model.",
+      "source_sha256": "45f47ee8d3b0999cc0c80a227081b6e89da11597a59ffe0e972558a3d74f253f"
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Physical Android/iOS NOT TESTED. Combined local gate PASS; see docs/verification/sgmy-batch06-final.md.",
+    "local_asset": "PASS",
+    "browser": "PASS: desktop Chromium156.0.8078.4 at three viewport sizes; physical Android/iOS NOT TESTED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "satay-skewer-display",
+    "glb_bytes": 302684,
+    "triangles": 5572,
+    "vertices": 10992,
+    "primitives": 55,
+    "materials": 4,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      0.44999998807907104,
+      0.04799999942770228,
+      0.40000006122541687
+    ],
+    "bounds": {
+      "min": [
+        -0.22499999403953552,
+        0,
+        -0.20000003061270843
+      ],
+      "max": [
+        0.22499999403953552,
+        0.04799999942770228,
+        0.20000003061270843
+      ]
+    },
+    "sha256": "58af28bfc84ad4877939cb6781f241d4cf32fe13072e9ee11aeb6ae980c2bc2d",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  }
+}
