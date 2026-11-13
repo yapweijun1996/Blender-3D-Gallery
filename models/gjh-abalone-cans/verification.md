@@ -155,11 +155,11 @@ Requested as a comparison version: quality first, similar look is enough. Four c
 
 What it improves over the photo set: sharper print, round logos by construction, no photo seams or baked highlights in the label, a complete 360 degrees for Mexico.
 
-What it does not give: fidelity. Reviewed against the official packshots:
-- Australia: cholesterol 156 mg (official 150 mg); certification and award seals are generic.
-- New Zealand: distributor and packer names and the drained weight are generated.
+What it does not give: fidelity. After a second Codex pass that corrected the text errors found in review (checked by eye against the official information-face photos), the remaining differences are:
+- Australia: the nutrition table now reads cholesterol 150 mg as official; seals are generic. The front still prints 425 g, matching the retailer listing used for the pack size.
+- New Zealand: distributor and packer lines now match the official photo; seals are generic.
 - South Africa: a crown seal and a star seal that the official label does not have.
-- Mexico: net weight 425 g (official 454 g), a "Goh Huat" logo, a generated address and an invented third face.
+- Mexico: net weight 454 g, GJH logo and addresses now match the official photo; the third face is still invented.
 - All four: QR codes and barcodes were redrawn and not scanned; the first Codex attempt (rejected) had invented certificate numbers and a year, so the prompt now forbids them.
 
 Not verified: that the generated Chinese is correct in every place (spot-checked on the prominent strings only), scannability of the codes, mobile devices and other browsers. This set is for comparison; do not treat its text as product information. Visual regression: `npm run test:cans:codex` records 5 views per can (0, 90, 180 and 270 degrees plus a zoomed front, 20 goldens); 20 of 20 passed on two consecutive runs on an idle machine. These goldens are a local guard from headless Chromium software rendering.

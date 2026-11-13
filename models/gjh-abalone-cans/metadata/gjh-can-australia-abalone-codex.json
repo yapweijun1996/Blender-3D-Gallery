@@ -73,7 +73,7 @@
     "status": "Not official artwork. Text, numbers, seals, QR codes and barcodes may differ from the official label; do not rely on it for claims.",
     "generator": "OpenAI Codex CLI built-in image generation (image_gen), prompted with the official eShop packshots listed under product.reference_images",
     "file": "sources/flat-labels/gjh-can-australia-abalone-flat.jpg",
-    "file_sha256": "a4432220381b62c5b5485b14b195669613389c977eed1d36f87ed25e41aa5e63",
+    "file_sha256": "268534e587d0f19bc23ffd4c8cd3f2887fd091ccbee6aa6065869cd8889de959",
     "source_pixels": [
       1774,
       887
@@ -81,14 +81,15 @@
     "front_face_centre_fraction": 0.5,
     "layout": "left to right: picture/food face, front face, information face; wraps around the can",
     "known_discrepancies_from_official": [
-      "Nutrition table shows cholesterol 156 mg; the official photo shows 150 mg.",
-      "Certification and award seals are generic designs, not the official marks.",
+      "Nutrition table was corrected against the official photo (cholesterol 150 mg).",
+      "Halal and award seals are generic designs, not the official marks.",
       "QR code and barcode were redrawn by the model and were not verified or scanned."
     ],
-    "comparison_with": "gjh-can-australia-abalone"
+    "comparison_with": "gjh-can-australia-abalone",
+    "revision": "Second pass: text corrected by Codex against the official information-face photo."
   },
   "metrics": {
-    "glb_bytes": 427224,
+    "glb_bytes": 428028,
     "triangles": 4888,
     "vertices": 2674,
     "primitives": 3,
@@ -116,7 +117,7 @@
         0.038750000298023224
       ]
     },
-    "sha256": "88b8eaa2f034816d4cb47d8af59257607f1436709732fb80586edc570457f5fe",
+    "sha256": "168d64928ab3f04ea93538ca879e2439be558f6f85567c92ee15cc5c72958078",
     "draw_calls": 3,
     "texture_memory_bytes": 6127616
   },

@@ -73,7 +73,7 @@
     "status": "Not official artwork. Text, numbers, seals, QR codes and barcodes may differ from the official label; do not rely on it for claims.",
     "generator": "OpenAI Codex CLI built-in image generation (image_gen), prompted with the official eShop packshots listed under product.reference_images",
     "file": "sources/flat-labels/gjh-can-new-zealand-abalone-flat.jpg",
-    "file_sha256": "87188e6c615e509ec157a96f0e09d15722e972e7a8ce7df86ba9b3285140a9f3",
+    "file_sha256": "8cbdfa27692e51ca141bbd2e44566fafb2ddcdab703745275f5af68c24dde07a",
     "source_pixels": [
       1774,
       887
@@ -81,14 +81,15 @@
     "front_face_centre_fraction": 0.503,
     "layout": "left to right: picture/food face, front face, information face; wraps around the can",
     "known_discrepancies_from_official": [
-      "Distributor and packer names (New Moon Foods, Oceania Foods Processing) and the drained weight (250 g) are generated; the official label names Goh Joo Hin and Prepared Foods Processing Ltd.",
+      "Distributor and packer lines were corrected against the official photo (Goh Joo Hin Pte Ltd / Goh Joo Hin (KL) Sdn Bhd, Prepared Foods Processing Ltd, Palmerston North).",
       "Halal and award seals are generic designs, not the official marks.",
       "QR code and barcode were redrawn by the model and were not verified or scanned."
     ],
-    "comparison_with": "gjh-can-new-zealand-abalone"
+    "comparison_with": "gjh-can-new-zealand-abalone",
+    "revision": "Second pass: text corrected by Codex against the official information-face photo."
   },
   "metrics": {
-    "glb_bytes": 421188,
+    "glb_bytes": 430052,
     "triangles": 4888,
     "vertices": 2674,
     "primitives": 3,
@@ -116,7 +117,7 @@
         0.038750000298023224
       ]
     },
-    "sha256": "29f5efa4b069e56aa26a9d361aac3647405c5878d5f6a6a5d2977bc250ed029f",
+    "sha256": "9184734e934f4c34fc178e1f073449327a38e5bc9dadd240f7193b79fe6098a0",
     "draw_calls": 3,
     "texture_memory_bytes": 6127616
   },

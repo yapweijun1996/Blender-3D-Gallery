@@ -72,7 +72,7 @@
     "status": "Not official artwork. Text, numbers, seals, QR codes and barcodes may differ from the official label; do not rely on it for claims.",
     "generator": "OpenAI Codex CLI built-in image generation (image_gen), prompted with the official eShop packshots listed under product.reference_images",
     "file": "sources/flat-labels/gjh-can-mexico-abalone-flat.jpg",
-    "file_sha256": "384a0600406eeabdb45e88dfc377d32c58b0701c56dc5e869ea18a4e6d28630d",
+    "file_sha256": "dc6f13f7f788c00ff62e79b1b0240a3beb1d8813573e9a1f97051c1531090c25",
     "source_pixels": [
       1774,
       887
@@ -81,14 +81,14 @@
     "layout": "left to right: picture/food face, front face, information face; wraps around the can",
     "known_discrepancies_from_official": [
       "The third face (left of the front) is invented: no official photo exists for it.",
-      "Net weight is printed as 425 g; the official Mexico can is 454 g.",
-      "The distributor logo reads 'Goh Huat' and the Malaysian address is generated; the official label shows the GJH logo and a different address.",
+      "Net weight, GJH logo and distributor addresses were corrected against the official information-face photo (454 g, GJH logo, Singapore and Malaysia addresses).",
       "QR code and barcode were redrawn by the model and were not verified or scanned."
     ],
-    "comparison_with": "gjh-can-mexico-abalone"
+    "comparison_with": "gjh-can-mexico-abalone",
+    "revision": "Second pass: text corrected by Codex against the official information-face photo."
   },
   "metrics": {
-    "glb_bytes": 391136,
+    "glb_bytes": 395836,
     "triangles": 4888,
     "vertices": 2674,
     "primitives": 3,
@@ -116,7 +116,7 @@
         0.038750000298023224
       ]
     },
-    "sha256": "5395bfbec196d97d4fbbb06b475cc58114f07d232da89e5a94cbf54670d0cf9d",
+    "sha256": "937d502f401feb44b8cfd11b19959622a436215f338dc8f9675e6372ea4560cd",
     "draw_calls": 3,
     "texture_memory_bytes": 6127616
   },
