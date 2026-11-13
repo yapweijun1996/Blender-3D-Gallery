@@ -106,6 +106,40 @@ Changes: label metallic 0.2 and roughness 0.3; viewer lighting (metadata) hemisp
 
 Also checked: the eShop page for the Mexico can has only front and back packshots; its five "Info" graphics are marketing composites of the front face, so they cannot fill the missing third face.
 
+## Texture distortion investigation (Australia first, then all four SKUs)
+
+Task: circular certification logos looked unnaturally proportioned when zoomed, label top and bottom needed checking, small print looked degraded. Findings in the order requested; evidence images are `reports/screenshots/v5-*`.
+
+**1. Actual GLB inspection** (`gjh-can-australia-abalone.glb`). Embedded JPEG, 1280 x 624 (before 1280 x 634); sampler magFilter LINEAR, minFilter LINEAR_MIPMAP_LINEAR, clamp-to-edge; label material metallic 0.2, roughness 0.3. Label wall radius 0.03705 m, circumference 0.23279 m, label height 0.11359 m (v 0 to 1 spans seam to seam; the strips under the seams extrapolate to v -0.018 and 1.018). Texel density is identical on every wall triangle: 5498.5 px/m horizontal, 5493.4 px/m vertical.
+
+**2. Circumference to height ratio.** C/H = 2.049 against a texture aspect of 2.051, so the mesh and UV ratio are consistent (before: 2.035 against 2.019, vertical density 0.8% higher). The real mismatch was in the artwork rows, see 6.
+
+**3. Circular logos, source versus render.** Boxes measured on 4x enlarged official photos; the face-on aspect is what a camera facing the logo sees after unrolling.
+
+| Logo (Australia) | Photo width/height | Printed circle would show | Face-on width/height after unrolling | Verdict |
+| --- | ---: | ---: | ---: | --- |
+| Halal circle | 0.65 | 0.62 | 1.04 | printed, correct |
+| ASME seal | 0.63 | 0.63 | 1.00 | printed, correct |
+| Wild Caught badge | 0.91 | 0.58 | **1.60** | pasted on flat in the packshot, too wide |
+
+The same flat Wild Caught badge exists in New Zealand (1.41 before) and Mexico (1.74 before). The South Africa red seal measures about 0.59 in the photo against 0.63 expected for a printed one, so it is left unchanged. This explains the report: the mesh and UV are not the cause, the packshot's retouched badge is.
+
+**4. UV checker.** A texture with physically sized 20 mm circles at eight angles (grid every 10 mm) was applied to the actual GLB and rendered with an orthographic camera: face-on width/height 0.99 at every angle including the wrap seam (1 px of 167 px quantisation), and with a fixed camera 0.697 at plus and minus 45 degrees against 0.699 expected from the cosine compression. Same result before and after the change (the 0.8% anisotropy is below this test's resolution). No stretching or seam error from the mesh or UVs.
+
+**5. Filtering, mipmaps, compression, resolution.** Mipmaps present. **Anisotropy was 1** (the viewer default; this machine supports 16), which visibly softened small text on the curved sides at oblique angles (`v5-aniso-1-before.jpg` against `v5-aniso-8-after.jpg`). Fixed by an opt-in `display.textureAnisotropy` of 8 for these cans. JPEG quality 88 shows no blocks at close range. Resolution is capped by the source (see Sharpness above).
+
+**6. Top and bottom label boundaries.** Measured on all 11 packshots: the printed label runs from row 313 to row 848. v3 cropped rows 301 to 835 (5% of the can bbox), so the top 13 rows were the pale gold seam and lid pixels (the pale band under the top rim) and the bottom 13 rows of label were missing, and the rows were stretched 2.3% vertically against the horizontal scale (`v5-label-top-before.jpg` against `v5-label-top-after.jpg`, and the bottom pair). Fixed: exact measured rows, the scale taken from the measured body silhouette, and the can height derived from the label rows (124.0 mm instead of 124.6 mm).
+
+**7. Fixes applied (confirmed defects only).**
+- Label rows and scale: described in 6.
+- Flat Wild Caught badges (Australia, New Zealand, Mexico): columns inside the badge's rows are remapped so its arc width equals its height; the freed angle is absorbed in the plain background on its left and the front panel ends just after the badge. No pixel is redrawn. Face-on render, Australia: 1.50 (colour mask) to 0.99; New Zealand and Mexico round by pixel check (the colour mask is unreliable against their blue bands; `v5-badge-*` crops). This is a geometric correction of the source photograph, can be switched off with `OVERLAY_BADGES`, and slightly stretches the plain background beside the badge.
+- Anisotropic filtering: opt-in, validated in `scripts/catalog.mjs`, tested.
+- Not changed: source resolution, the highlight and shading baked into the photographs, panel order and spacing, the Mexico placeholder.
+
+**8 and 9. Regression and all four variants.** `npm run test:cans` now records 12 golden views per can at 0, 40, 90, 180 and 270 degrees, each normal and zoomed, plus top and bottom, for all four cans (48 goldens). The viewer turns in 10 degree steps, so 40 degrees stands in for 45. Result: 48 of 48 views passed on two consecutive runs on an idle machine (mean channel difference at most 2.0, at most 1% of pixels differing by more than 40). The goldens are a local regression guard from headless Chromium software rendering, not a cross-GPU reference. Before/after evidence: `reports/screenshots/v5-*`; the earlier `v3-*`/`v4-*` sets are kept for history.
+
+**10. Remaining limitations.** Only the three Wild Caught badges were found to be pasted on flat; the other circular graphics (for example the Trans Fat Free circle, the recycle mark and the Double Boiled seal on the other faces) were not individually measured. Fine print is capped by the 1000 px source. Face-on logo proportions on the flat-badge fix rely on the badge boxes measured by eye on enlarged photographs (about 2 px).
+
 ## Not done or not possible here
 
 - KTX2/Basis and Meshopt compression: the gallery viewer has no decoders. The GLBs are plain glTF with JPEG textures.

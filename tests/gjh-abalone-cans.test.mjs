@@ -15,6 +15,7 @@ const catalog = loadCatalog();
 const collection = catalog.collections.find(c => c.id === 'gjh-abalone-cans');
 const report = JSON.parse(fs.readFileSync(`${folder}/reports/assets.json`));
 const parts = ['GoldRim', 'SilverMetal', 'Label'];
+const accessor_ = (json, prim, key) => json.accessors[prim.attributes[key]];
 const readGlb = bytes => JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)));
 // Decode a float accessor (VEC2/VEC3) from the GLB binary chunk; UV and normal accessors carry no min/max.
 function readFloats(bytes, json, accessor) {
@@ -143,4 +144,40 @@ test('metadata validation rejects malformed studio environment settings', () => 
   const id = 'gjh-can-mexico-abalone';
   assert.throws(() => validateMetadata({ ...metadata, display: { ...metadata.display, studioEnvironment: 'yes' } }, id), /studioEnvironment/);
   assert.throws(() => validateMetadata({ ...metadata, display: { ...metadata.display, environmentIntensity: 9 } }, id), /environmentIntensity/);
+});
+
+for (const [id] of Object.entries(cans)) {
+  test(`${id}: label texture is isotropic on the mesh (circles stay round), with mipmapped filtering and opt-in anisotropy`, () => {
+    const bytes = fs.readFileSync(`${folder}/exports/${id}.glb`);
+    const json = readGlb(bytes);
+    const prim = json.meshes[json.nodes.find(n => n.name === 'Label').mesh].primitives[0];
+    const jl = bytes.readUInt32LE(12);
+    const view = json.bufferViews[json.images[0].bufferView];
+    const jpg = bytes.subarray(20 + jl + 8 + view.byteOffset, 20 + jl + 8 + view.byteOffset + view.byteLength);
+    let w = 0, h = 0;
+    for (let i = 2; i < jpg.length;) { if (jpg[i] !== 0xFF) { i++; continue; } const m = jpg[i + 1]; if (m >= 0xC0 && m <= 0xC3) { h = jpg.readUInt16BE(i + 5); w = jpg.readUInt16BE(i + 7); break; } i += 2 + jpg.readUInt16BE(i + 2); }
+    const P = readFloats(bytes, json, accessor_(json, prim, 'POSITION', 3));
+    const UV = readFloats(bytes, json, accessor_(json, prim, 'TEXCOORD_0', 2));
+    const wall = P.map((p, i) => i).filter(i => Math.hypot(P[i][0], P[i][2]) > 0.0369);
+    const radius = wall.reduce((a, i) => a + Math.hypot(P[i][0], P[i][2]), 0) / wall.length;
+    const ys = wall.map(i => P[i][1]), vs = wall.map(i => UV[i][1]);
+    const labelHeight = (Math.max(...ys) - Math.min(...ys)) / (Math.max(...vs) - Math.min(...vs));
+    const horizontal = w / (2 * Math.PI * radius), vertical = h / labelHeight;
+    assert.ok(Math.abs(vertical / horizontal - 1) < 0.005, `texel density v/h ${vertical / horizontal}`);
+    assert.deepEqual([json.samplers[0].minFilter, json.samplers[0].magFilter], [9987, 9729], 'mipmapped minification, linear magnification');
+    const metadata = JSON.parse(fs.readFileSync(`${folder}/metadata/${id}.json`));
+    assert.equal(metadata.display.textureAnisotropy, 8);
+    assert.throws(() => validateMetadata({ ...metadata, display: { ...metadata.display, textureAnisotropy: 99 } }, id), /textureAnisotropy/);
+  });
+}
+
+test('flat Wild Caught badges are fixed and disclosed, printed logos are left alone', () => {
+  for (const id of ['gjh-can-australia-abalone', 'gjh-can-new-zealand-abalone', 'gjh-can-mexico-abalone']) {
+    const fix = JSON.parse(fs.readFileSync(`${folder}/metadata/${id}.json`)).label_layout.flat_badge_fix;
+    assert.ok(fix.face_on_width_over_height.before_computed > 1.3, 'distortion before the fix was measured');
+    assert.ok(Math.abs(fix.face_on_width_over_height.after_rendered_approx - 1) < 0.06, 'round after the fix');
+    assert.match(fix.fix, /no pixel is redrawn/i);
+  }
+  const sa = JSON.parse(fs.readFileSync(`${folder}/metadata/gjh-can-south-africa-abalone.json`)).label_layout;
+  assert.equal(sa.flat_badge_fix, null);
 });

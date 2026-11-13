@@ -34,7 +34,7 @@
     "origin": "floor centre",
     "front_axis": "Blender -Y / glTF +Z",
     "studioEnvironment": true,
-    "environmentIntensity": 1.0,
+    "environmentIntensity": 1,
     "previewLighting": {
       "hemisphereIntensity": 0.15,
       "directionalIntensity": 0.55,
@@ -43,7 +43,8 @@
         2,
         5
       ]
-    }
+    },
+    "textureAnisotropy": 8
   },
   "product": {
     "brand": "New Moon (GJH house brand)",
@@ -56,7 +57,7 @@
       "new-moon-au-425g-nutrition.jpg": "86a69d1972b86bb80b7955c88540c917064ae89b454f5f6364f56d134bd910e4"
     }
   },
-  "accuracy_notes": "Diameter is a nominal 73.5 mm and height follows the packshot aspect ratio; a retailer listing gives 7.5 x 11 x 7.5 without units, so real dimensions are unverified. Label panel order and spacing are estimated (see label_layout). Packshot limb zones are not used. Shading baked into the photographs is partly divided out.",
+  "accuracy_notes": "Diameter is a nominal 73.5 mm and height follows the packshot aspect ratio; a retailer listing gives 7.5 x 11 x 7.5 without units, so real dimensions are unverified. The label row boundaries (313 to 848 in the packshot) and body width were measured on the photographs. Label panel order and spacing are estimated (see label_layout). Packshot limb zones are not used. Shading baked into the photographs is partly divided out.",
   "attribution": [
     {
       "credit": "Label artwork unrolled from GJH eShop official packshots recorded in Webpage-Design-Gallery assets/companies/gjh/official (manifest.json). Can geometry is original."
@@ -64,7 +65,7 @@
   ],
   "rights": "Packaging artwork belongs to its respective owners (GJH / New Moon). Used in the owner's project on the owner's confirmation; no independent licence document was supplied. Public redistribution terms have not been specified.",
   "metrics": {
-    "glb_bytes": 380672,
+    "glb_bytes": 373868,
     "triangles": 4888,
     "vertices": 2674,
     "primitives": 3,
@@ -72,12 +73,12 @@
     "textures": 1,
     "texture_pixels": [
       1280,
-      634
+      624
     ],
     "animations": 0,
     "dimensions": [
       0.07750000059604645,
-      0.12478461861610413,
+      0.12399169057607651,
       0.07750000059604645
     ],
     "bounds": {
@@ -88,29 +89,29 @@
       ],
       "max": [
         0.038750000298023224,
-        0.12478461861610413,
+        0.12399169057607651,
         0.038750000298023224
       ]
     },
-    "sha256": "299724708351823ce84c14cc0049f8722c3b746014a8670ddc39835711256876",
+    "sha256": "0c692fbce67de0e8d44f1fbfb6db3b6079c6cb2066d3d72b04605a77ad8a6a73",
     "draw_calls": 3,
-    "texture_memory_bytes": 4328107,
+    "texture_memory_bytes": 4259840,
     "lod1": {
-      "glb_bytes": 155936,
+      "glb_bytes": 153464,
       "triangles": 3044,
       "draw_calls": 3,
       "materials": 3,
       "texture_pixels": [
         640,
-        317
+        312
       ],
-      "texture_memory_bytes": 1082027,
+      "texture_memory_bytes": 1064960,
       "dimensions": [
         0.07750000059604645,
-        0.12478461861610413,
+        0.12399169057607651,
         0.07750000059604645
       ],
-      "sha256": "ea9717fe3017d08ebceb4c9db971d5ee594251d12dc7ee24eac299dcd7630761",
+      "sha256": "d1ae9ff1b35a65c6bb4cafb4a70ff3dd746bf3f70c8ffdac3f93546478feacde",
       "validation": {
         "errors": 0,
         "warnings": 0
@@ -148,6 +149,23 @@
     ],
     "status": "Panel order and spacing are estimates, not verified against a physical can or a die-line.",
     "unprinted_gap_degrees": 0,
-    "gap_note": "No gap: the three official panels cover the full circumference."
+    "gap_note": "No gap: the three official panels cover the full circumference.",
+    "flat_badge_fix": {
+      "item": "Wild Caught badge on the front panel",
+      "finding": "In the official packshot this badge was pasted on flat (not foreshortened by the cylinder), unlike the printed halal and ASME logos which measure 1.00 to 1.04 once unrolled. Unrolling it as if foreshortened made it about 1.60 times too wide when viewed face-on.",
+      "fix": "Columns inside the badge's rows are remapped so its arc width equals its height. Only sampling positions change; no pixel is redrawn. The angle freed is absorbed in the plain background to its left, and the front panel ends just after the badge.",
+      "face_on_width_over_height": {
+        "before_computed": 1.6,
+        "before_rendered": 1.5,
+        "after_rendered_approx": 0.99
+      },
+      "source_box_px": [
+        570.5,
+        600.5,
+        667,
+        670
+      ],
+      "note": "Rendered values come from orthographic face-on renders of the GLB; the Australia figures use a colour mask, the others a visual pixel check."
+    }
   }
 }

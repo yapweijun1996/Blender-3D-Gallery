@@ -34,7 +34,7 @@
     "origin": "floor centre",
     "front_axis": "Blender -Y / glTF +Z",
     "studioEnvironment": true,
-    "environmentIntensity": 1.0,
+    "environmentIntensity": 1,
     "previewLighting": {
       "hemisphereIntensity": 0.15,
       "directionalIntensity": 0.55,
@@ -43,7 +43,8 @@
         2,
         5
       ]
-    }
+    },
+    "textureAnisotropy": 8
   },
   "product": {
     "brand": "New Moon (GJH house brand)",
@@ -55,7 +56,7 @@
       "new-moon-mx-454g-back.jpg": "c5d408f1e39d1673ea19159828f0583c587a52ec5b7cf509e52a6d6fcb012413"
     }
   },
-  "accuracy_notes": "Diameter is a nominal 73.5 mm and height follows the packshot aspect ratio; a retailer listing gives 7.5 x 11 x 7.5 without units, so real dimensions are unverified. Label panel order and spacing are estimated (see label_layout). Packshot limb zones are not used. Shading baked into the photographs is partly divided out.",
+  "accuracy_notes": "Diameter is a nominal 73.5 mm and height follows the packshot aspect ratio; a retailer listing gives 7.5 x 11 x 7.5 without units, so real dimensions are unverified. The label row boundaries (313 to 848 in the packshot) and body width were measured on the photographs. Label panel order and spacing are estimated (see label_layout). Packshot limb zones are not used. Shading baked into the photographs is partly divided out.",
   "attribution": [
     {
       "credit": "Label artwork unrolled from GJH eShop official packshots recorded in Webpage-Design-Gallery assets/companies/gjh/official (manifest.json). Can geometry is original."
@@ -63,7 +64,7 @@
   ],
   "rights": "Packaging artwork belongs to its respective owners (GJH / New Moon). Used in the owner's project on the owner's confirmation; no independent licence document was supplied. Public redistribution terms have not been specified.",
   "metrics": {
-    "glb_bytes": 274752,
+    "glb_bytes": 272252,
     "triangles": 4888,
     "vertices": 2674,
     "primitives": 3,
@@ -71,12 +72,12 @@
     "textures": 1,
     "texture_pixels": [
       1280,
-      632
+      624
     ],
     "animations": 0,
     "dimensions": [
       0.07750000059604645,
-      0.12457521259784698,
+      0.12399169057607651,
       0.07750000059604645
     ],
     "bounds": {
@@ -87,29 +88,29 @@
       ],
       "max": [
         0.038750000298023224,
-        0.12457521259784698,
+        0.12399169057607651,
         0.038750000298023224
       ]
     },
-    "sha256": "3d097a2e64b401a9ed0cd52ee70dbf865da8889a01f8dc641e8361869037fc42",
+    "sha256": "f255d16051d0f2f2d5ba1da37b020316b7d2ffd9d2243a1d77f7ffe0e29406eb",
     "draw_calls": 3,
-    "texture_memory_bytes": 4314453,
+    "texture_memory_bytes": 4259840,
     "lod1": {
-      "glb_bytes": 120636,
+      "glb_bytes": 119196,
       "triangles": 3044,
       "draw_calls": 3,
       "materials": 3,
       "texture_pixels": [
         640,
-        316
+        312
       ],
-      "texture_memory_bytes": 1078613,
+      "texture_memory_bytes": 1064960,
       "dimensions": [
         0.07750000059604645,
-        0.12457521259784698,
+        0.12399169057607651,
         0.07750000059604645
       ],
-      "sha256": "31c249948aeaf0868c7a6160338e2554f4811be7cb6037d009a50fab91a6bffa",
+      "sha256": "52f8952ca698cc77c6aaf8f1ef5c607a31c401817e6bf6741426e17510164acb",
       "validation": {
         "errors": 0,
         "warnings": 0
@@ -141,6 +142,23 @@
     ],
     "status": "Panel order and spacing are estimates, not verified against a physical can or a die-line.",
     "unprinted_gap_degrees": 121,
-    "gap_note": "No official image exists for this sector. It is an unprinted placeholder using two flat base colours; no artwork, text or marks were invented."
+    "gap_note": "No official image exists for this sector. It is an unprinted placeholder using two flat base colours; no artwork, text or marks were invented.",
+    "flat_badge_fix": {
+      "item": "Wild Caught badge on the front panel",
+      "finding": "In the official packshot this badge was pasted on flat (not foreshortened by the cylinder), unlike the printed halal and ASME logos which measure 1.00 to 1.04 once unrolled. Unrolling it as if foreshortened made it about 1.74 times too wide when viewed face-on.",
+      "fix": "Columns inside the badge's rows are remapped so its arc width equals its height. Only sampling positions change; no pixel is redrawn. The angle freed is absorbed in the plain background to its left, and the front panel ends just after the badge.",
+      "face_on_width_over_height": {
+        "before_computed": 1.74,
+        "before_rendered": null,
+        "after_rendered_approx": 0.97
+      },
+      "source_box_px": [
+        568,
+        598,
+        670,
+        673
+      ],
+      "note": "Rendered values come from orthographic face-on renders of the GLB; the Australia figures use a colour mask, the others a visual pixel check."
+    }
   }
 }

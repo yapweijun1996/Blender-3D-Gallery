@@ -25,7 +25,10 @@ TEX_W, TEX_H_MAX = 1280, 640  # about 1.15x the packshot's real detail; more wou
 LOD1_SEGMENTS, LOD1_TEX_W = 36, 640
 SEG = {"segments": SEGMENTS}
 SEAM = 0.0050  # double-seam height in metres
-RIM_CROP = 0.05  # packshot rim fraction cropped from each end of the label
+# Label rows measured on all 11 official packshots (same framing): the printed label runs from the first row below the
+# top seam to the last row above the bottom seam. Values are row boundaries in the 1000 px packshot.
+LABEL_TOP_ROW, LABEL_BOTTOM_ROW = 313.0, 848.0
+LABEL_RADIUS = DIAMETER / 2 + 0.0003  # outer radius of the label surface, metres (the packshot silhouette is the label)
 
 VARIANTS = [
     dict(key="nz", slug="gjh-can-new-zealand-abalone", name="New Zealand Abalone", zh="新西兰鲍鱼罐头",
@@ -78,6 +81,20 @@ def cubic_weights(t):
                      -1.5 * t ** 3 + 2 * t ** 2 + 0.5 * t, 0.5 * t ** 3 - 0.5 * t ** 2])
 
 
+def body_extent(px, bounds):
+    """Left and right silhouette of the can body at mid-height (excludes the wider seam beads)."""
+    x0, x1, y0, y1 = bounds
+    height = y1 - y0
+    lefts, rights = [], []
+    for y in range(int(y0 + 0.3 * height), int(y0 + 0.7 * height), 6):
+        ink = np.where(px[y, :].min(axis=1) < 0.86)[0]
+        ink = ink[(ink > x0 - 5) & (ink < x1 + 5)]
+        if len(ink) > 50:
+            lefts.append(ink.min())
+            rights.append(ink.max())
+    return float(np.median(lefts)), float(np.median(rights))
+
+
 def sample(px, x, y):
     """Bicubic (Catmull-Rom) sample of a top-down image at float pixel coordinates."""
     h, w, _ = px.shape
@@ -114,7 +131,7 @@ def delight(px, bounds):
     median of luminance relative to each row's mean, then divided out. The viewer lights the model again."""
     x0, x1, y0, y1 = bounds
     out = px.copy()
-    top, bottom = int(y0 + RIM_CROP * (y1 - y0)), int(y1 - RIM_CROP * (y1 - y0))
+    top, bottom = int(LABEL_TOP_ROW), int(LABEL_BOTTOM_ROW)
     cols = slice(x0 + 2, x1 - 1)
     band = px[top:bottom, cols].mean(axis=2)
     row_mean = band[:, band.shape[1] // 4: 3 * band.shape[1] // 4].mean(axis=1, keepdims=True) + 1e-4
@@ -136,18 +153,56 @@ EDGE_RANGE = range(44, 73)  # candidate seam positions, degrees from a panel's c
 PROFILE_BINS = 32
 
 
+# Circular badges that the packshot retouching pasted on flat (not foreshortened by the cylinder): (x0, x1, y0, y1) in packshot
+# pixels, measured on the enlarged official photos. Unrolling treats every pixel as foreshortened, which would stretch these
+# badges about 1.4 to 1.7 times too wide when viewed face-on. Printed logos (halal, ASME, the SA seal) measure 1.00 to 1.04 and
+# need no fix. A fix only remaps columns inside the badge's rows; it never redraws anything.
+OVERLAY_BADGES = {
+    "au": {"front": (600.5, 667.0, 646.0, 719.0)},
+    "nz": {"front": (584.4, 653.6, 657.0, 727.6)},
+    "mx": {"front": (598.0, 670.0, 646.0, 720.0)},
+}
+BADGE_MARGIN_PX = 30.0   # source pixels on the left of the badge over which the freed angle is absorbed
+BADGE_ROW_PAD, BADGE_ROW_RAMP = 4.0, 8.0
+
+
 class Panel:
     """One packshot treated as a cylinder panel centred on its own axis angle."""
 
-    def __init__(self, name, px, bounds):
+    def __init__(self, name, px, bounds, badge=None):
         self.name, self.px, self.bounds = name, px, bounds
-        x0, x1, y0, y1 = bounds
-        self.cx, self.r = (x0 + x1) / 2, (x1 - x0) / 2
-        height = y1 - y0
-        self.top, self.bottom = y0 + RIM_CROP * height, y1 - RIM_CROP * height
+        left, right = body_extent(px, bounds)
+        self.cx, self.r = (left + right) / 2, (right - left) / 2
+        self.top, self.bottom = LABEL_TOP_ROW, LABEL_BOTTOM_ROW
+        self.badge, self.warp, self.right_limit = badge, None, 999.0
+        if badge:
+            bx0, bx1, by0, by1 = badge
+            phi_c = math.degrees(math.asin(((bx0 + bx1) / 2 - self.cx) / self.r))
+            delta = math.degrees((by1 - by0) / self.r)        # round badge: arc width equals its height
+            phi_b0, phi_b1 = phi_c - delta / 2, phi_c + delta / 2
+            wx0 = bx0 - BADGE_MARGIN_PX
+            asin_deg = lambda x: math.degrees(math.asin(min((x - self.cx) / self.r, 0.999)))
+            x_limit = self.cx + self.r * math.sin(math.radians(PANEL_LIMIT))
+            room = x_limit - bx1                     # real background pixels to the right of the badge, before the limb
+            wx1 = bx1 + min(BADGE_MARGIN_PX, room) if room >= 8.0 else bx1 + 3.0
+            self.warp = dict(phi=[asin_deg(wx0), phi_b0, phi_b1, max(asin_deg(wx1), phi_b1 + 3.0)],
+                             x=[wx0, bx0, bx1, wx1], rows=(by0, by1), phi_c=phi_c, delta=delta)
+            # With no real background right of the badge the panel must end just after it; otherwise other artwork
+            # (such as the Chinese origin box) may continue to the limb and the seam stays free.
+            self.right_limit = phi_b1 + 1.5 if room < 8.0 else 999.0
+
+    def x_of(self, deg):
+        """Source column for a local angle, with the flat-badge remap where it applies (vectorised, degrees)."""
+        deg = np.asarray(deg, dtype=np.float64)
+        x = self.cx + self.r * np.sin(np.radians(deg))
+        if self.warp:
+            phi, xs = self.warp["phi"], self.warp["x"]
+            inside = (deg >= phi[0]) & (deg <= phi[3])
+            x = np.where(inside, np.interp(deg, phi, xs), x)
+        return x
 
     def columns(self, deg):
-        return self.cx + self.r * 0.995 * math.sin(math.radians(deg))
+        return float(self.x_of(deg))
 
     def profile(self, deg):
         """Mean colour of PROFILE_BINS row bands at a given local angle (5 px wide strip)."""
@@ -164,9 +219,15 @@ class Panel:
 
     def sample_columns(self, local_deg, v):
         """Bicubic colours for local angles (columns) and label heights v in 0 bottom .. 1 top."""
-        xs = self.cx + self.r * 0.995 * np.sin(np.radians(np.clip(local_deg, -PANEL_LIMIT, PANEL_LIMIT)))
+        local = np.clip(local_deg, -PANEL_LIMIT, PANEL_LIMIT)
+        xs = self.cx + self.r * np.sin(np.radians(local))
         ys = self.bottom - v * (self.bottom - self.top)
         X, Y = np.meshgrid(xs, ys)
+        if self.warp:
+            by0, by1 = self.warp["rows"]
+            weight = (smoothstep(by0 - BADGE_ROW_PAD - BADGE_ROW_RAMP, by0 - BADGE_ROW_PAD, ys) *
+                      (1 - smoothstep(by1 + BADGE_ROW_PAD, by1 + BADGE_ROW_PAD + BADGE_ROW_RAMP, ys)))
+            X = X + weight[:, None] * (self.x_of(local)[None, :] - xs[None, :])
         return sample(self.px, X, Y)
 
 
@@ -179,7 +240,7 @@ def seam_cost(a, b, deg_a, deg_b):
 def junction_table(a, b):
     """Best (cost, R, L) for every integer spacing R - L between a's right edge and b's left edge."""
     table = {}
-    for right in EDGE_RANGE:
+    for right in (d for d in EDGE_RANGE if d <= a.right_limit):
         for left in (-d for d in EDGE_RANGE):
             cost = seam_cost(a, b, right, left)
             spacing = right - left
@@ -534,7 +595,7 @@ def main():
             reports["inputs"][spec[kind]] = hashlib.sha256((packshots / spec[kind]).read_bytes()).hexdigest()
             raw = load_pixels(packshots / spec[kind])
             bounds = can_bounds(raw)
-            panels.append(Panel(kind, delight(raw, bounds), bounds))
+            panels.append(Panel(kind, delight(raw, bounds), bounds, OVERLAY_BADGES.get(spec["key"], {}).get(kind)))
         loaded[spec["key"]] = panels
     totals = {}
     reports["order_costs"] = {}
@@ -552,10 +613,11 @@ def main():
         fb = panels[0].bounds
         layout = (plan_layout(panels, forced_order=common) if len(panels) == 3
                   else plan_layout(panels, forced_side=side_of_nutrition))
-        width = fb[1] - fb[0]
-        height = DIAMETER * (fb[3] - fb[2]) / width
-        label_h = height - 2 * SEAM
-        tex_h = int(min(TEX_W * label_h / (math.pi * DIAMETER), TEX_H_MAX)) // 2 * 2
+        # Scale from the packshot's body silhouette (which is the label surface); the label height follows from its measured rows.
+        px_per_m = panels[0].r / LABEL_RADIUS
+        label_h = (LABEL_BOTTOM_ROW - LABEL_TOP_ROW) / px_per_m
+        height = label_h + 2 * SEAM
+        tex_h = int(min(TEX_W * label_h / (2 * math.pi * LABEL_RADIUS), TEX_H_MAX)) // 2 * 2
         strip = sharpen(unroll_panels(panels, layout, tex_h))
         # LOD1 (shelf display): half-resolution texture, coarse lathes, no hidden body, one mesh per material.
         small = strip.reshape(tex_h // 2, 2, TEX_W // 2, 2, 3).mean(axis=(1, 3))
@@ -587,6 +649,7 @@ def main():
         reports["cans"][spec["slug"]] = dict(height_m=round(height, 5), diameter_m=DIAMETER, texture=[TEX_W, tex_h],
                                               front_bounds=fb, layout=layout,
                                               panels={p.name: spec[p.name] for p in panels},
+                                              badge_fixes={p.name: {k: (v if not isinstance(v, list) else [round(x, 2) for x in v]) for k, v in p.warp.items() if k != 'rows'} for p in panels if p.warp},
                                               lod1=dict(texture=[TEX_W // 2, tex_h // 2], segments=LOD1_SEGMENTS))
         cans.append((spec, root, height))
 
