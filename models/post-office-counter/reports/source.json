@@ -1,0 +1,81 @@
+{
+  "source_sha256": "67cea2b2047e42491513b56affcc2480b1d4804e764bd3f24a83a0b648fb268f",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 10,
+  "objects": [
+    {
+      "name": "Counter_Base",
+      "type": "MESH",
+      "parent": "ASSET_PostOfficeCounter"
+    },
+    {
+      "name": "Counter_Body",
+      "type": "MESH",
+      "parent": "ASSET_PostOfficeCounter"
+    },
+    {
+      "name": "Divider",
+      "type": "MESH",
+      "parent": "ASSET_PostOfficeCounter"
+    },
+    {
+      "name": "Divider.001",
+      "type": "MESH",
+      "parent": "ASSET_PostOfficeCounter"
+    },
+    {
+      "name": "Editable_Label_POST",
+      "type": "MESH",
+      "parent": "ASSET_PostOfficeCounter"
+    },
+    {
+      "name": "Label",
+      "type": "MESH",
+      "parent": "ASSET_PostOfficeCounter"
+    },
+    {
+      "name": "Parcel",
+      "type": "MESH",
+      "parent": "ASSET_PostOfficeCounter"
+    },
+    {
+      "name": "Parcel_Scale",
+      "type": "MESH",
+      "parent": "ASSET_PostOfficeCounter"
+    },
+    {
+      "name": "Scale_Display",
+      "type": "MESH",
+      "parent": "ASSET_PostOfficeCounter"
+    },
+    {
+      "name": "Worktop",
+      "type": "MESH",
+      "parent": "ASSET_PostOfficeCounter"
+    }
+  ],
+  "edit_proof": {
+    "node": "Counter_Base",
+    "before": [
+      0,
+      0,
+      0.054999999701976776
+    ],
+    "after": [
+      0.12300000339746475,
+      0,
+      0.054999999701976776
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Dark rubber",
+    "roughness_before": 0.800000011920929,
+    "roughness_after": 0.27,
+    "copy_sha256": "dc4a780b4aba19c0d0e419622cd4f349981872e29cca1ec9048cb85c80c680aa",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

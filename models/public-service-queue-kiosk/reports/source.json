@@ -1,0 +1,96 @@
+{
+  "source_sha256": "c03324bd76abd0dcb4431eba3c26e7ce0bed27a80d2d9768719d990c6a9a4ff2",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 12,
+  "objects": [
+    {
+      "name": "Display",
+      "type": "MESH",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    },
+    {
+      "name": "Editable_Label_QUEUE",
+      "type": "MESH",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    },
+    {
+      "name": "Foot",
+      "type": "MESH",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    },
+    {
+      "name": "Head",
+      "type": "MESH",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    },
+    {
+      "name": "Interface_Line",
+      "type": "MESH",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    },
+    {
+      "name": "Interface_Line.001",
+      "type": "MESH",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    },
+    {
+      "name": "Interface_Line.002",
+      "type": "MESH",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    },
+    {
+      "name": "MOVABLE_Ticket",
+      "type": "EMPTY",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    },
+    {
+      "name": "Paper",
+      "type": "MESH",
+      "parent": "MOVABLE_Ticket"
+    },
+    {
+      "name": "Pedestal",
+      "type": "MESH",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    },
+    {
+      "name": "Speaker",
+      "type": "MESH",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    },
+    {
+      "name": "Ticket_Slot",
+      "type": "MESH",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    },
+    {
+      "name": "Wheelchair_Clearance_Marker",
+      "type": "MESH",
+      "parent": "ASSET_PublicServiceQueueKiosk"
+    }
+  ],
+  "edit_proof": {
+    "node": "Display",
+    "before": [
+      0,
+      -0.25600001215934753,
+      1.350000023841858
+    ],
+    "after": [
+      0.12300000339746475,
+      -0.25600001215934753,
+      1.350000023841858
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Dark rubber",
+    "roughness_before": 0.800000011920929,
+    "roughness_after": 0.27,
+    "copy_sha256": "bb7b4717026b90590d0ed7fa1200d5f774b12812a1e3db792b1d01d793cc4c34",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

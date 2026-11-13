@@ -1,0 +1,4 @@
+# Heritage tranche: 17 types
+See handoff.json for exact final hashes and per-asset evidence. Local gates PASS; physical mobile/Safari and combined latest-main gate remain NEEDS REVIEW.
+From repo root: npm test && npm run build; then MALL_QA_DIR=/tmp/fresh-heritage17-qa node scripts/test-fifty02-heritage-browser.mjs runs all51 responsive viewport cases and all4 isolated AnimationMixer checks, refusing a nonempty destination. Each individual scripts/test-<slug>.mjs supports MALL_QA_DIR too.
+No remote operations. All existing catalog objects preserved. Historic failing validators and changed asset snapshots remain for audit, not catalog registration. Actual rendered contact sheets cover studio and browser frames; filenames within corrected browser output still say initial because they denote initial view, not old geometry.

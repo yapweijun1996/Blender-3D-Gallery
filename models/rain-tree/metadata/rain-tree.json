@@ -1,0 +1,93 @@
+{
+  "id": "rain-tree",
+  "name": "Rain Tree",
+  "summary": "Original modular rain tree with editable components.",
+  "description": "Original species-inspired low-poly plant, not botanical-reference accuracy.",
+  "category": "Nature",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "metres",
+    "plant"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/rain-tree.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "No safety, medical, screening, accessibility or regulatory compliance claim. Plants are species-inspired stylizations, not botanical references. No external textures, logos or assets. Physical Android/iOS and WebKit NOT TESTED. Clips are asset capabilities, not gallery controls.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 26000,
+      "bytes": 1500000,
+      "mesh_primitives": 90
+    },
+    "structure": "PASS",
+    "source_edit": "PASS",
+    "browser": "PASS: desktop Chromium at three viewports, not physical mobile",
+    "visual": "PASS: four rendered angles, browser initial views, and open pose where applicable inspected",
+    "local_asset": "PASS",
+    "combined_fifty_asset_gate": "PENDING"
+  },
+  "metrics": {
+    "sha256": "f92bf200f394bdab5f1527779cd54b4fe43a0c156857a039c40180500262037e",
+    "glb_bytes": 157104,
+    "triangles": 2048,
+    "vertices": 5760,
+    "primitives": 30,
+    "materials": 4,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      8.844419479370117,
+      4.689415718443077,
+      8.225751876831055
+    ],
+    "bounds": {
+      "min": [
+        -4.5365002155303955,
+        -0.024415637380759803,
+        -4.080963730812073
+      ],
+      "max": [
+        4.307919263839722,
+        4.665000081062317,
+        4.144788146018982
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "animation_test": "NOT APPLICABLE: static asset, no fabricated clips"
+}

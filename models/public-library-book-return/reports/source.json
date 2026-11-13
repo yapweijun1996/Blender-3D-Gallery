@@ -1,0 +1,86 @@
+{
+  "source_sha256": "31cc80b4954d2a1b64cf3aabf259c56e4c4ea5401dc3ad6f744974bc38ec2ad1",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 10,
+  "objects": [
+    {
+      "name": "Back",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibraryBookReturn"
+    },
+    {
+      "name": "Base",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibraryBookReturn"
+    },
+    {
+      "name": "Editable_Label_BOOK_RETURN",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibraryBookReturn"
+    },
+    {
+      "name": "Front_Lower",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibraryBookReturn"
+    },
+    {
+      "name": "Inner_Bin",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibraryBookReturn"
+    },
+    {
+      "name": "MOVABLE_Return_Flap",
+      "type": "EMPTY",
+      "parent": "ASSET_PublicLibraryBookReturn"
+    },
+    {
+      "name": "Flap",
+      "type": "MESH",
+      "parent": "MOVABLE_Return_Flap"
+    },
+    {
+      "name": "Side",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibraryBookReturn"
+    },
+    {
+      "name": "Side.001",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibraryBookReturn"
+    },
+    {
+      "name": "Slot_Header",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibraryBookReturn"
+    },
+    {
+      "name": "Top",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibraryBookReturn"
+    }
+  ],
+  "edit_proof": {
+    "node": "Back",
+    "before": [
+      0,
+      0.2849999964237213,
+      0.6399999856948853
+    ],
+    "after": [
+      0.12300000339746475,
+      0.2849999964237213,
+      0.6399999856948853
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Muted teal",
+    "roughness_before": 0.5,
+    "roughness_after": 0.73,
+    "copy_sha256": "dfec71f37a6a542070be304ce8a3003b7a87d08de261b3dc733c0cefcac56eb4",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

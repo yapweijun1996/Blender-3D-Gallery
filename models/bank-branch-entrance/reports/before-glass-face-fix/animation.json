@@ -1,0 +1,198 @@
+{
+  "result": "PASS",
+  "sha256": "b88af3b08009a963b3ff09b2706e60213a3d2be1c7a2a17fb8b647b783741ba4",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416666666666667,
+    "reset": 2.0416667461395264
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_MOVABLE_Door_-1",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    },
+    {
+      "name": "Demonstrate_MOVABLE_Door_1",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "MOVABLE_Door_-1.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mid": 24
+    },
+    {
+      "track": "MOVABLE_Door_1.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Door_-1",
+      "position": [
+        -1.3200000524520874,
+        0.07999999821186066,
+        0.1599999964237213
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_Door_1",
+      "position": [
+        1.3200000524520874,
+        0.07999999821186066,
+        0.1599999964237213
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Door_-1",
+      "position": [
+        -1.3200000524520874,
+        0.07999999821186066,
+        0.1599999964237213
+      ],
+      "quaternion": [
+        0,
+        -0.5646424610928708,
+        0,
+        0.8253356233260418
+      ]
+    },
+    {
+      "name": "MOVABLE_Door_1",
+      "position": [
+        1.3200000524520874,
+        0.07999999821186066,
+        0.1599999964237213
+      ],
+      "quaternion": [
+        0,
+        0.5646424610928708,
+        0,
+        0.8253356233260418
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Door_-1",
+      "position": [
+        -1.3200000524520874,
+        0.07999999821186066,
+        0.1599999964237213
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_Door_1",
+      "position": [
+        1.3200000524520874,
+        0.07999999821186066,
+        0.1599999964237213
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        -1.32,
+        0.08,
+        0.16
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        -1.32,
+        0.08,
+        0.16
+      ],
+      "openQ": [
+        0,
+        -0.5646424733950354,
+        0,
+        0.8253356149096783
+      ]
+    },
+    {
+      "p": [
+        1.32,
+        0.08,
+        0.16
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        1.32,
+        0.08,
+        0.16
+      ],
+      "openQ": [
+        0,
+        0.5646424733950354,
+        0,
+        0.8253356149096783
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "clearance": "Original open width/height bounds plus explicit no jamb/header intersection at nine opening-sweep samples; front hinges/brackets require 1.5m clear space",
+  "verification": "Independent raw track endpoints and Three.js AnimationMixer closed-open-closed poses; no Gallery component controls"
+}

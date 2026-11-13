@@ -1,0 +1,29 @@
+{
+  "id": 443,
+  "slug": "bank-queue-ticket-machine",
+  "title": "Bank Queue Ticket Machine",
+  "root": "ASSET_BankQueueTicketMachine",
+  "required_nodes": [
+    "MOVABLE_Ticket",
+    "Ticket_Slot"
+  ],
+  "budget_bytes": 800000,
+  "budget_triangles": 15000,
+  "expected_dimensions_m": [
+    0.55,
+    1.4,
+    0.5
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Ticket"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Ticket",
+      "location",
+      1,
+      -0.16
+    ]
+  ]
+}

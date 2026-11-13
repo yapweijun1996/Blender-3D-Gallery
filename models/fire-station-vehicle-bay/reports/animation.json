@@ -1,0 +1,111 @@
+{
+  "result": "PASS",
+  "sha256": "e2b865cebcd6acc5b637b591d24125faa65abf94bb11cb24a74c3e594c38ea1e",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416666666666667,
+    "reset": 2.0416667461395264
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_MOVABLE_Overhead_Shutter",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "MOVABLE_Overhead_Shutter.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Overhead_Shutter",
+      "position": [
+        0,
+        4.159999847412109,
+        -0.4399999976158142
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Overhead_Shutter",
+      "position": [
+        0,
+        4.159999847412109,
+        -0.4399999976158142
+      ],
+      "quaternion": [
+        0.7071068662262071,
+        0,
+        0,
+        0.7071066719437064
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Overhead_Shutter",
+      "position": [
+        0,
+        4.159999847412109,
+        -0.4399999976158142
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        0,
+        4.16,
+        -0.44
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        0,
+        4.16,
+        -0.44
+      ],
+      "openQ": [
+        0.7071067811865475,
+        0,
+        0,
+        0.7071067811865476
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "clearance": "Tilt-up panel behind lintel, with 4.1m required clear rear sweep; illustrative independent bay module",
+  "verification": "Independent raw track endpoints and Three.js AnimationMixer closed-open-closed poses; no Gallery component controls"
+}

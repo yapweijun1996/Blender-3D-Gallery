@@ -1,0 +1,93 @@
+{
+  "id": "oil-palm",
+  "name": "Oil Palm",
+  "summary": "Original modular oil palm with editable components.",
+  "description": "Original species-inspired low-poly plant, not botanical-reference accuracy.",
+  "category": "Nature",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "metres",
+    "plant"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/oil-palm.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "No safety, medical, screening, accessibility or regulatory compliance claim. Plants are species-inspired stylizations, not botanical references. No external textures, logos or assets. Physical Android/iOS and WebKit NOT TESTED. Clips are asset capabilities, not gallery controls.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 26000,
+      "bytes": 1500000,
+      "mesh_primitives": 90
+    },
+    "structure": "PASS",
+    "source_edit": "PASS",
+    "browser": "PASS: desktop Chromium at three viewports, not physical mobile",
+    "visual": "PASS: four rendered angles, browser initial views, and open pose where applicable inspected",
+    "local_asset": "PASS",
+    "combined_fifty_asset_gate": "PENDING"
+  },
+  "metrics": {
+    "sha256": "ef9b2dbd5eeb1b285c5f5106167765ad431ab26e9ed68f11e1fa26ae85926882",
+    "glb_bytes": 1469616,
+    "triangles": 25288,
+    "vertices": 55764,
+    "primitives": 15,
+    "materials": 5,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      4.33692316558362,
+      4.839449181447363,
+      4.336923316056778
+    ],
+    "bounds": {
+      "min": [
+        -2.168461586231642,
+        0,
+        -2.1684616522519606
+      ],
+      "max": [
+        2.1684615793519777,
+        4.839449181447363,
+        2.1684616638048166
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "animation_test": "NOT APPLICABLE: static asset, no fabricated clips"
+}

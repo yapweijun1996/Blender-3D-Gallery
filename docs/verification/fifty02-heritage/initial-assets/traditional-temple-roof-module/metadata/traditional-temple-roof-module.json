@@ -1,0 +1,61 @@
+{
+  "id": "traditional-temple-roof-module",
+  "name": "Traditional Temple Roof Module",
+  "summary": "Traditional Temple Roof Module; original modular heritage asset.",
+  "description": "Traditional Temple Roof Module. Editable original generic SG/MY-inspired heritage geometry; no surveyed site, brand or certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable",
+    "original"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "generator": "generate.py",
+  "creation_method": "Original deterministic Blender Python meshes/materials. No marketplace model or external texture. Taxi lettering uses Blender bundled Bfont converted to mesh; Chinese tea sign uses original geometric vector strokes, no CJK font.",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/traditional-temple-roof-module.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1.3,
+      0.8,
+      2
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "ground-plane centre"
+  },
+  "backlog_id": 416,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using reviewed project helpers; no third-party assets."
+    }
+  ],
+  "material_notes": "Independent named materials and editable parts. Static module, no simulated interaction.",
+  "accuracy_notes": "Not a road, accessibility, structural, electrical or engineering certification. No official logo.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Production and visual QA pending; physical Android/iOS and Safari/WebKit not tested."
+  },
+  "budgets": {
+    "max_glb_bytes": 850000,
+    "max_triangles": 18000
+  }
+}

@@ -1,0 +1,95 @@
+"""Original deterministic metric architectural prop. Blender 4.0.2. No external assets."""
+from pathlib import Path
+import bpy, math, sys, json
+from mathutils import Vector
+HERE=Path(__file__).resolve().parent
+SLUG='shophouse-decorative-vent'
+ROOT='ASSET_ShophouseDecorativeVent'
+def mat(name,rgb,metal=0,rough=.45):
+ m=bpy.data.materials.new(name);m.use_nodes=True
+ c=tuple(v/12.92 if v<=.04045 else ((v+.055)/1.055)**2.4 for v in rgb)+(1,)
+ p=m.node_tree.nodes['Principled BSDF'];p.inputs['Base Color'].default_value=c;p.inputs['Metallic'].default_value=metal;p.inputs['Roughness'].default_value=rough;m.diffuse_color=c;return m
+def empty(name,loc=(0,0,0),parent=None):
+ o=bpy.data.objects.new(name,None);bpy.context.scene.collection.objects.link(o);o.location=loc;o.parent=parent;return o
+def finish(o,name,m,parent,bevel=.002):
+ o.name=name;o.data.materials.append(m);o.parent=parent
+ if bevel:
+  b=o.modifiers.new('Manufactured edge','BEVEL');b.width=bevel;b.segments=2;o.modifiers.new('Corner normals','WEIGHTED_NORMAL')
+ return o
+def box(name,loc,dims,m,parent,bevel=.002):
+ bpy.ops.mesh.primitive_cube_add(size=1,location=loc);o=bpy.context.object;o.dimensions=dims;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);return finish(o,name,m,parent,bevel)
+def rod(name,a,b,r,m,parent):
+ a,b=Vector(a),Vector(b);d=b-a;bpy.ops.mesh.primitive_cylinder_add(vertices=16,radius=r,depth=d.length,location=(a+b)/2);o=bpy.context.object;o.rotation_euler=d.to_track_quat('Z','Y').to_euler();return finish(o,name,m,parent,.001)
+def aim(o,p):o.rotation_euler=(Vector(p)-o.location).to_track_quat('-Z','Y').to_euler()
+def export(path):
+ bpy.ops.object.select_all(action='DESELECT');root=bpy.data.objects[ROOT];root.select_set(True)
+ for o in root.children_recursive:o.select_set(True)
+ bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_animations=True,export_texcoords=False,export_extras=True,export_cameras=False,export_lights=False)
+def studio():
+ s=bpy.context.scene;s.world=bpy.data.worlds.new('Slate studio');s.world.use_nodes=True;s.world.node_tree.nodes['Background'].inputs['Color'].default_value=(.10,.14,.18,1);s.world.node_tree.nodes['Background'].inputs['Strength'].default_value=.5
+ for name,loc,power in [('Key',(-4,-6,7),1300),('Fill',(5,-2,4),900),('Rim',(0,5,6),1500)]:
+  bpy.ops.object.light_add(type='AREA',location=loc);o=bpy.context.object;o.name='STUDIO_'+name;o.location*=(1.45/4);o.data.energy=power*(1.45/4)**2;o.data.size=1.45;aim(o,TARGET)
+ bpy.ops.object.camera_add();s.camera=bpy.context.object;s.camera.name='STUDIO_Camera';s.camera.data.type='ORTHO';s.camera.data.ortho_scale=SCALE
+ s.render.engine='CYCLES';s.cycles.samples=32;s.cycles.use_denoising=False;s.render.resolution_x=s.render.resolution_y=640;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.view_settings.view_transform='AgX'
+def render_views():
+ s=bpy.context.scene
+ for name,delta in [('hero',(1.3,-2,1)),('front',(0,-3,.50)),('rear',(1.4,2,1)),('side',(3,-.3,.5))]:
+  s.camera.location=Vector(TARGET)+Vector(delta)*SCALE;aim(s.camera,TARGET);s.render.filepath=str(HERE/'previews'/(name+'.png'));bpy.ops.render.render(write_still=True)
+
+def beam(name,a,b,width,depth,m,parent):
+ a,b=Vector(a),Vector(b);d=b-a;o=box(name,(a+b)/2,(width,depth,d.length),m,parent,0);o.rotation_euler=d.to_track_quat('Z','Y').to_euler();return o
+def text(name,value,loc,size,m,parent):
+ bpy.ops.object.text_add(location=loc,rotation=(math.pi/2,0,0));o=bpy.context.object;o.data.body=value;o.data.align_x='CENTER';o.data.size=size;o.data.extrude=.001
+ bpy.ops.object.convert(target='MESH');return finish(bpy.context.object,name,m,parent,0)
+def frame(root,w,h,m):
+ box('DOOR_Sill',(0,0,.04),(w,.24,.08),m,root,.004)
+ for x in [-w/2+.08,w/2-.08]:box('DOOR_Jamb',(x,0,h/2),(.16,.20,h),m,root,.004)
+ box('DOOR_Header',(0,0,h-.08),(w-.32,.20,.16),m,root,.004)
+def shutterframe(root,w,h,m):
+ box('FRAME_Sill',(0,0,.06),(w,.23,.12),m,root,.004)
+ for x in [-w/2+.05,w/2-.05]:box('FRAME_Jamb',(x,0,h/2),(.10,.15,h),m,root,.003)
+ box('FRAME_Head',(0,0,h-.05),(w-.2,.15,.1),m,root,.003)
+def doorleaf(leaf,side,sgn,w,h,wood,dark,brass):
+ box(side+'_Core',(sgn*w/2,0,h/2),(w,.06,h),dark,leaf,.003)
+ for x in [sgn*.045,sgn*(w-.045)]:box(side+'_Stile',(x,-.045,h/2),(.09,.035,h),wood,leaf,.003)
+ for z in [.05,h*.48,h-.05]:box(side+'_Rail',(sgn*w/2,-.045,z),(w-.18,.035,.1),wood,leaf,.003)
+ for z,hh in [(h*.25,h*.36),(h*.75,h*.34)]:
+  box(side+'_RaisedPanel',(sgn*w/2,-.045,z),(w-.25,.028,hh),wood,leaf,.008)
+ rod(side+'_Pull',(sgn*(w-.13),-.10,h*.45),(sgn*(w-.13),-.10,h*.55),.014,brass,leaf)
+def animate(leaf,side,angle):
+ for f,a in [(0,0),(30,angle),(60,0)]:
+  leaf.rotation_euler.z=math.radians(a);leaf.keyframe_insert(data_path='rotation_euler',frame=f)
+ leaf.animation_data.action.name='OpenClose_'+side
+ for fc in leaf.animation_data.action.fcurves:
+  for k in fc.keyframe_points:k.interpolation='LINEAR'
+ bpy.context.scene.render.fps=30;bpy.context.scene.frame_start=0;bpy.context.scene.frame_end=60;bpy.context.scene.frame_set(0)
+def archcap(name,x,length,radius,m,parent):
+ verts=[]
+ for xx in [x-length/2,x+length/2]:
+  for radius2 in [radius,radius-.035]:
+   for i in range(13):
+    a=i*math.pi/12;verts.append((xx,radius2*math.cos(a),.14+radius2*math.sin(a)))
+ faces=[]
+ for i in range(12):
+  faces.extend([(i,i+1,26+i+1,26+i),(13+i,39+i,40+i,14+i),(i,13+i,14+i,i+1),(26+i,27+i,40+i,39+i)])
+ faces.extend([(0,26,39,13),(12,25,51,38)])
+ mesh=bpy.data.meshes.new(name);mesh.from_pydata(verts,[],faces);mesh.update();o=bpy.data.objects.new(name,mesh);bpy.context.scene.collection.objects.link(o);finish(o,name,m,parent,0)
+
+TARGET=(0, 0, 0.3);SCALE=1.45
+def build(root):
+
+ plaster=mat('Pale jade plaster',(.62,.73,.61))
+ for x in [-.55,.55]:box('VENT_FrameSide',(x,0,.30),(.10,.12,.60),plaster,root,.003)
+ for z in [.05,.55]:box('VENT_FrameTop' if z>.3 else 'VENT_FrameBottom',(0,0,z),(1,.12,.10),plaster,root,.003)
+ for i in range(4):
+  cx=-.375+i*.25
+  for j,(a,b) in enumerate([((cx-.115,0,.30),(cx,0,.49)),((cx,0,.49),(cx+.115,0,.30)),((cx+.115,0,.30),(cx,0,.11)),((cx,0,.11),(cx-.115,0,.30))]):beam('VENT_Diamond_%s_%s'%(i,j),a,b,.035,.10,plaster,root)
+
+def main():
+ if '--export-source' in sys.argv:bpy.ops.wm.open_mainfile(filepath=str(HERE/'sources'/(SLUG+'.blend')))
+ else:
+  bpy.ops.wm.read_factory_settings(use_empty=True);bpy.context.preferences.filepaths.save_version=0;s=bpy.context.scene;s.unit_settings.system='METRIC';s.unit_settings.scale_length=1
+  root=empty(ROOT);root['units']='metres';root['front_axis']='Blender -Y / glTF +Z';root['backlog_id']=405;root['scope']='Original illustrative heritage module, not surveyed or certified'
+  build(root);studio();s.camera.location=Vector(TARGET)+Vector((1.3,-2,1))*SCALE;aim(s.camera,TARGET);bpy.ops.wm.save_as_mainfile(filepath=str(HERE/'sources'/(SLUG+'.blend')),compress=True)
+ export(HERE/'exports/optimized.glb')
+if __name__=='__main__':main()

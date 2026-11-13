@@ -1,0 +1,18 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(b.min.x>-1.34&&b.max.x<1.34)
+
+    at file:///srv/agent-workstation/workspaces/blender-fifty02-services-20261113/repo/scripts/test-services02-animation.mjs:14:111 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

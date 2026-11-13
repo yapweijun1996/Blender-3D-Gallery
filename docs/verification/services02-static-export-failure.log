@@ -1,0 +1,22 @@
+PASS 417 temple-incense-burner 69184 1348 [ 1.3699999631840136, 1.0000000093132257, 1.100000023841858 ]
+PASS 418 mosque-courtyard-fountain 37400 812 [ 2.4000000953674316, 1.0299999713897705, 2.4000000953674316 ]
+PASS 419 mosque-geometric-screen 485224 9672 [ 1.5999999791383743, 2.4000000953674316, 0.10000000149011612 ]
+PASS 420 heritage-street-lamp 51252 894 [ 0.5400000214576721, 4.0599999986588955, 0.5400000214576721 ]
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at file:///srv/agent-workstation/workspaces/blender-fifty02-services-20261113/repo/scripts/validate-services02.mjs:7:9 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.3
