@@ -158,7 +158,7 @@ What it improves over the photo set: sharper print, round logos by construction,
 What it does not give: fidelity. After a second Codex pass that corrected the text errors found in review (checked by eye against the official information-face photos), the remaining differences are:
 - Australia: the nutrition table now reads cholesterol 150 mg as official; seals are generic. The front still prints 425 g, matching the retailer listing used for the pack size.
 - New Zealand: distributor and packer lines now match the official photo; seals are generic.
-- South Africa: a crown seal and a star seal that the official label does not have.
+- South Africa: the invented crown and star seals were removed in a second pass; the remaining award marks are generic.
 - Mexico: net weight 454 g, GJH logo and addresses now match the official photo; the third face is still invented.
 - All four: QR codes and barcodes were redrawn and not scanned; the first Codex attempt (rejected) had invented certificate numbers and a year, so the prompt now forbids them.
 

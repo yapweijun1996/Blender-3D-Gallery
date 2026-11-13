@@ -73,7 +73,7 @@
     "status": "Not official artwork. Text, numbers, seals, QR codes and barcodes may differ from the official label; do not rely on it for claims.",
     "generator": "OpenAI Codex CLI built-in image generation (image_gen), prompted with the official eShop packshots listed under product.reference_images",
     "file": "sources/flat-labels/gjh-can-south-africa-abalone-flat.jpg",
-    "file_sha256": "d71fb13fd65124f4c25cdec9aaf9a8a077e5e83e0120a5581fe059f30e89c211",
+    "file_sha256": "4d2ad453cbb4cf82c05313fa5bacf55d7134e5d8e97fa08e7acbfcc9d2b967ac",
     "source_pixels": [
       1774,
       887
@@ -81,14 +81,15 @@
     "front_face_centre_fraction": 0.507,
     "layout": "left to right: picture/food face, front face, information face; wraps around the can",
     "known_discrepancies_from_official": [
-      "The crown seal and the star seal are generated and do not appear on the official label.",
-      "Halal/award marks are generic or invented designs, not the official marks.",
+      "The extra crown seal and star seal were removed in a second Codex pass.",
+      "The remaining award mark (gold trophy, PREMIUM BRAND WINNER) and the Halal/award marks are generic designs, not the official marks.",
       "QR code and barcode were redrawn by the model and were not verified or scanned."
     ],
-    "comparison_with": "gjh-can-south-africa-abalone"
+    "comparison_with": "gjh-can-south-africa-abalone",
+    "revision": "Second pass: invented crown and star seals removed."
   },
   "metrics": {
-    "glb_bytes": 441620,
+    "glb_bytes": 437628,
     "triangles": 4888,
     "vertices": 2674,
     "primitives": 3,
@@ -116,7 +117,7 @@
         0.038750000298023224
       ]
     },
-    "sha256": "5651d7dc7954e5d923fb1438dd9fd9d7ee4d0d05b5d3607ed2e386ffce19c035",
+    "sha256": "49a47b5e2f42a3b214bc3a652a639544f2f9c738add2efdb2609237e9215d32e",
     "draw_calls": 3,
     "texture_memory_bytes": 6127616
   },
