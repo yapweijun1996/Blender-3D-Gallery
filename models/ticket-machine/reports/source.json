@@ -1,0 +1,106 @@
+{
+  "source_sha256": "b8f53e51e814f5c769af2f1609ef234dadf844ec79303ec05646e030b0a29b3d",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 13,
+  "objects": [
+    {
+      "name": "Base",
+      "type": "MESH",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "Cabinet",
+      "type": "MESH",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "Card_Reader",
+      "type": "MESH",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "Coin_Return",
+      "type": "MESH",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "Editable_Label_TICKETS",
+      "type": "MESH",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "Fare_Selection_Button",
+      "type": "MESH",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "Fare_Selection_Button.001",
+      "type": "MESH",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "Fare_Selection_Button.002",
+      "type": "MESH",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "MOVABLE_Button",
+      "type": "EMPTY",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "Button",
+      "type": "MESH",
+      "parent": "MOVABLE_Button"
+    },
+    {
+      "name": "MOVABLE_Ticket",
+      "type": "EMPTY",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "Ticket_Paper",
+      "type": "MESH",
+      "parent": "MOVABLE_Ticket"
+    },
+    {
+      "name": "Receipt_Recess",
+      "type": "MESH",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "Screen",
+      "type": "MESH",
+      "parent": "ASSET_TicketMachine"
+    },
+    {
+      "name": "Slot",
+      "type": "MESH",
+      "parent": "ASSET_TicketMachine"
+    }
+  ],
+  "edit_proof": {
+    "node": "Base",
+    "before": [
+      0,
+      0,
+      0.03999999910593033
+    ],
+    "after": [
+      0.12300000339746475,
+      0,
+      0.03999999910593033
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Charcoal",
+    "roughness_before": 0.800000011920929,
+    "roughness_after": 0.27,
+    "copy_sha256": "2e89a7a5e8f48e159feda80e458724bf72649c65c8452575b03eb242a14d2cbb",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

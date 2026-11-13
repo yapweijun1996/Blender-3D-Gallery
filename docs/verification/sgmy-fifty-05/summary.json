@@ -1,0 +1,550 @@
+{
+  "base": "c5599b17891fc97da57295782305bdae5d7a8511",
+  "new_assets": 50,
+  "prior_assets_preserved": 294,
+  "total_assets": 344,
+  "unit_tests": 404,
+  "unit_failures": 0,
+  "build": "PASS",
+  "library": {
+    "pass": 9,
+    "fail": 0
+  },
+  "lifecycle": {
+    "pass": 4,
+    "fail": 0
+  },
+  "new_viewport_cases": {
+    "pass": 150,
+    "fail": 0
+  },
+  "isolated_animation_assets": {
+    "pass": 7,
+    "fail": 0
+  },
+  "legacy_preview_cases": {
+    "pass": 14,
+    "fail": 0
+  },
+  "pixel_matches": 150,
+  "fresh1440frames_actually_inspected": 50,
+  "preservation_start": "PASS",
+  "preservation_end": "PASS",
+  "overall_local": "PASS",
+  "release": "NEEDS REVIEW",
+  "prior_d9_gate": {
+    "base": "d9d69a457bc4ab45c77aa9b8058873a9448a8745",
+    "unit_tests": 399,
+    "status": "PASS",
+    "evidence": "prior-d9/"
+  },
+  "limitations": [
+    "Physical Android/iOS and shippingSafari/WebKit not verified for these50",
+    "Workplace7 action poses have GLB/source proof and inspected Blender previews; not included in7 isolatedbrowser animation cases",
+    "No Gallery component-control UI",
+    "No deployment or remote publication",
+    "Does not resolve separate third50 PR21 failed library regression"
+  ],
+  "assets": [
+    {
+      "slug": "satay-grill",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/satay-grill/metadata/satay-grill.json",
+      "glb": "models/satay-grill/exports/satay-grill.glb",
+      "glb_sha256": "182cfb939e80d492bef86485a28270ff31e73dc8b18e1ab8bcb1e61c2e7df3ed",
+      "source": "models/satay-grill/sources/satay-grill.blend",
+      "source_sha256": "f2ab879aaeb9495f9647db12f95d5dee234f2f290cd6de9e50cd57772eb4b68d"
+    },
+    {
+      "slug": "wok-cooking-station",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/wok-cooking-station/metadata/wok-cooking-station.json",
+      "glb": "models/wok-cooking-station/exports/wok-cooking-station.glb",
+      "glb_sha256": "652501f2fde3ea3b16a336051b2a0a97e392d82c0205188ca0e7d024ce42e1ef",
+      "source": "models/wok-cooking-station/sources/wok-cooking-station.blend",
+      "source_sha256": "d871ee75bd539145c2b76abe4662f42972a8c62ebab60b7cab37d44fb7e7b5df"
+    },
+    {
+      "slug": "fruit-display-rack",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/fruit-display-rack/metadata/fruit-display-rack.json",
+      "glb": "models/fruit-display-rack/exports/fruit-display-rack.glb",
+      "glb_sha256": "1192ce7b1664c7903a3ae6fd285d84e2526bfdbf923eca6c54ab040754a5028d",
+      "source": "models/fruit-display-rack/sources/fruit-display-rack.blend",
+      "source_sha256": "c8df3b3910ef7fdc41d608d278d9b4805315cd2654133cc009509a03d7c24d1b"
+    },
+    {
+      "slug": "store-security-gate",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/store-security-gate/metadata/store-security-gate.json",
+      "glb": "models/store-security-gate/exports/store-security-gate.glb",
+      "glb_sha256": "6aa36f5074e1b82f95e5aee4f98ececffdfe4fe15d71ab94a7bb0938f16a204c",
+      "source": "models/store-security-gate/sources/store-security-gate.blend",
+      "source_sha256": "74b532e6e6b3ff7d9b94d0d626218f9e7fb762bdb7687b0a6db082c475d9de9f"
+    },
+    {
+      "slug": "industrial-fan",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/industrial-fan/metadata/industrial-fan.json",
+      "glb": "models/industrial-fan/exports/industrial-fan.glb",
+      "glb_sha256": "6548e9f9933854074efb19a6ddb298c5b195cdbee3cc4ffbde6476161da750f9",
+      "source": "models/industrial-fan/sources/industrial-fan.blend",
+      "source_sha256": "b25e2fb8f4a31e0f1dcebfba983a121114e4ab63e56d8b84f2d3a274b8ad9798"
+    },
+    {
+      "slug": "ticket-machine",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/ticket-machine/metadata/ticket-machine.json",
+      "glb": "models/ticket-machine/exports/ticket-machine.glb",
+      "glb_sha256": "e6aa403e16d24be18937bbc2255a2ea4a2ea8ba19cd8856180ab9070e8ad6ebb",
+      "source": "models/ticket-machine/sources/ticket-machine.blend",
+      "source_sha256": "b8f53e51e814f5c769af2f1609ef234dadf844ec79303ec05646e030b0a29b3d"
+    },
+    {
+      "slug": "petrol-pump",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/petrol-pump/metadata/petrol-pump.json",
+      "glb": "models/petrol-pump/exports/petrol-pump.glb",
+      "glb_sha256": "b546b576457072900ff1d9b7dec1ee6db8976a0e2f62d2d9b3afcad2e9d0fe6e",
+      "source": "models/petrol-pump/sources/petrol-pump.blend",
+      "source_sha256": "69916f38caf40deca1a84803327290d8ab814b8202c303f8325bdf1c7b6ddb0f"
+    },
+    {
+      "slug": "pedestrian-bridge",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/pedestrian-bridge/metadata/pedestrian-bridge.json",
+      "glb": "models/pedestrian-bridge/exports/pedestrian-bridge.glb",
+      "glb_sha256": "f8baed814d7d1fc3a3a19137e4b4a74facc410837f3ed8086ddfa10a3f28f5fc",
+      "source": "models/pedestrian-bridge/sources/pedestrian-bridge.blend",
+      "source_sha256": "5815e7d906d55b110aa7ab1e985b301fbe2a880a7fdd61811eb48505467154fa"
+    },
+    {
+      "slug": "road-junction",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/road-junction/metadata/road-junction.json",
+      "glb": "models/road-junction/exports/road-junction.glb",
+      "glb_sha256": "9aaaf36127aad88b537935dca769f774c00f49b1a176b37b2405af411b9c04a3",
+      "source": "models/road-junction/sources/road-junction.blend",
+      "source_sha256": "dd159411357b2dc1a56dbe6d2fd43980c649c1a96d4d70f536fb2e19d69890b1"
+    },
+    {
+      "slug": "pedestrian-crossing",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/pedestrian-crossing/metadata/pedestrian-crossing.json",
+      "glb": "models/pedestrian-crossing/exports/pedestrian-crossing.glb",
+      "glb_sha256": "72c524a6b5ba2db6abcb8eb0e92bc64a3fd57b654c6028081d53fea4118721ad",
+      "source": "models/pedestrian-crossing/sources/pedestrian-crossing.blend",
+      "source_sha256": "e464249315826b713c96e2b8f9662f54b7cca3afa8e8d165566448353b51b4f9"
+    },
+    {
+      "slug": "road-sign",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/road-sign/metadata/road-sign.json",
+      "glb": "models/road-sign/exports/road-sign.glb",
+      "glb_sha256": "3e917d6bc3c38edc16a94e848d559e1cfc8f0dd33cc0f0190296ae1511f108be",
+      "source": "models/road-sign/sources/road-sign.blend",
+      "source_sha256": "9f0cfa9d8b33d0bd44acf0f5244e8631196485fa4d60d12666911334d115f267"
+    },
+    {
+      "slug": "condominium-tower",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/condominium-tower/metadata/condominium-tower.json",
+      "glb": "models/condominium-tower/exports/condominium-tower.glb",
+      "glb_sha256": "5f77b46d7f021237c54c0d2867b317d41fb1cc26790d2fbd546eb7ec8dd2f93f",
+      "source": "models/condominium-tower/sources/condominium-tower.blend",
+      "source_sha256": "427cb6058ea505a98d338f83df3c7995d3e2c106a2cf4271d4e5262e47bdc2e6"
+    },
+    {
+      "slug": "terrace-house",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/terrace-house/metadata/terrace-house.json",
+      "glb": "models/terrace-house/exports/terrace-house.glb",
+      "glb_sha256": "dd2e600fd1c825fdf06eb4f33210b26e3ae643ddd26dfa8f3d1bfbd68844cdf6",
+      "source": "models/terrace-house/sources/terrace-house.blend",
+      "source_sha256": "65274c1e6865c9bec333a66e7923bb883e86412e1f2bd1ce2cf69f53999a1ec6"
+    },
+    {
+      "slug": "shophouse",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/shophouse/metadata/shophouse.json",
+      "glb": "models/shophouse/exports/shophouse.glb",
+      "glb_sha256": "0d18690174361a34eba0d65c71111744e94c580b8a431cde5fc464cb2621229d",
+      "source": "models/shophouse/sources/shophouse.blend",
+      "source_sha256": "d6154304c91620296e1a24fd048e17fc5b42d8778c767835dd6afabcffcd5284"
+    },
+    {
+      "slug": "multi-storey-car-park",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/multi-storey-car-park/metadata/multi-storey-car-park.json",
+      "glb": "models/multi-storey-car-park/exports/multi-storey-car-park.glb",
+      "glb_sha256": "2e226c64c4ff85c8cd288107a91872c7713af28be2cdb993d8204079b83f948c",
+      "source": "models/multi-storey-car-park/sources/multi-storey-car-park.blend",
+      "source_sha256": "2ac01610b6392c041d7d2c45d44e2999e40942eaa5b8844bba89d07c439229af"
+    },
+    {
+      "slug": "shoplot-building",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/shoplot-building/metadata/shoplot-building.json",
+      "glb": "models/shoplot-building/exports/shoplot-building.glb",
+      "glb_sha256": "131a09d3cde5204f07ac8830045b4be8785163588ef3e0868dba4d06b88b6bd1",
+      "source": "models/shoplot-building/sources/shoplot-building.blend",
+      "source_sha256": "72c874f26ad567f570cbec676e91da68d919e00773b90d6ff2717b04bdca905b"
+    },
+    {
+      "slug": "public-market",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/public-market/metadata/public-market.json",
+      "glb": "models/public-market/exports/public-market.glb",
+      "glb_sha256": "bad9f195cc6d4b5fe8460c91a021426b8f53f681a38106c3e5ea8d10dde65b7c",
+      "source": "models/public-market/sources/public-market.blend",
+      "source_sha256": "90632d3e7012261134947a8809a257965cb6a31b56af2385933ecf795464778c"
+    },
+    {
+      "slug": "turnstile",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/turnstile/metadata/turnstile.json",
+      "glb": "models/turnstile/exports/optimized.glb",
+      "glb_sha256": "07de23c714f21df6bf9c9274872a3674f81bd86cbe52964dad73ae6212809577",
+      "source": "models/turnstile/sources/turnstile.blend",
+      "source_sha256": "7e882fcce153e5deaae2b7349190ec4f3d8cdeb74c9bc93c4e8142f75a1eac16"
+    },
+    {
+      "slug": "smartboard",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/smartboard/metadata/smartboard.json",
+      "glb": "models/smartboard/exports/optimized.glb",
+      "glb_sha256": "96ba83d75334206a38d45cfcffa49de43fc11b3eb310f282bc2410f37630d8e7",
+      "source": "models/smartboard/sources/smartboard.blend",
+      "source_sha256": "eb5a37623c5a1925910fcba305d50782cfec3b1d62a0b6c89a45d1ea95598460"
+    },
+    {
+      "slug": "computer-lab-desk",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/computer-lab-desk/metadata/computer-lab-desk.json",
+      "glb": "models/computer-lab-desk/exports/optimized.glb",
+      "glb_sha256": "b8b878ed94f808337eb11604c0148e1c6fb1e2ede07ba589cd273fca2aced59d",
+      "source": "models/computer-lab-desk/sources/computer-lab-desk.blend",
+      "source_sha256": "d2e40ab4bf74f9cd415e366799f18889dc68d48487f09659902351ed4986a452"
+    },
+    {
+      "slug": "stainless-steel-sink",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/stainless-steel-sink/metadata/stainless-steel-sink.json",
+      "glb": "models/stainless-steel-sink/exports/optimized.glb",
+      "glb_sha256": "b1fffdc6d1381bf4712e7214ecefc9d62fef1cc082b0489a2d55269abf78a495",
+      "source": "models/stainless-steel-sink/sources/stainless-steel-sink.blend",
+      "source_sha256": "3592886148f8f5d48f6d41aa9faf9383bbeb953e03a23e7c573d24bd6091294c"
+    },
+    {
+      "slug": "self-checkout-machine",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/self-checkout-machine/metadata/self-checkout-machine.json",
+      "glb": "models/self-checkout-machine/exports/optimized.glb",
+      "glb_sha256": "228a404102792b0e69134c42d5afb1e9dd49206463cd3d71a6630d7417f04655",
+      "source": "models/self-checkout-machine/sources/self-checkout-machine.blend",
+      "source_sha256": "e40196ce723e6226dc2fbb7ed784ae49febbc7fa1505d1e9a4be4727ec1c0309"
+    },
+    {
+      "slug": "chiller-cabinet",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/chiller-cabinet/metadata/chiller-cabinet.json",
+      "glb": "models/chiller-cabinet/exports/optimized.glb",
+      "glb_sha256": "d0de54b28c9b01033627593f749b14c9835f78d1e056bcd068b1ea2eb888e877",
+      "source": "models/chiller-cabinet/sources/chiller-cabinet.blend",
+      "source_sha256": "2b3c40d0d71d601b20f6c926c053093a2bd57460740703be002cf46467457114"
+    },
+    {
+      "slug": "bus-stop-shelter",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/bus-stop-shelter/metadata/bus-stop-shelter.json",
+      "glb": "models/bus-stop-shelter/exports/optimized.glb",
+      "glb_sha256": "990b079b43cd31a6f66f6c50a8ace4f856bfa0c9a9e247dd92eb7d3ead15cf5e",
+      "source": "models/bus-stop-shelter/sources/bus-stop-shelter.blend",
+      "source_sha256": "84eb398a5328855c0d34c73d5a5aa60ecb2072863fc6108d4d79d5124a3892e4"
+    },
+    {
+      "slug": "e-scooter",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/e-scooter/metadata/e-scooter.json",
+      "glb": "models/e-scooter/exports/optimized.glb",
+      "glb_sha256": "a55dbbb0fb7d6cc0f42b535ccf5f01c2ee1a4c3d89327c8677edf48e241ba592",
+      "source": "models/e-scooter/sources/e-scooter.blend",
+      "source_sha256": "d29c389800472649884ba93f67ad59a7b2fa213d7e0f0839af79bda5bd9dcb08"
+    },
+    {
+      "slug": "train-ticket-gate",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/train-ticket-gate/metadata/train-ticket-gate.json",
+      "glb": "models/train-ticket-gate/exports/optimized.glb",
+      "glb_sha256": "2fd63dca59c14968966a3abcf89297d6f866df3fa257da9c46796b58efc3f6f7",
+      "source": "models/train-ticket-gate/sources/train-ticket-gate.blend",
+      "source_sha256": "852bd6605915a82cbc4afd464d4a64f5808174bc9c6db9544c329901a4f404da"
+    },
+    {
+      "slug": "ev-charger",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/ev-charger/metadata/ev-charger.json",
+      "glb": "models/ev-charger/exports/optimized.glb",
+      "glb_sha256": "5e08bece5045646fa013c77a06234b951b7e65df7ce4094c17c7f16229fd31bf",
+      "source": "models/ev-charger/sources/ev-charger.blend",
+      "source_sha256": "352d2a5f5d96b0bfeb9a6584e701b2ab10a794c7ede4ec54ac80395e31e447bf"
+    },
+    {
+      "slug": "loading-dock",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/loading-dock/metadata/loading-dock.json",
+      "glb": "models/loading-dock/exports/optimized.glb",
+      "glb_sha256": "c052f08e969bc3b630989605aa0aad71a8e3981b853ca75ba86e8ede00d06dc6",
+      "source": "models/loading-dock/sources/loading-dock.blend",
+      "source_sha256": "430c3da69b2880588c2ae7b29a9efd3b302dfd9934f370d210afda7fee63c394"
+    },
+    {
+      "slug": "loading-ramp",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/loading-ramp/metadata/loading-ramp.json",
+      "glb": "models/loading-ramp/exports/optimized.glb",
+      "glb_sha256": "e683968513434bf57836d9216735f9ed3617cd7516003edf28736a76c13a4aba",
+      "source": "models/loading-ramp/sources/loading-ramp.blend",
+      "source_sha256": "04de59b4331e3de53275dc3dbe835516398f48ded20d4159ab7e4f787b86ef63"
+    },
+    {
+      "slug": "hdb-corridor",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/hdb-corridor/metadata/hdb-corridor.json",
+      "glb": "models/hdb-corridor/exports/optimized.glb",
+      "glb_sha256": "9b58a3f42adfa944a1f2e81620cde7200a9c9743306416694bb00019c28be16a",
+      "source": "models/hdb-corridor/sources/hdb-corridor.blend",
+      "source_sha256": "ae656844ba8b0765fc3259a46569e78704402fd1dd3fddc16121aa895ab135c8"
+    },
+    {
+      "slug": "hdb-lift-lobby",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/hdb-lift-lobby/metadata/hdb-lift-lobby.json",
+      "glb": "models/hdb-lift-lobby/exports/optimized.glb",
+      "glb_sha256": "6b318a35fd1934e3f176c0220d235a9b16118d9ce0fec672499b76f375a4590b",
+      "source": "models/hdb-lift-lobby/sources/hdb-lift-lobby.blend",
+      "source_sha256": "031e6742e709318b71794d47a353c4673066740d523ce174b6bf18bc5e755e42"
+    },
+    {
+      "slug": "condo-guardhouse",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/condo-guardhouse/metadata/condo-guardhouse.json",
+      "glb": "models/condo-guardhouse/exports/optimized.glb",
+      "glb_sha256": "b7d48efc3bc657797f5f1e0f1037cc46d6d5cdf0facaba5dc2e547b263bda48c",
+      "source": "models/condo-guardhouse/sources/condo-guardhouse.blend",
+      "source_sha256": "bdb1004f6477e5eb7e7c8e0be3d93baeec38647d76b6a6fa6d686b580ec8b550"
+    },
+    {
+      "slug": "library-building",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/library-building/metadata/library-building.json",
+      "glb": "models/library-building/exports/optimized.glb",
+      "glb_sha256": "65f048c25ed961a74a6082494acb19f618194ad028725bf23f38aa44f8d4873a",
+      "source": "models/library-building/sources/library-building.blend",
+      "source_sha256": "45c827a7b03974e1ea0a70603f2f63a8fe123261420b6a0ab1e36b8dd3c2620e"
+    },
+    {
+      "slug": "warehouse-building",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/warehouse-building/metadata/warehouse-building.json",
+      "glb": "models/warehouse-building/exports/optimized.glb",
+      "glb_sha256": "95b13b20d2a78bf060596b13ce9e89eea71cfca3d3304315f62f386251716905",
+      "source": "models/warehouse-building/sources/warehouse-building.blend",
+      "source_sha256": "42be1b669f1ed010a4154b5431267306283336fc03ba383fce8596da875620b7"
+    },
+    {
+      "slug": "office-partition",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/office-partition/metadata/office-partition.json",
+      "glb": "models/office-partition/exports/optimized.glb",
+      "glb_sha256": "4581064cddc402b71caaca8b7112f965db72a42ea1a407b84f99652bb2dde273",
+      "source": "models/office-partition/sources/office-partition.blend",
+      "source_sha256": "5fbfa8d16b9d7d131814a5b976960ce38cc6e86f1b09b613982fedbe2fd91a5e"
+    },
+    {
+      "slug": "forklift",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/forklift/metadata/forklift.json",
+      "glb": "models/forklift/exports/optimized.glb",
+      "glb_sha256": "0f3847cd49f2cf20fb55745e90d43236e56df408d7ba4670a94fce7ce4362b30",
+      "source": "models/forklift/sources/forklift.blend",
+      "source_sha256": "528d13603b757c81b376c321d9da783878a0bee73740d0688392670ac4082c80"
+    },
+    {
+      "slug": "student-desk",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/student-desk/metadata/student-desk.json",
+      "glb": "models/student-desk/exports/optimized.glb",
+      "glb_sha256": "25693998a1eb2cf513619a452001d07146e7c4b53c03535d66bfe3d9658b32ce",
+      "source": "models/student-desk/sources/student-desk.blend",
+      "source_sha256": "886800739033ebaaa4e237659ee18e715cb60d630fab552b1c4783575fc32936"
+    },
+    {
+      "slug": "buffet-counter",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/buffet-counter/metadata/buffet-counter.json",
+      "glb": "models/buffet-counter/exports/optimized.glb",
+      "glb_sha256": "3961936d3f09c08f5f79554ef3176e66d083fee2181fe655bd1ed4f18249adcb",
+      "source": "models/buffet-counter/sources/buffet-counter.blend",
+      "source_sha256": "0666403727c013ce9d1b7c147c1c34e197da38059a6f9bed404a19b14f4ac10c"
+    },
+    {
+      "slug": "food-display-cabinet",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/food-display-cabinet/metadata/food-display-cabinet.json",
+      "glb": "models/food-display-cabinet/exports/optimized.glb",
+      "glb_sha256": "87ac01e90f9ae731473b7591a72ece22a5275e5b2f714c270cb6b63429a41e7d",
+      "source": "models/food-display-cabinet/sources/food-display-cabinet.blend",
+      "source_sha256": "f821959d47656a6ad760c35f4bef4a5911e7045541ed43067f9816b968a54233"
+    },
+    {
+      "slug": "atm-kiosk",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/atm-kiosk/metadata/atm-kiosk.json",
+      "glb": "models/atm-kiosk/exports/optimized.glb",
+      "glb_sha256": "0348db21bde7c430940e76e37817ef86c2466ea549238adcbbcbce4f9619498a",
+      "source": "models/atm-kiosk/sources/atm-kiosk.blend",
+      "source_sha256": "8c39f556d1988626b87d5eacb9b4b9dfdc2ff0727872a39de8864154c0c5b56b"
+    },
+    {
+      "slug": "bicycle",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/bicycle/metadata/bicycle.json",
+      "glb": "models/bicycle/exports/optimized.glb",
+      "glb_sha256": "69a279dc8969672fb881213fda9d34a99a3d30524db12c74b68c35b1c51e9597",
+      "source": "models/bicycle/sources/bicycle.blend",
+      "source_sha256": "1775c3a14ed58921cf6db45a45e859f16d278ea0919b2902172e7e3db00dfe0c"
+    },
+    {
+      "slug": "parking-barrier",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/parking-barrier/metadata/parking-barrier.json",
+      "glb": "models/parking-barrier/exports/optimized.glb",
+      "glb_sha256": "022b1ffd5e980ff6449c038bd6caedc1f147a07e5281259b27200560a4c43bf4",
+      "source": "models/parking-barrier/sources/parking-barrier.blend",
+      "source_sha256": "65820a7211e7053261932875fac1d7f8dbf71d38cabd8485483c4093c43df336"
+    },
+    {
+      "slug": "road-segment",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/road-segment/metadata/road-segment.json",
+      "glb": "models/road-segment/exports/optimized.glb",
+      "glb_sha256": "6e5ee9563b02614614efc9e3b111d173e852fdf6fa548feae31cecc77188aa8e",
+      "source": "models/road-segment/sources/road-segment.blend",
+      "source_sha256": "e6911497a0e499d7039b8cb021b56b4913a529710c41721b248fae9e91f4f1ce"
+    },
+    {
+      "slug": "bollard",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/bollard/metadata/bollard.json",
+      "glb": "models/bollard/exports/optimized.glb",
+      "glb_sha256": "146bf49f2e8f6102d01562ab98161cd7898705d586414daa96b241ec9e43a5d3",
+      "source": "models/bollard/sources/bollard.blend",
+      "source_sha256": "9d1d22c50ffe773884ca999f66af600700d42aa9f4ee8977a9a4b315d907c2dc"
+    },
+    {
+      "slug": "office-building",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/office-building/metadata/office-building.json",
+      "glb": "models/office-building/exports/optimized.glb",
+      "glb_sha256": "9f90806eccedf987849a8cdf35c30f607b70408849bafe92d304c33e72b74a1b",
+      "source": "models/office-building/sources/office-building.blend",
+      "source_sha256": "4681ff0aa59f96f0d2c43792ab1c313391a0e2b7c4399c468d7177d6d048c568"
+    },
+    {
+      "slug": "glass-meeting-room",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/glass-meeting-room/metadata/glass-meeting-room.json",
+      "glb": "models/glass-meeting-room/exports/optimized.glb",
+      "glb_sha256": "a97f1e6691058f950ca13c6981f006dc984e88fe2c0df2f8d019f8e609009096",
+      "source": "models/glass-meeting-room/sources/glass-meeting-room.blend",
+      "source_sha256": "e317736e9c36ea0c8297c379900c9f387fa51df29ea76cea16fa7dc9f842ee08"
+    },
+    {
+      "slug": "hdb-block",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/hdb-block/metadata/hdb-block.json",
+      "glb": "models/hdb-block/exports/optimized.glb",
+      "glb_sha256": "e24f78bab50bf89697e68608d3369192b70625d765a78abd7716eceb5f964a98",
+      "source": "models/hdb-block/sources/hdb-block.blend",
+      "source_sha256": "9b15bbba32addc3a98279fdbf60dcd202e72c2d4ea02f19ff8bad2a8f77f33ab"
+    },
+    {
+      "slug": "hdb-void-deck",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/hdb-void-deck/metadata/hdb-void-deck.json",
+      "glb": "models/hdb-void-deck/exports/optimized.glb",
+      "glb_sha256": "d01416ca2d9ca2d644da14546f1b45ea659b08cd13e4eb7739bd7c04459fb391",
+      "source": "models/hdb-void-deck/sources/hdb-void-deck.blend",
+      "source_sha256": "25fa8cc32ce010b5c5e503e66938010e10929e9c7497a0f5a0a4128895fa80a8"
+    },
+    {
+      "slug": "school-building",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/school-building/metadata/school-building.json",
+      "glb": "models/school-building/exports/optimized.glb",
+      "glb_sha256": "0f2133114807462009364a00458dfad00f6161b66eb1b754b3a6835ade4f68d1",
+      "source": "models/school-building/sources/school-building.blend",
+      "source_sha256": "6d1f59ee316170efd52763e776a3539a4230a3c463e21211b0b6ccf3b3b3a3bb"
+    },
+    {
+      "slug": "school-classroom",
+      "local": "PASS",
+      "release": "NEEDS REVIEW",
+      "metadata": "models/school-classroom/metadata/school-classroom.json",
+      "glb": "models/school-classroom/exports/optimized.glb",
+      "glb_sha256": "e2dbdb11e35c3653deb7affd8742b9bda64494414c86cb13e98856415eff94bc",
+      "source": "models/school-classroom/sources/school-classroom.blend",
+      "source_sha256": "f821c72d02600208a3ffe8248c7dca105c7063d7f67115320861e7cce0a47d87"
+    }
+  ]
+}
