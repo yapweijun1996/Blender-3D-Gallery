@@ -1,0 +1,11 @@
+Blender 4.0.2
+Read blend: "/srv/agent-workstation/workspaces/blender-mall-food-court-tray-439-20261112/repo/models/mall-food-court-tray-station/sources/mall-food-court-tray-station.blend"
+Traceback (most recent call last):
+  File "/srv/agent-workstation/workspaces/blender-mall-food-court-tray-439-20261112/repo/models/mall-food-court-tray-station/inspect_sources.py", line 31, in <module>
+    for vert in bpy.data.objects['Counter'].data.vertices:vert.co.x*=1.04
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'bpy_prop_collection[key]: key "Counter" not found'
+
+Error: script failed, file: 'models/mall-food-court-tray-station/inspect_sources.py', exiting.
+
+Blender quit

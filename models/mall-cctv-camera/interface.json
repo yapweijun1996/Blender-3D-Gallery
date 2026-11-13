@@ -1,0 +1,61 @@
+{
+  "id": "mall-cctv-camera",
+  "backlog": "V2.1 P0 436",
+  "root": "ASSET_MallCctvCamera",
+  "units": "metres",
+  "mount_anchor": "CONNECTOR_CeilingMountPlane",
+  "mount_plane": {
+    "Blender_Z": 0,
+    "glTF_Y": 0
+  },
+  "mount_diameter_m": 0.14,
+  "pan_pivot": "PIVOT_Pan",
+  "pan_axis": "Blender local Z / glTF local Y",
+  "pan_origin_Blender_m": [
+    0,
+    0,
+    -0.025
+  ],
+  "tilt_pivot": "PIVOT_Tilt",
+  "tilt_axis": "Blender local X / glTF local X",
+  "tilt_origin_Blender_m": [
+    0,
+    0,
+    -0.098
+  ],
+  "default_tilt_degrees": 20,
+  "front_axis": "Blender -Y / glTF +Z",
+  "runtime_controls": "Existing orbit/zoom/reset only. Static visible prop; no capture, network, tracking or surveillance functionality.",
+  "source_pose_checks": {
+    "pan_degrees": [
+      0,
+      40,
+      90,
+      180,
+      270
+    ],
+    "tilt_degrees": [
+      -30,
+      0,
+      20,
+      45
+    ],
+    "clearance": "Continuous head swept-cylinder bound plus actual-source triangle intersection checks; visual geometry only, not mechanical or installation guidance."
+  },
+  "editable_modules": [
+    "MountingBase",
+    "BaseGasket",
+    "PanCollar",
+    "YokeBridge",
+    "YokeLeft",
+    "YokeRight",
+    "TiltAxleLeft",
+    "TiltAxleRight",
+    "Housing",
+    "Faceplate",
+    "LensTrim",
+    "LensGasket",
+    "Lens"
+  ],
+  "context_only": "Ceiling slab is a studio render-only context object, not exported."
+}

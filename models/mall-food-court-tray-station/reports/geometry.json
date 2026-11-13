@@ -1,0 +1,94 @@
+{
+  "status": "PASS",
+  "units": "metres",
+  "dimensions_glTF_m": [
+    1.5,
+    1.4900000095367432,
+    0.6600000262260437
+  ],
+  "floorPlane_glTF_Y_m": 0,
+  "independentModules": [
+    "CabinetLeft",
+    "CabinetRight",
+    "CabinetBack",
+    "LowerShelf",
+    "UpperShelf",
+    "Counter",
+    "Feet",
+    "SignFrame",
+    "SignText",
+    "Tray01",
+    "Tray02",
+    "Tray03",
+    "Tray04"
+  ],
+  "frontAxis": "Blender -Y / glTF +Z",
+  "clearOpeningWidth_m": 1.36,
+  "shelfVerticalClearances_m": [
+    0.33,
+    0.33
+  ],
+  "apertureRays": [
+    {
+      "height_m": 0.4,
+      "firstHit": "CabinetBack",
+      "depth_glTF_z_m": -0.2799999872222543
+    },
+    {
+      "height_m": 0.75,
+      "firstHit": "CabinetBack",
+      "depth_glTF_z_m": -0.2799999872222543
+    }
+  ],
+  "trays": [
+    {
+      "name": "Tray01",
+      "dimensions_m": [
+        0.44999999552965164,
+        0.0299999862909317,
+        0.32999999821186066
+      ],
+      "hollowFloorThickness_m": 0.00599999725818634,
+      "bottom_m": 0.22300000488758087
+    },
+    {
+      "name": "Tray02",
+      "dimensions_m": [
+        0.44999999552965164,
+        0.030000001192092896,
+        0.32999999821186066
+      ],
+      "hollowFloorThickness_m": 0.006000012159347534,
+      "bottom_m": 0.257999986410141
+    },
+    {
+      "name": "Tray03",
+      "dimensions_m": [
+        0.44999999552965164,
+        0.030000001192092896,
+        0.32999999821186066
+      ],
+      "hollowFloorThickness_m": 0.0059999823570251465,
+      "bottom_m": 0.2930000126361847
+    },
+    {
+      "name": "Tray04",
+      "dimensions_m": [
+        0.44999999552965164,
+        0.029999971389770508,
+        0.32999999821186066
+      ],
+      "hollowFloorThickness_m": 0.0059999823570251465,
+      "bottom_m": 0.5830000042915344
+    }
+  ],
+  "stackGap_m": 0.005,
+  "trayRemoval": {
+    "status": "PASS",
+    "distance_m": 0.62,
+    "minimumShelfGap_m": 0.003,
+    "sweptBoxNoFixedModuleCollision": true,
+    "fullyOutsideCounter": true
+  },
+  "staticProp": true
+}

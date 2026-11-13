@@ -1,0 +1,36 @@
+{
+  "id": "mall-sprinkler-head",
+  "backlog": "V2.1 P0 435",
+  "root": "ASSET_MallSprinklerHead",
+  "units": "metres",
+  "mount_anchor": "CONNECTOR_CeilingMountPlane",
+  "mount_plane": {
+    "Blender_Z": 0,
+    "glTF_Y": 0
+  },
+  "pendant_direction": {
+    "Blender": "-Z",
+    "glTF": "-Y"
+  },
+  "fitting_above_plane_m": 0.019,
+  "pendant_below_plane_m": 0.052,
+  "trim_diameter_m": 0.066,
+  "ceiling_context_opening_diameter_m": 0.03,
+  "context_only": "Ceiling is a render-only studio object and is NOT exported. Clearance is a visual geometry check, not installation guidance.",
+  "runtime_controls": "Existing orbit/zoom/reset only; no activation or simulation",
+  "editable_modules": [
+    "ThreadedFitting",
+    "HexBody",
+    "CeilingTrim",
+    "BodyCollar",
+    "YokeRight",
+    "YokeLeft",
+    "YokeBridge",
+    "BulbUpperSeat",
+    "BulbLowerSeat",
+    "Bulb",
+    "DeflectorStem",
+    "Deflector",
+    "DeflectorButton"
+  ]
+}

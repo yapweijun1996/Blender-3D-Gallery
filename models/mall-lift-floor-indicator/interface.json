@@ -1,0 +1,46 @@
+{
+  "root": "ASSET_MallLiftFloorIndicator",
+  "units": "metres",
+  "axes": {
+    "source_up": "+Z",
+    "source_front": "-Y",
+    "gltf_up": "+Y",
+    "gltf_front": "+Z"
+  },
+  "dimensions_m": [
+    0.42,
+    0.16,
+    0.0268
+  ],
+  "origin": "bottom centre on wall plane",
+  "wall_mount": {
+    "name": "CONNECTOR_WallMount",
+    "blender_position": [
+      0,
+      0,
+      0.08
+    ],
+    "gltf_position": [
+      0,
+      0.08,
+      0
+    ],
+    "wall_plane": "Blender Y=0 / glTF Z=0"
+  },
+  "housing_wall_thickness_m": 0.0015,
+  "bezel_thickness_m": 0.003,
+  "configuration": {
+    "display_floor": "two decimal digits, default 02",
+    "display_direction": "up or down, default up"
+  },
+  "editable_meshes": {
+    "housing": 1,
+    "bezel": 1,
+    "face": 1,
+    "digit_segments": 14,
+    "arrow_segments": 3
+  },
+  "export_behavior": "Applies source configuration to segment materials and direction pose without rebuilding meshes",
+  "runtime_state": "NOT IMPLEMENTED",
+  "safety_or_code_compliance": "NOT CLAIMED"
+}

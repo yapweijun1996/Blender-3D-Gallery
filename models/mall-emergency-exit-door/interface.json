@@ -1,0 +1,62 @@
+{
+  "root": "ASSET_MallEmergencyExitDoor",
+  "units": "metres",
+  "axes": {
+    "source_up": "+Z",
+    "source_front": "-Y",
+    "gltf_up": "+Y",
+    "gltf_front": "+Z"
+  },
+  "dimensions_m": [
+    1.100000023841858,
+    2.180000104010105,
+    0.46500239148736
+  ],
+  "origin": "floor centre of wall opening",
+  "opening_width_height_m": [
+    0.96,
+    2.1
+  ],
+  "frame_depth_m": 0.14,
+  "leaf_width_height_thickness_m": [
+    0.95,
+    2.083,
+    0.05
+  ],
+  "floor_gap_m": 0.012,
+  "top_and_side_gaps_m": 0.005,
+  "hinge_blender": [
+    -0.48,
+    -0.05,
+    0
+  ],
+  "hinge_gltf": [
+    -0.48,
+    0,
+    0.05
+  ],
+  "source_pose": {
+    "door_angle_degrees": [
+      0,
+      100
+    ],
+    "push_bar_depression_m": [
+      0,
+      0.018
+    ],
+    "default": [
+      0,
+      0
+    ],
+    "apply": "apply_pose(root)",
+    "closer_link_lengths_m": [
+      0.28,
+      0.28
+    ]
+  },
+  "suggested_scene_front_clearance_m": 1.1,
+  "clearance_scope": "Visual mesh placement envelope only, not evacuation clearance or code compliance",
+  "export_behavior": "Applies saved source pose without rebuilding edited meshes",
+  "runtime_door_ui": "NOT IMPLEMENTED",
+  "certification_fire_resistance_building_code_evacuation_safety": "NOT CLAIMED"
+}

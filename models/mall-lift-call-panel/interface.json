@@ -1,0 +1,43 @@
+{
+  "units": "metres",
+  "root": "ASSET_MallLiftCallPanel",
+  "wall_plane_blender": "Y=0",
+  "front": "Blender -Y / glTF +Z",
+  "origin_blender": [
+    0,
+    0,
+    0
+  ],
+  "wall_mount_anchor_blender": [
+    0,
+    0,
+    0.17
+  ],
+  "dimensions_glTF_XYZ_m": [
+    0.14,
+    0.34,
+    0.0344
+  ],
+  "faceplate_thickness_m": 0.003,
+  "housing_wall_thickness_m": 0.0015,
+  "button_cap_radius_m": 0.024,
+  "aperture_radius_m": 0.025,
+  "button_centres_blender": {
+    "Up": [
+      0,
+      -0.03225,
+      0.225
+    ],
+    "Down": [
+      0,
+      -0.03225,
+      0.115
+    ]
+  },
+  "source_button_travel_m": 0.002,
+  "source_press_axis": "Blender +Y / glTF -Z",
+  "runtime_interaction": "None",
+  "indicator_state": "Static amber emission, no state machine",
+  "installation_height": "Unspecified: set by consuming scene; not a code-compliant mounting prescription",
+  "scope": "Visual reusable component only; no physical mounting hardware specification, full lift, floor indicator, electrical wiring or accessibility/code compliance"
+}

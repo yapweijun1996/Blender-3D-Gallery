@@ -1,0 +1,76 @@
+{
+  "id": "mall-escalator-handrail",
+  "name": "Mall Escalator Handrail",
+  "summary": "A static 30-degree escalator handrail subsystem with one continuous black rounded-return belt, glazed balustrade and independent guide rails and lower casing.",
+  "description": "A static 30-degree escalator handrail subsystem with one continuous black rounded-return belt, glazed balustrade and independent guide rails and lower casing.",
+  "category": "Architecture",
+  "tags": [
+    "mall",
+    "escalator",
+    "handrail",
+    "balustrade",
+    "modular",
+    "editable",
+    "original",
+    "texture-free",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python mesh geometry and Principled BSDF materials. No external models, fonts, images or textures.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/mall-escalator-handrail.blend",
+    "preview": "previews/mall-escalator-handrail.webp"
+  },
+  "display": {
+    "previewRotationY": 0.7853981633974483,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "Lower datum elevation at plan midpoint of end tangencies",
+    "ascending_axis": "Blender +X / glTF +X"
+  },
+  "accuracy_notes": "V2.1 P0 item 430 only: a static generic visual handrail and balustrade subsystem, not full escalator 004, landing 429 or stationary glass railing 006. No moving parts, motor, steps, physics, safety/code certification, manufacturer interface or fabrication suitability. Exact future 004 integration is NOT VERIFIED. Android/iOS hardware is NOT TESTED. Merged-main local asset integration PASS. Overall NEEDS REVIEW: existing library demo reload failure and physical mobile acceptance remain unresolved; see docs/verification/mall-batch-02-final.md.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry authored for Blender-3D-Gallery; no third-party artwork or manufacturer geometry."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 117180,
+    "triangles": 5100,
+    "vertices": 3516,
+    "primitives": 8,
+    "materials": 5,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      7.041640758514404,
+      3.427999973297119,
+      0.14000000059604645
+    ],
+    "bounds": {
+      "min": [
+        -3.520820379257202,
+        0,
+        -0.07000000029802322
+      ],
+      "max": [
+        3.520820379257202,
+        3.427999973297119,
+        0.07000000029802322
+      ]
+    },
+    "sha256": "27cd23cc1d3bf33f11c114adb0be17f256e4a96e161396a541cca25734b56443"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "verification_scope": "Artifact validation and initial full unit/build/library pass. Initial strict browser 0/3 due retained old-loader ERR_ABORTED; final merged-base integration pending."
+}

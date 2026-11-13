@@ -1,0 +1,220 @@
+{
+  "source_reopened": "PASS",
+  "source_sha256": "cd3c69e93052ab4bf71efd8e3ac22a8539ef474ad31e489e398911549c2735c7",
+  "blender_version": "4.0.2",
+  "editable_mesh_parts": 13,
+  "source_units": "metres",
+  "source_scales": "UNIT",
+  "topology": {
+    "status": "PASS",
+    "nonmanifoldEdges": 0,
+    "degenerateFaces": 0,
+    "parts": {
+      "MODULE_BaseGasket": {
+        "vertices": 64,
+        "faces": 34,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 2.477803248088523e-05
+      },
+      "MODULE_MountingBase": {
+        "vertices": 256,
+        "faces": 226,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 0.00030243789355390114
+      },
+      "MODULE_PanCollar": {
+        "vertices": 64,
+        "faces": 34,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 9.442371080255385e-05
+      },
+      "MODULE_TiltAxleLeft": {
+        "vertices": 64,
+        "faces": 34,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 3.034044370768851e-06
+      },
+      "MODULE_TiltAxleRight": {
+        "vertices": 64,
+        "faces": 34,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 3.034044370768851e-06
+      },
+      "MODULE_YokeBridge": {
+        "vertices": 96,
+        "faces": 98,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 1.5741619272040244e-05
+      },
+      "MODULE_YokeLeft": {
+        "vertices": 96,
+        "faces": 98,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 8.729620111796779e-06
+      },
+      "MODULE_YokeRight": {
+        "vertices": 96,
+        "faces": 98,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 8.729620111796779e-06
+      },
+      "MODULE_Faceplate": {
+        "vertices": 64,
+        "faces": 34,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 1.0197761404635614e-05
+      },
+      "MODULE_Housing": {
+        "vertices": 256,
+        "faces": 226,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 0.0003613525750198016
+      },
+      "MODULE_Lens": {
+        "vertices": 64,
+        "faces": 34,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 8.989762257835428e-07
+      },
+      "MODULE_LensGasket": {
+        "vertices": 64,
+        "faces": 34,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 1.4046502969540077e-06
+      },
+      "MODULE_LensTrim": {
+        "vertices": 64,
+        "faces": 34,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 4.5073666014257295e-06
+      }
+    }
+  },
+  "articulation": {
+    "status": "PASS",
+    "method": "Actual source vertices bound a continuous tilt swept cylinder; separate BVH triangle checks at 20 pan/tilt poses. Intentional axle-to-housing mating contact excluded. No mechanical or installation claim.",
+    "tilt_axis_Blender": "X",
+    "pan_axis_Blender": "Z",
+    "axis_z_m": -0.09799999743700027,
+    "swept_head_radius_m": 0.05176926714249799,
+    "head_half_width_m": 0.041999999433755875,
+    "minimum_yoke_side_gap_m": 0.0030000005662441237,
+    "minimum_bridge_gap_m": 0.006230731188571953,
+    "samples": [
+      {
+        "pan_deg": 0,
+        "tilt_deg": -30,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 0,
+        "tilt_deg": 0,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 0,
+        "tilt_deg": 20,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 0,
+        "tilt_deg": 45,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 40,
+        "tilt_deg": -30,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 40,
+        "tilt_deg": 0,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 40,
+        "tilt_deg": 20,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 40,
+        "tilt_deg": 45,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 90,
+        "tilt_deg": -30,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 90,
+        "tilt_deg": 0,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 90,
+        "tilt_deg": 20,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 90,
+        "tilt_deg": 45,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 180,
+        "tilt_deg": -30,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 180,
+        "tilt_deg": 0,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 180,
+        "tilt_deg": 20,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 180,
+        "tilt_deg": 45,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 270,
+        "tilt_deg": -30,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 270,
+        "tilt_deg": 0,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 270,
+        "tilt_deg": 20,
+        "triangleOverlapPairs": 0
+      },
+      {
+        "pan_deg": 270,
+        "tilt_deg": 45,
+        "triangleOverlapPairs": 0
+      }
+    ]
+  },
+  "mount": "PASS: all asset vertices at/below Z=0, source anchor exactly zero"
+}
