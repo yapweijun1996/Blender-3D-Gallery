@@ -1,0 +1,29 @@
+{
+  "id": 450,
+  "slug": "fire-station-vehicle-bay",
+  "title": "Fire Station Vehicle Bay",
+  "root": "ASSET_FireStationVehicleBay",
+  "required_nodes": [
+    "MOVABLE_Overhead_Shutter",
+    "Guide_Rail"
+  ],
+  "budget_bytes": 800000,
+  "budget_triangles": 15000,
+  "expected_dimensions_m": [
+    4.8,
+    4.45,
+    1.4
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Overhead_Shutter"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Overhead_Shutter",
+      "rotation_euler",
+      0,
+      1.5707963267948966
+    ]
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": 452,
+  "slug": "public-library-book-return",
+  "title": "Public Library Book Return",
+  "root": "ASSET_PublicLibraryBookReturn",
+  "required_nodes": [
+    "MOVABLE_Return_Flap",
+    "Inner_Bin"
+  ],
+  "budget_bytes": 800000,
+  "budget_triangles": 15000,
+  "expected_dimensions_m": [
+    0.85,
+    1.29,
+    0.6725
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Return_Flap"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Return_Flap",
+      "rotation_euler",
+      0,
+      0.85
+    ]
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "source_sha256": "a76e97a7a5ec9172ebc1d3734a87a3d8b359c70f4b29151a2f41f6a410cf072c",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 12,
+  "objects": [
+    {
+      "name": "Base",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    },
+    {
+      "name": "Book",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    },
+    {
+      "name": "Book_Pad",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    },
+    {
+      "name": "Editable_Label_SCAN_BOOK",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    },
+    {
+      "name": "Pedestal",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    },
+    {
+      "name": "Receipt_Printer_Housing",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    },
+    {
+      "name": "Receipt_Slot",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    },
+    {
+      "name": "RFID_Surface",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    },
+    {
+      "name": "Screen",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    },
+    {
+      "name": "Screen_Housing",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    },
+    {
+      "name": "Terminal_Foot",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    },
+    {
+      "name": "Terminal_Stem",
+      "type": "MESH",
+      "parent": "ASSET_PublicLibrarySelfCheckout"
+    }
+  ],
+  "edit_proof": {
+    "node": "Base",
+    "before": [
+      0,
+      0,
+      0.03999999910593033
+    ],
+    "after": [
+      0.12300000339746475,
+      0,
+      0.03999999910593033
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Muted teal",
+    "roughness_before": 0.5,
+    "roughness_after": 0.73,
+    "copy_sha256": "8629e3c5a1cc612fa7fad3ad6a5d991a3671509890557eae6c1aa32ab452bdc1",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

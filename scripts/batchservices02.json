@@ -1,0 +1,381 @@
+[
+  {
+    "id": 417,
+    "slug": "temple-incense-burner",
+    "title": "Temple Incense Burner",
+    "root": "ASSET_TempleIncenseBurner",
+    "required_nodes": [
+      "Bowl",
+      "Ash_Bed"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      1.37,
+      1,
+      1.1
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 418,
+    "slug": "mosque-courtyard-fountain",
+    "title": "Mosque Courtyard Fountain",
+    "root": "ASSET_MosqueCourtyardFountain",
+    "required_nodes": [
+      "Basin_Rim",
+      "Upper_Bowl"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      2.4,
+      1.03,
+      2.4
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 419,
+    "slug": "mosque-geometric-screen",
+    "title": "Mosque Geometric Screen",
+    "root": "ASSET_MosqueGeometricScreen",
+    "required_nodes": [
+      "Side_Frame",
+      "Diamond"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      1.6,
+      2.4,
+      0.1
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 420,
+    "slug": "heritage-street-lamp",
+    "title": "Heritage Street Lamp",
+    "root": "ASSET_HeritageStreetLamp",
+    "required_nodes": [
+      "Pole",
+      "Pitched_Cap"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      0.54,
+      4.06,
+      0.54
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 441,
+    "slug": "bank-branch-entrance",
+    "title": "Bank Branch Entrance",
+    "root": "ASSET_BankBranchEntrance",
+    "required_nodes": [
+      "MOVABLE_Door_-1",
+      "MOVABLE_Door_1"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      3,
+      2.94,
+      0.9
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Door_-1",
+      "MOVABLE_Door_1"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Door_-1",
+        "rotation_euler",
+        2,
+        -1.2
+      ],
+      [
+        "MOVABLE_Door_1",
+        "rotation_euler",
+        2,
+        1.2
+      ]
+    ]
+  },
+  {
+    "id": 442,
+    "slug": "bank-teller-counter",
+    "title": "Bank Teller Counter",
+    "root": "ASSET_BankTellerCounter",
+    "required_nodes": [
+      "Security_Glazing",
+      "Transaction_Tray"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      2.4,
+      2.05,
+      0.8
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 443,
+    "slug": "bank-queue-ticket-machine",
+    "title": "Bank Queue Ticket Machine",
+    "root": "ASSET_BankQueueTicketMachine",
+    "required_nodes": [
+      "MOVABLE_Ticket",
+      "Ticket_Slot"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      0.55,
+      1.4,
+      0.5
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Ticket"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Ticket",
+        "location",
+        1,
+        -0.16
+      ]
+    ]
+  },
+  {
+    "id": 444,
+    "slug": "post-office-counter",
+    "title": "Post Office Counter",
+    "root": "ASSET_PostOfficeCounter",
+    "required_nodes": [
+      "Parcel_Scale",
+      "Scale_Display"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      2.6,
+      1.67,
+      0.8
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 445,
+    "slug": "parcel-collection-counter",
+    "title": "Parcel Collection Counter",
+    "root": "ASSET_ParcelCollectionCounter",
+    "required_nodes": [
+      "Cubby_Divider",
+      "Shelf"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      2.4,
+      2.08,
+      0.8
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 446,
+    "slug": "community-club-reception",
+    "title": "Community Club Reception",
+    "root": "ASSET_CommunityClubReception",
+    "required_nodes": [
+      "Accessible_Desk",
+      "Replaceable_Community_Panel"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      2.725,
+      1.39,
+      0.7845
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 447,
+    "slug": "public-service-queue-kiosk",
+    "title": "Public Service Queue Kiosk",
+    "root": "ASSET_PublicServiceQueueKiosk",
+    "required_nodes": [
+      "MOVABLE_Ticket",
+      "Speaker"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      0.65,
+      1.55,
+      0.57
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Ticket"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Ticket",
+        "location",
+        1,
+        -0.16
+      ]
+    ]
+  },
+  {
+    "id": 448,
+    "slug": "public-service-waiting-bench",
+    "title": "Public Service Waiting Bench",
+    "root": "ASSET_PublicServiceWaitingBench",
+    "required_nodes": [
+      "Seat_0",
+      "Backrest_2"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      2.3,
+      1.03,
+      0.65
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 449,
+    "slug": "police-station-reception",
+    "title": "Police Station Reception",
+    "root": "ASSET_PoliceStationReception",
+    "required_nodes": [
+      "Glazed_Partition",
+      "Document_Ledge"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      2.5,
+      2.1,
+      0.895
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 450,
+    "slug": "fire-station-vehicle-bay",
+    "title": "Fire Station Vehicle Bay",
+    "root": "ASSET_FireStationVehicleBay",
+    "required_nodes": [
+      "MOVABLE_Overhead_Shutter",
+      "Guide_Rail"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      4.8,
+      4.45,
+      1.4
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Overhead_Shutter"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Overhead_Shutter",
+        "rotation_euler",
+        0,
+        1.5707963267948966
+      ]
+    ]
+  },
+  {
+    "id": 451,
+    "slug": "public-library-self-checkout",
+    "title": "Public Library Self Checkout",
+    "root": "ASSET_PublicLibrarySelfCheckout",
+    "required_nodes": [
+      "RFID_Surface",
+      "Book_Pad"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      0.9,
+      1.33,
+      0.7485
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 452,
+    "slug": "public-library-book-return",
+    "title": "Public Library Book Return",
+    "root": "ASSET_PublicLibraryBookReturn",
+    "required_nodes": [
+      "MOVABLE_Return_Flap",
+      "Inner_Bin"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      0.85,
+      1.29,
+      0.6725
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Return_Flap"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Return_Flap",
+        "rotation_euler",
+        0,
+        0.85
+      ]
+    ]
+  },
+  {
+    "id": 453,
+    "slug": "clinic-registration-kiosk",
+    "title": "Clinic Registration Kiosk",
+    "root": "ASSET_ClinicRegistrationKiosk",
+    "required_nodes": [
+      "MOVABLE_Assist_Button",
+      "Card_Slot"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "expected_dimensions_m": [
+      0.74,
+      1.52,
+      0.5125
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Assist_Button"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Assist_Button",
+        "location",
+        1,
+        0.012
+      ]
+    ]
+  }
+]

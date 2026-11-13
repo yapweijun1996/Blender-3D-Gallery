@@ -1,0 +1,106 @@
+{
+  "id": "colonial-timber-door",
+  "name": "Colonial Timber Door",
+  "summary": "Colonial Timber Door; original modular heritage asset.",
+  "description": "Colonial Timber Door. Editable original generic SG/MY-inspired heritage geometry; no surveyed site, brand or certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable",
+    "original"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "generator": "generate.py",
+  "creation_method": "Original deterministic Blender Python meshes and materials; no marketplace assets, external texture or external font.",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/colonial-timber-door.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1.3,
+      0.8,
+      2
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "ground-plane centre"
+  },
+  "backlog_id": 411,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using reviewed project helpers; no third-party assets."
+    }
+  ],
+  "material_notes": "Independent named materials and editable parts. Two synchronized open/close GLB clips; no Gallery playback UI.",
+  "accuracy_notes": "Not a road, accessibility, structural, electrical or engineering certification. No official logo.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "scope": "Blender source reopen/component+material edit persistence, GLB structure/budgets, rendered visual review, Chromium three-viewport loading and cleanup passed. Physical Android/iOS and Safari/WebKit NOT TESTED. Combined assembly gate pending."
+  },
+  "budgets": {
+    "max_glb_bytes": 480000,
+    "max_triangles": 11000
+  },
+  "interaction": {
+    "clips": [
+      "OpenClose_Left",
+      "OpenClose_Right"
+    ],
+    "duration_seconds": 2,
+    "open_degrees": 90,
+    "usage": "Play both clips together; closed at 0s, open at 1s, closed at 2s.",
+    "gallery_playback_ui": "NOT IMPLEMENTED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "colonial-timber-door",
+    "glb_bytes": 141232,
+    "triangles": 2536,
+    "vertices": 5024,
+    "primitives": 22,
+    "materials": 4,
+    "textures": 0,
+    "animations": 2,
+    "dimensions": [
+      1.9000000059604645,
+      3.000000074505806,
+      0.23999999463558197
+    ],
+    "bounds": {
+      "min": [
+        -0.9500000029802322,
+        0,
+        -0.11999999731779099
+      ],
+      "max": [
+        0.9500000029802322,
+        3.000000074505806,
+        0.11999999731779099
+      ]
+    },
+    "sha256": "cad5eb4a497d8e0fafe24bc3366888fbc735dcea63140f7c4201f7ef09ebac8a",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  }
+}

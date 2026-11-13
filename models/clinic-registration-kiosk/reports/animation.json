@@ -1,0 +1,109 @@
+{
+  "result": "PASS",
+  "sha256": "dd56a2555d7e0cbf8ab221ed84b7b9c7ff71e9522b4e9b1fc3f5d520dc6bd57f",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416666666666667,
+    "reset": 2.0416667461395264
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_MOVABLE_Assist_Button",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "MOVABLE_Assist_Button.position",
+      "first": [
+        0.1599999964237213,
+        1.0800000429153442,
+        0.25999999046325684
+      ],
+      "last": [
+        0.1599999964237213,
+        1.0800000429153442,
+        0.25999999046325684
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Assist_Button",
+      "position": [
+        0.1599999964237213,
+        1.0800000429153442,
+        0.25999999046325684
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Assist_Button",
+      "position": [
+        0.15999999642372134,
+        1.0800000429153442,
+        0.24799999642371426
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Assist_Button",
+      "position": [
+        0.1599999964237213,
+        1.0800000429153442,
+        0.25999999046325684
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        0.16,
+        1.08,
+        0.26
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        0.16,
+        1.08,
+        0.248
+      ],
+      "openQ": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "clearance": "12mm depression partly recesses the button into its housing while front remains accessible",
+  "verification": "Independent raw track endpoints and Three.js AnimationMixer closed-open-closed poses; no Gallery component controls"
+}

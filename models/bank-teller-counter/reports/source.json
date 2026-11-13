@@ -1,0 +1,96 @@
+{
+  "source_sha256": "06ec0acc3ebff53148bdd057def969701622e6363548b3c2960b59bc0ff5f388",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 13,
+  "objects": [
+    {
+      "name": "Counter_Base",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Counter_Body",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Document_Slot",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Editable_Label_TELLER",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Screen",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Screen_Housing",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Screen_Post",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Screen_Post.001",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Security_Glazing",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Terminal_Foot",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Terminal_Stem",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Transaction_Tray",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    },
+    {
+      "name": "Worktop",
+      "type": "MESH",
+      "parent": "ASSET_BankTellerCounter"
+    }
+  ],
+  "edit_proof": {
+    "node": "Counter_Base",
+    "before": [
+      0,
+      0,
+      0.054999999701976776
+    ],
+    "after": [
+      0.12300000339746475,
+      0,
+      0.054999999701976776
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Dark rubber",
+    "roughness_before": 0.800000011920929,
+    "roughness_after": 0.27,
+    "copy_sha256": "7f5b621da5516b3417cc192abcfaa8bef16ce7368578b5b4194b0dee9816a629",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

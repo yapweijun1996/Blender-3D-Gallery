@@ -1,0 +1,109 @@
+{
+  "id": "mosque-courtyard-fountain",
+  "name": "Mosque Courtyard Fountain",
+  "summary": "Mosque Courtyard Fountain modular illustrative asset.",
+  "description": "Original generic SG/MY-inspired interpretation, no official branding, personal data, or infrastructure certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mosque-courtyard-fountain.glb",
+    "source": "sources/mosque-courtyard-fountain.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.55,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 418,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; material/export helpers adapted from project hawker-centre-tray-rack. Generic labels use Blender bundled Bfont converted to independent editable meshes. No external models, logos, personal data or textures."
+    }
+  ],
+  "material_notes": "Named independently editable meshes/materials. AnimationMixer clips where listed; no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative generic regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "NOT APPLICABLE: static asset",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "mosque-courtyard-fountain",
+    "backlog_id": 418,
+    "glb_bytes": 37400,
+    "triangles": 812,
+    "vertices": 1248,
+    "meshes": 7,
+    "materials": 5,
+    "dimensions": [
+      2.4000000953674316,
+      1.0299999713897705,
+      2.4000000953674316
+    ],
+    "bounds": {
+      "min": [
+        -1.2000000476837158,
+        0,
+        -1.2000000476837158
+      ],
+      "max": [
+        1.2000000476837158,
+        1.0299999713897705,
+        1.2000000476837158
+      ]
+    },
+    "sha256": "60c9028f7aa067513c87a8e5b6a4fb8733ec7dbd18a6f5b3b34583a6c3ab1282",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "animation_clips": 0
+  }
+}

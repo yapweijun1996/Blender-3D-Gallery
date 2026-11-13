@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import {fileURLToPath} from 'node:url';import {createHash} from 'node:crypto';import {Box3,Vector3,AnimationMixer,LoopOnce} from 'three';import validator from 'gltf-validator';import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+const dir=fileURLToPath(new URL('.',import.meta.url)),spec=JSON.parse(fs.readFileSync(dir+'backlog.json')),budget=spec.budget;
+const bytes=fs.readFileSync(dir+'exports/optimized.glb'),json=JSON.parse(bytes.subarray(20,20+bytes.readUInt32LE(12)));
+const gltf=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');const scene=gltf.scene;scene.updateMatrixWorld(true);
+const v=await validator.validateBytes(new Uint8Array(bytes));assert.equal(v.issues.numErrors,0);assert.equal(v.issues.numWarnings,0);
+const root=scene.getObjectByName(spec.root);assert.ok(root);assert.deepEqual(root.position.toArray(),[0,0,0]);assert.equal(root.userData.units,'metres');assert.ok(json.buffers.every(x=>!x.uri));assert.ok(!json.textures?.length&&!json.images?.length&&!json.cameras?.length&&!json.extensions?.KHR_lights_punctual);
+let triangles=0,vertices=0;const parts={};scene.traverse(o=>{if(o.isMesh){const a=o.geometry.attributes.position;assert.ok(o.geometry.attributes.normal);vertices+=a.count;triangles+=(o.geometry.index?.count??a.count)/3;for(const x of a.array)assert.ok(Number.isFinite(x));const b=new Box3().setFromObject(o);parts[o.name]={min:b.min.toArray(),max:b.max.toArray()};}});
+assert.ok(bytes.length<=budget.bytes,'fixed byte budget');assert.ok(triangles<=budget.triangles,'fixed polygon budget');assert.ok(Object.keys(parts).length<=budget.mesh_primitives,'fixed mesh primitive budget');assert.ok(Object.keys(parts).length>=4);
+const bounds=new Box3().setFromObject(scene,true),dimensions=bounds.getSize(new Vector3()).toArray();
+const ranges={454:[[1.79,1.81],[1.77,1.79]],455:[[1.19,1.21],[2.20,2.22]],456:[[.73,.75],[.77,.79]],457:[[1.24,1.25],[1.03,1.05]],458:[[1.63,1.65],[1.75,1.77]],459:[[1.49,1.51],[2.47,2.49]],460:[[.55,.57],[1.44,1.49]],461:[[7.5,9.5],[4.6,4.8]],462:[[5.0,6.2],[7.4,7.6]],463:[[4.8,5.2],[9.4,9.6]],464:[[2.9,3.6],[2.2,2.6]],465:[[3.3,4.1],[3.3,3.5]],466:[[5.4,6.3],[6.0,6.6]],467:[[4.0,5.5],[4.7,5.2]],468:[[1.7,3.1],[4.7,4.9]],469:[[1.7,2.6],[1.4,1.7]]};
+for(let i=0;i<2;i++)assert.ok(dimensions[i]>=ranges[spec.id][i][0]&&dimensions[i]<=ranges[spec.id][i][1],spec.id+' dimension '+i+': '+dimensions[i]);
+assert.ok(bounds.min.y>-.10,'ground/attachment datum');const count=p=>Object.keys(parts).filter(n=>n.startsWith(p)).length;
+const required={461:['CANOPY_UmbrellaBranch','CANOPY_CentralFill'],462:['CANOPY_Rounded','CANOPY_Top'],463:['CANOPY_TallTier','CANOPY_Tip'],464:['LEAVES_Rosette','FLOWERS_FivePetals'],465:['PSEUDOSTEM','LEAF_Paddle','LEAF_CentralSpear'],466:['TRUNK_CurvedSegment','FROND_Arching','FRUIT_Coconut'],467:['TRUNK_DiamondLeafScars','FROND_DenseUpright','FRUIT_Bunch'],468:['CANE','CANE_SegmentedNodes','LEAVES_Spray'],469:['FOLIAGE_Dense','BRACTS_MagentaCluster','LEAVES_GreenCluster']};
+for(const prefix of required[spec.id]||[])assert.ok((()=>{let found=false;scene.traverse(o=>{if(o.name.startsWith(prefix)){o.traverse(c=>{if(c.isMesh)found=true;});}});return found;})(),'required named species mesh/group with real descendant geometry '+prefix);
+let animationTest='NOT APPLICABLE: static asset, no fabricated clips';
+if([454,455,458].includes(spec.id)){
+ assert.equal(gltf.animations.length,1);const clip=gltf.animations[0];assert.ok(Math.abs(clip.duration-2.5)<1e-5);
+ for(const t of clip.tracks){const n=t.getValueSize();assert.ok(Math.abs(t.times[0]-1/24)<1e-5);assert.ok(Math.abs(t.times.at(-1)-2.5)<1e-5);for(let i=0;i<n;i++)assert.ok(Math.abs(t.values[i]-t.values[t.values.length-n+i])<1e-5,'raw exported endpoints restore, not mixer wrapping');}
+ const moving=[];scene.traverse(o=>{if(o.name.startsWith('MOVABLE_'))moving.push(o);});assert.equal(moving.length,1);const o=moving[0],pos=o.position.clone(),q=o.quaternion.clone(),children=new Set();o.traverse(x=>children.add(x));
+ const mixer=new AnimationMixer(scene),action=mixer.clipAction(clip);action.setLoop(LoopOnce,1);action.clampWhenFinished=true;action.play();mixer.setTime(1.25);scene.updateMatrixWorld(true);
+ const open=new Box3().setFromObject(o);
+ if(spec.id===454){assert.ok(Math.abs(o.position.y-pos.y-.65)<.001);const counter=new Box3().setFromObject(scene.getObjectByName('COUNTER_Ledge'));assert.ok(open.min.y-counter.max.y>.63,'open transaction aperture');}
+ else {const expected=spec.id===455?1.25:.75;assert.ok(Math.abs(q.angleTo(o.quaternion)-expected)<.001);assert.ok(o.position.distanceTo(pos)<1e-6,'fixed hinge');if(spec.id===455)assert.ok(.54-open.max.x>.65,'open door clear width');}
+ const fixed=[];scene.traverse(x=>{if(x.isMesh&&!children.has(x)&&(x.name.startsWith('FRAME_Jamb')||x.name.startsWith('WALL_')||(spec.id===458&&(x.name.startsWith('FRAME_')||x.name.startsWith('PANEL_')||x.name.startsWith('FOOT')))))fixed.push(new Box3().setFromObject(x));});
+ for(const b of fixed)assert.ok(!open.intersectsBox(b),'open assembly clears stationary geometry');
+ mixer.setTime(2.5);scene.updateMatrixWorld(true);assert.ok(o.position.distanceTo(pos)<.001);assert.ok(q.angleTo(o.quaternion)<.001);mixer.stopAllAction();
+ animationTest='PASS: raw first/last track values, exact2.5s timeline, midpoint intended travel/hinge rotation, opening/clearance and LoopOnce end restoration';
+}else assert.equal(gltf.animations.length,0);
+const report={id:spec.title,backlog_id:spec.id,sha256:createHash('sha256').update(bytes).digest('hex'),glb_bytes:bytes.length,triangles,vertices,primitives:Object.keys(parts).length,materials:json.materials.length,textures:0,animations:gltf.animations.length,animationTest,dimensions,bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()},parts,budget,validation:{errors:0,warnings:0,validator:v.validatorVersion},result:'PASS'};
+fs.writeFileSync(dir+'reports/assets.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

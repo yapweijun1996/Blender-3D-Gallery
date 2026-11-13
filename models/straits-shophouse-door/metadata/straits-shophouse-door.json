@@ -1,0 +1,106 @@
+{
+  "id": "straits-shophouse-door",
+  "name": "Straits Shophouse Door",
+  "summary": "Straits Shophouse Door; original modular heritage asset.",
+  "description": "Straits Shophouse Door. Editable original generic SG/MY-inspired heritage geometry; no surveyed site, brand or certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable",
+    "original"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "generator": "generate.py",
+  "creation_method": "Original deterministic Blender Python meshes and materials; no marketplace assets, external texture or external font.",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/straits-shophouse-door.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1.3,
+      0.8,
+      2
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "ground-plane centre"
+  },
+  "backlog_id": 401,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using reviewed project helpers; no third-party assets."
+    }
+  ],
+  "material_notes": "Independent named materials and editable parts. Two synchronized open/close GLB clips; no Gallery playback UI.",
+  "accuracy_notes": "Not a road, accessibility, structural, electrical or engineering certification. No official logo.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "scope": "Blender source reopen/component+material edit persistence, GLB structure/budgets, rendered visual review, Chromium three-viewport loading and cleanup passed. Physical Android/iOS and Safari/WebKit NOT TESTED. Combined assembly gate pending."
+  },
+  "budgets": {
+    "max_glb_bytes": 500000,
+    "max_triangles": 11000
+  },
+  "interaction": {
+    "clips": [
+      "OpenClose_Left",
+      "OpenClose_Right"
+    ],
+    "duration_seconds": 2,
+    "open_degrees": 85,
+    "usage": "Play both clips together; closed at 0s, open at 1s, closed at 2s.",
+    "gallery_playback_ui": "NOT IMPLEMENTED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "straits-shophouse-door",
+    "glb_bytes": 151464,
+    "triangles": 2632,
+    "vertices": 5216,
+    "primitives": 30,
+    "materials": 5,
+    "textures": 0,
+    "animations": 2,
+    "dimensions": [
+      2.0000000298023224,
+      2.850000023841858,
+      0.23999999463558197
+    ],
+    "bounds": {
+      "min": [
+        -1.0000000149011612,
+        0,
+        -0.11999999731779099
+      ],
+      "max": [
+        1.0000000149011612,
+        2.850000023841858,
+        0.11999999731779099
+      ]
+    },
+    "sha256": "9aaa22ab3102d1af0c4a643e70190df847d49ecc9aac512d19d67688b4936a8c",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  }
+}

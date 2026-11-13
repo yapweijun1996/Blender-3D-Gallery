@@ -1,0 +1,93 @@
+{
+  "id": "angsana-tree",
+  "name": "Angsana Tree",
+  "summary": "Original modular angsana tree with editable components.",
+  "description": "Original species-inspired low-poly plant, not botanical-reference accuracy.",
+  "category": "Nature",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "metres",
+    "plant"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/angsana-tree.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "No safety, medical, screening, accessibility or regulatory compliance claim. Plants are species-inspired stylizations, not botanical references. No external textures, logos or assets. Physical Android/iOS and WebKit NOT TESTED. Clips are asset capabilities, not gallery controls.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 26000,
+      "bytes": 1500000,
+      "mesh_primitives": 90
+    },
+    "structure": "PASS",
+    "source_edit": "PASS",
+    "browser": "PASS: desktop Chromium at three viewports, not physical mobile",
+    "visual": "PASS: four rendered angles, browser initial views, and open pose where applicable inspected",
+    "local_asset": "PASS",
+    "combined_fifty_asset_gate": "PENDING"
+  },
+  "metrics": {
+    "sha256": "5583dea94e846b3b4deac15da7bf7035692ce2a42a418453158fea973c72d852",
+    "glb_bytes": 78600,
+    "triangles": 1044,
+    "vertices": 2700,
+    "primitives": 18,
+    "materials": 4,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      5.874734878540039,
+      7.5071410107703365,
+      5.58700692653656
+    ],
+    "bounds": {
+      "min": [
+        -2.924734950065613,
+        -0.007140772351757363,
+        -2.7683353424072266
+      ],
+      "max": [
+        2.9499999284744263,
+        7.500000238418579,
+        2.8186715841293335
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "animation_test": "NOT APPLICABLE: static asset, no fabricated clips"
+}

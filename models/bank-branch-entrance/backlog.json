@@ -1,0 +1,36 @@
+{
+  "id": 441,
+  "slug": "bank-branch-entrance",
+  "title": "Bank Branch Entrance",
+  "root": "ASSET_BankBranchEntrance",
+  "required_nodes": [
+    "MOVABLE_Door_-1",
+    "MOVABLE_Door_1"
+  ],
+  "budget_bytes": 800000,
+  "budget_triangles": 15000,
+  "expected_dimensions_m": [
+    3,
+    2.94,
+    0.9
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Door_-1",
+    "MOVABLE_Door_1"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Door_-1",
+      "rotation_euler",
+      2,
+      -1.2
+    ],
+    [
+      "MOVABLE_Door_1",
+      "rotation_euler",
+      2,
+      1.2
+    ]
+  ]
+}

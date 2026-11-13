@@ -1,0 +1,111 @@
+{
+  "result": "PASS",
+  "sha256": "15104c6794f04301f0583f3b8fbbae2b10e221f4feebeefb9aa4867cc2184e9d",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416666666666667,
+    "reset": 2.0416667461395264
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_MOVABLE_Return_Flap",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "MOVABLE_Return_Flap.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Return_Flap",
+      "position": [
+        0,
+        1.100000023841858,
+        0.33500000834465027
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Return_Flap",
+      "position": [
+        0,
+        1.100000023841858,
+        0.33500000834465027
+      ],
+      "quaternion": [
+        0.4123207666355525,
+        0,
+        0,
+        0.9110387397916019
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Return_Flap",
+      "position": [
+        0,
+        1.100000023841858,
+        0.33500000834465027
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        0,
+        1.1,
+        0.335
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        0,
+        1.1,
+        0.335
+      ],
+      "openQ": [
+        0.41232078174342474,
+        0,
+        0,
+        0.9110387329540337
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "clearance": "Inward flap clears lower front, header, side walls and rear wall",
+  "verification": "Independent raw track endpoints and Three.js AnimationMixer closed-open-closed poses; no Gallery component controls"
+}

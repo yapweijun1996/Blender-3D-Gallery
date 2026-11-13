@@ -1,0 +1,123 @@
+{
+  "id": "clinic-registration-kiosk",
+  "name": "Clinic Registration Kiosk",
+  "summary": "Clinic Registration Kiosk modular illustrative asset.",
+  "description": "Original generic SG/MY-inspired interpretation, no official branding, personal data, or infrastructure certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/clinic-registration-kiosk.glb",
+    "source": "sources/clinic-registration-kiosk.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.55,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 453,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; material/export helpers adapted from project hawker-centre-tray-rack. Generic labels use Blender bundled Bfont converted to independent editable meshes. No external models, logos, personal data or textures."
+    }
+  ],
+  "material_notes": "Named independently editable meshes/materials. AnimationMixer clips where listed; no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative generic regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "PASS: independent raw endpoints, expected Mixer poses and clearance",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "animations": {
+    "authoring": [
+      [
+        "MOVABLE_Assist_Button",
+        "location",
+        1,
+        0.012
+      ]
+    ],
+    "cycle_seconds": 2,
+    "start_seconds": 0.041666666666666664,
+    "end_seconds": 2.0416666666666665,
+    "runtime": "Requires host AnimationMixer; Gallery component UI not implemented"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "clinic-registration-kiosk",
+    "backlog_id": 453,
+    "glb_bytes": 99784,
+    "triangles": 2104,
+    "vertices": 3352,
+    "meshes": 13,
+    "materials": 5,
+    "dimensions": [
+      0.7400000169873238,
+      1.5199999809265137,
+      0.5124999852851033
+    ],
+    "bounds": {
+      "min": [
+        -0.30000001192092896,
+        0,
+        -0.23999999463558197
+      ],
+      "max": [
+        0.4400000050663948,
+        1.5199999809265137,
+        0.27249999064952135
+      ]
+    },
+    "sha256": "dd56a2555d7e0cbf8ab221ed84b7b9c7ff71e9522b4e9b1fc3f5d520dc6bd57f",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "animation_clips": 1
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "id": "clinic-pharmacy-window",
+  "name": "Clinic Pharmacy Window",
+  "summary": "Original modular clinic pharmacy window with editable components.",
+  "description": "Original generic public facility prop, not measured or certified hardware.",
+  "category": "Architecture",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "metres",
+    "assembly"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/clinic-pharmacy-window.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp",
+      "previews/open.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "No safety, medical, screening, accessibility or regulatory compliance claim. Plants are species-inspired stylizations, not botanical references. No external textures, logos or assets. Physical Android/iOS and WebKit NOT TESTED. Clips are asset capabilities, not gallery controls.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 9000,
+      "bytes": 600000,
+      "mesh_primitives": 80
+    },
+    "structure": "PASS",
+    "source_edit": "PASS",
+    "browser": "PASS: desktop Chromium at three viewports, not physical mobile",
+    "visual": "PASS: four rendered angles, browser initial views, and open pose where applicable inspected",
+    "local_asset": "PASS",
+    "combined_fifty_asset_gate": "PENDING"
+  },
+  "metrics": {
+    "sha256": "76bbfc52c772038affe788d7dfddfe6fc40bfc8648a3f009fa33597894886188",
+    "glb_bytes": 84812,
+    "triangles": 1636,
+    "vertices": 2840,
+    "primitives": 12,
+    "materials": 4,
+    "textures": 0,
+    "animations": 1,
+    "dimensions": [
+      1.8000000268220901,
+      1.7829199992846791,
+      0.47999998927116394
+    ],
+    "bounds": {
+      "min": [
+        -0.9000000134110451,
+        0.06000000238418579,
+        -0.11999999731779099
+      ],
+      "max": [
+        0.9000000134110451,
+        1.842920001668865,
+        0.35999999195337296
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "animation_test": "PASS: raw first/last track values, exact2.5s timeline, midpoint intended travel/hinge rotation, opening/clearance and LoopOnce end restoration"
+}

@@ -1,0 +1,109 @@
+{
+  "result": "PASS",
+  "sha256": "4c10a09fc752afb53276f53cfb1d52bf7a993b8fd433e075070188af9a782d4e",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416666666666667,
+    "reset": 2.0416667461395264
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_MOVABLE_Ticket",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "MOVABLE_Ticket.position",
+      "first": [
+        0,
+        1.0199999809265137,
+        0.23999999463558197
+      ],
+      "last": [
+        0,
+        1.0199999809265137,
+        0.23999999463558197
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Ticket",
+      "position": [
+        0,
+        1.0199999809265137,
+        0.23999999463558197
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Ticket",
+      "position": [
+        0,
+        1.0199999809265137,
+        0.39999999960265387
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Ticket",
+      "position": [
+        0,
+        1.0199999809265137,
+        0.23999999463558197
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        0,
+        1.02,
+        0.24
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        0,
+        1.02,
+        0.4
+      ],
+      "openQ": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "clearance": "Fed ticket fully clears slot; paper width and thickness fit aperture dimensions",
+  "verification": "Independent raw track endpoints and Three.js AnimationMixer closed-open-closed poses; no Gallery component controls"
+}

@@ -1,0 +1,109 @@
+{
+  "id": "parcel-collection-counter",
+  "name": "Parcel Collection Counter",
+  "summary": "Parcel Collection Counter modular illustrative asset.",
+  "description": "Original generic SG/MY-inspired interpretation, no official branding, personal data, or infrastructure certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/parcel-collection-counter.glb",
+    "source": "sources/parcel-collection-counter.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.55,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 445,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; material/export helpers adapted from project hawker-centre-tray-rack. Generic labels use Blender bundled Bfont converted to independent editable meshes. No external models, logos, personal data or textures."
+    }
+  ],
+  "material_notes": "Named independently editable meshes/materials. AnimationMixer clips where listed; no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative generic regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "NOT APPLICABLE: static asset",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "parcel-collection-counter",
+    "backlog_id": 445,
+    "glb_bytes": 119092,
+    "triangles": 2608,
+    "vertices": 4132,
+    "meshes": 15,
+    "materials": 4,
+    "dimensions": [
+      2.4000000953674316,
+      2.0799999833106995,
+      0.800000011920929
+    ],
+    "bounds": {
+      "min": [
+        -1.2000000476837158,
+        0,
+        -0.4000000059604645
+      ],
+      "max": [
+        1.2000000476837158,
+        2.0799999833106995,
+        0.4000000059604645
+      ]
+    },
+    "sha256": "62c39aec43eed10a6b1042ae1c0d8cd1f9dcf69ca3d035553ab75b234d778a48",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000,
+    "animation_clips": 0
+  }
+}

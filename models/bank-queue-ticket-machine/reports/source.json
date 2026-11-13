@@ -1,0 +1,91 @@
+{
+  "source_sha256": "6d6641e23594306628dd2919afd714798d041b04595f5e77f7b3aa1e27fddffe",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 11,
+  "objects": [
+    {
+      "name": "Button",
+      "type": "MESH",
+      "parent": "ASSET_BankQueueTicketMachine"
+    },
+    {
+      "name": "Display",
+      "type": "MESH",
+      "parent": "ASSET_BankQueueTicketMachine"
+    },
+    {
+      "name": "Editable_Label_QUEUE",
+      "type": "MESH",
+      "parent": "ASSET_BankQueueTicketMachine"
+    },
+    {
+      "name": "Foot",
+      "type": "MESH",
+      "parent": "ASSET_BankQueueTicketMachine"
+    },
+    {
+      "name": "Head",
+      "type": "MESH",
+      "parent": "ASSET_BankQueueTicketMachine"
+    },
+    {
+      "name": "Interface_Line",
+      "type": "MESH",
+      "parent": "ASSET_BankQueueTicketMachine"
+    },
+    {
+      "name": "Interface_Line.001",
+      "type": "MESH",
+      "parent": "ASSET_BankQueueTicketMachine"
+    },
+    {
+      "name": "Interface_Line.002",
+      "type": "MESH",
+      "parent": "ASSET_BankQueueTicketMachine"
+    },
+    {
+      "name": "MOVABLE_Ticket",
+      "type": "EMPTY",
+      "parent": "ASSET_BankQueueTicketMachine"
+    },
+    {
+      "name": "Paper",
+      "type": "MESH",
+      "parent": "MOVABLE_Ticket"
+    },
+    {
+      "name": "Pedestal",
+      "type": "MESH",
+      "parent": "ASSET_BankQueueTicketMachine"
+    },
+    {
+      "name": "Ticket_Slot",
+      "type": "MESH",
+      "parent": "ASSET_BankQueueTicketMachine"
+    }
+  ],
+  "edit_proof": {
+    "node": "Button",
+    "before": [
+      0,
+      -0.12800000607967377,
+      0.8799999952316284
+    ],
+    "after": [
+      0.12300000339746475,
+      -0.12800000607967377,
+      0.8799999952316284
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Brass fittings",
+    "roughness_before": 0.4000000059604645,
+    "roughness_after": 0.73,
+    "copy_sha256": "ce2898f180612d53be1153e0202a7ad96f25fbcb13ba2f16d6f3b26fa2436842",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}
