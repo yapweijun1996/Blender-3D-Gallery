@@ -1,0 +1,29 @@
+# Covered Motorcycle Parking verification
+
+V2.1 backlog **389**. **Local asset PASS; overall NEEDS REVIEW**: physical Android/iOS browsers/devices are **NOT TESTED**. Desktop viewport emulation is not native mobile acceptance. No remote push, PR, merge or deployment by this preparation.
+
+## Asset and provenance
+
+One-sided cantilever canopy over three motorcycle spaces, with pitched sheet roof, independent steel braces, painted lines and wheel stops.
+
+Distinct one-sided two-column cantilever motorcycle shelter with three spaces, no bicycle stands. This differs from the existing four-post bicycle shelter rather than being a color/text variant. Shared original bay-marking helper is contextual geometry, not an extra counted type.
+
+Independent original Blender Python geometry and materials, using reviewed original project helpers. No third-party models, textures, fonts or logo artwork. Original geometric symbols are illustrative, not an official road sign or regulatory/engineering/structural/accessibility certification. Reuse in the owner's projects authorized; public redistribution terms unspecified and downloads disabled.
+
+- [Generator](generate.py), [editable source](sources/covered-motorcycle-parking.blend), [GLB](exports/covered-motorcycle-parking.glb), [metadata](metadata/covered-motorcycle-parking.json).
+- Metres; Blender +Z up/-Y front exports to glTF +Y up/+Z front.
+- Actual source reopen and independent mesh data: [report](reports/source.json).
+- Actual component edit/re-export **PASS**, original source preserved: [proof](reports/source-edit-proof.json), [edited source](reports/source-edit.blend), [edited GLB](reports/source-edit.glb). Editable components are not runtime interaction claims.
+
+## Executed checks
+
+- [Structural report](reports/assets.json): **0 Khronos errors, 0 warnings**; 101,648 bytes, 1,848 triangles, 30 primitives, 5 materials.
+- Budget **500 KiB / 12,000 triangles** passes. Validator asserts expected parts, finite geometry, scale/orientation and no external buffers/textures, animations, cameras or lights.
+- **235/235 unit tests PASS**, including five new tests. Build/catalog validation **PASS**, existing chunk-size warning retained. Shared [unit log](../malaysia-card-lane-sign/reports/unit-full.log), [build log](../malaysia-card-lane-sign/reports/build.log).
+- Strict desktop Chromium **3/3 PASS**, version 156.0.8078.4, at1440×900,768×1024,390×844. [Results](reports/browser/results.json), [log](reports/browser.log). Exact consumed GLB bytes/SHA, HTTP200, WebGL draws, orbit/zoom, exact reset/reopen, no overflow and no unfiltered request/page/console errors. One fixed browser pass, no error filtering or retry-to-green.
+
+## Visual review and limits
+
+Actual exported-GLB studio renders inspected: [primary](previews/covered-motorcycle-parking.webp), [front](previews/front.webp), [rear](previews/rear.webp). Actual Gallery initial pixels inspected at all three widths. Recognizable proportions, visible separate components/markings and no clipped framing. No Gallery per-model lighting adjustment needed. Independent review found the initial pale roof low-contrast against the studio floor. The render-only floor background was darkened; all three regenerated images were inspected and the roof silhouette is now clear. Original images and rationale are preserved in reports/initial-studio and reports/preview-review.txt. Shipped GLB and .blend source hashes are unchanged. WebP thumbnails are lightweight; larger lossless PNG renders are retained as evidence, not claimed under the proposed300KiB poster budget.
+
+Combined ten-model final gate is pending with assembler. Physical Android/iOS and device performance remain unverified. Existing models, catalog schema and historic evidence preserved.

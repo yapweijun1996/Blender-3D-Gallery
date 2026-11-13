@@ -1,0 +1,18 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(asset.getObjectByName('ICON_Engine'))
+
+    at file:///srv/agent-workstation/workspaces/blender-transport-385-389-worker-a-20261113/repo/models/motorcycle-parking-bay/validate.mjs:7:133 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

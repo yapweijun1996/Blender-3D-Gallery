@@ -1,0 +1,100 @@
+{
+  "results": [
+    {
+      "name": "cancel-partial-transfer-and-reopen",
+      "passed": true,
+      "failures": [
+        {
+          "url": "http://127.0.0.1:45227/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "network": {
+        "requests": [
+          {
+            "id": "2458550.323",
+            "url": "http://127.0.0.1:45227/Blender-3D-Gallery/assets/table-XWseCS4E.glb"
+          },
+          {
+            "id": "2458550.329",
+            "url": "http://127.0.0.1:45227/Blender-3D-Gallery/assets/ball_00-BoyXP3PW.glb"
+          }
+        ],
+        "failed": [
+          {
+            "requestId": "2458550.323",
+            "timestamp": 364467.705956,
+            "type": "Fetch",
+            "errorText": "net::ERR_ABORTED",
+            "canceled": true
+          }
+        ],
+        "finished": [
+          {
+            "requestId": "2458550.329",
+            "timestamp": 364467.790185,
+            "encodedDataLength": 93895
+          }
+        ],
+        "received": {
+          "2458550.323": 1493,
+          "2458550.329": 93692
+        },
+        "expectedBytes": 417656
+      }
+    },
+    {
+      "name": "http-503-retry",
+      "passed": true,
+      "failures": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+      ],
+      "pageErrors": [],
+      "injectedErrors": {
+        "failures": [],
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+        ]
+      }
+    },
+    {
+      "name": "truncated-glb-retry",
+      "passed": true,
+      "failures": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "injectedErrors": {
+        "failures": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "name": "transport-abort-retry",
+      "passed": true,
+      "failures": [
+        {
+          "url": "http://127.0.0.1:45227/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+          "error": "net::ERR_FAILED"
+        }
+      ],
+      "consoleErrors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "pageErrors": [],
+      "injectedErrors": {
+        "failures": [
+          {
+            "url": "http://127.0.0.1:45227/Blender-3D-Gallery/assets/table-XWseCS4E.glb",
+            "error": "net::ERR_FAILED"
+          }
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_FAILED"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "id": "motorcycle-parking-bay",
+  "name": "Motorcycle Parking Bay",
+  "summary": "Open three-space motorcycle parking module with painted bay lines, wheel stops and a separate original two-wheel pictogram panel.",
+  "description": "Open three-space motorcycle parking module with painted bay lines, wheel stops and a separate original two-wheel pictogram panel. Generic illustrative transport asset, not an official sign, surveyed site or regulatory standard.",
+  "category": "Architecture",
+  "tags": [
+    "transport",
+    "singapore",
+    "malaysia",
+    "modular",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials; reviewed original project helpers. No third-party models, textures, fonts, logos or artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/motorcycle-parking-bay.glb",
+    "source": "sources/motorcycle-parking-bay.blend",
+    "preview": "previews/motorcycle-parking-bay.webp",
+    "render": "previews/motorcycle-parking-bay.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.8,
+      0.55,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "base at ground plane",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "backlog_id": 387,
+  "material_notes": "Independent named editable mesh components and materials. No animations or runtime interaction. Geometric pictograms use original primitives, not text/font artwork.",
+  "accuracy_notes": "Illustrative asset only, not traffic, structural, vehicle clearance, accessibility or engineering certification. No proprietary logo. Touch n Go is descriptive context only, not affiliation. Three0.9m-spaced illustrative parking spaces with editable markings/stops and an original motorcycle pictogram. Overall width3.175m includes projecting sign, while slab is3.1m. See reports/initial-review.txt for the corrected mistaken width expectation, initial images and caught incomplete pictogram edit. Final engine/saddle meshes are asserted and visually inspected.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using reviewed original project helpers; no third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Physical Android/iOS NOT TESTED. Combined local gate PASS; see docs/verification/sgmy-batch07-final.md.",
+    "local_asset": "PASS",
+    "browser": "PASS: desktop Chromium156.0.8078.4 at three viewport sizes; physical Android/iOS NOT TESTED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "motorcycle-parking-bay",
+    "glb_bytes": 140804,
+    "triangles": 2592,
+    "vertices": 5088,
+    "primitives": 18,
+    "materials": 5,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      3.1749999821186066,
+      1.3599999696016312,
+      2.5
+    ],
+    "bounds": {
+      "min": [
+        -1.5499999523162842,
+        0,
+        -1.25
+      ],
+      "max": [
+        1.6250000298023224,
+        1.3599999696016312,
+        1.25
+      ]
+    },
+    "sha256": "ddbcc58e5caa010108dfa178a1a8da6e917bec89213b1817dedf73935d8b98ea",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  }
+}
