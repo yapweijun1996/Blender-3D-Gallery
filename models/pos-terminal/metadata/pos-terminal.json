@@ -1,0 +1,62 @@
+{
+  "id": "pos-terminal",
+  "name": "POS Terminal",
+  "summary": "Original independent pos terminal with editable metric components.",
+  "description": "Standalone touchscreen POS pedestal, tilt joint and cable routing; independent of cash register keyboard/drawer or self-checkout chassis.",
+  "category": "Props",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "metres"
+  ],
+  "status": "verified-local-needs-device-review",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/pos-terminal.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "Original generic illustrative proportions, not a surveyed building, landmark, operator installation, engineering/accessibility/safety certification or functioning payment, cooking, vehicle or access-control system. Asset-level clips only; no gallery playback UI. Physical mobile/WebKit NOT TESTED.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "budget": {
+      "triangles": 20000,
+      "bytes": 1500000,
+      "mesh_primitives": 100
+    },
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "local": "PASS",
+    "source_edit": "PASS: saved copy mesh/material edit, reopen and export without regeneration",
+    "khronos": "PASS",
+    "browser": "PASS: Chromium 1440x900,768x1024,390x844; final SHA evidence",
+    "visual": "PASS: all4 final studio and3 final browser images actually inspected",
+    "animation": "PASS: raw first/end values and duration; all60 sampled frames clearance/contact; intended midpoint and restoration. Not physics/security/operational simulation",
+    "source_sha256": "5d9d1cfe0d145020c40389ade80004fab3ab5040c479a80a0c07391df77be310",
+    "glb_sha256": "e8a8c5ecab2b5515684bc5baddcaf073b31e3193c712fad9db479290a2260250"
+  },
+  "novelty_contract": "Standalone touchscreen POS pedestal, tilt joint and cable routing; independent of cash register keyboard/drawer or self-checkout chassis."
+}

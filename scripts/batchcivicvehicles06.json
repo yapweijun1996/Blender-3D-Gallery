@@ -1,0 +1,647 @@
+[
+  {
+    "id": 97,
+    "slug": "food-tray",
+    "title": "Food Tray",
+    "root": "ASSET_FoodTray",
+    "required_nodes": [
+      "Tray_Base",
+      "Compartment_Divider",
+      "Carry_Rim"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      0.36,
+      0.03,
+      0.27
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 98,
+    "slug": "chopstick-holder",
+    "title": "Chopstick Holder",
+    "root": "ASSET_ChopstickHolder",
+    "required_nodes": [
+      "Holder_Wall",
+      "Drain_Base_Rib",
+      "Independent_Chopstick"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      0.13,
+      0.258,
+      0.13
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 143,
+    "slug": "plastic-pallet",
+    "title": "Plastic Pallet",
+    "root": "ASSET_PlasticPallet",
+    "required_nodes": [
+      "Bottom_Runner",
+      "Hollow_Block_Side",
+      "Deck_Rib_X",
+      "Deck_Rib_Y_Segment"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      1.2,
+      0.15,
+      1
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 185,
+    "slug": "blackboard",
+    "title": "Blackboard",
+    "root": "ASSET_Blackboard",
+    "required_nodes": [
+      "Fixed_Chalk_Panel",
+      "MOVABLE_Sliding_Panel",
+      "Eraser_Shelf"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      2.16,
+      2.1,
+      0.5
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Sliding_Panel"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Sliding_Panel",
+        "location",
+        0,
+        0.9
+      ]
+    ]
+  },
+  {
+    "id": 242,
+    "slug": "jogging-path",
+    "title": "Jogging Path",
+    "root": "ASSET_JoggingPath",
+    "required_nodes": [
+      "Curved_Subbase",
+      "Rubber_Running_Surface",
+      "Inner_Edge_Transition"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      5,
+      0.14,
+      5
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 252,
+    "slug": "flower-bed",
+    "title": "Flower Bed",
+    "root": "ASSET_FlowerBed",
+    "required_nodes": [
+      "Raised_Border",
+      "Plant_Socket",
+      "Flower_Stem"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      2.4,
+      0.703,
+      1.2
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 290,
+    "slug": "wet-market-fish-counter",
+    "title": "Wet Market Fish Counter",
+    "root": "ASSET_WetMarketFishCounter",
+    "required_nodes": [
+      "Ice_Well_Base",
+      "Drain_Gutter",
+      "Removable_Fish",
+      "Fish_Tail"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      1.6,
+      1.1,
+      0.847
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 152,
+    "slug": "industrial-machine",
+    "title": "Industrial Machine",
+    "root": "ASSET_IndustrialMachine",
+    "required_nodes": [
+      "Column",
+      "Adjustable_Worktable",
+      "Headstock",
+      "MOVABLE_Spindle"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      0.7,
+      1.78,
+      0.7
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Spindle"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Spindle",
+        "location",
+        2,
+        -0.1
+      ]
+    ]
+  },
+  {
+    "id": 293,
+    "slug": "kampung-house",
+    "title": "Kampung House",
+    "root": "ASSET_KampungHouse",
+    "required_nodes": [
+      "Stilt",
+      "Elevated_Floor",
+      "Pitched_Timber_Roof",
+      "Stair",
+      "Veranda_Rail"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      8,
+      5.8,
+      12
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 63,
+    "slug": "five-foot-way",
+    "title": "Five-Foot Way",
+    "root": "ASSET_Five-FootWay",
+    "required_nodes": [
+      "Linked_Arcade_Floor",
+      "Arcade_Column",
+      "Shop_Threshold",
+      "Covered_Arcade_Slab"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      6,
+      3.275,
+      2.2
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 167,
+    "slug": "covered-walkway",
+    "title": "Covered Walkway",
+    "root": "ASSET_CoveredWalkway",
+    "required_nodes": [
+      "Walkway_Slab",
+      "Continuous_Roof",
+      "Gutter",
+      "Downpipe",
+      "End_Connector"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      3.42,
+      3.5,
+      8
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 77,
+    "slug": "mosque-inspired-building",
+    "title": "Mosque-Inspired Building",
+    "root": "ASSET_Mosque-InspiredBuilding",
+    "required_nodes": [
+      "Dome",
+      "Hall_Side",
+      "Arcade_Column",
+      "Minaret"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      16,
+      9.2,
+      18
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 78,
+    "slug": "temple-inspired-building",
+    "title": "Temple-Inspired Building",
+    "root": "ASSET_Temple-InspiredBuilding",
+    "required_nodes": [
+      "Courtyard_Base",
+      "Hall_Column",
+      "Lower_Layered_Roof",
+      "Upper_Layered_Roof",
+      "Courtyard_Gateway_Roof"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      16,
+      7.6,
+      18
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 79,
+    "slug": "church-inspired-building",
+    "title": "Church-Inspired Building",
+    "root": "ASSET_Church-InspiredBuilding",
+    "required_nodes": [
+      "Nave_Wall",
+      "Nave_Roof",
+      "Side_Aisle",
+      "Bell",
+      "Bell_Tower_Roof"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      14,
+      11.1,
+      20
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 103,
+    "slug": "mrt-train-carriage",
+    "title": "MRT Train Carriage",
+    "root": "ASSET_MRTTrainCarriage",
+    "required_nodes": [
+      "Carriage_Floor",
+      "Bogie_Frame",
+      "Grab_Pole",
+      "MOVABLE_LeftFront_A"
+    ],
+    "budget_bytes": 5000000,
+    "budget_triangles": 80000,
+    "budget_primitives": 320,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      3.075,
+      3.7,
+      20.48
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_LeftFront_A",
+      "MOVABLE_LeftFront_B",
+      "MOVABLE_LeftRear_A",
+      "MOVABLE_LeftRear_B",
+      "MOVABLE_RightFront_A",
+      "MOVABLE_RightFront_B",
+      "MOVABLE_RightRear_A",
+      "MOVABLE_RightRear_B",
+      "ROLL_L00",
+      "ROLL_R00",
+      "ROLL_L01",
+      "ROLL_R01",
+      "ROLL_L10",
+      "ROLL_R10",
+      "ROLL_L11",
+      "ROLL_R11"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_LeftFront_A",
+        "location",
+        1,
+        -0.74
+      ],
+      [
+        "MOVABLE_LeftFront_B",
+        "location",
+        1,
+        0.74
+      ],
+      [
+        "MOVABLE_LeftRear_A",
+        "location",
+        1,
+        -0.74
+      ],
+      [
+        "MOVABLE_LeftRear_B",
+        "location",
+        1,
+        0.74
+      ],
+      [
+        "MOVABLE_RightFront_A",
+        "location",
+        1,
+        -0.74
+      ],
+      [
+        "MOVABLE_RightFront_B",
+        "location",
+        1,
+        0.74
+      ],
+      [
+        "MOVABLE_RightRear_A",
+        "location",
+        1,
+        -0.74
+      ],
+      [
+        "MOVABLE_RightRear_B",
+        "location",
+        1,
+        0.74
+      ],
+      [
+        "ROLL_L00",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_R00",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_L01",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_R01",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_L10",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_R10",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_L11",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_R11",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ]
+    ]
+  },
+  {
+    "id": 101,
+    "slug": "singapore-public-bus",
+    "title": "Singapore Public Bus",
+    "root": "ASSET_SingaporePublicBus",
+    "required_nodes": [
+      "Centre_Low_Floor",
+      "Reserved_Bay_Marking",
+      "Standee_Pole",
+      "MOVABLE_FrontEntry_A"
+    ],
+    "budget_bytes": 4000000,
+    "budget_triangles": 60000,
+    "budget_primitives": 240,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      2.6,
+      3.2,
+      12.14
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_FrontEntry_A",
+      "MOVABLE_FrontEntry_B",
+      "MOVABLE_MidEntry_A",
+      "MOVABLE_MidEntry_B",
+      "ROLL_FL",
+      "ROLL_FR",
+      "ROLL_RL",
+      "ROLL_RR",
+      "STEER_FL",
+      "STEER_FR"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_FrontEntry_A",
+        "location",
+        1,
+        -0.64
+      ],
+      [
+        "MOVABLE_FrontEntry_B",
+        "location",
+        1,
+        0.64
+      ],
+      [
+        "MOVABLE_MidEntry_A",
+        "location",
+        1,
+        -0.64
+      ],
+      [
+        "MOVABLE_MidEntry_B",
+        "location",
+        1,
+        0.64
+      ],
+      [
+        "ROLL_FL",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_FR",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_RL",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_RR",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "STEER_FL",
+        "rotation_euler",
+        2,
+        0.2
+      ],
+      [
+        "STEER_FR",
+        "rotation_euler",
+        2,
+        0.2
+      ]
+    ]
+  },
+  {
+    "id": 150,
+    "slug": "cargo-truck",
+    "title": "Cargo Truck",
+    "root": "ASSET_CargoTruck",
+    "required_nodes": [
+      "Cargo_Side",
+      "Cargo_Floor",
+      "Cab_Floor",
+      "MOVABLE_Loading_L"
+    ],
+    "budget_bytes": 3000000,
+    "budget_triangles": 50000,
+    "budget_primitives": 180,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      3.05,
+      3.84,
+      9.14
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Cab_L",
+      "MOVABLE_Loading_L",
+      "MOVABLE_Cab_R",
+      "MOVABLE_Loading_R",
+      "ROLL_FL",
+      "ROLL_FR",
+      "ROLL_RL",
+      "ROLL_RR",
+      "STEER_FL",
+      "STEER_FR"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Cab_L",
+        "rotation_euler",
+        2,
+        1.0
+      ],
+      [
+        "MOVABLE_Loading_L",
+        "rotation_euler",
+        2,
+        1.2
+      ],
+      [
+        "MOVABLE_Cab_R",
+        "rotation_euler",
+        2,
+        -1.0
+      ],
+      [
+        "MOVABLE_Loading_R",
+        "rotation_euler",
+        2,
+        -1.2
+      ],
+      [
+        "ROLL_FL",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_FR",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_RL",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_RR",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "STEER_FL",
+        "rotation_euler",
+        2,
+        0.2
+      ],
+      [
+        "STEER_FR",
+        "rotation_euler",
+        2,
+        0.2
+      ]
+    ]
+  }
+]

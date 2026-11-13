@@ -1,0 +1,111 @@
+{
+  "source_sha256": "43be99cbd3ce8ef12f844c85eca75bcaeaf602278d06e37cfcab34000ad3807b",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 15,
+  "objects": [
+    {
+      "name": "Adjustable_Worktable",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "Base",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "Column",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "Column_Collar",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "Control_Button.001",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "Control_Panel",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "Guard_Crossbar",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "Guard_Post",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "Guard_Post.001",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "Headstock",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "Motor",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "MOVABLE_Spindle",
+      "type": "EMPTY",
+      "parent": "ASSET_IndustrialMachine"
+    },
+    {
+      "name": "Chuck",
+      "type": "MESH",
+      "parent": "MOVABLE_Spindle"
+    },
+    {
+      "name": "Illustrative_Blunt_Tool",
+      "type": "MESH",
+      "parent": "MOVABLE_Spindle"
+    },
+    {
+      "name": "Quill",
+      "type": "MESH",
+      "parent": "MOVABLE_Spindle"
+    },
+    {
+      "name": "Control_Button",
+      "type": "MESH",
+      "parent": "ASSET_IndustrialMachine"
+    }
+  ],
+  "edit_proof": {
+    "node": "Adjustable_Worktable",
+    "before": [
+      0,
+      -0.11999999731779099,
+      0.800000011920929
+    ],
+    "after": [
+      0.12300000339746475,
+      -0.11999999731779099,
+      0.800000011920929
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Satin metal",
+    "roughness_before": 0.47999998927116394,
+    "roughness_after": 0.73,
+    "copy_sha256": "37f2e964ae58e5165e43cfbc9a9bd5ec300381698555e1702801df2275287bc6",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

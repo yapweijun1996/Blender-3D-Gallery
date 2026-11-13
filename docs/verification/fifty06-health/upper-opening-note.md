@@ -1,0 +1,1 @@
+Actual render review found inappropriate facade entry apertures inherited by elevated hotel/ward/clerestory modules. Closed only those upper module faces; retained ground public/ambulance/bay openings. Original render/source/export/logs retained in initial-upper-openings. Fixed budgets and validation assertions unchanged.

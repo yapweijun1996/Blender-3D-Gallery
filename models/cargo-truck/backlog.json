@@ -1,0 +1,96 @@
+{
+  "id": 150,
+  "slug": "cargo-truck",
+  "title": "Cargo Truck",
+  "root": "ASSET_CargoTruck",
+  "required_nodes": [
+    "Cargo_Side",
+    "Cargo_Floor",
+    "Cab_Floor",
+    "MOVABLE_Loading_L"
+  ],
+  "budget_bytes": 3000000,
+  "budget_triangles": 50000,
+  "budget_primitives": 180,
+  "max_dimension_m": 40,
+  "expected_dimensions_m": [
+    3.05,
+    3.84,
+    9.14
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Cab_L",
+    "MOVABLE_Loading_L",
+    "MOVABLE_Cab_R",
+    "MOVABLE_Loading_R",
+    "ROLL_FL",
+    "ROLL_FR",
+    "ROLL_RL",
+    "ROLL_RR",
+    "STEER_FL",
+    "STEER_FR"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Cab_L",
+      "rotation_euler",
+      2,
+      1.0
+    ],
+    [
+      "MOVABLE_Loading_L",
+      "rotation_euler",
+      2,
+      1.2
+    ],
+    [
+      "MOVABLE_Cab_R",
+      "rotation_euler",
+      2,
+      -1.0
+    ],
+    [
+      "MOVABLE_Loading_R",
+      "rotation_euler",
+      2,
+      -1.2
+    ],
+    [
+      "ROLL_FL",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_FR",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_RL",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_RR",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "STEER_FL",
+      "rotation_euler",
+      2,
+      0.2
+    ],
+    [
+      "STEER_FR",
+      "rotation_euler",
+      2,
+      0.2
+    ]
+  ]
+}

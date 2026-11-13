@@ -1,0 +1,23 @@
+{
+  "status": "REVIEWED",
+  "full_diff_check_exit": 2,
+  "warnings": [
+    "docs/verification/fifty06-health/build.log:972: trailing whitespace.",
+    "+[plugin builtin:vite-reporter] ",
+    "docs/verification/fifty06-health/hotel-final/build.log:972: trailing whitespace.",
+    "+[plugin builtin:vite-reporter] ",
+    "docs/verification/mall038/build-final.log:969: trailing whitespace.",
+    "+[plugin builtin:vite-reporter] ",
+    "docs/verification/mall038/build-initial.log:969: trailing whitespace.",
+    "+[plugin builtin:vite-reporter] ",
+    "docs/verification/mall038/build-pilot.log:924: trailing whitespace.",
+    "+[plugin builtin:vite-reporter] ",
+    "docs/verification/mall038/build-pos-correction.log:969: trailing whitespace.",
+    "+[plugin builtin:vite-reporter] ",
+    "docs/verification/sgmy-fifty-06/integration/build.log:1071: trailing whitespace.",
+    "+[plugin builtin:vite-reporter] ",
+    "docs/verification/sgmy-fifty-06/latest-main/build.log:1221: trailing whitespace.",
+    "+[plugin builtin:vite-reporter] "
+  ],
+  "decision": "Preserve8 exact raw Vite output lines, including6 producer logs. No source whitespace warnings; source-only diff check excludes evidence directory. No test assertion changes or normalization of canonical evidence."
+}

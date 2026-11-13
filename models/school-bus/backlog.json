@@ -1,0 +1,45 @@
+{
+  "id": 199,
+  "title": "School Bus",
+  "slug": "school-bus",
+  "root": "ASSET_SchoolBus",
+  "dimensions": [
+    2.6,
+    7.5,
+    3.2
+  ],
+  "scale": 10,
+  "features": [
+    "CHASSIS",
+    "PASSENGER",
+    "ENTRY",
+    "EMERGENCY",
+    "TYRE"
+  ],
+  "animation": {
+    "kind": "vehicle",
+    "wheel_radius": 0.45,
+    "track": 2.1,
+    "axles": [
+      -1.7,
+      2.5
+    ],
+    "doors": [
+      {
+        "node": "MOVABLE_Entry",
+        "kind": "rotation",
+        "angle": 1.1
+      },
+      {
+        "node": "MOVABLE_Emergency",
+        "kind": "rotation",
+        "angle": 1.1
+      }
+    ]
+  },
+  "budget": {
+    "triangles": 70000,
+    "bytes": 4000000,
+    "mesh_primitives": 200
+  }
+}

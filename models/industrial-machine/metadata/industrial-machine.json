@@ -1,0 +1,125 @@
+{
+  "id": "industrial-machine",
+  "name": "Industrial Machine",
+  "summary": "Industrial Machine reusable original asset.",
+  "description": "Original Singapore/Malaysia city, commercial and architectural illustrative asset with independently editable components. No commercial or official logos, real personal data, or engineering certification.",
+  "category": "Equipment",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "city-shells",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry; reviewed repository helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/industrial-machine.glb",
+    "source": "sources/industrial-machine.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.55,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 152,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. Not a medical, accessibility, engineering or safety certification.",
+  "attribution": [
+    {
+      "credit": "Original geometry; repository material/export helpers. Generic labels use Blender bundled Bfont converted to editable mesh. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. AnimationMixer clips where listed, no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative scene prop only. Not operational fuel, ticketing or security equipment; no accessibility, structural, electrical, traffic or safety certification. Not a real landmark or branded building.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "semantic_geometry": "PASS: independent prop/shell contracts, vehicle radius/axle/contact/aperture/sweep checks and visual review",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "PASS: independent raw endpoints, expected Mixer poses and clearance",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "animations": {
+    "authoring": [
+      [
+        "MOVABLE_Spindle",
+        "location",
+        2,
+        -0.1
+      ]
+    ],
+    "cycle_seconds": 2,
+    "start_seconds": 0.041666666666666664,
+    "end_seconds": 2.0416666666666665,
+    "runtime": "Requires host AnimationMixer; Gallery component UI not implemented"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "industrial-machine",
+    "backlog_id": 152,
+    "glb_bytes": 94164,
+    "triangles": 1660,
+    "vertices": 3288,
+    "meshes": 15,
+    "materials": 6,
+    "dimensions": [
+      0.699999988079071,
+      1.7799999862909317,
+      0.6999999955296516
+    ],
+    "bounds": {
+      "min": [
+        -0.3499999940395355,
+        0,
+        -0.3499999940395355
+      ],
+      "max": [
+        0.3499999940395355,
+        1.7799999862909317,
+        0.3500000014901161
+      ]
+    },
+    "sha256": "e775b49289573f0bb76c79eed3794d40082f15131f351d2479f7102d63f66ee7",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "animation_clips": 1
+  }
+}
