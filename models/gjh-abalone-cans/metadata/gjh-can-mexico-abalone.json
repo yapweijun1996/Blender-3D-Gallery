@@ -1,0 +1,90 @@
+{
+  "id": "gjh-can-mexico-abalone",
+  "name": "GJH Can — Mexico Abalone",
+  "name_zh": "墨西哥鲍鱼罐头",
+  "summary": "A 454g canned mexico abalone with a label unrolled from the official Mexico SKU packshots.",
+  "description": "Metre-scale tinplate can with double-seam rims, recessed lid with ring-pull and a wrap-around label textured from the official front and reverse Mexico 454g packshots.",
+  "category": "Packaged Goods",
+  "tags": [
+    "GJH",
+    "New Moon",
+    "abalone",
+    "can",
+    "packaging",
+    "mexico",
+    "product",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Deterministic Blender Python geometry (tinplate can, seams, lid, ring-pull). Label texture is unrolled from the owner's source-verified official packshots; no logo or text was redrawn or generated.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/gjh-can-mexico-abalone.glb",
+    "source": "sources/gjh-abalone-cans.blend",
+    "preview": "previews/gjh-can-mexico-abalone.webp",
+    "texture": "textures/gjh-can-mexico-abalone-label.jpg"
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor centre",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "product": {
+    "brand": "New Moon (GJH house brand)",
+    "origin": "Mexico",
+    "pack_size": "454g",
+    "type_zh": "墨西哥鲍鱼罐头",
+    "source_images": {
+      "new-moon-mx-454g-front.jpg": "68e266d70a1fbbc74351d368ae35555f1629454e20a2118be94ec40de910e979",
+      "new-moon-mx-454g-back.jpg": "c5d408f1e39d1673ea19159828f0583c587a52ec5b7cf509e52a6d6fcb012413"
+    }
+  },
+  "accuracy_notes": "Diameter is a nominal 73.5 mm; height follows the packshot aspect ratio. Not an official packaging specification. The label is a single-view unroll: the strips near each side of the can are blended between the front and reverse photographs, and shading baked into those photographs remains.",
+  "attribution": [
+    {
+      "credit": "Label artwork unrolled from GJH eShop official packshots recorded in Webpage-Design-Gallery assets/companies/gjh/official (manifest.json). Can geometry is original."
+    }
+  ],
+  "rights": "Packaging artwork belongs to its respective owners (GJH / New Moon). Used in the owner's project on the owner's confirmation; no independent licence document was supplied. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 211820,
+    "triangles": 2490,
+    "vertices": 1403,
+    "primitives": 7,
+    "materials": 4,
+    "textures": 1,
+    "texture_pixels": [
+      1280,
+      616
+    ],
+    "animations": 0,
+    "dimensions": [
+      0.07670000195503235,
+      0.12527521164156497,
+      0.07670000195503235
+    ],
+    "bounds": {
+      "min": [
+        -0.038350000977516174,
+        0,
+        -0.038350000977516174
+      ],
+      "max": [
+        0.038350000977516174,
+        0.12527521164156497,
+        0.038350000977516174
+      ]
+    },
+    "sha256": "a8326c6c81d6065101e077c7ccab2d85a46f3a3578ad2c3a9066e3c83993b671"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  }
+}
