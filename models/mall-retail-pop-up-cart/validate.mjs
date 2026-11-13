@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import validator from 'gltf-validator';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {Box3,Vector3} from 'three';
+const root=new URL('./',import.meta.url),p=new URL('exports/optimized.glb',root),b=fs.readFileSync(p);
+const report=await validator.validateBytes(new Uint8Array(b),{maxIssues:100});assert.equal(report.issues.numErrors,0);assert.equal(report.issues.numWarnings,0);
+const gltf=await new Promise((yes,no)=>new GLTFLoader().parse(b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength),'',yes,no));
+const box=new Box3().setFromObject(gltf.scene,true),dims=box.getSize(new Vector3()).toArray();console.log({dims,min:box.min.toArray(),max:box.max.toArray()});assert.ok(Math.abs(dims[0]-1.65)<.002);assert.ok(dims[1]>2&&dims[1]<2.06);assert.ok(dims[2]>.9&&dims[2]<.95);assert.ok(Math.abs(box.min.y)<.002);
+let tris=0,meshes=0;gltf.scene.traverse(o=>{if(o.isMesh){meshes++;tris+=(o.geometry.index?.count??o.geometry.attributes.position.count)/3;}});
+assert.ok(tris<16000);assert.ok(b.length<800000);
+const data=JSON.parse(b.subarray(20,20+b.readUInt32LE(12)).toString());const names=data.nodes.map(n=>n.name);for(const n of ['WheelFL','WheelFR','WheelRL','WheelRR','SignText','Counter','Shelf','Canopy'])assert.ok(names.includes(n));
+const metrics={sha256:createHash('sha256').update(b).digest('hex'),glb_bytes:b.length,triangles:tris,meshPrimitives:meshes,dimensions:dims,bounds:{min:box.min.toArray(),max:box.max.toArray()},budget:{triangles:16000,bytes:800000},errors:0,warnings:0};fs.writeFileSync(new URL('reports/assets.json',root),JSON.stringify(metrics,null,2)+'\n');const metaPath=new URL('metadata.json',root),meta=JSON.parse(fs.readFileSync(metaPath));meta.metrics=metrics;fs.writeFileSync(metaPath,JSON.stringify(meta,null,2)+'\n');console.log(metrics);

@@ -1,0 +1,6 @@
+from pathlib import Path
+import bpy,runpy
+HERE=Path(__file__).resolve().parent;h=runpy.run_path(str(HERE/'generate.py'))
+for name,loc,scale in [('hdb-lift-door',(3, -6, 2.8),3.25),('front',(0,-7,1.14),3.25),('alternate',(-3, 6, 2.8),3.25)]:
+    bpy.ops.wm.read_factory_settings(use_empty=True);bpy.ops.import_scene.gltf(filepath=str(HERE/'exports/hdb-lift-door.glb'))
+    h['studio']();s=bpy.context.scene;s.camera.location=loc;s.camera.data.ortho_scale=scale;h['point_at'](s.camera,(0, 0, 1.14));s.render.filepath=str(HERE/'previews'/(name+'.png'));bpy.ops.render.render(write_still=True)

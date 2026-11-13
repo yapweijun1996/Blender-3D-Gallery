@@ -1,0 +1,325 @@
+[
+  {
+    "id": "mall-retail-pop-up-cart",
+    "checks": [
+      {
+        "command": [
+          "/srv/agent-workstation/workspaces/blender-mall-four-20261112/blender-local.sh",
+          "-b",
+          "--threads",
+          "2",
+          "--python-exit-code",
+          "1",
+          "--python",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/mall-retail-pop-up-cart/inspect_sources.py"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/mall-retail-pop-up-cart/validate.mjs"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "hdb-corridor-gate",
+    "checks": [
+      {
+        "command": [
+          "/srv/agent-workstation/workspaces/blender-mall-four-20261112/blender-local.sh",
+          "-b",
+          "--threads",
+          "2",
+          "--python-exit-code",
+          "1",
+          "--python",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-corridor-gate/inspect_sources.py"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-corridor-gate/validate.mjs"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-corridor-gate/verify_source_edit.mjs"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "hdb-utility-riser",
+    "checks": [
+      {
+        "command": [
+          "/srv/agent-workstation/workspaces/blender-mall-four-20261112/blender-local.sh",
+          "-b",
+          "--threads",
+          "2",
+          "--python-exit-code",
+          "1",
+          "--python",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-utility-riser/inspect_sources.py"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-utility-riser/validate.mjs"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-utility-riser/verify_source_edit.mjs"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "hdb-clothes-drying-rack",
+    "checks": [
+      {
+        "command": [
+          "/srv/agent-workstation/workspaces/blender-mall-four-20261112/blender-local.sh",
+          "-b",
+          "--threads",
+          "2",
+          "--python-exit-code",
+          "1",
+          "--python",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-clothes-drying-rack/inspect_sources.py"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-clothes-drying-rack/validate.mjs"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-clothes-drying-rack/verify_source_edit.mjs"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "hdb-aircon-compressor-ledge",
+    "checks": [
+      {
+        "command": [
+          "/srv/agent-workstation/workspaces/blender-mall-four-20261112/blender-local.sh",
+          "-b",
+          "--threads",
+          "2",
+          "--python-exit-code",
+          "1",
+          "--python",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-aircon-compressor-ledge/inspect_sources.py"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-aircon-compressor-ledge/validate.mjs"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-aircon-compressor-ledge/verify_source_edit.mjs"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "hdb-bicycle-parking-shelter",
+    "checks": [
+      {
+        "command": [
+          "/srv/agent-workstation/workspaces/blender-mall-four-20261112/blender-local.sh",
+          "-b",
+          "--threads",
+          "2",
+          "--python-exit-code",
+          "1",
+          "--python",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-bicycle-parking-shelter/inspect_sources.py"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-bicycle-parking-shelter/validate.mjs"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-bicycle-parking-shelter/verify_source_edit.mjs"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "hdb-staircase",
+    "checks": [
+      {
+        "command": [
+          "/srv/agent-workstation/workspaces/blender-mall-four-20261112/blender-local.sh",
+          "-b",
+          "--threads",
+          "2",
+          "--python-exit-code",
+          "1",
+          "--python",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-staircase/inspect_source.py"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-staircase/validate.mjs"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-staircase/verify_source_edit.mjs"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "hdb-lift-door",
+    "checks": [
+      {
+        "command": [
+          "/srv/agent-workstation/workspaces/blender-mall-four-20261112/blender-local.sh",
+          "-b",
+          "--threads",
+          "2",
+          "--python-exit-code",
+          "1",
+          "--python",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-lift-door/inspect_source.py"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-lift-door/validate.mjs"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-lift-door/verify_source_edit.mjs"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "hdb-lift-interior",
+    "checks": [
+      {
+        "command": [
+          "/srv/agent-workstation/workspaces/blender-mall-four-20261112/blender-local.sh",
+          "-b",
+          "--threads",
+          "2",
+          "--python-exit-code",
+          "1",
+          "--python",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-lift-interior/inspect_source.py"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-lift-interior/validate.mjs"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-lift-interior/verify_source_edit.mjs"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "hdb-corridor-window",
+    "checks": [
+      {
+        "command": [
+          "/srv/agent-workstation/workspaces/blender-mall-four-20261112/blender-local.sh",
+          "-b",
+          "--threads",
+          "2",
+          "--python-exit-code",
+          "1",
+          "--python",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-corridor-window/inspect_source.py"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-corridor-window/validate.mjs"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "/home/ai-agent/.local/lib/node22/bin/node",
+          "/srv/agent-workstation/workspaces/blender-batch03-current-main-20261113/repo/../source-gate/hdb-corridor-window/verify_source_edit.mjs"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "passed": true
+  }
+]
