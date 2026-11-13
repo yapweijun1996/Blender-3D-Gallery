@@ -1,0 +1,121 @@
+{
+  "id": "cleaner",
+  "name": "Cleaner",
+  "summary": "Original low-poly cleaner character with editable rigid joints, work clothing and a separate broom component. Idle and sweeping clips; not skinned, IK-ready or an autonomous NPC.",
+  "description": "Original low-poly cleaner character with editable rigid joints, work clothing and a separate broom component. Idle and sweeping clips; not skinned, IK-ready or an autonomous NPC.",
+  "category": "Characters",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "cleaner",
+    "character",
+    "rigid-articulated",
+    "original"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "generator": "generate.py",
+  "creation_method": "Original deterministic Blender Python geometry, materials and rigid joint NLA tracks; no external reference art, textures, fonts or models.",
+  "backlog_id": 266,
+  "paths": {
+    "glb": "exports/cleaner.glb",
+    "source": "sources/cleaner.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp",
+      "previews/sweep-left.webp",
+      "previews/sweep-right.webp",
+      "previews/idle-action.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1.3,
+      0.8,
+      2
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "floor centre"
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural model and motion authored for Blender-3D-Gallery. No third-party mesh, texture, brand or likeness."
+    }
+  ],
+  "accuracy_notes": "Stylized visual character, not occupational/safety certification. Rigid articulation only; no skin, IK, walking, collision or navigation behavior.",
+  "material_notes": "Independent named meshes/materials; broom remains a separately editable component within this one asset.",
+  "budgets": {
+    "max_triangles": 15000,
+    "max_glb_bytes": 2000000,
+    "max_primitives": 120,
+    "set_before_generation": true,
+    "rationale": "One low-poly rigid articulated character and editable broom; no skin/textures."
+  },
+  "metrics": {
+    "id": "cleaner",
+    "backlog_id": 266,
+    "status": "PASS",
+    "sha256": "a0d791797cfe8883aa738492b04aaa53b3feac12f8b76041723270dd0f0a35d4",
+    "glb_bytes": 408396,
+    "triangles": 3924,
+    "primitives": 46,
+    "budgets": {
+      "max_triangles": 15000,
+      "max_glb_bytes": 2000000,
+      "max_primitives": 120
+    },
+    "dimensions": [
+      1.1472118677940248,
+      1.750000074505806,
+      0.6400000005960464
+    ],
+    "clips": [
+      {
+        "name": "Idle",
+        "duration": 2,
+        "tracks": 51,
+        "samples": 41,
+        "max_transformed_foot_vertex_drift": 0,
+        "max_grip_error": 0,
+        "max_bristle_floor_error": 2.2351741790771484e-08,
+        "max_root_drift": 0,
+        "shoulder_rotation": 0,
+        "head_rotation": 0.07000000089261658,
+        "brush_sweep_span": 0
+      },
+      {
+        "name": "Sweep",
+        "duration": 2,
+        "tracks": 51,
+        "samples": 41,
+        "max_transformed_foot_vertex_drift": 0,
+        "max_grip_error": 0,
+        "max_bristle_floor_error": 2.2351741790771484e-08,
+        "max_root_drift": 0,
+        "shoulder_rotation": 0.2600000433187515,
+        "head_rotation": 0.04500001859009066,
+        "brush_sweep_span": 0.15187127280144527
+      }
+    ],
+    "clip_switching": "PASS",
+    "validation": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "limits": "Rigid articulated nodes, no skin/IK/navigation; physical mobile and Safari untested"
+  },
+  "quality_gate": {
+    "local_asset": "PASS",
+    "overall": "NEEDS REVIEW",
+    "scope": "Verified Blender source edit, GLB, 3 Chromium gallery viewports, 2 animation clips and inspected final pixels. Physical Android/iOS, Safari/WebKit and owner pilot acceptance pending."
+  }
+}

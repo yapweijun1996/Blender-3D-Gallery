@@ -1,0 +1,22 @@
+
+> blender-3d-gallery@0.1.0 build
+> npm run validate:assets && vite build
+
+
+> blender-3d-gallery@0.1.0 validate:assets
+> node scripts/validate-assets.mjs
+
+file:///srv/agent-workstation/workspaces/blender-gap-extract06-20261113/repo/scripts/catalog.mjs:8
+  if (typeof value !== "string" || !value.trim()) throw new Error(`Invalid ${label}`);
+                                                        ^
+
+Error: Invalid metadata accuracy notes
+    at textField (file:///srv/agent-workstation/workspaces/blender-gap-extract06-20261113/repo/scripts/catalog.mjs:8:57)
+    at validateMetadata (file:///srv/agent-workstation/workspaces/blender-gap-extract06-20261113/repo/scripts/catalog.mjs:101:3)
+    at loadCatalog (file:///srv/agent-workstation/workspaces/blender-gap-extract06-20261113/repo/scripts/catalog.mjs:131:9)
+    at file:///srv/agent-workstation/workspaces/blender-gap-extract06-20261113/repo/scripts/validate-assets.mjs:5:17
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.23.3

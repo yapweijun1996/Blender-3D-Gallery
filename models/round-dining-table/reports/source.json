@@ -1,0 +1,51 @@
+{
+  "source_sha256": "09877ea2abe83f69fb9347f1a9709438362dde577f1b69dcaf76d36df4db55f0",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 4,
+  "objects": [
+    {
+      "name": "Base",
+      "type": "MESH",
+      "parent": "ASSET_RoundDiningTable"
+    },
+    {
+      "name": "Pedestal",
+      "type": "MESH",
+      "parent": "ASSET_RoundDiningTable"
+    },
+    {
+      "name": "Round_Top",
+      "type": "MESH",
+      "parent": "ASSET_RoundDiningTable"
+    },
+    {
+      "name": "Top_Support",
+      "type": "MESH",
+      "parent": "ASSET_RoundDiningTable"
+    }
+  ],
+  "edit_proof": {
+    "node": "Base",
+    "before": [
+      0,
+      0,
+      0.029999999329447746
+    ],
+    "after": [
+      0.12300000339746475,
+      0,
+      0.029999999329447746
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Satin graphite base",
+    "roughness_before": 0.36000001430511475,
+    "roughness_after": 0.73,
+    "copy_sha256": "45e78a2200179417c6b68e3110321fb0d9c01064eb93a39859b2d1e9887f61bf",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

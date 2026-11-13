@@ -1,0 +1,51 @@
+{
+  "source_sha256": "17981a7e6d18d0e97701dcaaf3b71ea7d8958ce49ab2a6ffe9ae38493e08a848",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 3,
+  "objects": [
+    {
+      "name": "RACK_Hoop_01",
+      "type": "EMPTY",
+      "parent": "ASSET_PublicBicycleRack"
+    },
+    {
+      "name": "HOOP_Leg.002",
+      "type": "MESH",
+      "parent": "RACK_Hoop_01"
+    },
+    {
+      "name": "HOOP_Leg.003",
+      "type": "MESH",
+      "parent": "RACK_Hoop_01"
+    },
+    {
+      "name": "HOOP_Top.001",
+      "type": "MESH",
+      "parent": "RACK_Hoop_01"
+    }
+  ],
+  "edit_proof": {
+    "node": "HOOP_Leg.002",
+    "before": [
+      -0.44999998807907104,
+      -0.3799999952316284,
+      0.41499999165534973
+    ],
+    "after": [
+      -0.3269999921321869,
+      -0.3799999952316284,
+      0.41499999165534973
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Cycle hoops",
+    "roughness_before": 0.44999998807907104,
+    "roughness_after": 0.73,
+    "copy_sha256": "365f1475d41432fd220938b50567a7f690dc9ab0d2106f155077c8d659edbb8a",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12299999594688416,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "base": "3c41bcfd660c69a41fe3bb7f5f56baed6f4b4e0b",
+  "registrations": 377,
+  "candidates": 33,
+  "prior_registrations": 344,
+  "distinct_candidates": 29,
+  "derived_count_pending": 4,
+  "unit_tests": 457,
+  "gallery_cases": 99,
+  "motion_cases": 45,
+  "library_cases": 9,
+  "lifecycle_cases": 4,
+  "legacy_cases": 14,
+  "build": "PASS",
+  "fixed_integration": "PASS",
+  "release": "NEEDS REVIEW",
+  "prior_library_failures": "Preserved; not reproduced in this run; no root-cause fix claimed",
+  "escalator": {
+    "raw-tracks": {
+      "status": "PASS",
+      "sha256": "f8f8bda8b28a4faaf1fb2b03ee2a832fe23b90621eee9ab0a24a26c1b2b89ada",
+      "evidence": "models/escalator/reports/circulation-final/raw-tracks.json"
+    },
+    "wheel-rail-sat": {
+      "status": "PASS_CENTER_PLANE_NONINTERSECTION_ONLY",
+      "sha256": "f8f8bda8b28a4faaf1fb2b03ee2a832fe23b90621eee9ab0a24a26c1b2b89ada",
+      "evidence": "models/escalator/reports/circulation-final/wheel-rail-sat.json"
+    },
+    "contact": {
+      "status": "NEEDS REVIEW",
+      "sha256": "f8f8bda8b28a4faaf1fb2b03ee2a832fe23b90621eee9ab0a24a26c1b2b89ada",
+      "evidence": "models/escalator/reports/circulation-final/contact.json"
+    }
+  },
+  "visual_review": {
+    "gallery_initial_frames": 33,
+    "representative_motion_frames": 25,
+    "sheets": [
+      "review-gallery-0.jpg",
+      "review-gallery-1.jpg",
+      "review-gallery-2.jpg",
+      "review-action.jpg",
+      "review-action-active.jpg"
+    ],
+    "finding": "Fully framed recognizable simple models and rigid characters; representative actual stepping, tray/tool, lift and escalator poses visible; no new obvious clipping or missing geometry in inspected frames"
+  },
+  "no_remote_actions": true
+}

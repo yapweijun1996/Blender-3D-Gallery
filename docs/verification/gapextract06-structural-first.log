@@ -1,0 +1,19 @@
+PASS 94 round-dining-table 41492 1008 [ 1, 0.7500000186264515, 1 ]
+PASS 175 public-bicycle-rack 29388 564 [ 0.05000008499340642, 0.6950000736627358, 0.8099999987581051 ]
+PASS 281 singapore-shophouse-facade 166160 3024 [ 6.199999809265137, 6.375, 2.4000000953674316 ]
+PASS 282 malaysia-shoplot-facade 97320 1728 [ 8.219999998807907, 10.300000190734863, 1.2999999523162842 ]
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Missing Hanger.001
+    at file:///srv/agent-workstation/workspaces/blender-gap-extract06-20261113/repo/scripts/validate-gapextract06.mjs:8:44 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

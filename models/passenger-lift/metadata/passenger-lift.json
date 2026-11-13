@@ -1,0 +1,125 @@
+{
+  "id": "passenger-lift",
+  "name": "Passenger Lift",
+  "category": "Props",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "original"
+  ],
+  "description": "Original illustrative two-stop cutaway passenger lift. Separate synchronized bottom-door cycle and closed-door 3m cab travel, never combined. No safety certification or Gallery runtime controls.",
+  "status": "draft",
+  "backlog_id": 5,
+  "created": "2026-11-13",
+  "author": "Blender-3D-Gallery / agent-assisted original source",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/passenger-lift.glb",
+    "source": "sources/passenger-lift.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/doors-open.png",
+      "previews/travel-upper.png"
+    ]
+  },
+  "display": {
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewRotationY": 0,
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    }
+  },
+  "rights": "Original procedural asset; reuse in owner projects authorized. Public redistribution terms unspecified.",
+  "provenance": {
+    "kind": "NEW DESIGN",
+    "source": "Original Blender Python procedural geometry",
+    "new_design_count": true
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "local_asset": "PASS",
+    "source_edit": "PASS: edited mesh position and material roughness survived save/reopen/export without regeneration",
+    "studio_visual": "PASS: actual exported GLB multi-angle images inspected",
+    "chromium": "PASS: three viewport sizes, actual GLB SHA, orbit/zoom/reset/reopen and inspected rendered images"
+  },
+  "counting": {
+    "classification": "NEW DESIGN",
+    "new_design": true,
+    "derivative_count_policy": "NOT APPLICABLE"
+  },
+  "accuracy_notes": "Original schematic cutaway lift, not operational/certified engineering equipment. Upper landing doors remain static; not a complete lift controller or passenger simulation. Door and travel clips are mutually exclusive modes.",
+  "attribution": [
+    {
+      "credit": "Blender-3D-Gallery original procedural passenger lift geometry",
+      "url": ""
+    }
+  ],
+  "mechanisms": {
+    "door_mode": [
+      "DOOR_Cycle_CabL",
+      "DOOR_Cycle_CabR",
+      "DOOR_Cycle_Landing0L",
+      "DOOR_Cycle_Landing0R"
+    ],
+    "travel_mode": [
+      "TRAVEL_Cab"
+    ],
+    "mutually_exclusive": true,
+    "cab_travel_m": 3,
+    "door_leaf_travel_m": 0.53
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "passenger-lift",
+    "backlog_id": 5,
+    "glb_bytes": 422340,
+    "triangles": 7656,
+    "vertices": 14844,
+    "meshes": 80,
+    "materials": 8,
+    "dimensions": [
+      3.200000047683716,
+      6.49000009894371,
+      3.200000047683716
+    ],
+    "bounds": {
+      "min": [
+        -1.600000023841858,
+        0,
+        -1.2000000178813934
+      ],
+      "max": [
+        1.600000023841858,
+        6.49000009894371,
+        2.0000000298023224
+      ]
+    },
+    "sha256": "86bae913acdf211d89cf8de8779bb6edfa70255f7508669e02f69017ab33cc4e",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 5000000,
+    "budget_triangles": 80000
+  },
+  "evidence": {
+    "structural": "reports/assets.json",
+    "source_edit": "reports/source.json",
+    "visual": "reports/visual-review.json"
+  }
+}
