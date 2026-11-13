@@ -1,0 +1,86 @@
+{
+  "id": "hdb-playground-floor",
+  "name": "HDB Playground Floor",
+  "summary": "A modular four-metre rubber playground floor with sixteen editable tiles and eight high-contrast dot-count play cells.",
+  "description": "A modular four-metre rubber playground floor with sixteen editable tiles and eight high-contrast dot-count play cells.",
+  "category": "Architecture",
+  "tags": [
+    "hdb",
+    "singapore",
+    "residential",
+    "modular",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python mesh geometry. No external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/hdb-playground-floor.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "V2.1 item 310, title-only scope. Original generic residential visual module, not a measured HDB installation. No structural, safety, fire, fitness, hygienic, security or building-code compliance is claimed. Movable components are editable source parts, not runtime controls. Physical Android/iOS NOT TESTED; combined ten-asset gate PENDING. Floor colour and graphics do not establish impact attenuation or playground safety compliance.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials for Blender-3D-Gallery; no external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "sha256": "81dfd0d1edded49f07d398a421ace0b5e3760ec531aed1c86beb16097e7af51b",
+    "glb_bytes": 238852,
+    "triangles": 4272,
+    "vertices": 7680,
+    "primitives": 84,
+    "materials": 3,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      3.996999979019165,
+      0.041000000142958015,
+      3.996999979019165
+    ],
+    "bounds": {
+      "min": [
+        -1.9984999895095825,
+        0,
+        -1.9984999895095825
+      ],
+      "max": [
+        1.9984999895095825,
+        0.041000000142958015,
+        1.9984999895095825
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "quality_gate": {
+    "local_asset": "PASS",
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "combined_ten_asset_gate": "PENDING",
+    "budget_bytes": 500000,
+    "budget_triangles": 10000
+  }
+}

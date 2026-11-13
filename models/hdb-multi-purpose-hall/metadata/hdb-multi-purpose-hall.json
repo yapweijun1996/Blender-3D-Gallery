@@ -1,0 +1,94 @@
+{
+  "id": "hdb-multi-purpose-hall",
+  "name": "HDB Multi-Purpose Hall",
+  "summary": "Open-sided neighbourhood hall pavilion with modular columns, pitched roof halves, simple rear platform and editable beams.",
+  "description": "Open-sided neighbourhood hall pavilion with modular columns, pitched roof halves, simple rear platform and editable beams. Generic HDB-inspired visual asset, not a particular surveyed building or official standard.",
+  "category": "Furniture",
+  "tags": [
+    "hdb",
+    "singapore",
+    "neighbourhood",
+    "architecture",
+    "modular",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials; reviewed original project helpers. No third-party models, textures, fonts, logos or artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/hdb-multi-purpose-hall.glb",
+    "source": "sources/hdb-multi-purpose-hall.blend",
+    "preview": "previews/hdb-multi-purpose-hall.webp",
+    "render": "previews/hdb-multi-purpose-hall.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.8,
+      0.55,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "base at ground plane",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "backlog_id": 316,
+  "material_notes": "Independent named editable mesh components and materials. No animations or runtime interaction. Geometric pictograms use original primitives, not text/font artwork.",
+  "accuracy_notes": "Visual architecture asset only, not construction, structural, fire, accessibility or building-code certification.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using reviewed original project helpers; no third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Physical Android/iOS NOT TESTED. Local preparation and validation recorded in verification.md.",
+    "local_asset": "PASS",
+    "browser": "PASS: desktop Chromium156.0.8078.4, three viewport sizes; physical Android/iOS NOT TESTED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "hdb-multi-purpose-hall",
+    "glb_bytes": 109848,
+    "triangles": 1944,
+    "vertices": 3888,
+    "primitives": 18,
+    "materials": 4,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      12.649999618530273,
+      4.819999981671572,
+      8.631003337882408
+    ],
+    "bounds": {
+      "min": [
+        -6.324999809265137,
+        0,
+        -4.315501668941204
+      ],
+      "max": [
+        6.324999809265137,
+        4.819999981671572,
+        4.315501668941204
+      ]
+    },
+    "sha256": "417523cfcc1225c40a502f78cdb4658e743711ae6910df61dc678aa275d2f797",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+# HDB Community Notice Board verification
+
+**Local asset: PASS. Overall: NEEDS REVIEW.** V2.1 item 312; one independent logical model. Physical Android/iOS **NOT TESTED**; combined batch4 ten-model integration **PENDING**. Not release/deployment approval.
+
+## Evidence
+
+- Blender 4.0.2 saved source reopened; 42 independently editable closed/manifold positive-volume mesh objects; metre scale and root datum validated: [source](reports/sources.json).
+- Saved-source vertex edit (local X ×0.92) and material roughness change survived re-export without regeneration; original source hash unchanged: [source edit](reports/source-edit-verify.log). Edited fixture is not cataloged.
+- GLB 164,096 bytes / 2,776 triangles / 42 primitives / 6 materials; zero images/textures/animations, external URIs, cameras or lights. Khronos zero errors/warnings: [structure](reports/assets.json). Budget 350,000 bytes and 7,000 triangles.
+- Dimensions glTF X/Y/Z: 1.8200, 2.1000, 0.1100 m; glTF +Y up, front+Z; Blender +Z up/front−Y. Bottom datum0 verified.
+- GLB SHA-256 `d0443e1525714f817ab1c33aad273cf663999fc102dbd7619672814ac36f4026`.
+- Strict desktop Chromium 156.0.8078.4: **3/3** at 1440×900,768×1024,390×844; exact consumed byte count/SHA, HTTP200, WebGL draws, orbit/zoom, pixel-identical reset/reopen, horizontal fit and all unexpected request/console/page errors checked without filtering: [browser](../../docs/verification/hdb-batch04-a/browser-final/results.json). Desktop viewport emulation is not Android/iOS hardware.
+- Hero/front/rear/side studio renders and actual Gallery initial views at 1440/390width were inspected. Recognizable geometry, clear silhouette, coherent materials; not photorealism or surveyed-installation certification.
+- Full existing unit suite **223/223**, production build/catalog/GLB validation PASS: [unit](../../docs/verification/hdb-batch04-a/unit.log), [build](../../docs/verification/hdb-batch04-a/build-metadata.log). Existing Vite chunk-size advisory remains, not hidden.
+
+## Limits and reproduction
+
+Title-only scope permits generic original geometry, not specific as-built HDB equipment. No structural, fire, safety, fitness, hygienic, security or building-code compliance asserted. Source components editable; no added runtime articulation or simulation. Physical mobile/Safari and mobile performance unverified. Public redistribution license unspecified, downloads disabled. No remote push/PR/merge/deploy.
+
+Run Blender 4.0.2 `--background --threads 2 --python-exit-code 1 --python models/hdb-community-notice-board/generate.py`; use `-- --export-source --skip-render` for saved-source export. `node models/hdb-community-notice-board/validate.mjs`; Blender `inspect_sources.py`; `node models/hdb-community-notice-board/verify_source_edit.mjs`. Source inspection writes new fixture/reports, so use an isolated copy when preserving previous evidence. Run `npm test`, `npm run build`, then `MALL_QA_DIR=... node scripts/test-hdb-batch04-a.mjs`; optional HDB_QA_ASSET selects one asset without changing assertions.
+
+Notices are intentionally abstract editable paper/graphic meshes, not claimed readable real announcements. No user personal information appears.
