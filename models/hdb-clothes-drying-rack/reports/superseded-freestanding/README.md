@@ -1,0 +1,1 @@
+Superseded initial generic freestanding variant. Replaced before delivery with an exterior pole system to better communicate the HDB context. V2.1 specifies a title only; this is an in-scope design choice, not a surveyed HDB specification. Not cataloged; counts as no additional model. Historical first browser gate15/15 passed, including this original307.\n

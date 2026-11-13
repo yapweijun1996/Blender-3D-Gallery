@@ -1,0 +1,93 @@
+{
+  "id": "hdb-staircase",
+  "name": "HDB Staircase",
+  "summary": "Two-flight switchback concrete staircase with a half-storey landing, independently editable closed treads, anti-slip nosings and teal rail members.",
+  "description": "Two-flight switchback concrete staircase with a half-storey landing, independently editable closed treads, anti-slip nosings and teal rail members. Original HDB-inspired generic visual module; not a reproduction of a particular estate or certified installation.",
+  "category": "Furniture",
+  "tags": [
+    "hdb",
+    "singapore",
+    "residential",
+    "modular",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials, with reviewed original project procedural helpers. No external models, textures or fonts.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/hdb-staircase.glb",
+    "source": "sources/hdb-staircase.blend",
+    "preview": "previews/hdb-staircase.webp",
+    "render": "previews/hdb-staircase.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.65,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "bottom centre, except staircase lower/upper floor connectors explicitly supplied",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "backlog_id": 301,
+  "material_notes": "Independent named mesh components and Principled materials; no textures or animation clips. Source editing/poses do not add runtime interactions.",
+  "accuracy_notes": "Visual asset only. No dimensional survey, engineering, structural, fire, accessibility or building-code certification.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using original project helpers. No third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Physical Android/iOS NOT TESTED; local validation and actual previews recorded in verification.md.",
+    "local_asset": "PASS",
+    "browser": "PASS: desktop Chromium 156.0.8078.4 at 1440, 768 and 390 px; physical Android/iOS NOT TESTED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "hdb-staircase",
+    "glb_bytes": 210560,
+    "triangles": 3780,
+    "vertices": 6264,
+    "primitives": 91,
+    "materials": 3,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      2.5999999046325684,
+      3.971482428791731,
+      3.7200000286102295
+    ],
+    "bounds": {
+      "min": [
+        -1.2999999523162842,
+        0,
+        -2.4600000381469727
+      ],
+      "max": [
+        1.2999999523162842,
+        3.971482428791731,
+        1.2599999904632568
+      ]
+    },
+    "sha256": "1dfb00dcbd4c7d2c1cdaee6ec7fb4409774c173d280076915433c42e40afa660",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  }
+}

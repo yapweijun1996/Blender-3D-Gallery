@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import {fileURLToPath} from 'node:url';import {createHash} from 'node:crypto';import {Box3,Vector3} from 'three';import validator from 'gltf-validator';import {readGlb,near} from './glb.mjs';
+const root=fileURLToPath(new URL('.',import.meta.url));const {bytes,json,scene}=await readGlb(root+'exports/hdb-staircase.glb');
+const v=await validator.validateBytes(new Uint8Array(bytes));assert.equal(v.issues.numErrors,0);assert.equal(v.issues.numWarnings,0);
+assert.ok(!json.images?.length&&!json.textures?.length&&!json.animations?.length&&!json.cameras?.length&&!json.extensions?.KHR_lights_punctual);assert.ok(json.buffers.every(b=>!b.uri));
+const asset=scene.getObjectByName('ASSET_HDBStaircase');assert.ok(asset);assert.equal(asset.userData.backlog_id,301);assert.equal(asset.userData.units,'metres');
+const meshes=[];let triangles=0,vertices=0;scene.traverse(o=>{if(o.isMesh){meshes.push(o);vertices+=o.geometry.attributes.position.count;triangles+=(o.geometry.index?.count??o.geometry.attributes.position.count)/3;assert.ok([...o.geometry.attributes.position.array].every(Number.isFinite));}});
+const bounds=new Box3().setFromObject(scene),dimensions=bounds.getSize(new Vector3()).toArray();
+assert.equal(meshes.filter(o=>o.name.startsWith('STEP_')).length,18);assert.equal(meshes.filter(o=>o.name.startsWith('NOSING_')).length,18);near(asset.userData.storey_rise_m,3);near(asset.getObjectByName('CONNECTOR_UpperFloor').getWorldPosition(new Vector3()).y,3);near(bounds.min.y,0);assert.ok(dimensions[1]>3.9&&dimensions[1]<4.1);
+assert.ok(bytes.length<1048576);assert.ok(triangles<30000);
+const report={result:'PASS',id:'hdb-staircase',glb_bytes:bytes.length,triangles,vertices,primitives:meshes.length,materials:json.materials.length,textures:0,animations:0,dimensions,bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()},sha256:createHash('sha256').update(bytes).digest('hex'),validation:{errors:0,warnings:0,version:v.validatorVersion}};
+fs.writeFileSync(root+'reports/assets.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));

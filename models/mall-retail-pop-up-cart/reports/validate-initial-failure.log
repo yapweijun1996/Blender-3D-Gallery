@@ -1,0 +1,23 @@
+{
+  dims: [ 1.649999976158142, 2.0981352279277514, 0.9546882994267339 ],
+  min: [ -0.824999988079071, -1.3099989024101255e-8, -0.4773441239839169 ],
+  max: [ 0.824999988079071, 2.0981352148277623, 0.47734417544281704 ]
+}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(dims[1]>2&&dims[1]<2.06)
+
+    at file:///srv/agent-workstation/workspaces/blender-mall-retail-cart-440-20261113/repo/models/mall-retail-pop-up-cart/validate.mjs:10:200 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

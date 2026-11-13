@@ -1,0 +1,93 @@
+{
+  "id": "hdb-corridor-window",
+  "name": "HDB Corridor Window",
+  "summary": "Three-leaf aluminium casement corridor window with separate glazing, handles and editable leaf hinge origins.",
+  "description": "Three-leaf aluminium casement corridor window with separate glazing, handles and editable leaf hinge origins. Original HDB-inspired generic visual module; not a reproduction of a particular estate or certified installation.",
+  "category": "Furniture",
+  "tags": [
+    "hdb",
+    "singapore",
+    "residential",
+    "modular",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials, with reviewed original project procedural helpers. No external models, textures or fonts.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/hdb-corridor-window.glb",
+    "source": "sources/hdb-corridor-window.blend",
+    "preview": "previews/hdb-corridor-window.webp",
+    "render": "previews/hdb-corridor-window.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/alternate.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.5,
+      0.2,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "bottom centre, except staircase lower/upper floor connectors explicitly supplied",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "backlog_id": 304,
+  "material_notes": "Independent named mesh components and Principled materials; no textures or animation clips. Source editing/poses do not add runtime interactions.",
+  "accuracy_notes": "Visual asset only. No dimensional survey, engineering, structural, fire, accessibility or building-code certification.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using original project helpers. No third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Physical Android/iOS NOT TESTED; local validation and actual previews recorded in verification.md.",
+    "local_asset": "PASS",
+    "browser": "PASS: desktop Chromium 156.0.8078.4 at 1440, 768 and 390 px; physical Android/iOS NOT TESTED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "hdb-corridor-window",
+    "glb_bytes": 130352,
+    "triangles": 2304,
+    "vertices": 4608,
+    "primitives": 24,
+    "materials": 3,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      1.8000000081956387,
+      1.2000000476837158,
+      0.11250000074505806
+    ],
+    "bounds": {
+      "min": [
+        -0.9000000040978193,
+        0,
+        -0.05000000074505806
+      ],
+      "max": [
+        0.9000000040978193,
+        1.2000000476837158,
+        0.0625
+      ]
+    },
+    "sha256": "9d9f8613b2a0817e11e92fb901488622edb843dbc35f28bab987d0dea0d0ce1e",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  }
+}
