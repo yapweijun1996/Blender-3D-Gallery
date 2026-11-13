@@ -1,0 +1,105 @@
+{
+  "id": "malaysia-terrace-house-gate",
+  "name": "Malaysia Terrace House Gate",
+  "summary": "Malaysia Terrace House Gate; original modular SG/MY-inspired editable architectural asset.",
+  "description": "Malaysia Terrace House Gate. Independently editable geometry and materials. Illustrative visual module, not a surveyed site, official standard or construction specification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable",
+    "original"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "generator": "generate.py",
+  "creation_method": "Original deterministic Blender Python geometry using reviewed project helpers. No third-party model, texture, font, logo or artwork.",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/malaysia-terrace-house-gate.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1.3,
+      0.8,
+      2
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "ground-plane centre"
+  },
+  "backlog_id": 321,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using reviewed project helpers; no third-party assets."
+    }
+  ],
+  "material_notes": "Independent hinge-rooted leaves and materials. Two synchronized two-second GLB open/close clips, verified with Three.js AnimationMixer; no Gallery playback UI or physics/collision system.",
+  "accuracy_notes": "Not a road, accessibility, structural, electrical or engineering certification. No official logo.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Production pending combined gate; physical Android/iOS and Safari/WebKit not tested."
+  },
+  "budgets": {
+    "max_glb_bytes": 409600,
+    "max_triangles": 10000
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "malaysia-terrace-house-gate",
+    "glb_bytes": 287296,
+    "triangles": 5288,
+    "vertices": 10480,
+    "primitives": 46,
+    "materials": 4,
+    "textures": 0,
+    "animations": 2,
+    "dimensions": [
+      4.260000109672546,
+      1.959999956190586,
+      0.4399999976158142
+    ],
+    "bounds": {
+      "min": [
+        -2.130000054836273,
+        0,
+        -0.2199999988079071
+      ],
+      "max": [
+        2.130000054836273,
+        1.959999956190586,
+        0.2199999988079071
+      ]
+    },
+    "sha256": "9d88e4b0ae0fd0832f95ea965f7ddde2c4fb8807f9e15aaddf31be7f39aea4d5",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  },
+  "interaction": {
+    "clips": [
+      "Gate_Left_Open_Close",
+      "Gate_Right_Open_Close"
+    ],
+    "duration_seconds": 2,
+    "open_degrees": 65,
+    "usage": "Play both clips together with Three.js AnimationMixer. Closed at0s, open at1s, closed at2s.",
+    "gallery_playback_ui": "NOT IMPLEMENTED"
+  }
+}

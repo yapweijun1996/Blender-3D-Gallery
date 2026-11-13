@@ -1,0 +1,89 @@
+{
+  "id": "mrt-train-door",
+  "name": "MRT Train Door",
+  "summary": "Original modular mrt train door with independent editable parts.",
+  "description": "Original generic Singapore/Malaysia transport prop, not a measured operator installation.",
+  "category": "Architecture",
+  "tags": [
+    "transport",
+    "sgmy",
+    "modular",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/mrt-train-door.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "Illustrative V2.1 transport module. Placeholder signage is not official wayfinding, route data or operator branding. No engineering, safety, accessibility or regulatory compliance claim. Glazing is stylized opaque blue-grey for reliable low-cost mobile rendering. Physical Android/iOS NOT TESTED. Runtime controls limited to validated gallery orbit/zoom; source animation availability is separately reported.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "local_structure": "PASS",
+    "source_reopen_edit_export": "PASS",
+    "visual_review": "PASS: all four rendered angles and all three browser viewport initial views inspected, including final corrections",
+    "browser": "PASS: desktop Chromium, three viewport sizes, not real mobile hardware",
+    "budget_bytes": 1200000,
+    "budget_triangles": 22000,
+    "local_asset": "PASS",
+    "combined_fifty_asset_gate": "PENDING"
+  },
+  "metrics": {
+    "sha256": "9fd75adcace7c6e1168c98ee6a20aa8cea36a9f2fe26a508316fa78c165e5c8c",
+    "glb_bytes": 110584,
+    "triangles": 1944,
+    "vertices": 3888,
+    "primitives": 18,
+    "materials": 5,
+    "textures": 0,
+    "animations": 2,
+    "dimensions": [
+      2.300000049173832,
+      2.30000002682209,
+      0.550000011920929
+    ],
+    "bounds": {
+      "min": [
+        -1.150000024586916,
+        0,
+        -0.2750000059604645
+      ],
+      "max": [
+        1.150000024586916,
+        2.30000002682209,
+        0.2750000059604645
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "animation_test": "PASS: duration 60/24s; midpoint intended travel/swing; door clear aperture and fixed-jamb clearance; end restoration"
+}

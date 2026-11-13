@@ -1,0 +1,108 @@
+{
+  "id": "malaysia-outdoor-water-tank",
+  "name": "Malaysia Outdoor Water Tank",
+  "summary": "Ribbed cylindrical outdoor water tank with base, inlet, tap outlet and an independently liftable lid over a recessed neck.",
+  "description": "Ribbed cylindrical outdoor water tank with base, inlet, tap outlet and an independently liftable lid over a recessed neck. Original illustrative asset, not engineering or safety certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/malaysia-outdoor-water-tank.glb",
+    "source": "sources/malaysia-outdoor-water-tank.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.4,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 328,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; helpers adapted from project hawker-centre-tray-rack. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials and open-close glTF animation clips. Gallery-specific component controls not implemented; AnimationMixer verification pending.",
+  "accuracy_notes": "Illustrative non-branded regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS: geometry,material,scale/orientation,Khronos,budgets,source edit and browser gates",
+    "visual": "PASS: exported GLB hero/front/rear pixels inspected; targeted seam/camera fixes re-inspected",
+    "browser": "PASS: desktop Chromium1440/768/390 viewports; physical Android/iOS NOT TESTED",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "source": "PASS: canonical blend SHA preserved; copied component +0.123m re-export verified"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "malaysia-outdoor-water-tank",
+    "backlog_id": 328,
+    "glb_bytes": 52980,
+    "triangles": 1020,
+    "vertices": 1656,
+    "meshes": 14,
+    "materials": 5,
+    "dimensions": [
+      1.1399999856948853,
+      1.5400000363588333,
+      1.2400000141176162
+    ],
+    "bounds": {
+      "min": [
+        -0.5699999928474426,
+        0,
+        -0.5699999928474426
+      ],
+      "max": [
+        0.5699999928474426,
+        1.5400000363588333,
+        0.6700000212701734
+      ]
+    },
+    "sha256": "bae0853ea58130e60dcfe05cb116a44d49f4b01cc7ef63cd8bd4b2054e54a655",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000
+  },
+  "interaction": {
+    "type": "glTF animation",
+    "nodes": [
+      "MOVABLE_Lid"
+    ],
+    "duration_seconds": 2.0416667461395264,
+    "cycle": "closed-open-closed",
+    "gallery_controls": "NOT IMPLEMENTED",
+    "verification": "PASS: explicit expected poses/fixed components and desktop Chromium AnimationMixer pixel change/exact reset. Gallery component controls not implemented.",
+    "cycle_seconds": 2,
+    "start_seconds": 0.0416666679084301
+  },
+  "source_sha256": "6874315058b46f8df95a8304e46a579334bf18734a4ad49d71697ab8d074a12a"
+}

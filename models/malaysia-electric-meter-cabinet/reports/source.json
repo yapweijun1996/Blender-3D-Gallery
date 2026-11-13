@@ -1,0 +1,105 @@
+{
+  "source_sha256": "8776c5fc865613911157b00a1b372a89782e137b3c4dbb6738dbd7c0441fccac",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 15,
+  "objects": [
+    {
+      "name": "Back",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaElectricMeterCabinet"
+    },
+    {
+      "name": "Cap",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaElectricMeterCabinet"
+    },
+    {
+      "name": "Cap.001",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaElectricMeterCabinet"
+    },
+    {
+      "name": "MOVABLE_Door",
+      "type": "EMPTY",
+      "parent": "ASSET_MalaysiaElectricMeterCabinet"
+    },
+    {
+      "name": "Latch",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Panel",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Reading_Window",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Readout",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Vent",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Vent.001",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Vent.002",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Vent.003",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Vent.004",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Vent.005",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Side",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaElectricMeterCabinet"
+    },
+    {
+      "name": "Side.001",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaElectricMeterCabinet"
+    }
+  ],
+  "edit_proof": {
+    "node": "Back",
+    "before": [
+      0,
+      0.17000000178813934,
+      0.550000011920929
+    ],
+    "after": [
+      0.12300000339746475,
+      0.17000000178813934,
+      0.550000011920929
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "result": "PASS",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416667070239782,
+    "reset": 2.0416667461395264
+  },
+  "clips": [
+    {
+      "name": "Open_Close_MOVABLE_Lid",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Lid",
+      "position": [
+        0,
+        1.4450000524520874,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Lid",
+      "position": [
+        0,
+        1.7449999807402032,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Lid",
+      "position": [
+        0,
+        1.4450000524520874,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        0,
+        1.445,
+        0
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        0,
+        1.745,
+        0
+      ],
+      "openQ": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "verification": "Three.js AnimationMixer closed-open-closed transforms; Gallery controls not implemented"
+}

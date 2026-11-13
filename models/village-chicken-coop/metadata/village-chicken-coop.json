@@ -1,0 +1,108 @@
+{
+  "id": "village-chicken-coop",
+  "name": "Village Chicken Coop",
+  "summary": "Raised village chicken coop with geometric wire-grid walls, timber framing, gabled roof, ridge cap, nesting box and independently opening front door.",
+  "description": "Raised village chicken coop with geometric wire-grid walls, timber framing, gabled roof, ridge cap, nesting box and independently opening front door. Original illustrative asset, not engineering or safety certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/village-chicken-coop.glb",
+    "source": "sources/village-chicken-coop.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.4,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 338,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; helpers adapted from project hawker-centre-tray-rack. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials and open-close glTF animation clips. Gallery-specific component controls not implemented; AnimationMixer verification pending.",
+  "accuracy_notes": "Illustrative non-branded regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS: geometry,material,scale/orientation,Khronos,budgets,source edit and browser gates",
+    "visual": "PASS: exported GLB hero/front/rear pixels inspected; targeted seam/camera fixes re-inspected",
+    "browser": "PASS: desktop Chromium1440/768/390 viewports; physical Android/iOS NOT TESTED",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "source": "PASS: canonical blend SHA preserved; copied component +0.123m re-export verified"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "village-chicken-coop",
+    "backlog_id": 338,
+    "glb_bytes": 655064,
+    "triangles": 12096,
+    "vertices": 24192,
+    "meshes": 112,
+    "materials": 3,
+    "dimensions": [
+      1.9211173188770547,
+      1.7749999947845936,
+      1.3600000143051147
+    ],
+    "bounds": {
+      "min": [
+        -0.9605586594385274,
+        0,
+        -0.6800000071525574
+      ],
+      "max": [
+        0.9605586594385274,
+        1.7749999947845936,
+        0.6800000071525574
+      ]
+    },
+    "sha256": "fec1133037085e0cff5f239bc01687806d6f04284fe7c47178aeecd029fc9e3b",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 1500000,
+    "budget_triangles": 25000
+  },
+  "interaction": {
+    "type": "glTF animation",
+    "nodes": [
+      "MOVABLE_Door"
+    ],
+    "duration_seconds": 2.0416667461395264,
+    "cycle": "closed-open-closed",
+    "gallery_controls": "NOT IMPLEMENTED",
+    "verification": "PASS: explicit expected poses/fixed components and desktop Chromium AnimationMixer pixel change/exact reset. Gallery component controls not implemented.",
+    "cycle_seconds": 2,
+    "start_seconds": 0.0416666679084301
+  },
+  "source_sha256": "23a422f7c74157ea4613bed9157650131995ba07a07b40bfd17e5db264a7b785"
+}

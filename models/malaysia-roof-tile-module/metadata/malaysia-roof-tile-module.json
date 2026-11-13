@@ -1,0 +1,96 @@
+{
+  "id": "malaysia-roof-tile-module",
+  "name": "Malaysia Roof Tile Module",
+  "summary": "Twenty solid half-round terracotta tiles arranged in five columns and four overlapping rows. Individual tiles remain editable for roof assembly.",
+  "description": "Twenty solid half-round terracotta tiles arranged in five columns and four overlapping rows. Individual tiles remain editable for roof assembly. Original illustrative asset, not engineering or safety certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/malaysia-roof-tile-module.glb",
+    "source": "sources/malaysia-roof-tile-module.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.4,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 326,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; helpers adapted from project hawker-centre-tray-rack. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. MOVABLE assemblies are authoring aids only, not browser runtime interactions.",
+  "accuracy_notes": "Illustrative non-branded regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS: geometry,material,scale/orientation,Khronos,budgets,source edit and browser gates",
+    "visual": "PASS: exported GLB hero/front/rear pixels inspected; targeted seam/camera fixes re-inspected",
+    "browser": "PASS: desktop Chromium1440/768/390 viewports; physical Android/iOS NOT TESTED",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "source": "PASS: canonical blend SHA preserved; copied component +0.123m re-export verified"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "malaysia-roof-tile-module",
+    "backlog_id": 326,
+    "glb_bytes": 64336,
+    "triangles": 1360,
+    "vertices": 2160,
+    "meshes": 20,
+    "materials": 1,
+    "dimensions": [
+      1.059999942779541,
+      0.1639999970793724,
+      1.2999999523162842
+    ],
+    "bounds": {
+      "min": [
+        -0.5299999713897705,
+        0,
+        -0.6499999761581421
+      ],
+      "max": [
+        0.5299999713897705,
+        0.1639999970793724,
+        0.6499999761581421
+      ]
+    },
+    "sha256": "d9f2724b5d136363a2a3491c616d668166799910b4ef147eb299e77ff970186f",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000
+  },
+  "source_sha256": "4a6562825c59b0cac72c0cea0a34035aac2240e632a27e92da9e6f7f8f8b38fa"
+}

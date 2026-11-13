@@ -1,0 +1,105 @@
+{
+  "id": "kampung-zinc-roof",
+  "name": "Kampung Zinc Roof",
+  "summary": "Thin solid corrugated zinc roof sheet measuring 2.4 by 1.2 metres, with independent roof fasteners.",
+  "description": "Thin solid corrugated zinc roof sheet measuring 2.4 by 1.2 metres, with independent roof fasteners. Original illustrative asset, not engineering or safety certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/kampung-zinc-roof.glb",
+    "source": "sources/kampung-zinc-roof.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      1.1,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference",
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    }
+  },
+  "backlog_id": 334,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; helpers adapted from project hawker-centre-tray-rack. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. MOVABLE assemblies are authoring aids only, not browser runtime interactions.",
+  "accuracy_notes": "Illustrative non-branded regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS: geometry,material,scale/orientation,Khronos,budgets,source edit and browser gates",
+    "visual": "PASS: exported GLB hero/front/rear pixels inspected; targeted seam/camera fixes re-inspected",
+    "browser": "PASS: desktop Chromium1440/768/390 viewports; physical Android/iOS NOT TESTED",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "source": "PASS: canonical blend SHA preserved; copied component +0.123m re-export verified"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "kampung-zinc-roof",
+    "backlog_id": 334,
+    "glb_bytes": 50608,
+    "triangles": 1132,
+    "vertices": 1684,
+    "meshes": 7,
+    "materials": 2,
+    "dimensions": [
+      2.4000000953674316,
+      0.06100000161677599,
+      1.2000000476837158
+    ],
+    "bounds": {
+      "min": [
+        -1.2000000476837158,
+        0,
+        -0.6000000238418579
+      ],
+      "max": [
+        1.2000000476837158,
+        0.06100000161677599,
+        0.6000000238418579
+      ]
+    },
+    "sha256": "8b223c75a71f5d6a3943640e436be121337dc1a535036e029e75b9a69d05467f",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000
+  },
+  "source_sha256": "8406f098a1bc07956abf302ffbb845744147c15c69cfa496ea7f2de4d93b4de3"
+}

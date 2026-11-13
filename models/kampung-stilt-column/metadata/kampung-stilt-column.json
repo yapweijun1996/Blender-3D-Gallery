@@ -1,0 +1,96 @@
+{
+  "id": "kampung-stilt-column",
+  "name": "Kampung Stilt Column",
+  "summary": "Single tall timber stilt column with concrete footing, top saddle, steel bracket plates and bolts.",
+  "description": "Single tall timber stilt column with concrete footing, top saddle, steel bracket plates and bolts. Original illustrative asset, not engineering or safety certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/kampung-stilt-column.glb",
+    "source": "sources/kampung-stilt-column.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.4,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 333,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; helpers adapted from project hawker-centre-tray-rack. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. MOVABLE assemblies are authoring aids only, not browser runtime interactions.",
+  "accuracy_notes": "Illustrative non-branded regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS: geometry,material,scale/orientation,Khronos,budgets,source edit and browser gates",
+    "visual": "PASS: exported GLB hero/front/rear pixels inspected; targeted seam/camera fixes re-inspected",
+    "browser": "PASS: desktop Chromium1440/768/390 viewports; physical Android/iOS NOT TESTED",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "source": "PASS: canonical blend SHA preserved; copied component +0.123m re-export verified"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "kampung-stilt-column",
+    "backlog_id": 333,
+    "glb_bytes": 37892,
+    "triangles": 660,
+    "vertices": 1272,
+    "meshes": 7,
+    "materials": 4,
+    "dimensions": [
+      0.4399999976158142,
+      2.5699999891221523,
+      0.40200002110452143
+    ],
+    "bounds": {
+      "min": [
+        -0.2199999988079071,
+        0,
+        -0.17000000178813934
+      ],
+      "max": [
+        0.2199999988079071,
+        2.5699999891221523,
+        0.2320000193163821
+      ]
+    },
+    "sha256": "3b1a453094eba9b1024bc6416cbe2bfcc528c4e41bec6aa4c9a0f33ee209b58c",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000
+  },
+  "source_sha256": "296b5c981373cd4f6c01a0d45bbb43da45e6d79c8508a22dcc8aba27baf75054"
+}

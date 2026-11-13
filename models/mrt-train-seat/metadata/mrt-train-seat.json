@@ -1,0 +1,89 @@
+{
+  "id": "mrt-train-seat",
+  "name": "MRT Train Seat",
+  "summary": "Original modular mrt train seat with independent editable parts.",
+  "description": "Original generic Singapore/Malaysia transport prop, not a measured operator installation.",
+  "category": "Architecture",
+  "tags": [
+    "transport",
+    "sgmy",
+    "modular",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/mrt-train-seat.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "Illustrative V2.1 transport module. Placeholder signage is not official wayfinding, route data or operator branding. No engineering, safety, accessibility or regulatory compliance claim. Glazing is stylized opaque blue-grey for reliable low-cost mobile rendering. Physical Android/iOS NOT TESTED. Runtime controls limited to validated gallery orbit/zoom; source animation availability is separately reported.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "local_structure": "PASS",
+    "source_reopen_edit_export": "PASS",
+    "visual_review": "PASS: all four rendered angles and all three browser viewport initial views inspected, including final corrections",
+    "browser": "PASS: desktop Chromium, three viewport sizes, not real mobile hardware",
+    "budget_bytes": 850000,
+    "budget_triangles": 16000,
+    "local_asset": "PASS",
+    "combined_fifty_asset_gate": "PENDING"
+  },
+  "metrics": {
+    "sha256": "072a095012c1c544e88afec87f8ed4a6c3052340b0b2b62155431bd3286a5ed6",
+    "glb_bytes": 114476,
+    "triangles": 2180,
+    "vertices": 4192,
+    "primitives": 15,
+    "materials": 2,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      2.1860001554709334,
+      1.0674396369803187,
+      0.5513482996704634
+    ],
+    "bounds": {
+      "min": [
+        -1.0930000777354667,
+        0,
+        -0.2713483059289511
+      ],
+      "max": [
+        1.0930000777354667,
+        1.0674396369803187,
+        0.2799999937415123
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "animation_test": "NOT APPLICABLE"
+}

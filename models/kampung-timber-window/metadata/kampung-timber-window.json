@@ -1,0 +1,109 @@
+{
+  "id": "kampung-timber-window",
+  "name": "Kampung Timber Window",
+  "summary": "Timber window with two independently hinged plank shutters, braces, perimeter frame and projecting sill.",
+  "description": "Timber window with two independently hinged plank shutters, braces, perimeter frame and projecting sill. Original illustrative asset, not engineering or safety certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/kampung-timber-window.glb",
+    "source": "sources/kampung-timber-window.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.4,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 335,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; helpers adapted from project hawker-centre-tray-rack. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials and open-close glTF animation clips. Gallery-specific component controls not implemented; AnimationMixer verification pending.",
+  "accuracy_notes": "Illustrative non-branded regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS: geometry,material,scale/orientation,Khronos,budgets,source edit and browser gates",
+    "visual": "PASS: exported GLB hero/front/rear pixels inspected; targeted seam/camera fixes re-inspected",
+    "browser": "PASS: desktop Chromium1440/768/390 viewports; physical Android/iOS NOT TESTED",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "source": "PASS: canonical blend SHA preserved; copied component +0.123m re-export verified"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "kampung-timber-window",
+    "backlog_id": 335,
+    "glb_bytes": 114424,
+    "triangles": 2052,
+    "vertices": 4104,
+    "meshes": 19,
+    "materials": 1,
+    "dimensions": [
+      1.25,
+      1.2774999998509884,
+      0.23000000417232513
+    ],
+    "bounds": {
+      "min": [
+        -0.625,
+        0,
+        -0.11500000208616257
+      ],
+      "max": [
+        0.625,
+        1.2774999998509884,
+        0.11500000208616257
+      ]
+    },
+    "sha256": "85ac8a61a3616954c562766b9947d7a946b6ce391f1804a907a082ba9443d458",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000
+  },
+  "interaction": {
+    "type": "glTF animation",
+    "nodes": [
+      "MOVABLE_Shutter_-1",
+      "MOVABLE_Shutter_1"
+    ],
+    "duration_seconds": 2.0416667461395264,
+    "cycle": "closed-open-closed",
+    "gallery_controls": "NOT IMPLEMENTED",
+    "verification": "PASS: explicit expected poses/fixed components and desktop Chromium AnimationMixer pixel change/exact reset. Gallery component controls not implemented.",
+    "cycle_seconds": 2,
+    "start_seconds": 0.0416666679084301
+  },
+  "source_sha256": "8a413b7654c4be635f98ce6da8f39b15da9dd915b96b48ec48a483430debac6e"
+}

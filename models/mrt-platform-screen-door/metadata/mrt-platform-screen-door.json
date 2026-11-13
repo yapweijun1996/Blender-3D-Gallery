@@ -1,0 +1,89 @@
+{
+  "id": "mrt-platform-screen-door",
+  "name": "MRT Platform Screen Door",
+  "summary": "Original modular mrt platform screen door with independent editable parts.",
+  "description": "Original generic Singapore/Malaysia transport prop, not a measured operator installation.",
+  "category": "Architecture",
+  "tags": [
+    "transport",
+    "sgmy",
+    "modular",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/mrt-platform-screen-door.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "Illustrative V2.1 transport module. Placeholder signage is not official wayfinding, route data or operator branding. No engineering, safety, accessibility or regulatory compliance claim. Glazing is stylized opaque blue-grey for reliable low-cost mobile rendering. Physical Android/iOS NOT TESTED. Runtime controls limited to validated gallery orbit/zoom; source animation availability is separately reported.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "local_structure": "PASS",
+    "source_reopen_edit_export": "PASS",
+    "visual_review": "PASS: all four rendered angles and all three browser viewport initial views inspected, including final corrections",
+    "browser": "PASS: desktop Chromium, three viewport sizes, not real mobile hardware",
+    "budget_bytes": 1200000,
+    "budget_triangles": 22000,
+    "local_asset": "PASS",
+    "combined_fifty_asset_gate": "PENDING"
+  },
+  "metrics": {
+    "sha256": "f8e88b27a92b1a59a34f5cbddf26eb9674ea01c4dc54235abd2fa7e2e5c7eb09",
+    "glb_bytes": 138844,
+    "triangles": 2644,
+    "vertices": 4827,
+    "primitives": 21,
+    "materials": 5,
+    "textures": 0,
+    "animations": 2,
+    "dimensions": [
+      4.400000229477882,
+      2.6000000536441803,
+      0.6000000238418579
+    ],
+    "bounds": {
+      "min": [
+        -2.200000114738941,
+        0,
+        -0.30000001192092896
+      ],
+      "max": [
+        2.200000114738941,
+        2.6000000536441803,
+        0.30000001192092896
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "animation_test": "PASS: duration 60/24s; midpoint intended travel/swing; door clear aperture and fixed-jamb clearance; end restoration"
+}

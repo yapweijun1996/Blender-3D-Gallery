@@ -1,0 +1,96 @@
+{
+  "id": "village-roadside-drain",
+  "name": "Village Roadside Drain",
+  "summary": "Two-metre rural trapezoidal drainage channel with separate stone edging. Distinct from the urban precast U-shaped drain asset.",
+  "description": "Two-metre rural trapezoidal drainage channel with separate stone edging. Distinct from the urban precast U-shaped drain asset. Original illustrative asset, not engineering or safety certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/village-roadside-drain.glb",
+    "source": "sources/village-roadside-drain.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.4,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 336,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; helpers adapted from project hawker-centre-tray-rack. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. MOVABLE assemblies are authoring aids only, not browser runtime interactions.",
+  "accuracy_notes": "Illustrative non-branded regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS: geometry,material,scale/orientation,Khronos,budgets,source edit and browser gates",
+    "visual": "PASS: exported GLB hero/front/rear pixels inspected; targeted seam/camera fixes re-inspected",
+    "browser": "PASS: desktop Chromium1440/768/390 viewports; physical Android/iOS NOT TESTED",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "source": "PASS: canonical blend SHA preserved; copied component +0.123m re-export verified"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "village-roadside-drain",
+    "backlog_id": 336,
+    "glb_bytes": 95684,
+    "triangles": 1748,
+    "vertices": 3492,
+    "meshes": 17,
+    "materials": 2,
+    "dimensions": [
+      1.4000000059604645,
+      0.4000000059604645,
+      2
+    ],
+    "bounds": {
+      "min": [
+        -0.7000000029802322,
+        0,
+        -1
+      ],
+      "max": [
+        0.7000000029802322,
+        0.4000000059604645,
+        1
+      ]
+    },
+    "sha256": "14ca6cfe1bfc994168fdc16f9d8c2b83b64ae5c1292a961bfa1b6248897657d1",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000
+  },
+  "source_sha256": "7926bed5b9eba06d628963d827cb4a3d88cab80df3743467379eaed517434837"
+}

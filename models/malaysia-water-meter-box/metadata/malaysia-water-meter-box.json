@@ -1,0 +1,108 @@
+{
+  "id": "malaysia-water-meter-box",
+  "name": "Malaysia Water Meter Box",
+  "summary": "Compact water-meter enclosure with a hinged opaque door, latch, circular meter and two internal pipe sections. Door opening reveals the meter.",
+  "description": "Compact water-meter enclosure with a hinged opaque door, latch, circular meter and two internal pipe sections. Door opening reveals the meter. Original illustrative asset, not engineering or safety certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/malaysia-water-meter-box.glb",
+    "source": "sources/malaysia-water-meter-box.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.4,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 329,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; helpers adapted from project hawker-centre-tray-rack. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials and open-close glTF animation clips. Gallery-specific component controls not implemented; AnimationMixer verification pending.",
+  "accuracy_notes": "Illustrative non-branded regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS: geometry,material,scale/orientation,Khronos,budgets,source edit and browser gates",
+    "visual": "PASS: exported GLB hero/front/rear pixels inspected; targeted seam/camera fixes re-inspected",
+    "browser": "PASS: desktop Chromium1440/768/390 viewports; physical Android/iOS NOT TESTED",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "source": "PASS: canonical blend SHA preserved; copied component +0.123m re-export verified"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "malaysia-water-meter-box",
+    "backlog_id": 329,
+    "glb_bytes": 54144,
+    "triangles": 936,
+    "vertices": 1800,
+    "meshes": 10,
+    "materials": 5,
+    "dimensions": [
+      0.44999998807907104,
+      0.5999999782070518,
+      0.3250000085681677
+    ],
+    "bounds": {
+      "min": [
+        -0.22499999403953552,
+        0,
+        -0.13000000175088644
+      ],
+      "max": [
+        0.22499999403953552,
+        0.5999999782070518,
+        0.19500000681728125
+      ]
+    },
+    "sha256": "e7a3af9a3ae3502b8ea9d409e2887706dcbca534df124d71bfe5f979b07ab720",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000
+  },
+  "interaction": {
+    "type": "glTF animation",
+    "nodes": [
+      "MOVABLE_Door"
+    ],
+    "duration_seconds": 2.0416667461395264,
+    "cycle": "closed-open-closed",
+    "gallery_controls": "NOT IMPLEMENTED",
+    "verification": "PASS: explicit expected poses/fixed components and desktop Chromium AnimationMixer pixel change/exact reset. Gallery component controls not implemented.",
+    "cycle_seconds": 2,
+    "start_seconds": 0.0416666679084301
+  },
+  "source_sha256": "66c4dfc83633e77c7d5f58b3211866830cca3732e879d8ef231aeee6082249cf"
+}

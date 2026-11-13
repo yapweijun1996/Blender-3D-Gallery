@@ -1,0 +1,60 @@
+{
+  "source_sha256": "296b5c981373cd4f6c01a0d45bbb43da45e6d79c8508a22dcc8aba27baf75054",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 7,
+  "objects": [
+    {
+      "name": "Bolt.001",
+      "type": "MESH",
+      "parent": "ASSET_KampungStiltColumn"
+    },
+    {
+      "name": "Bracket",
+      "type": "MESH",
+      "parent": "ASSET_KampungStiltColumn"
+    },
+    {
+      "name": "Bracket.001",
+      "type": "MESH",
+      "parent": "ASSET_KampungStiltColumn"
+    },
+    {
+      "name": "Bolt",
+      "type": "MESH",
+      "parent": "ASSET_KampungStiltColumn"
+    },
+    {
+      "name": "Footing",
+      "type": "MESH",
+      "parent": "ASSET_KampungStiltColumn"
+    },
+    {
+      "name": "Saddle",
+      "type": "MESH",
+      "parent": "ASSET_KampungStiltColumn"
+    },
+    {
+      "name": "Timber_Post",
+      "type": "MESH",
+      "parent": "ASSET_KampungStiltColumn"
+    }
+  ],
+  "edit_proof": {
+    "node": "Bolt.001",
+    "before": [
+      0,
+      -0.1120000034570694,
+      0.23000000417232513
+    ],
+    "after": [
+      0.12300000339746475,
+      -0.1120000034570694,
+      0.23000000417232513
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475
+  }
+}

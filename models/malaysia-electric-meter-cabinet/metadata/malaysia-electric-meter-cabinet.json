@@ -1,0 +1,117 @@
+{
+  "id": "malaysia-electric-meter-cabinet",
+  "name": "Malaysia Electric Meter Cabinet",
+  "summary": "Tall electrical meter cabinet with hinged door, reading window, latch and six ventilation louvres. Illustrative only, without live electrical simulation.",
+  "description": "Tall electrical meter cabinet with hinged door, reading window, latch and six ventilation louvres. Illustrative only, without live electrical simulation. Original illustrative asset, not engineering or safety certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/malaysia-electric-meter-cabinet.glb",
+    "source": "sources/malaysia-electric-meter-cabinet.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.4,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference",
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    }
+  },
+  "backlog_id": 330,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; helpers adapted from project hawker-centre-tray-rack. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials and open-close glTF animation clips. Gallery-specific component controls not implemented; AnimationMixer verification pending.",
+  "accuracy_notes": "Illustrative non-branded regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS: geometry,material,scale/orientation,Khronos,budgets,source edit and browser gates",
+    "visual": "PASS: exported GLB hero/front/rear pixels inspected; targeted seam/camera fixes re-inspected",
+    "browser": "PASS: desktop Chromium1440/768/390 viewports; physical Android/iOS NOT TESTED",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "source": "PASS: canonical blend SHA preserved; copied component +0.123m re-export verified"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "malaysia-electric-meter-cabinet",
+    "backlog_id": 330,
+    "glb_bytes": 91848,
+    "triangles": 1620,
+    "vertices": 3240,
+    "meshes": 15,
+    "materials": 4,
+    "dimensions": [
+      0.6500000040978193,
+      1.1000000378116965,
+      0.44000001065433025
+    ],
+    "bounds": {
+      "min": [
+        -0.32500000204890966,
+        0,
+        -0.18500000145286322
+      ],
+      "max": [
+        0.32500000204890966,
+        1.1000000378116965,
+        0.25500000920146704
+      ]
+    },
+    "sha256": "f46d3e14fd60983622c646fed8ac4f4631bed40696e4864c91ed1baefed4c0d8",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000
+  },
+  "interaction": {
+    "type": "glTF animation",
+    "nodes": [
+      "MOVABLE_Door"
+    ],
+    "duration_seconds": 2.0416667461395264,
+    "cycle": "closed-open-closed",
+    "gallery_controls": "NOT IMPLEMENTED",
+    "verification": "PASS: explicit expected poses/fixed components and desktop Chromium AnimationMixer pixel change/exact reset. Gallery component controls not implemented.",
+    "cycle_seconds": 2,
+    "start_seconds": 0.0416666679084301
+  },
+  "source_sha256": "8776c5fc865613911157b00a1b372a89782e137b3c4dbb6738dbd7c0441fccac"
+}

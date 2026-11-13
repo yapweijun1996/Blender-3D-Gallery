@@ -1,0 +1,89 @@
+{
+  "id": "bus-stop-route-panel",
+  "name": "Bus Stop Route Panel",
+  "summary": "Original modular bus stop route panel with independent editable parts.",
+  "description": "Original generic Singapore/Malaysia transport prop, not a measured operator installation.",
+  "category": "Architecture",
+  "tags": [
+    "transport",
+    "sgmy",
+    "modular",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/bus-stop-route-panel.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "Illustrative V2.1 transport module. Placeholder signage is not official wayfinding, route data or operator branding. No engineering, safety, accessibility or regulatory compliance claim. Glazing is stylized opaque blue-grey for reliable low-cost mobile rendering. Physical Android/iOS NOT TESTED. Runtime controls limited to validated gallery orbit/zoom; source animation availability is separately reported.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "local_structure": "PASS",
+    "source_reopen_edit_export": "PASS",
+    "visual_review": "PASS: all four rendered angles and all three browser viewport initial views inspected, including final corrections",
+    "browser": "PASS: desktop Chromium, three viewport sizes, not real mobile hardware",
+    "budget_bytes": 850000,
+    "budget_triangles": 16000,
+    "local_asset": "PASS",
+    "combined_fifty_asset_gate": "PENDING"
+  },
+  "metrics": {
+    "sha256": "1538f603ef4c225c810881aef34214d2d010594acf5bf48bfbd56787304d5de5",
+    "glb_bytes": 114224,
+    "triangles": 2768,
+    "vertices": 3753,
+    "primitives": 14,
+    "materials": 5,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      0.75,
+      1.2000000476837158,
+      0.09849999938160181
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        0,
+        -0.032499998807907104
+      ],
+      "max": [
+        0.375,
+        1.2000000476837158,
+        0.0660000005736947
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "animation_test": "NOT APPLICABLE"
+}
