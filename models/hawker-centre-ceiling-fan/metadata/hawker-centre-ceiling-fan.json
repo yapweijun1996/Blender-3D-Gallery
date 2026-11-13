@@ -1,0 +1,100 @@
+{
+  "id": "hawker-centre-ceiling-fan",
+  "name": "Hawker Centre Ceiling Fan",
+  "summary": "Three-blade ceiling fan with separate editable rotor, motor, downrod and ceiling canopy; static model only.",
+  "description": "Three-blade ceiling fan with separate editable rotor, motor, downrod and ceiling canopy; static model only. Original generic food-court prop without official product branding or certification.",
+  "category": "Equipment",
+  "tags": [
+    "hawker",
+    "kopitiam",
+    "singapore",
+    "malaysia",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials; reviewed original project helpers. No third-party models, textures, fonts, logos or artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/hawker-centre-ceiling-fan.glb",
+    "source": "sources/hawker-centre-ceiling-fan.blend",
+    "preview": "previews/hawker-centre-ceiling-fan.webp",
+    "render": "previews/hawker-centre-ceiling-fan.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.8,
+      -0.6,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "mounting reference; motor underside at +0.04 m, ceiling connector +0.73 m",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        -7,
+        5
+      ]
+    }
+  },
+  "backlog_id": 366,
+  "material_notes": "Independent named editable mesh components and materials. No animations or runtime interaction. Geometric pictograms use original primitives, not text/font artwork.",
+  "accuracy_notes": "Illustrative static asset only. No hygiene, electrical, engineering or safety certification; no runtime simulation.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using reviewed original project helpers; no third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Physical Android/iOS NOT TESTED. Combined local gate PASS; see docs/verification/sgmy-batch05-final.md.",
+    "local_asset": "PASS",
+    "browser": "PASS: desktop Chromium156.0.8078.4 at three viewport sizes; physical Android/iOS NOT TESTED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "hawker-centre-ceiling-fan",
+    "glb_bytes": 31044,
+    "triangles": 564,
+    "vertices": 1032,
+    "primitives": 7,
+    "materials": 2,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      1.1428499355995325,
+      0.6899999883025885,
+      1.3172415062848968
+    ],
+    "bounds": {
+      "min": [
+        -0.4240545764648584,
+        0.03999999910593033,
+        -0.6598246886808159
+      ],
+      "max": [
+        0.7187953591346741,
+        0.7299999874085188,
+        0.657416817604081
+      ]
+    },
+    "sha256": "6012ee9f37ab9de1cff2103154c58d720e5a92528a9ec93769b61b3ac29b5197",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  }
+}

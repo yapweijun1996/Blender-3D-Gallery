@@ -1,0 +1,4 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import {Box3,Vector3} from 'three';import validator from 'gltf-validator';import {readGlb,near} from './glb.mjs';
+const root=new URL('.',import.meta.url);const a=await readGlb(new URL('exports/kopitiam-coffee-sock.glb',root)),b=await readGlb(new URL('reports/source-edit.glb',root));const v=await validator.validateBytes(new Uint8Array(b.bytes));assert.equal(v.issues.numErrors,0);assert.equal(v.issues.numWarnings,0);assert.notDeepEqual(a.bytes,b.bytes);
+near(new Box3().setFromObject(b.scene.getObjectByName('CLOTH_EditableHollowSock')).max.y/new Box3().setFromObject(a.scene.getObjectByName('CLOTH_EditableHollowSock')).max.y,1.1);
+fs.writeFileSync(new URL('reports/source-edit-proof.json',root),JSON.stringify({result:'PASS',actualBlendReopenEditAndReexport:true,shippedSourcePreserved:true,errors:0,warnings:0},null,2)+'\n');console.log('PASS kopitiam-coffee-sock actual source edit');

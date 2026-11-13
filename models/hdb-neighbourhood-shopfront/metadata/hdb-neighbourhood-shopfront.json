@@ -1,0 +1,94 @@
+{
+  "id": "hdb-neighbourhood-shopfront",
+  "name": "HDB Neighbourhood Shopfront",
+  "summary": "Neighbourhood retail frontage module with replaceable blank sign panel, sheltered canopy, display glazing and an independently hinged entrance.",
+  "description": "Neighbourhood retail frontage module with replaceable blank sign panel, sheltered canopy, display glazing and an independently hinged entrance. Generic HDB-inspired visual asset, not a particular surveyed building or official standard.",
+  "category": "Furniture",
+  "tags": [
+    "hdb",
+    "singapore",
+    "neighbourhood",
+    "architecture",
+    "modular",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials; reviewed original project helpers. No third-party models, textures, fonts, logos or artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/hdb-neighbourhood-shopfront.glb",
+    "source": "sources/hdb-neighbourhood-shopfront.blend",
+    "preview": "previews/hdb-neighbourhood-shopfront.webp",
+    "render": "previews/hdb-neighbourhood-shopfront.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.8,
+      0.55,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "base at ground plane",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "backlog_id": 317,
+  "material_notes": "Independent named editable mesh components and materials. No animations or runtime interaction. Geometric pictograms use original primitives, not text/font artwork.",
+  "accuracy_notes": "Visual architecture asset only, not construction, structural, fire, accessibility or building-code certification.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using reviewed original project helpers; no third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Physical Android/iOS NOT TESTED. Local preparation and validation recorded in verification.md.",
+    "local_asset": "PASS",
+    "browser": "PASS: desktop Chromium156.0.8078.4, three viewport sizes; physical Android/iOS NOT TESTED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "hdb-neighbourhood-shopfront",
+    "glb_bytes": 107760,
+    "triangles": 1872,
+    "vertices": 3696,
+    "primitives": 20,
+    "materials": 5,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      4.150000095367432,
+      3.180000066757202,
+      1.649999976158142
+    ],
+    "bounds": {
+      "min": [
+        -2.075000047683716,
+        0,
+        -0.25
+      ],
+      "max": [
+        2.075000047683716,
+        3.180000066757202,
+        1.399999976158142
+      ]
+    },
+    "sha256": "3d9134761dfee19994b3e8e528f5aaf7298d70495cc627d55927b922423b1b6b",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  }
+}
