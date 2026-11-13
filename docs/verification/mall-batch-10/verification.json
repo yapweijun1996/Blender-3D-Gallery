@@ -1,0 +1,696 @@
+{
+  "reviewedImplementation": "955bca52d7ca7cbeb5a053b37de0e0e8312c6bd1",
+  "mainBaseline": "b7421d284b503ff923508fc3046b2193108f503a",
+  "previewBaseline": "7a69dd674d5b3ad10739187e01a4f5a491c2cde8",
+  "verifiedAtUTC": "2026-11-12T12:25:42.968563+00:00",
+  "environment": {
+    "os": "Ubuntu Linux ARM64",
+    "node": "22.23.3",
+    "blender": "4.0.2",
+    "playwright": "1.64.1",
+    "chromium": "156.0.8078.4",
+    "renderer": "SwiftShader",
+    "coverage": "Desktop Chromium viewport emulation only; no native Android/iOS or physical touch/performance verification"
+  },
+  "localGate": "PASS",
+  "overall": "NEEDS REVIEW",
+  "fullUnitTests": {
+    "passed": 165,
+    "failed": 0,
+    "skipped": 0
+  },
+  "strictBrowserCases": {
+    "passed": 36,
+    "failed": 0
+  },
+  "lifecycle": {
+    "passed": 4,
+    "failed": 0
+  },
+  "library": {
+    "passed": 9,
+    "failed": 0
+  },
+  "previewBaselineCases": 14,
+  "previewCandidateCases": 14,
+  "glassDiagnostics": 4,
+  "sourceEditProofs": [
+    "428",
+    "429"
+  ],
+  "types": [
+    {
+      "backlogId": "006",
+      "collection": "mall-glass-railing",
+      "logicalTypes": 1,
+      "glbFiles": 3,
+      "strictCases": 9,
+      "strictPassed": 9,
+      "sourceReopen": "PASS",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "421",
+      "collection": "mall-floor-tile",
+      "logicalTypes": 1,
+      "glbFiles": 1,
+      "strictCases": 3,
+      "strictPassed": 3,
+      "sourceReopen": "PASS",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "422",
+      "collection": "mall-ceiling-panel",
+      "logicalTypes": 1,
+      "glbFiles": 1,
+      "strictCases": 3,
+      "strictPassed": 3,
+      "sourceReopen": "PASS",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "423",
+      "collection": "mall-ceiling-light",
+      "logicalTypes": 1,
+      "glbFiles": 1,
+      "strictCases": 3,
+      "strictPassed": 3,
+      "sourceReopen": "PASS",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "424",
+      "collection": "mall-shopfront-door",
+      "logicalTypes": 1,
+      "glbFiles": 1,
+      "strictCases": 3,
+      "strictPassed": 3,
+      "sourceReopen": "PASS",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "425",
+      "collection": "mall-shopfront-roller-shutter",
+      "logicalTypes": 1,
+      "glbFiles": 1,
+      "strictCases": 3,
+      "strictPassed": 3,
+      "sourceReopen": "PASS",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "426",
+      "collection": "mall-glass-partition",
+      "logicalTypes": 1,
+      "glbFiles": 1,
+      "strictCases": 3,
+      "strictPassed": 3,
+      "sourceReopen": "PASS",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "427",
+      "collection": "mall-structural-column",
+      "logicalTypes": 1,
+      "glbFiles": 1,
+      "strictCases": 3,
+      "strictPassed": 3,
+      "sourceReopen": "PASS",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "428",
+      "collection": "mall-atrium-balcony",
+      "logicalTypes": 1,
+      "glbFiles": 1,
+      "strictCases": 3,
+      "strictPassed": 3,
+      "sourceReopen": "PASS",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "429",
+      "collection": "mall-escalator-landing",
+      "logicalTypes": 1,
+      "glbFiles": 1,
+      "strictCases": 3,
+      "strictPassed": 3,
+      "sourceReopen": "PASS",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    }
+  ],
+  "assets": [
+    {
+      "backlogId": "006",
+      "id": "mall-glass-railing-post",
+      "glb": "models/mall-glass-railing/exports/mall-glass-railing-post.glb",
+      "sha256": "4104d29b95e1e8b82c1e4db8a4e00437aaf60e01c7e8e0b503fcd7c17586dd69",
+      "glbBytes": 57548,
+      "triangles": 1024,
+      "source": "models/mall-glass-railing/sources/mall-glass-railing-post.blend",
+      "sourceSha256": "db4753364ac09c8f29fc0190f43cce474976fef6047be95bbe54ea27792e05fc",
+      "thumbnailBytes": 10896,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "006",
+      "id": "mall-glass-railing-1m",
+      "glb": "models/mall-glass-railing/exports/mall-glass-railing-1m.glb",
+      "sha256": "556cfc03f38a0cb0c21a125a318c5dc251976e18598f3d15f3e0979dc2dfd49d",
+      "glbBytes": 175864,
+      "triangles": 3236,
+      "source": "models/mall-glass-railing/sources/mall-glass-railing-1m.blend",
+      "sourceSha256": "c04509dce572c88e6ed9e09f004a52df24eb02434d91f7965a7d462be1322957",
+      "thumbnailBytes": 32266,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "006",
+      "id": "mall-glass-railing-2m",
+      "glb": "models/mall-glass-railing/exports/mall-glass-railing-2m.glb",
+      "sha256": "037b734e7285961e93a75184f7aab28f4a20498fbac5639ed2cd0fab0958c6c5",
+      "glbBytes": 175864,
+      "triangles": 3236,
+      "source": "models/mall-glass-railing/sources/mall-glass-railing-2m.blend",
+      "sourceSha256": "5812eccd5fffb7899dece958e6a2652bd768754d3db9c4d48ba4d81205eef008",
+      "thumbnailBytes": 29496,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "421",
+      "id": "mall-floor-tile-module",
+      "glb": "models/mall-floor-tile/exports/mall-floor-tile-module.glb",
+      "sha256": "328a091a1372b0246694484d0cea05319bad032cfa603ed030b69ef87153c305",
+      "glbBytes": 155964,
+      "triangles": 604,
+      "source": "models/mall-floor-tile/sources/mall-floor-tile-module.blend",
+      "sourceSha256": "1e046dc2c5b6c57a4beeb9dc7ec5c435b7b58dbd308af310a34656d193b47809",
+      "thumbnailBytes": 14800,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "422",
+      "id": "mall-ceiling-panel-module",
+      "glb": "models/mall-ceiling-panel/exports/mall-ceiling-panel-module.glb",
+      "sha256": "40f7e02cc5f4db5fa3556ddda90c69ea128c98848707106433c25d1018b1d7ef",
+      "glbBytes": 147100,
+      "triangles": 1724,
+      "source": "models/mall-ceiling-panel/sources/mall-ceiling-panel-module.blend",
+      "sourceSha256": "61dc761bb83dc51d914f8cc3a6ec82de8408c3720dad7a869c248af46ba49163",
+      "thumbnailBytes": 9618,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "423",
+      "id": "mall-ceiling-light-module",
+      "glb": "models/mall-ceiling-light/exports/mall-ceiling-light-module.glb",
+      "sha256": "b8b0b31c7657028dff44f8c04ba7e65b07feac892b4849b81bb0a1fd78432cf8",
+      "glbBytes": 125008,
+      "triangles": 1900,
+      "source": "models/mall-ceiling-light/sources/mall-ceiling-light-module.blend",
+      "sourceSha256": "881ff73ec593c8c96bc19e3eebf0a7f4f085fe43655304cd0788abdf977e68bd",
+      "thumbnailBytes": 6718,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "424",
+      "id": "mall-shopfront-door",
+      "glb": "models/mall-shopfront-door/exports/mall-shopfront-door.glb",
+      "sha256": "daf0d6aa4347a58c9b39f2b3e32f0a24e6d66b041a8669c6c1b225343864c402",
+      "glbBytes": 145752,
+      "triangles": 2604,
+      "source": "models/mall-shopfront-door/sources/mall-shopfront-door.blend",
+      "sourceSha256": "a3d6f53c62459712e27fcc8f42928fde17f4ced823ae0c4310d287d6a98548a4",
+      "thumbnailBytes": 15760,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "425",
+      "id": "mall-shopfront-roller-shutter",
+      "glb": "models/mall-shopfront-roller-shutter/exports/mall-shopfront-roller-shutter.glb",
+      "sha256": "0cdb6d5fd565760a01fb9a1c491249afe8f54e40654ae2ab2080a6e772d4f077",
+      "glbBytes": 252888,
+      "triangles": 4608,
+      "source": "models/mall-shopfront-roller-shutter/sources/mall-shopfront-roller-shutter.blend",
+      "sourceSha256": "df05a3d25a552937e87058826fd27570af495d556c9cdd9e448b89cf6187f126",
+      "thumbnailBytes": 32444,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "426",
+      "id": "mall-glass-partition",
+      "glb": "models/mall-glass-partition/exports/mall-glass-partition.glb",
+      "sha256": "115d1e7a4c66d0ac5af08af51627f5d1a04c037156f9c2178b815ce4857ffd7f",
+      "glbBytes": 54420,
+      "triangles": 852,
+      "source": "models/mall-glass-partition/sources/mall-glass-partition.blend",
+      "sourceSha256": "57d49e3efbef5f321a2957d2359126ac2f3674c889edeebc421c9c1b0b43e35c",
+      "thumbnailBytes": 10498,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "427",
+      "id": "mall-structural-column",
+      "glb": "models/mall-structural-column/exports/mall-structural-column.glb",
+      "sha256": "5a856c9a4e30b7cbde2e99cb50e4e43e9f45a86dd3e504f4dea4708cbe8874aa",
+      "glbBytes": 78744,
+      "triangles": 1404,
+      "source": "models/mall-structural-column/sources/mall-structural-column.blend",
+      "sourceSha256": "bb6cdbf5a49134924139093c72df3c965cfc6bc60e723c457324d10d382c9e31",
+      "thumbnailBytes": 6460,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "428",
+      "id": "mall-atrium-balcony",
+      "glb": "models/mall-atrium-balcony/exports/mall-atrium-balcony.glb",
+      "sha256": "5d5247640c2a99ab414507cacf2928e954621f3248dc6f42ad90257ee98fbe62",
+      "glbBytes": 486156,
+      "triangles": 4940,
+      "source": "models/mall-atrium-balcony/sources/mall-atrium-balcony.blend",
+      "sourceSha256": "52a2392fe944f5c65d682b458fbeee0ca656346b1c3ed975f3160dbbc25bf164",
+      "thumbnailBytes": 17162,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    },
+    {
+      "backlogId": "429",
+      "id": "mall-escalator-landing",
+      "glb": "models/mall-escalator-landing/exports/optimized.glb",
+      "sha256": "aa2632a479f3e474b38413667f01c308d0a542325e451660f0e67be5384bc63d",
+      "glbBytes": 83352,
+      "triangles": 1616,
+      "source": "models/mall-escalator-landing/sources/mall-escalator-landing.blend",
+      "sourceSha256": "a36d9a6bc85db52dde9d2b5694ee044f15048e5908fb5a132941e1be479c5f78",
+      "thumbnailBytes": 22928,
+      "thumbnailPixels": [
+        768,
+        768
+      ],
+      "downloadable": false,
+      "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+      "localGate": "PASS",
+      "overall": "NEEDS REVIEW",
+      "android": "NOT TESTED",
+      "ios": "NOT TESTED"
+    }
+  ],
+  "preservation": {
+    "baseCatalogEntries": 68,
+    "finalCatalogEntries": 80,
+    "originalEntriesIdentical": true,
+    "duplicateIds": 0,
+    "changedOriginalModelPaths": [
+      "models/catalog.json"
+    ],
+    "builtGlbFiles": 96,
+    "catalogGlbFiles": 80,
+    "additionalExistingDemoGlbFiles": 16,
+    "allCatalogGlbHashesPresentInBuild": true,
+    "allBuiltGlbHashesMatchSourceFiles": true,
+    "originalReportsPreserved": true
+  },
+  "checks": [
+    {
+      "check": "unit",
+      "exitCode": 0,
+      "seconds": 3
+    },
+    {
+      "check": "build",
+      "exitCode": 0,
+      "seconds": 2
+    },
+    {
+      "check": "validate-glass-railing",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "source-glass-railing",
+      "exitCode": 0,
+      "seconds": 2
+    },
+    {
+      "check": "validate-floor-tile",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "source-floor-tile",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "validate-ceiling-panel",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "source-ceiling-panel",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "validate-ceiling-light",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "source-ceiling-light",
+      "exitCode": 0,
+      "seconds": 1
+    },
+    {
+      "check": "validate-shopfront-door",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "source-shopfront-door",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "validate-shopfront-roller-shutter",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "source-shopfront-roller-shutter",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "validate-glass-partition",
+      "exitCode": 0,
+      "seconds": 1
+    },
+    {
+      "check": "source-glass-partition",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "validate-structural-column",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "source-structural-column",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "validate-atrium-balcony",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "source-atrium-balcony",
+      "exitCode": 0,
+      "seconds": 1
+    },
+    {
+      "check": "validate-escalator-landing",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "source-escalator-landing",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "browser-glass-railing",
+      "exitCode": 0,
+      "seconds": 10
+    },
+    {
+      "check": "browser-floor-tile",
+      "exitCode": 0,
+      "seconds": 4
+    },
+    {
+      "check": "browser-ceiling-panel",
+      "exitCode": 0,
+      "seconds": 5
+    },
+    {
+      "check": "browser-ceiling-light",
+      "exitCode": 0,
+      "seconds": 14
+    },
+    {
+      "check": "browser-shopfront-door",
+      "exitCode": 0,
+      "seconds": 15
+    },
+    {
+      "check": "browser-shopfront-roller-shutter",
+      "exitCode": 0,
+      "seconds": 14
+    },
+    {
+      "check": "browser-glass-partition",
+      "exitCode": 0,
+      "seconds": 14
+    },
+    {
+      "check": "browser-structural-column",
+      "exitCode": 0,
+      "seconds": 14
+    },
+    {
+      "check": "browser-atrium-balcony",
+      "exitCode": 0,
+      "seconds": 15
+    },
+    {
+      "check": "browser-escalator-landing",
+      "exitCode": 0,
+      "seconds": 14
+    },
+    {
+      "check": "lifecycle",
+      "exitCode": 0,
+      "seconds": 4
+    },
+    {
+      "check": "library",
+      "exitCode": 0,
+      "seconds": 55
+    },
+    {
+      "check": "glass-railing",
+      "exitCode": 0,
+      "seconds": 2
+    },
+    {
+      "check": "glass-door",
+      "exitCode": 0,
+      "seconds": 1
+    },
+    {
+      "check": "glass-partition",
+      "exitCode": 0,
+      "seconds": 1
+    },
+    {
+      "check": "glass-atrium",
+      "exitCode": 0,
+      "seconds": 2
+    },
+    {
+      "check": "baseline-build",
+      "exitCode": 0,
+      "seconds": 2
+    },
+    {
+      "check": "preview-baseline",
+      "exitCode": 0,
+      "seconds": 61
+    },
+    {
+      "check": "preview-candidate",
+      "exitCode": 0,
+      "seconds": 60
+    },
+    {
+      "check": "edit-atrium-balcony",
+      "exitCode": 0,
+      "seconds": 1
+    },
+    {
+      "check": "reexport-atrium-balcony",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "verify-edit-atrium-balcony",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "edit-escalator-landing",
+      "exitCode": 0,
+      "seconds": 1
+    },
+    {
+      "check": "reexport-escalator-landing",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "verify-edit-escalator-landing",
+      "exitCode": 0,
+      "seconds": 0
+    },
+    {
+      "check": "diff-check",
+      "exitCode": 0,
+      "seconds": 1
+    }
+  ],
+  "firstRunFailures": [],
+  "reportAssemblyCorrection": "Initial report-generation assertion assumed built GLB count equaled 80 catalog entries. Inspection found 96 built files: 80 catalog assets and 16 existing Solar/NASA demo assets. Corrected the inventory expectation after verifying all 96 hashes match source files. No application test failed or was altered.",
+  "postReconciliation": {
+    "fullUnitTests": {
+      "passed": 165,
+      "failed": 0,
+      "skipped": 0
+    },
+    "build": "PASS",
+    "assetValidation": "PASS",
+    "scope": "Only additive evidence/status documentation and railing quality-gate summary changed after full browser run. No runtime, geometry, test or catalog registration change."
+  }
+}

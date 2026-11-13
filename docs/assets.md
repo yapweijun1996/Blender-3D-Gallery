@@ -18,3 +18,42 @@ Suggested measured metrics are GLB bytes, triangle and vertex counts, maximum te
 4. Review provenance, rights, attribution and visual quality. Only approved, validated entries enter the published catalog; failures remain drafts.
 
 Candidate budgets for measurement: prefer GLB files at or below 5 MiB and 100,000 triangles; review larger assets and require an explicit exception for materially larger files. Typical texture dimensions should not exceed 2048 pixels without justification. Prefer thumbnails under 150 KiB and posters under 300 KiB when visual quality allows. These are targets, not measured guarantees.
+
+## Optional Gallery preview settings (implemented)
+
+Existing `display.previewRotationY` remains required and unchanged. The following
+optional fields affect Gallery presentation only, not exported/source geometry,
+Game or Solar scenes, material definitions, downloads or the visible UI:
+
+```json
+{
+  "previewRotationY": 0,
+  "previewCameraDirection": [1, -1.4, 1],
+  "previewLighting": {
+    "directionalPosition": [4, -7, 5],
+    "hemisphereIntensity": 2,
+    "directionalIntensity": 2.1
+  }
+}
+```
+
+- `previewCameraDirection` is the world/glTF-space vector **from the model bounds
+  centre toward the camera**, after `previewRotationY`. The viewer normalizes it
+  and retains automatic distance fitting, orbit/zoom limits and per-model reset.
+- `directionalPosition` is the white key light's world-space position, aimed at
+  the world origin, matching the existing Three.js light convention. The other
+  hemisphere colours, vehicle studio and rendering presets do not change.
+- Vectors are exactly three finite numbers, each in [-100,100], with length at
+  least 0.000001. Camera X/Z length must also be at least 0.000001 to avoid a
+  vertical look-at pole. Lighting intensities are finite numbers in [0,10]; zero
+  is allowed and does not trigger a default.
+- Each omitted field retains its old default independently. No camera override
+  keeps the exact existing vehicle, solar, ball or generic camera branch. No
+  lighting override keeps hemisphere intensity 2, key intensity 2.1 and position
+  [4,7,5]. Empty `previewLighting: {}` also retains all defaults.
+- Known invalid values (including null, strings and non-finite numbers) fail
+  catalog validation/build; they are not clamped/coerced or silently substituted.
+  Unknown metadata fields remain accepted and preserved, as before.
+
+The ceiling uses only camera and key-position overrides. See
+[verification](verification/preview-config.md) for baseline comparisons and limits.

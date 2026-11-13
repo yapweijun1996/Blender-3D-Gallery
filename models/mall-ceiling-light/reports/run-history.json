@@ -1,0 +1,22 @@
+[
+  {
+    "stage": "preparation",
+    "result": "FAIL then corrected",
+    "observed": "Initial authoring pipeline stopped because inspect_sources.py had not been written. Confirmed missing file before writing it; regenerated source and reran source inspection, edit re-export, validation and all renders successfully."
+  },
+  {
+    "stage": "initial complete checks",
+    "result": "unit 129/131; build PASS; strict browser 3/3; library 9/9",
+    "observed": "Placing new collection first violated two existing registry tests that rely on the original first collection. No legacy test changed. New collection moved to end, preserving original order. First unit failure log retained as unit-attempt-1.log."
+  },
+  {
+    "stage": "initial library output",
+    "result": "PASS with output-location correction",
+    "observed": "Initial run used wrong artifact-directory environment variable and wrote default /tmp output. Final run uses TEST_ARTIFACT_DIR in this isolated workspace."
+  },
+  {
+    "stage": "final complete checks",
+    "result": "PASS",
+    "observed": "131/131 units, production asset validation and build, strict 3/3 viewport cases and library 9/9. No test weakening or request-failure filtering."
+  }
+]

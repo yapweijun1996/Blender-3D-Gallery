@@ -1,0 +1,91 @@
+{
+  "id": "mall-glass-railing-post",
+  "name": "Glass Railing Post",
+  "summary": "Independent four-way graphite post with champagne cap and floor fixing plate.",
+  "description": "Independent four-way graphite post with champagne cap and floor fixing plate.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "railing",
+    "glass",
+    "modular",
+    "architecture",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled BSDF materials. No external models or textures.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-glass-railing-post.glb",
+    "source": "sources/mall-glass-railing-post.blend",
+    "preview": "previews/mall-glass-railing-post.webp",
+    "render": "previews/mall-glass-railing-post.png",
+    "additional_previews": [
+      "previews/mall-glass-railing-post-front.webp",
+      "previews/mall-glass-railing-post-rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor centre",
+    "front_axis": "Blender -Y / glTF +Z; visually symmetric"
+  },
+  "assembly": {
+    "centre_spacing_m": 0,
+    "modules": [
+      "MODULE_Post"
+    ],
+    "layouts": "layouts.json",
+    "connectors": "Post faces at 0.026 m offset; handrail centre at 1.095 m. Use one post at each unique joint and extract only MODULE_Infill for repeated bays."
+  },
+  "material_notes": "Sea-green glass uses glTF BLEND alpha 0.28 with double-sided surfaces, not refraction/transmission. Thin edge tint makes the glass readable. Original source geometry/materials remain individually editable.",
+  "accuracy_notes": "Static decorative concept only. Not building-code compliance, a structural engineering design, fabrication instructions, physics simulation or a safety-certified barrier.",
+  "attribution": [
+    {
+      "credit": "Original geometry and materials authored for Blender-3D-Gallery; no external artwork."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 57548,
+    "triangles": 1024,
+    "vertices": 2016,
+    "primitives": 3,
+    "materials": 3,
+    "animations": 0,
+    "dimensions": [
+      0.1599999964237213,
+      1.1200000047683716,
+      0.1599999964237213
+    ],
+    "bounds": {
+      "min": [
+        -0.07999999821186066,
+        0,
+        -0.07999999821186066
+      ],
+      "max": [
+        0.07999999821186066,
+        1.1200000047683716,
+        0.07999999821186066
+      ]
+    },
+    "sha256": "4104d29b95e1e8b82c1e4db8a4e00437aaf60e01c7e8e0b503fcd7c17586dd69"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Current final batch verification: local asset gate PASS, strict Gallery 9/9 PASS after the native-fetch transport fix; overall NEEDS REVIEW because physical Android/iOS remain NOT TESTED. See docs/verification/mall-batch-10.md. Historical initial snapshot, superseded for the browser gate: Local asset structure/source/visual checks passed. Strict gallery gate has one unresolved request failure; Android and iOS untested. See verification.md."
+  }
+}

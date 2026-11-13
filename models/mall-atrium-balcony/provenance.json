@@ -1,0 +1,26 @@
+{
+  "scope": "Original project 006 railing and 421 flooring reused, not new logical types",
+  "inputs": [
+    {
+      "path": "mall-glass-railing/sources/mall-glass-railing-2m.blend",
+      "sha256": "5812eccd5fffb7899dece958e6a2652bd768754d3db9c4d48ba4d81205eef008"
+    },
+    {
+      "path": "mall-glass-railing/exports/mall-glass-railing-2m.glb",
+      "sha256": "037b734e7285961e93a75184f7aab28f4a20498fbac5639ed2cd0fab0958c6c5"
+    },
+    {
+      "path": "mall-floor-tile/sources/mall-floor-tile-module.blend",
+      "sha256": "1e046dc2c5b6c57a4beeb9dc7ec5c435b7b58dbd308af310a34656d193b47809"
+    },
+    {
+      "path": "mall-floor-tile/exports/mall-floor-tile-module.glb",
+      "sha256": "328a091a1372b0246694484d0cea05319bad032cfa603ed030b69ef87153c305"
+    },
+    {
+      "path": "mall-floor-tile/textures/terrazzo-original.png",
+      "sha256": "f37f6e2927fd1473ca287ecf683e25121765ae9653f6986a3b190deb7a769398"
+    }
+  ],
+  "modifications": "Railing geometry/materials translated only. Floor tile source meshes duplicate original 421 with cropped edge tiles and adapted grout grid; original packed finish artwork/materials. Original input bytes unchanged."
+}

@@ -1,0 +1,141 @@
+{
+  "id": "mall-ceiling-panel-module",
+  "name": "Mall Ceiling Panel Module",
+  "summary": "A 1.2 m square suspended ceiling cassette with four recessed mineral-fibre-style panels, ivory T-grid and editable steel hangers.",
+  "description": "A 1.2 m square suspended ceiling cassette with four recessed mineral-fibre-style panels, ivory T-grid and editable steel hangers.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "ceiling",
+    "panel",
+    "suspended",
+    "modular",
+    "architecture",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry, Principled materials and seeded Pillow mineral-fibre artwork; no third-party models, artwork or fonts.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-ceiling-panel-module.glb",
+    "source": "sources/mall-ceiling-panel-module.blend",
+    "preview": "previews/mall-ceiling-panel-module.webp",
+    "render": "previews/mall-ceiling-panel-module.png",
+    "additional_previews": [
+      "previews/underside.webp",
+      "previews/rear.webp",
+      "previews/edge.webp",
+      "previews/assembly-3x3.webp"
+    ],
+    "original_texture": "textures/mineral-fibre-original.png"
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "centre of visible grid underside",
+    "front_axis": "Square ceiling; decorative face points toward Blender -Z / glTF -Y",
+    "previewCameraDirection": [
+      1,
+      -1.4,
+      1
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        -7,
+        5
+      ]
+    }
+  },
+  "assembly": {
+    "repeat_pitch_m": 1.2,
+    "panel_pitch_m": 0.6,
+    "panel_size_gltf_m": [
+      0.576,
+      0.016,
+      0.576
+    ],
+    "grid_face_width_m": 0.024,
+    "boundary_half_grid_width_m": 0.012,
+    "overall_height_m": 0.36,
+    "panel_underside_height_m": 0.008,
+    "panel_top_height_m": 0.024,
+    "connector_positions_gltf_m": {
+      "XP": [
+        0.6000000238418579,
+        0.017999999225139618,
+        0
+      ],
+      "XN": [
+        -0.6000000238418579,
+        0.017999999225139618,
+        0
+      ],
+      "YP": [
+        0,
+        0.017999999225139618,
+        -0.6000000238418579
+      ],
+      "YN": [
+        0,
+        0.017999999225139618,
+        0.6000000238418579
+      ]
+    },
+    "instructions": "Place whole roots on a 1.2 m glTF X/Z grid at the desired ceiling height Y. Root Y is the visible grid underside; hangers rise to Y+0.36. Quarter-turn Y rotations retain connector alignment. Each boundary contributes a 12 mm half-grid flange; do not add a duplicate border. Four connector empties are visual registration aids, not structural fittings."
+  },
+  "material_notes": "25 independently editable closed meshes: four mineral-fibre-style panels, nine closed T-grid rails and twelve suspension pieces. Four connector empties. The original 256 x 256 texture is packed in source and embedded in GLB. No light emitter or electrical system is included.",
+  "accuracy_notes": "Generic decorative mall ceiling concept for Singapore/Malaysia scenes. No acoustic, fire, electrical, structural, load-bearing, installation or building-code certification is claimed.",
+  "attribution": [
+    {
+      "credit": "Original geometry, materials and seeded mineral-fibre texture authored for Blender-3D-Gallery; no external artwork."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 147100,
+    "triangles": 1724,
+    "vertices": 3312,
+    "primitives": 29,
+    "materials": 5,
+    "textures": 1,
+    "texture_dimensions": [
+      256,
+      256
+    ],
+    "animations": 0,
+    "dimensions": [
+      1.2000000476837158,
+      0.3600000021979213,
+      1.199999963864684
+    ],
+    "bounds": {
+      "min": [
+        -0.6000000238418579,
+        0,
+        -0.599999981932342
+      ],
+      "max": [
+        0.6000000238418579,
+        0.3600000021979213,
+        0.599999981932342
+      ]
+    },
+    "sha256": "40f7e02cc5f4db5fa3556ddda90c69ea128c98848707106433c25d1018b1d7ef"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Local artifact. Optional per-model Gallery camera and light settings show the decorative underside initially; geometry is unchanged. Desktop Chromium viewport evidence is not physical Android/iOS coverage. Publication and overall visual approval remain separate."
+  }
+}

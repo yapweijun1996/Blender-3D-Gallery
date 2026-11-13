@@ -1,0 +1,112 @@
+{
+  "id": "mall-escalator-landing",
+  "name": "Mall Escalator Landing",
+  "summary": "Compact ribbed escalator landing with two access plates, recessed support tray, side trims and a simplified comb transition.",
+  "description": "V2.1 P0 item 429: static modular landing threshold only, not a full escalator or moving transport. Eight independently editable meshes in metres. Existing floor module 421 fits at a verified flush nominal top; future escalator interface remains provisional.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "escalator",
+    "landing",
+    "threshold",
+    "access-plate",
+    "modular",
+    "architecture",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials. No external models, textures, logos or fonts. Actual original project 421 floor used for separate assembly evidence only.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/mall-escalator-landing.blend",
+    "preview": "previews/mall-escalator-landing.webp",
+    "render": "previews/mall-escalator-landing.png",
+    "additional_previews": [
+      "previews/top.webp",
+      "previews/interface.webp",
+      "previews/underside.webp",
+      "previews/assembly-floor.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.8,
+      1.2,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "module underside centre",
+    "front_axis": "mall floor at Blender -Y / glTF +Z; future escalator at opposite side",
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        2,
+        1
+      ],
+      "hemisphereIntensity": 2,
+      "directionalIntensity": 4.5
+    }
+  },
+  "assembly": {
+    "dimensions_m": [
+      1.2,
+      0.03,
+      1.2
+    ],
+    "floor_top_m": 0.03,
+    "layouts": "layouts.json",
+    "instructions": "Place unchanged 421 floor root at glTF (0,0,1.2) for the front connection, or (+/-1.2,0,0) beside side trims. No scaling. Both wear surfaces at Y=0.03; existing 421 perimeter grout is deliberately 1 mm lower. Future escalator envelope is provisional only, no compatibility claim."
+  },
+  "material_notes": "Two closed ribbed access-plate meshes, two trims, threshold, tray, closed comb and marker. Five editable named materials; front/rear plates share satin aluminium. 25 coarse ribs per plate and 27 coarse comb fingers; no textures/animations/decoder dependencies.",
+  "accuracy_notes": "Visual architecture asset only. No moving transport, mechanical compatibility, slip resistance, engineering, manufacturer, safety or building-code certification. Full escalator item 004 is not included or tested. Separate handrail item 430 is not included or tested.",
+  "attribution": [
+    {
+      "credit": "Original geometry and materials for Blender-3D-Gallery; existing original floor module 421 unchanged in separate assembly verification only."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Local source, geometry, floor joints, rendering and Gallery checks recorded separately. Actual Android and iOS remain NOT TESTED. No deployment/release."
+  },
+  "metrics": {
+    "glb_bytes": 83352,
+    "triangles": 1616,
+    "vertices": 2616,
+    "primitives": 8,
+    "materials": 5,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      1.1999999843537807,
+      0.03000000020256266,
+      1.2000000476837158
+    ],
+    "bounds": {
+      "min": [
+        -0.5999999921768904,
+        0,
+        -0.6000000238418579
+      ],
+      "max": [
+        0.5999999921768904,
+        0.03000000020256266,
+        0.6000000238418579
+      ]
+    },
+    "sha256": "aa2632a479f3e474b38413667f01c308d0a542325e451660f0e67be5384bc63d"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  }
+}

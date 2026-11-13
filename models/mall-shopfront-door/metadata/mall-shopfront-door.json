@@ -1,0 +1,104 @@
+{
+  "id": "mall-shopfront-door",
+  "name": "Mall Shopfront Door",
+  "summary": "Glazed double shopfront door with fixed aluminium frame, editable hinge roots and paired stainless pull handles.",
+  "description": "Original generic 2.10 m by 2.40 m double-door module for Singapore/Malaysia mall scenes. Independent named leaves and materials. A door module only, not a roller shutter or a complete store.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "shopfront",
+    "door",
+    "glass",
+    "double-door",
+    "modular",
+    "architecture",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials; no third-party models, artwork, textures or fonts.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-shopfront-door.glb",
+    "source": "sources/mall-shopfront-door.blend",
+    "preview": "previews/mall-shopfront-door.webp",
+    "render": "previews/mall-shopfront-door.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/open.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.35,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor midpoint of fixed frame",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "assembly": {
+    "frame_aperture_width_height_m": [
+      1.94,
+      2.32
+    ],
+    "leaf_width_height_m": [
+      0.944,
+      2.282
+    ],
+    "open_clear_width_including_hardware_m": 1.7339999862015243,
+    "instructions": "Place the root at the floor plane of a 2.10 m x 2.40 m facade opening. Keep FRAME_Fixed stationary. Rotate HINGE_Left -90 degrees and HINGE_Right +90 degrees around Blender local Z / glTF local Y to open outward. Children retain local transforms. This is editable articulation, not an installed or certified door system."
+  },
+  "material_notes": "33 independent closed meshes and four editable materials. Fixed frame and four hinge barrels; each leaf has separate rails, 10 mm transparent glass, frosted visibility bands, front/rear pull handles and brackets. Glass uses alpha 0.22 blending, not physically refractive glass. No exported animation clips or lights.",
+  "accuracy_notes": "Generic visual concept, not a security, fire, accessibility, structural or building-code specification. Static gallery viewing only; no runtime click-to-open controls or door animation player. Frame aperture is 1.94 m; open clear width including handles is about 1.734 m.",
+  "attribution": [
+    {
+      "credit": "Original geometry and materials authored for Blender-3D-Gallery; no external artwork."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 145752,
+    "triangles": 2604,
+    "vertices": 5016,
+    "primitives": 33,
+    "materials": 4,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      2.0999999791383743,
+      2.3999998942017555,
+      0.1830000001937151
+    ],
+    "bounds": {
+      "min": [
+        -1.0499999895691872,
+        0,
+        -0.05999999865889549
+      ],
+      "max": [
+        1.0499999895691872,
+        2.3999998942017555,
+        0.1230000015348196
+      ]
+    },
+    "sha256": "daf0d6aa4347a58c9b39f2b3e32f0a24e6d66b041a8669c6c1b225343864c402"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Local artifact and visual approval PASS; actual studio/gallery pixels and transparent/opaque/hidden glass controls inspected. Overall NEEDS REVIEW because physical Android/iOS remain untested. No runtime door interaction is claimed."
+  }
+}

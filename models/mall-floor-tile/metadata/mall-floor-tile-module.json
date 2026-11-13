@@ -1,0 +1,105 @@
+{
+  "id": "mall-floor-tile-module",
+  "name": "Mall Floor Tile Module",
+  "summary": "A 1.2 m square repeat module with four honed ivory terrazzo slabs and continuous 4 mm warm-grey grout joints.",
+  "description": "A 1.2 m square repeat module with four honed ivory terrazzo slabs and continuous 4 mm warm-grey grout joints.",
+  "category": "Furniture",
+  "tags": [
+    "mall",
+    "floor",
+    "tile",
+    "terrazzo",
+    "modular",
+    "architecture",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry, Principled materials and seeded Pillow terrazzo artwork. No third-party assets or downloaded pixels.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mall-floor-tile-module.glb",
+    "source": "sources/mall-floor-tile-module.blend",
+    "preview": "previews/mall-floor-tile-module.webp",
+    "render": "previews/mall-floor-tile-module.png",
+    "additional_previews": [
+      "previews/top.webp",
+      "previews/edge.webp",
+      "previews/assembly-3x3.webp"
+    ],
+    "original_texture": "textures/terrazzo-original.png"
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "bottom centre",
+    "front_axis": "Square floor, no directional front"
+  },
+  "assembly": {
+    "repeat_pitch_m": 1.2,
+    "tile_pitch_m": 0.6,
+    "grout_joint_m": 0.004,
+    "overall_height_m": 0.03,
+    "slab_size_m": [
+      0.596,
+      0.018,
+      0.596
+    ],
+    "instructions": "Instance whole root at 1.2 m increments in glTF X/Z, height Y=0. Quarter-turn Y rotations preserve joints. Each module carries 2 mm of the boundary joint; never add a second grout border. Do not scale modules for mixed dimensions.",
+    "grout_surface_height_m": 0.029,
+    "slab_support_height_m": 0.012
+  },
+  "material_notes": "Original 512 x 512 embedded PNG, seed 421, four UV orientations. Five independently editable mesh objects: four eased stone slabs and a continuous grout bed. Separate body, finish and grout materials; source texture is packed. Filled grout is 1 mm below the wearing surface. The grout bed is a closed mesh with slab recesses, not an overlapping full-height box.",
+  "accuracy_notes": "Generic decorative mall flooring concept. No slip resistance, fire rating, accessibility, fabrication or Singapore/Malaysia building-code certification is claimed.",
+  "attribution": [
+    {
+      "credit": "Original geometry, materials and seeded terrazzo artwork authored for Blender-3D-Gallery; no external artwork."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 155964,
+    "triangles": 604,
+    "vertices": 1064,
+    "primitives": 9,
+    "materials": 3,
+    "textures": 1,
+    "texture_dimensions": [
+      512,
+      512
+    ],
+    "animations": 0,
+    "dimensions": [
+      1.2000000476837158,
+      0.029999999329447746,
+      1.2000000476837158
+    ],
+    "bounds": {
+      "min": [
+        -0.6000000238418579,
+        0,
+        -0.6000000238418579
+      ],
+      "max": [
+        0.6000000238418579,
+        0.029999999329447746,
+        0.6000000238418579
+      ]
+    },
+    "sha256": "328a091a1372b0246694484d0cea05319bad032cfa603ed030b69ef87153c305"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Local artifact; desktop browser evidence is recorded in verification.md. Actual Android and iOS browsers have not been tested."
+  }
+}

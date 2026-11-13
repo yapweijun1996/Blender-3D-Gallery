@@ -1,0 +1,16 @@
+Blender 4.0.2
+Traceback (most recent call last):
+  File "/srv/agent-workstation/workspaces/blender-mall-shopfront-door-20261112/repo/models/mall-shopfront-door/generate.py", line 86, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/srv/agent-workstation/workspaces/blender-mall-shopfront-door-20261112/repo/models/mall-shopfront-door/generate.py", line 64, in main
+    for side,x in [('Left',-1.01),('Right',1.01)]:attach(box('FRAME_Jamb_'+side,(x,0,1.16),(.08,.12,2.32),metal,.002),fixed)
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/srv/agent-workstation/workspaces/blender-mall-shopfront-door-20261112/repo/models/mall-shopfront-door/generate.py", line 19, in box
+    bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(mat);o.data.uv_layers.clear()
+                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: bpy_prop_collection: attribute "clear" not found
+
+Error: script failed, file: 'models/mall-shopfront-door/generate.py', exiting.
+
+Blender quit

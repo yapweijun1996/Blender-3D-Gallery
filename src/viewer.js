@@ -11,6 +11,10 @@ export default async function createViewer(
   asset,
 ) {
   const isVehicle = asset.id === "proton-saga-1985";
+  // Optional metadata is validated during catalog loading/build. Omitting each
+  // override retains the original viewer defaults, including special families.
+  const display = asset.details?.display;
+  const lighting = display?.previewLighting;
   let vehicleToolbar;
   let studio;
   let environmentTarget;
@@ -64,9 +68,9 @@ export default async function createViewer(
     controls.update();
     invalidate();
   });
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x535b53, 2));
-  const light = new THREE.DirectionalLight(0xffffff, 2.1);
-  light.position.set(4, 7, 5);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x535b53, lighting?.hemisphereIntensity ?? 2));
+  const light = new THREE.DirectionalLight(0xffffff, lighting?.directionalIntensity ?? 2.1);
+  light.position.fromArray(lighting?.directionalPosition ?? [4, 7, 5]);
   scene.add(light);
   let frame = 0;
   let model;
@@ -136,24 +140,16 @@ export default async function createViewer(
         "The 3D view was interrupted. Close and reopen it to retry.";
   });
   try {
-    let gltf;
-    if (isVehicle) {
-      // Consume the self-contained GLB before parsing, while retaining the
-      // viewer's abort signal for an in-flight request.
-      const response = await fetch(url, { signal });
-      if (!response.ok) throw new Error(`Model request failed: ${response.status}`);
-      const buffer = await response.arrayBuffer();
-      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
-      const base = THREE.LoaderUtils.extractUrlBase(new URL(url, document.baseURI).href);
-      gltf = await new GLTFLoader().parseAsync(buffer, base);
-    } else {
-      gltf = await new GLTFLoader().loadAsync(url, (event) => {
-        if (!disposed)
-          status.textContent = event.total
-            ? `Loading the 3D model… ${Math.round((event.loaded / event.total) * 100)}%`
-            : "Loading the 3D model…";
-      });
-    }
+    // Read the native response before parsing. The pinned FileLoader's stream
+    // reader path reports ERR_ABORTED after a complete transfer in Chromium;
+    // see docs/gallery-loading.md. Keep the viewer signal on the real request.
+    const response = await fetch(url, { signal });
+    // Consume error bodies too: retry must not abort a leftover HTTP response.
+    const buffer = await response.arrayBuffer();
+    if (!response.ok) throw new Error(`Model request failed: ${response.status}`);
+    if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+    const base = THREE.LoaderUtils.extractUrlBase(new URL(url, document.baseURI).href);
+    const gltf = await new GLTFLoader().parseAsync(buffer, base);
     if (disposed || signal.aborted) {
       disposeModel(gltf.scene);
       throw new DOMException("Viewer closed", "AbortError");
@@ -179,8 +175,8 @@ export default async function createViewer(
         pmrem.dispose();
       }
     }
-    if (asset.details?.display)
-      model.rotation.y = asset.details.display.previewRotationY ?? 0;
+    if (display)
+      model.rotation.y = display.previewRotationY ?? 0;
     scene.add(model);
     const bounds = new THREE.Box3().setFromObject(model);
     if (bounds.isEmpty()) throw new Error("Model has no visible bounds");
@@ -192,6 +188,7 @@ export default async function createViewer(
     controls.minDistance = radius * 1.05;
     controls.maxDistance = radius * 20;
     const direction = (
+      display?.previewCameraDirection ? new THREE.Vector3().fromArray(display.previewCameraDirection) :
       isVehicle ? new THREE.Vector3(1, 0.35, -0.75) :
       asset.family === "solar-system"
         ? new THREE.Vector3(0.55, 0.42, 1)

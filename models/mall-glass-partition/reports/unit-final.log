@@ -1,0 +1,3582 @@
+
+> blender-3d-gallery@0.1.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: catalog rejects external core image and buffer URIs
+ok 1 - catalog rejects external core image and buffer URIs
+  ---
+  duration_ms: 75.589118
+  type: 'test'
+  ...
+# Subtest: catalog accepts embedded core resources and self-contained data URIs
+ok 2 - catalog accepts embedded core resources and self-contained data URIs
+  ---
+  duration_ms: 783.625325
+  type: 'test'
+  ...
+# Subtest: billiards catalog includes each physical asset and the legacy scene
+ok 3 - billiards catalog includes each physical asset and the legacy scene
+  ---
+  duration_ms: 145.387676
+  type: 'test'
+  ...
+# Subtest: individual GLBs have only their own root and a zero origin
+ok 4 - individual GLBs have only their own root and a zero origin
+  ---
+  duration_ms: 78.429107
+  type: 'test'
+  ...
+# Subtest: assembled scene retains all 21 roots at their assembled locations
+ok 5 - assembled scene retains all 21 roots at their assembled locations
+  ---
+  duration_ms: 102.620178
+  type: 'test'
+  ...
+# Subtest: number marks follow the ball surface on opposite sides
+ok 6 - number marks follow the ball surface on opposite sides
+  ---
+  duration_ms: 102.681553
+  type: 'test'
+  ...
+# Subtest: break guide reaches the rack beyond the former artificial range
+ok 7 - break guide reaches the rack beyond the former artificial range
+  ---
+  duration_ms: 8.332258
+  type: 'test'
+  ...
+# Subtest: guide picks nearest ball and clears a near miss to the actual cushion
+ok 8 - guide picks nearest ball and clears a near miss to the actual cushion
+  ---
+  duration_ms: 1.32337
+  type: 'test'
+  ...
+# Subtest: guide distinguishes side pocket opening and handles touching cushion
+ok 9 - guide distinguishes side pocket opening and handles touching cushion
+  ---
+  duration_ms: 0.38379
+  type: 'test'
+  ...
+# Subtest: feedback reports observed pots and authoritative turn/rule result
+ok 10 - feedback reports observed pots and authoritative turn/rule result
+  ---
+  duration_ms: 0.268291
+  type: 'test'
+  ...
+# Subtest: guide handles legal near-touching placements without claiming separating contact
+ok 11 - guide handles legal near-touching placements without claiming separating contact
+  ---
+  duration_ms: 1.369578
+  type: 'test'
+  ...
+# Subtest: rack is seeded, complete, eight centered, opposite rear groups and non-overlapping
+ok 12 - rack is seeded, complete, eight centered, opposite rear groups and non-overlapping
+  ---
+  duration_ms: 2.333158
+  type: 'test'
+  ...
+# Subtest: placement respects head string, overlaps, table and pocket limits
+ok 13 - placement respects head string, overlaps, table and pocket limits
+  ---
+  duration_ms: 0.226499
+  type: 'test'
+  ...
+# Subtest: legal pot allocates group and continues; miss passes turn
+ok 14 - legal pot allocates group and continues; miss passes turn
+  ---
+  duration_ms: 0.589706
+  type: 'test'
+  ...
+# Subtest: foul does not allocate group and pockets stay pocketed
+ok 15 - foul does not allocate group and pockets stay pocketed
+  ---
+  duration_ms: 0.229999
+  type: 'test'
+  ...
+# Subtest: mixed pots sort by event time, with ball number breaking simultaneous ties
+ok 16 - mixed pots sort by event time, with ball number breaking simultaneous ties
+  ---
+  duration_ms: 2.11945
+  type: 'test'
+  ...
+# Subtest: open-table group follows the first actual pot within a substep
+ok 17 - open-table group follows the first actual pot within a substep
+  ---
+  duration_ms: 2.07195
+  type: 'test'
+  ...
+# Subtest: break never allocates groups, eight is re-spotted and scratch gives ball in hand
+ok 18 - break never allocates groups, eight is re-spotted and scratch gives ball in hand
+  ---
+  duration_ms: 0.210582
+  type: 'test'
+  ...
+# Subtest: break pot continues, miss changes turn, no contact is a foul
+ok 19 - break pot continues, miss changes turn, no contact is a foul
+  ---
+  duration_ms: 0.325373
+  type: 'test'
+  ...
+# Subtest: early eight and last own ball plus eight lose
+ok 20 - early eight and last own ball plus eight lose
+  ---
+  duration_ms: 0.41079
+  type: 'test'
+  ...
+# Subtest: eligible eight wins unless any foul occurs in the same shot
+ok 21 - eligible eight wins unless any foul occurs in the same shot
+  ---
+  duration_ms: 0.567456
+  type: 'test'
+  ...
+# Subtest: wrong first contact and open-table eight contact are fouls
+ok 22 - wrong first contact and open-table eight contact are fouls
+  ---
+  duration_ms: 0.713997
+  type: 'test'
+  ...
+# Subtest: an open table with all group balls gone can finish, but a partly cleared open table cannot play eight
+ok 23 - an open table with all group balls gone can finish, but a partly cleared open table cannot play eight
+  ---
+  duration_ms: 0.334957
+  type: 'test'
+  ...
+# Subtest: opponent-only pots pass turn and mixed own pots continue
+ok 24 - opponent-only pots pass turn and mixed own pots continue
+  ---
+  duration_ms: 0.157083
+  type: 'test'
+  ...
+# Subtest: duplicate and finished shot resolution is rejected
+ok 25 - duplicate and finished shot resolution is rejected
+  ---
+  duration_ms: 0.21
+  type: 'test'
+  ...
+# Subtest: invalid physical outcome restores pre-shot state in recovery
+ok 26 - invalid physical outcome restores pre-shot state in recovery
+  ---
+  duration_ms: 0.171916
+  type: 'test'
+  ...
+# Subtest: stable schema rejects corruption, motion, shuffled IDs and contradictory results
+ok 27 - stable schema rejects corruption, motion, shuffled IDs and contradictory results
+  ---
+  duration_ms: 0.670081
+  type: 'test'
+  ...
+# Subtest: fixed-step rack break settles without escape, preserves identity and repeats
+ok 28 - fixed-step rack break settles without escape, preserves identity and repeats
+  ---
+  duration_ms: 770.682709
+  type: 'test'
+  ...
+# Subtest: malformed save entries are rejected without throwing
+ok 29 - malformed save entries are rejected without throwing
+  ---
+  duration_ms: 0.220666
+  type: 'test'
+  ...
+# Subtest: all six pocket approach fixtures capture exactly once
+ok 30 - all six pocket approach fixtures capture exactly once
+  ---
+  duration_ms: 42.459541
+  type: 'test'
+  ...
+# Subtest: cushion reflects, low power stops, and high power cannot tunnel
+ok 31 - cushion reflects, low power stops, and high power cannot tunnel
+  ---
+  duration_ms: 68.740728
+  type: 'test'
+  ...
+# Subtest: pull is relative to origin, clamps and reverses without charging
+ok 32 - pull is relative to origin, clamps and reverses without charging
+  ---
+  duration_ms: 2.209949
+  type: 'test'
+  ...
+# Subtest: release threshold tolerates real pointer-coordinate representation without admitting weak pulls
+ok 33 - release threshold tolerates real pointer-coordinate representation without admitting weak pulls
+  ---
+  duration_ms: 0.369874
+  type: 'test'
+  ...
+# Subtest: strength curve preserves threshold and monotonic speed
+ok 34 - strength curve preserves threshold and monotonic speed
+  ---
+  duration_ms: 0.18925
+  type: 'test'
+  ...
+# Subtest: cue retraction follows pull and reaches real contact on timeline
+ok 35 - cue retraction follows pull and reaches real contact on timeline
+  ---
+  duration_ms: 0.121207
+  type: 'test'
+  ...
+# Subtest: aim points from the white ball toward the pointer and retains angle at zero-length
+ok 36 - aim points from the white ball toward the pointer and retains angle at zero-length
+  ---
+  duration_ms: 0.319541
+  type: 'test'
+  ...
+# Subtest: dragging the cue butt aims away from the pointer
+ok 37 - dragging the cue butt aims away from the pointer
+  ---
+  duration_ms: 0.180624
+  type: 'test'
+  ...
+# Subtest: cue hit test covers the shaft behind the ball only
+ok 38 - cue hit test covers the shaft behind the ball only
+  ---
+  duration_ms: 0.206957
+  type: 'test'
+  ...
+# Subtest: post-contact estimate: head-on sends the object ball straight and leaves no cue tangent
+ok 39 - post-contact estimate: head-on sends the object ball straight and leaves no cue tangent
+  ---
+  duration_ms: 0.210541
+  type: 'test'
+  ...
+# Subtest: post-contact estimate: cut shot splits object and cue directions at right angles
+ok 40 - post-contact estimate: cut shot splits object and cue directions at right angles
+  ---
+  duration_ms: 0.49654
+  type: 'test'
+  ...
+# {
+#   "asset": {
+#     "id": "mall-ceiling-light-module",
+#     "surfaceChecks": [
+#       {
+#         "x": 0,
+#         "z": 0,
+#         "expectedUndersideHeight": 0.003,
+#         "measuredHeight": 0.003000000026077032
+#       },
+#       {
+#         "x": 0.28,
+#         "z": 0,
+#         "expectedUndersideHeight": 0,
+#         "measuredHeight": 0
+#       },
+#       {
+#         "x": -0.274,
+#         "z": 0.274,
+#         "expectedUndersideHeight": -0.001,
+#         "measuredHeight": -0.0010000000474974513
+#       }
+#     ],
+#     "glb_bytes": 125008,
+#     "triangles": 1900,
+#     "vertices": 3624,
+#     "primitives": 11,
+#     "materials": 4,
+#     "textures": 0,
+#     "animations": 0,
+#     "emissiveFactor": [
+#       0.800000011920929,
+#       0.7300000190734863,
+#       0.550000011920929
+#     ],
+#     "dimensions": [
+#       0.5759999752044678,
+#       0.06500000122468919,
+#       0.5759999752044678
+#     ],
+#     "bounds": {
+#       "min": [
+#         -0.2879999876022339,
+#         -0.0010000000474974513,
+#         -0.2879999876022339
+#       ],
+#       "max": [
+#         0.2879999876022339,
+#         0.06400000117719173,
+#         0.2879999876022339
+#       ]
+#     },
+#     "parts": {
+#       "DIFFUSER_Opal": {
+#         "min": [
+#           -0.2669999897480011,
+#           0.003000000026077032,
+#           -0.2669999897480011
+#         ],
+#         "max": [
+#           0.2669999897480011,
+#           0.009000000078231096,
+#           0.2669999897480011
+#         ],
+#         "dimensions": [
+#           0.5339999794960022,
+#           0.006000000052154064,
+#           0.5339999794960022
+#         ]
+#       },
+#       "DRIVER_Cover": {
+#         "min": [
+#           -0.05999999865889549,
+#           0.04700000025331974,
+#           -0.029999999329447746
+#         ],
+#         "max": [
+#           0.05999999865889549,
+#           0.06400000117719173,
+#           0.029999999329447746
+#         ],
+#         "dimensions": [
+#           0.11999999731779099,
+#           0.017000000923871994,
+#           0.05999999865889549
+#         ]
+#       },
+#       "FASTENER_Bezel_1": {
+#         "min": [
+#           -0.2774999891407788,
+#           -0.0010000000474974513,
+#           0.27049998892471194
+#         ],
+#         "max": [
+#           -0.27049998892471194,
+#           0.0010000000474974513,
+#           0.2774999891407788
+#         ],
+#         "dimensions": [
+#           0.007000000216066837,
+#           0.0020000000949949026,
+#           0.007000000216066837
+#         ]
+#       },
+#       "FASTENER_Bezel_2": {
+#         "min": [
+#           0.27049998892471194,
+#           -0.0010000000474974513,
+#           0.27049998892471194
+#         ],
+#         "max": [
+#           0.2774999891407788,
+#           0.0010000000474974513,
+#           0.2774999891407788
+#         ],
+#         "dimensions": [
+#           0.007000000216066837,
+#           0.0020000000949949026,
+#           0.007000000216066837
+#         ]
+#       },
+#       "FASTENER_Bezel_3": {
+#         "min": [
+#           -0.2774999891407788,
+#           -0.0010000000474974513,
+#           -0.2774999891407788
+#         ],
+#         "max": [
+#           -0.27049998892471194,
+#           0.0010000000474974513,
+#           -0.27049998892471194
+#         ],
+#         "dimensions": [
+#           0.007000000216066837,
+#           0.0020000000949949026,
+#           0.007000000216066837
+#         ]
+#       },
+#       "FASTENER_Bezel_4": {
+#         "min": [
+#           0.27049998892471194,
+#           -0.0010000000474974513,
+#           -0.2774999891407788
+#         ],
+#         "max": [
+#           0.2774999891407788,
+#           0.0010000000474974513,
+#           -0.27049998892471194
+#         ],
+#         "dimensions": [
+#           0.007000000216066837,
+#           0.0020000000949949026,
+#           0.007000000216066837
+#         ]
+#       },
+#       "FRAME_Bezel": {
+#         "min": [
+#           -0.2879999876022339,
+#           0,
+#           -0.2879999876022339
+#         ],
+#         "max": [
+#           0.2879999876022339,
+#           0.012000000104308128,
+#           0.2879999876022339
+#         ],
+#         "dimensions": [
+#           0.5759999752044678,
+#           0.012000000104308128,
+#           0.5759999752044678
+#         ]
+#       },
+#       "GLAND_CableEntry_1": {
+#         "min": [
+#           -0.08799999859184027,
+#           0.04699999885633588,
+#           -0.00800000037997961
+#         ],
+#         "max": [
+#           -0.07199999783188105,
+#           0.05499999923631549,
+#           0.00800000037997961
+#         ],
+#         "dimensions": [
+#           0.01600000075995922,
+#           0.00800000037997961,
+#           0.01600000075995922
+#         ]
+#       },
+#       "GLAND_CableEntry_2": {
+#         "min": [
+#           0.07199999783188105,
+#           0.04699999885633588,
+#           -0.00800000037997961
+#         ],
+#         "max": [
+#           0.08799999859184027,
+#           0.05499999923631549,
+#           0.00800000037997961
+#         ],
+#         "dimensions": [
+#           0.01600000075995922,
+#           0.00800000037997961,
+#           0.01600000075995922
+#         ]
+#       },
+#       "HOUSING_BackPlate": {
+#         "min": [
+#           -0.2750000059604645,
+#           0.04399999906308949,
+#           -0.2750000059604645
+#         ],
+#         "max": [
+#           0.2750000059604645,
+#           0.04699999908916652,
+#           0.2750000059604645
+#         ],
+#         "dimensions": [
+#           0.550000011920929,
+#           0.003000000026077032,
+#           0.550000011920929
+#         ]
+#       },
+#       "HOUSING_TrayWalls": {
+#         "min": [
+#           -0.2750000059604645,
+#           0.012000000104308128,
+#           -0.2750000059604645
+#         ],
+#         "max": [
+#           0.2750000059604645,
+#           0.04399999976158142,
+#           0.2750000059604645
+#         ],
+#         "dimensions": [
+#           0.550000011920929,
+#           0.03199999965727329,
+#           0.550000011920929
+#         ]
+#       }
+#     },
+#     "sha256": "b8b0b31c7657028dff44f8c04ba7e65b07feac892b4849b81bb0a1fd78432cf8",
+#     "validation": {
+#       "errors": 0,
+#       "warnings": 0,
+#       "validator": "2.0.0-dev.3.10"
+#     }
+#   },
+#   "assembly": [
+#     {
+#       "removedPanel": "PANEL_1",
+#       "quarterTurn": false,
+#       "retainedPanels": 3,
+#       "retainedMeshes": 24,
+#       "retainedTransformsUnchanged": true,
+#       "fixturePosition": [
+#         -0.30000001192092896,
+#         0.008,
+#         0.30000001192092896
+#       ],
+#       "maxAabbOverlapMetres": 1.7695128917694092e-8,
+#       "undersideVisible": true,
+#       "result": "PASS"
+#     },
+#     {
+#       "removedPanel": "PANEL_1",
+#       "quarterTurn": true,
+#       "retainedPanels": 3,
+#       "retainedMeshes": 24,
+#       "retainedTransformsUnchanged": true,
+#       "fixturePosition": [
+#         -0.30000001192092896,
+#         0.008,
+#         0.30000001192092896
+#       ],
+#       "maxAabbOverlapMetres": 1.7695128917694092e-8,
+#       "undersideVisible": true,
+#       "result": "PASS"
+#     },
+#     {
+#       "removedPanel": "PANEL_2",
+#       "quarterTurn": false,
+#       "retainedPanels": 3,
+#       "retainedMeshes": 24,
+#       "retainedTransformsUnchanged": true,
+#       "fixturePosition": [
+#         0.30000001192092896,
+#         0.008,
+#         0.30000001192092896
+#       ],
+#       "maxAabbOverlapMetres": 1.7695128917694092e-8,
+#       "undersideVisible": true,
+#       "result": "PASS"
+#     },
+#     {
+#       "removedPanel": "PANEL_2",
+#       "quarterTurn": true,
+#       "retainedPanels": 3,
+#       "retainedMeshes": 24,
+#       "retainedTransformsUnchanged": true,
+#       "fixturePosition": [
+#         0.30000001192092896,
+#         0.008,
+#         0.30000001192092896
+#       ],
+#       "maxAabbOverlapMetres": 1.7695128917694092e-8,
+#       "undersideVisible": true,
+#       "result": "PASS"
+#     },
+#     {
+#       "removedPanel": "PANEL_3",
+#       "quarterTurn": false,
+#       "retainedPanels": 3,
+#       "retainedMeshes": 24,
+#       "retainedTransformsUnchanged": true,
+#       "fixturePosition": [
+#         -0.30000001192092896,
+#         0.008,
+#         -0.30000001192092896
+#       ],
+#       "maxAabbOverlapMetres": 1.7695128917694092e-8,
+#       "undersideVisible": true,
+#       "result": "PASS"
+#     },
+#     {
+#       "removedPanel": "PANEL_3",
+#       "quarterTurn": true,
+#       "retainedPanels": 3,
+#       "retainedMeshes": 24,
+#       "retainedTransformsUnchanged": true,
+#       "fixturePosition": [
+#         -0.30000001192092896,
+#         0.008,
+#         -0.30000001192092896
+#       ],
+#       "maxAabbOverlapMetres": 1.7695128917694092e-8,
+#       "undersideVisible": true,
+#       "result": "PASS"
+#     },
+#     {
+#       "removedPanel": "PANEL_4",
+#       "quarterTurn": false,
+#       "retainedPanels": 3,
+#       "retainedMeshes": 24,
+#       "retainedTransformsUnchanged": true,
+#       "fixturePosition": [
+#         0.30000001192092896,
+#         0.008,
+#         -0.30000001192092896
+#       ],
+#       "maxAabbOverlapMetres": 1.7695128917694092e-8,
+#       "undersideVisible": true,
+#       "result": "PASS"
+#     },
+#     {
+#       "removedPanel": "PANEL_4",
+#       "quarterTurn": true,
+#       "retainedPanels": 3,
+#       "retainedMeshes": 24,
+#       "retainedTransformsUnchanged": true,
+#       "fixturePosition": [
+#         0.30000001192092896,
+#         0.008,
+#         -0.30000001192092896
+#       ],
+#       "maxAabbOverlapMetres": 1.7695128917694092e-8,
+#       "undersideVisible": true,
+#       "result": "PASS"
+#     }
+#   ]
+# }
+# Subtest: ceiling light is one logical asset with original restricted redistribution
+ok 41 - ceiling light is one logical asset with original restricted redistribution
+  ---
+  duration_ms: 2.692656
+  type: 'test'
+  ...
+# Subtest: ceiling light source is genuinely editable and reexports actual mesh and emission edits
+ok 42 - ceiling light source is genuinely editable and reexports actual mesh and emission edits
+  ---
+  duration_ms: 2.433949
+  type: 'test'
+  ...
+# Subtest: ceiling light includes actual GLB underside rear edge and ceiling assembly previews
+ok 43 - ceiling light includes actual GLB underside rear edge and ceiling assembly previews
+  ---
+  duration_ms: 3.419445
+  type: 'test'
+  ...
+# Subtest: light fits every real ceiling bay and quarter-turn without erasing other panels or hardware
+ok 44 - light fits every real ceiling bay and quarter-turn without erasing other panels or hardware
+  ---
+  duration_ms: 0.1065
+  type: 'test'
+  ...
+# Subtest: ceiling light opts into approved underside preview without changing geometry or emission
+ok 45 - ceiling light opts into approved underside preview without changing geometry or emission
+  ---
+  duration_ms: 0.14275
+  type: 'test'
+  ...
+# {
+#   "asset": {
+#     "id": "mall-ceiling-panel-module",
+#     "surfaceChecks": [
+#       {
+#         "x": 0,
+#         "z": 0,
+#         "expectedUndersideHeight": 0,
+#         "measuredHeight": 0
+#       },
+#       {
+#         "x": 0.3,
+#         "z": 0,
+#         "expectedUndersideHeight": 0,
+#         "measuredHeight": 0
+#       },
+#       {
+#         "x": 0,
+#         "z": 0.3,
+#         "expectedUndersideHeight": 0,
+#         "measuredHeight": 0
+#       },
+#       {
+#         "x": 0.594,
+#         "z": 0,
+#         "expectedUndersideHeight": 0,
+#         "measuredHeight": 0
+#       },
+#       {
+#         "x": 0.3,
+#         "z": 0.3,
+#         "expectedUndersideHeight": 0.008,
+#         "measuredHeight": 0.00800000037997961
+#       },
+#       {
+#         "x": -0.3,
+#         "z": -0.3,
+#         "expectedUndersideHeight": 0.008,
+#         "measuredHeight": 0.00800000037997961
+#       }
+#     ],
+#     "connectors": {
+#       "XP": [
+#         0.6000000238418579,
+#         0.017999999225139618,
+#         0
+#       ],
+#       "XN": [
+#         -0.6000000238418579,
+#         0.017999999225139618,
+#         0
+#       ],
+#       "YP": [
+#         0,
+#         0.017999999225139618,
+#         -0.6000000238418579
+#       ],
+#       "YN": [
+#         0,
+#         0.017999999225139618,
+#         0.6000000238418579
+#       ]
+#     },
+#     "glb_bytes": 147100,
+#     "triangles": 1724,
+#     "vertices": 3312,
+#     "primitives": 29,
+#     "materials": 5,
+#     "textures": 1,
+#     "texture_dimensions": [
+#       256,
+#       256
+#     ],
+#     "animations": 0,
+#     "dimensions": [
+#       1.2000000476837158,
+#       0.3600000021979213,
+#       1.199999963864684
+#     ],
+#     "bounds": {
+#       "min": [
+#         -0.6000000238418579,
+#         0,
+#         -0.599999981932342
+#       ],
+#       "max": [
+#         0.6000000238418579,
+#         0.3600000021979213,
+#         0.599999981932342
+#       ]
+#     },
+#     "parts": {
+#       "GRID_Cross_1_1": {
+#         "min": [
+#           -0.599999981932342,
+#           0,
+#           0.012000024318695068
+#         ],
+#         "max": [
+#           -0.5879999818280339,
+#           0.03200000151991844,
+#           0.5879999995231628
+#         ],
+#         "dimensions": [
+#           0.012000000104308128,
+#           0.03200000151991844,
+#           0.5759999752044678
+#         ]
+#       },
+#       "GRID_Cross_1_2": {
+#         "min": [
+#           -0.599999981932342,
+#           0,
+#           -0.5879999995231628
+#         ],
+#         "max": [
+#           -0.5879999818280339,
+#           0.03200000151991844,
+#           -0.012000024318695068
+#         ],
+#         "dimensions": [
+#           0.012000000104308128,
+#           0.03200000151991844,
+#           0.5759999752044678
+#         ]
+#       },
+#       "GRID_Cross_2_1": {
+#         "min": [
+#           -0.012000000104308128,
+#           0,
+#           0.012000024318695068
+#         ],
+#         "max": [
+#           0.012000000104308128,
+#           0.03200000151991844,
+#           0.5879999995231628
+#         ],
+#         "dimensions": [
+#           0.024000000208616257,
+#           0.03200000151991844,
+#           0.5759999752044678
+#         ]
+#       },
+#       "GRID_Cross_2_2": {
+#         "min": [
+#           -0.012000000104308128,
+#           0,
+#           -0.5879999995231628
+#         ],
+#         "max": [
+#           0.012000000104308128,
+#           0.03200000151991844,
+#           -0.012000024318695068
+#         ],
+#         "dimensions": [
+#           0.024000000208616257,
+#           0.03200000151991844,
+#           0.5759999752044678
+#         ]
+#       },
+#       "GRID_Cross_3_1": {
+#         "min": [
+#           0.5879999818280339,
+#           0,
+#           0.012000024318695068
+#         ],
+#         "max": [
+#           0.599999981932342,
+#           0.03200000151991844,
+#           0.5879999995231628
+#         ],
+#         "dimensions": [
+#           0.012000000104308128,
+#           0.03200000151991844,
+#           0.5759999752044678
+#         ]
+#       },
+#       "GRID_Cross_3_2": {
+#         "min": [
+#           0.5879999818280339,
+#           0,
+#           -0.5879999995231628
+#         ],
+#         "max": [
+#           0.599999981932342,
+#           0.03200000151991844,
+#           -0.012000024318695068
+#         ],
+#         "dimensions": [
+#           0.012000000104308128,
+#           0.03200000151991844,
+#           0.5759999752044678
+#         ]
+#       },
+#       "GRID_Main_1": {
+#         "min": [
+#           -0.6000000238418579,
+#           0,
+#           0.5879999818280339
+#         ],
+#         "max": [
+#           0.6000000238418579,
+#           0.03200000151991844,
+#           0.599999981932342
+#         ],
+#         "dimensions": [
+#           1.2000000476837158,
+#           0.03200000151991844,
+#           0.012000000104308128
+#         ]
+#       },
+#       "GRID_Main_2": {
+#         "min": [
+#           -0.6000000238418579,
+#           0,
+#           -0.012000000104308128
+#         ],
+#         "max": [
+#           0.6000000238418579,
+#           0.03200000151991844,
+#           0.012000000104308128
+#         ],
+#         "dimensions": [
+#           1.2000000476837158,
+#           0.03200000151991844,
+#           0.024000000208616257
+#         ]
+#       },
+#       "GRID_Main_3": {
+#         "min": [
+#           -0.6000000238418579,
+#           0,
+#           -0.599999981932342
+#         ],
+#         "max": [
+#           0.6000000238418579,
+#           0.03200000151991844,
+#           -0.5879999818280339
+#         ],
+#         "dimensions": [
+#           1.2000000476837158,
+#           0.03200000151991844,
+#           0.012000000104308128
+#         ]
+#       },
+#       "HANGER_Cleat_1": {
+#         "min": [
+#           -0.49199998937547207,
+#           0.02599999913945794,
+#           0.5879999818280339
+#         ],
+#         "max": [
+#           -0.4679999891668558,
+#           0.03399999951943755,
+#           0.599999981932342
+#         ],
+#         "dimensions": [
+#           0.024000000208616257,
+#           0.00800000037997961,
+#           0.012000000104308128
+#         ]
+#       },
+#       "HANGER_Cleat_2": {
+#         "min": [
+#           0.4679999891668558,
+#           0.02599999913945794,
+#           0.5879999818280339
+#         ],
+#         "max": [
+#           0.49199998937547207,
+#           0.03399999951943755,
+#           0.599999981932342
+#         ],
+#         "dimensions": [
+#           0.024000000208616257,
+#           0.00800000037997961,
+#           0.012000000104308128
+#         ]
+#       },
+#       "HANGER_Cleat_3": {
+#         "min": [
+#           -0.49199998937547207,
+#           0.02599999913945794,
+#           -0.599999981932342
+#         ],
+#         "max": [
+#           -0.4679999891668558,
+#           0.03399999951943755,
+#           -0.5879999818280339
+#         ],
+#         "dimensions": [
+#           0.024000000208616257,
+#           0.00800000037997961,
+#           0.012000000104308128
+#         ]
+#       },
+#       "HANGER_Cleat_4": {
+#         "min": [
+#           0.4679999891668558,
+#           0.02599999913945794,
+#           -0.599999981932342
+#         ],
+#         "max": [
+#           0.49199998937547207,
+#           0.03399999951943755,
+#           -0.5879999818280339
+#         ],
+#         "dimensions": [
+#           0.024000000208616257,
+#           0.00800000037997961,
+#           0.012000000104308128
+#         ]
+#       },
+#       "HANGER_Rod_1": {
+#         "min": [
+#           -0.48399998946115375,
+#           0.03399999439716339,
+#           0.5899999816901982
+#         ],
+#         "max": [
+#           -0.47599998908117414,
+#           0.34800000488758087,
+#           0.5979999820701778
+#         ],
+#         "dimensions": [
+#           0.00800000037997961,
+#           0.3140000104904175,
+#           0.00800000037997961
+#         ]
+#       },
+#       "HANGER_Rod_2": {
+#         "min": [
+#           0.47599998908117414,
+#           0.03399999439716339,
+#           0.5899999816901982
+#         ],
+#         "max": [
+#           0.48399998946115375,
+#           0.34800000488758087,
+#           0.5979999820701778
+#         ],
+#         "dimensions": [
+#           0.00800000037997961,
+#           0.3140000104904175,
+#           0.00800000037997961
+#         ]
+#       },
+#       "HANGER_Rod_3": {
+#         "min": [
+#           -0.48399998946115375,
+#           0.03399999439716339,
+#           -0.5979999820701778
+#         ],
+#         "max": [
+#           -0.47599998908117414,
+#           0.34800000488758087,
+#           -0.5899999816901982
+#         ],
+#         "dimensions": [
+#           0.00800000037997961,
+#           0.3140000104904175,
+#           0.00800000037997961
+#         ]
+#       },
+#       "HANGER_Rod_4": {
+#         "min": [
+#           0.47599998908117414,
+#           0.03399999439716339,
+#           -0.5979999820701778
+#         ],
+#         "max": [
+#           0.48399998946115375,
+#           0.34800000488758087,
+#           -0.5899999816901982
+#         ],
+#         "dimensions": [
+#           0.00800000037997961,
+#           0.3140000104904175,
+#           0.00800000037997961
+#         ]
+#       },
+#       "HANGER_TopPlate_1": {
+#         "min": [
+#           -0.4999999888241291,
+#           0.34800000209361315,
+#           0.5879999818280339
+#         ],
+#         "max": [
+#           -0.4599999897181988,
+#           0.3600000021979213,
+#           0.599999981932342
+#         ],
+#         "dimensions": [
+#           0.03999999910593033,
+#           0.012000000104308128,
+#           0.012000000104308128
+#         ]
+#       },
+#       "HANGER_TopPlate_2": {
+#         "min": [
+#           0.4599999897181988,
+#           0.34800000209361315,
+#           0.5879999818280339
+#         ],
+#         "max": [
+#           0.4999999888241291,
+#           0.3600000021979213,
+#           0.599999981932342
+#         ],
+#         "dimensions": [
+#           0.03999999910593033,
+#           0.012000000104308128,
+#           0.012000000104308128
+#         ]
+#       },
+#       "HANGER_TopPlate_3": {
+#         "min": [
+#           -0.4999999888241291,
+#           0.34800000209361315,
+#           -0.599999981932342
+#         ],
+#         "max": [
+#           -0.4599999897181988,
+#           0.3600000021979213,
+#           -0.5879999818280339
+#         ],
+#         "dimensions": [
+#           0.03999999910593033,
+#           0.012000000104308128,
+#           0.012000000104308128
+#         ]
+#       },
+#       "HANGER_TopPlate_4": {
+#         "min": [
+#           0.4599999897181988,
+#           0.34800000209361315,
+#           -0.599999981932342
+#         ],
+#         "max": [
+#           0.4999999888241291,
+#           0.3600000021979213,
+#           -0.5879999818280339
+#         ],
+#         "dimensions": [
+#           0.03999999910593033,
+#           0.012000000104308128,
+#           0.012000000104308128
+#         ]
+#       },
+#       "PANEL_1": {
+#         "min": [
+#           -0.5879999995231628,
+#           0.00800000037997961,
+#           0.012000024318695068
+#         ],
+#         "max": [
+#           -0.012000024318695068,
+#           0.02400000113993883,
+#           0.5879999995231628
+#         ],
+#         "dimensions": [
+#           0.5759999752044678,
+#           0.01600000075995922,
+#           0.5759999752044678
+#         ]
+#       },
+#       "PANEL_2": {
+#         "min": [
+#           0.012000024318695068,
+#           0.00800000037997961,
+#           0.012000024318695068
+#         ],
+#         "max": [
+#           0.5879999995231628,
+#           0.02400000113993883,
+#           0.5879999995231628
+#         ],
+#         "dimensions": [
+#           0.5759999752044678,
+#           0.01600000075995922,
+#           0.5759999752044678
+#         ]
+#       },
+#       "PANEL_3": {
+#         "min": [
+#           -0.5879999995231628,
+#           0.00800000037997961,
+#           -0.5879999995231628
+#         ],
+#         "max": [
+#           -0.012000024318695068,
+#           0.02400000113993883,
+#           -0.012000024318695068
+#         ],
+#         "dimensions": [
+#           0.5759999752044678,
+#           0.01600000075995922,
+#           0.5759999752044678
+#         ]
+#       },
+#       "PANEL_4": {
+#         "min": [
+#           0.012000024318695068,
+#           0.00800000037997961,
+#           -0.5879999995231628
+#         ],
+#         "max": [
+#           0.5879999995231628,
+#           0.02400000113993883,
+#           -0.012000024318695068
+#         ],
+#         "dimensions": [
+#           0.5759999752044678,
+#           0.01600000075995922,
+#           0.5759999752044678
+#         ]
+#       }
+#     },
+#     "sha256": "40f7e02cc5f4db5fa3556ddda90c69ea128c98848707106433c25d1018b1d7ef",
+#     "validation": {
+#       "errors": 0,
+#       "warnings": 0,
+#       "validator": "2.0.0-dev.3.10"
+#     }
+#   },
+#   "assembly": [
+#     {
+#       "name": "3x3-repeat",
+#       "modules": 9,
+#       "panels": 36,
+#       "panelGapsMeasured": 60,
+#       "matchedConnectorSeams": 12,
+#       "nominalGridWidthMetres": 0.024,
+#       "maxGridGapErrorMetres": 4.863739013621915e-8,
+#       "maxConnectorErrorMetres": 4.768371586472142e-8,
+#       "maxModuleAabbOverlapMetres": 4.768371586472142e-8,
+#       "dimensions": [
+#         3.6000000476837157,
+#         0.3600000021979213,
+#         3.599999963864684
+#       ],
+#       "result": "PASS"
+#     },
+#     {
+#       "name": "3x3-alternating-quarter-turns",
+#       "modules": 9,
+#       "panels": 36,
+#       "panelGapsMeasured": 60,
+#       "matchedConnectorSeams": 12,
+#       "nominalGridWidthMetres": 0.024,
+#       "maxGridGapErrorMetres": 4.863739013621915e-8,
+#       "maxConnectorErrorMetres": 4.768371586472142e-8,
+#       "maxModuleAabbOverlapMetres": 5.774200340091795e-9,
+#       "dimensions": [
+#         3.6000000476837157,
+#         0.3600000021979213,
+#         3.6000000476837157
+#       ],
+#       "result": "PASS"
+#     }
+#   ]
+# }
+# Subtest: ceiling is one logical kit and preserves redistribution restriction
+ok 46 - ceiling is one logical kit and preserves redistribution restriction
+  ---
+  duration_ms: 0.651456
+  type: 'test'
+  ...
+# Subtest: ceiling source is genuinely editable with independent panels, grid and hangers
+ok 47 - ceiling source is genuinely editable with independent panels, grid and hangers
+  ---
+  duration_ms: 4.411191
+  type: 'test'
+  ...
+# Subtest: ceiling previews include actual-GLB underside, rear, edge and repeat assembly
+ok 48 - ceiling previews include actual-GLB underside, rear, edge and repeat assembly
+  ---
+  duration_ms: 2.511532
+  type: 'test'
+  ...
+# Subtest: ceiling repeat and quarter-turn assembly preserve every grid gap and connector seam
+ok 49 - ceiling repeat and quarter-turn assembly preserve every grid gap and connector seam
+  ---
+  duration_ms: 0.115124
+  type: 'test'
+  ...
+# Subtest: mall essentials registers exactly the four requested fixtures
+ok 50 - mall essentials registers exactly the four requested fixtures
+  ---
+  duration_ms: 0.770206
+  type: 'test'
+  ...
+# Subtest: mall-directory-kiosk preserves provenance, measured export, source and thumbnail
+ok 51 - mall-directory-kiosk preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 1.877535
+  type: 'test'
+  ...
+# Subtest: mall-advertising-lightbox preserves provenance, measured export, source and thumbnail
+ok 52 - mall-advertising-lightbox preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 1.383828
+  type: 'test'
+  ...
+# Subtest: mall-trash-bin preserves provenance, measured export, source and thumbnail
+ok 53 - mall-trash-bin preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 2.276241
+  type: 'test'
+  ...
+# Subtest: mall-display-shelf preserves provenance, measured export, source and thumbnail
+ok 54 - mall-display-shelf preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.969205
+  type: 'test'
+  ...
+# Subtest: event booth is registered and measured metadata is synchronized
+ok 55 - event booth is registered and measured metadata is synchronized
+  ---
+  duration_ms: 1.358411
+  type: 'test'
+  ...
+# Subtest: poster and display are real independent mesh-bearing groups
+ok 56 - poster and display are real independent mesh-bearing groups
+  ---
+  duration_ms: 0.185791
+  type: 'test'
+  ...
+# Subtest: hiding/replacing either module leaves the other and booth structure intact
+ok 57 - hiding/replacing either module leaves the other and booth structure intact
+  ---
+  duration_ms: 1.102079
+  type: 'test'
+  ...
+# Subtest: floor direction sign is registered before queue kit with synchronized measured metadata
+ok 58 - floor direction sign is registered before queue kit with synchronized measured metadata
+  ---
+  duration_ms: 1.303495
+  type: 'test'
+  ...
+# Subtest: floor-centred, metre-scale GLB has six independent mesh-bearing modules
+ok 59 - floor-centred, metre-scale GLB has six independent mesh-bearing modules
+  ---
+  duration_ms: 0.766831
+  type: 'test'
+  ...
+# Subtest: each label cartridge can be removed and replaced without changing the structure or other labels
+ok 60 - each label cartridge can be removed and replaced without changing the structure or other labels
+  ---
+  duration_ms: 1.52941
+  type: 'test'
+  ...
+# Subtest: reopened source retains editable text and original destination labels, with no live editing claim
+ok 61 - reopened source retains editable text and original destination labels, with no live editing claim
+  ---
+  duration_ms: 0.135874
+  type: 'test'
+  ...
+# {
+#   "asset": {
+#     "id": "mall-floor-tile-module",
+#     "surfaceChecks": [
+#       {
+#         "x": 0,
+#         "z": 0,
+#         "expectedHeight": 0.029,
+#         "measuredHeight": 0.028999999165535084
+#       },
+#       {
+#         "x": 0.3,
+#         "z": 0,
+#         "expectedHeight": 0.029,
+#         "measuredHeight": 0.028999999165534973
+#       },
+#       {
+#         "x": 0,
+#         "z": 0.3,
+#         "expectedHeight": 0.029,
+#         "measuredHeight": 0.028999999165534973
+#       },
+#       {
+#         "x": 0.599,
+#         "z": 0,
+#         "expectedHeight": 0.029,
+#         "measuredHeight": 0.028999999165534973
+#       },
+#       {
+#         "x": 0.3,
+#         "z": 0.3,
+#         "expectedHeight": 0.03,
+#         "measuredHeight": 0.029999999329447746
+#       },
+#       {
+#         "x": -0.3,
+#         "z": -0.3,
+#         "expectedHeight": 0.03,
+#         "measuredHeight": 0.029999999329447746
+#       }
+#     ],
+#     "glb_bytes": 155964,
+#     "triangles": 604,
+#     "vertices": 1064,
+#     "primitives": 9,
+#     "materials": 3,
+#     "textures": 1,
+#     "texture_dimensions": [
+#       512,
+#       512
+#     ],
+#     "animations": 0,
+#     "dimensions": [
+#       1.2000000476837158,
+#       0.029999999329447746,
+#       1.2000000476837158
+#     ],
+#     "bounds": {
+#       "min": [
+#         -0.6000000238418579,
+#         0,
+#         -0.6000000238418579
+#       ],
+#       "max": [
+#         0.6000000238418579,
+#         0.029999999329447746,
+#         0.6000000238418579
+#       ]
+#     },
+#     "parts": {
+#       "MODULE_GroutBed": {
+#         "min": [
+#           -0.6000000238418579,
+#           0,
+#           -0.6000000238418579
+#         ],
+#         "max": [
+#           0.6000000238418579,
+#           0.028999999165534973,
+#           0.6000000238418579
+#         ],
+#         "dimensions": [
+#           1.2000000476837158,
+#           0.028999999165534973,
+#           1.2000000476837158
+#         ]
+#       },
+#       "MODULE_Tile_1": {
+#         "min": [
+#           -0.5980000197887421,
+#           0.012000000104308128,
+#           0.0020000040531158447
+#         ],
+#         "max": [
+#           -0.0020000040531158447,
+#           0.029999999329447746,
+#           0.5980000197887421
+#         ],
+#         "dimensions": [
+#           0.5960000157356262,
+#           0.017999999225139618,
+#           0.5960000157356262
+#         ]
+#       },
+#       "MODULE_Tile_2": {
+#         "min": [
+#           0.0020000040531158447,
+#           0.012000000104308128,
+#           0.0020000040531158447
+#         ],
+#         "max": [
+#           0.5980000197887421,
+#           0.029999999329447746,
+#           0.5980000197887421
+#         ],
+#         "dimensions": [
+#           0.5960000157356262,
+#           0.017999999225139618,
+#           0.5960000157356262
+#         ]
+#       },
+#       "MODULE_Tile_3": {
+#         "min": [
+#           -0.5980000197887421,
+#           0.012000000104308128,
+#           -0.5980000197887421
+#         ],
+#         "max": [
+#           -0.0020000040531158447,
+#           0.029999999329447746,
+#           -0.0020000040531158447
+#         ],
+#         "dimensions": [
+#           0.5960000157356262,
+#           0.017999999225139618,
+#           0.5960000157356262
+#         ]
+#       },
+#       "MODULE_Tile_4": {
+#         "min": [
+#           0.0020000040531158447,
+#           0.012000000104308128,
+#           -0.5980000197887421
+#         ],
+#         "max": [
+#           0.5980000197887421,
+#           0.029999999329447746,
+#           -0.0020000040531158447
+#         ],
+#         "dimensions": [
+#           0.5960000157356262,
+#           0.017999999225139618,
+#           0.5960000157356262
+#         ]
+#       }
+#     },
+#     "sha256": "328a091a1372b0246694484d0cea05319bad032cfa603ed030b69ef87153c305",
+#     "validation": {
+#       "errors": 0,
+#       "warnings": 0,
+#       "validator": "2.0.0-dev.3.10"
+#     }
+#   },
+#   "assembly": [
+#     {
+#       "name": "3x3-repeat",
+#       "modules": 9,
+#       "tiles": 36,
+#       "modulePairs": 36,
+#       "jointsMeasured": 60,
+#       "nominalGroutMetres": 0.004,
+#       "maxGroutErrorMetres": 3.957748417535156e-8,
+#       "maxModuleAabbOverlapMetres": 4.768371586472142e-8,
+#       "dimensions": [
+#         3.6000000476837157,
+#         0.029999999329447746,
+#         3.6000000476837157
+#       ],
+#       "result": "PASS"
+#     },
+#     {
+#       "name": "3x3-alternating-quarter-turns",
+#       "modules": 9,
+#       "tiles": 36,
+#       "modulePairs": 36,
+#       "jointsMeasured": 60,
+#       "nominalGroutMetres": 0.004,
+#       "maxGroutErrorMetres": 3.9577484286373865e-8,
+#       "maxModuleAabbOverlapMetres": 4.7683716086766026e-8,
+#       "dimensions": [
+#         3.6000000476837157,
+#         0.029999999329447746,
+#         3.6000000476837157
+#       ],
+#       "result": "PASS"
+#     }
+#   ]
+# }
+# Subtest: mall tile is one logical repeat module, with unchanged public download restriction
+ok 62 - mall tile is one logical repeat module, with unchanged public download restriction
+  ---
+  duration_ms: 0.896621
+  type: 'test'
+  ...
+# Subtest: mall tile source remains editable, packed and correctly measured
+ok 63 - mall tile source remains editable, packed and correctly measured
+  ---
+  duration_ms: 2.248074
+  type: 'test'
+  ...
+# Subtest: mall tile previews include perspective, top, edge and actual-GLB repeat assembly
+ok 64 - mall tile previews include perspective, top, edge and actual-GLB repeat assembly
+  ---
+  duration_ms: 4.325441
+  type: 'test'
+  ...
+# Subtest: mall tile actual exported repeated and quarter-turned modules keep every joint
+ok 65 - mall tile actual exported repeated and quarter-turned modules keep every joint
+  ---
+  duration_ms: 2.540198
+  type: 'test'
+  ...
+# {
+#   "asset": {
+#     "id": "mall-glass-partition",
+#     "glb_bytes": 54420,
+#     "triangles": 852,
+#     "vertices": 1704,
+#     "primitives": 15,
+#     "materials": 3,
+#     "textures": 0,
+#     "animations": 0,
+#     "dimensions": [
+#       1.1999999843537807,
+#       2.4000000953674316,
+#       0.05999999865889549
+#     ],
+#     "bounds": {
+#       "min": [
+#         -0.5999999921768904,
+#         0,
+#         -0.029999999329447746
+#       ],
+#       "max": [
+#         0.5999999921768904,
+#         2.4000000953674316,
+#         0.029999999329447746
+#       ]
+#     },
+#     "parts": {
+#       "FRAME_CeilingTrack": {
+#         "min": [
+#           -0.5400000214576721,
+#           2.3399998862296343,
+#           -0.029999999329447746
+#         ],
+#         "max": [
+#           0.5400000214576721,
+#           2.3999998848885298,
+#           0.029999999329447746
+#         ]
+#       },
+#       "FRAME_FloorTrack": {
+#         "min": [
+#           -0.5400000214576721,
+#           0,
+#           -0.029999999329447746
+#         ],
+#         "max": [
+#           0.5400000214576721,
+#           0.05999999865889549,
+#           0.029999999329447746
+#         ]
+#       },
+#       "MULLION_Centre": {
+#         "min": [
+#           -0.014999999664723873,
+#           0.060000061988830566,
+#           -0.02250000089406967
+#         ],
+#         "max": [
+#           0.014999999664723873,
+#           2.340000033378601,
+#           0.02250000089406967
+#         ]
+#       },
+#       "TRANSOM_Left": {
+#         "min": [
+#           -0.5399999916553497,
+#           1.835000024177134,
+#           -0.02250000089406967
+#         ],
+#         "max": [
+#           -0.015000015497207642,
+#           1.8650000235065818,
+#           0.02250000089406967
+#         ]
+#       },
+#       "TRANSOM_Right": {
+#         "min": [
+#           0.015000015497207642,
+#           1.835000024177134,
+#           -0.02250000089406967
+#         ],
+#         "max": [
+#           0.5399999916553497,
+#           1.8650000235065818,
+#           0.02250000089406967
+#         ]
+#       },
+#       "BAND_Left_Back": {
+#         "min": [
+#           -0.5200000107288361,
+#           1.292500052601099,
+#           -0.00650000007590279
+#         ],
+#         "max": [
+#           -0.034999996423721313,
+#           1.3475000523030758,
+#           -0.0055000000284053385
+#         ]
+#       },
+#       "BAND_Left_Front": {
+#         "min": [
+#           -0.5200000107288361,
+#           1.292500052601099,
+#           0.0055000000284053385
+#         ],
+#         "max": [
+#           -0.034999996423721313,
+#           1.3475000523030758,
+#           0.00650000007590279
+#         ]
+#       },
+#       "BAND_Right_Back": {
+#         "min": [
+#           0.034999996423721313,
+#           1.292500052601099,
+#           -0.00650000007590279
+#         ],
+#         "max": [
+#           0.5200000107288361,
+#           1.3475000523030758,
+#           -0.0055000000284053385
+#         ]
+#       },
+#       "BAND_Right_Front": {
+#         "min": [
+#           0.034999996423721313,
+#           1.292500052601099,
+#           0.0055000000284053385
+#         ],
+#         "max": [
+#           0.5200000107288361,
+#           1.3475000523030758,
+#           0.00650000007590279
+#         ]
+#       },
+#       "GLASS_Left_Lower": {
+#         "min": [
+#           -0.5399999916553497,
+#           0.06000000238418579,
+#           -0.004999999888241291
+#         ],
+#         "max": [
+#           -0.015000015497207642,
+#           1.8349999785423279,
+#           0.004999999888241291
+#         ]
+#       },
+#       "GLASS_Left_Upper": {
+#         "min": [
+#           -0.5399999916553497,
+#           1.8649999648332596,
+#           -0.004999999888241291
+#         ],
+#         "max": [
+#           -0.015000015497207642,
+#           2.339999958872795,
+#           0.004999999888241291
+#         ]
+#       },
+#       "GLASS_Right_Lower": {
+#         "min": [
+#           0.015000015497207642,
+#           0.06000000238418579,
+#           -0.004999999888241291
+#         ],
+#         "max": [
+#           0.5399999916553497,
+#           1.8349999785423279,
+#           0.004999999888241291
+#         ]
+#       },
+#       "GLASS_Right_Upper": {
+#         "min": [
+#           0.015000015497207642,
+#           1.8649999648332596,
+#           -0.004999999888241291
+#         ],
+#         "max": [
+#           0.5399999916553497,
+#           2.339999958872795,
+#           0.004999999888241291
+#         ]
+#       },
+#       "POST_Left": {
+#         "min": [
+#           -0.5999999921768904,
+#           0,
+#           -0.029999999329447746
+#         ],
+#         "max": [
+#           -0.5399999935179949,
+#           2.4000000953674316,
+#           0.029999999329447746
+#         ]
+#       },
+#       "POST_Right": {
+#         "min": [
+#           0.5399999935179949,
+#           0,
+#           -0.029999999329447746
+#         ],
+#         "max": [
+#           0.5999999921768904,
+#           2.4000000953674316,
+#           0.029999999329447746
+#         ]
+#       }
+#     },
+#     "glassAlpha": 0.22,
+#     "sha256": "115d1e7a4c66d0ac5af08af51627f5d1a04c037156f9c2178b815ce4857ffd7f",
+#     "validation": {
+#       "errors": 0,
+#       "warnings": 0,
+#       "validator": "2.0.0-dev.3.10"
+#     }
+#   },
+#   "assemblies": [
+#     {
+#       "name": "straight-three-bay",
+#       "bays": 3,
+#       "uniquePosts": 4,
+#       "meshes": 43,
+#       "dimensions": [
+#         3.4799999843537806,
+#         2.4000000953674316,
+#         0.05999999865889549
+#       ],
+#       "maxJointErrorMetres": 1.4305114648394124e-8,
+#       "pairwiseMeshComparisons": 903,
+#       "overlappingMeshPairs": 0,
+#       "result": "PASS"
+#     },
+#     {
+#       "name": "corner-three-bay",
+#       "bays": 3,
+#       "uniquePosts": 4,
+#       "meshes": 43,
+#       "dimensions": [
+#         2.339999991506338,
+#         2.4000000953674316,
+#         1.199999991506338
+#       ],
+#       "maxJointErrorMetres": 1.4305114648394124e-8,
+#       "pairwiseMeshComparisons": 903,
+#       "overlappingMeshPairs": 0,
+#       "result": "PASS"
+#     },
+#     {
+#       "name": "reverse-corner-two-bay",
+#       "bays": 2,
+#       "uniquePosts": 3,
+#       "meshes": 29,
+#       "dimensions": [
+#         1.1999999915063382,
+#         2.4000000953674316,
+#         1.199999991506338
+#       ],
+#       "maxJointErrorMetres": 1.0115243495025877e-8,
+#       "pairwiseMeshComparisons": 406,
+#       "overlappingMeshPairs": 0,
+#       "result": "PASS"
+#     }
+#   ]
+# }
+# Subtest: glass partition is one logical original restricted-redistribution static asset
+ok 66 - glass partition is one logical original restricted-redistribution static asset
+  ---
+  duration_ms: 0.529831
+  type: 'test'
+  ...
+# Subtest: glass partition source and independent geometry/material edit proof match shipped hashes
+ok 67 - glass partition source and independent geometry/material edit proof match shipped hashes
+  ---
+  duration_ms: 2.206033
+  type: 'test'
+  ...
+# Subtest: glass partition has actual GLB multiangle and assembled preview images within budgets
+ok 68 - glass partition has actual GLB multiangle and assembled preview images within budgets
+  ---
+  duration_ms: 12.264368
+  type: 'test'
+  ...
+# Subtest: live GLB straight and both corner directions join without duplicated posts or mesh penetration
+ok 69 - live GLB straight and both corner directions join without duplicated posts or mesh penetration
+  ---
+  duration_ms: 0.168166
+  type: 'test'
+  ...
+# {
+#   "assets": [
+#     {
+#       "id": "mall-glass-railing-post",
+#       "spacing": 0,
+#       "modules": {
+#         "MODULE_Post": {
+#           "origin": [
+#             0,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             -0.07999999821186066,
+#             0,
+#             -0.07999999821186066
+#           ],
+#           "max": [
+#             0.07999999821186066,
+#             1.1200000047683716,
+#             0.07999999821186066
+#           ],
+#           "connectedPieces": 16
+#         }
+#       },
+#       "glb_bytes": 57548,
+#       "triangles": 1024,
+#       "vertices": 2016,
+#       "primitives": 3,
+#       "materials": 3,
+#       "animations": 0,
+#       "dimensions": [
+#         0.1599999964237213,
+#         1.1200000047683716,
+#         0.1599999964237213
+#       ],
+#       "bounds": {
+#         "min": [
+#           -0.07999999821186066,
+#           0,
+#           -0.07999999821186066
+#         ],
+#         "max": [
+#           0.07999999821186066,
+#           1.1200000047683716,
+#           0.07999999821186066
+#         ]
+#       },
+#       "sha256": "4104d29b95e1e8b82c1e4db8a4e00437aaf60e01c7e8e0b503fcd7c17586dd69",
+#       "glass": null,
+#       "validation": {
+#         "errors": 0,
+#         "warnings": 0,
+#         "validator": "2.0.0-dev.3.10"
+#       }
+#     },
+#     {
+#       "id": "mall-glass-railing-1m",
+#       "spacing": 1,
+#       "modules": {
+#         "MODULE_Post_Left": {
+#           "origin": [
+#             -0.5,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             -0.5799999982118607,
+#             0,
+#             -0.07999999821186066
+#           ],
+#           "max": [
+#             -0.42000000178813934,
+#             1.1200000047683716,
+#             0.07999999821186066
+#           ],
+#           "connectedPieces": 16
+#         },
+#         "MODULE_Post_Right": {
+#           "origin": [
+#             0.5,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             0.42000000178813934,
+#             0,
+#             -0.07999999821186066
+#           ],
+#           "max": [
+#             0.5799999982118607,
+#             1.1200000047683716,
+#             0.07999999821186066
+#           ],
+#           "connectedPieces": 16
+#         },
+#         "MODULE_Infill": {
+#           "origin": [
+#             0,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             -0.4740000069141388,
+#             0.11499994993209839,
+#             -0.02199999988079071
+#           ],
+#           "max": [
+#             0.4740000069141388,
+#             1.1209999322891235,
+#             0.02199999988079071
+#           ],
+#           "connectedPieces": 9
+#         }
+#       },
+#       "glb_bytes": 175864,
+#       "triangles": 3236,
+#       "vertices": 6456,
+#       "primitives": 10,
+#       "materials": 5,
+#       "animations": 0,
+#       "dimensions": [
+#         1.1599999964237213,
+#         1.1209999322891235,
+#         0.1599999964237213
+#       ],
+#       "bounds": {
+#         "min": [
+#           -0.5799999982118607,
+#           0,
+#           -0.07999999821186066
+#         ],
+#         "max": [
+#           0.5799999982118607,
+#           1.1209999322891235,
+#           0.07999999821186066
+#         ]
+#       },
+#       "sha256": "556cfc03f38a0cb0c21a125a318c5dc251976e18598f3d15f3e0979dc2dfd49d",
+#       "glass": {
+#         "material": "GLASS sea-green transparent alpha 0.28",
+#         "alphaMode": "BLEND",
+#         "alpha": 0.2800000011920929,
+#         "doubleSided": true
+#       },
+#       "validation": {
+#         "errors": 0,
+#         "warnings": 0,
+#         "validator": "2.0.0-dev.3.10"
+#       }
+#     },
+#     {
+#       "id": "mall-glass-railing-2m",
+#       "spacing": 2,
+#       "modules": {
+#         "MODULE_Post_Left": {
+#           "origin": [
+#             -1,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             -1.0799999982118607,
+#             0,
+#             -0.07999999821186066
+#           ],
+#           "max": [
+#             -0.9200000017881393,
+#             1.1200000047683716,
+#             0.07999999821186066
+#           ],
+#           "connectedPieces": 16
+#         },
+#         "MODULE_Post_Right": {
+#           "origin": [
+#             1,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             0.9200000017881393,
+#             0,
+#             -0.07999999821186066
+#           ],
+#           "max": [
+#             1.0799999982118607,
+#             1.1200000047683716,
+#             0.07999999821186066
+#           ],
+#           "connectedPieces": 16
+#         },
+#         "MODULE_Infill": {
+#           "origin": [
+#             0,
+#             0,
+#             0
+#           ],
+#           "min": [
+#             -0.9739999771118164,
+#             0.11499994993209839,
+#             -0.02199999988079071
+#           ],
+#           "max": [
+#             0.9739999771118164,
+#             1.1209999322891235,
+#             0.02199999988079071
+#           ],
+#           "connectedPieces": 9
+#         }
+#       },
+#       "glb_bytes": 175864,
+#       "triangles": 3236,
+#       "vertices": 6456,
+#       "primitives": 10,
+#       "materials": 5,
+#       "animations": 0,
+#       "dimensions": [
+#         2.1599999964237213,
+#         1.1209999322891235,
+#         0.1599999964237213
+#       ],
+#       "bounds": {
+#         "min": [
+#           -1.0799999982118607,
+#           0,
+#           -0.07999999821186066
+#         ],
+#         "max": [
+#           1.0799999982118607,
+#           1.1209999322891235,
+#           0.07999999821186066
+#         ]
+#       },
+#       "sha256": "037b734e7285961e93a75184f7aab28f4a20498fbac5639ed2cd0fab0958c6c5",
+#       "glass": {
+#         "material": "GLASS sea-green transparent alpha 0.28",
+#         "alphaMode": "BLEND",
+#         "alpha": 0.2800000011920929,
+#         "doubleSided": true
+#       },
+#       "validation": {
+#         "errors": 0,
+#         "warnings": 0,
+#         "validator": "2.0.0-dev.3.10"
+#       }
+#     }
+#   ],
+#   "assembly": [
+#     {
+#       "name": "repeated-1m",
+#       "uniquePosts": 4,
+#       "infills": 3,
+#       "actualExportedConnectedPiecePairsTested": 3507,
+#       "maxConnectorErrorMetres": 6.914138817037951e-9,
+#       "maxIntermoduleAabbPenetrationMetres": 0.0005000084638595581,
+#       "allowanceMetres": 0.00051,
+#       "result": "PASS"
+#     },
+#     {
+#       "name": "mixed-right-angle",
+#       "uniquePosts": 5,
+#       "infills": 4,
+#       "actualExportedConnectedPiecePairsTested": 5926,
+#       "maxConnectorErrorMetres": 2.288818359494349e-8,
+#       "maxIntermoduleAabbPenetrationMetres": 0.0005000084638595581,
+#       "allowanceMetres": 0.00051,
+#       "result": "PASS"
+#     }
+#   ]
+# }
+# Subtest: glass railing collection has exactly the three distinct reusable modules
+ok 70 - glass railing collection has exactly the three distinct reusable modules
+  ---
+  duration_ms: 0.951872
+  type: 'test'
+  ...
+# Subtest: mall-glass-railing-post source, rights, metrics and glass contract
+ok 71 - mall-glass-railing-post source, rights, metrics and glass contract
+  ---
+  duration_ms: 3.38932
+  type: 'test'
+  ...
+# Subtest: mall-glass-railing-1m source, rights, metrics and glass contract
+ok 72 - mall-glass-railing-1m source, rights, metrics and glass contract
+  ---
+  duration_ms: 3.159654
+  type: 'test'
+  ...
+# Subtest: mall-glass-railing-2m source, rights, metrics and glass contract
+ok 73 - mall-glass-railing-2m source, rights, metrics and glass contract
+  ---
+  duration_ms: 6.833682
+  type: 'test'
+  ...
+# Subtest: real exported components pass repeated and orthogonal assembly clearance checks
+ok 74 - real exported components pass repeated and orthogonal assembly clearance checks
+  ---
+  duration_ms: 0.201833
+  type: 'test'
+  ...
+# Subtest: queue kit registers independent post and short/long bays
+ok 75 - queue kit registers independent post and short/long bays
+  ---
+  duration_ms: 1.118204
+  type: 'test'
+  ...
+# Subtest: mall-queue-post preserves provenance, measured export, source and thumbnail
+ok 76 - mall-queue-post preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 1.738952
+  type: 'test'
+  ...
+# Subtest: mall-queue-short preserves provenance, measured export, source and thumbnail
+ok 77 - mall-queue-short preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.539665
+  type: 'test'
+  ...
+# Subtest: mall-queue-long preserves provenance, measured export, source and thumbnail
+ok 78 - mall-queue-long preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 0.48054
+  type: 'test'
+  ...
+# Subtest: short, long and turned layouts align measured belt endpoints with post sockets
+ok 79 - short, long and turned layouts align measured belt endpoints with post sockets
+  ---
+  duration_ms: 1.572036
+  type: 'test'
+  ...
+# Subtest: service desk registers the requested counter and sign
+ok 80 - service desk registers the requested counter and sign
+  ---
+  duration_ms: 2.930447
+  type: 'test'
+  ...
+# Subtest: mall-service-desk preserves provenance, measured export, source and thumbnail
+ok 81 - mall-service-desk preserves provenance, measured export, source and thumbnail
+  ---
+  duration_ms: 4.510232
+  type: 'test'
+  ...
+# {
+#   "asset": {
+#     "id": "mall-shopfront-door",
+#     "glb_bytes": 145752,
+#     "triangles": 2604,
+#     "vertices": 5016,
+#     "primitives": 33,
+#     "materials": 4,
+#     "textures": 0,
+#     "animations": 0,
+#     "dimensions": [
+#       2.0999999791383743,
+#       2.3999998942017555,
+#       0.1830000001937151
+#     ],
+#     "bounds": {
+#       "min": [
+#         -1.0499999895691872,
+#         0,
+#         -0.05999999865889549
+#       ],
+#       "max": [
+#         1.0499999895691872,
+#         2.3999998942017555,
+#         0.1230000015348196
+#       ]
+#     },
+#     "parts": {
+#       "FRAME_Header": {
+#         "min": [
+#           -1.0499999523162842,
+#           2.319999895989895,
+#           -0.05999999865889549
+#         ],
+#         "max": [
+#           1.0499999523162842,
+#           2.3999998942017555,
+#           0.05999999865889549
+#         ]
+#       },
+#       "FRAME_Jamb_Left": {
+#         "min": [
+#           -1.0499999895691872,
+#           0,
+#           -0.05999999865889549
+#         ],
+#         "max": [
+#           -0.9699999913573265,
+#           2.319999933242798,
+#           0.05999999865889549
+#         ]
+#       },
+#       "FRAME_Jamb_Right": {
+#         "min": [
+#           0.9699999913573265,
+#           0,
+#           -0.05999999865889549
+#         ],
+#         "max": [
+#           1.0499999895691872,
+#           2.319999933242798,
+#           0.05999999865889549
+#         ]
+#       },
+#       "HINGE_Barrel_Left_032": {
+#         "min": [
+#           -0.9639999885112047,
+#           0.26999999210238457,
+#           0.025999998673796654
+#         ],
+#         "max": [
+#           -0.9359999876469374,
+#           0.3699999935925007,
+#           0.053999999538064
+#         ]
+#       },
+#       "HINGE_Barrel_Left_204": {
+#         "min": [
+#           -0.9639999885112047,
+#           1.9899999611079693,
+#           0.025999998673796654
+#         ],
+#         "max": [
+#           -0.9359999876469374,
+#           2.0899999625980854,
+#           0.053999999538064
+#         ]
+#       },
+#       "HINGE_Barrel_Right_032": {
+#         "min": [
+#           0.9359999876469374,
+#           0.26999999210238457,
+#           0.025999998673796654
+#         ],
+#         "max": [
+#           0.9639999885112047,
+#           0.3699999935925007,
+#           0.053999999538064
+#         ]
+#       },
+#       "HINGE_Barrel_Right_204": {
+#         "min": [
+#           0.9359999876469374,
+#           1.9899999611079693,
+#           0.025999998673796654
+#         ],
+#         "max": [
+#           0.9639999885112047,
+#           2.0899999625980854,
+#           0.053999999538064
+#         ]
+#       },
+#       "BAND_Left_Back": {
+#         "min": [
+#           -0.8879999816417694,
+#           1.3325000144541264,
+#           0.03350000182399526
+#         ],
+#         "max": [
+#           -0.06799998879432678,
+#           1.3875000141561031,
+#           0.034500001871492714
+#         ]
+#       },
+#       "BAND_Left_Front": {
+#         "min": [
+#           -0.8879999816417694,
+#           1.3325000144541264,
+#           0.04550000006565824
+#         ],
+#         "max": [
+#           -0.06799998879432678,
+#           1.3875000141561031,
+#           0.04650000011315569
+#         ]
+#       },
+#       "BRACKET_Left_Back_084": {
+#         "min": [
+#           -0.14099999517202377,
+#           0.8289999738335609,
+#           -0.03099999949336052
+#         ],
+#         "max": [
+#           -0.11899999529123306,
+#           0.8509999737143517,
+#           0.04000000283122063
+#         ]
+#       },
+#       "BRACKET_Left_Back_136": {
+#         "min": [
+#           -0.14099999517202377,
+#           1.3490000143647194,
+#           -0.03099999949336052
+#         ],
+#         "max": [
+#           -0.11899999529123306,
+#           1.37100001424551,
+#           0.04000000283122063
+#         ]
+#       },
+#       "BRACKET_Left_Front_084": {
+#         "min": [
+#           -0.14099999517202377,
+#           0.8289999738335609,
+#           0.03999999538064003
+#         ],
+#         "max": [
+#           -0.11899999529123306,
+#           0.8509999737143517,
+#           0.11099999770522118
+#         ]
+#       },
+#       "BRACKET_Left_Front_136": {
+#         "min": [
+#           -0.14099999517202377,
+#           1.3490000143647194,
+#           0.03999999538064003
+#         ],
+#         "max": [
+#           -0.11899999529123306,
+#           1.37100001424551,
+#           0.11099999770522118
+#         ]
+#       },
+#       "GLASS_Left": {
+#         "min": [
+#           -0.9099999964237213,
+#           0.11800003051757812,
+#           0.03499999921768904
+#         ],
+#         "max": [
+#           -0.04599997401237488,
+#           2.240000009536743,
+#           0.04499999899417162
+#         ]
+#       },
+#       "HANDLE_Left_Back": {
+#         "min": [
+#           -0.14199999533593655,
+#           0.800000011920929,
+#           -0.04299999587237835
+#         ],
+#         "max": [
+#           -0.11799999512732029,
+#           1.4000000357627869,
+#           -0.018999995663762093
+#         ]
+#       },
+#       "HANDLE_Left_Front": {
+#         "min": [
+#           -0.14199999533593655,
+#           0.800000011920929,
+#           0.09900000132620335
+#         ],
+#         "max": [
+#           -0.11799999512732029,
+#           1.4000000357627869,
+#           0.1230000015348196
+#         ]
+#       },
+#       "LEAF_Left_BottomRail": {
+#         "min": [
+#           -0.9099999964237213,
+#           0.018000002950429916,
+#           0.019999999552965164
+#         ],
+#         "max": [
+#           -0.04599997401237488,
+#           0.11800000444054604,
+#           0.05999999865889549
+#         ]
+#       },
+#       "LEAF_Left_HingeStile": {
+#         "min": [
+#           -0.9500000067055225,
+#           0.018000006675720215,
+#           0.019999999552965164
+#         ],
+#         "max": [
+#           -0.9100000075995922,
+#           2.3000000715255737,
+#           0.05999999865889549
+#         ]
+#       },
+#       "LEAF_Left_MeetingStile": {
+#         "min": [
+#           -0.04600002244114876,
+#           0.018000006675720215,
+#           0.019999999552965164
+#         ],
+#         "max": [
+#           -0.0060000233352184296,
+#           2.3000000715255737,
+#           0.05999999865889549
+#         ]
+#       },
+#       "LEAF_Left_TopRail": {
+#         "min": [
+#           -0.9099999964237213,
+#           2.239999981597066,
+#           0.019999999552965164
+#         ],
+#         "max": [
+#           -0.04599997401237488,
+#           2.2999999802559614,
+#           0.05999999865889549
+#         ]
+#       },
+#       "BAND_Right_Back": {
+#         "min": [
+#           0.06799998879432678,
+#           1.3325000144541264,
+#           0.03350000182399526
+#         ],
+#         "max": [
+#           0.8879999816417694,
+#           1.3875000141561031,
+#           0.034500001871492714
+#         ]
+#       },
+#       "BAND_Right_Front": {
+#         "min": [
+#           0.06799998879432678,
+#           1.3325000144541264,
+#           0.04550000006565824
+#         ],
+#         "max": [
+#           0.8879999816417694,
+#           1.3875000141561031,
+#           0.04650000011315569
+#         ]
+#       },
+#       "BRACKET_Right_Back_084": {
+#         "min": [
+#           0.11899999529123306,
+#           0.8289999738335609,
+#           -0.03099999949336052
+#         ],
+#         "max": [
+#           0.14099999517202377,
+#           0.8509999737143517,
+#           0.04000000283122063
+#         ]
+#       },
+#       "BRACKET_Right_Back_136": {
+#         "min": [
+#           0.11899999529123306,
+#           1.3490000143647194,
+#           -0.03099999949336052
+#         ],
+#         "max": [
+#           0.14099999517202377,
+#           1.37100001424551,
+#           0.04000000283122063
+#         ]
+#       },
+#       "BRACKET_Right_Front_084": {
+#         "min": [
+#           0.11899999529123306,
+#           0.8289999738335609,
+#           0.03999999538064003
+#         ],
+#         "max": [
+#           0.14099999517202377,
+#           0.8509999737143517,
+#           0.11099999770522118
+#         ]
+#       },
+#       "BRACKET_Right_Front_136": {
+#         "min": [
+#           0.11899999529123306,
+#           1.3490000143647194,
+#           0.03999999538064003
+#         ],
+#         "max": [
+#           0.14099999517202377,
+#           1.37100001424551,
+#           0.11099999770522118
+#         ]
+#       },
+#       "GLASS_Right": {
+#         "min": [
+#           0.04599997401237488,
+#           0.11800003051757812,
+#           0.03499999921768904
+#         ],
+#         "max": [
+#           0.9099999964237213,
+#           2.240000009536743,
+#           0.04499999899417162
+#         ]
+#       },
+#       "HANDLE_Right_Back": {
+#         "min": [
+#           0.11799999512732029,
+#           0.800000011920929,
+#           -0.04299999587237835
+#         ],
+#         "max": [
+#           0.14199999533593655,
+#           1.4000000357627869,
+#           -0.018999995663762093
+#         ]
+#       },
+#       "HANDLE_Right_Front": {
+#         "min": [
+#           0.11799999512732029,
+#           0.800000011920929,
+#           0.09900000132620335
+#         ],
+#         "max": [
+#           0.14199999533593655,
+#           1.4000000357627869,
+#           0.1230000015348196
+#         ]
+#       },
+#       "LEAF_Right_BottomRail": {
+#         "min": [
+#           0.04599997401237488,
+#           0.018000002950429916,
+#           0.019999999552965164
+#         ],
+#         "max": [
+#           0.9099999964237213,
+#           0.11800000444054604,
+#           0.05999999865889549
+#         ]
+#       },
+#       "LEAF_Right_HingeStile": {
+#         "min": [
+#           0.9100000075995922,
+#           0.018000006675720215,
+#           0.019999999552965164
+#         ],
+#         "max": [
+#           0.9500000067055225,
+#           2.3000000715255737,
+#           0.05999999865889549
+#         ]
+#       },
+#       "LEAF_Right_MeetingStile": {
+#         "min": [
+#           0.0060000233352184296,
+#           0.018000006675720215,
+#           0.019999999552965164
+#         ],
+#         "max": [
+#           0.04600002244114876,
+#           2.3000000715255737,
+#           0.05999999865889549
+#         ]
+#       },
+#       "LEAF_Right_TopRail": {
+#         "min": [
+#           0.04599997401237488,
+#           2.239999981597066,
+#           0.019999999552965164
+#         ],
+#         "max": [
+#           0.9099999964237213,
+#           2.2999999802559614,
+#           0.05999999865889549
+#         ]
+#       }
+#     },
+#     "frameApertureMetres": [
+#       1.94,
+#       2.32
+#     ],
+#     "openClearWidthIncludingHardwareMetres": 1.7339999862015243,
+#     "glassAlpha": 0.22,
+#     "sha256": "daf0d6aa4347a58c9b39f2b3e32f0a24e6d66b041a8669c6c1b225343864c402",
+#     "validation": {
+#       "errors": 0,
+#       "warnings": 0,
+#       "validator": "2.0.0-dev.3.10"
+#     }
+#   },
+#   "articulationCases": 21
+# }
+# Subtest: shopfront door is one logical original restricted-redistribution asset
+ok 82 - shopfront door is one logical original restricted-redistribution asset
+  ---
+  duration_ms: 2.814698
+  type: 'test'
+  ...
+# Subtest: shopfront source is editable with real mesh and material source reexport proof
+ok 83 - shopfront source is editable with real mesh and material source reexport proof
+  ---
+  duration_ms: 1.962159
+  type: 'test'
+  ...
+# Subtest: shopfront includes actual GLB closed front rear and open previews
+ok 84 - shopfront includes actual GLB closed front rear and open previews
+  ---
+  duration_ms: 2.831655
+  type: 'test'
+  ...
+# Subtest: actual named GLB hinges articulate independently without moving frame or colliding
+ok 85 - actual named GLB hinges articulate independently without moving frame or colliding
+  ---
+  duration_ms: 0.215957
+  type: 'test'
+  ...
+# {
+#   "id": "mall-shopfront-roller-shutter",
+#   "glb_bytes": 252888,
+#   "triangles": 4608,
+#   "vertices": 9144,
+#   "primitives": 44,
+#   "materials": 4,
+#   "textures": 0,
+#   "animations": 0,
+#   "dimensions": [
+#     3.296000115573406,
+#     3.3379999957978725,
+#     0.6900000236928463
+#   ],
+#   "bounds": {
+#     "min": [
+#       -1.648000057786703,
+#       0,
+#       -0.530000027269125
+#     ],
+#     "max": [
+#       1.648000057786703,
+#       3.3379999957978725,
+#       0.1599999964237213
+#     ]
+#   },
+#   "parts": {
+#     "BOTTOM_Rail": {
+#       "min": [
+#         -1.5,
+#         0.004999998956918716,
+#         0.007499998435378075
+#       ],
+#       "max": [
+#         1.5,
+#         0.07499999925494194,
+#         0.05250000022351742
+#       ]
+#     },
+#     "BOTTOM_Seal": {
+#       "min": [
+#         -1.5,
+#         0,
+#         0.009999999776482582
+#       ],
+#       "max": [
+#         1.5,
+#         0.009999999776482582,
+#         0.04999999888241291
+#       ]
+#     },
+#     "SLAT_01": {
+#       "min": [
+#         -1.5,
+#         0.0819999948143959,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         0.17799999564886093,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_02": {
+#       "min": [
+#         -1.5,
+#         0.18200000375509262,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         0.27800000458955765,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_03": {
+#       "min": [
+#         -1.5,
+#         0.28200001269578934,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         0.37800001353025436,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_04": {
+#       "min": [
+#         -1.5,
+#         0.38200000673532486,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         0.4780000075697899,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_05": {
+#       "min": [
+#         -1.5,
+#         0.481999970972538,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         0.577999971807003,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_06": {
+#       "min": [
+#         -1.5,
+#         0.5819999948143959,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         0.6779999956488609,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_07": {
+#       "min": [
+#         -1.5,
+#         0.6820000186562538,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         0.7780000194907188,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_08": {
+#       "min": [
+#         -1.5,
+#         0.781999982893467,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         0.877999983727932,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_09": {
+#       "min": [
+#         -1.5,
+#         0.8820000067353249,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         0.9780000075697899,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_10": {
+#       "min": [
+#         -1.5,
+#         0.981999970972538,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         1.077999971807003,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_11": {
+#       "min": [
+#         -1.5,
+#         1.081999994814396,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         1.177999995648861,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_12": {
+#       "min": [
+#         -1.5,
+#         1.1820000186562538,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         1.2780000194907188,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_13": {
+#       "min": [
+#         -1.5,
+#         1.2820000424981117,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         1.3780000433325768,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_14": {
+#       "min": [
+#         -1.5,
+#         1.38199994713068,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         1.4779999479651451,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_15": {
+#       "min": [
+#         -1.5,
+#         1.481999970972538,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         1.577999971807003,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_16": {
+#       "min": [
+#         -1.5,
+#         1.581999994814396,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         1.677999995648861,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_17": {
+#       "min": [
+#         -1.5,
+#         1.6820000186562538,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         1.7780000194907188,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_18": {
+#       "min": [
+#         -1.5,
+#         1.7820000424981117,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         1.8780000433325768,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_19": {
+#       "min": [
+#         -1.5,
+#         1.88199994713068,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         1.9779999479651451,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_20": {
+#       "min": [
+#         -1.5,
+#         1.981999970972538,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         2.077999971807003,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_21": {
+#       "min": [
+#         -1.5,
+#         2.0820001140236855,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         2.1780001148581505,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_22": {
+#       "min": [
+#         -1.5,
+#         2.182000018656254,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         2.278000019490719,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_23": {
+#       "min": [
+#         -1.5,
+#         2.281999923288822,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         2.377999924123287,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_24": {
+#       "min": [
+#         -1.5,
+#         2.3820000663399696,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         2.4780000671744347,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_25": {
+#       "min": [
+#         -1.5,
+#         2.481999970972538,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         2.577999971807003,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_26": {
+#       "min": [
+#         -1.5,
+#         2.5820001140236855,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         2.6780001148581505,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_27": {
+#       "min": [
+#         -1.5,
+#         2.682000018656254,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         2.778000019490719,
+#         0.03599999938160181
+#       ]
+#     },
+#     "SLAT_28": {
+#       "min": [
+#         -1.5,
+#         2.781999923288822,
+#         0.023999999277293682
+#       ],
+#       "max": [
+#         1.5,
+#         2.877999924123287,
+#         0.03599999938160181
+#       ]
+#     },
+#     "HOOD_Front": {
+#       "min": [
+#         -1.6299999952316284,
+#         2.699999988079071,
+#         0.1419999934732914
+#       ],
+#       "max": [
+#         1.6299999952316284,
+#         3.3199999928474426,
+#         0.15999999269843102
+#       ]
+#     },
+#     "HOOD_Left": {
+#       "min": [
+#         -1.648000057786703,
+#         2.699999988079071,
+#         -0.5300000011920929
+#       ],
+#       "max": [
+#         -1.6300000585615635,
+#         3.3199999928474426,
+#         0.1599999964237213
+#       ]
+#     },
+#     "HOOD_Rear": {
+#       "min": [
+#         -1.6299999952316284,
+#         2.699999988079071,
+#         -0.530000027269125
+#       ],
+#       "max": [
+#         1.6299999952316284,
+#         3.3199999928474426,
+#         -0.5120000280439854
+#       ]
+#     },
+#     "HOOD_Right": {
+#       "min": [
+#         1.6300000585615635,
+#         2.699999988079071,
+#         -0.5300000011920929
+#       ],
+#       "max": [
+#         1.648000057786703,
+#         3.3199999928474426,
+#         0.1599999964237213
+#       ]
+#     },
+#     "HOOD_Top": {
+#       "min": [
+#         -1.6299999952316284,
+#         3.319999996572733,
+#         -0.5300000011920929
+#       ],
+#       "max": [
+#         1.6299999952316284,
+#         3.3379999957978725,
+#         0.1599999964237213
+#       ]
+#     },
+#     "TRACK_Left_FrontLip": {
+#       "min": [
+#         -1.5799999795854092,
+#         0,
+#         0.08000000100582838
+#       ],
+#       "max": [
+#         -1.4599999822676182,
+#         2.700000047683716,
+#         0.10500000137835741
+#       ]
+#     },
+#     "TRACK_Left_RearLip": {
+#       "min": [
+#         -1.5799999795854092,
+#         0,
+#         -0.04499999899417162
+#       ],
+#       "max": [
+#         -1.4599999822676182,
+#         2.700000047683716,
+#         -0.01999999862164259
+#       ]
+#     },
+#     "TRACK_Left_Web": {
+#       "min": [
+#         -1.579999951645732,
+#         0,
+#         -0.04500000365078449
+#       ],
+#       "max": [
+#         -1.5199999529868364,
+#         2.700000047683716,
+#         0.10500000230967999
+#       ]
+#     },
+#     "TRACK_Right_FrontLip": {
+#       "min": [
+#         1.4599999822676182,
+#         0,
+#         0.08000000100582838
+#       ],
+#       "max": [
+#         1.5799999795854092,
+#         2.700000047683716,
+#         0.10500000137835741
+#       ]
+#     },
+#     "TRACK_Right_RearLip": {
+#       "min": [
+#         1.4599999822676182,
+#         0,
+#         -0.04499999899417162
+#       ],
+#       "max": [
+#         1.5799999795854092,
+#         2.700000047683716,
+#         -0.01999999862164259
+#       ]
+#     },
+#     "TRACK_Right_Web": {
+#       "min": [
+#         1.5199999529868364,
+#         0,
+#         -0.04500000365078449
+#       ],
+#       "max": [
+#         1.579999951645732,
+#         2.700000047683716,
+#         0.10500000230967999
+#       ]
+#     },
+#     "ROLLER_Axle_Left": {
+#       "min": [
+#         -1.6200000414413744,
+#         2.9649999911176628,
+#         -0.2749999947845936
+#       ],
+#       "max": [
+#         -1.5600000253158277,
+#         3.0350000088823372,
+#         -0.20499999448657036
+#       ]
+#     },
+#     "ROLLER_Axle_Right": {
+#       "min": [
+#         1.5600000253158277,
+#         2.9649999911176628,
+#         -0.2749999947845936
+#       ],
+#       "max": [
+#         1.6200000414413744,
+#         3.0350000088823372,
+#         -0.20499999448657036
+#       ]
+#     },
+#     "ROLLER_Drum": {
+#       "min": [
+#         -1.5600001819382976,
+#         2.779999762033336,
+#         -0.4599999934434891
+#       ],
+#       "max": [
+#         1.5600001819382976,
+#         3.220000237966664,
+#         -0.019999995827674866
+#       ]
+#     }
+#   },
+#   "clearOpeningMetres": [
+#     2.9199999645352364,
+#     2.6
+#   ],
+#   "poseCases": 53,
+#   "sha256": "0cdb6d5fd565760a01fb9a1c491249afe8f54e40654ae2ab2080a6e772d4f077",
+#   "validation": {
+#     "errors": 0,
+#     "warnings": 0,
+#     "validator": "2.0.0-dev.3.10"
+#   }
+# }
+# Subtest: roller shutter is one logical original asset with disabled public download
+ok 86 - roller shutter is one logical original asset with disabled public download
+  ---
+  duration_ms: 2.59049
+  type: 'test'
+  ...
+# Subtest: roller shutter metadata matches live GLB and hashed editable source proof
+ok 87 - roller shutter metadata matches live GLB and hashed editable source proof
+  ---
+  duration_ms: 8.635674
+  type: 'test'
+  ...
+# Subtest: real separate shutter slats clear fixed guides, hood and roller across 53 poses
+ok 88 - real separate shutter slats clear fixed guides, hood and roller across 53 poses
+  ---
+  duration_ms: 0.282499
+  type: 'test'
+  ...
+# Subtest: shutter closed, part-open, open and cutaway previews exist within image budgets
+ok 89 - shutter closed, part-open, open and cutaway previews exist within image budgets
+  ---
+  duration_ms: 3.117821
+  type: 'test'
+  ...
+# Subtest: sorting station is distinct from existing single bin and registered before mall essentials
+ok 90 - sorting station is distinct from existing single bin and registered before mall essentials
+  ---
+  duration_ms: 2.520948
+  type: 'test'
+  ...
+# Subtest: floor-centred metre-scale station retains seven independent mesh-bearing groups
+ok 91 - floor-centred metre-scale station retains seven independent mesh-bearing groups
+  ---
+  duration_ms: 1.441994
+  type: 'test'
+  ...
+# Subtest: all three apertures are genuinely open and lead to separate liner bottoms
+ok 92 - all three apertures are genuinely open and lead to separate liner bottoms
+  ---
+  duration_ms: 15.640105
+  type: 'test'
+  ...
+# Subtest: each compartment or lid can be replaced without touching its siblings
+ok 93 - each compartment or lid can be replaced without touching its siblings
+  ---
+  duration_ms: 4.448441
+  type: 'test'
+  ...
+# Subtest: source reopening and real source-edit export preserve editable labels and isolate changes
+ok 94 - source reopening and real source-edit export preserve editable labels and isolate changes
+  ---
+  duration_ms: 0.270207
+  type: 'test'
+  ...
+# Subtest: NASA Moon and Tempel 1 are distinct, attributed candidates outside the solar demo
+ok 95 - NASA Moon and Tempel 1 are distinct, attributed candidates outside the solar demo
+  ---
+  duration_ms: 79.710894
+  type: 'test'
+  ...
+# Subtest: NASA Saturn remains a distinct attributed candidate outside the solar demo
+ok 96 - NASA Saturn remains a distinct attributed candidate outside the solar demo
+  ---
+  duration_ms: 69.404268
+  type: 'test'
+  ...
+# Subtest: NASA solar candidates are attributed, discoverable and excluded from the solar demo
+ok 97 - NASA solar candidates are attributed, discoverable and excluded from the solar demo
+  ---
+  duration_ms: 111.10352
+  type: 'test'
+  ...
+# Subtest: a close three-ball chain tracks a finer timestep near 0.14044842518866063
+ok 98 - a close three-ball chain tracks a finer timestep near 0.14044842518866063
+  ---
+  duration_ms: 246.794818
+  type: 'test'
+  ...
+# Subtest: a close three-ball chain tracks a finer timestep near 0.09708761543035507
+ok 99 - a close three-ball chain tracks a finer timestep near 0.09708761543035507
+  ---
+  duration_ms: 103.344468
+  type: 'test'
+  ...
+# Subtest: a close three-ball chain tracks a finer timestep near 0.13475384443998337
+ok 100 - a close three-ball chain tracks a finer timestep near 0.13475384443998337
+  ---
+  duration_ms: 61.780465
+  type: 'test'
+  ...
+# Subtest: earliest geometric cue contact receives the first impulse within a substep
+ok 101 - earliest geometric cue contact receives the first impulse within a substep
+  ---
+  duration_ms: 1.74341
+  type: 'test'
+  ...
+# Subtest: moving-target encounter time determines first contact, not array or ID order
+ok 102 - moving-target encounter time determines first contact, not array or ID order
+  ---
+  duration_ms: 9.423837
+  type: 'test'
+  ...
+# Subtest: simultaneous cue contacts use deterministic ball-number tie breaks
+ok 103 - simultaneous cue contacts use deterministic ball-number tie breaks
+  ---
+  duration_ms: 6.448641
+  type: 'test'
+  ...
+# Subtest: ordered contacts do not create kinetic energy
+ok 104 - ordered contacts do not create kinetic energy
+  ---
+  duration_ms: 3.459403
+  type: 'test'
+  ...
+# Subtest: a cue/object collision near a side-pocket jaw settles safely
+ok 105 - a cue/object collision near a side-pocket jaw settles safely
+  ---
+  duration_ms: 12.243494
+  type: 'test'
+  ...
+# Subtest: a shallow high-speed graze produces an actual impulse instead of tunneling
+ok 106 - a shallow high-speed graze produces an actual impulse instead of tunneling
+  ---
+  duration_ms: 0.479457
+  type: 'test'
+  ...
+# Subtest: a near miss is not converted into a phantom collision
+ok 107 - a near miss is not converted into a phantom collision
+  ---
+  duration_ms: 0.518831
+  type: 'test'
+  ...
+# Subtest: swept contact accounts for moving targets
+ok 108 - swept contact accounts for moving targets
+  ---
+  duration_ms: 0.304457
+  type: 'test'
+  ...
+# Subtest: a grazing hit parallel to a cushion is not discarded
+ok 109 - a grazing hit parallel to a cushion is not discarded
+  ---
+  duration_ms: 3.346445
+  type: 'test'
+  ...
+# Subtest: a pocket capture before a predicted graze takes precedence
+ok 110 - a pocket capture before a predicted graze takes precedence
+  ---
+  duration_ms: 0.248874
+  type: 'test'
+  ...
+# Subtest: a graze before pocket entry records the hit and applies its impulse
+ok 111 - a graze before pocket entry records the hit and applies its impulse
+  ---
+  duration_ms: 0.216208
+  type: 'test'
+  ...
+# Subtest: an earlier head-on impact stops the cue before the pocket sensor
+ok 112 - an earlier head-on impact stops the cue before the pocket sensor
+  ---
+  duration_ms: 0.449124
+  type: 'test'
+  ...
+# Subtest: a fast path crossing the pocket sensor cannot tunnel through it
+ok 113 - a fast path crossing the pocket sensor cannot tunnel through it
+  ---
+  duration_ms: 0.136291
+  type: 'test'
+  ...
+# Subtest: a fast path outside the pocket sensor is not a phantom pot
+ok 114 - a fast path outside the pocket sensor is not a phantom pot
+  ---
+  duration_ms: 0.153333
+  type: 'test'
+  ...
+# Subtest: a ball-before-rail path remains bounded and comparable to fine stepping
+ok 115 - a ball-before-rail path remains bounded and comparable to fine stepping
+  ---
+  duration_ms: 69.195852
+  type: 'test'
+  ...
+# Subtest: a rail-before-ball path remains bounded and comparable to fine stepping
+ok 116 - a rail-before-ball path remains bounded and comparable to fine stepping
+  ---
+  duration_ms: 99.192693
+  type: 'test'
+  ...
+# Subtest: a centered equal-mass impact transfers speed without creating energy
+ok 117 - a centered equal-mass impact transfers speed without creating energy
+  ---
+  duration_ms: 4.612357
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":-0.07,"z":0.46}
+ok 118 - rolling agrees with fine stepping near cushion {"x":-0.07,"z":0.46}
+  ---
+  duration_ms: 137.080376
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":0.4,"z":-0.46}
+ok 119 - rolling agrees with fine stepping near cushion {"x":0.4,"z":-0.46}
+  ---
+  duration_ms: 76.0177
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":1.04,"z":0.2}
+ok 120 - rolling agrees with fine stepping near cushion {"x":1.04,"z":0.2}
+  ---
+  duration_ms: 14.268652
+  type: 'test'
+  ...
+# Subtest: rolling agrees with fine stepping near cushion {"x":-1.04,"z":0.2}
+ok 121 - rolling agrees with fine stepping near cushion {"x":-1.04,"z":0.2}
+  ---
+  duration_ms: 6.232184
+  type: 'test'
+  ...
+# Subtest: rolling through a cushion bounce follows the contact path (0, 1)
+ok 122 - rolling through a cushion bounce follows the contact path (0, 1)
+  ---
+  duration_ms: 6.210725
+  type: 'test'
+  ...
+# Subtest: rolling through a cushion bounce follows the contact path (1, 1)
+ok 123 - rolling through a cushion bounce follows the contact path (1, 1)
+  ---
+  duration_ms: 7.347805
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (1, 0)
+ok 124 - free rolling follows travel without slipping (1, 0)
+  ---
+  duration_ms: 0.507206
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (-1, 0)
+ok 125 - free rolling follows travel without slipping (-1, 0)
+  ---
+  duration_ms: 0.304666
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (0, 1)
+ok 126 - free rolling follows travel without slipping (0, 1)
+  ---
+  duration_ms: 0.471623
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (0, -1)
+ok 127 - free rolling follows travel without slipping (0, -1)
+  ---
+  duration_ms: 0.422415
+  type: 'test'
+  ...
+# Subtest: free rolling follows travel without slipping (1, 1)
+ok 128 - free rolling follows travel without slipping (1, 1)
+  ---
+  duration_ms: 0.199916
+  type: 'test'
+  ...
+# Subtest: rolling uses world-space direction after a previous ball rotation
+ok 129 - rolling uses world-space direction after a previous ball rotation
+  ---
+  duration_ms: 0.378915
+  type: 'test'
+  ...
+# Subtest: omitted and partial preview settings retain metadata without inserting defaults
+ok 130 - omitted and partial preview settings retain metadata without inserting defaults
+  ---
+  duration_ms: 6.299517
+  type: 'test'
+  ...
+# Subtest: preview vectors reject malformed, non-finite, excessive and degenerate values
+ok 131 - preview vectors reject malformed, non-finite, excessive and degenerate values
+  ---
+  duration_ms: 1.525036
+  type: 'test'
+  ...
+# Subtest: known invalid preview fields fail authoring validation, never silently fall back
+ok 132 - known invalid preview fields fail authoring validation, never silently fall back
+  ---
+  duration_ms: 3.848277
+  type: 'test'
+  ...
+# Subtest: unknown metadata conventions and source objects remain unchanged
+ok 133 - unknown metadata conventions and source objects remain unchanged
+  ---
+  duration_ms: 0.254749
+  type: 'test'
+  ...
+# Subtest: ceiling opts into underside presentation without geometry, rotation or rights changes
+ok 134 - ceiling opts into underside presentation without geometry, rotation or rights changes
+  ---
+  duration_ms: 73.18517
+  type: 'test'
+  ...
+# Subtest: catalog enrichment preserves every registered asset and supplies measured metadata
+ok 135 - catalog enrichment preserves every registered asset and supplies measured metadata
+  ---
+  duration_ms: 64.361705
+  type: 'test'
+  ...
+# Subtest: Saga study retains its identity, provenance and pending redistribution policy
+ok 136 - Saga study retains its identity, provenance and pending redistribution policy
+  ---
+  duration_ms: 51.54838
+  type: 'test'
+  ...
+# Subtest: catalog rejects duplicate identities and slugs across collections
+ok 137 - catalog rejects duplicate identities and slugs across collections
+  ---
+  duration_ms: 1.241328
+  type: 'test'
+  ...
+# Subtest: catalog rejects malformed required and optional values before coercion
+ok 138 - catalog rejects malformed required and optional values before coercion
+  ---
+  duration_ms: 5.659228
+  type: 'test'
+  ...
+# Subtest: catalog paths reject traversal, URL schemes, query fragments and encoded separators
+ok 139 - catalog paths reject traversal, URL schemes, query fragments and encoded separators
+  ---
+  duration_ms: 3.125821
+  type: 'test'
+  ...
+# Subtest: optional defaults are explicit and false download permission is retained
+ok 140 - optional defaults are explicit and false download permission is retained
+  ---
+  duration_ms: 1.190495
+  type: 'test'
+  ...
+# Subtest: catalog refuses symlink references outside the model directory
+ok 141 - catalog refuses symlink references outside the model directory
+  ---
+  duration_ms: 0.886371
+  type: 'test'
+  ...
+# Subtest: demo registry resolves verified posters and legacy launch routes
+ok 142 - demo registry resolves verified posters and legacy launch routes
+  ---
+  duration_ms: 54.08837
+  type: 'test'
+  ...
+# Subtest: demo schema rejects duplicates, missing posters, invalid routes and malformed values
+ok 143 - demo schema rejects duplicates, missing posters, invalid routes and malformed values
+  ---
+  duration_ms: 1.616327
+  type: 'test'
+  ...
+# Subtest: legacy IDs cannot be claimed by a different canonical model slug
+ok 144 - legacy IDs cannot be claimed by a different canonical model slug
+  ---
+  duration_ms: 12.246701
+  type: 'test'
+  ...
+# Subtest: metadata validates the display and text fields consumed by existing viewers
+ok 145 - metadata validates the display and text fields consumed by existing viewers
+  ---
+  duration_ms: 0.384373
+  type: 'test'
+  ...
+# Subtest: ball_01 real GLB rolls its contact point against the direction of travel
+ok 146 - ball_01 real GLB rolls its contact point against the direction of travel
+  ---
+  duration_ms: 15.441564
+  type: 'test'
+  ...
+# Subtest: ball_09 real GLB rolls its contact point against the direction of travel
+ok 147 - ball_09 real GLB rolls its contact point against the direction of travel
+  ---
+  duration_ms: 14.121861
+  type: 'test'
+  ...
+# Subtest: optimized solar GLBs match current sources and retain every non-image buffer
+ok 148 - optimized solar GLBs match current sources and retain every non-image buffer
+  ---
+  duration_ms: 305.493129
+  type: 'test'
+  ...
+# Subtest: solar scene uses attributed NASA assets without losing physical facts
+ok 149 - solar scene uses attributed NASA assets without losing physical facts
+  ---
+  duration_ms: 52.025504
+  type: 'test'
+  ...
+1..149
+# tests 149
+# suites 0
+# pass 149
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3638.867688
