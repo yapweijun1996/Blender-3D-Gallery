@@ -1,0 +1,371 @@
+[
+  {
+    "id": 202,
+    "slug": "hospital-bed",
+    "title": "Hospital Bed",
+    "root": "ASSET_HospitalBed",
+    "required_nodes": [
+      "Mattress",
+      "Pillow",
+      "Safety_Rail"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "expected_dimensions_m": [
+      1.03,
+      1.04,
+      2.1025
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 204,
+    "slug": "wheelchair",
+    "title": "Wheelchair",
+    "root": "ASSET_Wheelchair",
+    "required_nodes": [
+      "Seat",
+      "Backrest",
+      "Rear_Wheel",
+      "Footplate"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "expected_dimensions_m": [
+      0.662,
+      0.98,
+      0.96
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 205,
+    "slug": "stretcher",
+    "title": "Stretcher",
+    "root": "ASSET_Stretcher",
+    "required_nodes": [
+      "Transport_Frame",
+      "Thin_Pad",
+      "Carry_Handle"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "expected_dimensions_m": [
+      0.75,
+      0.848,
+      2.144
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 211,
+    "slug": "blood-pressure-monitor",
+    "title": "Blood Pressure Monitor",
+    "root": "ASSET_BloodPressureMonitor",
+    "required_nodes": [
+      "Monitor_Housing",
+      "Fabric_Cuff",
+      "Air_Tube"
+    ],
+    "budget_bytes": 400000,
+    "budget_triangles": 8000,
+    "expected_dimensions_m": [
+      0.378,
+      0.13,
+      0.234
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 212,
+    "slug": "iv-stand",
+    "title": "IV Stand",
+    "root": "ASSET_IVStand",
+    "required_nodes": [
+      "Upright",
+      "Height_Collar",
+      "Hook_Bar"
+    ],
+    "budget_bytes": 400000,
+    "budget_triangles": 8000,
+    "expected_dimensions_m": [
+      0.50534,
+      2,
+      0.60455
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 214,
+    "slug": "hospital-curtain",
+    "title": "Hospital Curtain",
+    "root": "ASSET_HospitalCurtain",
+    "required_nodes": [
+      "Curtain_Track",
+      "Pleated_Fabric",
+      "Hanging_Tab"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "expected_dimensions_m": [
+      2.14,
+      2.205,
+      0.55
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 215,
+    "slug": "hand-sanitizer-stand",
+    "title": "Hand Sanitizer Stand",
+    "root": "ASSET_HandSanitizerStand",
+    "required_nodes": [
+      "Bottle",
+      "MOVABLE_Pump",
+      "Sign"
+    ],
+    "budget_bytes": 400000,
+    "budget_triangles": 8000,
+    "expected_dimensions_m": [
+      0.35,
+      1.575,
+      0.35
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Pump"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Pump",
+        "location",
+        2,
+        -0.012
+      ]
+    ]
+  },
+  {
+    "id": 216,
+    "slug": "emergency-exit-sign",
+    "title": "Emergency Exit Sign",
+    "root": "ASSET_EmergencyExitSign",
+    "required_nodes": [
+      "Housing",
+      "Green_Face",
+      "Arrow_Shaft"
+    ],
+    "budget_bytes": 400000,
+    "budget_triangles": 8000,
+    "expected_dimensions_m": [
+      0.42,
+      0.2,
+      0.076
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 218,
+    "slug": "first-aid-box",
+    "title": "First Aid Box",
+    "root": "ASSET_FirstAidBox",
+    "required_nodes": [
+      "MOVABLE_Door",
+      "Case_Back",
+      "Inner_Divider"
+    ],
+    "budget_bytes": 400000,
+    "budget_triangles": 8000,
+    "expected_dimensions_m": [
+      0.36,
+      0.28,
+      0.182
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Door"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Door",
+        "rotation_euler",
+        2,
+        -1.4
+      ]
+    ]
+  },
+  {
+    "id": 223,
+    "slug": "hotel-luggage-cart",
+    "title": "Hotel Luggage Cart",
+    "root": "ASSET_HotelLuggageCart",
+    "required_nodes": [
+      "Carpet_Deck",
+      "Top_Cross_Rail",
+      "Garment_Bar"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "expected_dimensions_m": [
+      0.7,
+      1.725,
+      1
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 225,
+    "slug": "bedside-table",
+    "title": "Bedside Table",
+    "root": "ASSET_BedsideTable",
+    "required_nodes": [
+      "MOVABLE_Drawer",
+      "Top",
+      "Drawer_Floor"
+    ],
+    "budget_bytes": 400000,
+    "budget_triangles": 8000,
+    "expected_dimensions_m": [
+      0.52,
+      0.6225,
+      0.4925
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Drawer"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Drawer",
+        "location",
+        1,
+        -0.22
+      ]
+    ]
+  },
+  {
+    "id": 236,
+    "slug": "swimming-pool-ladder",
+    "title": "Swimming Pool Ladder",
+    "root": "ASSET_SwimmingPoolLadder",
+    "required_nodes": [
+      "Tubular_Rail",
+      "Non_Slip_Step",
+      "Deck_Socket"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "expected_dimensions_m": [
+      0.68,
+      1.505,
+      0.55
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 237,
+    "slug": "pool-lounger",
+    "title": "Pool Lounger",
+    "root": "ASSET_PoolLounger",
+    "required_nodes": [
+      "Seat_Slat",
+      "Back_Slat",
+      "Frame"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "expected_dimensions_m": [
+      0.65,
+      0.869,
+      1.8913
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 238,
+    "slug": "gym-treadmill",
+    "title": "Gym Treadmill",
+    "root": "ASSET_GymTreadmill",
+    "required_nodes": [
+      "Belt",
+      "Console",
+      "Screen",
+      "Stop_Button"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "expected_dimensions_m": [
+      0.82,
+      1.3225,
+      1.85
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 240,
+    "slug": "luggage-suitcase",
+    "title": "Luggage Suitcase",
+    "root": "ASSET_LuggageSuitcase",
+    "required_nodes": [
+      "Shell",
+      "MOVABLE_Handle",
+      "Grip"
+    ],
+    "budget_bytes": 400000,
+    "budget_triangles": 8000,
+    "expected_dimensions_m": [
+      0.42,
+      0.6825,
+      0.289
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Handle"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Handle",
+        "location",
+        2,
+        0.24
+      ]
+    ]
+  },
+  {
+    "id": 245,
+    "slug": "picnic-table",
+    "title": "Picnic Table",
+    "root": "ASSET_PicnicTable",
+    "required_nodes": [
+      "A_Frame_Leg",
+      "Table_Plank",
+      "Fixed_Bench"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "expected_dimensions_m": [
+      1.58,
+      0.7825,
+      1.8
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 259,
+    "slug": "outdoor-stage",
+    "title": "Outdoor Stage",
+    "root": "ASSET_OutdoorStage",
+    "required_nodes": [
+      "Modular_Deck",
+      "Support",
+      "Stair_Tread"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "expected_dimensions_m": [
+      4,
+      0.68,
+      3.76
+    ],
+    "dimension_tolerance_m": 0.006
+  }
+]

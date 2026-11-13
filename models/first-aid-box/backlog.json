@@ -1,0 +1,30 @@
+{
+  "id": 218,
+  "slug": "first-aid-box",
+  "title": "First Aid Box",
+  "root": "ASSET_FirstAidBox",
+  "required_nodes": [
+    "MOVABLE_Door",
+    "Case_Back",
+    "Inner_Divider"
+  ],
+  "budget_bytes": 400000,
+  "budget_triangles": 8000,
+  "expected_dimensions_m": [
+    0.36,
+    0.28,
+    0.182
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Door"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Door",
+      "rotation_euler",
+      2,
+      -1.4
+    ]
+  ]
+}

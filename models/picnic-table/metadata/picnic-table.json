@@ -1,0 +1,111 @@
+{
+  "id": "picnic-table",
+  "name": "Picnic Table",
+  "summary": "Picnic Table reusable original asset.",
+  "description": "Original Singapore/Malaysia healthcare, hospitality and recreation illustrative asset with independently editable components. No commercial or official logos, real personal data, or engineering certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "care-hospitality",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry; reviewed repository helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/picnic-table.glb",
+    "source": "sources/picnic-table.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.55,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 245,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. Not a medical, accessibility, engineering or safety certification.",
+  "attribution": [
+    {
+      "credit": "Original geometry; repository material/export helpers. Generic labels use Blender bundled Bfont converted to editable mesh. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. AnimationMixer clips where listed, no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative scene prop only. Not for operational medical use or certified accessibility, structural, electrical, emergency-sign or safety design.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "component_contacts": "PASS: selected mesh contact assertions plus visual review",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "NOT APPLICABLE: static asset",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "picnic-table",
+    "backlog_id": 245,
+    "glb_bytes": 84236,
+    "triangles": 1536,
+    "vertices": 2976,
+    "meshes": 16,
+    "materials": 2,
+    "dimensions": [
+      1.5799999833106995,
+      0.7824999913573265,
+      1.7999999523162842
+    ],
+    "bounds": {
+      "min": [
+        -0.7899999916553497,
+        0,
+        -0.8999999761581421
+      ],
+      "max": [
+        0.7899999916553497,
+        0.7824999913573265,
+        0.8999999761581421
+      ]
+    },
+    "sha256": "e700c296d79fb748a3e9f771682770a48f80c013cf0847df206f60f2dfe4ff76",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "animation_clips": 0
+  }
+}

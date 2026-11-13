@@ -1,0 +1,19 @@
+COMPONENT_PASS 202 1
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(group('Front_Caster').some(b=>touch(a,b)))
+
+    at file:///srv/agent-workstation/workspaces/blender-fifty04-carehotel-20261113/repo/scripts/test-carehotel04-components.mjs:5:137 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3
