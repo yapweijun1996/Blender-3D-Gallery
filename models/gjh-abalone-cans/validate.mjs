@@ -8,12 +8,16 @@ import validator from 'gltf-validator';
 
 // Validates each exported can, then records measured metrics in its metadata and reports/assets.json.
 const root = path.dirname(fileURLToPath(import.meta.url));
-const cans = [
+// Usage: node validate.mjs [codex]   (default: the photo-unrolled set)
+const codex = process.argv[2] === 'codex';
+const sub = codex ? 'codex' : '';
+const baseCans = [
   ['gjh-can-new-zealand-abalone', 'ASSET_GJHCanNewZealandAbalone'],
   ['gjh-can-australia-abalone', 'ASSET_GJHCanAustraliaAbalone'],
   ['gjh-can-south-africa-abalone', 'ASSET_GJHCanSouthAfricaAbalone'],
   ['gjh-can-mexico-abalone', 'ASSET_GJHCanMexicoAbalone'],
 ];
+const cans = codex ? baseCans.map(([id, rootName]) => [id + '-codex', rootName + 'Codex']) : baseCans;
 const parts = ['GoldRim', 'SilverMetal', 'Label'];
 // GLTFLoader needs a browser to decode textures, so geometry is checked on a texture-stripped copy.
 function stripTextures(bytes) {
@@ -51,7 +55,7 @@ async function checkLod1(id, rootName, build, textureBytes, lod0Triangles) {
 }
 const reports = [];
 for (const [id, rootName] of cans) {
-  const bytes = fs.readFileSync(path.join(root, 'exports', id + '.glb'));
+  const bytes = fs.readFileSync(path.join(root, 'exports', sub, id + '.glb'));
   const validation = await validator.validateBytes(new Uint8Array(bytes), { uri: id + '.glb' });
   if (validation.issues.numErrors || validation.issues.numWarnings) throw Error(id + ': ' + JSON.stringify(validation.issues));
   const json = JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)));
@@ -80,7 +84,7 @@ for (const [id, rootName] of cans) {
   const size = bounds.getSize(new Vector3());
   if (Math.abs(bounds.min.y) > 0.0005 || size.x < 0.07 || size.x > 0.08 || size.y < 0.11 || size.y > 0.13 || bytes.length > 500 * 1024 || triangles > 5000 || primitives > 3 || json.materials.length > 3)
     throw Error(`${id}: budget/origin violation ${bytes.length} bytes, ${triangles} triangles, ${primitives} primitives, size ${size.toArray()}`);
-  const build = JSON.parse(fs.readFileSync(path.join(root, 'reports/build.json'), 'utf8')).cans[id];
+  const build = JSON.parse(fs.readFileSync(path.join(root, 'reports', sub, 'build.json'), 'utf8')).cans[id];
   const textureBytes = ([w, h]) => Math.round(w * h * 4 * 4 / 3); // RGBA8 with a full mip chain on the GPU
   const metrics = { glb_bytes: bytes.length, triangles, vertices, primitives, materials: json.materials.length, textures: json.images.length,
     texture_pixels: null, animations: (json.animations ?? []).length, dimensions: size.toArray(),
@@ -88,7 +92,7 @@ for (const [id, rootName] of cans) {
   metrics.texture_pixels = build.texture;
   metrics.draw_calls = primitives;
   metrics.texture_memory_bytes = textureBytes(build.texture);
-  metrics.lod1 = await checkLod1(id, rootName, build, textureBytes, triangles);
+  if (!codex) metrics.lod1 = await checkLod1(id, rootName, build, textureBytes, triangles);
   const check = { errors: validation.issues.numErrors, warnings: validation.issues.numWarnings, validator: validation.validatorVersion };
   const file = path.join(root, 'metadata', id + '.json');
   const meta = JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -98,5 +102,6 @@ for (const [id, rootName] of cans) {
   reports.push({ id, ...metrics, validation: check });
 }
 fs.mkdirSync(path.join(root, 'reports'), { recursive: true });
-fs.writeFileSync(path.join(root, 'reports/assets.json'), JSON.stringify(reports, null, 2) + '\n');
+fs.mkdirSync(path.join(root, 'reports', sub), { recursive: true });
+fs.writeFileSync(path.join(root, 'reports', sub, 'assets.json'), JSON.stringify(reports, null, 2) + '\n');
 for (const r of reports) console.log(r.id, r.glb_bytes, 'bytes', r.triangles, 'tris', r.dimensions.map(v => +v.toFixed(4)).join(' x '), 'errors', r.validation.errors, 'warnings', r.validation.warnings);

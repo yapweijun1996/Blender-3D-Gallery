@@ -40,6 +40,16 @@ Thumbnails are 640 px WebP converted from the Blender PNG renders (any converter
 - **Look.** The label is a glossy lacquered print (metallic 0.2, roughness 0.3) and the viewer lighting is tuned per can (`display.previewLighting`, environment intensity 1.0) so the cylinder shows a soft highlight band and edge falloff; the result depends on the viewer's RoomEnvironment.
 - **Viewer.** The can metadata opts in to the viewer's studio environment (`display.studioEnvironment`) and tuned lighting. No texture compression or runtime LOD switching is provided; Firefox, Safari and mobile devices were not tested. See [verification.md](verification.md) for the full PASS/FAIL/UNVERIFIED list.
 
+## Codex flat-label comparison set
+
+A second set of the same four cans, `gjh-can-<sku>-abalone-codex` (collection `gjh-abalone-cans-codex`), whose label is an **AI-generated flat artwork** made with the Codex CLI's built-in image generation from the official packshots, for side-by-side comparison with the photo-unrolled set above. It looks crisper (clean vector-like print, round logos, no photo seams) but is **not official artwork**: text, numbers, seals, QR codes and barcodes may differ from the real label. Each metadata file lists the differences found when reviewing it (for example Mexico prints 425 g instead of 454 g, shows a "Goh Huat" logo and has an invented third face).
+
+- Flat labels: `sources/flat-labels/<slug>-flat.jpg` (1774 x 887, from the model's PNG output). Prompts demanded exact Chinese strings, no certificate numbers or years, and round logos.
+- Build: `blender --background --factory-startup --python models/gjh-abalone-cans/generate.py -- --label-source flat` writes `exports/codex/`, `textures/codex/`, `reports/codex/` and `sources/gjh-abalone-cans-codex.blend`. Validate with `node models/gjh-abalone-cans/validate.mjs codex`.
+- Same geometry and budgets as the photo set (4,888 triangles, 3 materials, 3 draw calls, under 500 KiB); no LOD1 for this set.
+- Comparison images: `reports/codex/compare/<sku>-photo-vs-codex.jpg` (same viewer and camera) and `<sku>-flat-labels.jpg` (the two flat labels).
+- Regression: `npm run test:cans:codex` (5 views per can).
+
 ## Rights
 
 Packaging artwork belongs to its respective owners (GJH / New Moon). It is used in the owner's project on the owner's confirmation; no independent licence document was supplied, and public redistribution terms have not been specified. Gallery downloads are disabled, but public interactive viewing still serves the GLBs. The can geometry and generator are original work for this repository.

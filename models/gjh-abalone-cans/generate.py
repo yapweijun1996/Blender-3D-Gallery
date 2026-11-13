@@ -23,6 +23,10 @@ DIAMETER = 0.0735  # nominal metres; height follows each packshot's measured asp
 SEGMENTS = 64
 TEX_W, TEX_H_MAX = 1280, 640  # about 1.15x the packshot's real detail; more would only enlarge blur
 LOD1_SEGMENTS, LOD1_TEX_W = 36, 640
+# Flat-label (Codex) variants: label height equals the photo variant's, texture is 1536 px around the can.
+FLAT_LABEL_H = 0.11359
+FLAT_TEX_W = 1536
+FLAT_FRONT_CENTRE = {"au": 0.500, "nz": 0.503, "sa": 0.507, "mx": 0.500}   # fraction of the image width where the front face is centred; set per generated image
 SEG = {"segments": SEGMENTS}
 SEAM = 0.0050  # double-seam height in metres
 # Label rows measured on all 11 official packshots (same framing): the printed label runs from the first row below the
@@ -52,6 +56,9 @@ VARIANTS = [
 def args():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     p = argparse.ArgumentParser()
+    p.add_argument("--label-source", choices=("photo", "flat"), default="photo",
+                   help="photo: unroll the official packshots; flat: use AI-generated flat labels from sources/flat-labels (separate Codex variants)")
+    p.add_argument("--flat-dir", default=str(HERE / "sources" / "flat-labels"))
     p.add_argument("--packshots", default=str(HERE.parents[2] / "Webpage-Design-Gallery/assets/companies/gjh/official"))
     return p.parse_args(argv)
 
@@ -581,34 +588,71 @@ def main():
     gold = solid_material("Gold lacquered rim", (214, 170, 84), metallic=0.9, roughness=0.28)
     silver = solid_material("Silver tinplate", (206, 206, 202), metallic=0.9, roughness=0.34)
 
-    tex_dir = HERE / "textures"
+    flat = opts.label_source == "flat"
+    sub = "codex" if flat else ""
+    out = dict(exports=HERE / "exports" / sub, tex=HERE / "textures" / sub, qa=HERE / "reports" / (sub + "/qa" if flat else "qa"),
+               build=HERE / "reports" / (sub + "/build.json" if flat else "build.json"),
+               blend=HERE / "sources" / ("gjh-abalone-cans-codex.blend" if flat else "gjh-abalone-cans.blend"))
+    variants = [dict(v, orig_slug=v["slug"], slug=v["slug"] + "-codex", root=v["root"] + "Codex") for v in VARIANTS] if flat else VARIANTS
+    tex_dir = out["tex"]
     tex_dir.mkdir(parents=True, exist_ok=True)
-    reports = {"inputs": {}, "cans": {}}
+    reports = {"inputs": {}, "cans": {}, "label_source": opts.label_source}
     cans = []
-    # Pass 1: load every packshot and choose one panel order shared by all three-panel SKUs (they share one design).
-    loaded = {}
-    for spec in VARIANTS:
-        panels = []
-        for kind in ("front", "back", "nutrition"):
-            if kind not in spec:
-                continue
-            reports["inputs"][spec[kind]] = hashlib.sha256((packshots / spec[kind]).read_bytes()).hexdigest()
-            raw = load_pixels(packshots / spec[kind])
-            bounds = can_bounds(raw)
-            panels.append(Panel(kind, delight(raw, bounds), bounds, OVERLAY_BADGES.get(spec["key"], {}).get(kind)))
-        loaded[spec["key"]] = panels
-    totals = {}
-    reports["order_costs"] = {}
-    for spec in VARIANTS:
-        if len(loaded[spec["key"]]) == 3:
-            costs = order_costs(loaded[spec["key"]])
-            reports["order_costs"][spec["key"]] = {"/".join(k): round(v, 4) for k, v in costs.items()}
-            for order, cost in costs.items():
-                totals[order] = totals.get(order, 0.0) + cost
-    common = min(totals, key=totals.get)
-    reports["common_order"] = list(common)
-    side_of_nutrition = +1 if common.index("nutrition") == 1 else -1
-    for spec in VARIANTS:
+    common, loaded, side_of_nutrition = None, {}, 1
+    if not flat:
+        # Pass 1: load every packshot and choose one panel order shared by all three-panel SKUs (they share one design).
+        loaded = {}
+        for spec in VARIANTS:
+            panels = []
+            for kind in ("front", "back", "nutrition"):
+                if kind not in spec:
+                    continue
+                reports["inputs"][spec[kind]] = hashlib.sha256((packshots / spec[kind]).read_bytes()).hexdigest()
+                raw = load_pixels(packshots / spec[kind])
+                bounds = can_bounds(raw)
+                panels.append(Panel(kind, delight(raw, bounds), bounds, OVERLAY_BADGES.get(spec["key"], {}).get(kind)))
+            loaded[spec["key"]] = panels
+        totals = {}
+        reports["order_costs"] = {}
+        for spec in VARIANTS:
+            if len(loaded[spec["key"]]) == 3:
+                costs = order_costs(loaded[spec["key"]])
+                reports["order_costs"][spec["key"]] = {"/".join(k): round(v, 4) for k, v in costs.items()}
+                for order, cost in costs.items():
+                    totals[order] = totals.get(order, 0.0) + cost
+        common = min(totals, key=totals.get)
+        reports["common_order"] = list(common)
+        side_of_nutrition = +1 if common.index("nutrition") == 1 else -1
+    for spec in variants:
+        if flat:
+            label_h = FLAT_LABEL_H
+            height = label_h + 2 * SEAM
+            flat_w = FLAT_TEX_W
+            tex_h = int(round(flat_w * label_h / (2 * math.pi * LABEL_RADIUS))) // 2 * 2
+            src_file = next(f for f in (Path(opts.flat_dir) / f"{spec['orig_slug']}-flat.jpg", Path(opts.flat_dir) / f"{spec['orig_slug']}-flat.png") if f.exists())
+            reports["inputs"][src_file.name] = hashlib.sha256(src_file.read_bytes()).hexdigest()
+            flat_px = load_pixels(src_file)                       # top-down rows
+            sh, sw, _ = flat_px.shape
+            # Bring the front face to the centre of the texture (u = 0.5) by rolling the wrapped image horizontally.
+            shift = (0.5 - FLAT_FRONT_CENTRE[spec["key"]]) * sw
+            xs = (np.arange(flat_w) + 0.5) * (sw / flat_w) - 0.5 - shift
+            ys = (np.arange(tex_h) + 0.5) * (sh / tex_h) - 0.5
+            X, Y = np.meshgrid(xs % sw, ys)
+            strip = np.clip(sample(np.concatenate([flat_px, flat_px[:, :4]], axis=1), X, Y), 0, 1)[::-1]  # bottom-up
+            img = save_jpeg(strip, tex_dir / f"{spec['slug']}-label.jpg", f"{spec['slug']}-label", scene)
+            root = build_can(spec, img, height, gold, silver)
+            root.name = spec["root"] + "_parts"
+            for node in root.children:
+                node.name += f"_{spec['key']}"
+                node.data.name += f"_{spec['key']}"
+            clone = merged_copy(root, spec["root"])
+            export_glb(clone, out["exports"] / f"{spec['slug']}.glb")
+            discard(clone)
+            root.name = spec["root"]
+            reports["cans"][spec["slug"]] = dict(height_m=round(height, 5), diameter_m=DIAMETER, texture=[flat_w, tex_h],
+                                                  source=src_file.name, source_size=[sw, sh], front_centre=FLAT_FRONT_CENTRE[spec["key"]])
+            cans.append((spec, root, height))
+            continue
         panels = loaded[spec["key"]]
         fb = panels[0].bounds
         layout = (plan_layout(panels, forced_order=common) if len(panels) == 3
@@ -629,7 +673,7 @@ def main():
         for node in lod1.children:
             node.name += "_lod1"
         clone = merged_copy(lod1, spec["root"])
-        export_glb(clone, HERE / "exports" / "lod1" / f"{spec['slug']}-lod1.glb")
+        export_glb(clone, out["exports"] / "lod1" / f"{spec['slug']}-lod1.glb")
         discard(clone)
         discard(lod1)
         for mat in [m for m in bpy.data.materials if m.name.endswith("LOD1")]:
@@ -643,7 +687,7 @@ def main():
             node.name += f"_{spec['key']}"
             node.data.name += f"_{spec['key']}"
         clone = merged_copy(root, spec["root"])
-        export_glb(clone, HERE / "exports" / f"{spec['slug']}.glb")
+        export_glb(clone, out["exports"] / f"{spec['slug']}.glb")
         discard(clone)
         root.name = spec["root"]
         reports["cans"][spec["slug"]] = dict(height_m=round(height, 5), diameter_m=DIAMETER, texture=[TEX_W, tex_h],
@@ -702,7 +746,7 @@ def main():
             break
     (HERE / "sources").mkdir(exist_ok=True)
     (HERE / "previews").mkdir(exist_ok=True)
-    bpy.ops.wm.save_as_mainfile(filepath=str(HERE / "sources/gjh-abalone-cans.blend"), compress=True)
+    bpy.ops.wm.save_as_mainfile(filepath=str(out["blend"]), compress=True)
 
     # One preview per can, rendered with that can alone at the origin.
     for spec, root, height in cans:
@@ -718,7 +762,7 @@ def main():
         bpy.ops.render.render(write_still=True)
         root.location = saved
     # QA renders: 24 turntable views (every 15 degrees) and six standard views per can, as contact sheets.
-    qa_dir = HERE / "reports" / "qa"
+    qa_dir = out["qa"]
     qa_dir.mkdir(parents=True, exist_ok=True)
     cyclorama = next(o for o in studio.children if o.name == "Cyclorama")
     tmp = str(qa_dir / "_tile.png")
@@ -776,8 +820,8 @@ def main():
     Path(tmp).unlink(missing_ok=True)
     reports["engine"] = scene.render.engine
     reports["blender"] = bpy.app.version_string
-    (HERE / "reports").mkdir(exist_ok=True)
-    (HERE / "reports/build.json").write_text(json.dumps(reports, indent=2) + "\n")
+    out["build"].parent.mkdir(parents=True, exist_ok=True)
+    out["build"].write_text(json.dumps(reports, indent=2) + "\n")
     print("done", scene.render.engine, bpy.app.version_string)
 
 
