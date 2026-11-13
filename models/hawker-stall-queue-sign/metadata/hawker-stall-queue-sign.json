@@ -1,0 +1,85 @@
+{
+  "id": "hawker-stall-queue-sign",
+  "name": "Hawker Stall Queue Sign",
+  "summary": "A teal freestanding hawker queue marker with editable QUEUE HERE lettering, a separate right-pointing arrow and weighted circular base.",
+  "description": "A teal freestanding hawker queue marker with editable QUEUE HERE lettering, a separate right-pointing arrow and weighted circular base.",
+  "category": "Architecture",
+  "tags": [
+    "hawker",
+    "singapore-malaysia",
+    "modular",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and editable Blender bundled Bfont lettering. No external models or textures.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/hawker-stall-queue-sign.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "V2.1 item 364, title-only scope. Generic original visual module, not an as-built or certified installation. No structural, fire, ventilation, hygiene, load, accessibility or building-code compliance asserted. Editable source components, not runtime operation. Physical Android/iOS NOT TESTED; combined local ten-asset gate PASS; overall NEEDS REVIEW for untested physical Android/iOS.",
+  "attribution": [
+    {
+      "credit": "Original geometry and materials for this repository; queue lettering uses Blender bundled Bfont."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "sha256": "8c685c0b8cd9d2158b2fab6b49ea76fd03971416e97a33468122bb0e17c03bc0",
+    "glb_bytes": 69688,
+    "triangles": 1552,
+    "vertices": 2358,
+    "primitives": 6,
+    "materials": 4,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      0.7799999713897705,
+      1.5199999809265137,
+      0.47999998927116394
+    ],
+    "bounds": {
+      "min": [
+        -0.38999998569488525,
+        0,
+        -0.23999999463558197
+      ],
+      "max": [
+        0.38999998569488525,
+        1.5199999809265137,
+        0.23999999463558197
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "quality_gate": {
+    "local_asset": "PASS",
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "combined_ten_asset_gate": "PASS: see docs/verification/sgmy-batch05-final.md",
+    "budget_bytes": 400000,
+    "budget_triangles": 8000
+  }
+}
