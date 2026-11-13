@@ -1,0 +1,110 @@
+{
+  "id": "traditional-five-stones-game-set",
+  "name": "Traditional Five Stones Game Set",
+  "summary": "Traditional Five Stones Game Set reusable original asset.",
+  "description": "Original Singapore/Malaysia cultural illustrative asset with independently editable components. No commercial or official logos, real personal data, or engineering certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "culture",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry; reviewed repository helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/traditional-five-stones-game-set.glb",
+    "source": "sources/traditional-five-stones-game-set.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.55,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 500,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. National-symbol usage restrictions still apply where relevant.",
+  "attribution": [
+    {
+      "credit": "Original geometry; repository material/export helpers. Generic labels use Blender bundled Bfont converted to editable mesh. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. AnimationMixer clips where listed, no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative cultural prop, not certified infrastructure, flame simulation or calibrated measuring equipment.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "NOT APPLICABLE: static asset",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "traditional-five-stones-game-set",
+    "backlog_id": 500,
+    "glb_bytes": 39892,
+    "triangles": 668,
+    "vertices": 1236,
+    "meshes": 11,
+    "materials": 7,
+    "dimensions": [
+      0.30000001192092896,
+      0.04541833305320865,
+      0.2199999988079071
+    ],
+    "bounds": {
+      "min": [
+        -0.15000000596046448,
+        0,
+        -0.10999999940395355
+      ],
+      "max": [
+        0.15000000596046448,
+        0.04541833305320865,
+        0.10999999940395355
+      ]
+    },
+    "sha256": "28badad003ef91064cddaf399a3e2126be767be0a045265e37698d3fc85443cc",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 400000,
+    "budget_triangles": 8000,
+    "animation_clips": 0
+  }
+}

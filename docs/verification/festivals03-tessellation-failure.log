@@ -1,0 +1,21 @@
+Blender 4.0.2
+Traceback (most recent call last):
+  File "/srv/agent-workstation/workspaces/blender-fifty03-festivals-20261113/repo/models/deepavali-oil-lamp/generate.py", line 187, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/srv/agent-workstation/workspaces/blender-fifty03-festivals-20261113/repo/models/deepavali-oil-lamp/generate.py", line 185, in main
+    root=build();animate();bpy.ops.wm.save_as_mainfile(filepath=str(HERE/'sources'/(SLUG+'.blend')),compress=True)
+         ^^^^^^^
+  File "/srv/agent-workstation/workspaces/blender-fifty03-festivals-20261113/repo/models/deepavali-oil-lamp/generate.py", line 165, in build
+    prism('Spout',[(.07,-.035),(.16,0),(.07,.035)],.035,.065,terra,horizontal=True)
+  File "/srv/agent-workstation/workspaces/blender-fifty03-festivals-20261113/repo/models/deepavali-oil-lamp/generate.py", line 120, in prism
+    vec=[Vector((x,y,0)) for x,y in points];tri=tessellate_polygon([vec]);indices={tuple(v):i for i,v in enumerate(vec)};faces=[tuple(indices[tuple(v)] for v in t) for t in tri];N=len(points)
+                                                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/srv/agent-workstation/workspaces/blender-fifty03-festivals-20261113/repo/models/deepavali-oil-lamp/generate.py", line 120, in <genexpr>
+    vec=[Vector((x,y,0)) for x,y in points];tri=tessellate_polygon([vec]);indices={tuple(v):i for i,v in enumerate(vec)};faces=[tuple(indices[tuple(v)] for v in t) for t in tri];N=len(points)
+                                                                                                                                              ^^^^^^^^
+TypeError: 'int' object is not iterable
+
+Error: script failed, file: 'models/deepavali-oil-lamp/generate.py', exiting.
+
+Blender quit

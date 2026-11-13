@@ -1,0 +1,110 @@
+{
+  "id": "national-day-flag-pole",
+  "name": "National Day Flag Pole",
+  "summary": "National Day Flag Pole reusable original asset.",
+  "description": "Original Singapore/Malaysia cultural illustrative asset with independently editable components. No commercial or official logos, real personal data, or engineering certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "culture",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry; reviewed repository helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/national-day-flag-pole.glb",
+    "source": "sources/national-day-flag-pole.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.55,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 492,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. National-symbol usage restrictions still apply where relevant.",
+  "attribution": [
+    {
+      "credit": "Original geometry; repository material/export helpers. Generic labels use Blender bundled Bfont converted to editable mesh. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. AnimationMixer clips where listed, no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative cultural prop, not certified infrastructure, flame simulation or calibrated measuring equipment.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "NOT APPLICABLE: static asset",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "national-day-flag-pole",
+    "backlog_id": 492,
+    "glb_bytes": 41916,
+    "triangles": 740,
+    "vertices": 1392,
+    "meshes": 8,
+    "materials": 4,
+    "dimensions": [
+      0.6000000238418579,
+      6.169999904930592,
+      0.6000000238418579
+    ],
+    "bounds": {
+      "min": [
+        -0.30000001192092896,
+        0,
+        -0.30000001192092896
+      ],
+      "max": [
+        0.30000001192092896,
+        6.169999904930592,
+        0.30000001192092896
+      ]
+    },
+    "sha256": "38e7d40944e1b039730a5b9f337643e2c0a172ff4d49d195b5746863ccbb750a",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 400000,
+    "budget_triangles": 8000,
+    "animation_clips": 0
+  }
+}

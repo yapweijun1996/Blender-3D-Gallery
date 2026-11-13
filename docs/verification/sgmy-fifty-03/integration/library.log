@@ -1,0 +1,23 @@
+PASS static indexes preserve all assets and never download GLBs or create WebGL
+PASS model search, combined filters, empty state and clear preserve URL state
+PASS demo search/category combine and clear
+PASS legacy model detail direct link, refresh, metadata, related and history
+PASS failed model load retains fallback and can retry
+PASS unknown model and unavailable WebGL provide useful recovery
+PASS mobile menu supports keyboard dismissal, focus return and navigation
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.reload: Timeout 30000ms exceeded.
+Call log:
+  - waiting for navigation until "domcontentloaded"
+
+    at /srv/agent-workstation/workspaces/blender-sgmy-fifty03-main762-20261113/repo/scripts/test-library-browser.mjs:211:18
+    at async run (/srv/agent-workstation/workspaces/blender-sgmy-fifty03-main762-20261113/repo/scripts/test-library-browser.mjs:28:5)
+    at async file:///srv/agent-workstation/workspaces/blender-sgmy-fifty03-main762-20261113/repo/scripts/test-library-browser.mjs:203:3 {
+  log: [ '  - waiting for navigation until "domcontentloaded"' ],
+  name: 'TimeoutError'
+}
+
+Node.js v22.23.3

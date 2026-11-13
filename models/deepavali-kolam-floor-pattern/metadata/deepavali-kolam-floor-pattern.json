@@ -1,0 +1,110 @@
+{
+  "id": "deepavali-kolam-floor-pattern",
+  "name": "Deepavali Kolam Floor Pattern",
+  "summary": "Deepavali Kolam Floor Pattern reusable original asset.",
+  "description": "Original Singapore/Malaysia cultural illustrative asset with independently editable components. No commercial or official logos, real personal data, or engineering certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "culture",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry; reviewed repository helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/deepavali-kolam-floor-pattern.glb",
+    "source": "sources/deepavali-kolam-floor-pattern.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.2,
+      1.5,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 488,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. National-symbol usage restrictions still apply where relevant.",
+  "attribution": [
+    {
+      "credit": "Original geometry; repository material/export helpers. Generic labels use Blender bundled Bfont converted to editable mesh. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. AnimationMixer clips where listed, no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative cultural prop, not certified infrastructure, flame simulation or calibrated measuring equipment.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "NOT APPLICABLE: static asset",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "deepavali-kolam-floor-pattern",
+    "backlog_id": 488,
+    "glb_bytes": 515540,
+    "triangles": 10248,
+    "vertices": 16440,
+    "meshes": 170,
+    "materials": 4,
+    "dimensions": [
+      1.2000000476837158,
+      0.02100001176377542,
+      1.2000000476837158
+    ],
+    "bounds": {
+      "min": [
+        -0.6000000238418579,
+        0,
+        -0.6000000238418579
+      ],
+      "max": [
+        0.6000000238418579,
+        0.02100001176377542,
+        0.6000000238418579
+      ]
+    },
+    "sha256": "58948ea22304baa5598549ea4c7f14313e79bd057d60aa7f69a528befbc2a79b",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 20000,
+    "animation_clips": 0
+  }
+}

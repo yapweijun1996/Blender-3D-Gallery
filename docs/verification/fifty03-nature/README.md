@@ -1,0 +1,4 @@
+# Nature/facility/festive tranche:17 types
+Final hashes and explicit local PASS/release NEEDS REVIEW statuses are in handoff.json. No physical Android/iOS/Safari/WebKit tests or deployment.
+From repo root: npm test && npm run build; then MALL_QA_DIR=/tmp/fresh-nature17-qa node scripts/test-fifty03-nature-browser.mjs runs all51 viewport cases and both isolated cabinet/crate AnimationMixer checks. It refuses a nonempty destination; historical evidence stays intact. Individual scripts/test-<slug>.mjs and scripts/test-{tool-cabinet,storage-crate}-animation.mjs accept MALL_QA_DIR.
+All source/editable parts, initial failed logs and relevant snapshots retained. Corrections are documented, fixed budgets unchanged. No prior asset replaced. Current browser screenshot filenames use initial to mean initial camera view, not outdated asset.

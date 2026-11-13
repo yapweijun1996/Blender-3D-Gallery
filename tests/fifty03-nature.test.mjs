@@ -1,0 +1,2 @@
+import test from 'node:test';
+for(const slug of ["tool-cabinet", "storage-crate", "science-lab-bench", "hibiscus-plant", "orchid-planter", "pandan-plant", "durian-tree", "mangrove-tree", "tropical-fern-cluster", "tropical-grass-patch", "roadside-tree-pit", "rainwater-puddle", "tropical-rock-cluster", "drainage-canal-bank", "chinese-new-year-lantern-arch", "chinese-new-year-mandarin-orange-basket", "chinese-new-year-red-packet-display"])test(slug+' structure and fixed budgets',async()=>{await import('../models/'+slug+'/validate.mjs');});

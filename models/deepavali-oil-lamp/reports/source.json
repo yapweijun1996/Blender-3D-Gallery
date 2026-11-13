@@ -1,0 +1,61 @@
+{
+  "source_sha256": "1822d50b0ca69ef26e1d4ac6db6a2c5a18329287e4b82a5471371b115bc90bce",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 6,
+  "objects": [
+    {
+      "name": "Bowl_Floor",
+      "type": "MESH",
+      "parent": "ASSET_DeepavaliOilLamp"
+    },
+    {
+      "name": "Cotton_Wick",
+      "type": "MESH",
+      "parent": "ASSET_DeepavaliOilLamp"
+    },
+    {
+      "name": "Earthen_Rim",
+      "type": "MESH",
+      "parent": "ASSET_DeepavaliOilLamp"
+    },
+    {
+      "name": "Flame",
+      "type": "MESH",
+      "parent": "ASSET_DeepavaliOilLamp"
+    },
+    {
+      "name": "Oil_Surface",
+      "type": "MESH",
+      "parent": "ASSET_DeepavaliOilLamp"
+    },
+    {
+      "name": "Spout",
+      "type": "MESH",
+      "parent": "ASSET_DeepavaliOilLamp"
+    }
+  ],
+  "edit_proof": {
+    "node": "Bowl_Floor",
+    "before": [
+      0,
+      0,
+      0.014999999664723873
+    ],
+    "after": [
+      0.12300000339746475,
+      0,
+      0.014999999664723873
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Terracotta",
+    "roughness_before": 0.75,
+    "roughness_after": 0.27,
+    "copy_sha256": "ffbcf531fada566a99d0a61620fc1c66cca5322b24b766b784d1000fb388f3ee",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

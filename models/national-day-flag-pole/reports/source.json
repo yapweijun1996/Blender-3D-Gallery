@@ -1,0 +1,71 @@
+{
+  "source_sha256": "76f8dc1b64c5b2e18c23e0f5737c7f6a12b0e50f28fc6a067ab2e49a338541ff",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 8,
+  "objects": [
+    {
+      "name": "Cleat",
+      "type": "MESH",
+      "parent": "ASSET_NationalDayFlagPole"
+    },
+    {
+      "name": "Concrete_Base",
+      "type": "MESH",
+      "parent": "ASSET_NationalDayFlagPole"
+    },
+    {
+      "name": "Finial",
+      "type": "MESH",
+      "parent": "ASSET_NationalDayFlagPole"
+    },
+    {
+      "name": "Halyard",
+      "type": "MESH",
+      "parent": "ASSET_NationalDayFlagPole"
+    },
+    {
+      "name": "Halyard.001",
+      "type": "MESH",
+      "parent": "ASSET_NationalDayFlagPole"
+    },
+    {
+      "name": "Halyard_Pulley",
+      "type": "MESH",
+      "parent": "ASSET_NationalDayFlagPole"
+    },
+    {
+      "name": "Pole",
+      "type": "MESH",
+      "parent": "ASSET_NationalDayFlagPole"
+    },
+    {
+      "name": "Socket",
+      "type": "MESH",
+      "parent": "ASSET_NationalDayFlagPole"
+    }
+  ],
+  "edit_proof": {
+    "node": "Cleat",
+    "before": [
+      0,
+      -0.05000000074505806,
+      1
+    ],
+    "after": [
+      0.12300000339746475,
+      -0.05000000074505806,
+      1
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Satin metal",
+    "roughness_before": 0.47999998927116394,
+    "roughness_after": 0.73,
+    "copy_sha256": "e09b902784d11f556c3c119e4b8ce5a25d8ecf76082dddb92fc2913612972fc0",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": 491,
+  "slug": "mooncake-gift-box",
+  "title": "Mooncake Gift Box",
+  "root": "ASSET_MooncakeGiftBox",
+  "required_nodes": [
+    "MOVABLE_Lid",
+    "Mooncake",
+    "Tray_Insert"
+  ],
+  "budget_bytes": 400000,
+  "budget_triangles": 8000,
+  "expected_dimensions_m": [
+    0.35,
+    0.125,
+    0.294
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Lid"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Lid",
+      "rotation_euler",
+      0,
+      -1.4
+    ]
+  ]
+}
