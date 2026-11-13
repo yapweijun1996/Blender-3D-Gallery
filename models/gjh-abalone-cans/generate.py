@@ -323,8 +323,8 @@ def label_material(name, image):
     tex.interpolation = "Linear"
     tex.extension = "EXTEND"
     links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
-    bsdf.inputs["Metallic"].default_value = 0.05
-    bsdf.inputs["Roughness"].default_value = 0.5  # printed lacquer: soft, no hot streaks
+    bsdf.inputs["Metallic"].default_value = 0.2  # lacquered print on tin: glossy, with a soft highlight band
+    bsdf.inputs["Roughness"].default_value = 0.3  # printed lacquer: soft, no hot streaks
     return m
 
 

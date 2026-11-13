@@ -93,10 +93,18 @@ Load timing (localhost Vite dev server, headless Chromium, 3 runs): canvas visib
 
 ## Inventory
 
-- Materials: `Label <SKU>` (base-colour image, metallic 0.05, roughness 0.5), `Gold lacquered rim` (0.9 / 0.28), `Silver tinplate` (0.9 / 0.34). No normal maps, so no tangents are needed.
+- Materials: `Label <SKU>` (base-colour image, metallic 0.2, roughness 0.3: glossy lacquered print), `Gold lacquered rim` (0.9 / 0.28), `Silver tinplate` (0.9 / 0.34). No normal maps, so no tangents are needed.
 - Textures: `textures/<slug>-label.jpg` (LOD0) and `textures/lod1/<slug>-label-lod1.jpg`, JPEG quality 88 embedded in the GLBs, sRGB, clamp-to-edge. Dimensions are not powers of two (fine for WebGL2 mipmaps).
 - Nodes in each GLB: `GoldRim`, `SilverMetal`, `Label` under the asset root. Editable parts (`BottomSeam`, `TopSeam`, `Lid`, `OpeningScore`, `PullTabPlate`, `PullTabRivet`, `PullTabRing`, `Base`, `CanBody`, `Label`) are separate objects in `sources/gjh-abalone-cans.blend`.
 - Evidence: `reports/qa/` (24-view and six-view sheets), `reports/screenshots/` (v2/v3 same-angle pairs, textures, mobile, cards, LOD), `reports/golden/` (regression goldens), `reports/build.json` (inputs, layout, costs), `reports/assets.json` (metrics).
+
+## Follow-up: "the can looks fake, too flat like a rectangle" (user review)
+
+Cause, confirmed in the viewer: (1) the baked cylinder shading had been divided out of the label, but the viewer's lights were too flat and too strong (hemisphere 0.45 plus directional 0.9 clipped the light-yellow label to near white), so the sides were as bright as the centre; (2) the label was matte, with no highlight band like a lacquered tin. The official marketing renders of the Mexico can (shown on the eShop page) confirm the real can is high-gloss with a vertical highlight and dark edges.
+
+Changes: label metallic 0.2 and roughness 0.3; viewer lighting (metadata) hemisphere 0.15, directional 0.55 from the front left, studio environment intensity 1.0, which gives a soft highlight band and a natural falloff toward the edges. Three other lighting sets were tried and rejected (point-like hotspot, washed-out colour, still flat). Compare `reports/screenshots/v3-*` with `v4-*` (front, 40 degrees, zoom). This is a judgement of look from screenshots; it is not measured against a real can, and the highlight depends on the viewer's RoomEnvironment.
+
+Also checked: the eShop page for the Mexico can has only front and back packshots; its five "Info" graphics are marketing composites of the front face, so they cannot fill the missing third face.
 
 ## Not done or not possible here
 
