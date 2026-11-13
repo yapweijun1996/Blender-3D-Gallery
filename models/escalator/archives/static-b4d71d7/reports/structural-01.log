@@ -1,0 +1,18 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(dims.z>7.59&&dims.z<7.63)
+
+    at file:///srv/agent-workstation/workspaces/blender-seventh-distinct08-20261113/repo/models/escalator/validate.mjs:5:178 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

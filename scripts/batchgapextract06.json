@@ -1,0 +1,177 @@
+[
+  {
+    "id": 94,
+    "slug": "round-dining-table",
+    "title": "Round Dining Table",
+    "root": "ASSET_RoundDiningTable",
+    "kind": "NEW DESIGN",
+    "budget_triangles": 12000,
+    "budget_bytes": 800000,
+    "budget_primitives": 40,
+    "expected_dimensions_m": [
+      1,
+      0.75,
+      1
+    ],
+    "max_dimension_m": 2,
+    "dimension_tolerance_m": 0.006,
+    "required_nodes": [
+      "Round_Top",
+      "Pedestal",
+      "Base",
+      "Top_Support"
+    ]
+  },
+  {
+    "id": 175,
+    "slug": "public-bicycle-rack",
+    "title": "Public Bicycle Rack",
+    "root": "ASSET_PublicBicycleRack",
+    "kind": "DERIVED EXTRACTION",
+    "parent": "hdb-bicycle-parking-shelter",
+    "prefixes": [
+      "RACK_Hoop_01"
+    ],
+    "budget_triangles": 6000,
+    "budget_bytes": 400000,
+    "budget_primitives": 20,
+    "expected_dimensions_m": [
+      0.05,
+      0.695,
+      0.81
+    ],
+    "max_dimension_m": 2,
+    "dimension_tolerance_m": 0.006,
+    "required_nodes": [
+      "RACK_Hoop_01"
+    ]
+  },
+  {
+    "id": 281,
+    "slug": "singapore-shophouse-facade",
+    "title": "Singapore Shophouse Facade",
+    "root": "ASSET_SingaporeShophouseFacade",
+    "kind": "DERIVED EXTRACTION",
+    "parent": "shophouse",
+    "prefixes": [
+      "Arcade_Column",
+      "Arcade_Canopy",
+      "Cornice",
+      "Shopfront",
+      "Upper_Facade",
+      "Shutter_Window",
+      "Shutter_Louvre"
+    ],
+    "budget_triangles": 18000,
+    "budget_bytes": 1500000,
+    "budget_primitives": 100,
+    "expected_dimensions_m": [
+      6.2,
+      6.375,
+      2.4
+    ],
+    "max_dimension_m": 15,
+    "dimension_tolerance_m": 0.006,
+    "required_nodes": [
+      "Upper_Facade",
+      "Arcade_Canopy",
+      "Shopfront"
+    ]
+  },
+  {
+    "id": 282,
+    "slug": "malaysia-shoplot-facade",
+    "title": "Malaysia Shoplot Facade",
+    "root": "ASSET_MalaysiaShoplotFacade",
+    "kind": "DERIVED EXTRACTION",
+    "parent": "shoplot-building",
+    "prefixes": [
+      "Upper_Front_Wall",
+      "Ground_Shutter",
+      "Ribbon_Window",
+      "Facade_Band",
+      "Facade_Pier",
+      "Flat_Parapet",
+      "Modern_Awning"
+    ],
+    "budget_triangles": 18000,
+    "budget_bytes": 1500000,
+    "budget_primitives": 100,
+    "expected_dimensions_m": [
+      8.22,
+      10.3,
+      1.3
+    ],
+    "max_dimension_m": 15,
+    "dimension_tolerance_m": 0.006,
+    "required_nodes": [
+      "Upper_Front_Wall",
+      "Facade_Pier",
+      "Modern_Awning"
+    ]
+  },
+  {
+    "id": 296,
+    "slug": "chinese-lantern",
+    "title": "Chinese Lantern",
+    "root": "ASSET_ChineseLantern",
+    "kind": "DERIVED EXTRACTION",
+    "parent": "mid-autumn-lantern-display",
+    "prefixes": [
+      "Lantern_1"
+    ],
+    "exact_names": [
+      "Hanger.001",
+      "Tassel.001"
+    ],
+    "budget_triangles": 16000,
+    "budget_bytes": 1200000,
+    "budget_primitives": 90,
+    "expected_dimensions_m": [
+      0.478,
+      1.17,
+      0.478
+    ],
+    "max_dimension_m": 2,
+    "dimension_tolerance_m": 0.01,
+    "required_nodes": [
+      "Lantern_1_Body",
+      "Hanger.001",
+      "Tassel.001"
+    ]
+  },
+  {
+    "id": 5,
+    "slug": "passenger-lift",
+    "title": "Passenger Lift",
+    "root": "ASSET_PassengerLift",
+    "kind": "NEW DESIGN",
+    "budget_triangles": 80000,
+    "budget_bytes": 5000000,
+    "budget_primitives": 260,
+    "expected_dimensions_m": [
+      3.2,
+      6.49,
+      3.2
+    ],
+    "max_dimension_m": 10,
+    "dimension_tolerance_m": 0.006,
+    "required_nodes": [
+      "CAB_Carriage",
+      "DOOR_CabL",
+      "DOOR_CabR",
+      "DOOR_Landing0L",
+      "DOOR_Landing0R",
+      "DOOR_Landing1L",
+      "DOOR_Landing1R",
+      "FIXED_ShaftAndLandings"
+    ],
+    "animation_nodes": [
+      "CAB_Carriage",
+      "DOOR_CabL",
+      "DOOR_CabR",
+      "DOOR_Landing0L",
+      "DOOR_Landing0R"
+    ]
+  }
+]

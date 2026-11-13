@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import validator from 'gltf-validator';
+import {Box3,Vector3} from 'three';
+import {readGlb} from './glb.mjs';
+const here=new URL('.',import.meta.url); const file=new URL('exports/optimized.glb',here); const {bytes,json,scene}=await readGlb(file);
+const v=await validator.validateBytes(new Uint8Array(bytes)); assert.equal(v.issues.numErrors,0); assert.equal(v.issues.numWarnings,0);
+assert.equal(json.animations?.length??0,0); assert.equal(json.cameras?.length??0,0); assert.equal((json.images??[]).length,0); assert.ok((json.buffers??[]).every(x=>!x.uri));
+const root=scene.getObjectByName('ASSET_EscalatorV1_ID004'); assert(root); assert.deepEqual(root.position.toArray(),[0,0,0]);
+let tris=0,primitives=0; const names=[]; root.traverse(o=>{if(o.isMesh){names.push(o.name);primitives+=o.geometry.groups?.length||1; const a=o.geometry.index?.count??o.geometry.attributes.position.count; tris+=a/3;}});
+assert.ok(tris<=70000); assert.ok(bytes.length<=6000000); assert.ok(primitives<=220); assert.ok(names.some(x=>x.includes('STEP_01_TREAD'))); assert.ok(names.some(x=>x.includes('STEP_18_RISER')));
+const bounds=new Box3().setFromObject(root), size=bounds.getSize(new Vector3()); assert.ok(bounds.min.z>=-1e-5); assert.ok(size.z>=3.0); assert.ok(size.x>=1.0); assert.ok(size.y>7.5);
+for(const name of ['LOWER_LANDING_DECK','UPPER_LANDING_DECK','RETURN_ENCLOSURE','MAINTENANCE_PANEL_SEPARATE','HANDRAIL_L','HANDRAIL_R']) assert(root.getObjectByName(name),name);
+const report={status:'PASS',id:'ID004',bytes:bytes.length,triangles:tris,meshPrimitives:primitives,materials:json.materials?.length??0,textures:0,animations:0,bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()},sha256:createHash('sha256').update(bytes).digest('hex'),khronos:{errors:0,warnings:0,version:v.validatorVersion},mechanism:'NEEDS REVIEW static only'};
+fs.mkdirSync(new URL('reports/',here),{recursive:true}); fs.writeFileSync(new URL('reports/validate.json',here),JSON.stringify(report,null,2)+'\n'); console.log(JSON.stringify(report,null,2));

@@ -1,0 +1,131 @@
+{
+  "id": "chinese-lantern",
+  "name": "Chinese Lantern",
+  "category": "Props",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "derived-extraction"
+  ],
+  "description": "Chinese Lantern; DERIVED EXTRACTION. Independent editable source and export. Illustrative only.",
+  "status": "draft",
+  "backlog_id": 296,
+  "created": "2026-11-13",
+  "author": "Blender-3D-Gallery / agent-assisted original source",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/chinese-lantern.glb",
+    "source": "sources/chinese-lantern.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewRotationY": 0,
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. National-symbol usage restrictions still apply where relevant.",
+  "provenance": {
+    "kind": "DERIVED EXTRACTION",
+    "parent_asset": "mid-autumn-lantern-display",
+    "parent_commit": "a4bd4c0ed26ac65c9f788e9502a2cd7bc1b1d8de",
+    "publication": "PR21 dependency pending; original source only, no runtime inherited",
+    "source_files": {
+      "parent-generator.py": {
+        "original_path": "models/mid-autumn-lantern-display/generate.py",
+        "sha256": "57636013aee07bc020b11c5e8f0201ccf2f8c48716d65ec495ea8a17d18d8250"
+      },
+      "parent.glb": {
+        "original_path": "models/mid-autumn-lantern-display/exports/mid-autumn-lantern-display.glb",
+        "sha256": "8e77c2be0d35236ac808f713a08e0b2ae7d347b5268993cba1e59b089b583876"
+      },
+      "parent-metadata.json": {
+        "original_path": "models/mid-autumn-lantern-display/metadata/mid-autumn-lantern-display.json",
+        "sha256": "d6d84c397f6847da13b5d8e9aabc77da0bca213f48da14375b4c691fcf2096ab"
+      }
+    },
+    "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. National-symbol usage restrictions still apply where relevant.",
+    "changes": "Select existing components and translate origin only; parent geometry and parent assets unchanged",
+    "new_design_count": false,
+    "count_toward_500": "PENDING OWNER POLICY"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "local_asset": "PASS",
+    "source_edit": "PASS: edited mesh position and material roughness survived save/reopen/export without regeneration",
+    "studio_visual": "PASS: actual exported GLB multi-angle images inspected",
+    "chromium": "PASS: three viewport sizes, actual GLB SHA, orbit/zoom/reset/reopen and inspected rendered images",
+    "derivative_count": "PENDING OWNER POLICY",
+    "parent_publication": "PENDING: parent source pinned to blocked PR21; no released status inherited"
+  },
+  "counting": {
+    "classification": "DERIVED EXTRACTION",
+    "new_design": false,
+    "derivative_count_policy": "PENDING OWNER POLICY"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "chinese-lantern",
+    "backlog_id": 296,
+    "glb_bytes": 170832,
+    "triangles": 3344,
+    "vertices": 5472,
+    "meshes": 53,
+    "materials": 2,
+    "dimensions": [
+      0.47734735613743345,
+      1.169999960557559,
+      0.47734737966415536
+    ],
+    "bounds": {
+      "min": [
+        -0.23867367843642134,
+        -2.2649369879612635e-09,
+        -0.23867368983207768
+      ],
+      "max": [
+        0.2386736777010121,
+        1.1699999582926222,
+        0.23867368983207768
+      ]
+    },
+    "sha256": "8157a23e63a1d96c3d043f5e54ff52258dd6128e26ca28fe6bb12115b687a8c9",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 1200000,
+    "budget_triangles": 16000
+  },
+  "accuracy_notes": "Illustrative modular asset in metres, not a surveyed product or certified equipment. Unchanged geometry extracted from pinned parent; independent packaging, not a new design. Derivative count policy pending owner decision.",
+  "attribution": [
+    {
+      "credit": "Blender-3D-Gallery original procedural geometry; derived from mid-autumn-lantern-display at immutable commit recorded in provenance/provenance.json",
+      "url": ""
+    }
+  ],
+  "evidence": {
+    "structural": "reports/assets.json",
+    "source_edit": "reports/source.json",
+    "visual": "reports/visual-review.json",
+    "exact_parent_geometry": "reports/extraction-validation.json"
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "id": "singapore-shophouse-facade",
+  "name": "Singapore Shophouse Facade",
+  "category": "Architecture",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "derived-extraction"
+  ],
+  "description": "Singapore Shophouse Facade; DERIVED EXTRACTION. Independent editable source and export. Illustrative only.",
+  "status": "draft",
+  "backlog_id": 281,
+  "created": "2026-11-13",
+  "author": "Blender-3D-Gallery / agent-assisted original source",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/singapore-shophouse-facade.glb",
+    "source": "sources/singapore-shophouse-facade.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewRotationY": 0,
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. Not a medical, accessibility, engineering or safety certification.",
+  "provenance": {
+    "kind": "DERIVED EXTRACTION",
+    "parent_asset": "shophouse",
+    "parent_commit": "3c41bcfd660c69a41fe3bb7f5f56baed6f4b4e0b",
+    "publication": "main3c41",
+    "source_files": {
+      "parent-generator.py": {
+        "original_path": "models/shophouse/generate.py",
+        "sha256": "5211e7f4160e252dafa04eba71065dc5aa7a7944892d7b6a777b0c8d5e0cd82d"
+      },
+      "parent.glb": {
+        "original_path": "models/shophouse/exports/shophouse.glb",
+        "sha256": "0d18690174361a34eba0d65c71111744e94c580b8a431cde5fc464cb2621229d"
+      },
+      "parent-metadata.json": {
+        "original_path": "models/shophouse/metadata/shophouse.json",
+        "sha256": "78c36462ec9f9dd3f2ab7f044815c798f0f078baa410568bb39a848b25949cea"
+      }
+    },
+    "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. Not a medical, accessibility, engineering or safety certification.",
+    "changes": "Select existing components and translate origin only; parent geometry and parent assets unchanged",
+    "new_design_count": false,
+    "count_toward_500": "PENDING OWNER POLICY"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "local_asset": "PASS",
+    "source_edit": "PASS: edited mesh position and material roughness survived save/reopen/export without regeneration",
+    "studio_visual": "PASS: actual exported GLB multi-angle images inspected",
+    "chromium": "PASS: three viewport sizes, actual GLB SHA, orbit/zoom/reset/reopen and inspected rendered images",
+    "derivative_count": "PENDING OWNER POLICY"
+  },
+  "counting": {
+    "classification": "DERIVED EXTRACTION",
+    "new_design": false,
+    "derivative_count_policy": "PENDING OWNER POLICY"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "singapore-shophouse-facade",
+    "backlog_id": 281,
+    "glb_bytes": 166160,
+    "triangles": 3024,
+    "vertices": 6048,
+    "meshes": 28,
+    "materials": 5,
+    "dimensions": [
+      6.199999809265137,
+      6.375,
+      2.4000000953674316
+    ],
+    "bounds": {
+      "min": [
+        -3.0999999046325684,
+        0,
+        -1.2000000476837158
+      ],
+      "max": [
+        3.0999999046325684,
+        6.375,
+        1.2000000476837158
+      ]
+    },
+    "sha256": "8045241714863f2b5880b94cab7a3b9fa40d6ab08b4e525e2281a2fa66955933",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 1500000,
+    "budget_triangles": 18000
+  },
+  "accuracy_notes": "Illustrative modular asset in metres, not a surveyed product or certified equipment. Unchanged geometry extracted from pinned parent; independent packaging, not a new design. Derivative count policy pending owner decision.",
+  "attribution": [
+    {
+      "credit": "Blender-3D-Gallery original procedural geometry; derived from shophouse at immutable commit recorded in provenance/provenance.json",
+      "url": ""
+    }
+  ],
+  "evidence": {
+    "structural": "reports/assets.json",
+    "source_edit": "reports/source.json",
+    "visual": "reports/visual-review.json",
+    "exact_parent_geometry": "reports/extraction-validation.json"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": 281,
+  "slug": "singapore-shophouse-facade",
+  "title": "Singapore Shophouse Facade",
+  "root": "ASSET_SingaporeShophouseFacade",
+  "kind": "DERIVED EXTRACTION",
+  "parent": "shophouse",
+  "prefixes": [
+    "Arcade_Column",
+    "Arcade_Canopy",
+    "Cornice",
+    "Shopfront",
+    "Upper_Facade",
+    "Shutter_Window",
+    "Shutter_Louvre"
+  ],
+  "budget_triangles": 18000,
+  "budget_bytes": 1500000,
+  "budget_primitives": 100,
+  "expected_dimensions_m": [
+    6.2,
+    6.375,
+    2.4
+  ],
+  "max_dimension_m": 15,
+  "dimension_tolerance_m": 0.006,
+  "required_nodes": [
+    "Upper_Facade",
+    "Arcade_Canopy",
+    "Shopfront"
+  ]
+}

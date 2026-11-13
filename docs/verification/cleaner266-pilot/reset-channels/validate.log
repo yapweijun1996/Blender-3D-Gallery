@@ -1,0 +1,53 @@
+{
+  "id": "cleaner",
+  "backlog_id": 266,
+  "status": "PASS",
+  "sha256": "a0d791797cfe8883aa738492b04aaa53b3feac12f8b76041723270dd0f0a35d4",
+  "glb_bytes": 408396,
+  "triangles": 3924,
+  "primitives": 46,
+  "budgets": {
+    "max_triangles": 15000,
+    "max_glb_bytes": 2000000,
+    "max_primitives": 120
+  },
+  "dimensions": [
+    1.1472118677940248,
+    1.750000074505806,
+    0.6400000005960464
+  ],
+  "clips": [
+    {
+      "name": "Idle",
+      "duration": 2,
+      "tracks": 51,
+      "samples": 41,
+      "max_transformed_foot_vertex_drift": 0,
+      "max_grip_error": 0,
+      "max_bristle_floor_error": 2.2351741790771484e-8,
+      "max_root_drift": 0,
+      "shoulder_rotation": 0,
+      "head_rotation": 0.07000000089261658,
+      "brush_sweep_span": 0
+    },
+    {
+      "name": "Sweep",
+      "duration": 2,
+      "tracks": 51,
+      "samples": 41,
+      "max_transformed_foot_vertex_drift": 0,
+      "max_grip_error": 0,
+      "max_bristle_floor_error": 2.2351741790771484e-8,
+      "max_root_drift": 0,
+      "shoulder_rotation": 0.2600000433187515,
+      "head_rotation": 0.04500001859009066,
+      "brush_sweep_span": 0.15187127280144527
+    }
+  ],
+  "clip_switching": "PASS",
+  "validation": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "limits": "Rigid articulated nodes, no skin/IK/navigation; physical mobile and Safari untested"
+}
