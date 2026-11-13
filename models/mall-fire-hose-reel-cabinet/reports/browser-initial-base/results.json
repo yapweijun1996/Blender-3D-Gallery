@@ -1,0 +1,257 @@
+{
+  "browserVersion": "156.0.8078.4",
+  "policy": "No requestfailed or ERR_ABORTED filtering; one fixed pass of all three cases",
+  "android": "NOT TESTED",
+  "ios": "NOT TESTED",
+  "results": [
+    {
+      "asset": "mall-fire-hose-reel-cabinet",
+      "width": 1440,
+      "height": 900,
+      "runtime": "Desktop Chromium with viewport emulation, not Android/iOS",
+      "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5",
+      "bytes": 474576,
+      "passed": false,
+      "requestConsolePageErrors": [
+        "GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED",
+        "GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED"
+      ],
+      "initialConsumed": [
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        }
+      ],
+      "lifecycleCycles": 3,
+      "closeStopsRendering": true,
+      "focusRestored": true,
+      "pixels": {
+        "initial": "8d93e85e601a778596fa2dc04cd8af5e83aa0ff7b3c2136c7be1f50e8a87cadf",
+        "orbit": "784a47015ad54c09469a94986ed145e207342a0054c5e039b9d1c1f538614937",
+        "zoom": "75ffb84651b71d34d5db384f565172ae0de52452aee814e0bdfd3813acecf13a",
+        "reset": "8d93e85e601a778596fa2dc04cd8af5e83aa0ff7b3c2136c7be1f50e8a87cadf",
+        "rear": "2bf705a5defecd0e20350778c856e102b55b06e9f7bef23df6ab34df36296e9a",
+        "reopened": "8d93e85e601a778596fa2dc04cd8af5e83aa0ff7b3c2136c7be1f50e8a87cadf"
+      },
+      "resetMatchesInitial": true,
+      "reopenMatchesInitial": true,
+      "consumed": [
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        },
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        },
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        },
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        }
+      ],
+      "glbResponses": [
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        }
+      ],
+      "horizontalOverflow": false,
+      "renderDrawCalls": 320,
+      "controls": [
+        "orbit",
+        "zoom",
+        "exact reset",
+        "additional orbit",
+        "close and exact reopen"
+      ],
+      "defaultView": "Existing default gallery camera and lighting; static gallery orbit controls only",
+      "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED',\n+   'GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED'\n+ ]\n- []\n"
+    },
+    {
+      "asset": "mall-fire-hose-reel-cabinet",
+      "width": 768,
+      "height": 1024,
+      "runtime": "Desktop Chromium with viewport emulation, not Android/iOS",
+      "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5",
+      "bytes": 474576,
+      "passed": false,
+      "requestConsolePageErrors": [
+        "GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED"
+      ],
+      "initialConsumed": [
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        }
+      ],
+      "lifecycleCycles": 3,
+      "closeStopsRendering": true,
+      "focusRestored": true,
+      "pixels": {
+        "initial": "e30e0ab3fe3d542c798d6b9e58b88928def491fe233b20a591458f7cddc0fff7",
+        "orbit": "e4fd681c2ce848a6708401f936110989fd4afb3e67292df685dbf02d50ab49b9",
+        "zoom": "8d2374d687245732f73279f381fb1c54984b2ae2d380ebe334bb25fd1fe86447",
+        "reset": "e30e0ab3fe3d542c798d6b9e58b88928def491fe233b20a591458f7cddc0fff7",
+        "rear": "a77e62a0a62370ca56a449e61040446ae4a9f83f708004e6ecf058953ff80ccf",
+        "reopened": "e30e0ab3fe3d542c798d6b9e58b88928def491fe233b20a591458f7cddc0fff7"
+      },
+      "resetMatchesInitial": true,
+      "reopenMatchesInitial": true,
+      "consumed": [
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        },
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        },
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        },
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        }
+      ],
+      "glbResponses": [
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        }
+      ],
+      "horizontalOverflow": false,
+      "renderDrawCalls": 384,
+      "controls": [
+        "orbit",
+        "zoom",
+        "exact reset",
+        "additional orbit",
+        "close and exact reopen"
+      ],
+      "defaultView": "Existing default gallery camera and lighting; static gallery orbit controls only",
+      "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED'\n+ ]\n- []\n"
+    },
+    {
+      "asset": "mall-fire-hose-reel-cabinet",
+      "width": 390,
+      "height": 844,
+      "runtime": "Desktop Chromium with viewport emulation, not Android/iOS",
+      "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5",
+      "bytes": 474576,
+      "passed": false,
+      "requestConsolePageErrors": [
+        "GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED",
+        "GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED",
+        "GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED"
+      ],
+      "initialConsumed": [
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        }
+      ],
+      "lifecycleCycles": 3,
+      "closeStopsRendering": true,
+      "focusRestored": true,
+      "pixels": {
+        "initial": "db4848d11aa4bf833ac3e22a7edbaee8912830ef920bbc8cea722c4abb1703a3",
+        "orbit": "ed4359044706c929579f679e819d4e673741736b07760c9e6cd9225a69c706c4",
+        "zoom": "37a5462ec00aef8dddcff3df288a33be553f63abef5d7697bfa080f4f959a096",
+        "reset": "db4848d11aa4bf833ac3e22a7edbaee8912830ef920bbc8cea722c4abb1703a3",
+        "rear": "4ef186fec28c2eb1080f2938c1d8ca7f9869f6d9423f3b02498885db4fb197e7",
+        "reopened": "db4848d11aa4bf833ac3e22a7edbaee8912830ef920bbc8cea722c4abb1703a3"
+      },
+      "resetMatchesInitial": true,
+      "reopenMatchesInitial": true,
+      "consumed": [
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        },
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        },
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        },
+        {
+          "bytes": 474576,
+          "sha256": "78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5"
+        }
+      ],
+      "glbResponses": [
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb",
+          "status": 200
+        }
+      ],
+      "horizontalOverflow": false,
+      "renderDrawCalls": 384,
+      "controls": [
+        "orbit",
+        "zoom",
+        "exact reset",
+        "additional orbit",
+        "close and exact reopen"
+      ],
+      "defaultView": "Existing default gallery camera and lighting; static gallery orbit controls only",
+      "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED',\n+   'GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED',\n+   'GET http://127.0.0.1:36571/Blender-3D-Gallery/assets/optimized-Bg0VWWrw.glb net::ERR_ABORTED'\n+ ]\n- []\n"
+    }
+  ]
+}

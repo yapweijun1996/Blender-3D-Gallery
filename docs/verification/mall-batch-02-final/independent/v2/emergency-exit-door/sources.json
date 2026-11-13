@@ -1,0 +1,51 @@
+{
+  "source_reopened": "PASS",
+  "source_sha256": "fbe25f34e65f46a0b758248befb4e11d609060a3293f4aabf21d772dcec26c7d",
+  "blender_version": "4.0.2",
+  "editable_mesh_parts": 35,
+  "source_units": "metres",
+  "source_scales": "UNIT",
+  "pose_sweep": {
+    "status": "PASS",
+    "angle_samples": 101,
+    "angle_range_degrees": [
+      0,
+      100
+    ],
+    "push_samples_m": [
+      0,
+      0.009,
+      0.018
+    ],
+    "tested_collision_pairs": 7272,
+    "collisions": 0,
+    "method": "Conservative oriented source mesh bounding boxes, separating axis tests; joined hinge/closer bearings excluded by design",
+    "moving_components": [
+      "MODULE_DoorLeaf",
+      "MODULE_KickPlate",
+      "MODULE_PushBarMountLeft",
+      "MODULE_PushBarMountRight",
+      "MODULE_HorizontalPushBar",
+      "MODULE_RearPullHandle",
+      "MODULE_ExitPlaque",
+      "MODULE_CloserBody"
+    ],
+    "fixed_obstacles": [
+      "FRAME_LeftJamb",
+      "FRAME_RightJamb",
+      "FRAME_Head"
+    ],
+    "minimum_floor_clearance_m": 0.012000083923339844,
+    "minimum_leaf_header_gap_m": 0.004999971389770597,
+    "pressed_bar_to_leaf_gap_m": 0.06750001572072506,
+    "maximum_hardware_swept_radius_m": 0.9579405526873788,
+    "maximum_front_reach_from_wall_m": 1.00790536403656,
+    "suggested_scene_front_clearance_m": 1.1,
+    "closer_link_lengths_m": [
+      0.28,
+      0.28
+    ]
+  },
+  "runtime_door_UI": "NOT IMPLEMENTED",
+  "safety_compliance": "NOT CLAIMED"
+}

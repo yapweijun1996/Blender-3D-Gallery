@@ -1,0 +1,119 @@
+{
+  "source_reopened": "PASS",
+  "source_sha256": "9be20a9ffabb76b4e44dc454c0b5c2806df054f0abcc9eaa40249e78bc3d0a4d",
+  "blender_version": "4.0.2",
+  "editable_mesh_parts": 13,
+  "source_units": "metres",
+  "source_scales": "UNIT",
+  "topology": {
+    "status": "PASS",
+    "nonmanifoldEdges": 0,
+    "degenerateFaces": 0,
+    "parts": {
+      "MODULE_BodyCollar": {
+        "vertices": 48,
+        "faces": 26,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 1.2423314048459197e-06
+      },
+      "MODULE_Bulb": {
+        "vertices": 114,
+        "faces": 128,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 3.434986090081992e-07
+      },
+      "MODULE_BulbLowerSeat": {
+        "vertices": 32,
+        "faces": 18,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 1.5001191604375766e-07
+      },
+      "MODULE_BulbUpperSeat": {
+        "vertices": 32,
+        "faces": 18,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 1.1250893266689708e-07
+      },
+      "MODULE_CeilingTrim": {
+        "vertices": 192,
+        "faces": 192,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 1.0185276007967143e-05
+      },
+      "MODULE_Deflector": {
+        "vertices": 96,
+        "faces": 50,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 1.2279905974101575e-06
+      },
+      "MODULE_DeflectorButton": {
+        "vertices": 32,
+        "faces": 18,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 4.8983484878949603e-08
+      },
+      "MODULE_DeflectorStem": {
+        "vertices": 32,
+        "faces": 18,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 1.2000951101149593e-07
+      },
+      "MODULE_HexBody": {
+        "vertices": 12,
+        "faces": 8,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 5.09222951397069e-06
+      },
+      "MODULE_ThreadedFitting": {
+        "vertices": 768,
+        "faces": 768,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 4.237361754972614e-06
+      },
+      "MODULE_YokeBridge": {
+        "vertices": 8,
+        "faces": 6,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 2.240000542700323e-07
+      },
+      "MODULE_YokeLeft": {
+        "vertices": 16,
+        "faces": 10,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 5.310000586668044e-07
+      },
+      "MODULE_YokeRight": {
+        "vertices": 16,
+        "faces": 10,
+        "nonmanifoldEdges": 0,
+        "degenerateFaces": 0,
+        "signedVolume_m3": 5.310000586668044e-07
+      }
+    }
+  },
+  "mount_clearance": {
+    "status": "PASS",
+    "method": "All actual source vertices above Z=0 checked against 15 mm radial context opening; max-radius bound contains every triangle",
+    "abovePlaneComponents": [
+      "MODULE_HexBody",
+      "MODULE_ThreadedFitting"
+    ],
+    "maximumAbovePlaneRadius_m": 0.014000000432133675,
+    "contextHoleRadius_m": 0.015,
+    "minimumRadialClearance_m": 0.0009999995678663248,
+    "scope": "visual context only, not installation or safety guidance"
+  },
+  "orientation": "PASS: pendant below plane, fitting above plane"
+}

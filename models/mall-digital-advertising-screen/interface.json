@@ -1,0 +1,51 @@
+{
+  "id": "mall-digital-advertising-screen",
+  "backlog": "V2.1 P0 437",
+  "root": "ASSET_MallDigitalAdvertisingScreen",
+  "units": "metres",
+  "mount_anchor": "CONNECTOR_WallMountPlane",
+  "mount_plane": {
+    "Blender_Y": 0,
+    "glTF_Z": 0
+  },
+  "front_axis": "Blender -Y / glTF +Z",
+  "panel_dimensions_m": [
+    1.28,
+    0.755,
+    0.085
+  ],
+  "screen_dimensions_m": [
+    1.2,
+    0.675
+  ],
+  "screen_aspect_ratio": "16:9",
+  "editable_modules": [
+    "MODULE_BezelBottom",
+    "MODULE_BezelLeft",
+    "MODULE_BezelRight",
+    "MODULE_BezelTop",
+    "MODULE_MountFastenerLeftBottom",
+    "MODULE_MountFastenerLeftTop",
+    "MODULE_MountFastenerRightBottom",
+    "MODULE_MountFastenerRightTop",
+    "MODULE_MountRailLeft",
+    "MODULE_MountRailRight",
+    "MODULE_RearHousing",
+    "MODULE_RearServicePanel",
+    "MODULE_ScreenContent",
+    "MODULE_VentGrilleLower",
+    "MODULE_VentGrilleUpper",
+    "MODULE_VentRecessLower",
+    "MODULE_VentRecessUpper"
+  ],
+  "screen_image": "REPLACEABLE_ScreenArtwork",
+  "screen_node": "REPLACE_SCREEN_IMAGE",
+  "artwork_scene": "EDITABLE_Artwork",
+  "screen_texture_source": "sources/screen-artwork.png",
+  "texture_dimensions": [
+    1024,
+    576
+  ],
+  "runtime_controls": "Existing orbit/zoom/reset only. Static screen image; no live CMS, video, touch or network functionality.",
+  "context_only": "Wall context slab and artwork/studio scenes are not exported."
+}

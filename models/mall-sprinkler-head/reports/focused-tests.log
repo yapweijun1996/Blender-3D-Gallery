@@ -1,0 +1,47 @@
+TAP version 13
+# {"id":"mall-sprinkler-head","sha256":"ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca","glb_bytes":70796,"triangles":2752,"vertices":1870,"primitives":13,"materials":4,"textures":0,"animations":0,"dimensions":[0.06599999964237213,0.07099999947240576,0.06599999964237213],"bounds":{"min":[-0.032999999821186066,-0.05200000008335337,-0.032999999821186066],"max":[0.032999999821186066,0.01899999938905239,0.032999999821186066]},"validation":{"errors":0,"warnings":0,"validator":"2.0.0-dev.3.10"},"geometry":{"status":"PASS","units":"metres","dimensions_glTF_m":[0.06599999964237213,0.07099999947240576,0.06599999964237213],"mountPlane_glTF_Y_m":0,"up_axis":"Blender +Z / glTF +Y","pendant_direction":"Blender -Z / glTF -Y","fittingAbovePlane_m":0.019,"pendantBelowPlane_m":0.052,"trimDiameter_m":0.066,"contextHoleDiameter_m":0.03,"threadedFittingDiameter_m":0.021,"radialFittingClearance_m":0.0045,"bulb":"Opaque glossy red representation; no physical glass, refraction or temperature encoding","safetyCompliance":"NOT CLAIMED","scope":"Visual geometry envelope only; not installation instructions or safety clearance"}}
+# Subtest: 435 exact visual-only sprinkler contract; original rights and disabled downloads
+ok 1 - 435 exact visual-only sprinkler contract; original rights and disabled downloads
+  ---
+  duration_ms: 0.448666
+  type: 'test'
+  ...
+# Subtest: optimized exact SHA, Khronos 0/0 and economical opaque independent meshes
+ok 2 - optimized exact SHA, Khronos 0/0 and economical opaque independent meshes
+  ---
+  duration_ms: 0.166208
+  type: 'test'
+  ...
+# Subtest: small metre dimensions, downward pendant and ceiling-plane anchor stay correct
+ok 3 - small metre dimensions, downward pendant and ceiling-plane anchor stay correct
+  ---
+  duration_ms: 0.065875
+  type: 'test'
+  ...
+# Subtest: real source reopens with clean manifold topology and measured mount clearance
+ok 4 - real source reopens with clean manifold topology and measured mount clearance
+  ---
+  duration_ms: 0.242124
+  type: 'test'
+  ...
+# Subtest: isolated bulb mesh and material edit survives save/reopen/re-export
+ok 5 - isolated bulb mesh and material edit survives save/reopen/re-export
+  ---
+  duration_ms: 0.193917
+  type: 'test'
+  ...
+# Subtest: six multiangle PNG masters and WebPs include underside and ceiling context
+ok 6 - six multiangle PNG masters and WebPs include underside and ceiling context
+  ---
+  duration_ms: 0.211249
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 313.355262

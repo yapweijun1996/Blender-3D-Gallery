@@ -1,0 +1,41 @@
+{
+  "id": "mall-fire-hose-reel-cabinet",
+  "root": "ASSET_MallFireHoseReelCabinet",
+  "units": "metres",
+  "axes": {
+    "Blender": "Z up, -Y front",
+    "glTF": "Y up, +Z front"
+  },
+  "origin": "Cabinet bottom rear centre",
+  "connectors": [
+    "CONNECTOR_WallBottomCentre"
+  ],
+  "source_pose": {
+    "property": "door_angle_degrees",
+    "range": [
+      0,
+      105
+    ],
+    "default": 105,
+    "pivot": "PIVOT_CabinetDoor",
+    "pivot_Blender_m": [
+      -0.365,
+      -0.257,
+      0
+    ],
+    "apply": "apply_pose(root) in generate.py"
+  },
+  "modules": [
+    "ENCLOSURE_*",
+    "MODULE_MetalDoor",
+    "MODULE_Reel",
+    "MODULE_CoiledHose",
+    "MODULE_HoseTail",
+    "MODULE_NozzleBody",
+    "MODULE_NozzleTip",
+    "HARDWARE_*"
+  ],
+  "runtime_controls": "NOT IMPLEMENTED",
+  "glass": "NONE",
+  "physical_system": "NOT IMPLEMENTED"
+}

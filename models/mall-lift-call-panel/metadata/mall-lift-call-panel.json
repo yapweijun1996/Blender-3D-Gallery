@@ -1,0 +1,77 @@
+{
+  "id": "mall-lift-call-panel",
+  "name": "Mall Lift Call Panel",
+  "summary": "A compact wall-mounted lift call panel with a satin metal faceplate, separate up/down buttons, static amber arrow indicators and a thin housing.",
+  "description": "A compact wall-mounted lift call panel with a satin metal faceplate, separate up/down buttons, static amber arrow indicators and a thin housing.",
+  "category": "Architecture",
+  "tags": [
+    "mall",
+    "lift",
+    "call-panel",
+    "buttons",
+    "wall-mounted",
+    "modular",
+    "editable",
+    "original",
+    "texture-free",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python mesh geometry and Principled BSDF materials. No external models, fonts, images or textures.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/mall-lift-call-panel.blend",
+    "preview": "previews/mall-lift-call-panel.webp"
+  },
+  "display": {
+    "previewRotationY": 0.5235987755982988,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "Panel bottom centre on wall plane; mount anchor at Blender (0,0,0.17)",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "V2.1 P0 item 431 only: generic visual lift call panel, not a lift or floor indicator 432. Source button pivots permit independent 2 mm inward poses; no runtime elevator call, electrical connection, tactile or code compliance. Amber emission is static only. Android/iOS hardware is NOT TESTED. Merged-main local asset integration PASS. Overall NEEDS REVIEW: existing library demo reload failure and physical mobile acceptance remain unresolved; see docs/verification/mall-batch-02-final.md.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry authored for Blender-3D-Gallery; no third-party artwork or manufacturer geometry."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 99924,
+    "triangles": 2608,
+    "vertices": 3308,
+    "primitives": 16,
+    "materials": 6,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      0.14000000059604645,
+      0.3400000035762787,
+      0.034399998374283314
+    ],
+    "bounds": {
+      "min": [
+        -0.07000000029802322,
+        0,
+        0
+      ],
+      "max": [
+        0.07000000029802322,
+        0.3400000035762787,
+        0.034399998374283314
+      ]
+    },
+    "sha256": "b78f11cc2da1c3bffc4ca226a46a95b345120b7f955e3a71e7a4e632f52f2f7b"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "verification_scope": "Local asset validation and source-edit proof. Initial-base full gates recorded separately; final merged-base integration pending."
+}

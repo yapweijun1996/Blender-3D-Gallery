@@ -1,0 +1,47 @@
+TAP version 13
+# {"id":"mall-wayfinding-ceiling-sign","sha256":"dd0db4a794d01dfb25b6cc6f494e7285e9fe42de7a70673a596e848563dc0c14","glb_bytes":676028,"triangles":11524,"vertices":25667,"primitives":18,"materials":4,"textures":0,"animations":0,"dimensions":[2.0999999046325684,0.9400000125169754,0.16200014208513558],"bounds":{"min":[-1.0499999523162842,-0.9400000125169754,-0.08100013835425733],"max":[1.0499999523162842,0,0.08100000373087823]},"nodes":["Scene","ASSET_MallWayfindingCeilingSign","ANCHOR_CeilingLeft","ANCHOR_CeilingRight","FrontArrows","FrontFace","Cube050","Cube050_1","Cube050_2","FrontIcons","FrontText","HangerLeft","Cube048","Cube048_1","HangerRight","Cube049","Cube049_1","Housing","Cube045","Cube045_1","RearArrows","RearFace","Cube070","Cube070_1","Cube070_2","RearIcons","RearText"],"validation":{"errors":0,"warnings":0,"validator":"2.0.0-dev.3.10"}}
+# Subtest: 438 exact double-sided ceiling sign, original rights and disabled downloads
+ok 1 - 438 exact double-sided ceiling sign, original rights and disabled downloads
+  ---
+  duration_ms: 0.84562
+  type: 'test'
+  ...
+# Subtest: optimized exact SHA, Khronos zero errors/warnings, bounded geometry and no textures
+ok 2 - optimized exact SHA, Khronos zero errors/warnings, bounded geometry and no textures
+  ---
+  duration_ms: 0.473622
+  type: 'test'
+  ...
+# Subtest: ceiling-plane origin, real hangers, metric dimensions and independent two faces
+ok 3 - ceiling-plane origin, real hangers, metric dimensions and independent two faces
+  ---
+  duration_ms: 0.120957
+  type: 'test'
+  ...
+# Subtest: delivered source reopens with ten editable labels, manifold evaluated geometry and non-mirrored rear
+ok 4 - delivered source reopens with ten editable labels, manifold evaluated geometry and non-mirrored rear
+  ---
+  duration_ms: 0.451664
+  type: 'test'
+  ...
+# Subtest: real saved label and arrow edit re-export changes only front text/arrows
+ok 5 - real saved label and arrow edit re-export changes only front text/arrows
+  ---
+  duration_ms: 0.25254
+  type: 'test'
+  ...
+# Subtest: seven PNG/WebP views include correctly oriented front/rear and ceiling mount context
+ok 6 - seven PNG/WebP views include correctly oriented front/rear and ceiling mount context
+  ---
+  duration_ms: 0.229665
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 341.278703

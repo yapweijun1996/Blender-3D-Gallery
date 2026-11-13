@@ -1,0 +1,77 @@
+{
+  "id": "mall-lift-floor-indicator",
+  "name": "Mall Lift Floor Indicator",
+  "summary": "A thin horizontal wall-mounted lift display with a satin metal bezel, dark face, independent amber seven-segment 02 digits and a static up arrow.",
+  "description": "A thin horizontal wall-mounted lift display with a satin metal bezel, dark face, independent amber seven-segment 02 digits and a static up arrow.",
+  "category": "Architecture",
+  "tags": [
+    "mall",
+    "lift",
+    "floor-indicator",
+    "seven-segment",
+    "wall-mounted",
+    "modular",
+    "editable",
+    "original",
+    "texture-free",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-12",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python mesh geometry and Principled BSDF materials. No external models, fonts, images or textures.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/mall-lift-floor-indicator.blend",
+    "preview": "previews/mall-lift-floor-indicator.webp"
+  },
+  "display": {
+    "previewRotationY": 0.5235987755982988,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "Bottom centre on wall plane; mounting anchor Blender (0,0,0.08)",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "V2.1 P0 item 432 only: static visual lift floor indicator, not call panel 431 or a complete lift. Source display_floor/display_direction configuration and all 17 digit/arrow segment meshes are independently editable. No live elevator state, runtime update, electrical design or safety/code compliance. Android/iOS hardware is NOT TESTED. Merged-main local asset integration PASS. Overall NEEDS REVIEW: existing library demo reload failure and physical mobile acceptance remain unresolved; see docs/verification/mall-batch-02-final.md.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry authored for Blender-3D-Gallery; no third-party artwork or manufacturer geometry."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 43292,
+    "triangles": 596,
+    "vertices": 1104,
+    "primitives": 20,
+    "materials": 5,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      0.41999998688697815,
+      0.1599999964237213,
+      0.026799999177455902
+    ],
+    "bounds": {
+      "min": [
+        -0.20999999344348907,
+        0,
+        0
+      ],
+      "max": [
+        0.20999999344348907,
+        0.1599999964237213,
+        0.026799999177455902
+      ]
+    },
+    "sha256": "8b4ba00d43b990599d94772a6738467a191a1fb8ea9ea3cee462f271c9e48b31"
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "verification_scope": "Local asset validation and real source-edit proof. Initial-base application gates recorded separately; final merged-base integration PENDING."
+}

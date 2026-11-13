@@ -1,0 +1,47 @@
+TAP version 13
+# {"id":"mall-fire-hose-reel-cabinet","sha256":"78ee25359cb1783a505d62a6df98652cbad42135e13b14a929459e1a8f936cc5","glb_bytes":474576,"triangles":15156,"vertices":15464,"primitives":64,"materials":6,"textures":0,"animations":0,"dimensions":[0.9327153668263605,0.8200000105425715,0.9754511910287582],"bounds":{"min":[-0.5727153525212457,0,-0.022000000812113285],"max":[0.36000001430511475,0.8200000105425715,0.9534511902166449]},"validation":{"errors":0,"warnings":0,"validator":"2.0.0-dev.3.10"},"geometry":{"status":"PASS","units":"metres","enclosureDimensions_glTF_m":[0.7200000286102295,0.8200000105425715,0.23500000173226],"displayPoseDimensions_glTF_m":[0.9327153668263605,0.8200000105425715,0.9754511910287582],"hinge_glTF_m":[-0.365,0,0.257],"displayPoseDegrees":105,"reelDiameter_m":0.576,"hoseDiameter_m":0.024,"coilTurns":7,"coilRadialPitch_m":0.027,"coilInterturnGap_m":0.003,"glass":"NONE; opaque metal door","runtimeDoorControls":"NOT IMPLEMENTED","safetyCompliance":"NOT CLAIMED"}}
+# Subtest: 434 exact visual-only cabinet contract; original rights and disabled downloads
+ok 1 - 434 exact visual-only cabinet contract; original rights and disabled downloads
+  ---
+  duration_ms: 0.493458
+  type: 'test'
+  ...
+# Subtest: optimized exact SHA and Khronos 0/0, opaque independent mesh parts
+ok 2 - optimized exact SHA and Khronos 0/0, opaque independent mesh parts
+  ---
+  duration_ms: 0.367792
+  type: 'test'
+  ...
+# Subtest: metre enclosure, independent door pivot and seven-turn spaced coil
+ok 3 - metre enclosure, independent door pivot and seven-turn spaced coil
+  ---
+  duration_ms: 0.102
+  type: 'test'
+  ...
+# Subtest: source reopens with clean manifold topology and actual 106-angle collision/clearance sweep
+ok 4 - source reopens with clean manifold topology and actual 106-angle collision/clearance sweep
+  ---
+  duration_ms: 0.714124
+  type: 'test'
+  ...
+# Subtest: actual isolated nozzle mesh edit and door closure survives save/reopen/re-export
+ok 5 - actual isolated nozzle mesh edit and door closure survives save/reopen/re-export
+  ---
+  duration_ms: 0.248667
+  type: 'test'
+  ...
+# Subtest: six multiangle PNG masters and WebPs include opaque closed door and exposed interior
+ok 6 - six multiangle PNG masters and WebPs include opaque closed door and exposed interior
+  ---
+  duration_ms: 0.285
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 322.850186

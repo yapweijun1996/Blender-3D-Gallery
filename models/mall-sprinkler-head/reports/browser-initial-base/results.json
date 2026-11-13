@@ -1,0 +1,251 @@
+{
+  "browserVersion": "156.0.8078.4",
+  "policy": "No requestfailed or ERR_ABORTED filtering; one fixed pass of all three cases",
+  "android": "NOT TESTED",
+  "ios": "NOT TESTED",
+  "results": [
+    {
+      "asset": "mall-sprinkler-head",
+      "width": 1440,
+      "height": 900,
+      "runtime": "Desktop Chromium with viewport emulation, not Android/iOS",
+      "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca",
+      "bytes": 70796,
+      "passed": false,
+      "requestConsolePageErrors": [
+        "GET http://127.0.0.1:35959/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb net::ERR_ABORTED"
+      ],
+      "initialConsumed": [
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        }
+      ],
+      "lifecycleCycles": 3,
+      "closeStopsRendering": true,
+      "focusRestored": true,
+      "pixels": {
+        "initial": "ef560932f7b60343fad40f95dc0ef11e5e554cc29fefeb466c5b15c203b8ea32",
+        "orbit": "00dd4d038325a3fb1fa55bab3dfe15bc1d6f45dba821d743f11e0a66c406246b",
+        "zoom": "e93c1690d7a780e9617068f5f286da2248a2a10b58ffc5dae2d8555b19705684",
+        "reset": "ef560932f7b60343fad40f95dc0ef11e5e554cc29fefeb466c5b15c203b8ea32",
+        "rear": "6228f8c5637487218e80cddcafbee20f9a00c331486cdefd434507523d3f8400",
+        "reopened": "ef560932f7b60343fad40f95dc0ef11e5e554cc29fefeb466c5b15c203b8ea32"
+      },
+      "resetMatchesInitial": true,
+      "reopenMatchesInitial": true,
+      "consumed": [
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        },
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        },
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        },
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        }
+      ],
+      "glbResponses": [
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        }
+      ],
+      "horizontalOverflow": false,
+      "renderDrawCalls": 91,
+      "controls": [
+        "orbit",
+        "zoom",
+        "exact reset",
+        "additional orbit",
+        "close and exact reopen"
+      ],
+      "defaultView": "Old default gallery camera looks from above and partly obscures yoke; correct pendant geometry retained; static orbit controls only",
+      "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'GET http://127.0.0.1:35959/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb net::ERR_ABORTED'\n+ ]\n- []\n"
+    },
+    {
+      "asset": "mall-sprinkler-head",
+      "width": 768,
+      "height": 1024,
+      "runtime": "Desktop Chromium with viewport emulation, not Android/iOS",
+      "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca",
+      "bytes": 70796,
+      "passed": true,
+      "requestConsolePageErrors": [],
+      "initialConsumed": [
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        }
+      ],
+      "lifecycleCycles": 3,
+      "closeStopsRendering": true,
+      "focusRestored": true,
+      "pixels": {
+        "initial": "73c50457b93fc69818a33bcec8c9bf85785b5fb7d8b20dbe5050893c65868410",
+        "orbit": "48d3023384c29464e535915627c733ce5d946e2decec7555ae5c37e41dc64779",
+        "zoom": "988ae279f9694e225f9455a74b7aaf1428546918426b9449c00e4f4068928920",
+        "reset": "73c50457b93fc69818a33bcec8c9bf85785b5fb7d8b20dbe5050893c65868410",
+        "rear": "e761f525d2a66965580aca277c75231e5202772e23ada5e7d0eec2cd327fb5da",
+        "reopened": "73c50457b93fc69818a33bcec8c9bf85785b5fb7d8b20dbe5050893c65868410"
+      },
+      "resetMatchesInitial": true,
+      "reopenMatchesInitial": true,
+      "consumed": [
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        },
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        },
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        },
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        }
+      ],
+      "glbResponses": [
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        }
+      ],
+      "horizontalOverflow": false,
+      "renderDrawCalls": 91,
+      "controls": [
+        "orbit",
+        "zoom",
+        "exact reset",
+        "additional orbit",
+        "close and exact reopen"
+      ],
+      "defaultView": "Old default gallery camera looks from above and partly obscures yoke; correct pendant geometry retained; static orbit controls only"
+    },
+    {
+      "asset": "mall-sprinkler-head",
+      "width": 390,
+      "height": 844,
+      "runtime": "Desktop Chromium with viewport emulation, not Android/iOS",
+      "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca",
+      "bytes": 70796,
+      "passed": false,
+      "requestConsolePageErrors": [
+        "GET http://127.0.0.1:35959/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb net::ERR_ABORTED"
+      ],
+      "initialConsumed": [
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        }
+      ],
+      "lifecycleCycles": 3,
+      "closeStopsRendering": true,
+      "focusRestored": true,
+      "pixels": {
+        "initial": "3528796a17a4266c39c3b898b34aac2ca3504dd923ad145897f3264b064f7945",
+        "orbit": "417ec96ccfe59704f42794e09cff1341eae2c634c9fd7033228aad3c3989e913",
+        "zoom": "8c8b793d0d944de062fb614247478e5e4644f6d7b5016090b67dbdb056ff5551",
+        "reset": "3528796a17a4266c39c3b898b34aac2ca3504dd923ad145897f3264b064f7945",
+        "rear": "28ac8306f8d8d6dd15a3d4829bfbd374593f478a2d3ecf85c0d1cc419fda22b6",
+        "reopened": "3528796a17a4266c39c3b898b34aac2ca3504dd923ad145897f3264b064f7945"
+      },
+      "resetMatchesInitial": true,
+      "reopenMatchesInitial": true,
+      "consumed": [
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        },
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        },
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        },
+        {
+          "bytes": 70796,
+          "sha256": "ef2045874b59e7e60c35976b23d8b2fce2694cfb8f575222373c9931b17994ca"
+        }
+      ],
+      "glbResponses": [
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        },
+        {
+          "path": "/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb",
+          "status": 200
+        }
+      ],
+      "horizontalOverflow": false,
+      "renderDrawCalls": 78,
+      "controls": [
+        "orbit",
+        "zoom",
+        "exact reset",
+        "additional orbit",
+        "close and exact reopen"
+      ],
+      "defaultView": "Old default gallery camera looks from above and partly obscures yoke; correct pendant geometry retained; static orbit controls only",
+      "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'GET http://127.0.0.1:35959/Blender-3D-Gallery/assets/optimized-CT3r8pwJ.glb net::ERR_ABORTED'\n+ ]\n- []\n"
+    }
+  ]
+}

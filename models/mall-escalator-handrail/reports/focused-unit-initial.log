@@ -1,0 +1,114 @@
+TAP version 13
+# {
+#   "metrics": {
+#     "id": "mall-escalator-handrail",
+#     "glb_bytes": 117180,
+#     "triangles": 5100,
+#     "vertices": 3516,
+#     "primitives": 8,
+#     "materials": 5,
+#     "textures": 0,
+#     "animations": 0,
+#     "dimensions": [
+#       7.041640758514404,
+#       3.427999973297119,
+#       0.14000000059604645
+#     ],
+#     "bounds": {
+#       "min": [
+#         -3.520820379257202,
+#         0,
+#         -0.07000000029802322
+#       ],
+#       "max": [
+#         3.520820379257202,
+#         3.427999973297119,
+#         0.07000000029802322
+#       ]
+#     },
+#     "sha256": "27cd23cc1d3bf33f11c114adb0be17f256e4a96e161396a541cca25734b56443",
+#     "validation": {
+#       "errors": 0,
+#       "warnings": 0,
+#       "validator": "2.0.0-dev.3.10"
+#     }
+#   },
+#   "geometry": {
+#     "status": "PASS",
+#     "closedBeltTopology": "One connected, consistently wound genus-one manifold; no open belt ends",
+#     "nominalSlopeDegrees": 30,
+#     "nominalRise_m": 2.4,
+#     "raySamples": [
+#       {
+#         "x": -2.8,
+#         "upperBeltCentreY": 0.9999999811116855,
+#         "returnBeltCentreY": 0.20000000025050246,
+#         "upperGuideGap_m": 0.015000023486453351,
+#         "lowerReturnGap_m": 0.03200005394353678,
+#         "glassSeatsInBothRails": true
+#       },
+#       {
+#         "x": 0,
+#         "upperBeltCentreY": 2.2000000176610293,
+#         "returnBeltCentreY": 1.4000000356526054,
+#         "upperGuideGap_m": 0.007574406813989132,
+#         "lowerReturnGap_m": 0.024574351968688735,
+#         "glassSeatsInBothRails": true
+#       },
+#       {
+#         "x": 2.8,
+#         "upperBeltCentreY": 3.399999976158142,
+#         "returnBeltCentreY": 2.600000023841858,
+#         "upperGuideGap_m": 0.014999953750879591,
+#         "lowerReturnGap_m": 0.032000064849853516,
+#         "glassSeatsInBothRails": true
+#       }
+#     ],
+#     "roundedReturnRadialGap_m": 0.04900002479553223,
+#     "returnBeltCasingLateralGap_m": 0.01,
+#     "pairCasingClearance_m": 1.1399999994039536,
+#     "pair": "Two translated instances of one logical asset; no full escalator is implied",
+#     "future004Integration": "NOT VERIFIED",
+#     "certification": "None: visual envelope, not manufacturer, passenger-clearance or safety certification",
+#     "measuredCentralSlopeDegrees": 29.999998714407877
+#   }
+# }
+# Subtest: item 430 registers one handrail type, not a full escalator or two mirrored types
+ok 1 - item 430 registers one handrail type, not a full escalator or two mirrored types
+  ---
+  duration_ms: 0.44429
+  type: 'test'
+  ...
+# Subtest: measured export and metadata hashes match real artifact
+ok 2 - measured export and metadata hashes match real artifact
+  ---
+  duration_ms: 0.171582
+  type: 'test'
+  ...
+# Subtest: actual closed belt, slope, clearances, rail seating and reusable pair geometry pass
+ok 3 - actual closed belt, slope, clearances, rail seating and reusable pair geometry pass
+  ---
+  duration_ms: 0.098708
+  type: 'test'
+  ...
+# Subtest: delivered source reopens, permits real belt edit/reexport and preserves other meshes
+ok 4 - delivered source reopens, permits real belt edit/reexport and preserves other meshes
+  ---
+  duration_ms: 1.261453
+  type: 'test'
+  ...
+# Subtest: six faithful multiangle WebP previews fit gallery budgets
+ok 5 - six faithful multiangle WebP previews fit gallery budgets
+  ---
+  duration_ms: 1.167912
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 366.957502

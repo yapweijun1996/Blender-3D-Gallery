@@ -1,0 +1,53 @@
+TAP version 13
+# {"id":"mall-food-court-tray-station","sha256":"6dbf9a5ae6260f4473a4e16e600e9557f08de087707a0b38209922014d0ad585","glb_bytes":353656,"triangles":5412,"vertices":12903,"primitives":15,"materials":8,"textures":0,"animations":0,"dimensions":[1.5,1.4900000095367432,0.6600000262260437],"bounds":{"min":[-0.75,0,-0.33000001311302185],"max":[0.75,1.4900000095367432,0.33000001311302185]},"nodes":["Scene","ASSET_MallFoodCourtTrayStation","CabinetBack","CabinetLeft","CabinetRight","Counter","Feet","Cylinder008","Cylinder008_1","LowerShelf","SignFrame","Cube015","Cube015_1","SignText","Tray01","Tray02","Tray03","Tray04","UpperShelf"],"validation":{"errors":0,"warnings":0,"validator":"2.0.0-dev.3.10"}}
+# Subtest: 439 exact tray return station, original rights and disabled downloads
+ok 1 - 439 exact tray return station, original rights and disabled downloads
+  ---
+  duration_ms: 0.926245
+  type: 'test'
+  ...
+# Subtest: exact optimized bytes, Khronos 0 errors and warnings, bounded geometry and no textures
+ok 2 - exact optimized bytes, Khronos 0 errors and warnings, bounded geometry and no textures
+  ---
+  duration_ms: 0.286748
+  type: 'test'
+  ...
+# Subtest: floor origin, practical metric scale, supported counter and real shelf openings
+ok 3 - floor origin, practical metric scale, supported counter and real shelf openings
+  ---
+  duration_ms: 0.091749
+  type: 'test'
+  ...
+# Subtest: four hollow independent trays have real shelf clearance and a free removal sweep
+ok 4 - four hollow independent trays have real shelf clearance and a free removal sweep
+  ---
+  duration_ms: 0.062208
+  type: 'test'
+  ...
+# Subtest: self-contained source reopens with editable labels and closed evaluated meshes
+ok 5 - self-contained source reopens with editable labels and closed evaluated meshes
+  ---
+  duration_ms: 0.344873
+  type: 'test'
+  ...
+# Subtest: saved real mesh, material and label edits survive reopen and reexport without regeneration
+ok 6 - saved real mesh, material and label edits survive reopen and reexport without regeneration
+  ---
+  duration_ms: 0.371623
+  type: 'test'
+  ...
+# Subtest: six PNG/WebP views include rear, interior and source-only tray removal
+ok 7 - six PNG/WebP views include rear, interior and source-only tray removal
+  ---
+  duration_ms: 2.926818
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 290.837391

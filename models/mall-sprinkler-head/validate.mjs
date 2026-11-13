@@ -1,0 +1,18 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {fileURLToPath} from 'node:url';import {createHash} from 'node:crypto';import {Box3,Vector3} from 'three';import validator from 'gltf-validator';import {readGlb,near} from './glb.mjs';
+const dir=fileURLToPath(new URL('.',import.meta.url)),{bytes,json,scene}=await readGlb(dir+'exports/optimized.glb'),validation=await validator.validateBytes(new Uint8Array(bytes));
+assert.equal(validation.issues.numErrors,0);assert.equal(validation.issues.numWarnings,0);
+const root=scene.getObjectByName('ASSET_MallSprinklerHead');assert.ok(root);assert.deepEqual(root.position.toArray(),[0,0,0]);
+assert.equal(json.animations?.length||0,0);assert.equal(json.textures?.length||0,0);assert.ok(!json.cameras?.length&&!json.extensions?.KHR_lights_punctual);assert.ok(json.buffers.every(x=>!x.uri));assert.ok(json.materials.every(m=>!m.alphaMode||m.alphaMode==='OPAQUE'));
+const parts={};let triangles=0,vertices=0,primitives=0;
+scene.traverse(o=>{if(!o.isMesh)return;const a=o.geometry.attributes.position,idx=o.geometry.index,b=new Box3().setFromObject(o),t=(idx?.count??a.count)/3;assert.ok(t>0);for(let i=0;i<a.count;i++)for(const v of [a.getX(i),a.getY(i),a.getZ(i)])assert.ok(Number.isFinite(v));parts[o.name]={triangles:t,vertices:a.count,min:b.min.toArray(),max:b.max.toArray()};triangles+=t;vertices+=a.count;primitives++;});
+assert.equal(primitives,13);assert.equal(json.materials.length,4);assert.ok(triangles<5000&&bytes.length<250*1024);
+const obj=n=>{const o=root.getObjectByName(n);assert.ok(o,n);return o},box=n=>new Box3().setFromObject(obj(n));
+for(const n of ['ThreadedFitting','HexBody','CeilingTrim','BodyCollar','YokeRight','YokeLeft','YokeBridge','BulbUpperSeat','BulbLowerSeat','Bulb','DeflectorStem','Deflector','DeflectorButton'])assert.equal(obj('MODULE_'+n).parent,root);
+near(box('MODULE_ThreadedFitting').max.y,.019);near(box('MODULE_DeflectorButton').min.y,-.052);near(box('MODULE_CeilingTrim').max.y,0);near(box('MODULE_CeilingTrim').min.y,-.004);
+const trim=box('MODULE_CeilingTrim').getSize(new Vector3());near(trim.x,.066);near(trim.z,.066);
+assert.ok(box('MODULE_Bulb').min.y<-.038&&box('MODULE_Bulb').max.y<-.014);assert.ok(box('MODULE_Deflector').max.y<box('MODULE_Bulb').min.y);
+obj('CONNECTOR_CeilingMountPlane').getWorldPosition(new Vector3()).toArray().forEach(x=>near(x,0));
+const b=new Box3().setFromObject(root),dims=b.getSize(new Vector3()).toArray();[.066,.071,.066].forEach((v,i)=>near(dims[i],v));
+export const geometry={status:'PASS',units:'metres',dimensions_glTF_m:dims,mountPlane_glTF_Y_m:0,up_axis:'Blender +Z / glTF +Y',pendant_direction:'Blender -Z / glTF -Y',fittingAbovePlane_m:.019,pendantBelowPlane_m:.052,trimDiameter_m:.066,contextHoleDiameter_m:.030,threadedFittingDiameter_m:.021,radialFittingClearance_m:.0045,bulb:'Opaque glossy red representation; no physical glass, refraction or temperature encoding',safetyCompliance:'NOT CLAIMED',scope:'Visual geometry envelope only; not installation instructions or safety clearance'};
+export const report={id:'mall-sprinkler-head',sha256:createHash('sha256').update(bytes).digest('hex'),glb_bytes:bytes.length,triangles,vertices,primitives,materials:json.materials.length,textures:0,animations:0,dimensions:dims,bounds:{min:b.min.toArray(),max:b.max.toArray()},parts,validation:{errors:validation.issues.numErrors,warnings:validation.issues.numWarnings,validator:'2.0.0-dev.3.10'}};
+fs.writeFileSync(dir+'reports/assets.json',JSON.stringify(report,null,2)+'\n');fs.writeFileSync(dir+'reports/geometry.json',JSON.stringify(geometry,null,2)+'\n');console.log(JSON.stringify({...report,parts:undefined,geometry}));
