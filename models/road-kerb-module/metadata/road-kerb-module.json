@@ -1,0 +1,91 @@
+{
+  "id": "road-kerb-module",
+  "name": "Road Kerb Module",
+  "summary": "One-metre precast-style kerb with a chamfered upper traffic face, separate mortar bed and end connection datums.",
+  "description": "One-metre precast-style kerb with a chamfered upper traffic face, separate mortar bed and end connection datums. Generic illustrative street asset, not a surveyed site or official regulatory standard.",
+  "category": "Architecture",
+  "tags": [
+    "street",
+    "singapore",
+    "malaysia",
+    "modular",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials; reviewed original project helpers. No third-party models, textures, fonts, logos or artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/road-kerb-module.glb",
+    "source": "sources/road-kerb-module.blend",
+    "preview": "previews/road-kerb-module.webp",
+    "render": "previews/road-kerb-module.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.8,
+      0.55,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "base at ground plane",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "backlog_id": 397,
+  "material_notes": "Independent named editable mesh components and materials. No animations or runtime interaction. Geometric pictograms use original primitives, not text/font artwork.",
+  "accuracy_notes": "Illustrative asset only, not traffic, structural, accessibility, electrical or engineering certification. No proprietary pattern or official brand.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using reviewed original project helpers; no third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Physical Android/iOS NOT TESTED. Local preparation and validation recorded in verification.md."
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "road-kerb-module",
+    "glb_bytes": 3644,
+    "triangles": 28,
+    "vertices": 54,
+    "primitives": 2,
+    "materials": 2,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      1,
+      0.28999999165534973,
+      0.23000000417232513
+    ],
+    "bounds": {
+      "min": [
+        -0.5,
+        0,
+        -0.11500000208616257
+      ],
+      "max": [
+        0.5,
+        0.28999999165534973,
+        0.11500000208616257
+      ]
+    },
+    "sha256": "87ff56912bfa4789af7bab6c8d3e57a54f6e93a18d06a050588043834f8e3b29",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  }
+}

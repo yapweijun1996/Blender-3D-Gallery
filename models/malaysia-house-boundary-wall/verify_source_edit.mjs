@@ -1,0 +1,4 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import {Box3} from 'three';import validator from 'gltf-validator';import {readGlb} from './glb.mjs';
+const root=new URL('.',import.meta.url),a=await readGlb(new URL('exports/optimized.glb',root)),b=await readGlb(new URL('reports/source-edit.glb',root));const v=await validator.validateBytes(new Uint8Array(b.bytes));assert.equal(v.issues.numErrors,0);assert.equal(v.issues.numWarnings,0);assert.notDeepEqual(a.bytes,b.bytes);
+const old=new Box3().setFromObject(a.scene.getObjectByName('WALL_Cap')),edited=new Box3().setFromObject(b.scene.getObjectByName('WALL_Cap'));assert.ok(Math.abs(edited.min.y-old.min.y-.2)<.001);
+fs.writeFileSync(new URL('reports/source-edit-proof.json',root),JSON.stringify({result:'PASS',actualBlendReopenEditAndReexport:true,component:'WALL_Cap',verifiedMovementMetres:.2,errors:0,warnings:0},null,2)+'\n');console.log('PASS actual source edit: malaysia-house-boundary-wall');

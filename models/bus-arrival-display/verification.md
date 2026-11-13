@@ -1,0 +1,11 @@
+# Bus Arrival Display verification
+- Backlog V2.1 352; local asset PASS, overall NEEDS REVIEW.
+- Source reopened, metre units and closed manifold mesh solids verified; real mesh/material edit re-exported; original source hash preserved. reports/sources.json, source*.log and source-edit*.log.
+- Export: 1800 triangles, 70860 bytes, 5 materials, 0 clips. Zero Khronos validator errors/warnings. reports/assets.json and validate-final.log.
+- GLB SHA256: 485dee6a4e440656a84f22463f649a175fd9fa460416ef464a42d574da55c49d.
+- Four Blender views visually inspected. Final browser screenshots visually inspected at1440x900,768x1024,390x844; these are desktop Chromium viewport emulations, NOT physical Android/iOS.
+- Browser loading consumes matching full GLB hash; WebGL draw calls, orbit, zoom, exact reset/reopen, close cleanup, focus restoration, three repeated lifecycle cycles, no horizontal overflow, no request/page/console errors.
+- Animation: NOT APPLICABLE. Gallery currently has orbit/zoom controls but no animation-playback UI. No NFC, ticketing, live arrival data or safety-control functionality is claimed.
+- All regional signage is generic original placeholder geometry, not real station/route information or operator branding. Glazing is intentionally stylized opaque blue-grey. Not engineering or accessibility certification.
+- Independent parts remain editable. Wall/ceiling modules use local attachment datum rather than a floor placement guarantee.
+- Evidence: ../../docs/verification/transport342/README.md and per-asset reports. No deployment.

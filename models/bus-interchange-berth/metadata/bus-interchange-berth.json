@@ -1,0 +1,94 @@
+{
+  "id": "bus-interchange-berth",
+  "name": "Bus Interchange Berth",
+  "summary": "Original modular bus interchange berth with independent editable parts.",
+  "description": "Original generic Singapore/Malaysia transport prop, not a measured operator installation.",
+  "category": "Architecture",
+  "tags": [
+    "transport",
+    "sgmy",
+    "modular",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/bus-interchange-berth.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      1,
+      0.5,
+      2
+    ]
+  },
+  "accuracy_notes": "Illustrative V2.1 transport module. Placeholder signage is not official wayfinding, route data or operator branding. No engineering, safety, accessibility or regulatory compliance claim. Glazing is stylized opaque blue-grey for reliable low-cost mobile rendering. Physical Android/iOS NOT TESTED. Runtime controls limited to validated gallery orbit/zoom; source animation availability is separately reported.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "local_structure": "PASS",
+    "source_reopen_edit_export": "PASS",
+    "visual_review": "PASS: all four rendered angles and all three browser viewport initial views inspected, including final corrections",
+    "browser": "PASS: desktop Chromium, three viewport sizes, not real mobile hardware",
+    "budget_bytes": 1200000,
+    "budget_triangles": 22000,
+    "local_asset": "PASS",
+    "combined_fifty_asset_gate": "PENDING"
+  },
+  "metrics": {
+    "sha256": "2e4a30ef715e61307ebfe0f62d1a0d8c8df0229c857f05d72d0597abf9d51649",
+    "glb_bytes": 85872,
+    "triangles": 1676,
+    "vertices": 2980,
+    "primitives": 11,
+    "materials": 5,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      5.800000190734863,
+      3.20500011742115,
+      3.4000000953674316
+    ],
+    "bounds": {
+      "min": [
+        -2.9000000953674316,
+        0,
+        -1.7000000476837158
+      ],
+      "max": [
+        2.9000000953674316,
+        3.20500011742115,
+        1.7000000476837158
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "animation_test": "NOT APPLICABLE"
+}

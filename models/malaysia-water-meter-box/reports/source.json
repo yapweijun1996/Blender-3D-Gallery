@@ -1,0 +1,80 @@
+{
+  "source_sha256": "66c4dfc83633e77c7d5f58b3211866830cca3732e879d8ef231aeee6082249cf",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 10,
+  "objects": [
+    {
+      "name": "Back",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaWaterMeterBox"
+    },
+    {
+      "name": "Cap",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaWaterMeterBox"
+    },
+    {
+      "name": "Cap.001",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaWaterMeterBox"
+    },
+    {
+      "name": "Meter_Dial",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaWaterMeterBox"
+    },
+    {
+      "name": "MOVABLE_Door",
+      "type": "EMPTY",
+      "parent": "ASSET_MalaysiaWaterMeterBox"
+    },
+    {
+      "name": "Door_Panel",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Latch",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Side",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaWaterMeterBox"
+    },
+    {
+      "name": "Side.001",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaWaterMeterBox"
+    },
+    {
+      "name": "Water_Pipe",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaWaterMeterBox"
+    },
+    {
+      "name": "Water_Pipe.001",
+      "type": "MESH",
+      "parent": "ASSET_MalaysiaWaterMeterBox"
+    }
+  ],
+  "edit_proof": {
+    "node": "Back",
+    "before": [
+      0,
+      0.11500000208616257,
+      0.30000001192092896
+    ],
+    "after": [
+      0.12300000339746475,
+      0.11500000208616257,
+      0.30000001192092896
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475
+  }
+}

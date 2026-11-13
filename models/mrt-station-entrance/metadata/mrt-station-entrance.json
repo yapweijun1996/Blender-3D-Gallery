@@ -1,0 +1,96 @@
+{
+  "id": "mrt-station-entrance",
+  "name": "MRT Station Entrance",
+  "summary": "Generic above-ground MRT station approach module with elevated landing, six approach steps, canopy, side balustrades and replaceable station label. Not a replica of a specific station or an accessibility-certified design.",
+  "description": "Generic above-ground MRT station approach module with elevated landing, six approach steps, canopy, side balustrades and replaceable station label. Not a replica of a specific station or an accessibility-certified design. Original illustrative asset, not engineering or safety certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/mrt-station-entrance.glb",
+    "source": "sources/mrt-station-entrance.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.4,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 341,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; helpers adapted from project hawker-centre-tray-rack. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. MOVABLE assemblies are authoring aids only, not browser runtime interactions.",
+  "accuracy_notes": "Illustrative non-branded regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS: geometry,material,scale/orientation,Khronos,budgets,source edit and browser gates",
+    "visual": "PASS: exported GLB hero/front/rear pixels inspected; targeted seam/camera fixes re-inspected",
+    "browser": "PASS: desktop Chromium1440/768/390 viewports; physical Android/iOS NOT TESTED",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "source": "PASS: canonical blend SHA preserved; copied component +0.123m re-export verified"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "mrt-station-entrance",
+    "backlog_id": 341,
+    "glb_bytes": 138860,
+    "triangles": 2496,
+    "vertices": 4944,
+    "meshes": 24,
+    "materials": 4,
+    "dimensions": [
+      4.800000190734863,
+      4.529999807476997,
+      5.800000101327896
+    ],
+    "bounds": {
+      "min": [
+        -2.4000000953674316,
+        0,
+        -2
+      ],
+      "max": [
+        2.4000000953674316,
+        4.529999807476997,
+        3.800000101327896
+      ]
+    },
+    "sha256": "d74f75aaa3cef37aeabf5e05f0962af9e8b343b6a9387795728f4a80d4502a25",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 1500000,
+    "budget_triangles": 25000
+  },
+  "source_sha256": "9a1f3eee96be71cc95c0f60d709d3800cb66ab9b0cd50c9436c468ea44e864e7"
+}

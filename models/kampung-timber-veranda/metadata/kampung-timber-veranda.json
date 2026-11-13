@@ -1,0 +1,96 @@
+{
+  "id": "kampung-timber-veranda",
+  "name": "Kampung Timber Veranda",
+  "summary": "Raised timber veranda module with fifteen deck boards, structural beams, four short stilts and a rear balustrade.",
+  "description": "Raised timber veranda module with fifteen deck boards, structural beams, four short stilts and a rear balustrade. Original illustrative asset, not engineering or safety certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry with reviewed repository material/export helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/kampung-timber-veranda.glb",
+    "source": "sources/kampung-timber-veranda.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.4,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 332,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original geometry; helpers adapted from project hawker-centre-tray-rack. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. MOVABLE assemblies are authoring aids only, not browser runtime interactions.",
+  "accuracy_notes": "Illustrative non-branded regional interpretation, not engineering certified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS: geometry,material,scale/orientation,Khronos,budgets,source edit and browser gates",
+    "visual": "PASS: exported GLB hero/front/rear pixels inspected; targeted seam/camera fixes re-inspected",
+    "browser": "PASS: desktop Chromium1440/768/390 viewports; physical Android/iOS NOT TESTED",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "source": "PASS: canonical blend SHA preserved; copied component +0.123m re-export verified"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "kampung-timber-veranda",
+    "backlog_id": 332,
+    "glb_bytes": 253336,
+    "triangles": 4644,
+    "vertices": 9288,
+    "meshes": 43,
+    "materials": 1,
+    "dimensions": [
+      2.9899999499320984,
+      1.5250000096857548,
+      1.7999999523162842
+    ],
+    "bounds": {
+      "min": [
+        -1.4949999749660492,
+        0,
+        -0.8999999761581421
+      ],
+      "max": [
+        1.4949999749660492,
+        1.5250000096857548,
+        0.8999999761581421
+      ]
+    },
+    "sha256": "d8dfb61c259cd8f2f8141d33fd54a3b09785cf72260a2eb0f2d041142d086781",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 800000,
+    "budget_triangles": 15000
+  },
+  "source_sha256": "2fcb482c6da8da06d91024ae4afd4b70c8252cd9931374fbf0ce9aabb7d16c07"
+}
