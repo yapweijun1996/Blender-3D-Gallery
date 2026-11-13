@@ -1,0 +1,94 @@
+{
+  "id": "hdb-bin-centre",
+  "name": "HDB Bin Centre",
+  "summary": "Compact ventilated bin-centre enclosure with editable louvered doors, two contextual wheeled bins and a simple geometric waste pictogram.",
+  "description": "Compact ventilated bin-centre enclosure with editable louvered doors, two contextual wheeled bins and a simple geometric waste pictogram. Generic HDB-inspired visual asset, not a particular surveyed building or official standard.",
+  "category": "Furniture",
+  "tags": [
+    "hdb",
+    "singapore",
+    "neighbourhood",
+    "architecture",
+    "modular",
+    "editable",
+    "original",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and Principled materials; reviewed original project helpers. No third-party models, textures, fonts, logos or artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/hdb-bin-centre.glb",
+    "source": "sources/hdb-bin-centre.blend",
+    "preview": "previews/hdb-bin-centre.webp",
+    "render": "previews/hdb-bin-centre.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.8,
+      0.55,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "base at ground plane",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "backlog_id": 315,
+  "material_notes": "Independent named editable mesh components and materials. No animations or runtime interaction. Geometric pictograms use original primitives, not text/font artwork.",
+  "accuracy_notes": "Visual architecture asset only, not construction, structural, fire, accessibility or building-code certification.",
+  "attribution": [
+    {
+      "credit": "Original geometry/materials authored for Blender-3D-Gallery using reviewed original project helpers; no third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "scope": "Physical Android/iOS NOT TESTED. Local preparation and validation recorded in verification.md.",
+    "local_asset": "PASS",
+    "browser": "PASS: desktop Chromium156.0.8078.4, three viewport sizes; physical Android/iOS NOT TESTED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "hdb-bin-centre",
+    "glb_bytes": 283812,
+    "triangles": 5208,
+    "vertices": 10320,
+    "primitives": 50,
+    "materials": 5,
+    "textures": 0,
+    "animations": 0,
+    "dimensions": [
+      5,
+      2.8799999728798866,
+      3.4000000953674316
+    ],
+    "bounds": {
+      "min": [
+        -2.5,
+        0,
+        -1.7000000476837158
+      ],
+      "max": [
+        2.5,
+        2.8799999728798866,
+        1.7000000476837158
+      ]
+    },
+    "sha256": "b7b87a922c6e4b8afeba9a483e7ece86db0ceded9a0bcdf2c886c2d45bea7f65",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    }
+  }
+}
