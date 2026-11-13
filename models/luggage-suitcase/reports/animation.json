@@ -1,0 +1,109 @@
+{
+  "result": "PASS",
+  "sha256": "106cf7c5de04ed994f479ef0d1483a3c2cfd4cecf300863bb55dcfcec7433cc9",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416666666666667,
+    "reset": 2.0416667461395264
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_MOVABLE_Handle",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "MOVABLE_Handle.position",
+      "first": [
+        0,
+        0.6499999761581421,
+        -0.07999999821186066
+      ],
+      "last": [
+        0,
+        0.6499999761581421,
+        -0.07999999821186066
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Handle",
+      "position": [
+        0,
+        0.6499999761581421,
+        -0.07999999821186066
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Handle",
+      "position": [
+        0,
+        0.8899999761581694,
+        -0.07999999821186067
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Handle",
+      "position": [
+        0,
+        0.6499999761581421,
+        -0.07999999821186066
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        0,
+        0.65,
+        -0.08
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        0,
+        0.89,
+        -0.08
+      ],
+      "openQ": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "clearance": "240mm handle extension; rods retain at least59mm socket insertion at full extension",
+  "verification": "Independent raw track endpoints and Three.js Mixer poses; no Gallery component-control UI"
+}

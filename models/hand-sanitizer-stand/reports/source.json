@@ -1,0 +1,81 @@
+{
+  "source_sha256": "2fb38e1d08b9ca2dd8440977abbdb76a21ef6162577e7e0efe2751656d476003",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 9,
+  "objects": [
+    {
+      "name": "Base",
+      "type": "MESH",
+      "parent": "ASSET_HandSanitizerStand"
+    },
+    {
+      "name": "Bottle",
+      "type": "MESH",
+      "parent": "ASSET_HandSanitizerStand"
+    },
+    {
+      "name": "Bottle_Shelf",
+      "type": "MESH",
+      "parent": "ASSET_HandSanitizerStand"
+    },
+    {
+      "name": "Cap",
+      "type": "MESH",
+      "parent": "ASSET_HandSanitizerStand"
+    },
+    {
+      "name": "Editable_Label_CLEAN_HANDS",
+      "type": "MESH",
+      "parent": "ASSET_HandSanitizerStand"
+    },
+    {
+      "name": "MOVABLE_Pump",
+      "type": "EMPTY",
+      "parent": "ASSET_HandSanitizerStand"
+    },
+    {
+      "name": "Pump_Head",
+      "type": "MESH",
+      "parent": "MOVABLE_Pump"
+    },
+    {
+      "name": "Sign",
+      "type": "MESH",
+      "parent": "ASSET_HandSanitizerStand"
+    },
+    {
+      "name": "Sign_Support",
+      "type": "MESH",
+      "parent": "ASSET_HandSanitizerStand"
+    },
+    {
+      "name": "Stem",
+      "type": "MESH",
+      "parent": "ASSET_HandSanitizerStand"
+    }
+  ],
+  "edit_proof": {
+    "node": "Base",
+    "before": [
+      0,
+      0,
+      0.02500000037252903
+    ],
+    "after": [
+      0.12300000339746475,
+      0,
+      0.02500000037252903
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Satin metal",
+    "roughness_before": 0.47999998927116394,
+    "roughness_after": 0.73,
+    "copy_sha256": "12fea2fe607b866ce7cfd9aca62d0d085b85f6be9fa014110fcb0649f7d07027",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

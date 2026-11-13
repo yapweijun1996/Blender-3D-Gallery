@@ -1,0 +1,29 @@
+{
+  "id": 146,
+  "title": "Conveyor Belt",
+  "slug": "conveyor-belt",
+  "root": "ASSET_ConveyorBelt",
+  "dimensions": [
+    1.6,
+    0.65,
+    0.8
+  ],
+  "scale": 2.3,
+  "features": [
+    "FRAME",
+    "ROLLER",
+    "BELT",
+    "DRIVE"
+  ],
+  "animation": {
+    "node": "MOVABLE_Carrier",
+    "kind": "translation",
+    "axis": 0,
+    "travel": 1.1
+  },
+  "budget": {
+    "triangles": 20000,
+    "bytes": 1048576,
+    "mesh_primitives": 90
+  }
+}

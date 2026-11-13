@@ -1,0 +1,1 @@
+Initial animation tests passed, but visual inspection found the open freezer lid cropped by the isolated QA camera. Initial screenshots/results retained. Camera distance increased from 1.7 to 2.6 times closed bounding diagonal for all animation cases; geometry, clips and assertions unchanged. Corrected evidence is animation-framed/.

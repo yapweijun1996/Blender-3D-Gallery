@@ -1,0 +1,30 @@
+{
+  "id": 225,
+  "slug": "bedside-table",
+  "title": "Bedside Table",
+  "root": "ASSET_BedsideTable",
+  "required_nodes": [
+    "MOVABLE_Drawer",
+    "Top",
+    "Drawer_Floor"
+  ],
+  "budget_bytes": 400000,
+  "budget_triangles": 8000,
+  "expected_dimensions_m": [
+    0.52,
+    0.6225,
+    0.4925
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Drawer"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Drawer",
+      "location",
+      1,
+      -0.22
+    ]
+  ]
+}

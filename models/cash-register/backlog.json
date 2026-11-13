@@ -1,0 +1,29 @@
+{
+  "id": 128,
+  "title": "Cash Register",
+  "slug": "cash-register",
+  "root": "ASSET_CashRegister",
+  "dimensions": [
+    0.42,
+    0.4,
+    0.38
+  ],
+  "scale": 0.72,
+  "features": [
+    "BASE",
+    "KEYPAD",
+    "DISPLAY",
+    "DRAWER"
+  ],
+  "animation": {
+    "node": "MOVABLE_CashDrawer",
+    "kind": "translation",
+    "axis": 2,
+    "travel": 0.24
+  },
+  "budget": {
+    "triangles": 7000,
+    "bytes": 350000,
+    "mesh_primitives": 60
+  }
+}
