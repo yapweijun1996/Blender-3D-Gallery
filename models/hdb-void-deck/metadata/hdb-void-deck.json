@@ -1,0 +1,61 @@
+{
+  "id": "hdb-void-deck",
+  "name": "HDB Void Deck",
+  "summary": "Original modular hdb void deck with independently editable components.",
+  "description": "Original generic reusable metric asset; repeated static architectural details grouped by structural bay/storey where appropriate.",
+  "category": "Architecture",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "metres"
+  ],
+  "status": "verified-local-needs-device-review",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/hdb-void-deck.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "Original generic illustrative proportions, not a surveyed building, landmark, operator installation, engineering/accessibility/safety certification or functioning payment, cooking, vehicle or access-control system. Asset-level clips only; no gallery playback UI. Physical mobile/WebKit NOT TESTED.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 70000,
+      "bytes": 4000000,
+      "mesh_primitives": 180
+    },
+    "local": "PASS",
+    "source_edit": "PASS",
+    "khronos": "PASS",
+    "browser": "PASS: desktop Chromium at 1440x900, 768x1024, 390x844",
+    "visual": "PASS: four final studio views and all three final browser views inspected",
+    "animation": "NOT APPLICABLE: static editable asset",
+    "source_sha256": "25fa8cc32ce010b5c5e503e66938010e10929e9c7497a0f5a0a4128895fa80a8",
+    "glb_sha256": "d01416ca2d9ca2d644da14546f1b45ea659b08cd13e4eb7739bd7c04459fb391"
+  }
+}

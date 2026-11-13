@@ -1,0 +1,66 @@
+{
+  "source_sha256": "9f0cfa9d8b33d0bd44acf0f5244e8631196485fa4d60d12666911334d115f267",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 7,
+  "objects": [
+    {
+      "name": "Arrow_Shaft",
+      "type": "MESH",
+      "parent": "ASSET_RoadSign"
+    },
+    {
+      "name": "Arrow_Tip.001",
+      "type": "MESH",
+      "parent": "ASSET_RoadSign"
+    },
+    {
+      "name": "Arrow_Tip",
+      "type": "MESH",
+      "parent": "ASSET_RoadSign"
+    },
+    {
+      "name": "Direction_Board",
+      "type": "MESH",
+      "parent": "ASSET_RoadSign"
+    },
+    {
+      "name": "Editable_Label_TOWN_CENTRE",
+      "type": "MESH",
+      "parent": "ASSET_RoadSign"
+    },
+    {
+      "name": "Footing",
+      "type": "MESH",
+      "parent": "ASSET_RoadSign"
+    },
+    {
+      "name": "Post",
+      "type": "MESH",
+      "parent": "ASSET_RoadSign"
+    }
+  ],
+  "edit_proof": {
+    "node": "Arrow_Shaft",
+    "before": [
+      0.025000005960464478,
+      -0.07000000029802322,
+      2.5
+    ],
+    "after": [
+      0.14800000190734863,
+      -0.07000000029802322,
+      2.5
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "White",
+    "roughness_before": 0.6000000238418579,
+    "roughness_after": 0.27,
+    "copy_sha256": "d8672a37eaca38d3ae44043605d7ac3d77a0a66b1c8c4b005a0d551db932b6b2",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12299999594688416,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": 114,
+  "title": "Train Ticket Gate",
+  "slug": "train-ticket-gate",
+  "root": "ASSET_TrainTicketGate",
+  "dimensions": [
+    2.3,
+    1.2,
+    1.08
+  ],
+  "scale": 3.2,
+  "features": [
+    "CABINET",
+    "FLAP",
+    "READER",
+    "INDICATOR"
+  ],
+  "animation": {
+    "node": "MOVABLE_Flap",
+    "kind": "translation",
+    "axis": 0,
+    "travel": -0.66
+  },
+  "budget": {
+    "triangles": 20000,
+    "bytes": 1048576,
+    "mesh_primitives": 90
+  }
+}

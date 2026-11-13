@@ -1,0 +1,391 @@
+[
+  {
+    "id": 87,
+    "slug": "satay-grill",
+    "title": "Satay Grill",
+    "root": "ASSET_SatayGrill",
+    "required_nodes": [
+      "Firebox_Base",
+      "Cooking_Grate",
+      "Bamboo_Skewer"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      1.2,
+      0.8975,
+      0.565
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 88,
+    "slug": "wok-cooking-station",
+    "title": "Wok Cooking Station",
+    "root": "ASSET_WokCookingStation",
+    "required_nodes": [
+      "Wok",
+      "Burner",
+      "Backsplash"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      1,
+      1.295,
+      0.8425
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 132,
+    "slug": "fruit-display-rack",
+    "title": "Fruit Display Rack",
+    "root": "ASSET_FruitDisplayRack",
+    "required_nodes": [
+      "Crate_Base",
+      "Fruit",
+      "Produce_Header"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      1.2,
+      1.77,
+      0.7
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 140,
+    "slug": "store-security-gate",
+    "title": "Store Security Gate",
+    "root": "ASSET_StoreSecurityGate",
+    "required_nodes": [
+      "Antenna_Post",
+      "Antenna_Core",
+      "Status_Light"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      1.48,
+      1.5175,
+      0.5
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 153,
+    "slug": "industrial-fan",
+    "title": "Industrial Fan",
+    "root": "ASSET_IndustrialFan",
+    "required_nodes": [
+      "Cage_Rim",
+      "MOVABLE_Rotor",
+      "Stand"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      0.724,
+      1.042,
+      0.45
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Rotor"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Rotor",
+        "rotation_euler",
+        1,
+        6.283185307179586
+      ]
+    ]
+  },
+  {
+    "id": 115,
+    "slug": "ticket-machine",
+    "title": "Ticket Machine",
+    "root": "ASSET_TicketMachine",
+    "required_nodes": [
+      "Cabinet",
+      "MOVABLE_Button",
+      "MOVABLE_Ticket",
+      "Fare_Selection_Button",
+      "Coin_Return"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      0.56,
+      1.525,
+      0.48
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Button",
+      "MOVABLE_Ticket"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Button",
+        "location",
+        1,
+        0.008
+      ],
+      [
+        "MOVABLE_Ticket",
+        "location",
+        1,
+        -0.045
+      ]
+    ]
+  },
+  {
+    "id": 119,
+    "slug": "petrol-pump",
+    "title": "Petrol Pump",
+    "root": "ASSET_PetrolPump",
+    "required_nodes": [
+      "Meter",
+      "Fuel_Hose",
+      "Nozzle"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      1.114,
+      1.6,
+      0.62
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 120,
+    "slug": "pedestrian-bridge",
+    "title": "Pedestrian Bridge",
+    "root": "ASSET_PedestrianBridge",
+    "required_nodes": [
+      "Bridge_Deck",
+      "Stair",
+      "Bridge_Rail"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      18,
+      6.325,
+      10
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 162,
+    "slug": "road-junction",
+    "title": "Road Junction",
+    "root": "ASSET_RoadJunction",
+    "required_nodes": [
+      "Road_Tile",
+      "Corner_Sidewalk",
+      "Stop_Line"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      20,
+      0.3,
+      20
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 164,
+    "slug": "pedestrian-crossing",
+    "title": "Pedestrian Crossing",
+    "root": "ASSET_PedestrianCrossing",
+    "required_nodes": [
+      "Kerb_Ramp",
+      "Tactile_Pad",
+      "Zebra_Stripe"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      12,
+      0.312,
+      6
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 173,
+    "slug": "road-sign",
+    "title": "Road Sign",
+    "root": "ASSET_RoadSign",
+    "required_nodes": [
+      "Direction_Board",
+      "Post",
+      "Arrow_Shaft"
+    ],
+    "budget_bytes": 800000,
+    "budget_triangles": 18000,
+    "max_dimension_m": 10,
+    "expected_dimensions_m": [
+      1.8,
+      3.1,
+      0.45
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 45,
+    "slug": "condominium-tower",
+    "title": "Condominium Tower",
+    "root": "ASSET_CondominiumTower",
+    "required_nodes": [
+      "Private_Podium",
+      "Private_Balcony",
+      "Privacy_Divider",
+      "Lift_Overrun"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      18,
+      28.8,
+      15.7
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 47,
+    "slug": "terrace-house",
+    "title": "Terrace House",
+    "root": "ASSET_TerraceHouse",
+    "required_nodes": [
+      "Party_Wall",
+      "Pitched_Roof",
+      "Porch_Column",
+      "MOVABLE_Entry_Door"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      5.4,
+      7.7,
+      16
+    ],
+    "dimension_tolerance_m": 0.006,
+    "animation_nodes": [
+      "MOVABLE_Entry_Door"
+    ],
+    "animation_specs": [
+      [
+        "MOVABLE_Entry_Door",
+        "rotation_euler",
+        2,
+        -1.4
+      ]
+    ]
+  },
+  {
+    "id": 62,
+    "slug": "shophouse",
+    "title": "Shophouse",
+    "root": "ASSET_Shophouse",
+    "required_nodes": [
+      "Arcade_Column",
+      "Airwell_Side_Floor",
+      "Front_Pitched_Roof",
+      "Shutter_Louvre",
+      "Airwell_Side_Cover"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      6.4,
+      8,
+      15.95
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 72,
+    "slug": "multi-storey-car-park",
+    "title": "Multi Storey Car Park",
+    "root": "ASSET_MultiStoreyCarPark",
+    "required_nodes": [
+      "Parking_Deck",
+      "Vehicle_Ramp",
+      "Column",
+      "Parking_Sign"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      17.8,
+      10.9,
+      14.191
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 76,
+    "slug": "shoplot-building",
+    "title": "Shoplot Building",
+    "root": "ASSET_ShoplotBuilding",
+    "required_nodes": [
+      "Ground_Shutter",
+      "Ribbon_Window",
+      "Flat_Parapet",
+      "Modern_Awning"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      8.4,
+      10.5,
+      13.4
+    ],
+    "dimension_tolerance_m": 0.006
+  },
+  {
+    "id": 80,
+    "slug": "public-market",
+    "title": "Public Market",
+    "root": "ASSET_PublicMarket",
+    "required_nodes": [
+      "Open_Bay_Column",
+      "Fixed_Stall_Counter",
+      "Market_Roof",
+      "Market_Header"
+    ],
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "max_dimension_m": 40,
+    "expected_dimensions_m": [
+      12.6,
+      6.2,
+      18.72
+    ],
+    "dimension_tolerance_m": 0.006
+  }
+]

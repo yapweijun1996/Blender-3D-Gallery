@@ -1,0 +1,1 @@
+Added one yellow safety grip marker before browser gate so a full 120-degree tripod advance is visually distinguishable despite the threefold symmetric arm geometry. Initial unmarked source/export/previews/logs retained. Angle and assertions unchanged.

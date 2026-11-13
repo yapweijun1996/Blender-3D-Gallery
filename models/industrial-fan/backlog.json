@@ -1,0 +1,31 @@
+{
+  "id": 153,
+  "slug": "industrial-fan",
+  "title": "Industrial Fan",
+  "root": "ASSET_IndustrialFan",
+  "required_nodes": [
+    "Cage_Rim",
+    "MOVABLE_Rotor",
+    "Stand"
+  ],
+  "budget_bytes": 800000,
+  "budget_triangles": 18000,
+  "max_dimension_m": 10,
+  "expected_dimensions_m": [
+    0.724,
+    1.042,
+    0.45
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Rotor"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Rotor",
+      "rotation_euler",
+      1,
+      6.283185307179586
+    ]
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": 47,
+  "slug": "terrace-house",
+  "title": "Terrace House",
+  "root": "ASSET_TerraceHouse",
+  "required_nodes": [
+    "Party_Wall",
+    "Pitched_Roof",
+    "Porch_Column",
+    "MOVABLE_Entry_Door"
+  ],
+  "budget_bytes": 1500000,
+  "budget_triangles": 30000,
+  "max_dimension_m": 40,
+  "expected_dimensions_m": [
+    5.4,
+    7.7,
+    16
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Entry_Door"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Entry_Door",
+      "rotation_euler",
+      2,
+      -1.4
+    ]
+  ]
+}

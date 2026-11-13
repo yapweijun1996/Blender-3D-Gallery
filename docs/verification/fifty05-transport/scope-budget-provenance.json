@@ -1,0 +1,297 @@
+{
+  "base": "9604912f6eded65d01424e6ff229f15fd739077d",
+  "original": "New procedural geometry; shared authored helper functions reused. No imported third-party models/images.",
+  "scope": [
+    {
+      "id": 39,
+      "slug": "turnstile",
+      "novelty": "Tripod mechanical rotating arms, distinct from retractable train flap gate.",
+      "fixed_budget": {
+        "triangles": 20000,
+        "bytes": 1048576,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        0.85,
+        0.8,
+        1.05
+      ],
+      "animation": {
+        "node": "MOVABLE_Tripod",
+        "kind": "rotation",
+        "angle": 2.09439510239
+      }
+    },
+    {
+      "id": 186,
+      "slug": "smartboard",
+      "novelty": "Teaching surface with pen tray, speakers and camera, not desktop monitor.",
+      "fixed_budget": {
+        "triangles": 12000,
+        "bytes": 614400,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        1.9,
+        0.65,
+        1.95
+      ],
+      "animation": null
+    },
+    {
+      "id": 191,
+      "slug": "computer-lab-desk",
+      "novelty": "Dual workstation CPU trays and shared service duct, not single desk.",
+      "fixed_budget": {
+        "triangles": 12000,
+        "bytes": 614400,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        2.4,
+        0.8,
+        1.2
+      ],
+      "animation": null
+    },
+    {
+      "id": 92,
+      "slug": "stainless-steel-sink",
+      "novelty": "Open stainless basin, drain and faucet with independent legs.",
+      "fixed_budget": {
+        "triangles": 12000,
+        "bytes": 614400,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        1.2,
+        0.6,
+        0.98
+      ],
+      "animation": null
+    },
+    {
+      "id": 125,
+      "slug": "self-checkout-machine",
+      "novelty": "Retail scan/weigh/bag/payment stations, not library RFID kiosk.",
+      "fixed_budget": {
+        "triangles": 12000,
+        "bytes": 614400,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        1.35,
+        0.75,
+        1.55
+      ],
+      "animation": null
+    },
+    {
+      "id": 131,
+      "slug": "chiller-cabinet",
+      "novelty": "Upright glazed display cabinet, independent hinged door and shelves, not chest freezer/domestic fridge.",
+      "fixed_budget": {
+        "triangles": 20000,
+        "bytes": 1048576,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        0.9,
+        0.65,
+        1.9
+      ],
+      "animation": {
+        "node": "MOVABLE_ChillerDoor",
+        "kind": "rotation",
+        "angle": 1.2
+      }
+    },
+    {
+      "id": 106,
+      "slug": "bus-stop-shelter",
+      "novelty": "Cantilever canopy, wind panels and integrated bench, not platform shelter.",
+      "fixed_budget": {
+        "triangles": 12000,
+        "bytes": 614400,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        4.2,
+        1.6,
+        2.7
+      ],
+      "animation": null
+    },
+    {
+      "id": 113,
+      "slug": "e-scooter",
+      "novelty": "Standing electric scooter with deck, two small wheels, display and brake.",
+      "fixed_budget": {
+        "triangles": 12000,
+        "bytes": 614400,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        0.55,
+        1.2,
+        1.2
+      ],
+      "animation": null
+    },
+    {
+      "id": 114,
+      "slug": "train-ticket-gate",
+      "novelty": "Single retractable flap fully housed in wide left cabinet, not rotating tripod.",
+      "fixed_budget": {
+        "triangles": 20000,
+        "bytes": 1048576,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        2.3,
+        1.2,
+        1.08
+      ],
+      "animation": {
+        "node": "MOVABLE_Flap",
+        "kind": "translation",
+        "axis": 0,
+        "travel": -0.66
+      }
+    },
+    {
+      "id": 118,
+      "slug": "ev-charger",
+      "novelty": "Freestanding charger with charging cable/plug, not parking meter.",
+      "fixed_budget": {
+        "triangles": 12000,
+        "bytes": 614400,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        0.55,
+        0.35,
+        1.65
+      ],
+      "animation": null
+    },
+    {
+      "id": 147,
+      "slug": "loading-dock",
+      "novelty": "Fixed raised loading dock and hinged leveller, not mobile yard ramp.",
+      "fixed_budget": {
+        "triangles": 20000,
+        "bytes": 1048576,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        3.2,
+        3.0,
+        1.2
+      ],
+      "animation": {
+        "node": "MOVABLE_Leveller",
+        "kind": "rotation",
+        "angle": 0.14
+      }
+    },
+    {
+      "id": 159,
+      "slug": "loading-ramp",
+      "novelty": "Wheeled inclined yard ramp and towing bar, not fixed dock.",
+      "fixed_budget": {
+        "triangles": 12000,
+        "bytes": 614400,
+        "mesh_primitives": 90
+      },
+      "dimensions_m_blender_xyz": [
+        2.2,
+        4.0,
+        1.1
+      ],
+      "animation": null
+    },
+    {
+      "id": 43,
+      "slug": "hdb-corridor",
+      "novelty": "Corridor shell with circulation strip, parapet, back wall and ceiling.",
+      "fixed_budget": {
+        "triangles": 30000,
+        "bytes": 1572864,
+        "mesh_primitives": 120
+      },
+      "dimensions_m_blender_xyz": [
+        6,
+        1.8,
+        3
+      ],
+      "animation": null
+    },
+    {
+      "id": 44,
+      "slug": "hdb-lift-lobby",
+      "novelty": "Lobby circulation/core with two exterior lift frontages, not lift interior.",
+      "fixed_budget": {
+        "triangles": 30000,
+        "bytes": 1572864,
+        "mesh_primitives": 120
+      },
+      "dimensions_m_blender_xyz": [
+        5,
+        4,
+        3
+      ],
+      "animation": null
+    },
+    {
+      "id": 46,
+      "slug": "condo-guardhouse",
+      "novelty": "Bounded security kiosk shell with glazing and canopy.",
+      "fixed_budget": {
+        "triangles": 30000,
+        "bytes": 1572864,
+        "mesh_primitives": 120
+      },
+      "dimensions_m_blender_xyz": [
+        3.8,
+        3.0,
+        3.1
+      ],
+      "animation": null
+    },
+    {
+      "id": 68,
+      "slug": "library-building",
+      "novelty": "Bounded public library building shell with labeled entrance, no internal scene/demo.",
+      "fixed_budget": {
+        "triangles": 30000,
+        "bytes": 1572864,
+        "mesh_primitives": 120
+      },
+      "dimensions_m_blender_xyz": [
+        10,
+        7,
+        5
+      ],
+      "animation": null
+    },
+    {
+      "id": 73,
+      "slug": "warehouse-building",
+      "novelty": "Bounded industrial warehouse shell with loading bay and roof, no internal scene/demo.",
+      "fixed_budget": {
+        "triangles": 30000,
+        "bytes": 1572864,
+        "mesh_primitives": 120
+      },
+      "dimensions_m_blender_xyz": [
+        12,
+        9,
+        5.5
+      ],
+      "animation": null
+    }
+  ],
+  "clone": "Direct GitHub clone to independent object store. First shared clone checkout failed on alternate-depth and remains outside repo as partial-shared-clone. No upstream objects/config modified.",
+  "quality": "Pending generation and inspections; fixed budgets established before rendering."
+}

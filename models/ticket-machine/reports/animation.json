@@ -1,0 +1,194 @@
+{
+  "result": "PASS",
+  "sha256": "e6aa403e16d24be18937bbc2255a2ea4a2ea8ba19cd8856180ab9070e8ad6ebb",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416666666666667,
+    "reset": 2.0416667461395264
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_MOVABLE_Button",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    },
+    {
+      "name": "Demonstrate_MOVABLE_Ticket",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "MOVABLE_Button.position",
+      "first": [
+        0.15000000596046448,
+        0.699999988079071,
+        0.2199999988079071
+      ],
+      "last": [
+        0.15000000596046448,
+        0.699999988079071,
+        0.2199999988079071
+      ],
+      "mid": 24
+    },
+    {
+      "track": "MOVABLE_Ticket.position",
+      "first": [
+        0,
+        0.8799999952316284,
+        0.1850000023841858
+      ],
+      "last": [
+        0,
+        0.8799999952316284,
+        0.1850000023841858
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Button",
+      "position": [
+        0.15000000596046448,
+        0.699999988079071,
+        0.2199999988079071
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_Ticket",
+      "position": [
+        0,
+        0.8799999952316284,
+        0.1850000023841858
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Button",
+      "position": [
+        0.15000000596046448,
+        0.699999988079071,
+        0.21199999781450113
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_Ticket",
+      "position": [
+        0,
+        0.8799999952316284,
+        0.2300000023841909
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Button",
+      "position": [
+        0.15000000596046448,
+        0.699999988079071,
+        0.2199999988079071
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "MOVABLE_Ticket",
+      "position": [
+        0,
+        0.8799999952316284,
+        0.1850000023841858
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        0.15,
+        0.7,
+        0.22
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        0.15,
+        0.7,
+        0.212
+      ],
+      "openQ": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "p": [
+        0,
+        0.88,
+        0.185
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        0,
+        0.88,
+        0.23
+      ],
+      "openQ": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "clearance": "Ticket feeds45mm outward and retains25mm insertion; button depresses8mm into its mount",
+  "verification": "Independent raw track endpoints and Three.js Mixer poses; no Gallery component-control UI"
+}

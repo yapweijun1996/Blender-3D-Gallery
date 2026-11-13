@@ -1,0 +1,111 @@
+{
+  "result": "PASS",
+  "sha256": "6548e9f9933854074efb19a6ddb298c5b195cdbee3cc4ffbde6476161da750f9",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416666666666667,
+    "reset": 2.0416667461395264
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_MOVABLE_Rotor",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "MOVABLE_Rotor.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        -8.742277657347586e-8,
+        1
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Rotor",
+      "position": [
+        0,
+        0.6800000071525574,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Rotor",
+      "position": [
+        0,
+        0.6800000071525574,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0.9999999999999952,
+        1.0612909086276618e-7
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Rotor",
+      "position": [
+        0,
+        0.6800000071525574,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        0,
+        0.68,
+        0
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        0,
+        0.68,
+        0
+      ],
+      "openQ": [
+        0,
+        0,
+        -1,
+        0
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "clearance": "Full360-degree rotor cycle with quarter-turn raw samples and summed angular travel; radial and axial cage clearance at nine samples",
+  "verification": "Independent raw track endpoints and Three.js Mixer poses; no Gallery component-control UI"
+}
