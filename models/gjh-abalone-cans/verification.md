@@ -1,62 +1,107 @@
-# Verification: GJH Abalone Cans (quality pass v2)
+# Verification: GJH Abalone Cans (refinement pass v3)
 
-Run on 2026-11-13, Blender 5.2.3 LTS, macOS arm64, headless Chromium (Playwright) against the real gallery viewer (`?model=<slug>`, Vite dev server). Before = commit `3c79765`; after = this change. Before/after viewer shots use the same Playwright mouse script, so the camera is identical.
+Run on 2026-11-13, Blender 5.2.3 LTS, macOS arm64, headless Chromium (Playwright, software rendering) against the real gallery viewer (`?model=<slug>`). v2 = commit `496b1db` (previous pass), v3 = this change. Before/after viewer shots use the same arrow-key camera script, so the angles are identical. Contact sheets and screenshots are in `reports/`.
 
-## Gap analysis result
+## Root cause of the side-label problem (GJH-P0-01 / 02 / 03)
 
-| Gap | Status | Evidence / what changed |
+Inspected in the order given by the report: source artwork, layout, material, sampling, geometry, render.
+
+1. **Source artwork.** The official eShop set has three different faces for New Zealand, Australia and South Africa (front, food-photo face, nutrition/information face) and two for Mexico (front, information face). v2 assumed one "back" exactly opposite the front, so the faces were in the wrong places and the information face was unused.
+2. **Texture sampling.** v2 blended front and back across 80 to 100 degrees, which pulled in the packshots' limb zone (edge glare and background anti-aliasing). That is the pale grey vertical band at the sides. Compare `reports/screenshots/v2-*-side.jpg` with `v3-*-side.jpg` and `v2-texture-*.jpg` with `v3-texture-*.jpg`.
+3. **UV and geometry** were not the cause: the label is one island (u around, v along the height) and the automated test confirms u covers exactly one wrap and v stays within the seams.
+
+Fix: each packshot is treated as a cylinder panel (angle = asin of the normalised column), only the reliable centre (about 70 degrees each side) is used, and seams are placed where neighbouring faces match best in colour and artwork. Nothing is redrawn, generated or retouched; the artwork pixels come from the official packshots (SHA-256 in `reports/build.json` and the metadata).
+
+**Known limits of that fix**
+- Panel **order and spacing are estimates**. The total seam cost differs by only about 4% between the two possible orders, and Australia alone prefers the other order, so the order is not proven by evidence; one shared order is used for consistency across the three-panel SKUs. A physical can or a die-line is needed to confirm it.
+- **Mexico has no official third face.** About 121 degrees are an unprinted placeholder (two flat base colours, no artwork). `label_layout` in the metadata records this.
+- An attempt to infer the panel angles from the printed wave line failed (fit R-squared 0.05 to 0.35) and was not used.
+
+## Gap register
+
+| ID | Status | Evidence |
 | --- | --- | --- |
-| GAP-001 thick gold rims | PASS | Seams reduced from 8.6 mm (7% of height) to 5 mm with a rolled bead profile; test asserts seam height < 5.5 mm and bulge < 3 mm. See `screenshots/before-*-front.jpg` vs `after-*-front.jpg`. |
-| GAP-002 label sharpness / stretching | PARTIAL | UV mapping corrected (v spans seam to seam; strips under the seams clamp), bicubic resampling and de-lighting added; the Chinese seal and outlines are visibly crisper in `before/after-*-zoom.jpg`. Sharpness is capped by the source: the official eShop page offers 1000 x 1000 px at most (`data-large_image_width/height` = 1000), so the can is about 350 px wide. Fine print stays soft when zoomed. |
-| GAP-003 hotspot and reflection | PASS | Baked highlight streaks removed from the texture, label roughness 0.62 versus 0.34-0.36 on metal, soft studio environment through an opt-in viewer setting. No distracting hotspot in the zoom shots. |
-| GAP-004 PBR separation | PASS | Label (metallic 0, roughness 0.62), seams (0.45 / 0.34), lid (0.40 / 0.36), body (0.30 / 0.50). No normal maps, so no tangents are needed. |
-| GAP-005 lid detail | PASS | Raised rim, recessed panel, two pressed rings, score plate and a ring-pull loop (`after-*-top.jpg`). About 2.4 mm of relief. |
-| GAP-006 proportions | PARTIAL | Height-to-diameter follows the measured aspect of the official packshots (front and reverse agree). Diameter is a nominal 73.5 mm; no verified packaging dimensions were supplied. |
-| GAP-007 label alignment | PASS (visual) | Front, 45 degrees, side, reverse and top reviewed; the wave line and artwork continue across the reverse seam with no gap or visible stretch. |
-| GAP-008 roughness microdetail | NOT DONE | Roughness differs per part, but no roughness-variation map was added. |
-| GAP-009 presentation | PASS | Cyclorama studio, soft area lights, contact shadow, balanced exposure. Thumbnails are composed to survive the gallery card crop (see Notes). Front, 45 degrees, side and top captured. |
-| GAP-010 optimization | PARTIAL | LOD1 GLBs exported (see measurements). No texture compression (the viewer has no KTX2 loader) and no runtime LOD switching in the gallery. |
+| P0-01 side seam grey band | PASS | Cause found and fixed; v2 vs v3 side views; 24-view sheets. |
+| P0-02 label fidelity | PARTIAL | All artwork from the official packshots with recorded hashes; panel order estimated; Mexico has a placeholder sector. |
+| P0-03 360 degree texture integrity | PASS (NZ, AU, SA) / PARTIAL (MX) | `reports/qa/*-turntable-24.jpg` (every 15 degrees); no tears or cut text. Mexico shows its disclosed placeholder. |
+| P1-01 pull tab | PASS | Separate ring, rivet, neck plate and opening score (parts in the .blend; merged per material in the GLB). Official lid type not verified (no lid photo exists). |
+| P1-02 top lid | PASS | Recessed panel, two pressed rings, rolled seam; automated check of the profile levels. |
+| P1-03 bottom | PASS | Standing ring, recessed base and central panel (`v3-*-bottom.jpg`, `reports/qa/*-six-views.jpg`). |
+| P1-04 gold rim material | PASS | Metallic 0.9, roughness 0.28; reads as metal in the viewer with its studio environment. Not measured against a real can. |
+| P1-05 back label softness | PARTIAL | Limited by the source: the official page tops out at 1000 x 1000 px, about 350 px for the can width. Texture is 1280 px for the full circumference (about 1.3x native detail); a 2048 x 1024 texture was not adopted because it would only enlarge the blur. |
+| P1-06 label distortion | PASS (visual) | Exact cylinder projection; front, side, reverse, top and bottom reviewed. |
+| P1-07 geometry and normals | PASS | glTF validator 0/0; automated check that label wall normals face outward; rounded seam profiles instead of bevel modifiers. |
+| P1-08 real scale | UNVERIFIED | No official dimension found. A retailer listing gives 7.5 x 11 x 7.5 with no unit (possibly the box), about 14% shorter than the packshot-based 124.6 mm. Diameter and height are still estimates. |
+| P1-09 runtime performance | PARTIAL | File size, triangles, draw calls and texture memory measured (below). FPS and device GPU memory not measured. |
+| P1-10 cross-device | UNVERIFIED | See E2E-25 to 27. |
+| P2-01 lighting | PARTIAL | Viewer uses its RoomEnvironment (opt-in) with tuned lights; no HDRI. |
+| P2-02 roughness variation | NOT DONE | Roughness differs per material only. |
+| P2-03 edge detail | PASS | Rounded seam and lid profiles. |
+| P2-04 viewer background | NOT DONE | The viewer background is global; only thumbnails use the studio. |
+| P2-05 camera presets | PARTIAL | Six standard views exist in the QA sheets and golden tests; no UI presets in the viewer. |
+| P2-06 developer inspector | NOT DONE | |
+| P2-07 shared QA pipeline | PASS | One generator, one validator and one test suite for all four SKUs. |
+| P2-08 golden screenshots | PASS | `npm run test:cans`: 24 golden views, stable over repeated runs (local, headless Chromium). |
 
-## Acceptance tests
+## Acceptance tests (30)
 
 | ID | Result | Notes |
 | --- | --- | --- |
-| E2E-001 logo recognizable | PASS | Visual, all four cans. |
-| E2E-002 no visible stretching | PASS (visual) | Plus automated UV range check (u covers exactly one wrap). |
-| E2E-003 no missing or black textures | PASS | Automated: one embedded JPEG per GLB; visual in viewer; 0 failed requests. |
-| E2E-004 proportionate rims | PASS | Automated thickness and bulge limits. |
-| E2E-005 lid construction detail | PASS | Automated relief range; visual top view. |
-| E2E-006 no label hotspot | PASS (visual) | Judged on the zoom shots only. |
-| E2E-007 no visible geometry intersections | PASS (visual) | No z-fighting seen. Parts overlap by design under the seams; no automated intersection test. |
-| E2E-008 multiple lighting environments | PARTIAL | Checked in the Blender studio and in the gallery viewer with room environment; two setups only. |
-| E2E-009 loads in the Three.js viewer | PASS | All four, 0 console errors. |
-| E2E-010 mobile usable | PARTIAL | Headless Chromium at 390 and 768 px wide only; no physical device. |
-| E2E-011 LOD switching | UNVERIFIED | LOD1 GLBs load in Three.js and match LOD0 in `screenshots/lod0-vs-lod1.jpg`; the gallery has no switching mechanism to test. |
-| E2E-012 correct after reload | PASS | Reloaded twice; identical canvas output size, no errors. |
-| E2E-013 no texture network failures | PASS | 0 failed requests in every capture. |
-| E2E-014 brand graphics unchanged | PASS | Labels come from the official packshots; nothing redrawn. Colour and exposure follow the viewer lighting. |
-| E2E-015 same-angle before/after | PASS | `screenshots/before-*` and `after-*` (front, 45 degrees, side, top, zoom). |
+| E2E-01 24 views every 15 degrees | PASS (NZ, AU, SA) / PARTIAL (MX) | Reviewed on the contact sheets. Mexico has the disclosed unprinted sector. |
+| E2E-02 side grey band | PASS | Root cause fixed. |
+| E2E-03 UV island boundary | PASS | Automated u/v range plus visual. |
+| E2E-04 wrap continuity matches the real packaging | UNVERIFIED | Seam positions are estimates. |
+| E2E-05 texture sampling | PASS (visual) | Clamp-to-edge, no sampling lines seen. |
+| E2E-06 mipmap levels | UNVERIFIED | Not tested at several distances. |
+| E2E-07 pull tab structure | PASS | Visual and geometry; official lid type unverified. |
+| E2E-08 lid profile | PASS | Automated. |
+| E2E-09 bottom recess | PASS | Automated and visual. |
+| E2E-10 normals | PASS | Label automated; others visual. |
+| E2E-11 geometry integrity | PASS (visual) | No automated intersection test; parts overlap by design under the seams. |
+| E2E-12 physical dimensions | UNVERIFIED | See P1-08. |
+| E2E-13 gold rim | PASS (visual) | |
+| E2E-14 silver lid | PASS (visual) | |
+| E2E-15 front label fidelity | PASS | Derived from the official front packshot. |
+| E2E-16 back label fidelity | PARTIAL | Real faces, soft source, estimated placement. |
+| E2E-17 country accuracy | PASS | Each can shows its own origin text and Chinese mark. |
+| E2E-18 compression | PASS (visual) | JPEG quality 88, no blocks or broken text seen. |
+| E2E-19 glTF validator | PASS | 0 errors, 0 warnings on all 8 GLBs. |
+| E2E-20 GLB size | PASS | Largest 384 KiB (target 500). |
+| E2E-21 triangles | PASS | 4,888 (target 5,000). |
+| E2E-22 draw calls | PASS | 3 (target 3). Materials: 3. |
+| E2E-23 desktop FPS | UNVERIFIED | Only software-rendered headless Chromium. |
+| E2E-24 mobile FPS | UNVERIFIED | |
+| E2E-25 iOS Safari | UNVERIFIED | |
+| E2E-26 Android Chrome | UNVERIFIED | |
+| E2E-27 desktop browsers | PARTIAL | Chromium only. Firefox is not installed here; Playwright WebKit did not show the canvas within 30 s (cause not investigated). |
+| E2E-28 visual regression | PASS | `npm run test:cans`, 24/24 on two consecutive runs. |
+| E2E-29 four-SKU consistency | PASS | Identical geometry budgets (automated); labels correct per SKU; Mexico partial. |
+| E2E-30 delivery integrity | PASS | Validator, recorded SHA-256 and reload-stable rendering (2 reloads, no errors, 0 failed requests). |
 
-## Measurements (from `reports/assets.json`, regenerated by `validate.mjs`)
+## Measurements (`reports/assets.json`, regenerated by `validate.mjs`)
 
-| Can | LOD0 tris | LOD0 draw calls | LOD0 GLB | LOD0 texture | LOD0 GPU texture* | LOD1 tris | LOD1 draw calls | LOD1 GLB | LOD1 texture | LOD1 GPU texture* |
-| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: | --- | ---: |
-| New Zealand | 3,802 | 7 | 302 KiB | 1280x632 | 4.31 MB | 2,002 | 3 | 121 KiB | 640x316 | 1.08 MB |
-| Australia | 3,802 | 7 | 286 KiB | 1280x634 | 4.33 MB | 2,002 | 3 | 117 KiB | 640x317 | 1.08 MB |
-| South Africa | 3,802 | 7 | 299 KiB | 1280x634 | 4.33 MB | 2,002 | 3 | 119 KiB | 640x317 | 1.08 MB |
-| Mexico | 3,802 | 7 | 266 KiB | 1280x632 | 4.31 MB | 2,002 | 3 | 105 KiB | 640x316 | 1.08 MB |
+| Can | LOD0 tris | LOD0 draw calls | Materials | LOD0 GLB | LOD0 texture | LOD0 GPU texture* | LOD1 tris | LOD1 draw calls | LOD1 GLB | LOD1 texture | LOD1 GPU texture* |
+| --- | ---: | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: | --- | ---: |
+| New Zealand | 4,888 | 3 | 3 | 384 KiB | 1280x632 | 4.31 MB | 3,044 | 3 | 155 KiB | 640x316 | 1.08 MB |
+| Australia | 4,888 | 3 | 3 | 372 KiB | 1280x634 | 4.33 MB | 3,044 | 3 | 152 KiB | 640x317 | 1.08 MB |
+| South Africa | 4,888 | 3 | 3 | 382 KiB | 1280x634 | 4.33 MB | 3,044 | 3 | 153 KiB | 640x317 | 1.08 MB |
+| Mexico | 4,888 | 3 | 3 | 268 KiB | 1280x632 | 4.31 MB | 3,044 | 3 | 118 KiB | 640x316 | 1.08 MB |
 
-\*Estimate: RGBA8 with a full mip chain (width x height x 4 x 4/3); not a measured GPU figure. Before this pass: 2,490 triangles, 7 draw calls, 1280 x 616 texture, 207-243 KiB. LOD0 triangles rose because the seams and lid gained detail.
+\*Estimate: RGBA8 with a full mip chain (width x height x 4 x 4/3); not measured on a device. v2 for comparison: 3,802 triangles, 7 draw calls, 4 materials.
+
+Load timing (localhost Vite dev server, headless Chromium, 3 runs): canvas visible in 0.54 to 1.9 s, GLB fetch 2 to 86 ms. Indicative only, not a network or device measurement.
 
 ## Inventory
 
-- Textures (per can): `textures/<slug>-label.jpg` (LOD0, sRGB base colour) and `textures/lod1/<slug>-label-lod1.jpg`, embedded in the GLBs. Texture sizes are not powers of two (fine for WebGL2 mipmaps; three.js resizes for WebGL1).
-- Materials: label (image), gold lacquered seam, lid satin tinplate, can steel (LOD0 only).
-- Source scene: `sources/gjh-abalone-cans.blend`; generator `generate.py`; metrics `reports/`.
+- Materials: `Label <SKU>` (base-colour image, metallic 0.05, roughness 0.5), `Gold lacquered rim` (0.9 / 0.28), `Silver tinplate` (0.9 / 0.34). No normal maps, so no tangents are needed.
+- Textures: `textures/<slug>-label.jpg` (LOD0) and `textures/lod1/<slug>-label-lod1.jpg`, JPEG quality 88 embedded in the GLBs, sRGB, clamp-to-edge. Dimensions are not powers of two (fine for WebGL2 mipmaps).
+- Nodes in each GLB: `GoldRim`, `SilverMetal`, `Label` under the asset root. Editable parts (`BottomSeam`, `TopSeam`, `Lid`, `OpeningScore`, `PullTabPlate`, `PullTabRivet`, `PullTabRing`, `Base`, `CanBody`, `Label`) are separate objects in `sources/gjh-abalone-cans.blend`.
+- Evidence: `reports/qa/` (24-view and six-view sheets), `reports/screenshots/` (v2/v3 same-angle pairs, textures, mobile, cards, LOD), `reports/golden/` (regression goldens), `reports/build.json` (inputs, layout, costs), `reports/assets.json` (metrics).
 
-## Notes and remaining issues
+## Not done or not possible here
 
-- Gallery card crop: `.asset-image img` has `height="400"` from `poster()` which overrides `aspect-ratio: 1`, so square thumbnails are scaled to 315 x 400 and centre-cropped to the card. This affects every asset (the GJH Mall Visitor card is cropped the same way). It was not changed here; the can thumbnails were recomposed to stay fully visible. A one-line `height: auto` CSS fix would show whole square thumbnails everywhere if you want it.
-- Viewer change: `display.studioEnvironment` and `display.environmentIntensity` are an opt-in for the existing RoomEnvironment (previously vehicles only); other assets are unaffected. Validated in `scripts/catalog.mjs` and tested.
-- Faint vertical texture grain remains from the source photographs.
-- Not verified: physical phones, other browsers and engines, GPU texture memory measured on a device, GitHub Pages deployment.
+- KTX2/Basis and Meshopt compression: the gallery viewer has no decoders. The GLBs are plain glTF with JPEG textures.
+- Runtime LOD switching: LOD1 GLBs are exported and load in Three.js (`reports/screenshots/v3-lod0-vs-lod1.jpg`); the gallery has no switching mechanism, so E2E LOD behaviour is untested.
+- Physical devices, iOS Safari, Android Chrome, Firefox and Safari proper.
+- Official dimensions, die-line, the third Mexico face and the true panel order.
+- The goldens are a local regression guard from software rendering, not a cross-GPU reference.

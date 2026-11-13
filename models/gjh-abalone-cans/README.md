@@ -4,17 +4,17 @@ Four metre-scale canned-abalone props for the owner's GJH virtual mall: New Zeal
 
 | Asset | Origin | Pack | Chinese type name | Triangles (LOD0 / LOD1) | GLB bytes |
 | --- | --- | --- | --- | ---: | ---: |
-| `gjh-can-new-zealand-abalone` | New Zealand | 425g | 新西兰鲍鱼罐头 | 3,802 / 2,002 | see `reports/assets.json` |
-| `gjh-can-australia-abalone` | Australia | 425g | 澳洲鲍鱼罐头 | 3,802 / 2,002 | see `reports/assets.json` |
-| `gjh-can-south-africa-abalone` | South Africa | 425g | 南非鲍鱼罐头 | 3,802 / 2,002 | see `reports/assets.json` |
-| `gjh-can-mexico-abalone` | Mexico | 454g | 墨西哥鲍鱼罐头 | 3,802 / 2,002 | see `reports/assets.json` |
+| `gjh-can-new-zealand-abalone` | New Zealand | 425g | 新西兰鲍鱼罐头 | 4,888 / 3,044 | see `reports/assets.json` |
+| `gjh-can-australia-abalone` | Australia | 425g | 澳洲鲍鱼罐头 | 4,888 / 3,044 | see `reports/assets.json` |
+| `gjh-can-south-africa-abalone` | South Africa | 425g | 南非鲍鱼罐头 | 4,888 / 3,044 | see `reports/assets.json` |
+| `gjh-can-mexico-abalone` | Mexico | 454g | 墨西哥鲍鱼罐头 | 4,888 / 3,044 | see `reports/assets.json` |
 
 ## Contents
 
-- `exports/*.glb` (LOD0, shown in the gallery): self-contained glTF 2.0, one embedded JPEG label texture each, floor-centre origin, front toward glTF +Z. Parts: `CanBody`, `TopSeam`, `BottomSeam`, `Lid`, `PullTabPlate`, `PullTabRing`, `Label`. Thin rolled seams, a recessed lid with pressed rings and a ring-pull.
-- `exports/lod1/*-lod1.glb`: shelf-display LOD with about half the triangles, 3 draw calls, a 640 px texture and no hidden body. Not in the gallery catalog; for consumers such as the mall.
-- `sources/gjh-abalone-cans.blend`: editable scene with all four cans in a row (textures packed) and a non-exported `STUDIO` group.
-- `textures/*-label.jpg` and `textures/lod1/`: the derived label strips (1280 and 640 px wide). `reports/build.json` records the SHA-256 of every source packshot used, the detected can bounds and texture sizes.
+- `exports/*.glb` (LOD0, shown in the gallery): self-contained glTF 2.0, one embedded JPEG label texture, floor-centre origin, front toward glTF +Z, three materials and three draw calls (`GoldRim`, `SilverMetal`, `Label`). Thin rolled seams, a recessed lid with pressed rings, opening score, ring-pull with rivet, and a recessed base.
+- `exports/lod1/*-lod1.glb`: shelf-display LOD with 3,044 triangles, a 640 px texture and no hidden body, also three draw calls. Not in the gallery catalog.
+- `sources/gjh-abalone-cans.blend`: editable scene with all four cans in a row (textures packed, parts as separate objects) and a non-exported `STUDIO` group.
+- `textures/*-label.jpg` and `textures/lod1/`: the derived label strips (1280 and 640 px wide). `reports/build.json` records the SHA-256 of every source packshot, the chosen panel layout and seam costs, and texture sizes. `reports/qa/` holds 24-view and six-view contact sheets; `reports/golden/` the regression goldens.
 - `metadata/*.json`, `previews/*.webp`, `reports/assets.json`: gallery metadata, thumbnails and measured metrics.
 
 ## Reproduce
@@ -25,18 +25,17 @@ Blender 5.2.3 LTS, from the repository root. The generator reads the packshots f
 blender --background --factory-startup --python models/gjh-abalone-cans/generate.py -- --packshots /path/to/Webpage-Design-Gallery/assets/companies/gjh/official
 node models/gjh-abalone-cans/validate.mjs
 npm test
+npm run build && npm run test:cans   # golden-screenshot regression; add --update after reviewing intended changes
 ```
 
 Thumbnails are 640 px WebP converted from the Blender PNG renders (any converter works; PNGs are not committed).
 
 ## Limits
 
-- Diameter is a nominal 73.5 mm and height follows each packshot's aspect ratio (about 124 mm). These are not official packaging dimensions; the 454g Mexico SKU is not scaled differently because its photo has the same aspect.
-- The official eShop packshots are at most 1000 x 1000 px (the can is about 350 px wide), which caps label sharpness; fine print is soft when zoomed. Resampling is bicubic with light sharpening, and the baked vertical shading is divided out so the viewer lights the model. A larger official original would be picked up automatically by `--packshots`.
-- A single-view unroll: the strips near each side are blended between the front and reverse photographs, and some glare in the photographs remains.
-- Viewer: the can metadata opts in to the viewer's studio environment (`display.studioEnvironment`) and tuned lighting. No texture compression or runtime LOD switching is provided.
-- Nutrition panels and the second side views of the NZ/AU/SA SKUs are not used.
-- The label shows the New Moon brand (GJH house brand), and the cans are packaging props, not product claims. Certification marks printed on the label are part of the source photograph, not independently verified.
+- **Label layout.** The official eShop packshots show three faces (front, food photo, nutrition) for New Zealand, Australia and South Africa, and two for Mexico. Each is treated as a cylinder panel and used only in its reliable centre. Panel **order and spacing are estimates** chosen for the best seam match; they are not verified against a physical can or die-line. Mexico has no third face, so about 121 degrees are an **unprinted placeholder** (two flat colours); nothing is redrawn or invented. See `label_layout` in each metadata file.
+- **Sharpness.** The official page offers at most 1000 x 1000 px (the can is about 350 px wide), which caps detail; fine print is soft when zoomed. Resampling is bicubic with light sharpening, and the baked vertical shading is divided out so the viewer lights the model. A larger official original is picked up automatically by `--packshots`.
+- **Dimensions.** Diameter is a nominal 73.5 mm and height follows the packshot aspect ratio (about 125 mm). A retailer listing (7.5 x 11 x 7.5, no unit) disagrees with the height, so real dimensions are unverified.
+- **Viewer.** The can metadata opts in to the viewer's studio environment (`display.studioEnvironment`) and tuned lighting. No texture compression or runtime LOD switching is provided; Firefox, Safari and mobile devices were not tested. See [verification.md](verification.md) for the full PASS/FAIL/UNVERIFIED list.
 
 ## Rights
 

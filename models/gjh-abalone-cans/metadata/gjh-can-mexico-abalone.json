@@ -3,7 +3,7 @@
   "name": "GJH Can — Mexico Abalone",
   "name_zh": "墨西哥鲍鱼罐头",
   "summary": "A 454g canned mexico abalone with a label unrolled from the official Mexico SKU packshots.",
-  "description": "Metre-scale tinplate can with double-seam rims, recessed lid with ring-pull and a wrap-around label textured from the official front and reverse Mexico 454g packshots.",
+  "description": "Metre-scale tinplate can with thin rolled gold seams, a recessed lid with pressed rings, opening score, ring-pull and rivet, a recessed base, and a 360-degree label unrolled from the official GJH eShop packshots (front and information panels).",
   "category": "Packaged Goods",
   "tags": [
     "GJH",
@@ -55,7 +55,7 @@
       "new-moon-mx-454g-back.jpg": "c5d408f1e39d1673ea19159828f0583c587a52ec5b7cf509e52a6d6fcb012413"
     }
   },
-  "accuracy_notes": "Diameter is a nominal 73.5 mm; height follows the packshot aspect ratio. Not an official packaging specification. The label is a single-view unroll: the strips near each side of the can are blended between the front and reverse photographs, and shading baked into those photographs remains.",
+  "accuracy_notes": "Diameter is a nominal 73.5 mm and height follows the packshot aspect ratio; a retailer listing gives 7.5 x 11 x 7.5 without units, so real dimensions are unverified. Label panel order and spacing are estimated (see label_layout). Packshot limb zones are not used. Shading baked into the photographs is partly divided out.",
   "attribution": [
     {
       "credit": "Label artwork unrolled from GJH eShop official packshots recorded in Webpage-Design-Gallery assets/companies/gjh/official (manifest.json). Can geometry is original."
@@ -63,11 +63,11 @@
   ],
   "rights": "Packaging artwork belongs to its respective owners (GJH / New Moon). Used in the owner's project on the owner's confirmation; no independent licence document was supplied. Public redistribution terms have not been specified.",
   "metrics": {
-    "glb_bytes": 272692,
-    "triangles": 3802,
-    "vertices": 2143,
-    "primitives": 7,
-    "materials": 4,
+    "glb_bytes": 274736,
+    "triangles": 4888,
+    "vertices": 2674,
+    "primitives": 3,
+    "materials": 3,
     "textures": 1,
     "texture_pixels": [
       1280,
@@ -76,7 +76,7 @@
     "animations": 0,
     "dimensions": [
       0.07750000059604645,
-      0.12547521060332656,
+      0.12457521259784698,
       0.07750000059604645
     ],
     "bounds": {
@@ -87,16 +87,16 @@
       ],
       "max": [
         0.038750000298023224,
-        0.12547521060332656,
+        0.12457521259784698,
         0.038750000298023224
       ]
     },
-    "sha256": "41e68b9b0e8f861aa2d186b4bb51f9fcdc58bc52c3fd0657f4a3aff1d140b017",
-    "draw_calls": 7,
+    "sha256": "fbb295fe199706b9c7523e70389260c6dd35917035ce99d5a326b592e82d65a0",
+    "draw_calls": 3,
     "texture_memory_bytes": 4314453,
     "lod1": {
-      "glb_bytes": 107952,
-      "triangles": 2002,
+      "glb_bytes": 120620,
+      "triangles": 3044,
       "draw_calls": 3,
       "materials": 3,
       "texture_pixels": [
@@ -106,10 +106,10 @@
       "texture_memory_bytes": 1078613,
       "dimensions": [
         0.07750000059604645,
-        0.125475212931633,
+        0.12457521259784698,
         0.07750000059604645
       ],
-      "sha256": "10a77263883ad2f1062da9c97c9c1059ab1b8b5d9e0bcfef0de9f351c5537c63",
+      "sha256": "4bdd60cd58359b8ed08a11c87d7b4abd734cbc99e1f4009d56ce121375d75c15",
       "validation": {
         "errors": 0,
         "warnings": 0
@@ -120,5 +120,27 @@
     "errors": 0,
     "warnings": 0,
     "validator": "2.0.0-dev.3.10"
+  },
+  "label_layout": {
+    "method": "Each packshot is treated as a cylinder panel (angle = asin of the normalised column). Seam positions and panel spacing are chosen to minimise colour and artwork mismatch at the seams, constrained to close the circle.",
+    "panels_degrees_from_front": {
+      "front": {
+        "centre": 0,
+        "usable_from": -65,
+        "usable_to": 72
+      },
+      "back": {
+        "centre": 120,
+        "usable_from": -48,
+        "usable_to": 54
+      }
+    },
+    "order_around_can": [
+      "front",
+      "back"
+    ],
+    "status": "Panel order and spacing are estimates, not verified against a physical can or a die-line.",
+    "unprinted_gap_degrees": 121,
+    "gap_note": "No official image exists for this sector. It is an unprinted placeholder using two flat base colours; no artwork, text or marks were invented."
   }
 }

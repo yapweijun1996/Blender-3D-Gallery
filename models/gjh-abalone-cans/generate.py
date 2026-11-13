@@ -20,7 +20,7 @@ from mathutils import Vector
 
 HERE = Path(__file__).resolve().parent
 DIAMETER = 0.0735  # nominal metres; height follows each packshot's measured aspect ratio
-SEGMENTS = 72
+SEGMENTS = 64
 TEX_W, TEX_H_MAX = 1280, 640  # about 1.15x the packshot's real detail; more would only enlarge blur
 LOD1_SEGMENTS, LOD1_TEX_W = 36, 640
 SEG = {"segments": SEGMENTS}
@@ -30,13 +30,16 @@ RIM_CROP = 0.05  # packshot rim fraction cropped from each end of the label
 VARIANTS = [
     dict(key="nz", slug="gjh-can-new-zealand-abalone", name="New Zealand Abalone", zh="新西兰鲍鱼罐头",
          origin="New Zealand", pack="425g", root="ASSET_GJHCanNewZealandAbalone",
-         front="new-moon-nz-425g-front.jpg", back="new-moon-nz-425g-back.jpg"),
+         front="new-moon-nz-425g-front.jpg", back="new-moon-nz-425g-back.jpg",
+         nutrition="new-moon-nz-425g-nutrition.jpg"),
     dict(key="au", slug="gjh-can-australia-abalone", name="Australia Abalone", zh="澳洲鲍鱼罐头",
          origin="Australia", pack="425g", root="ASSET_GJHCanAustraliaAbalone",
-         front="new-moon-au-425g-front.jpg", back="new-moon-au-425g-back.jpg"),
+         front="new-moon-au-425g-front.jpg", back="new-moon-au-425g-back.jpg",
+         nutrition="new-moon-au-425g-nutrition.jpg"),
     dict(key="sa", slug="gjh-can-south-africa-abalone", name="South Africa Abalone", zh="南非鲍鱼罐头",
          origin="South Africa", pack="425g", root="ASSET_GJHCanSouthAfricaAbalone",
-         front="new-moon-sa-425g-front.jpg", back="new-moon-sa-425g-back.jpg"),
+         front="new-moon-sa-425g-front.jpg", back="new-moon-sa-425g-back.jpg",
+         nutrition="new-moon-sa-425g-nutrition.jpg"),
     dict(key="mx", slug="gjh-can-mexico-abalone", name="Mexico Abalone", zh="墨西哥鲍鱼罐头",
          origin="Mexico", pack="454g", root="ASSET_GJHCanMexicoAbalone",
          front="new-moon-mx-454g-front.jpg", back="new-moon-mx-454g-back.jpg"),
@@ -128,25 +131,170 @@ def sharpen(img, amount=0.7, sigma=1.1):
     return np.clip(img + amount * (img - blur), 0, 1)
 
 
-def unroll_label(front_px, back_px, fb, bb, tex_h):
-    """Unroll front/back packshots into one label strip. u=0.5 is the front centre, u=0/1 the back centre."""
-    u = (np.arange(TEX_W) + 0.5) / TEX_W
-    phi = (u - 0.5) * 2 * np.pi
-    v = (np.arange(tex_h) + 0.5) / tex_h  # 0 bottom .. 1 top
-    rim = RIM_CROP
-    result = []
-    for px, (x0, x1, y0, y1), ang in ((front_px, fb, phi), (back_px, bb, np.where(phi >= 0, phi - np.pi, phi + np.pi))):
-        cx, r = (x0 + x1) / 2, (x1 - x0) / 2
+PANEL_LIMIT = 74.0       # degrees from a packshot's centre beyond which limb distortion and edge glare dominate
+EDGE_RANGE = range(44, 73)  # candidate seam positions, degrees from a panel's centre
+PROFILE_BINS = 32
+
+
+class Panel:
+    """One packshot treated as a cylinder panel centred on its own axis angle."""
+
+    def __init__(self, name, px, bounds):
+        self.name, self.px, self.bounds = name, px, bounds
+        x0, x1, y0, y1 = bounds
+        self.cx, self.r = (x0 + x1) / 2, (x1 - x0) / 2
         height = y1 - y0
-        top, bottom = y0 + rim * height, y1 - rim * height
-        xs = cx + r * 0.995 * np.sin(ang)
-        ys = bottom - v * (bottom - top)
+        self.top, self.bottom = y0 + RIM_CROP * height, y1 - RIM_CROP * height
+
+    def columns(self, deg):
+        return self.cx + self.r * 0.995 * math.sin(math.radians(deg))
+
+    def profile(self, deg):
+        """Mean colour of PROFILE_BINS row bands at a given local angle (5 px wide strip)."""
+        x = int(round(self.columns(deg)))
+        band = self.px[int(self.top):int(self.bottom), x - 2:x + 3].mean(axis=1)
+        return np.array([b.mean(axis=0) for b in np.array_split(band, PROFILE_BINS)])
+
+    def energy(self, deg):
+        """How busy the artwork is at a local angle: low means plain colour, a safe place for a seam."""
+        x = int(round(self.columns(deg)))
+        a = self.px[int(self.top):int(self.bottom), x - 3]
+        b = self.px[int(self.top):int(self.bottom), x + 3]
+        return float(np.abs(a - b).mean())
+
+    def sample_columns(self, local_deg, v):
+        """Bicubic colours for local angles (columns) and label heights v in 0 bottom .. 1 top."""
+        xs = self.cx + self.r * 0.995 * np.sin(np.radians(np.clip(local_deg, -PANEL_LIMIT, PANEL_LIMIT)))
+        ys = self.bottom - v * (self.bottom - self.top)
         X, Y = np.meshgrid(xs, ys)
-        result.append(sample(px, X, Y))
-    # front weight 1 within 80 degrees of front centre, 0 beyond 100 degrees
-    w_front = 1 - smoothstep(np.radians(80), np.radians(100), np.abs(phi))
-    out = result[0] * w_front[None, :, None] + result[1] * (1 - w_front)[None, :, None]
-    return out  # row 0 is the label bottom, as Blender expects
+        return sample(self.px, X, Y)
+
+
+def seam_cost(a, b, deg_a, deg_b):
+    """Mismatch between panel a's right edge and panel b's left edge, plus how busy both artworks are there."""
+    diff = float(((a.profile(deg_a) - b.profile(deg_b)) ** 2).mean())
+    return 4.0 * diff + a.energy(deg_a) + b.energy(deg_b)
+
+
+def junction_table(a, b):
+    """Best (cost, R, L) for every integer spacing R - L between a's right edge and b's left edge."""
+    table = {}
+    for right in EDGE_RANGE:
+        for left in (-d for d in EDGE_RANGE):
+            cost = seam_cost(a, b, right, left)
+            spacing = right - left
+            if spacing not in table or cost < table[spacing][0]:
+                table[spacing] = (cost, right, left)
+    return table
+
+
+def order_costs(panels):
+    """Best seam cost of each cyclic order of three panels (front, back, nutrition) -> {order names: cost}."""
+    result = {}
+    for order in ((0, 1, 2), (0, 2, 1)):
+        tables = [junction_table(panels[order[k]], panels[order[(k + 1) % 3]]) for k in range(3)]
+        costs = [t1[0] + t2[0] + tables[2][360 - s1 - s2][0] for s1, t1 in tables[0].items() for s2, t2 in tables[1].items()
+                 if 360 - s1 - s2 in tables[2]]
+        result[tuple(panels[i].name for i in order)] = min(costs)
+    return result
+
+
+def plan_layout(panels, forced_order=None, forced_side=None):
+    """Arrange panels around the can. Returns {'order', 'centres', 'intervals', 'gap', 'cost'}.
+
+    Three panels must close the circle exactly (spacings sum to 360 degrees); the order and seam positions are the
+    ones with the smallest colour/artwork mismatch at the seams. With two panels the rest of the circle is a gap that
+    is left unprinted (no official image exists for it)."""
+    names = [p.name for p in panels]
+    if len(panels) == 3:
+        best = None
+        for order in ((0, 1, 2), (0, 2, 1)):
+            if forced_order and tuple(names[i] for i in order) != tuple(forced_order):
+                continue
+            tables = [junction_table(panels[order[k]], panels[order[(k + 1) % 3]]) for k in range(3)]
+            for s1, t1 in tables[0].items():
+                for s2, t2 in tables[1].items():
+                    s3 = 360 - s1 - s2
+                    if s3 in tables[2]:
+                        cost = t1[0] + t2[0] + tables[2][s3][0]
+                        if best is None or cost < best[0]:
+                            best = (cost, order, (t1, t2, tables[2][s3]), (s1, s2, s3))
+        cost, order, joins, spacings = best
+        centres, intervals = {}, {}
+        acc = 0.0
+        for k, idx in enumerate(order):
+            centres[idx] = acc
+            acc += spacings[k]
+            prev_left = joins[(k - 1) % 3][2]
+            intervals[idx] = (prev_left, joins[k][1])
+        return dict(order=[names[i] for i in order], centres={names[i]: centres[i] for i in centres},
+                    intervals={names[i]: intervals[i] for i in intervals}, gap=None, cost=round(cost, 4),
+                    spacings=list(spacings))
+    front, other = panels
+    best = None
+    for side in ((+1, -1) if forced_side is None else (forced_side,)):
+        a, b = (front, other) if side > 0 else (other, front)  # a's right edge meets b's left edge
+        table = junction_table(a, b)
+        for spacing, (cost, right, left) in table.items():
+            outer_a = min(EDGE_RANGE, key=lambda d: a.energy(-d))      # a's free (left) edge
+            outer_b = min(EDGE_RANGE, key=lambda d: b.energy(d))       # b's free (right) edge
+            if best is None or cost < best[0]:
+                best = (cost, side, spacing, right, left, outer_a, outer_b)
+    cost, side, spacing, right, left, outer_a, outer_b = best
+    if side > 0:  # front at 0, other to its right
+        centre_other = float(spacing)
+        intervals = {front.name: (-float(outer_a), float(right)), other.name: (float(left), float(outer_b))}
+        centres = {front.name: 0.0, other.name: centre_other}
+        gap = (centre_other + outer_b, 360.0 - outer_a)
+    else:         # other to the left of front
+        centre_other = -float(spacing)
+        intervals = {other.name: (-float(outer_a), float(right)), front.name: (float(left), float(outer_b))}
+        centres = {front.name: 0.0, other.name: centre_other}
+        gap = (outer_b, 360.0 + centre_other - outer_a)
+    free = {front.name: 'left' if side > 0 else 'right', other.name: 'right' if side > 0 else 'left'}
+    return dict(order=[front.name, other.name], centres=centres, intervals=intervals, gap=gap, cost=round(cost, 4),
+                spacings=[spacing], free_edges=free)
+
+
+def field_colour(panel, degrees, v):
+    """Per-row median colour over several columns: removes thin lines, text and badges, keeping the base colour."""
+    return np.median(panel.sample_columns(np.array(degrees, dtype=np.float64), v), axis=1)
+
+
+def unroll_panels(panels, layout, tex_h):
+    """Unroll the packshots into one label strip. u=0.5 is the front centre (absolute angle 0 at the front)."""
+    u = (np.arange(TEX_W) + 0.5) / TEX_W
+    absolute = (u - 0.5) * 360.0
+    v = (np.arange(tex_h) + 0.5) / tex_h  # 0 bottom .. 1 top
+    free = layout.get("free_edges", {})
+    total = np.zeros(TEX_W, dtype=np.float32)
+    acc = np.zeros((tex_h, TEX_W, 3), dtype=np.float32)
+    for panel in panels:
+        centre, (left, right) = layout["centres"][panel.name], layout["intervals"][panel.name]
+        local = (absolute - centre + 180.0) % 360.0 - 180.0
+        f_left = 6.0 if free.get(panel.name) == "left" else 2.0
+        f_right = 6.0 if free.get(panel.name) == "right" else 2.0
+        weight = (smoothstep(left - f_left / 2, left + f_left / 2, local) *
+                  (1 - smoothstep(right - f_right / 2, right + f_right / 2, local))).astype(np.float32)
+        acc += panel.sample_columns(local, v) * weight[None, :, None]
+        total += weight
+    out = acc / np.maximum(total, 1e-6)[None, :, None]
+    if layout["gap"] is not None:
+        # No official image covers this part of the circle. It is left as an unprinted placeholder: two flat base colours
+        # (upper field and lower band) taken from the front panel, with no artwork, text or marks invented.
+        front = panels[0]
+        med = gaussian_1d(field_colour(front, np.linspace(-60, 60, 60), v), 3.0, 0)
+        change = np.abs(np.diff(med, axis=0)).sum(axis=1)
+        lo, hi = int(0.2 * tex_h), int(0.75 * tex_h)
+        boundary = lo + int(np.argmax(change[lo:hi]))
+        lower = np.median(med[:max(boundary - 6, 1)], axis=0)
+        upper = np.median(med[boundary + 6:], axis=0)
+        step = smoothstep(boundary - 3.0, boundary + 3.0, np.arange(tex_h).astype(np.float64))[:, None]
+        fill = (lower[None, :] * (1 - step) + upper[None, :] * step)[:, None, :]
+        fill = np.broadcast_to(fill, (tex_h, TEX_W, 3))
+        gap_mask = np.clip(1.0 - total, 0.0, 1.0)[None, :, None]
+        out = out * (1 - gap_mask) + fill * gap_mask
+    return out
 
 
 def srgb_to_linear(v):
@@ -175,8 +323,8 @@ def label_material(name, image):
     tex.interpolation = "Linear"
     tex.extension = "EXTEND"
     links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
-    bsdf.inputs["Metallic"].default_value = 0.0
-    bsdf.inputs["Roughness"].default_value = 0.62  # printed lacquer: soft, no hot streaks
+    bsdf.inputs["Metallic"].default_value = 0.05
+    bsdf.inputs["Roughness"].default_value = 0.5  # printed lacquer: soft, no hot streaks
     return m
 
 
@@ -243,41 +391,85 @@ def box_bm(size, loc, bevel=0.0):
     return bm
 
 
-def build_can(spec, label_img, height, tinplate, lid_metal, steel, lod=0):
+def build_can(spec, label_img, height, gold, silver, lod=0):
+    """Reusable can geometry. Parts are separate objects (editable in the .blend); exports merge them per material."""
     r = DIAMETER / 2
     root = empty(spec["root"])
     # Body shell under the label (visible only through the seams).
     if lod == 0:
-        mesh_object("CanBody", root, steel, lathe_bm([(0.0, SEAM * 0.5), (r, SEAM * 0.5), (r, height - SEAM * 0.5)], cap_top=False))
+        mesh_object("CanBody", root, silver, lathe_bm([(0.0, SEAM * 0.5), (r, SEAM * 0.5), (r, height - SEAM * 0.5)], cap_top=False))
     # Rolled double seams: a rounded bead that bulges slightly past the body, with a chamfered outer lip.
     bead = r + 0.0020
     bottom = [(r - 0.0030, 0.0), (r + 0.0006, 0.0), (r + 0.0016, SEAM * 0.22), (bead, SEAM * 0.55),
               (r + 0.0016, SEAM * 0.9), (r + 0.0004, SEAM)]
-    mesh_object("BottomSeam", root, tinplate, lathe_bm(bottom, cap_top=False))
+    mesh_object("BottomSeam", root, gold, lathe_bm(bottom, cap_top=False))
     top = [(r + 0.0004, height - SEAM), (r + 0.0016, height - SEAM * 0.9), (bead, height - SEAM * 0.55),
            (r + 0.0016, height - SEAM * 0.22), (r + 0.0006, height), (r - 0.0030, height)]
-    mesh_object("TopSeam", root, tinplate, lathe_bm(top, cap_top=False))
-    # Lid: raised rim, recessed panel, stacking bead and a gentle pressed ring.
+    mesh_object("TopSeam", root, gold, lathe_bm(top, cap_top=False))
+    # Lid: raised rim, recessed panel, two pressed rings.
     lid = height - 0.0004
     panel = lid - 0.0024
-    mesh_object("Lid", root, lid_metal, lathe_bm([
+    mesh_object("Lid", root, silver, lathe_bm([
         (0.0, panel), (r * 0.50, panel), (r * 0.54, panel + 0.0011), (r * 0.60, panel), (r * 0.78, panel),
         (r * 0.84, panel + 0.0015), (r - 0.0034, lid - 0.0006), (r - 0.0030, lid), (r - 0.0030, lid - 0.0008),
         (r - 0.0050, lid - 0.0008), (0.0, lid - 0.0008)]))
-    mesh_object("PullTabPlate", root, lid_metal, box_bm((0.020, 0.013, 0.0010), (0.0, 0.014, panel + 0.0007), 0.0003))
-    ring = lathe_bm([(0.0048, 0.0), (0.0092, 0.0), (0.0092, 0.0019), (0.0048, 0.0019)], segments=40, closed=True)
-    ring_obj = mesh_object("PullTabRing", root, lid_metal, ring)
-    ring_obj.location = (0.0, -0.0105, panel + 0.0022)
-    ring_obj.scale = (1.0, 1.4, 1.0)
+    # Opening score: a thin raised oval contour on the panel.
+    score = lathe_bm([(0.0140, 0.0), (0.0147, 0.0), (0.0147, 0.00045), (0.0140, 0.00045)], segments=40, closed=True)
+    score_obj = mesh_object("OpeningScore", root, silver, score)
+    score_obj.scale = (1.0, 0.72, 1.0)
+    score_obj.location = (0.0, 0.002, panel)
+    # Pull tab: ring, neck plate and rivet are independent parts.
+    mesh_object("PullTabPlate", root, silver, box_bm((0.011, 0.020, 0.0009), (0.0, -0.0045, panel + 0.0009), 0.0003))
+    rivet = lathe_bm([(0.0, 0.0), (0.0024, 0.0), (0.0024, 0.0016), (0.0017, 0.0019), (0.0, 0.0019)], segments=24)
+    rivet_obj = mesh_object("PullTabRivet", root, silver, rivet)
+    rivet_obj.location = (0.0, 0.004, panel + 0.0013)
+    ring = lathe_bm([(0.0050, 0.0), (0.0090, 0.0), (0.0090, 0.0016), (0.0050, 0.0016)], segments=40, closed=True)
+    ring_obj = mesh_object("PullTabRing", root, silver, ring)
+    ring_obj.scale = (0.9, 1.25, 1.0)
+    ring_obj.location = (0.0, -0.0235, panel + 0.0013)
+    # Base: standing ring, recessed base and central panel, so the underside is not an open hole or a flat disc.
+    mesh_object("Base", root, silver, lathe_bm([
+        (r - 0.0030, 0.0), (r - 0.0042, 0.0), (r - 0.0050, 0.0004), (r - 0.0075, 0.0016), (r * 0.78, 0.0020),
+        (r * 0.74, 0.0030), (r * 0.46, 0.0030), (r * 0.42, 0.0022), (0.0, 0.0022)]))
     # Label: printed tin that continues under both seams, so there is no sticker edge.
     z0, z1 = SEAM * 0.6, height - SEAM * 0.6
     span = height - 2 * SEAM
     v_lo, v_hi = (z0 - SEAM) / span, (z1 - SEAM) / span
     profile = [(r - 0.0004, z0), (r + 0.0003, z0), (r + 0.0003, z1), (r - 0.0004, z1)]
-    # Texture rows span seam-to-seam; the short strips under each seam repeat the edge rows.
     mesh_object("Label", root, label_material(f"Label {spec['name']}" + (" LOD1" if lod else ""), label_img),
                 lathe_bm(profile, uv=[v_lo, v_lo, v_hi, v_hi], cap_top=False))
     return root
+
+
+NODE_NAMES = {"Gold lacquered rim": "GoldRim", "Silver tinplate": "SilverMetal"}
+
+
+def merged_copy(root, name):
+    """Copy a can with parts merged per material (one draw call per material) for export, leaving the source parts intact."""
+    clone = empty(name)
+    for obj in root.children:
+        dup = obj.copy()
+        dup.data = obj.data.copy()
+        dup.parent = clone
+        bpy.context.scene.collection.objects.link(dup)
+    # Bake each part's own transform into its mesh so joining keeps positions.
+    bpy.ops.object.select_all(action="DESELECT")
+    for dup in clone.children:
+        dup.select_set(True)
+    bpy.context.view_layer.objects.active = clone.children[0]
+    bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
+    groups = {}
+    for dup in list(clone.children):
+        groups.setdefault(dup.data.materials[0].name, []).append(dup)
+    for name, objs in groups.items():
+        bpy.ops.object.select_all(action="DESELECT")
+        for obj in objs:
+            obj.select_set(True)
+        bpy.context.view_layer.objects.active = objs[0]
+        if len(objs) > 1:
+            bpy.ops.object.join()
+        bpy.context.view_layer.objects.active.name = NODE_NAMES.get(name, "Label")
+    return clone
 
 
 def export_glb(root, path):
@@ -291,21 +483,6 @@ def export_glb(root, path):
         filepath=str(path), export_format="GLB", use_selection=True, export_apply=True, export_yup=True,
         export_animations=False, export_extras=True, export_texcoords=True, export_image_format="JPEG",
         export_jpeg_quality=88, export_cameras=False, export_lights=False)
-
-
-def join_by_material(root):
-    """LOD1: merge parts that share a material, so the can is one draw call per material."""
-    groups = {}
-    for obj in list(root.children):
-        groups.setdefault(obj.data.materials[0].name, []).append(obj)
-    for name, objs in groups.items():
-        bpy.ops.object.select_all(action="DESELECT")
-        for obj in objs:
-            obj.select_set(True)
-        bpy.context.view_layer.objects.active = objs[0]
-        if len(objs) > 1:
-            bpy.ops.object.join()
-        bpy.context.view_layer.objects.active.name = "LOD1_" + name.replace(" ", "_")
 
 
 def discard(root):
@@ -339,49 +516,77 @@ def main():
     scene = bpy.context.scene
     scene.unit_settings.system = "METRIC"
 
-    # Partly metallic: fully metallic surfaces render black in viewers that have no environment map.
-    tinplate = solid_material("Gold lacquered seam", (190, 150, 68), metallic=0.45, roughness=0.34)
-    lid_metal = solid_material("Lid satin tinplate", (196, 196, 192), metallic=0.4, roughness=0.36)
-    steel = solid_material("Can steel", (176, 180, 186), metallic=0.3, roughness=0.5)
+    # Three materials in total (label, gold rim, silver metal) keep the can at three draw calls.
+    gold = solid_material("Gold lacquered rim", (214, 170, 84), metallic=0.9, roughness=0.28)
+    silver = solid_material("Silver tinplate", (206, 206, 202), metallic=0.9, roughness=0.34)
 
     tex_dir = HERE / "textures"
     tex_dir.mkdir(parents=True, exist_ok=True)
     reports = {"inputs": {}, "cans": {}}
     cans = []
+    # Pass 1: load every packshot and choose one panel order shared by all three-panel SKUs (they share one design).
+    loaded = {}
     for spec in VARIANTS:
-        for kind in ("front", "back"):
-            data = (packshots / spec[kind]).read_bytes()
-            reports["inputs"][spec[kind]] = hashlib.sha256(data).hexdigest()
-        fpx, bpx = load_pixels(packshots / spec["front"]), load_pixels(packshots / spec["back"])
-        fb, bb = can_bounds(fpx), can_bounds(bpx)
-        fpx, bpx = delight(fpx, fb), delight(bpx, bb)
+        panels = []
+        for kind in ("front", "back", "nutrition"):
+            if kind not in spec:
+                continue
+            reports["inputs"][spec[kind]] = hashlib.sha256((packshots / spec[kind]).read_bytes()).hexdigest()
+            raw = load_pixels(packshots / spec[kind])
+            bounds = can_bounds(raw)
+            panels.append(Panel(kind, delight(raw, bounds), bounds))
+        loaded[spec["key"]] = panels
+    totals = {}
+    reports["order_costs"] = {}
+    for spec in VARIANTS:
+        if len(loaded[spec["key"]]) == 3:
+            costs = order_costs(loaded[spec["key"]])
+            reports["order_costs"][spec["key"]] = {"/".join(k): round(v, 4) for k, v in costs.items()}
+            for order, cost in costs.items():
+                totals[order] = totals.get(order, 0.0) + cost
+    common = min(totals, key=totals.get)
+    reports["common_order"] = list(common)
+    side_of_nutrition = +1 if common.index("nutrition") == 1 else -1
+    for spec in VARIANTS:
+        panels = loaded[spec["key"]]
+        fb = panels[0].bounds
+        layout = (plan_layout(panels, forced_order=common) if len(panels) == 3
+                  else plan_layout(panels, forced_side=side_of_nutrition))
         width = fb[1] - fb[0]
         height = DIAMETER * (fb[3] - fb[2]) / width
         label_h = height - 2 * SEAM
         tex_h = int(min(TEX_W * label_h / (math.pi * DIAMETER), TEX_H_MAX)) // 2 * 2
-        strip = sharpen(unroll_label(fpx, bpx, fb, bb, tex_h))
+        strip = sharpen(unroll_panels(panels, layout, tex_h))
         # LOD1 (shelf display): half-resolution texture, coarse lathes, no hidden body, one mesh per material.
         small = strip.reshape(tex_h // 2, 2, TEX_W // 2, 2, 3).mean(axis=(1, 3))
         (tex_dir / "lod1").mkdir(exist_ok=True)
         lod1_img = save_jpeg(small, tex_dir / "lod1" / f"{spec['slug']}-label-lod1.jpg", f"{spec['slug']}-label-lod1", scene)
         SEG["segments"] = LOD1_SEGMENTS
-        lod1 = build_can(spec, lod1_img, height, tinplate, lid_metal, steel, lod=1)
-        join_by_material(lod1)
-        export_glb(lod1, HERE / "exports" / "lod1" / f"{spec['slug']}-lod1.glb")
+        lod1 = build_can(spec, lod1_img, height, gold, silver, lod=1)
+        lod1.name = spec["root"] + "_parts"
+        for node in lod1.children:
+            node.name += "_lod1"
+        clone = merged_copy(lod1, spec["root"])
+        export_glb(clone, HERE / "exports" / "lod1" / f"{spec['slug']}-lod1.glb")
+        discard(clone)
         discard(lod1)
         for mat in [m for m in bpy.data.materials if m.name.endswith("LOD1")]:
             bpy.data.materials.remove(mat)
         bpy.data.images.remove(lod1_img)
         SEG["segments"] = SEGMENTS
         img = save_jpeg(strip, tex_dir / f"{spec['slug']}-label.jpg", f"{spec['slug']}-label", scene)
-        root = build_can(spec, img, height, tinplate, lid_metal, steel)
-        export_glb(root, HERE / "exports" / f"{spec['slug']}.glb")
-        # Free the plain part names for the next variant; the exported GLB already keeps them unsuffixed.
-        for node in root.children_recursive:
+        root = build_can(spec, img, height, gold, silver)
+        root.name = spec["root"] + "_parts"
+        for node in root.children:  # keep source part names unique per variant so the export can use plain names
             node.name += f"_{spec['key']}"
             node.data.name += f"_{spec['key']}"
+        clone = merged_copy(root, spec["root"])
+        export_glb(clone, HERE / "exports" / f"{spec['slug']}.glb")
+        discard(clone)
+        root.name = spec["root"]
         reports["cans"][spec["slug"]] = dict(height_m=round(height, 5), diameter_m=DIAMETER, texture=[TEX_W, tex_h],
-                                              front_bounds=fb, back_bounds=bb,
+                                              front_bounds=fb, layout=layout,
+                                              panels={p.name: spec[p.name] for p in panels},
                                               lod1=dict(texture=[TEX_W // 2, tex_h // 2], segments=LOD1_SEGMENTS))
         cans.append((spec, root, height))
 
@@ -449,6 +654,63 @@ def main():
         scene.render.filepath = str(HERE / "previews" / f"{spec['slug']}.png")
         bpy.ops.render.render(write_still=True)
         root.location = saved
+    # QA renders: 24 turntable views (every 15 degrees) and six standard views per can, as contact sheets.
+    qa_dir = HERE / "reports" / "qa"
+    qa_dir.mkdir(parents=True, exist_ok=True)
+    cyclorama = next(o for o in studio.children if o.name == "Cyclorama")
+    tmp = str(qa_dir / "_tile.png")
+
+    def render_tile(size):
+        scene.render.resolution_x = scene.render.resolution_y = size
+        scene.render.filepath = tmp
+        bpy.ops.render.render(write_still=True)
+        tile = bpy.data.images.load(tmp)
+        arr = np.array(tile.pixels[:], dtype=np.float32).reshape(size, size, 4)[:, :, :3]
+        bpy.data.images.remove(tile)
+        return arr
+
+    def sheet(tiles, columns, size):
+        rows = (len(tiles) + columns - 1) // columns
+        big = np.ones((rows * size, columns * size, 3), dtype=np.float32)
+        for index, tile in enumerate(tiles):
+            r, c = divmod(index, columns)
+            y0 = (rows - 1 - r) * size  # Blender pixel rows run bottom-up
+            big[y0:y0 + size, c * size:(c + 1) * size] = tile
+        return big
+
+    for spec, root, height in cans:
+        for other, other_root, _ in cans:
+            for node in (other_root, *other_root.children_recursive):
+                node.hide_render = other_root is not root
+        root.location = (0, 0, 0)
+        cam.data.lens = 85
+        views = []
+        for degrees in range(0, 360, 15):
+            root.rotation_euler = (0, 0, math.radians(degrees))
+            cam.location = (0.0, -0.40, height * 0.55)
+            cam.rotation_euler = (Vector((0, 0, height * 0.47)) - cam.location).to_track_quat("-Z", "Y").to_euler()
+            views.append(render_tile(320))
+        save_jpeg(sheet(views, 6, 320), qa_dir / f"{spec['slug']}-turntable-24.jpg", f"{spec['slug']}-turntable", scene)
+        bpy.data.images.remove(bpy.data.images[f"{spec['slug']}-turntable"])
+        six = []
+        for name, yaw, cam_pos, target_z, hide_floor in (
+                ("front", 0, (0.0, -0.40, height * 0.55), height * 0.47, False),
+                ("back", 180, (0.0, -0.40, height * 0.55), height * 0.47, False),
+                ("left", 90, (0.0, -0.40, height * 0.55), height * 0.47, False),
+                ("right", -90, (0.0, -0.40, height * 0.55), height * 0.47, False),
+                ("top", 0, (0.0, -0.20, height + 0.40), height, False),
+                ("bottom", 0, (0.0, -0.20, -0.40), 0.0, True)):
+            root.rotation_euler = (0, 0, math.radians(yaw))
+            root.location = (0, 0, 0.0)
+            cyclorama.hide_render = hide_floor
+            cam.location = cam_pos
+            cam.rotation_euler = (Vector((0, 0, target_z)) - cam.location).to_track_quat("-Z", "Y").to_euler()
+            six.append(render_tile(400))
+        cyclorama.hide_render = False
+        save_jpeg(sheet(six, 3, 400), qa_dir / f"{spec['slug']}-six-views.jpg", f"{spec['slug']}-six", scene)
+        bpy.data.images.remove(bpy.data.images[f"{spec['slug']}-six"])
+        root.rotation_euler = (0, 0, 0)
+    Path(tmp).unlink(missing_ok=True)
     reports["engine"] = scene.render.engine
     reports["blender"] = bpy.app.version_string
     (HERE / "reports").mkdir(exist_ok=True)

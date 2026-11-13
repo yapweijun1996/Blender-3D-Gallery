@@ -2,10 +2,13 @@
   "inputs": {
     "new-moon-nz-425g-front.jpg": "5735d60c5951e0c9fef5cbd2931b125281b410a4165ab9bd04b5b6af0c96a082",
     "new-moon-nz-425g-back.jpg": "8cbdbeb68255d9f4b5d04a97326b8332dac653de502221d88585e981aeffc0ac",
+    "new-moon-nz-425g-nutrition.jpg": "ce52927629cdf060c9a4adecd265efb0d0f9e2e8b98ab937ab216731af718cf1",
     "new-moon-au-425g-front.jpg": "5aa9106a7e04a5888d1ad653e0faeeefbca74a7ca389121c289cad6d5e45a34a",
     "new-moon-au-425g-back.jpg": "37d7de5e7ef591ac7b3b64e4ddad53f355f7dd28a4a4305a55e1eed9f6b98ebd",
+    "new-moon-au-425g-nutrition.jpg": "86a69d1972b86bb80b7955c88540c917064ae89b454f5f6364f56d134bd910e4",
     "new-moon-sa-425g-front.jpg": "c0c77f857f17dfa3ab0dc5b0ab74fd0356448abf0014ac7e40ca4b1a96374b71",
     "new-moon-sa-425g-back.jpg": "aae438ba58182074055c682c33c18dab839344345d1e0b89359614d86d0a0dd8",
+    "new-moon-sa-425g-nutrition.jpg": "34b196ed941a276a470342f7e80d9b82860ff32ec9f59156758284476acb2af5",
     "new-moon-mx-454g-front.jpg": "68e266d70a1fbbc74351d368ae35555f1629454e20a2118be94ec40de910e979",
     "new-moon-mx-454g-back.jpg": "c5d408f1e39d1673ea19159828f0583c587a52ec5b7cf509e52a6d6fcb012413"
   },
@@ -23,12 +26,44 @@
         271,
         866
       ],
-      "back_bounds": [
-        324,
-        675,
-        271,
-        864
-      ],
+      "layout": {
+        "order": [
+          "front",
+          "nutrition",
+          "back"
+        ],
+        "centres": {
+          "front": 0.0,
+          "nutrition": 117.0,
+          "back": 226.0
+        },
+        "intervals": {
+          "front": [
+            -72,
+            69
+          ],
+          "nutrition": [
+            -48,
+            49
+          ],
+          "back": [
+            -60,
+            62
+          ]
+        },
+        "gap": null,
+        "cost": 0.2654,
+        "spacings": [
+          117,
+          109,
+          134
+        ]
+      },
+      "panels": {
+        "front": "new-moon-nz-425g-front.jpg",
+        "back": "new-moon-nz-425g-back.jpg",
+        "nutrition": "new-moon-nz-425g-nutrition.jpg"
+      },
       "lod1": {
         "texture": [
           640,
@@ -50,12 +85,44 @@
         271,
         865
       ],
-      "back_bounds": [
-        323,
-        675,
-        271,
-        865
-      ],
+      "layout": {
+        "order": [
+          "front",
+          "nutrition",
+          "back"
+        ],
+        "centres": {
+          "front": 0.0,
+          "nutrition": 116.0,
+          "back": 228.0
+        },
+        "intervals": {
+          "front": [
+            -69,
+            71
+          ],
+          "nutrition": [
+            -45,
+            50
+          ],
+          "back": [
+            -62,
+            63
+          ]
+        },
+        "gap": null,
+        "cost": 0.2951,
+        "spacings": [
+          116,
+          112,
+          132
+        ]
+      },
+      "panels": {
+        "front": "new-moon-au-425g-front.jpg",
+        "back": "new-moon-au-425g-back.jpg",
+        "nutrition": "new-moon-au-425g-nutrition.jpg"
+      },
       "lod1": {
         "texture": [
           640,
@@ -77,12 +144,44 @@
         271,
         865
       ],
-      "back_bounds": [
-        321,
-        676,
-        271,
-        865
-      ],
+      "layout": {
+        "order": [
+          "front",
+          "nutrition",
+          "back"
+        ],
+        "centres": {
+          "front": 0.0,
+          "nutrition": 120.0,
+          "back": 223.0
+        },
+        "intervals": {
+          "front": [
+            -72,
+            72
+          ],
+          "nutrition": [
+            -48,
+            48
+          ],
+          "back": [
+            -55,
+            65
+          ]
+        },
+        "gap": null,
+        "cost": 0.3222,
+        "spacings": [
+          120,
+          103,
+          137
+        ]
+      },
+      "panels": {
+        "front": "new-moon-sa-425g-front.jpg",
+        "back": "new-moon-sa-425g-back.jpg",
+        "nutrition": "new-moon-sa-425g-nutrition.jpg"
+      },
       "lod1": {
         "texture": [
           640,
@@ -104,12 +203,42 @@
         271,
         864
       ],
-      "back_bounds": [
-        324,
-        675,
-        271,
-        865
-      ],
+      "layout": {
+        "order": [
+          "front",
+          "back"
+        ],
+        "centres": {
+          "front": 0.0,
+          "back": 120.0
+        },
+        "intervals": {
+          "front": [
+            -65.0,
+            72.0
+          ],
+          "back": [
+            -48.0,
+            54.0
+          ]
+        },
+        "gap": [
+          174.0,
+          295.0
+        ],
+        "cost": 0.1267,
+        "spacings": [
+          120
+        ],
+        "free_edges": {
+          "front": "left",
+          "back": "right"
+        }
+      },
+      "panels": {
+        "front": "new-moon-mx-454g-front.jpg",
+        "back": "new-moon-mx-454g-back.jpg"
+      },
       "lod1": {
         "texture": [
           640,
@@ -119,6 +248,25 @@
       }
     }
   },
+  "order_costs": {
+    "nz": {
+      "front/back/nutrition": 0.3108,
+      "front/nutrition/back": 0.2654
+    },
+    "au": {
+      "front/back/nutrition": 0.2792,
+      "front/nutrition/back": 0.2951
+    },
+    "sa": {
+      "front/back/nutrition": 0.3272,
+      "front/nutrition/back": 0.3222
+    }
+  },
+  "common_order": [
+    "front",
+    "nutrition",
+    "back"
+  ],
   "engine": "BLENDER_EEVEE",
   "blender": "5.2.3 LTS"
 }

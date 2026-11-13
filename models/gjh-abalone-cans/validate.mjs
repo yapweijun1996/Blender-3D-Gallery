@@ -14,7 +14,7 @@ const cans = [
   ['gjh-can-south-africa-abalone', 'ASSET_GJHCanSouthAfricaAbalone'],
   ['gjh-can-mexico-abalone', 'ASSET_GJHCanMexicoAbalone'],
 ];
-const parts = ['CanBody', 'TopSeam', 'BottomSeam', 'Lid', 'PullTabPlate', 'PullTabRing', 'Label'];
+const parts = ['GoldRim', 'SilverMetal', 'Label'];
 // GLTFLoader needs a browser to decode textures, so geometry is checked on a texture-stripped copy.
 function stripTextures(bytes) {
   const jsonLength = bytes.readUInt32LE(12);
@@ -42,7 +42,7 @@ async function checkLod1(id, rootName, build, textureBytes, lod0Triangles) {
   let triangles = 0, primitives = 0;
   asset.traverse(o => { if (o.isMesh) { primitives++; triangles += (o.geometry.index?.count ?? o.geometry.attributes.position.count) / 3; } });
   const full = JSON.parse(fs.readFileSync(path.join(root, 'metadata', id + '.json'), 'utf8'));
-  if (Math.abs(bounds.min.y) > 0.0005 || triangles >= lod0Triangles || primitives > 4)
+  if (Math.abs(bounds.min.y) > 0.0005 || triangles >= lod0Triangles || primitives > 3)
     throw Error(`${id} LOD1: origin/budget violation (${triangles} triangles, ${primitives} primitives)`);
   return { glb_bytes: bytes.length, triangles, draw_calls: primitives, materials: json.materials.length,
     texture_pixels: build.lod1.texture, texture_memory_bytes: textureBytes(build.lod1.texture),
@@ -78,8 +78,8 @@ for (const [id, rootName] of cans) {
   label.traverse(o => { if (o.isMesh && o.geometry.attributes.uv) uvOk = true; });
   if (!uvOk) throw Error(id + ': Label has no UVs');
   const size = bounds.getSize(new Vector3());
-  if (Math.abs(bounds.min.y) > 0.0005 || size.x < 0.07 || size.x > 0.08 || size.y < 0.11 || size.y > 0.13 || bytes.length > 600000 || triangles > 12000)
-    throw Error(`${id}: budget/origin violation ${bytes.length} bytes, ${triangles} triangles, size ${size.toArray()}`);
+  if (Math.abs(bounds.min.y) > 0.0005 || size.x < 0.07 || size.x > 0.08 || size.y < 0.11 || size.y > 0.13 || bytes.length > 500 * 1024 || triangles > 5000 || primitives > 3 || json.materials.length > 3)
+    throw Error(`${id}: budget/origin violation ${bytes.length} bytes, ${triangles} triangles, ${primitives} primitives, size ${size.toArray()}`);
   const build = JSON.parse(fs.readFileSync(path.join(root, 'reports/build.json'), 'utf8')).cans[id];
   const textureBytes = ([w, h]) => Math.round(w * h * 4 * 4 / 3); // RGBA8 with a full mip chain on the GPU
   const metrics = { glb_bytes: bytes.length, triangles, vertices, primitives, materials: json.materials.length, textures: json.images.length,

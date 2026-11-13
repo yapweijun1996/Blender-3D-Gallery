@@ -3,7 +3,7 @@
   "name": "GJH Can — Australia Abalone",
   "name_zh": "澳洲鲍鱼罐头",
   "summary": "A 425g canned australia abalone with a label unrolled from the official Australia SKU packshots.",
-  "description": "Metre-scale tinplate can with double-seam rims, recessed lid with ring-pull and a wrap-around label textured from the official front and reverse Australia 425g packshots.",
+  "description": "Metre-scale tinplate can with thin rolled gold seams, a recessed lid with pressed rings, opening score, ring-pull and rivet, a recessed base, and a 360-degree label unrolled from the official GJH eShop packshots (front, food-photo and nutrition panels).",
   "category": "Packaged Goods",
   "tags": [
     "GJH",
@@ -52,10 +52,11 @@
     "type_zh": "澳洲鲍鱼罐头",
     "source_images": {
       "new-moon-au-425g-front.jpg": "5aa9106a7e04a5888d1ad653e0faeeefbca74a7ca389121c289cad6d5e45a34a",
-      "new-moon-au-425g-back.jpg": "37d7de5e7ef591ac7b3b64e4ddad53f355f7dd28a4a4305a55e1eed9f6b98ebd"
+      "new-moon-au-425g-back.jpg": "37d7de5e7ef591ac7b3b64e4ddad53f355f7dd28a4a4305a55e1eed9f6b98ebd",
+      "new-moon-au-425g-nutrition.jpg": "86a69d1972b86bb80b7955c88540c917064ae89b454f5f6364f56d134bd910e4"
     }
   },
-  "accuracy_notes": "Diameter is a nominal 73.5 mm; height follows the packshot aspect ratio. Not an official packaging specification. The label is a single-view unroll: the strips near each side of the can are blended between the front and reverse photographs, and shading baked into those photographs remains.",
+  "accuracy_notes": "Diameter is a nominal 73.5 mm and height follows the packshot aspect ratio; a retailer listing gives 7.5 x 11 x 7.5 without units, so real dimensions are unverified. Label panel order and spacing are estimated (see label_layout). Packshot limb zones are not used. Shading baked into the photographs is partly divided out.",
   "attribution": [
     {
       "credit": "Label artwork unrolled from GJH eShop official packshots recorded in Webpage-Design-Gallery assets/companies/gjh/official (manifest.json). Can geometry is original."
@@ -63,11 +64,11 @@
   ],
   "rights": "Packaging artwork belongs to its respective owners (GJH / New Moon). Used in the owner's project on the owner's confirmation; no independent licence document was supplied. Public redistribution terms have not been specified.",
   "metrics": {
-    "glb_bytes": 292872,
-    "triangles": 3802,
-    "vertices": 2143,
-    "primitives": 7,
-    "materials": 4,
+    "glb_bytes": 380656,
+    "triangles": 4888,
+    "vertices": 2674,
+    "primitives": 3,
+    "materials": 3,
     "textures": 1,
     "texture_pixels": [
       1280,
@@ -76,7 +77,7 @@
     "animations": 0,
     "dimensions": [
       0.07750000059604645,
-      0.1256846166215837,
+      0.12478461861610413,
       0.07750000059604645
     ],
     "bounds": {
@@ -87,16 +88,16 @@
       ],
       "max": [
         0.038750000298023224,
-        0.1256846166215837,
+        0.12478461861610413,
         0.038750000298023224
       ]
     },
-    "sha256": "49d6ee59640ec8c4410cedc301cc9d869901ffcca01e4ecebc631b4c51e5964c",
-    "draw_calls": 7,
+    "sha256": "66bf366b8ea7c22e49000f96ca76f5c112c02e88c092fe2716cd0a5708595f93",
+    "draw_calls": 3,
     "texture_memory_bytes": 4328107,
     "lod1": {
-      "glb_bytes": 119348,
-      "triangles": 2002,
+      "glb_bytes": 155920,
+      "triangles": 3044,
       "draw_calls": 3,
       "materials": 3,
       "texture_pixels": [
@@ -106,10 +107,10 @@
       "texture_memory_bytes": 1082027,
       "dimensions": [
         0.07750000059604645,
-        0.12568461894989014,
+        0.12478461861610413,
         0.07750000059604645
       ],
-      "sha256": "a4d05f6c2cc24c3530cf13bc651e24e880c261ec4a75b8bea651551f046d04fc",
+      "sha256": "ef3517b13446b6893b7b544f43aaed6719a9fe1714b9f6cfb938dcf0e1344641",
       "validation": {
         "errors": 0,
         "warnings": 0
@@ -120,5 +121,33 @@
     "errors": 0,
     "warnings": 0,
     "validator": "2.0.0-dev.3.10"
+  },
+  "label_layout": {
+    "method": "Each packshot is treated as a cylinder panel (angle = asin of the normalised column). Seam positions and panel spacing are chosen to minimise colour and artwork mismatch at the seams, constrained to close the circle.",
+    "panels_degrees_from_front": {
+      "front": {
+        "centre": 0,
+        "usable_from": -69,
+        "usable_to": 71
+      },
+      "nutrition": {
+        "centre": 116,
+        "usable_from": -45,
+        "usable_to": 50
+      },
+      "back": {
+        "centre": 228,
+        "usable_from": -62,
+        "usable_to": 63
+      }
+    },
+    "order_around_can": [
+      "front",
+      "nutrition",
+      "back"
+    ],
+    "status": "Panel order and spacing are estimates, not verified against a physical can or a die-line.",
+    "unprinted_gap_degrees": 0,
+    "gap_note": "No gap: the three official panels cover the full circumference."
   }
 }
