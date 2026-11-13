@@ -1,18 +1,62 @@
-# Verification: GJH Abalone Cans
+# Verification: GJH Abalone Cans (quality pass v2)
 
-Run on 2026-11-13 with Blender 5.2.3 LTS on macOS arm64.
+Run on 2026-11-13, Blender 5.2.3 LTS, macOS arm64, headless Chromium (Playwright) against the real gallery viewer (`?model=<slug>`, Vite dev server). Before = commit `3c79765`; after = this change. Before/after viewer shots use the same Playwright mouse script, so the camera is identical.
 
-| Check | Result |
-| --- | --- |
-| `generate.py` regenerates all four GLBs, textures, `.blend` and previews | PASS |
-| `node models/gjh-abalone-cans/validate.mjs` (Khronos validator 2.0.0-dev.3.10, parts, UVs, bounds, budgets) | PASS: 0 errors, 0 warnings, 2,490 triangles each |
-| `npm test` | PASS (all suites, including `tests/gjh-abalone-cans.test.mjs`) |
-| `npm run validate:assets` and `npm run build` | PASS |
-| Real browser (Chromium via Playwright, Vite dev server): `?model=<slug>` at 1440, 768 and 390 px wide | PASS: label texture visible, model rotatable viewer opens, 0 console errors |
+## Gap analysis result
 
-## Not verified
+| Gap | Status | Evidence / what changed |
+| --- | --- | --- |
+| GAP-001 thick gold rims | PASS | Seams reduced from 8.6 mm (7% of height) to 5 mm with a rolled bead profile; test asserts seam height < 5.5 mm and bulge < 3 mm. See `screenshots/before-*-front.jpg` vs `after-*-front.jpg`. |
+| GAP-002 label sharpness / stretching | PARTIAL | UV mapping corrected (v spans seam to seam; strips under the seams clamp), bicubic resampling and de-lighting added; the Chinese seal and outlines are visibly crisper in `before/after-*-zoom.jpg`. Sharpness is capped by the source: the official eShop page offers 1000 x 1000 px at most (`data-large_image_width/height` = 1000), so the can is about 350 px wide. Fine print stays soft when zoomed. |
+| GAP-003 hotspot and reflection | PASS | Baked highlight streaks removed from the texture, label roughness 0.62 versus 0.34-0.36 on metal, soft studio environment through an opt-in viewer setting. No distracting hotspot in the zoom shots. |
+| GAP-004 PBR separation | PASS | Label (metallic 0, roughness 0.62), seams (0.45 / 0.34), lid (0.40 / 0.36), body (0.30 / 0.50). No normal maps, so no tangents are needed. |
+| GAP-005 lid detail | PASS | Raised rim, recessed panel, two pressed rings, score plate and a ring-pull loop (`after-*-top.jpg`). About 2.4 mm of relief. |
+| GAP-006 proportions | PARTIAL | Height-to-diameter follows the measured aspect of the official packshots (front and reverse agree). Diameter is a nominal 73.5 mm; no verified packaging dimensions were supplied. |
+| GAP-007 label alignment | PASS (visual) | Front, 45 degrees, side, reverse and top reviewed; the wave line and artwork continue across the reverse seam with no gap or visible stretch. |
+| GAP-008 roughness microdetail | NOT DONE | Roughness differs per part, but no roughness-variation map was added. |
+| GAP-009 presentation | PASS | Cyclorama studio, soft area lights, contact shadow, balanced exposure. Thumbnails are composed to survive the gallery card crop (see Notes). Front, 45 degrees, side and top captured. |
+| GAP-010 optimization | PARTIAL | LOD1 GLBs exported (see measurements). No texture compression (the viewer has no KTX2 loader) and no runtime LOD switching in the gallery. |
 
-- Appearance on physical phones or non-Chromium engines.
-- The label is a single-view unroll of 1000 px packshots, so small print is soft. Judged by eye in the viewer and Blender previews only.
-- Current packaging edition, certification validity and redistribution terms. Packaging artwork is used on the owner's confirmation only (see README, Rights).
-- No deployment was checked. A push to `main` is not evidence of a live GitHub Pages release.
+## Acceptance tests
+
+| ID | Result | Notes |
+| --- | --- | --- |
+| E2E-001 logo recognizable | PASS | Visual, all four cans. |
+| E2E-002 no visible stretching | PASS (visual) | Plus automated UV range check (u covers exactly one wrap). |
+| E2E-003 no missing or black textures | PASS | Automated: one embedded JPEG per GLB; visual in viewer; 0 failed requests. |
+| E2E-004 proportionate rims | PASS | Automated thickness and bulge limits. |
+| E2E-005 lid construction detail | PASS | Automated relief range; visual top view. |
+| E2E-006 no label hotspot | PASS (visual) | Judged on the zoom shots only. |
+| E2E-007 no visible geometry intersections | PASS (visual) | No z-fighting seen. Parts overlap by design under the seams; no automated intersection test. |
+| E2E-008 multiple lighting environments | PARTIAL | Checked in the Blender studio and in the gallery viewer with room environment; two setups only. |
+| E2E-009 loads in the Three.js viewer | PASS | All four, 0 console errors. |
+| E2E-010 mobile usable | PARTIAL | Headless Chromium at 390 and 768 px wide only; no physical device. |
+| E2E-011 LOD switching | UNVERIFIED | LOD1 GLBs load in Three.js and match LOD0 in `screenshots/lod0-vs-lod1.jpg`; the gallery has no switching mechanism to test. |
+| E2E-012 correct after reload | PASS | Reloaded twice; identical canvas output size, no errors. |
+| E2E-013 no texture network failures | PASS | 0 failed requests in every capture. |
+| E2E-014 brand graphics unchanged | PASS | Labels come from the official packshots; nothing redrawn. Colour and exposure follow the viewer lighting. |
+| E2E-015 same-angle before/after | PASS | `screenshots/before-*` and `after-*` (front, 45 degrees, side, top, zoom). |
+
+## Measurements (from `reports/assets.json`, regenerated by `validate.mjs`)
+
+| Can | LOD0 tris | LOD0 draw calls | LOD0 GLB | LOD0 texture | LOD0 GPU texture* | LOD1 tris | LOD1 draw calls | LOD1 GLB | LOD1 texture | LOD1 GPU texture* |
+| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: | --- | ---: |
+| New Zealand | 3,802 | 7 | 302 KiB | 1280x632 | 4.31 MB | 2,002 | 3 | 121 KiB | 640x316 | 1.08 MB |
+| Australia | 3,802 | 7 | 286 KiB | 1280x634 | 4.33 MB | 2,002 | 3 | 117 KiB | 640x317 | 1.08 MB |
+| South Africa | 3,802 | 7 | 299 KiB | 1280x634 | 4.33 MB | 2,002 | 3 | 119 KiB | 640x317 | 1.08 MB |
+| Mexico | 3,802 | 7 | 266 KiB | 1280x632 | 4.31 MB | 2,002 | 3 | 105 KiB | 640x316 | 1.08 MB |
+
+\*Estimate: RGBA8 with a full mip chain (width x height x 4 x 4/3); not a measured GPU figure. Before this pass: 2,490 triangles, 7 draw calls, 1280 x 616 texture, 207-243 KiB. LOD0 triangles rose because the seams and lid gained detail.
+
+## Inventory
+
+- Textures (per can): `textures/<slug>-label.jpg` (LOD0, sRGB base colour) and `textures/lod1/<slug>-label-lod1.jpg`, embedded in the GLBs. Texture sizes are not powers of two (fine for WebGL2 mipmaps; three.js resizes for WebGL1).
+- Materials: label (image), gold lacquered seam, lid satin tinplate, can steel (LOD0 only).
+- Source scene: `sources/gjh-abalone-cans.blend`; generator `generate.py`; metrics `reports/`.
+
+## Notes and remaining issues
+
+- Gallery card crop: `.asset-image img` has `height="400"` from `poster()` which overrides `aspect-ratio: 1`, so square thumbnails are scaled to 315 x 400 and centre-cropped to the card. This affects every asset (the GJH Mall Visitor card is cropped the same way). It was not changed here; the can thumbnails were recomposed to stay fully visible. A one-line `height: auto` CSS fix would show whole square thumbnails everywhere if you want it.
+- Viewer change: `display.studioEnvironment` and `display.environmentIntensity` are an opt-in for the existing RoomEnvironment (previously vehicles only); other assets are unaffected. Validated in `scripts/catalog.mjs` and tested.
+- Faint vertical texture grain remains from the source photographs.
+- Not verified: physical phones, other browsers and engines, GPU texture memory measured on a device, GitHub Pages deployment.

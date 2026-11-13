@@ -80,6 +80,11 @@ export function validateMetadata(input, expectedId) {
   if (!isObject(input) || input.id !== expectedId) throw new Error("Mismatched model metadata");
   if (!isObject(input.display) || !Number.isFinite(input.display.previewRotationY)) throw new Error("Invalid metadata display");
   const { previewCameraDirection, previewLighting } = input.display;
+  if (input.display.studioEnvironment !== undefined && typeof input.display.studioEnvironment !== "boolean")
+    throw new Error("Invalid metadata studioEnvironment");
+  if (input.display.environmentIntensity !== undefined &&
+      (!Number.isFinite(input.display.environmentIntensity) || input.display.environmentIntensity < 0 || input.display.environmentIntensity > 3))
+    throw new Error("Invalid metadata environmentIntensity");
   if (previewCameraDirection !== undefined) previewVector(previewCameraDirection, "previewCameraDirection", true);
   if (previewLighting !== undefined) {
     if (!isObject(previewLighting)) throw new Error("Invalid metadata previewLighting");

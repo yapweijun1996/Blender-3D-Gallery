@@ -21,7 +21,11 @@ from mathutils import Vector
 HERE = Path(__file__).resolve().parent
 DIAMETER = 0.0735  # nominal metres; height follows each packshot's measured aspect ratio
 SEGMENTS = 72
-TEX_W, TEX_H_MAX = 1280, 640
+TEX_W, TEX_H_MAX = 1280, 640  # about 1.15x the packshot's real detail; more would only enlarge blur
+LOD1_SEGMENTS, LOD1_TEX_W = 36, 640
+SEG = {"segments": SEGMENTS}
+SEAM = 0.0050  # double-seam height in metres
+RIM_CROP = 0.05  # packshot rim fraction cropped from each end of the label
 
 VARIANTS = [
     dict(key="nz", slug="gjh-can-new-zealand-abalone", name="New Zealand Abalone", zh="新西兰鲍鱼罐头",
@@ -65,15 +69,24 @@ def can_bounds(px):
     return int(cols.min()), int(cols.max()), y0, y1
 
 
+def cubic_weights(t):
+    """Catmull-Rom weights for the four taps around a fractional position t."""
+    return np.stack([-0.5 * t ** 3 + t ** 2 - 0.5 * t, 1.5 * t ** 3 - 2.5 * t ** 2 + 1,
+                     -1.5 * t ** 3 + 2 * t ** 2 + 0.5 * t, 0.5 * t ** 3 - 0.5 * t ** 2])
+
+
 def sample(px, x, y):
-    """Bilinear sample of a top-down image at float pixel coordinates."""
+    """Bicubic (Catmull-Rom) sample of a top-down image at float pixel coordinates."""
     h, w, _ = px.shape
-    x = np.clip(x, 0, w - 1.001)
-    y = np.clip(y, 0, h - 1.001)
+    x = np.clip(x, 1, w - 3.001)
+    y = np.clip(y, 1, h - 3.001)
     x0, y0 = x.astype(int), y.astype(int)
-    fx, fy = (x - x0)[..., None], (y - y0)[..., None]
-    return (px[y0, x0] * (1 - fx) * (1 - fy) + px[y0, x0 + 1] * fx * (1 - fy) +
-            px[y0 + 1, x0] * (1 - fx) * fy + px[y0 + 1, x0 + 1] * fx * fy)
+    wx, wy = cubic_weights(x - x0), cubic_weights(y - y0)
+    out = np.zeros(x.shape + (3,), dtype=np.float32)
+    for j in range(4):
+        for i in range(4):
+            out += px[y0 + j - 1, x0 + i - 1] * (wx[i] * wy[j])[..., None]
+    return np.clip(out, 0, 1)
 
 
 def smoothstep(a, b, x):
@@ -81,12 +94,46 @@ def smoothstep(a, b, x):
     return t * t * (3 - 2 * t)
 
 
+def gaussian_1d(a, sigma, axis):
+    radius = int(sigma * 3) + 1
+    k = np.exp(-0.5 * (np.arange(-radius, radius + 1) / sigma) ** 2)
+    k /= k.sum()
+    pad = [(0, 0)] * a.ndim
+    pad[axis] = (radius, radius)
+    a = np.pad(a, pad, mode="edge")
+    return np.apply_along_axis(lambda v: np.convolve(v, k, mode="valid"), axis, a)
+
+
+def delight(px, bounds):
+    """Remove the vertical shading baked into a cylinder packshot (edge darkening and the long highlight streak).
+
+    The shading of a lit cylinder is close to a function of the column only, so it is estimated as the per-column
+    median of luminance relative to each row's mean, then divided out. The viewer lights the model again."""
+    x0, x1, y0, y1 = bounds
+    out = px.copy()
+    top, bottom = int(y0 + RIM_CROP * (y1 - y0)), int(y1 - RIM_CROP * (y1 - y0))
+    cols = slice(x0 + 2, x1 - 1)
+    band = px[top:bottom, cols].mean(axis=2)
+    row_mean = band[:, band.shape[1] // 4: 3 * band.shape[1] // 4].mean(axis=1, keepdims=True) + 1e-4
+    column = np.median(band / row_mean, axis=0)
+    column = gaussian_1d(column, 16.0, 0)  # wide smoothing: per-column noise would show as vertical banding
+    centre = column[len(column) // 4: 3 * len(column) // 4].mean()
+    gain = np.clip(centre / np.maximum(column, 1e-3), 0.8, 1.4)
+    out[:, cols] = np.clip(px[:, cols] * gain[None, :, None], 0, 1)
+    return out
+
+
+def sharpen(img, amount=0.7, sigma=1.1):
+    blur = gaussian_1d(gaussian_1d(img, sigma, 0), sigma, 1)
+    return np.clip(img + amount * (img - blur), 0, 1)
+
+
 def unroll_label(front_px, back_px, fb, bb, tex_h):
     """Unroll front/back packshots into one label strip. u=0.5 is the front centre, u=0/1 the back centre."""
     u = (np.arange(TEX_W) + 0.5) / TEX_W
     phi = (u - 0.5) * 2 * np.pi
     v = (np.arange(tex_h) + 0.5) / tex_h  # 0 bottom .. 1 top
-    rim = 0.052  # seam fraction of can height, measured from the packshots
+    rim = RIM_CROP
     result = []
     for px, (x0, x1, y0, y1), ang in ((front_px, fb, phi), (back_px, bb, np.where(phi >= 0, phi - np.pi, phi + np.pi))):
         cx, r = (x0 + x1) / 2, (x1 - x0) / 2
@@ -126,9 +173,10 @@ def label_material(name, image):
     tex = nodes.new("ShaderNodeTexImage")
     tex.image = image
     tex.interpolation = "Linear"
+    tex.extension = "EXTEND"
     links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
     bsdf.inputs["Metallic"].default_value = 0.0
-    bsdf.inputs["Roughness"].default_value = 0.38
+    bsdf.inputs["Roughness"].default_value = 0.62  # printed lacquer: soft, no hot streaks
     return m
 
 
@@ -153,8 +201,9 @@ def mesh_object(name, parent, mat, bm, smooth=True):
     return link(bpy.data.objects.new(name, me), parent)
 
 
-def lathe_bm(profile, segments=SEGMENTS, uv=None, cap_top=True):
+def lathe_bm(profile, segments=None, uv=None, cap_top=True, closed=False):
     """Radial profile [(radius, z)] revolved around Z; phi=0 faces -Y. A zero radius becomes a single pole vertex."""
+    segments = segments or SEG["segments"]
     bm = bmesh.new()
     rings = []
     for r, z in profile:
@@ -164,10 +213,10 @@ def lathe_bm(profile, segments=SEGMENTS, uv=None, cap_top=True):
             rings.append([bm.verts.new((r * math.sin(i * math.tau / segments - math.pi),
                                         -r * math.cos(i * math.tau / segments - math.pi), z)) for i in range(segments)])
     layer = bm.loops.layers.uv.new("UVMap") if uv else None
-    for j in range(len(profile) - 1):
+    for j in range(len(profile) - (0 if closed else 1)):
         for i in range(segments):
             k = (i + 1) % segments
-            a, b = rings[j], rings[j + 1]
+            a, b = rings[j], rings[(j + 1) % len(profile)]
             if isinstance(a, list) and isinstance(b, list):
                 face = bm.faces.new((a[i], a[k], b[k], b[i]))
             elif isinstance(a, list):
@@ -194,32 +243,40 @@ def box_bm(size, loc, bevel=0.0):
     return bm
 
 
-def build_can(spec, label_img, height, tinplate, lid_metal, steel):
+def build_can(spec, label_img, height, tinplate, lid_metal, steel, lod=0):
     r = DIAMETER / 2
     root = empty(spec["root"])
-    seam = 0.0045
-    body_top = height - seam
-    # Body shell under the label (never visible except at the seams).
-    mesh_object("CanBody", root, steel, lathe_bm([(0.0, seam * 0.5), (r, seam * 0.5), (r, body_top)]))
-    # Double-seam rings at both ends, slightly proud of the body.
-    for name, z0, z1 in (("BottomSeam", 0.0, seam * 1.9), ("TopSeam", height - seam * 1.9, height)):
-        profile = [(0.0, z0), (r + 0.0012, z0), (r + 0.0016, (z0 + z1) / 2), (r + 0.0012, z1), (r - 0.0006, z1)]
-        mesh_object(name, root, tinplate, lathe_bm(profile, cap_top=False))
-    # Recessed lid with stepped panel and a ring-pull.
-    lid_top = height - 0.0014
-    mesh_object("Lid", root, lid_metal, lathe_bm([(0.0, lid_top - 0.0016), (r * 0.82, lid_top - 0.0016),
-                                                  (r * 0.88, lid_top), (r - 0.0008, lid_top), (r - 0.0008, lid_top - 0.0004),
-                                                  (0.0, lid_top - 0.0004)]))
-    mesh_object("PullTabPlate", root, lid_metal, box_bm((0.022, 0.012, 0.0012), (0.0, 0.016, lid_top + 0.0006), 0.0003))
-    ring = lathe_bm([(0.0, 0.0), (0.0090, 0.0), (0.0090, 0.0012), (0.0, 0.0012)], segments=32)
+    # Body shell under the label (visible only through the seams).
+    if lod == 0:
+        mesh_object("CanBody", root, steel, lathe_bm([(0.0, SEAM * 0.5), (r, SEAM * 0.5), (r, height - SEAM * 0.5)], cap_top=False))
+    # Rolled double seams: a rounded bead that bulges slightly past the body, with a chamfered outer lip.
+    bead = r + 0.0020
+    bottom = [(r - 0.0030, 0.0), (r + 0.0006, 0.0), (r + 0.0016, SEAM * 0.22), (bead, SEAM * 0.55),
+              (r + 0.0016, SEAM * 0.9), (r + 0.0004, SEAM)]
+    mesh_object("BottomSeam", root, tinplate, lathe_bm(bottom, cap_top=False))
+    top = [(r + 0.0004, height - SEAM), (r + 0.0016, height - SEAM * 0.9), (bead, height - SEAM * 0.55),
+           (r + 0.0016, height - SEAM * 0.22), (r + 0.0006, height), (r - 0.0030, height)]
+    mesh_object("TopSeam", root, tinplate, lathe_bm(top, cap_top=False))
+    # Lid: raised rim, recessed panel, stacking bead and a gentle pressed ring.
+    lid = height - 0.0004
+    panel = lid - 0.0024
+    mesh_object("Lid", root, lid_metal, lathe_bm([
+        (0.0, panel), (r * 0.50, panel), (r * 0.54, panel + 0.0011), (r * 0.60, panel), (r * 0.78, panel),
+        (r * 0.84, panel + 0.0015), (r - 0.0034, lid - 0.0006), (r - 0.0030, lid), (r - 0.0030, lid - 0.0008),
+        (r - 0.0050, lid - 0.0008), (0.0, lid - 0.0008)]))
+    mesh_object("PullTabPlate", root, lid_metal, box_bm((0.020, 0.013, 0.0010), (0.0, 0.014, panel + 0.0007), 0.0003))
+    ring = lathe_bm([(0.0048, 0.0), (0.0092, 0.0), (0.0092, 0.0019), (0.0048, 0.0019)], segments=40, closed=True)
     ring_obj = mesh_object("PullTabRing", root, lid_metal, ring)
-    ring_obj.location = (0.0, -0.010, lid_top + 0.0013)
-    ring_obj.scale = (1.0, 1.35, 1.0)
-    # Label shell: rises from the bottom seam to the top seam, mapped to the unrolled packshot texture.
-    z0, z1 = seam * 1.9 - 0.0004, height - seam * 1.9 + 0.0004
-    profile = [(r - 0.0002, z0), (r + 0.0006, z0), (r + 0.0006, z1), (r - 0.0002, z1)]
-    mesh_object("Label", root, label_material(f"Label {spec['name']}", label_img),
-                lathe_bm(profile, uv=[0.0, 0.0, 1.0, 1.0], cap_top=False))
+    ring_obj.location = (0.0, -0.0105, panel + 0.0022)
+    ring_obj.scale = (1.0, 1.4, 1.0)
+    # Label: printed tin that continues under both seams, so there is no sticker edge.
+    z0, z1 = SEAM * 0.6, height - SEAM * 0.6
+    span = height - 2 * SEAM
+    v_lo, v_hi = (z0 - SEAM) / span, (z1 - SEAM) / span
+    profile = [(r - 0.0004, z0), (r + 0.0003, z0), (r + 0.0003, z1), (r - 0.0004, z1)]
+    # Texture rows span seam-to-seam; the short strips under each seam repeat the edge rows.
+    mesh_object("Label", root, label_material(f"Label {spec['name']}" + (" LOD1" if lod else ""), label_img),
+                lathe_bm(profile, uv=[v_lo, v_lo, v_hi, v_hi], cap_top=False))
     return root
 
 
@@ -236,6 +293,45 @@ def export_glb(root, path):
         export_jpeg_quality=88, export_cameras=False, export_lights=False)
 
 
+def join_by_material(root):
+    """LOD1: merge parts that share a material, so the can is one draw call per material."""
+    groups = {}
+    for obj in list(root.children):
+        groups.setdefault(obj.data.materials[0].name, []).append(obj)
+    for name, objs in groups.items():
+        bpy.ops.object.select_all(action="DESELECT")
+        for obj in objs:
+            obj.select_set(True)
+        bpy.context.view_layer.objects.active = objs[0]
+        if len(objs) > 1:
+            bpy.ops.object.join()
+        bpy.context.view_layer.objects.active.name = "LOD1_" + name.replace(" ", "_")
+
+
+def discard(root):
+    for obj in [*root.children_recursive, root]:
+        data = obj.data
+        bpy.data.objects.remove(obj)
+        if data and data.users == 0:
+            bpy.data.meshes.remove(data)
+
+
+def save_jpeg(strip, path, name, scene):
+    h, w, _ = strip.shape
+    rgba = np.concatenate([strip, np.ones((h, w, 1), np.float32)], axis=2)
+    img = bpy.data.images.new(name + "-raw", w, h)
+    img.pixels = rgba.ravel()
+    img.filepath_raw = str(path)
+    img.file_format = "JPEG"
+    scene.render.image_settings.quality = 88
+    img.save()
+    bpy.data.images.remove(img)
+    packed = bpy.data.images.load(str(path))
+    packed.name = name
+    packed.pack()
+    return packed
+
+
 def main():
     opts = args()
     packshots = Path(opts.packshots)
@@ -244,8 +340,8 @@ def main():
     scene.unit_settings.system = "METRIC"
 
     # Partly metallic: fully metallic surfaces render black in viewers that have no environment map.
-    tinplate = solid_material("Tinplate gold seam", (222, 196, 128), metallic=0.3, roughness=0.42)
-    lid_metal = solid_material("Lid satin tinplate", (218, 212, 196), metallic=0.25, roughness=0.4)
+    tinplate = solid_material("Gold lacquered seam", (190, 150, 68), metallic=0.45, roughness=0.34)
+    lid_metal = solid_material("Lid satin tinplate", (196, 196, 192), metallic=0.4, roughness=0.36)
     steel = solid_material("Can steel", (176, 180, 186), metallic=0.3, roughness=0.5)
 
     tex_dir = HERE / "textures"
@@ -258,21 +354,26 @@ def main():
             reports["inputs"][spec[kind]] = hashlib.sha256(data).hexdigest()
         fpx, bpx = load_pixels(packshots / spec["front"]), load_pixels(packshots / spec["back"])
         fb, bb = can_bounds(fpx), can_bounds(bpx)
+        fpx, bpx = delight(fpx, fb), delight(bpx, bb)
         width = fb[1] - fb[0]
         height = DIAMETER * (fb[3] - fb[2]) / width
-        label_h = height * (1 - 2 * 0.052)
+        label_h = height - 2 * SEAM
         tex_h = int(min(TEX_W * label_h / (math.pi * DIAMETER), TEX_H_MAX)) // 2 * 2
-        strip = unroll_label(fpx, bpx, fb, bb, tex_h)
-        rgba = np.concatenate([strip, np.ones((tex_h, TEX_W, 1), np.float32)], axis=2)
-        img = bpy.data.images.new(f"{spec['slug']}-label", TEX_W, tex_h)
-        img.pixels = rgba.ravel()
-        img.filepath_raw = str(tex_dir / f"{spec['slug']}-label.jpg")
-        img.file_format = "JPEG"
-        scene.render.image_settings.quality = 88
-        img.save()
-        img = bpy.data.images.load(str(tex_dir / f"{spec['slug']}-label.jpg"))
-        img.name = f"{spec['slug']}-label"
-        img.pack()
+        strip = sharpen(unroll_label(fpx, bpx, fb, bb, tex_h))
+        # LOD1 (shelf display): half-resolution texture, coarse lathes, no hidden body, one mesh per material.
+        small = strip.reshape(tex_h // 2, 2, TEX_W // 2, 2, 3).mean(axis=(1, 3))
+        (tex_dir / "lod1").mkdir(exist_ok=True)
+        lod1_img = save_jpeg(small, tex_dir / "lod1" / f"{spec['slug']}-label-lod1.jpg", f"{spec['slug']}-label-lod1", scene)
+        SEG["segments"] = LOD1_SEGMENTS
+        lod1 = build_can(spec, lod1_img, height, tinplate, lid_metal, steel, lod=1)
+        join_by_material(lod1)
+        export_glb(lod1, HERE / "exports" / "lod1" / f"{spec['slug']}-lod1.glb")
+        discard(lod1)
+        for mat in [m for m in bpy.data.materials if m.name.endswith("LOD1")]:
+            bpy.data.materials.remove(mat)
+        bpy.data.images.remove(lod1_img)
+        SEG["segments"] = SEGMENTS
+        img = save_jpeg(strip, tex_dir / f"{spec['slug']}-label.jpg", f"{spec['slug']}-label", scene)
         root = build_can(spec, img, height, tinplate, lid_metal, steel)
         export_glb(root, HERE / "exports" / f"{spec['slug']}.glb")
         # Free the plain part names for the next variant; the exported GLB already keeps them unsuffixed.
@@ -280,37 +381,50 @@ def main():
             node.name += f"_{spec['key']}"
             node.data.name += f"_{spec['key']}"
         reports["cans"][spec["slug"]] = dict(height_m=round(height, 5), diameter_m=DIAMETER, texture=[TEX_W, tex_h],
-                                              front_bounds=fb, back_bounds=bb)
+                                              front_bounds=fb, back_bounds=bb,
+                                              lod1=dict(texture=[TEX_W // 2, tex_h // 2], segments=LOD1_SEGMENTS))
         cans.append((spec, root, height))
 
     # Source scene: all four cans in a row with a studio rig that is never exported.
     for i, (spec, root, height) in enumerate(cans):
         root.location = ((i - 1.5) * 0.12, 0, 0)
     studio = empty("STUDIO")
-    floor_mat = solid_material("Studio floor", (226, 228, 230), roughness=0.85)
-    fm = bmesh.new()
-    bmesh.ops.create_cube(fm, size=1.0)
-    for v in fm.verts:
-        v.co = (v.co.x * 3, v.co.y * 3, v.co.z * 0.02 - 0.01)
-    mesh_object("Floor", studio, floor_mat, fm, smooth=False)
+    floor_mat = solid_material("Studio cyclorama", (222, 224, 226), roughness=0.92)
+
+    def cyclorama(bm):
+        # Floor that sweeps up into a back wall along a quarter-circle, extruded along X.
+        profile = [(-0.9, 0.0), (0.18, 0.0)]
+        for step in range(1, 13):
+            t = step / 12 * math.pi / 2
+            profile.append((0.18 + 0.30 * math.sin(t), 0.30 - 0.30 * math.cos(t)))
+        profile.append((0.48, 1.4))
+        rows = [[bm.verts.new((x, y, z)) for x in (-1.2, 1.2)] for y, z in profile]
+        for a_, b_ in zip(rows, rows[1:]):
+            bm.faces.new((a_[0], a_[1], b_[1], b_[0]))
+    cyc_bm = bmesh.new()
+    cyclorama(cyc_bm)
+    mesh_object("Cyclorama", studio, floor_mat, cyc_bm)
     world = bpy.data.worlds.new("Studio")
     world.use_nodes = True
-    next(n for n in world.node_tree.nodes if n.type == "BACKGROUND").inputs["Color"].default_value = (0.5, 0.51, 0.53, 1)
+    next(n for n in world.node_tree.nodes if n.type == "BACKGROUND").inputs["Color"].default_value = (0.45, 0.46, 0.48, 1)
     scene.world = world
-    for name, loc, energy in (("Key", (0.5, -0.7, 0.7), 12), ("Fill", (-0.6, -0.5, 0.4), 5), ("Rim", (0.0, 0.6, 0.5), 6)):
+    # Large area lights give soft, contact-grounded shadows; the key sits high at the front left.
+    for name, loc, energy, size in (("Key", (-0.45, -0.55, 0.55), 11, 0.7), ("Fill", (0.6, -0.45, 0.25), 5, 1.0),
+                                    ("Rim", (0.0, 0.5, 0.45), 7, 0.5)):
         bpy.ops.object.light_add(type="AREA", location=loc)
         light = bpy.context.object
         light.name = name
         light.data.energy = energy
-        light.data.size = 0.5
+        light.data.size = size
+        light.data.use_shadow = True
         light.parent = studio
-        light.rotation_euler = (Vector((0, 0, 0.06)) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
+        light.rotation_euler = (Vector((0, 0, 0.05)) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
     bpy.ops.object.camera_add()
     cam = bpy.context.object
     cam.parent = studio
     cam.data.lens = 85
     scene.camera = cam
-    scene.render.resolution_x = scene.render.resolution_y = 800
+    scene.render.resolution_x = scene.render.resolution_y = 1000
     scene.render.image_settings.file_format = "PNG"
     scene.view_settings.view_transform = "Standard"
     engines = [e.identifier for e in bpy.types.RenderSettings.bl_rna.properties["engine"].enum_items]
@@ -329,8 +443,9 @@ def main():
                 node.hide_render = other_root is not root
         saved = root.location.copy()
         root.location = (0, 0, 0)
-        cam.location = (0.11, -0.42, height * 0.66)
-        cam.rotation_euler = (Vector((0, 0, height * 0.5)) - cam.location).to_track_quat("-Z", "Y").to_euler()
+        # Gallery cards show a centre crop of the top ~79% of the square image, so keep the can in the upper middle.
+        cam.location = (0.09, -0.60, height * 0.62)
+        cam.rotation_euler = (Vector((0, 0, height * 0.20)) - cam.location).to_track_quat("-Z", "Y").to_euler()
         scene.render.filepath = str(HERE / "previews" / f"{spec['slug']}.png")
         bpy.ops.render.render(write_still=True)
         root.location = saved

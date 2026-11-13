@@ -32,7 +32,18 @@
     "units": "metres",
     "up_axis": "Blender +Z / glTF +Y",
     "origin": "floor centre",
-    "front_axis": "Blender -Y / glTF +Z"
+    "front_axis": "Blender -Y / glTF +Z",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.5,
+    "previewLighting": {
+      "hemisphereIntensity": 0.45,
+      "directionalIntensity": 0.9,
+      "directionalPosition": [
+        -2,
+        3,
+        6
+      ]
+    }
   },
   "product": {
     "brand": "New Moon (GJH house brand)",
@@ -52,35 +63,58 @@
   ],
   "rights": "Packaging artwork belongs to its respective owners (GJH / New Moon). Used in the owner's project on the owner's confirmation; no independent licence document was supplied. Public redistribution terms have not been specified.",
   "metrics": {
-    "glb_bytes": 236300,
-    "triangles": 2490,
-    "vertices": 1403,
+    "glb_bytes": 305732,
+    "triangles": 3802,
+    "vertices": 2143,
     "primitives": 7,
     "materials": 4,
     "textures": 1,
     "texture_pixels": [
       1280,
-      616
+      634
     ],
     "animations": 0,
     "dimensions": [
-      0.07670000195503235,
-      0.1254846176598221,
-      0.07670000195503235
+      0.07750000059604645,
+      0.1256846166215837,
+      0.07750000059604645
     ],
     "bounds": {
       "min": [
-        -0.038350000977516174,
+        -0.038750000298023224,
         0,
-        -0.038350000977516174
+        -0.038750000298023224
       ],
       "max": [
-        0.038350000977516174,
-        0.1254846176598221,
-        0.038350000977516174
+        0.038750000298023224,
+        0.1256846166215837,
+        0.038750000298023224
       ]
     },
-    "sha256": "b3a066cd71932c806c4b28c2205da344a04f5e4b302d1981115187c12fc1234a"
+    "sha256": "ea058cf9c1bd125c47aadeeb2e28a24996d25a3a4da023a2dd7ff0a344e467ff",
+    "draw_calls": 7,
+    "texture_memory_bytes": 4328107,
+    "lod1": {
+      "glb_bytes": 122248,
+      "triangles": 2002,
+      "draw_calls": 3,
+      "materials": 3,
+      "texture_pixels": [
+        640,
+        317
+      ],
+      "texture_memory_bytes": 1082027,
+      "dimensions": [
+        0.07750000059604645,
+        0.12568461894989014,
+        0.07750000059604645
+      ],
+      "sha256": "88dc830a7706dd22e097263e9922d8b2898c464ed813f3cfee1192999896f0f6",
+      "validation": {
+        "errors": 0,
+        "warnings": 0
+      }
+    }
   },
   "validation": {
     "errors": 0,

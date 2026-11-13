@@ -162,14 +162,14 @@ export default async function createViewer(
       ? Object.fromEntries(doorCodes.map((code, index) => [code, { node: candidates[index], closed: candidates[index].rotation.y }]))
       : null;
     const doorButtons = new Map();
-    if (isVehicle) {
-      // Local studio reflections give metallic paint and steel rims their form.
+    if (isVehicle || display?.studioEnvironment === true) {
+      // Local studio reflections give metallic paint, steel rims and tin lids their form.
       const room = new RoomEnvironment();
       const pmrem = new THREE.PMREMGenerator(renderer);
       try {
         environmentTarget = pmrem.fromScene(room, 0.04);
         scene.environment = environmentTarget.texture;
-        scene.environmentIntensity = 0.6;
+        scene.environmentIntensity = display?.environmentIntensity ?? 0.6;
       } finally {
         room.dispose();
         pmrem.dispose();

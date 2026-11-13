@@ -28,6 +28,27 @@ function stripTextures(bytes) {
   out.writeUInt32LE(padded.length, 12); out.write('JSON', 16, 'ascii'); padded.copy(out, 20); rest.copy(out, 20 + padded.length);
   return out;
 }
+async function checkLod1(id, rootName, build, textureBytes, lod0Triangles) {
+  const bytes = fs.readFileSync(path.join(root, 'exports/lod1', id + '-lod1.glb'));
+  const validation = await validator.validateBytes(new Uint8Array(bytes), { uri: id + '-lod1.glb' });
+  if (validation.issues.numErrors || validation.issues.numWarnings) throw Error(id + ' LOD1: ' + JSON.stringify(validation.issues));
+  const json = JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)));
+  if (json.images?.length !== 1 || json.buffers.some(b => b.uri)) throw Error(id + ' LOD1: expected one embedded texture');
+  const bare = stripTextures(bytes);
+  const gltf = await new GLTFLoader().parseAsync(bare.buffer.slice(bare.byteOffset, bare.byteOffset + bare.byteLength), '');
+  gltf.scene.updateMatrixWorld(true);
+  const asset = gltf.scene.getObjectByName(rootName);
+  const bounds = new Box3().setFromObject(asset);
+  let triangles = 0, primitives = 0;
+  asset.traverse(o => { if (o.isMesh) { primitives++; triangles += (o.geometry.index?.count ?? o.geometry.attributes.position.count) / 3; } });
+  const full = JSON.parse(fs.readFileSync(path.join(root, 'metadata', id + '.json'), 'utf8'));
+  if (Math.abs(bounds.min.y) > 0.0005 || triangles >= lod0Triangles || primitives > 4)
+    throw Error(`${id} LOD1: origin/budget violation (${triangles} triangles, ${primitives} primitives)`);
+  return { glb_bytes: bytes.length, triangles, draw_calls: primitives, materials: json.materials.length,
+    texture_pixels: build.lod1.texture, texture_memory_bytes: textureBytes(build.lod1.texture),
+    dimensions: bounds.getSize(new Vector3()).toArray(), sha256: createHash('sha256').update(bytes).digest('hex'),
+    validation: { errors: validation.issues.numErrors, warnings: validation.issues.numWarnings } };
+}
 const reports = [];
 for (const [id, rootName] of cans) {
   const bytes = fs.readFileSync(path.join(root, 'exports', id + '.glb'));
@@ -59,11 +80,15 @@ for (const [id, rootName] of cans) {
   const size = bounds.getSize(new Vector3());
   if (Math.abs(bounds.min.y) > 0.0005 || size.x < 0.07 || size.x > 0.08 || size.y < 0.11 || size.y > 0.13 || bytes.length > 600000 || triangles > 12000)
     throw Error(`${id}: budget/origin violation ${bytes.length} bytes, ${triangles} triangles, size ${size.toArray()}`);
+  const build = JSON.parse(fs.readFileSync(path.join(root, 'reports/build.json'), 'utf8')).cans[id];
+  const textureBytes = ([w, h]) => Math.round(w * h * 4 * 4 / 3); // RGBA8 with a full mip chain on the GPU
   const metrics = { glb_bytes: bytes.length, triangles, vertices, primitives, materials: json.materials.length, textures: json.images.length,
     texture_pixels: null, animations: (json.animations ?? []).length, dimensions: size.toArray(),
     bounds: { min: bounds.min.toArray(), max: bounds.max.toArray() }, sha256: createHash('sha256').update(bytes).digest('hex') };
-  const build = JSON.parse(fs.readFileSync(path.join(root, 'reports/build.json'), 'utf8')).cans[id];
   metrics.texture_pixels = build.texture;
+  metrics.draw_calls = primitives;
+  metrics.texture_memory_bytes = textureBytes(build.texture);
+  metrics.lod1 = await checkLod1(id, rootName, build, textureBytes, triangles);
   const check = { errors: validation.issues.numErrors, warnings: validation.issues.numWarnings, validator: validation.validatorVersion };
   const file = path.join(root, 'metadata', id + '.json');
   const meta = JSON.parse(fs.readFileSync(file, 'utf8'));
