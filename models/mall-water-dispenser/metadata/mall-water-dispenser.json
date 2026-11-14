@@ -1,0 +1,112 @@
+{
+  "id": "mall-water-dispenser",
+  "backlog_id": "shopping-mall-009",
+  "name": "Mall Water Dispenser",
+  "summary": "Unbranded public corridor drinking water dispenser with recessed bottle bay, drip grate and cold/ambient controls.",
+  "description": "Original illustrative freestanding public drinking fixture. The spout and service panel are independently editable; the service panel has an authored open/close clip.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "public",
+    "drinking-water",
+    "dispenser",
+    "original",
+    "unbranded",
+    "editable",
+    "animated"
+  ],
+  "status": "PASS local QA; release NEEDS REVIEW",
+  "created": "2026-11-14",
+  "author": "Blender-3D-Gallery / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry and materials; no external assets or textures.",
+  "generator": "generate.py",
+  "paths": {
+    "source": "sources/mall-water-dispenser.blend",
+    "glb": "exports/optimized.glb",
+    "preview": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/rear.png",
+      "previews/side.png",
+      "previews/open.png"
+    ]
+  },
+  "display": {
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "floor centre",
+    "previewRotationY": 0,
+    "studioEnvironment": true,
+    "environmentIntensity": 0.8
+  },
+  "accuracy_notes": "Proportioned illustrative public corridor fixture, not measured equipment and not a water, plumbing, refrigeration, hygiene, accessibility, electrical, hot-water, safety, or certification specification. No actual water simulation is claimed; controls are cold and ambient only.",
+  "rights": "Original geometry and materials; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets, brands, labels, or copied models."
+    }
+  ],
+  "budgets": {
+    "triangles": 12000,
+    "primitives": 80,
+    "glb_bytes": 1000000
+  },
+  "interaction": {
+    "root": "ASSET_MallWaterDispenser",
+    "clips": [
+      "ServicePanelOpenClose"
+    ],
+    "duration_seconds": 2.5,
+    "mutually_exclusive": true,
+    "reset_seconds": 0
+  },
+  "qa": {
+    "browser": "PASS Chromium: 1440/768/390 gallery load by actual GLB hash, orbit, zoom, reset, close/reopen x3; isolated AnimationMixer changed pixels and exact reset. Not gallery animation controls.",
+    "render_review": "PASS actual hero/front/rear/side/open rendered pixels and gallery/animation screenshots inspected 2026-11-14",
+    "source_edit": "PASS saved-copy mesh/material edit, reopen and re-export; canonical source unchanged",
+    "physical_devices": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "Mall Water Dispenser",
+    "backlog_id": "shopping-mall-009",
+    "sha256": "ef73e0d578b70850dd7d9c5e5c799f4e8561a06bd606ad164a1b8e8b2d4ec8f8",
+    "glb_bytes": 177716,
+    "triangles": 3252,
+    "vertices": 6416,
+    "primitives": 27,
+    "materials": 7,
+    "textures": 0,
+    "animations": 1,
+    "dimensions": [
+      0.7400000095367432,
+      1.4800000376999378,
+      0.70749999769032
+    ],
+    "bounds": {
+      "min": [
+        -0.3700000047683716,
+        0,
+        -0.28249998576939106
+      ],
+      "max": [
+        0.3700000047683716,
+        1.4800000376999378,
+        0.42500001192092896
+      ]
+    },
+    "budget": {
+      "triangles": 12000,
+      "bytes": 1000000,
+      "mesh_primitives": 80
+    },
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "validator": "2.0.0-dev.3.10"
+    }
+  }
+}
