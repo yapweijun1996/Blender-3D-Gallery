@@ -202,28 +202,80 @@ try {
     assert.notEqual(await page.evaluate(()=>getComputedStyle(document.body).overflow),'hidden');
     await noOverflow(page);
   },{viewport:{width:390,height:844},hasTouch:true});
-  await run('legacy demos launch, refresh, return to index and release canvas', async page => {
+  await run('legacy demos launch, refresh, return to index and release canvas', async (page, context) => {
+    page.on('console', message => { if(message.text().startsWith('LEGACY_HEARTBEAT ')) console.log(message.text()); });
+    // Observation only: keep the original actions, readiness and timeouts intact.
+    await context.addInitScript(() => {
+      const metrics = window.qaLegacyMetrics = {
+        started: performance.timeOrigin, timerTicks: 0, frames: 0,
+        timerMaxGap: 0, frameMaxGap: 0, longTasks: 0, longTaskMax: 0,
+        rectChanges: 0, lastRect: null, visible: !document.hidden,
+      };
+      let lastTimer = performance.now(), lastFrame = 0, previousRect = '';
+      setInterval(() => {
+        const now = performance.now();
+        metrics.timerTicks++; metrics.timerMaxGap = Math.max(metrics.timerMaxGap, now-lastTimer); lastTimer=now;
+        metrics.visible=!document.hidden;
+        const link=document.querySelector('#demo-breadcrumb a');
+        if(link) {
+          const r=link.getBoundingClientRect(), rect=[r.x,r.y,r.width,r.height];
+          const serialized=JSON.stringify(rect);
+          if(previousRect && previousRect!==serialized)metrics.rectChanges++;
+          previousRect=serialized; metrics.lastRect=rect;
+          metrics.linkDisplay=getComputedStyle(link).display;
+          metrics.linkVisibility=getComputedStyle(link).visibility;
+        }
+        if(metrics.timerTicks % 4 === 0)console.log('LEGACY_HEARTBEAT '+JSON.stringify({url:location.href,at:Date.now(),draws:window.qaDrawCalls,...metrics}));
+      },500);
+      const tick=now=>{
+        metrics.frames++;
+        if(lastFrame)metrics.frameMaxGap=Math.max(metrics.frameMaxGap,now-lastFrame);
+        lastFrame=now;requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      try { new PerformanceObserver(list=>{
+        for(const entry of list.getEntries()){metrics.longTasks++;metrics.longTaskMax=Math.max(metrics.longTaskMax,entry.duration);}
+      }).observe({type:'longtask',buffered:true}); } catch {}
+    });
+    const diagnostic = async (kind, phase) => {
+      let timer;
+      try {
+        const observation=await Promise.race([
+          page.evaluate(()=>({url:location.href,readyState:document.readyState,visibility:document.visibilityState,draws:window.qaDrawCalls,metrics:window.qaLegacyMetrics})),
+          new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('diagnostic evaluate unresponsive after 1500ms')),1500);}),
+        ]);
+        console.log('LEGACY_DIAGNOSTIC',JSON.stringify({kind,phase,at:new Date().toISOString(),observation}));
+      } catch(error) { console.log('LEGACY_DIAGNOSTIC',JSON.stringify({kind,phase,at:new Date().toISOString(),error:error.message})); }
+      finally {clearTimeout(timer);}
+    };
+    const phase = async (kind, name, action) => {
+      const started=Date.now();
+      console.log('LEGACY_PHASE',JSON.stringify({kind,name,event:'start',at:new Date(started).toISOString()}));
+      try {const result=await action();console.log('LEGACY_PHASE',JSON.stringify({kind,name,event:'end',elapsedMs:Date.now()-started}));return result;}
+      catch(error){console.log('LEGACY_PHASE',JSON.stringify({kind,name,event:'failure',elapsedMs:Date.now()-started,error:error.message}));await diagnostic(kind,name);throw error;}
+    };
     for(const kind of ['game','solar']) {
       // Navigation establishes the document; demoReady verifies the actual
       // renderer separately, without waiting for unrelated resource load events.
-      await page.goto(server.url+'?page='+kind,{waitUntil:'domcontentloaded'});
-      await demoReady(page,kind);
+      await phase(kind,'goto',()=>page.goto(server.url+'?page='+kind,{waitUntil:'domcontentloaded'}));
+      await phase(kind,'initial-ready',()=>demoReady(page,kind));
       assert.equal(await page.locator('canvas').count(),1);
       const previousDocument = await page.evaluate(()=>performance.timeOrigin);
-      await page.reload({waitUntil:'domcontentloaded'});
-      await demoReady(page,kind);
+      await phase(kind,'reload',()=>page.reload({waitUntil:'domcontentloaded'}));
+      await phase(kind,'reload-ready',()=>demoReady(page,kind));
       assert.notEqual(await page.evaluate(()=>performance.timeOrigin),previousDocument,'reload creates a fresh document');
       assert.equal(await page.locator('canvas').count(),1);
       assert.ok(await page.evaluate(()=>window.qaDrawCalls > 0),'reloaded demo draws real frames');
-      await page.getByRole('link',{name:/back to.*demos/i}).click();
-      await page.getByRole('heading',{name:/^Interactive Demos/}).waitFor();
+      await phase(kind,'back-link-click',()=>page.getByRole('link',{name:/back to.*demos/i}).click());
+      await phase(kind,'index-ready',()=>page.getByRole('heading',{name:/^Interactive Demos/}).waitFor());
       assert.equal(await page.locator('canvas').count(),0);
       const draws=await page.evaluate(()=>window.qaDrawCalls);
       await page.waitForTimeout(250);
       assert.equal(await page.evaluate(()=>window.qaDrawCalls),draws,'demo draw calls stop after leaving');
-      await page.goBack({waitUntil:'domcontentloaded'});
-      await demoReady(page,kind);
+      await phase(kind,'history-back',()=>page.goBack({waitUntil:'domcontentloaded'}));
+      await phase(kind,'history-ready',()=>demoReady(page,kind));
       assert.equal(await page.locator('canvas').count(),1);
+      await diagnostic(kind,'completed');
     }
   });
   await run('reduced motion and equivalent 200 percent reflow remain usable',async page=>{
