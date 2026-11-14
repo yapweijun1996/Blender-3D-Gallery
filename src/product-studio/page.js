@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { createPoseController } from './pose.js';
 import { createLatestLoader, disposeProduct } from './load.js';
+import { createLabelController, LABEL_PRESETS } from './labels.js';
 import './style.css';
 
 const button = (label, attrs = {}) => {
@@ -22,18 +23,19 @@ export async function mountProductStudio(root, asset, signal, alternatives = [])
   const products = [...new Map([asset,...alternatives].filter(Boolean).map(item => [item.id,item])).values()];
   root.replaceChildren();
   const section = document.createElement('section'); section.className='product-studio';
-  section.innerHTML = `<header class="ps-heading"><div><p class="ps-kicker">PRODUCT PACKAGING / ORIGINAL STUDIES</p><h1>Product Studio<span>.</span></h1></div><p>Inspect fictional packaging studies, explore their parts and reset the view.</p></header><div class="ps-layout"><div class="ps-stage" aria-busy="true"><div class="ps-loading" role="status"></div></div><aside class="ps-panel"><span class="ps-demo">FICTIONAL DEMO</span><h2></h2><p class="ps-description"></p><div class="ps-choice" role="group" aria-label="Choose packaging study"></div><div class="ps-actions"></div><fieldset class="ps-views" disabled><legend>Inspect a side</legend><div class="ps-view-grid"></div></fieldset><p class="ps-status" aria-live="polite">Preparing controls.</p><p class="ps-note"></p></aside></div><p class="ps-hint">Drag or swipe to orbit · Scroll or pinch to zoom · Focus the 3D view and use arrow keys to orbit, + / − to zoom, Home to reset.</p>`;
+  section.innerHTML = `<header class="ps-heading"><div><p class="ps-kicker">PRODUCT PACKAGING / ORIGINAL STUDIES</p><h1>Product Studio<span>.</span></h1></div><p>Inspect fictional packaging studies, explore their parts and reset the view.</p></header><div class="ps-layout"><div class="ps-stage" aria-busy="true"><div class="ps-loading" role="status"></div></div><aside class="ps-panel"><span class="ps-demo">FICTIONAL DEMO</span><h2></h2><p class="ps-description"></p><div class="ps-choice" role="group" aria-label="Choose packaging study"></div><fieldset class="ps-labels" disabled><legend>Original label concept</legend><div class="ps-label-grid"></div><p class="ps-label-help">Runtime artwork only; the baked GLB and source are unchanged.</p></fieldset><div class="ps-actions"></div><fieldset class="ps-views" disabled><legend>Inspect a side</legend><div class="ps-view-grid"></div></fieldset><p class="ps-status" aria-live="polite">Preparing controls.</p><p class="ps-note"></p></aside></div><p class="ps-hint">Drag or swipe to orbit · Scroll or pinch to zoom · Focus the 3D view and use arrow keys to orbit, + / − to zoom, Home to reset.</p>`;
   root.append(section);
-  const $=s=>section.querySelector(s), stage=$('.ps-stage'), loading=$('.ps-loading'), status=$('.ps-status'), choice=$('.ps-choice'), views=$('.ps-views');
+  const $=s=>section.querySelector(s), stage=$('.ps-stage'), loading=$('.ps-loading'), status=$('.ps-status'), choice=$('.ps-choice'), views=$('.ps-views'), labelChoices=$('.ps-labels');
   const openButton=button('Open lid',{'data-action':'open','aria-pressed':'false'}), explodeButton=button('Exploded view',{'data-action':'explode','aria-pressed':'false'}), resetButton=button('Reset product & camera',{'data-action':'reset'});
   $('.ps-actions').append(openButton,explodeButton,resetButton);
+  for (const preset of LABEL_PRESETS) labelChoices.querySelector('.ps-label-grid').append(button(preset.name, {'data-label': preset.id, 'aria-pressed': 'false'}));
   for(const name of ['front','back','left','right','top','bottom']) $('.ps-view-grid').append(button(name[0].toUpperCase()+name.slice(1),{'data-view':name}));
   for(const item of products) choice.append(button(item.name,{'data-product':item.id,'aria-pressed':String(item.id===asset.id)}));
   const local=new AbortController(), motion=matchMedia('(prefers-reduced-motion: reduce)');
-  let disposed=false, renderer, controls, observer, environment, model, poses, loader;
+  let disposed=false, renderer, controls, observer, environment, model, poses, labelsController, loader;
   let frame=0, dirty=true, ready=false, animation=null, mode='closed', amount=0, targetMode='closed', targetAmount=0, lastTime=0, current=asset, modelRadius=0;
   const center=new THREE.Vector3(), camera=new THREE.PerspectiveCamera(35,1,.001,10), scene=new THREE.Scene();
-  const setBusy=busy=>{stage.setAttribute('aria-busy',String(busy));for(const el of [openButton,explodeButton,resetButton]) el.disabled=busy||!ready||disposed;views.disabled=busy||!ready||disposed;choice.querySelectorAll('button').forEach(el=>el.disabled=disposed);if(controls)controls.enabled=ready&&!busy&&!disposed;};
+  const setBusy=busy=>{stage.setAttribute('aria-busy',String(busy));for(const el of [openButton,explodeButton,resetButton]) el.disabled=busy||!ready||disposed;views.disabled=busy||!ready||disposed;labelChoices.disabled=busy||!ready||disposed||current.root!=='ASSET_DemoBeverageCan';choice.querySelectorAll('button').forEach(el=>el.disabled=disposed);if(controls)controls.enabled=ready&&!busy&&!disposed;};
   const invalidate=()=>{dirty=true;if(!disposed&&!document.hidden&&!frame)frame=requestAnimationFrame(render);};
   const report=()=>{
     if(disposed)return;
@@ -52,13 +54,14 @@ export async function mountProductStudio(root, asset, signal, alternatives = [])
     else animation={start:amount,end,elapsed:0};
     lastTime=0;report();invalidate();
   };
-  const reset=()=>{setPose('closed',0,true);view('front');};
+  const syncLabelState=()=>{stage.dataset.labelId=labelsController?.current??'original';stage.dataset.labelTexture=labelsController?.texture?'runtime-canvas':'authored';};
+  const reset=()=>{labelsController?.reset();labelChoices.querySelectorAll('[data-label]').forEach(b=>b.setAttribute('aria-pressed','false'));syncLabelState();setPose('closed',0,true);view('front');};
   function render(now){
     frame=0;if(disposed||document.hidden)return;
     if(animation){animation.elapsed+=lastTime?Math.min((now-lastTime)/1000,.05):0;const p=Math.min(animation.elapsed/.45,1);amount=animation.start+(animation.end-animation.start)*p;poses.apply(mode,amount);dirty=true;if(p===1){animation=null;report();}}
     lastTime=now;if(dirty){renderer.render(scene,camera);dirty=false;}if(animation)frame=requestAnimationFrame(render);
   }
-  function disposeModel(){poses?.dispose();poses=null;if(model){scene.remove(model);disposeProduct(model);model=null;}ready=false;animation=null;lastTime=0;setBusy(true);}
+  function disposeModel(){labelsController?.dispose();labelsController=null;syncLabelState();labelChoices.querySelectorAll('[data-label]').forEach(b=>b.setAttribute('aria-pressed','false'));poses?.dispose();poses=null;if(model){scene.remove(model);disposeProduct(model);model=null;}ready=false;animation=null;lastTime=0;setBusy(true);}
   function showError(item){
     if(disposed)return;stage.dataset.pose='error';setBusy(true);stage.setAttribute('aria-busy','false');
     loading.hidden=false;loading.replaceChildren(document.createTextNode(`Unable to load ${item.name}. `));
@@ -92,7 +95,7 @@ export async function mountProductStudio(root, asset, signal, alternatives = [])
         if(bounds.isEmpty())throw new Error('Packaging model has no visible geometry');
         const nextCenter=new THREE.Vector3();bounds.getCenter(nextCenter);const radius=bounds.getSize(new THREE.Vector3()).length()/2;
         if(!Number.isFinite(radius)||radius<=0)throw new Error('Invalid packaging size');
-        model=gltf.scene;poses=nextPoses;scene.add(model);center.copy(nextCenter);modelRadius=radius;
+        model=gltf.scene;poses=nextPoses;scene.add(model);labelsController=item.root==='ASSET_DemoBeverageCan'?createLabelController(model):null;center.copy(nextCenter);modelRadius=radius;
         camera.aspect=Math.max(stage.clientWidth,1)/Math.max(stage.clientHeight,1);camera.near=radius/80;camera.far=radius*80;camera.updateProjectionMatrix();
         controls.minDistance=radius*1.2;controls.maxDistance=Math.max(radius*12,fitDistance()*3);
         ready=true;stage.dataset.modelId=item.id;stage.dataset.modelRoot=model.getObjectByName(item.root).name;
@@ -119,6 +122,7 @@ export async function mountProductStudio(root, asset, signal, alternatives = [])
     openButton.addEventListener('click',()=>setPose('open',targetMode==='open'&&targetAmount===1?0:1),{signal:local.signal});
     explodeButton.addEventListener('click',()=>setPose('exploded',targetMode==='exploded'&&targetAmount===1?0:1),{signal:local.signal});resetButton.addEventListener('click',reset,{signal:local.signal});
     $('.ps-view-grid').querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>view(b.dataset.view),{signal:local.signal}));
+    labelChoices.querySelectorAll('[data-label]').forEach(b=>b.addEventListener('click',()=>{if(!labelsController||!ready)return;labelsController.apply(b.dataset.label);labelChoices.querySelectorAll('[data-label]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));syncLabelState();invalidate();},{signal:local.signal}));
     choice.querySelectorAll('[data-product]').forEach(b=>b.addEventListener('click',()=>{const next=products.find(item=>item.id===b.dataset.product);if(next&&next.id!==current.id)void loader.select(next);},{signal:local.signal}));
     canvas.addEventListener('keydown',event=>{
       if(!ready||disposed)return;const key=event.key;if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','=','-','Home'].includes(key))return;event.preventDefault();if(key==='Home'){reset();return;}

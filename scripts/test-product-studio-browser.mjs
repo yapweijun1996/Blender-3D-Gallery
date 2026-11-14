@@ -217,5 +217,38 @@ try {
   await page.getByRole('link',{name:/Back to Interactive Demos/}).click();await page.getByRole('heading',{name:'Interactive Demos'}).waitFor();await page.goBack();await ready(page);await page.goForward();await page.getByRole('heading',{name:'Interactive Demos'}).waitFor();assert.equal(await page.locator('canvas').count(),0);
   const hashes=await Promise.all(consumed);assert.ok(hashes.length);assert.ok(hashes.every(h=>h===beverageSha),'actual beverage GLB bytes match authored export');assert.deepEqual(errors,[]);
  },{viewport:{width:390,height:844},hasTouch:true});
+ await run('beverage-runtime-label-presets-render-uv-reset-bound',async(page,context,errors)=>{
+  await page.goto(server.url+studio);await ready(page);await page.locator('[data-product="demo-beverage-can"]').click();await ready(page,'demo-beverage-can');
+  const stage=page.locator('.ps-stage'),canvas=stage.locator('canvas'),labels=page.locator('[data-label]');
+  assert.equal(await labels.count(),3);assert.equal(await labels.evaluateAll(xs=>xs.every(x=>x.textContent&&!x.matches(':disabled'))),true);
+  const original=await canvas.screenshot({path:path.join(out,'slice03-original-front.png')});
+  const renders=[];
+  for(const id of ['citrus-grid','berry-night','mint-signal']){
+   await page.locator(`[data-label="${id}"]`).click();await page.waitForFunction(v=>document.querySelector('.ps-stage')?.dataset.labelId===v,id);
+   renders.push(await canvas.screenshot({path:path.join(out,`slice03-${id}-front.png`)}));
+   await page.locator('[data-view="back"]').click();renders.push(await canvas.screenshot({path:path.join(out,`slice03-${id}-rear.png`)}));
+   await page.locator('[data-view="front"]').click();
+  }
+  assert.ok(renders.every((shot)=>Buffer.compare(shot,original)!==0),'each runtime label changes actual rendered pixels');
+  assert.equal(new Set(renders.filter((_,i)=>i%2===0).map(hash)).size,3,'each preset renders a distinct front');
+  await page.locator('[data-label="citrus-grid"]').click();await canvas.screenshot();const runtimeBaseline=await page.evaluate(()=>qaGpu());
+  for(let i=0;i<30;i++){await page.locator('[data-label="'+['citrus-grid','berry-night','mint-signal'][i%3]+'"]').click();await canvas.screenshot();}
+  await page.locator('[data-label="citrus-grid"]').click();await canvas.screenshot();assert.deepEqual(await page.evaluate(()=>qaGpu()),runtimeBaseline,'30 direct label changes return to exact live GPU baseline');
+  await action(page,'reset').click();await canvas.screenshot();const authoredBaseline=await page.evaluate(()=>qaGpu());
+  await page.locator('[data-label="berry-night"]').click();await page.locator('[data-product="demo-food-tin"]').click();await ready(page,'demo-food-tin');assert.equal(await labels.evaluateAll(xs=>xs.every(x=>x.matches(':disabled'))),true);
+  await page.locator('[data-product="demo-beverage-can"]').click();await ready(page,'demo-beverage-can');assert.equal(await stage.getAttribute('data-label-id'),'original');
+  for(let i=0;i<12;i++){
+   await page.locator(`[data-label="${['citrus-grid','berry-night','mint-signal'][i%3]}"]`).click();
+   await page.locator('[data-product="demo-food-tin"]').click();await ready(page,'demo-food-tin');
+   await page.locator('[data-product="demo-beverage-can"]').click();await ready(page,'demo-beverage-can');
+  }
+  await canvas.screenshot();const bound=await page.evaluate(()=>qaGpu());assert.deepEqual(bound,authoredBaseline,'12 model swaps with runtime labels return to exact authored GPU baseline');
+  await page.locator('[data-label="mint-signal"]').click();await action(page,'open').click();await pose(page,'open');await action(page,'reset').click();await pose(page,'closed');assert.equal(await stage.getAttribute('data-label-id'),'original');assert.deepEqual(errors,[]);
+  assert.equal(await stage.getAttribute('data-label-texture'),'authored');assert.equal(await pixelHash(page,await canvas.screenshot()),await pixelHash(page,original),'reset restores exact original artwork pixels');
+  await page.locator('[data-label="mint-signal"]').click();await page.getByRole('link',{name:/Back to Interactive Demos/}).click();await page.getByRole('heading',{name:'Interactive Demos'}).waitFor();assert.equal(await page.locator('canvas').count(),0);
+  await page.locator('.demo-card[data-demo-id="product-studio"] .outline-button').click();await ready(page);await page.locator('[data-product="demo-beverage-can"]').click();await ready(page,'demo-beverage-can');assert.equal(await stage.getAttribute('data-label-id'),'original');
+  await page.locator('[data-label="berry-night"]').click();await canvas.evaluate(c=>c.dispatchEvent(new Event('webglcontextlost',{cancelable:true})));await page.getByRole('button',{name:'Retry experience'}).waitFor();assert.equal(await labels.evaluateAll(xs=>xs.every(x=>x.matches(':disabled'))),true);assert.equal(await stage.getAttribute('data-label-texture'),'authored');assert.equal(await page.locator('canvas').count(),0);
+  return {presets:3,runtimeBaseline,authoredBaseline,resourceBound:bound};
+ });
 } finally {await browser.close();await server.close();}
 if(results.some(r=>r.status!=="PASS"))process.exitCode=1;
