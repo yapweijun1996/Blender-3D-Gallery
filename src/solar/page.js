@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import "./style.css";
+import { createFrameGate } from "./frame-gate.js";
 import { solarSceneAssets as buildSolarSceneAssets } from "./assets.js";
 
 // URL imports remain lazy: the browser fetches each GLB only when the scene loads.
@@ -39,6 +40,7 @@ export async function mountSolar(root, assets, signal) {
       },
     };
   }
+  const frameGate=createFrameGate(renderer.getContext());
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.setClearColor(0x101717);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -94,6 +96,7 @@ export async function mountSolar(root, assets, signal) {
   const dispose = () => {
     if (disposed) return;
     disposed = true;
+    frameGate.dispose();
     cancelAnimationFrame(frame);
     observer.disconnect();
     controls.removeEventListener("change", invalidate);
@@ -121,6 +124,7 @@ export async function mountSolar(root, assets, signal) {
   signal.addEventListener("abort", dispose, { once: true });
   renderer.domElement.addEventListener("webglcontextlost", (e) => {
     e.preventDefault();
+    frameGate.dispose();
     $("#solar-speed").value = "0";
     status.textContent =
       "The 3D view was interrupted. Return to Gallery, then reopen Solar System.";
@@ -498,8 +502,10 @@ export async function mountSolar(root, assets, signal) {
       belt.visible = mode === "presentation" && !selected;
       const cameraChanged = controls.update();
       // A paused atlas needs a new frame only after input, resize or a view change.
-      if (!document.hidden && (advancing || needsRender || cameraChanged)) {
+      if (advancing || cameraChanged) needsRender=true;
+      if (!document.hidden && needsRender && frameGate.ready()) {
         renderer.render(scene, camera);
+        frameGate.submitted();
         needsRender = false;
       }
       frame = requestAnimationFrame(render);
