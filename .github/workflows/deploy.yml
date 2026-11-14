@@ -21,7 +21,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - name: Install browser test runtime
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium webkit
       - name: Unit and browser release gates
         run: |
           npm test
