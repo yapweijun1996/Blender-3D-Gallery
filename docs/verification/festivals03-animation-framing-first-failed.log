@@ -1,0 +1,14 @@
+First sweep-envelope camera run timed out in page.waitForFunction after adding a no-crop assertion. Camera matrix was not updated after lookAt and before projecting bounds. Added camera.updateMatrixWorld(true), keeping exact pixel-change/reset and no-crop assertions.
+
+Raw stderr:
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 30000ms exceeded.
+    at /srv/agent-workstation/workspaces/blender-fifty03-festivals-20261113/repo/scripts/test-festivals03-animation-browser.mjs:14:311 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v22.23.3

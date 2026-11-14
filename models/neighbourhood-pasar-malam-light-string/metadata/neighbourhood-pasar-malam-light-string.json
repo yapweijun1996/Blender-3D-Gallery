@@ -1,0 +1,110 @@
+{
+  "id": "neighbourhood-pasar-malam-light-string",
+  "name": "Neighbourhood Pasar Malam Light String",
+  "summary": "Neighbourhood Pasar Malam Light String reusable original asset.",
+  "description": "Original Singapore/Malaysia cultural illustrative asset with independently editable components. No commercial or official logos, real personal data, or engineering certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "culture",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry; reviewed repository helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/neighbourhood-pasar-malam-light-string.glb",
+    "source": "sources/neighbourhood-pasar-malam-light-string.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.55,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 496,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. National-symbol usage restrictions still apply where relevant.",
+  "attribution": [
+    {
+      "credit": "Original geometry; repository material/export helpers. Generic labels use Blender bundled Bfont converted to editable mesh. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. AnimationMixer clips where listed, no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative cultural prop, not certified infrastructure, flame simulation or calibrated measuring equipment.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "NOT APPLICABLE: static asset",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "neighbourhood-pasar-malam-light-string",
+    "backlog_id": 496,
+    "glb_bytes": 287580,
+    "triangles": 5496,
+    "vertices": 9888,
+    "meshes": 67,
+    "materials": 6,
+    "dimensions": [
+      4.007011360772695,
+      0.7421910581775614,
+      0.07400000095367432
+    ],
+    "bounds": {
+      "min": [
+        -2.0035056840357823,
+        -3.725290298461914e-09,
+        -0.03700000047683716
+      ],
+      "max": [
+        2.0035056767369124,
+        0.7421910544522711,
+        0.03700000047683716
+      ]
+    },
+    "sha256": "697464492e87c56f2a690dd0f08c35170e104705c6c689dd015749fb99a793b5",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 400000,
+    "budget_triangles": 8000,
+    "animation_clips": 0
+  }
+}

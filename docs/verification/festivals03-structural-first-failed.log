@@ -1,0 +1,32 @@
+PASS 484 hari-raya-ketupat-decoration 314208 5736 [ 0.311126988950573, 0.6210733066714231, 0.10800000233575702 ]
+PASS 485 hari-raya-pelita-lamp 18096 316 [ 0.20000000298023224, 1.1050000190734863, 0.20000000298023224 ]
+PASS 486 hari-raya-bazaar-stall 116060 2494 [ 2.5999999046325684, 2.700000047683716, 1.6305000020646845 ]
+PASS 487 deepavali-oil-lamp 24764 460 [ 0.2669999971985817, 0.14499999582767487, 0.16380000114440918 ]
+PASS 488 deepavali-kolam-floor-pattern 515540 10248 [ 1.2000000476837158, 0.02100001176377542, 1.2000000476837158 ]
+PASS 489 deepavali-festive-arch 392552 7400 [ 3.1999999582767487, 3.404999926686287, 0.6000000238418579 ]
+PASS 490 mid-autumn-lantern-display 539584 10572 [ 2.300000011920929, 2.4500000961124897, 0.5 ]
+PASS 491 mooncake-gift-box 234600 4608 [ 0.3499999940395355, 0.12499999604187906, 0.29400001373142004 ]
+PASS 492 national-day-flag-pole 41916 740 [ 0.6000000238418579, 6.169999904930592, 0.6000000238418579 ]
+PASS 493 singapore-flag-banner 72040 1420 [ 1.600000242040644, 1.0920001521190454, 0.05999999865889549 ]
+PASS 494 malaysia-flag-banner 75192 1432 [ 2.1000001900107668, 1.0920001857087516, 0.05999999865889549 ]
+PASS 495 community-event-tent 74144 1302 [ 4.400000095367432, 3.450000047683716, 4.400000095367432 ]
+PASS 496 neighbourhood-pasar-malam-light-string 287580 5496 [ 4.007011360772695, 0.7421910581775614, 0.07400000095367432 ]
+PASS 497 local-wet-market-weighing-scale 100556 1824 [ 0.38000000454485416, 0.4599999971687794, 0.30000001192092896 ]
+PASS 498 durian-display-basket 346436 5276 [ 0.800000011920929, 0.5899999924004078, 0.6409999970346689 ]
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Dimension mismatch 499 axis0
+    at file:///srv/agent-workstation/workspaces/blender-fifty03-festivals-20261113/repo/scripts/validate-festivals03.mjs:10:203
+    at Array.forEach (<anonymous>)
+    at file:///srv/agent-workstation/workspaces/blender-fifty03-festivals-20261113/repo/scripts/validate-festivals03.mjs:10:181 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

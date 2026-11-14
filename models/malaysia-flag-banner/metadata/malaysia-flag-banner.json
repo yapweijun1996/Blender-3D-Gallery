@@ -1,0 +1,113 @@
+{
+  "id": "malaysia-flag-banner",
+  "name": "Malaysia Flag Banner",
+  "summary": "Malaysia Flag Banner reusable original asset.",
+  "description": "Original Singapore/Malaysia cultural illustrative asset with independently editable components. No commercial or official logos, real personal data, or engineering certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "culture",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry; reviewed repository helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/malaysia-flag-banner.glb",
+    "source": "sources/malaysia-flag-banner.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.25,
+      0.15,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 494,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. National-symbol usage restrictions still apply where relevant.",
+  "attribution": [
+    {
+      "credit": "Original geometry; repository material/export helpers. Generic labels use Blender bundled Bfont converted to editable mesh. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. AnimationMixer clips where listed, no Gallery component-control UI.",
+  "accuracy_notes": "Horizontal national flag geometry with separate bands and symbols. Preserve ratio, colours, symbol count and upper-left hoist orientation. Mount above ground; no official endorsement or legal-use certification. Digital colours are approximate under scene lighting.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "NOT APPLICABLE: static asset",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "references": [
+    "https://dbook.penerangan.gov.my/dbook/dmdocuments/jalur_gemilang_2020/files/downloads/jalur_gemilang_2020.pdf#page=11"
+  ],
+  "metrics": {
+    "result": "PASS",
+    "id": "malaysia-flag-banner",
+    "backlog_id": 494,
+    "glb_bytes": 75192,
+    "triangles": 1432,
+    "vertices": 2376,
+    "meshes": 22,
+    "materials": 5,
+    "dimensions": [
+      2.1000001900107668,
+      1.0920001857087516,
+      0.05999999865889549
+    ],
+    "bounds": {
+      "min": [
+        -1.0500000950053834,
+        0,
+        -0.029999999329447746
+      ],
+      "max": [
+        1.0500000950053834,
+        1.0920001857087516,
+        0.029999999329447746
+      ]
+    },
+    "sha256": "ecfe0a45c7a4f4c671b1c5f9a5651033e60877a48a4e2c6b002cdbed511aba4f",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 400000,
+    "budget_triangles": 8000,
+    "animation_clips": 0
+  }
+}

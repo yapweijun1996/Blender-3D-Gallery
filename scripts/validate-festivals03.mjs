@@ -1,0 +1,13 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';import {Box3,Vector3} from 'three';import validator from 'gltf-validator';
+const specs=JSON.parse(fs.readFileSync('scripts/batchfestivals03.json'));const selected=process.argv[2]?specs.filter(s=>s.id===Number(process.argv[2])):specs;
+for(const spec of selected){
+ const folder='models/'+spec.slug, {readGlb}=await import('../'+folder+'/glb.mjs');
+ const {bytes,json,scene}=await readGlb(folder+'/exports/'+spec.slug+'.glb');const result=await validator.validateBytes(new Uint8Array(bytes));
+ assert.equal(result.issues.numErrors,0);assert.equal(result.issues.numWarnings,0);assert.ok(!json.images?.length&&!json.textures?.length&&!json.cameras?.length);
+ assert.equal(Boolean(json.animations?.length),Boolean(spec.animation_nodes?.length));assert.ok(json.buffers.every(b=>!b.uri));const root=scene.getObjectByName(spec.root);assert.ok(root);assert.equal(root.userData.backlog_id,spec.id);assert.equal(root.userData.units,'metres');
+ for(const n of spec.required_nodes)assert.ok(root.getObjectByName(n),'Missing '+n);
+ let triangles=0,vertices=0,meshes=0;scene.traverse(o=>{if(o.isMesh){meshes++;const p=o.geometry.attributes.position,n=o.geometry.attributes.normal;assert.ok(p&&n);assert.ok([...p.array,...n.array].every(Number.isFinite));vertices+=p.count;triangles+=(o.geometry.index?.count??p.count)/3;}});
+ const b=new Box3().setFromObject(scene),dims=b.getSize(new Vector3()).toArray();assert.ok(Math.abs(b.min.y)<1e-5);assert.ok(dims.every(x=>x>.01&&x<10));spec.expected_dimensions_m.forEach((x,i)=>assert.ok(Math.abs(dims[i]-x)<spec.dimension_tolerance_m,'Dimension mismatch '+spec.id+' axis'+i));assert.ok(triangles>0&&triangles<spec.budget_triangles);assert.ok(bytes.length<spec.budget_bytes);
+ const report={result:'PASS',id:spec.slug,backlog_id:spec.id,glb_bytes:bytes.length,triangles,vertices,meshes,materials:json.materials.length,dimensions:dims,bounds:{min:b.min.toArray(),max:b.max.toArray()},sha256:createHash('sha256').update(bytes).digest('hex'),validation:{errors:0,warnings:0,version:result.validatorVersion},budget_bytes:spec.budget_bytes,budget_triangles:spec.budget_triangles};
+ fs.writeFileSync(folder+'/reports/assets.json',JSON.stringify(report,null,2)+'\n');const mp=folder+'/metadata/'+spec.slug+'.json',m=JSON.parse(fs.readFileSync(mp));m.metrics=report;m.quality_gate.local_asset='PASS: structural GLB, base origin, finite geometry/normals, required hierarchy and budgets';fs.writeFileSync(mp,JSON.stringify(m,null,2)+'\n');console.log('PASS',spec.id,spec.slug,bytes.length,triangles,dims);
+}

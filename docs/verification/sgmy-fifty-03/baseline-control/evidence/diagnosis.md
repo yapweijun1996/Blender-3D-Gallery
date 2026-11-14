@@ -1,0 +1,8 @@
+# Bounded legacy library regression diagnosis
+Original third50 integration:7 completed cases PASS; case8 FAIL at scripts/test-library-browser.mjs:211, page.reload DOMContentLoaded30s timeout; case9 NOT RUN. The original log/screenshot cannot distinguish game vs solar. No uncaught page errors recorded. Original failure remains authoritative and unchanged.
+The test is byte-identical to main762: SHA256 e8a4caca79d848841aaed2af245930426786d5d6c8ef1a50458f19f00a8ed94b.
+One diagnostic baseline control: exact7621956d834a468504f481871ec4d6802d21cbb6 with244catalog entries, no added50; new isolated checkout, local build PASS, nine library cases PASS. Game and solar both completed reload, renderer readiness and cleanup. Job0eaa0cd5-d9dd-44b0-a3dc-d14cff6e7d8b. No second baseline retry.
+Logging-only ESM loader outside repo adds case/kind/URL/request-response/DOMContentLoaded/console-error events. Assertions, test ordering, timeouts, browser options and app source unchanged. Tracked git diff empty.
+This single passing baseline does not establish why integration failed, cannot identify original failing kind, and does not prove asset additions caused regression or that retrying would fix it. Keep third50 overall regression FAIL/Draft until an authorized correction is verified or the failure is otherwise resolved with evidence.
+Actual environment Ubuntu VM, Node22.23.3, Chromium SwiftShader. The original test report hardcodes macOS; that inherited label is inaccurate and is not a claim of macOS coverage.
+Evidence: library.log, library/results.json, build.log, screenshots; loader ../diagnostic-loader.mjs. No runtime fixes, timeout weakening, remote actions or changes to original integration evidence.

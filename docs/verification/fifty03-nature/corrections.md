@@ -1,0 +1,5 @@
+# Initial evidence and corrections
+Initial lantern arch1,001,156 bytes exceeded unchanged950000 budget. Removed bevels from tiny independent ribs only, keeping five lanterns and semantic checks.
+Actual rendered review found a floating closed crate lid, cabinet side setback, flower petals oriented tangentially, loose plant details, canal underside gap and grate coplanar joins. Corrected actual dimensions, radial petals/orchid lip, attachment stalks/twigs/root grounding, solid bank cross-section and separated grate ties. Grass placement is now an evenly distributed jittered grid. Mandarin basket is shallow, with lowest fruit layer resting on its base rather than suspended over an empty basket. Initial affected source/GLB/previews/reports retained. No budget raised or assertion removed.
+
+Durian corrected validator returned6 not3 because stalk object names DURIAN_FruitStalk matched existing fruit prefix. Renamed actual source stalk objects to STALK_Durian; retained independent three-fruit and three-stalk assertions. Pre-rename binaries/source/logs preserved; no geometry changes or assertion removal.

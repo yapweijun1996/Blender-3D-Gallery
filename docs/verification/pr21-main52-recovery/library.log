@@ -1,0 +1,44 @@
+PASS static indexes preserve all assets and never download GLBs or create WebGL
+PASS model search, combined filters, empty state and clear preserve URL state
+PASS demo search/category combine and clear
+PASS legacy model detail direct link, refresh, metadata, related and history
+PASS failed model load retains fallback and can retry
+PASS unknown model and unavailable WebGL provide useful recovery
+PASS mobile menu supports keyboard dismissal, focus return and navigation
+LEGACY_PHASE {"kind":"game","name":"goto","event":"start","at":"2026-11-14T11:30:09.530Z"}
+LEGACY_PHASE {"kind":"game","name":"goto","event":"end","elapsedMs":148}
+LEGACY_PHASE {"kind":"game","name":"initial-ready","event":"start","at":"2026-11-14T11:30:09.678Z"}
+LEGACY_PHASE {"kind":"game","name":"initial-ready","event":"end","elapsedMs":136}
+LEGACY_PHASE {"kind":"game","name":"reload","event":"start","at":"2026-11-14T11:30:09.842Z"}
+LEGACY_PHASE {"kind":"game","name":"reload","event":"end","elapsedMs":742}
+LEGACY_PHASE {"kind":"game","name":"reload-ready","event":"start","at":"2026-11-14T11:30:10.584Z"}
+LEGACY_PHASE {"kind":"game","name":"reload-ready","event":"end","elapsedMs":154}
+LEGACY_PHASE {"kind":"game","name":"back-link-click","event":"start","at":"2026-11-14T11:30:10.775Z"}
+LEGACY_PHASE {"kind":"game","name":"back-link-click","event":"end","elapsedMs":64}
+LEGACY_PHASE {"kind":"game","name":"index-ready","event":"start","at":"2026-11-14T11:30:10.839Z"}
+LEGACY_PHASE {"kind":"game","name":"index-ready","event":"end","elapsedMs":11}
+LEGACY_PHASE {"kind":"game","name":"history-back","event":"start","at":"2026-11-14T11:30:11.103Z"}
+LEGACY_PHASE {"kind":"game","name":"history-back","event":"end","elapsedMs":2}
+LEGACY_PHASE {"kind":"game","name":"history-ready","event":"start","at":"2026-11-14T11:30:11.105Z"}
+LEGACY_PHASE {"kind":"game","name":"history-ready","event":"end","elapsedMs":77}
+LEGACY_DIAGNOSTIC {"kind":"game","phase":"completed","at":"2026-11-14T11:30:11.198Z","observation":{"url":"http://127.0.0.1:33879/Blender-3D-Gallery/?page=game","readyState":"complete","visibility":"visible","draws":826,"metrics":{"started":1794655809843.6,"timerTicks":1,"frames":37,"timerMaxGap":500.19999998807907,"frameMaxGap":133.29999999999995,"longTasks":1,"longTaskMax":129,"rectChanges":0,"lastRect":[0,0,0,0],"visible":true,"linkDisplay":"inline-flex","linkVisibility":"visible"}}}
+LEGACY_PHASE {"kind":"solar","name":"goto","event":"start","at":"2026-11-14T11:30:11.198Z"}
+LEGACY_PHASE {"kind":"solar","name":"goto","event":"end","elapsedMs":479}
+LEGACY_PHASE {"kind":"solar","name":"initial-ready","event":"start","at":"2026-11-14T11:30:11.677Z"}
+LEGACY_PHASE {"kind":"solar","name":"initial-ready","event":"end","elapsedMs":530}
+LEGACY_PHASE {"kind":"solar","name":"reload","event":"start","at":"2026-11-14T11:30:12.223Z"}
+LEGACY_PHASE {"kind":"solar","name":"reload","event":"end","elapsedMs":4306}
+LEGACY_PHASE {"kind":"solar","name":"reload-ready","event":"start","at":"2026-11-14T11:30:16.529Z"}
+LEGACY_PHASE {"kind":"solar","name":"reload-ready","event":"end","elapsedMs":491}
+LEGACY_PHASE {"kind":"solar","name":"back-link-click","event":"start","at":"2026-11-14T11:30:17.034Z"}
+LEGACY_PHASE {"kind":"solar","name":"back-link-click","event":"end","elapsedMs":75}
+LEGACY_PHASE {"kind":"solar","name":"index-ready","event":"start","at":"2026-11-14T11:30:17.109Z"}
+LEGACY_PHASE {"kind":"solar","name":"index-ready","event":"end","elapsedMs":9}
+LEGACY_PHASE {"kind":"solar","name":"history-back","event":"start","at":"2026-11-14T11:30:22.098Z"}
+LEGACY_PHASE {"kind":"solar","name":"history-back","event":"end","elapsedMs":23}
+LEGACY_PHASE {"kind":"solar","name":"history-ready","event":"start","at":"2026-11-14T11:30:22.121Z"}
+LEGACY_PHASE {"kind":"solar","name":"history-ready","event":"end","elapsedMs":685}
+LEGACY_HEARTBEAT {"url":"http://127.0.0.1:33879/Blender-3D-Gallery/?page=solar","at":1794655823100,"draws":168,"started":1794655812224.3,"timerTicks":4,"frames":82,"timerMaxGap":5301,"frameMaxGap":4799.800000000001,"longTasks":3,"longTaskMax":180,"rectChanges":2,"lastRect":[60,130,176.171875,44],"visible":true,"linkDisplay":"inline-flex","linkVisibility":"visible"}
+LEGACY_DIAGNOSTIC {"kind":"solar","phase":"completed","at":"2026-11-14T11:30:23.112Z","observation":{"url":"http://127.0.0.1:33879/Blender-3D-Gallery/?page=solar","readyState":"complete","visibility":"visible","draws":168,"metrics":{"started":1794655812224.3,"timerTicks":4,"frames":83,"timerMaxGap":5301,"frameMaxGap":4799.800000000001,"longTasks":4,"longTaskMax":299,"rectChanges":2,"lastRect":[60,130,176.171875,44],"visible":true,"linkDisplay":"inline-flex","linkVisibility":"visible"}}}
+PASS legacy demos launch, refresh, return to index and release canvas
+PASS reduced motion and equivalent 200 percent reflow remain usable

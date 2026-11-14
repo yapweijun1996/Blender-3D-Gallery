@@ -1,0 +1,37 @@
+{
+  "id": 497,
+  "slug": "local-wet-market-weighing-scale",
+  "title": "Local Wet Market Weighing Scale",
+  "root": "ASSET_LocalWetMarketWeighingScale",
+  "required_nodes": [
+    "Dial",
+    "MOVABLE_Needle",
+    "MOVABLE_Pan"
+  ],
+  "budget_bytes": 400000,
+  "budget_triangles": 8000,
+  "expected_dimensions_m": [
+    0.38,
+    0.46,
+    0.3
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Needle",
+    "MOVABLE_Pan"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Needle",
+      "rotation_euler",
+      1,
+      2.1
+    ],
+    [
+      "MOVABLE_Pan",
+      "location",
+      2,
+      -0.015
+    ]
+  ]
+}
