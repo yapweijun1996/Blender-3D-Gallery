@@ -481,7 +481,7 @@ async function syncRoute() {
               navigate("gallery", true),
             )
           : page === "product-studio"
-            ? await module.mountProductStudio(root, assetById.get("demo-food-tin"), controller.signal)
+            ? await module.mountProductStudio(root, assetById.get("demo-food-tin"), controller.signal, [assetById.get("demo-beverage-can")].filter(Boolean))
           : await module.mountSolar(
               root,
               module.solarSceneAssets(assets),

@@ -1,0 +1,21 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import {execFileSync} from 'node:child_process';
+test('Original beverage source, GLB, preview and exact catalog evidence',()=>{
+ const h='models/demo-beverage-can',m=JSON.parse(fs.readFileSync(h+'/metadata.json'));
+ const b=fs.readFileSync(h+'/exports/demo-beverage-can.glb');
+ assert.equal(b.toString('ascii',0,4),'glTF');
+ assert.equal(crypto.createHash('sha256').update(b).digest('hex'),m.validation.sha256);
+ assert.equal(fs.readFileSync(h+'/'+m.paths.source).toString('ascii',0,7),'BLENDER');
+ for(const p of m.paths.previews)assert(fs.statSync(h+'/'+p).size>10000,p);
+ const c=JSON.parse(fs.readFileSync('models/catalog.json'));
+ const entries=c.collections.flatMap(x=>x.assets||x.models||[]);
+ assert.equal(entries.filter(x=>x.id==='demo-beverage-can').length,1);
+ assert.equal(entries.filter(x=>x.id==='demo-food-tin').length,1);
+ assert.equal(entries.find(x=>x.id==='demo-beverage-can').thumbnail,h+'/previews/hero.png');
+ const food=fs.readFileSync('models/demo-food-tin/exports/demo-food-tin.glb');
+ assert.equal(crypto.createHash('sha256').update(food).digest('hex'),'4b265f78a711d95a80b730ebeaae3906f42c93fbd28f0b8c6e64c8c003eee0ee');
+ execFileSync(process.execPath,[h+'/validate.mjs'],{stdio:'pipe'});
+});

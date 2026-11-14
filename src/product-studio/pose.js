@@ -3,8 +3,11 @@ import { AnimationMixer, LoopOnce } from "three";
 export const POSES = Object.freeze({ closed: null, open: "OpenClose", exploded: "Exploded" });
 export const REQUIRED_NODES = ["ASSET_DemoFoodTin", "BODY_HollowShell", "MOVABLE_Lid", "MOVABLE_PullRing"];
 /** Authored clips are the only authority for movement. No synthetic lid offsets. */
-export function createPoseController(gltf) {
-  for (const name of REQUIRED_NODES) if (!gltf.scene.getObjectByName(name)) throw new Error("Missing packaging node: " + name);
+export function createPoseController(gltf, contract = {}) {
+  const required = contract.root === "ASSET_DemoBeverageCan"
+    ? ["ASSET_DemoBeverageCan", "BODY_HollowShell", "MOVABLE_Tab", "MOVABLE_ScoreFlap"]
+    : REQUIRED_NODES;
+  for (const name of required) if (!gltf.scene.getObjectByName(name)) throw new Error("Missing packaging node: " + name);
   const clips = new Map(gltf.animations.map(c => [c.name, c]));
   for (const name of ["OpenClose", "Exploded"]) {
     const clip = clips.get(name);

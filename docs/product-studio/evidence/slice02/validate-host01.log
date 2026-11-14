@@ -1,0 +1,13 @@
+file:///srv/agent-workstation/workspaces/blender-product-studio-slice01-20261113/repo/models/demo-beverage-can/validate.mjs:19
+const all=['BODY_HollowShell','RIM_NeckedUpper','TOP_AperturePlate','TOP_InnerApertureWall','LABEL_OriginalCitrusBand'].flatMap(n=>{const o=byname(n),m=j.meshes[j.nodes.indexOf(o)];return m.primitives.flatMap(p=>acc(p.attributes.POSITION).map(v=>new T.Vector3(...v).applyMatrix4(o.matrixWorld)));});const box=new T.Box3().setFromPoints(all),dims=box.getSize(new T.Vector3()).toArray();assert(dims[0]>.065&&dims[0]<.069);assert(dims[1]>.115&&dims[1]<.13);assert(dims[2]>.065&&dims[2]<.069);assert(Math.abs(box.min.y)<1e-4);
+                                                                                                                                                                                              ^
+
+TypeError: Cannot read properties of undefined (reading 'primitives')
+    at file:///srv/agent-workstation/workspaces/blender-product-studio-slice01-20261113/repo/models/demo-beverage-can/validate.mjs:19:191
+    at Array.flatMap (<anonymous>)
+    at file:///srv/agent-workstation/workspaces/blender-product-studio-slice01-20261113/repo/models/demo-beverage-can/validate.mjs:19:121
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.23.3

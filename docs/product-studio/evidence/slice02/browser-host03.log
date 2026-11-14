@@ -1,0 +1,65 @@
+START skip-link-keyboard-access
+PASS skip-link-keyboard-access
+START controls-1440
+STEP 1440 exploded-frame
+STEP 1440 reset
+PASS controls-1440
+START controls-768
+STEP 768 exploded-frame
+STEP 768 reset
+PASS controls-768
+START controls-390
+STEP 390 exploded-frame
+STEP 390 reset
+PASS controls-390
+START controls-320
+STEP 320 exploded-frame
+STEP 320 reset
+PASS controls-320
+START orientation-resize
+PASS orientation-resize
+START rapid-switch-reset
+PASS rapid-switch-reset
+START reduced-motion-keyboard
+PASS reduced-motion-keyboard
+START repeated-navigation-disposal
+PASS repeated-navigation-disposal
+START load-503-retry
+FAIL load-503-retry locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+  - waiting for getByRole('button', { name: 'Retry experience' }) to be visible
+
+START load-truncated-retry
+FAIL load-truncated-retry locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+  - waiting for getByRole('button', { name: 'Retry experience' }) to be visible
+
+START abort-delayed-load-newer-navigation
+PASS abort-delayed-load-newer-navigation
+START context-loss-during-load
+PASS context-loss-during-load
+START no-webgl-recovery
+PASS no-webgl-recovery
+START context-loss-disposal
+FAIL context-loss-disposal locator.waitFor: Error: strict mode violation: getByText(/3D view interrupted/) resolved to 2 elements:
+    1) <p role="status" class="ps-loading">…</p> aka getByText('3D view interrupted. Retry')
+    2) <p class="ps-status" aria-live="polite">3D view interrupted. Reload the Product Studio to…</p> aka getByText('3D view interrupted. Reload')
+
+Call log:
+  - waiting for getByText(/3D view interrupted/) to be visible
+
+START delayedA-fastB-and-A-B-A-newest-wins
+FAIL delayedA-fastB-and-A-B-A-newest-wins locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+  - waiting for locator('.ps-stage[data-pose=closed]') to be visible
+
+START late-error-no-overwrite-and-switch-while-animating
+FAIL late-error-no-overwrite-and-switch-while-animating locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+  - waiting for locator('.ps-stage[data-pose=closed][data-model-id="demo-beverage-can"]') to be visible
+
+START twenty-switch-five-route-cycles-resource-stability
+FAIL twenty-switch-five-route-cycles-resource-stability locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+  - waiting for locator('.ps-stage[data-pose=closed]') to be visible
+
