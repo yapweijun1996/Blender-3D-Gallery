@@ -177,6 +177,16 @@ export default async function createViewer(
     }
     if (display)
       model.rotation.y = display.previewRotationY ?? 0;
+    if (display?.textureAnisotropy > 1) {
+      // Anisotropic filtering keeps small printed text readable at oblique angles on curved surfaces (opt-in per asset).
+      const level = Math.min(display.textureAnisotropy, renderer.capabilities.getMaxAnisotropy());
+      model.traverse((node) => {
+        if (!node.isMesh) return;
+        for (const material of [].concat(node.material))
+          for (const texture of [material.map, material.normalMap, material.roughnessMap, material.metalnessMap])
+            if (texture) texture.anisotropy = Math.max(texture.anisotropy, level);
+      });
+    }
     scene.add(model);
     const bounds = new THREE.Box3().setFromObject(model);
     if (bounds.isEmpty()) throw new Error("Model has no visible bounds");

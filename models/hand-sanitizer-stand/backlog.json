@@ -1,0 +1,30 @@
+{
+  "id": 215,
+  "slug": "hand-sanitizer-stand",
+  "title": "Hand Sanitizer Stand",
+  "root": "ASSET_HandSanitizerStand",
+  "required_nodes": [
+    "Bottle",
+    "MOVABLE_Pump",
+    "Sign"
+  ],
+  "budget_bytes": 400000,
+  "budget_triangles": 8000,
+  "expected_dimensions_m": [
+    0.35,
+    1.575,
+    0.35
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Pump"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Pump",
+      "location",
+      2,
+      -0.012
+    ]
+  ]
+}

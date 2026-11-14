@@ -1,0 +1,51 @@
+{
+  "source_sha256": "86576ff3cebcbca1686a899aeaa5e114a92c7492e2c3946fae407eb149bb8bca",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 4,
+  "objects": [
+    {
+      "name": "Curved_Subbase",
+      "type": "MESH",
+      "parent": "ASSET_JoggingPath"
+    },
+    {
+      "name": "Inner_Edge_Transition",
+      "type": "MESH",
+      "parent": "ASSET_JoggingPath"
+    },
+    {
+      "name": "Outer_Edge_Transition",
+      "type": "MESH",
+      "parent": "ASSET_JoggingPath"
+    },
+    {
+      "name": "Rubber_Running_Surface",
+      "type": "MESH",
+      "parent": "ASSET_JoggingPath"
+    }
+  ],
+  "edit_proof": {
+    "node": "Curved_Subbase",
+    "before": [
+      0,
+      0,
+      0
+    ],
+    "after": [
+      0.12300000339746475,
+      0,
+      0
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Warm concrete",
+    "roughness_before": 0.8500000238418579,
+    "roughness_after": 0.27,
+    "copy_sha256": "8ee1ed65f4c3b60396819a0cae75e56d9f74eb2910f594407ec017ac9a4ddfe7",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

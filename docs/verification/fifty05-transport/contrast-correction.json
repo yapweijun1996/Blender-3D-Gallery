@@ -1,0 +1,11 @@
+{
+  "reason": "Actual initial Gallery images show low contrast for four steel-heavy assets against grey canvas.",
+  "affected": [
+    "turnstile",
+    "stainless-steel-sink",
+    "train-ticket-gate",
+    "loading-ramp"
+  ],
+  "change": "New asset Steel base color .55/.61/.64 to .75/.80/.82 and metalness .65 to .25; brushed metal illustrative readability. No app, geometry, budgets or assertions changes.",
+  "initial_evidence": "initial-contrast plus initial browser/animation directories"
+}

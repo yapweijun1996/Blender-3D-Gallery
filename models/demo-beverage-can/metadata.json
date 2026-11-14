@@ -1,0 +1,100 @@
+{
+  "id": "demo-beverage-can",
+  "name": "Demo Beverage Can",
+  "summary": "Original fictional 330 mL-ish beverage can with a profiled rim, editable tab and score flap.",
+  "description": "Original unbranded DEMO / CONCEPT beverage can. Opening and exploded clips are illustrative component studies, not a manufacturing simulation.",
+  "category": "Product Packaging",
+  "tags": [
+    "original",
+    "unbranded",
+    "demo",
+    "beverage-can",
+    "packaging",
+    "editable",
+    "animated"
+  ],
+  "status": "validated",
+  "created": "2026-11-14",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original procedural geometry. No brand artwork, copied packaging or liquid simulation.",
+  "generator": "generate.py",
+  "paths": {
+    "source": "sources/demo-beverage-can.blend",
+    "glb": "exports/demo-beverage-can.glb",
+    "previews": [
+      "previews/hero.png",
+      "previews/rear.png",
+      "previews/top.png",
+      "previews/opened.png",
+      "previews/exploded.png"
+    ],
+    "draft_evidence": "draft-evidence/ (superseded handcrafted helper and placeholder preview)"
+  },
+  "display": {
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "base centre",
+    "previewRotationY": 0,
+    "studioEnvironment": true,
+    "environmentIntensity": 0.8,
+    "textureAnisotropy": 8
+  },
+  "accuracy_notes": "330 mL-ish standard can proportions; illustrative editable tab and score flap. Not a physical opening, seal, pressure, food-safety or fabrication specification.",
+  "rights": "Original geometry and fictional concept artwork; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. DejaVu font license retained in textures/FONT-LICENSE.txt.",
+  "attribution": [
+    {
+      "credit": "Original geometry and fictional DEMO concept."
+    }
+  ],
+  "metrics": {
+    "dimensions": [
+      0.066600002348423,
+      0.11429999634856358,
+      0.066600002348423
+    ],
+    "triangles": 11772,
+    "primitives": 10,
+    "glb_bytes": 231400,
+    "animations": 2
+  },
+  "budgets": {
+    "triangles": 18000,
+    "primitives": 18,
+    "glb_bytes": 1000000,
+    "texture_max": [
+      2048,
+      1024
+    ]
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "gltf-validator 2.0.0-dev.3.10",
+    "report": "reports/structure-motion.json",
+    "sha256": "09cbe9d07bf7dc5eca32db8010f5c615d97ac666a72dd8a401662c8cc6f7684c"
+  },
+  "interaction": {
+    "root": "ASSET_DemoBeverageCan",
+    "clips": [
+      "OpenClose",
+      "Exploded"
+    ],
+    "duration_seconds": 3,
+    "key_seconds": {
+      "rest_start": 0,
+      "open": 1.5,
+      "rest_end": 3
+    },
+    "mutually_exclusive": true,
+    "reset_seconds": 0
+  },
+  "qa": {
+    "structural_motion": "PASS: reports/structure-motion.json",
+    "source_edit": "PASS: reports/source-proof/result.json",
+    "render_review": "PASS: five-angle Blender contact sheet inspected; original DEMO label legible, closed/tab-open/exploded states distinct; conceptual geometry, not physical packaging specification",
+    "browser": "PASS: Chromium156.0.8078.4, original15+7switch/retry/resource scenarios; mobile touch emulation, not physical devices",
+    "physical_mobile_safari": "NOT TESTED"
+  }
+}

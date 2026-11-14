@@ -1,0 +1,81 @@
+{
+  "source_sha256": "67137f70ef4bb4e48ce5cd3e01813a441a2e93ccb704865dacd6f8a92ae49d0e",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 9,
+  "objects": [
+    {
+      "name": "Case_Back",
+      "type": "MESH",
+      "parent": "ASSET_FirstAidBox"
+    },
+    {
+      "name": "Inner_Divider",
+      "type": "MESH",
+      "parent": "ASSET_FirstAidBox"
+    },
+    {
+      "name": "MOVABLE_Door",
+      "type": "EMPTY",
+      "parent": "ASSET_FirstAidBox"
+    },
+    {
+      "name": "Door_Panel",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Editable_Label_FIRST_AID",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Handle",
+      "type": "MESH",
+      "parent": "MOVABLE_Door"
+    },
+    {
+      "name": "Shelf",
+      "type": "MESH",
+      "parent": "ASSET_FirstAidBox"
+    },
+    {
+      "name": "Shelf.001",
+      "type": "MESH",
+      "parent": "ASSET_FirstAidBox"
+    },
+    {
+      "name": "Side",
+      "type": "MESH",
+      "parent": "ASSET_FirstAidBox"
+    },
+    {
+      "name": "Side.001",
+      "type": "MESH",
+      "parent": "ASSET_FirstAidBox"
+    }
+  ],
+  "edit_proof": {
+    "node": "Case_Back",
+    "before": [
+      0,
+      0.054999999701976776,
+      0.14000000059604645
+    ],
+    "after": [
+      0.12300000339746475,
+      0.054999999701976776,
+      0.14000000059604645
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "White",
+    "roughness_before": 0.6000000238418579,
+    "roughness_after": 0.27,
+    "copy_sha256": "4815e5062ebd414fdf122cb1e6bbc27c77cf6bed84e709dbd27279960d97461b",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

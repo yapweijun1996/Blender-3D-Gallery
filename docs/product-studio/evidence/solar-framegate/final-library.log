@@ -1,0 +1,43 @@
+PASS static indexes preserve all assets and never download GLBs or create WebGL
+PASS model search, combined filters, empty state and clear preserve URL state
+PASS demo search/category combine and clear
+PASS legacy model detail direct link, refresh, metadata, related and history
+PASS failed model load retains fallback and can retry
+PASS unknown model and unavailable WebGL provide useful recovery
+PASS mobile menu supports keyboard dismissal, focus return and navigation
+LEGACY_PHASE {"kind":"game","name":"goto","event":"start","at":"2026-11-14T10:26:27.069Z"}
+LEGACY_PHASE {"kind":"game","name":"goto","event":"end","elapsedMs":92}
+LEGACY_PHASE {"kind":"game","name":"initial-ready","event":"start","at":"2026-11-14T10:26:27.161Z"}
+LEGACY_PHASE {"kind":"game","name":"initial-ready","event":"end","elapsedMs":93}
+LEGACY_PHASE {"kind":"game","name":"reload","event":"start","at":"2026-11-14T10:26:27.272Z"}
+LEGACY_PHASE {"kind":"game","name":"reload","event":"end","elapsedMs":605}
+LEGACY_PHASE {"kind":"game","name":"reload-ready","event":"start","at":"2026-11-14T10:26:27.877Z"}
+LEGACY_PHASE {"kind":"game","name":"reload-ready","event":"end","elapsedMs":173}
+LEGACY_PHASE {"kind":"game","name":"back-link-click","event":"start","at":"2026-11-14T10:26:28.075Z"}
+LEGACY_PHASE {"kind":"game","name":"back-link-click","event":"end","elapsedMs":453}
+LEGACY_PHASE {"kind":"game","name":"index-ready","event":"start","at":"2026-11-14T10:26:28.528Z"}
+LEGACY_PHASE {"kind":"game","name":"index-ready","event":"end","elapsedMs":10}
+LEGACY_PHASE {"kind":"game","name":"history-back","event":"start","at":"2026-11-14T10:26:28.792Z"}
+LEGACY_PHASE {"kind":"game","name":"history-back","event":"end","elapsedMs":3}
+LEGACY_PHASE {"kind":"game","name":"history-ready","event":"start","at":"2026-11-14T10:26:28.795Z"}
+LEGACY_PHASE {"kind":"game","name":"history-ready","event":"end","elapsedMs":91}
+LEGACY_DIAGNOSTIC {"kind":"game","phase":"completed","at":"2026-11-14T10:26:28.892Z","observation":{"url":"http://127.0.0.1:45809/Blender-3D-Gallery/?page=game","readyState":"complete","visibility":"visible","draws":883,"metrics":{"started":1794651987273.6,"timerTicks":2,"frames":41,"timerMaxGap":694.8999999761581,"frameMaxGap":383.19999999999993,"longTasks":1,"longTaskMax":85,"rectChanges":1,"lastRect":[0,0,0,0],"visible":true,"linkDisplay":"inline-flex","linkVisibility":"visible"}}}
+LEGACY_PHASE {"kind":"solar","name":"goto","event":"start","at":"2026-11-14T10:26:28.892Z"}
+LEGACY_PHASE {"kind":"solar","name":"goto","event":"end","elapsedMs":588}
+LEGACY_PHASE {"kind":"solar","name":"initial-ready","event":"start","at":"2026-11-14T10:26:29.480Z"}
+LEGACY_PHASE {"kind":"solar","name":"initial-ready","event":"end","elapsedMs":450}
+LEGACY_PHASE {"kind":"solar","name":"reload","event":"start","at":"2026-11-14T10:26:29.943Z"}
+LEGACY_PHASE {"kind":"solar","name":"reload","event":"end","elapsedMs":4000}
+LEGACY_PHASE {"kind":"solar","name":"reload-ready","event":"start","at":"2026-11-14T10:26:33.943Z"}
+LEGACY_PHASE {"kind":"solar","name":"reload-ready","event":"end","elapsedMs":713}
+LEGACY_PHASE {"kind":"solar","name":"back-link-click","event":"start","at":"2026-11-14T10:26:34.679Z"}
+LEGACY_PHASE {"kind":"solar","name":"back-link-click","event":"end","elapsedMs":74}
+LEGACY_PHASE {"kind":"solar","name":"index-ready","event":"start","at":"2026-11-14T10:26:34.753Z"}
+LEGACY_PHASE {"kind":"solar","name":"index-ready","event":"end","elapsedMs":17}
+LEGACY_PHASE {"kind":"solar","name":"history-back","event":"start","at":"2026-11-14T10:26:38.351Z"}
+LEGACY_PHASE {"kind":"solar","name":"history-back","event":"end","elapsedMs":3}
+LEGACY_PHASE {"kind":"solar","name":"history-ready","event":"start","at":"2026-11-14T10:26:38.354Z"}
+LEGACY_PHASE {"kind":"solar","name":"history-ready","event":"end","elapsedMs":278}
+LEGACY_DIAGNOSTIC {"kind":"solar","phase":"completed","at":"2026-11-14T10:26:38.800Z","observation":{"url":"http://127.0.0.1:45809/Blender-3D-Gallery/?page=solar","readyState":"complete","visibility":"visible","draws":168,"metrics":{"started":1794651989944.5,"timerTicks":3,"frames":63,"timerMaxGap":4052.599999964237,"frameMaxGap":3566.5,"longTasks":3,"longTaskMax":174,"rectChanges":2,"lastRect":[60,130,176.171875,44],"visible":true,"linkDisplay":"inline-flex","linkVisibility":"visible"}}}
+PASS legacy demos launch, refresh, return to index and release canvas
+PASS reduced motion and equivalent 200 percent reflow remain usable

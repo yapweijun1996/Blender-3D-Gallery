@@ -1,0 +1,180 @@
+{
+  "id": "cargo-truck",
+  "name": "Cargo Truck",
+  "summary": "Cargo Truck reusable original asset.",
+  "description": "Original Singapore/Malaysia city, commercial and architectural illustrative asset with independently editable components. No commercial or official logos, real personal data, or engineering certification.",
+  "category": "Vehicles",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "city-shells",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry; reviewed repository helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/cargo-truck.glb",
+    "source": "sources/cargo-truck.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.55,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 150,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. Not a medical, accessibility, engineering or safety certification.",
+  "attribution": [
+    {
+      "credit": "Original geometry; repository material/export helpers. Generic labels use Blender bundled Bfont converted to editable mesh. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. AnimationMixer clips where listed, no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative scene prop only. Not operational fuel, ticketing or security equipment; no accessibility, structural, electrical, traffic or safety certification. Not a real landmark or branded building.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "semantic_geometry": "PASS: independent prop/shell contracts, vehicle radius/axle/contact/aperture/sweep checks and visual review",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "PASS: independent raw endpoints, expected Mixer poses and clearance",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "animations": {
+    "authoring": [
+      [
+        "MOVABLE_Cab_L",
+        "rotation_euler",
+        2,
+        1
+      ],
+      [
+        "MOVABLE_Loading_L",
+        "rotation_euler",
+        2,
+        1.2
+      ],
+      [
+        "MOVABLE_Cab_R",
+        "rotation_euler",
+        2,
+        -1
+      ],
+      [
+        "MOVABLE_Loading_R",
+        "rotation_euler",
+        2,
+        -1.2
+      ],
+      [
+        "ROLL_FL",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_FR",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_RL",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "ROLL_RR",
+        "rotation_euler",
+        0,
+        3.141592653589793
+      ],
+      [
+        "STEER_FL",
+        "rotation_euler",
+        2,
+        0.2
+      ],
+      [
+        "STEER_FR",
+        "rotation_euler",
+        2,
+        0.2
+      ]
+    ],
+    "cycle_seconds": 2,
+    "start_seconds": 0.041666666666666664,
+    "end_seconds": 2.0416666666666665,
+    "runtime": "Requires host AnimationMixer; Gallery component UI not implemented"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "cargo-truck",
+    "backlog_id": 150,
+    "glb_bytes": 557408,
+    "triangles": 10144,
+    "vertices": 20192,
+    "meshes": 77,
+    "materials": 5,
+    "dimensions": [
+      3.049999877810478,
+      3.8400000414426496,
+      9.137500000186265
+    ],
+    "bounds": {
+      "min": [
+        -1.524999938905239,
+        -9.002043510619728e-08,
+        -4.597500038333237
+      ],
+      "max": [
+        1.524999938905239,
+        3.8399999514222145,
+        4.539999961853027
+      ]
+    },
+    "sha256": "11d7b8cacaa409b24800c9cdcd7eceb9fe2f6c903975223a4d16bccfb052ec6c",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 3000000,
+    "budget_triangles": 50000,
+    "animation_clips": 10
+  }
+}

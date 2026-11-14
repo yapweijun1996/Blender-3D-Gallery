@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "glb_sha256": "86bae913acdf211d89cf8de8779bb6edfa70255f7508669e02f69017ab33cc4e",
+  "source_sha256": "2d10ce9eacce5764cf5f2a1e146211557cde73438685928bd1228ca3ae2ad75a",
+  "studio": "PASS: all six final exported-GLB studio views and six motion-browser images actually inspected. Open-frame two-stop shaft, guides/landings and complete cab recognizable. Stationary synchronized bottom aperture opens; cab upper pose distinct, all doors closed during travel. No visible clipping. Not certified equipment or lift control simulation.",
+  "browser": "Actual three-width Chromium images individually inspected; recognizable complete asset, no observed missing surfaces; viewport emulation only.",
+  "browser_cases": [
+    {
+      "width": 1440,
+      "sha256": "86bae913acdf211d89cf8de8779bb6edfa70255f7508669e02f69017ab33cc4e",
+      "passed": true
+    },
+    {
+      "width": 768,
+      "sha256": "86bae913acdf211d89cf8de8779bb6edfa70255f7508669e02f69017ab33cc4e",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "sha256": "86bae913acdf211d89cf8de8779bb6edfa70255f7508669e02f69017ab33cc4e",
+      "passed": true
+    }
+  ],
+  "evidence": "docs/verification/gapextract06-lift-browser",
+  "limitations": [
+    "Physical Android and iOS NOT TESTED",
+    "WebKit NOT TESTED",
+    "No Gallery runtime animation controls added",
+    "Illustrative not engineering or safety certified"
+  ]
+}

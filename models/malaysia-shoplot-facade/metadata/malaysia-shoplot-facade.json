@@ -1,0 +1,130 @@
+{
+  "id": "malaysia-shoplot-facade",
+  "name": "Malaysia Shoplot Facade",
+  "category": "Architecture",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "derived-extraction"
+  ],
+  "description": "Malaysia Shoplot Facade; DERIVED EXTRACTION. Independent editable source and export. Illustrative only.",
+  "status": "draft",
+  "backlog_id": 282,
+  "created": "2026-11-13",
+  "author": "Blender-3D-Gallery / agent-assisted original source",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/malaysia-shoplot-facade.glb",
+    "source": "sources/malaysia-shoplot-facade.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewRotationY": 0,
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. Not a medical, accessibility, engineering or safety certification.",
+  "provenance": {
+    "kind": "DERIVED EXTRACTION",
+    "parent_asset": "shoplot-building",
+    "parent_commit": "3c41bcfd660c69a41fe3bb7f5f56baed6f4b4e0b",
+    "publication": "main3c41",
+    "source_files": {
+      "parent-generator.py": {
+        "original_path": "models/shoplot-building/generate.py",
+        "sha256": "500613ac717cb629af301b99dfad99fc09d17f6e2145a2e0ad2b8b3090442965"
+      },
+      "parent.glb": {
+        "original_path": "models/shoplot-building/exports/shoplot-building.glb",
+        "sha256": "131a09d3cde5204f07ac8830045b4be8785163588ef3e0868dba4d06b88b6bd1"
+      },
+      "parent-metadata.json": {
+        "original_path": "models/shoplot-building/metadata/shoplot-building.json",
+        "sha256": "56dd3d955745eb5494d1e08c68f167a6e324282d38e16cd9fbbffc0d7908c262"
+      }
+    },
+    "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. Not a medical, accessibility, engineering or safety certification.",
+    "changes": "Select existing components and translate origin only; parent geometry and parent assets unchanged",
+    "new_design_count": false,
+    "count_toward_500": "PENDING OWNER POLICY"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "local_asset": "PASS",
+    "source_edit": "PASS: edited mesh position and material roughness survived save/reopen/export without regeneration",
+    "studio_visual": "PASS: actual exported GLB multi-angle images inspected",
+    "chromium": "PASS: three viewport sizes, actual GLB SHA, orbit/zoom/reset/reopen and inspected rendered images",
+    "derivative_count": "PENDING OWNER POLICY"
+  },
+  "counting": {
+    "classification": "DERIVED EXTRACTION",
+    "new_design": false,
+    "derivative_count_policy": "PENDING OWNER POLICY"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "malaysia-shoplot-facade",
+    "backlog_id": 282,
+    "glb_bytes": 97320,
+    "triangles": 1728,
+    "vertices": 3456,
+    "meshes": 16,
+    "materials": 4,
+    "dimensions": [
+      8.219999998807907,
+      10.300000190734863,
+      1.2999999523162842
+    ],
+    "bounds": {
+      "min": [
+        -4.1099999994039536,
+        0,
+        -0.6499999761581421
+      ],
+      "max": [
+        4.1099999994039536,
+        10.300000190734863,
+        0.6499999761581421
+      ]
+    },
+    "sha256": "4870f97d7ea364c29dd87a17293e1260b176f52e86db1f916b33662e943fd99f",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 1500000,
+    "budget_triangles": 18000
+  },
+  "accuracy_notes": "Illustrative modular asset in metres, not a surveyed product or certified equipment. Unchanged geometry extracted from pinned parent; independent packaging, not a new design. Derivative count policy pending owner decision.",
+  "attribution": [
+    {
+      "credit": "Blender-3D-Gallery original procedural geometry; derived from shoplot-building at immutable commit recorded in provenance/provenance.json",
+      "url": ""
+    }
+  ],
+  "evidence": {
+    "structural": "reports/assets.json",
+    "source_edit": "reports/source.json",
+    "visual": "reports/visual-review.json",
+    "exact_parent_geometry": "reports/extraction-validation.json"
+  }
+}

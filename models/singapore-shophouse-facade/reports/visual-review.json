@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "glb_sha256": "8045241714863f2b5880b94cab7a3b9fa40d6ab08b4e525e2281a2fa66955933",
+  "source_sha256": "34d067e5198d79c2c2f4612aa2ad3132b826383c1e3d163dddc1d7151a18c553",
+  "studio": "PASS as facade extraction: shopfront glazing, arcade columns/canopy, upper facade, shutters and cornice present; rear deliberately incomplete assembly boundary, no whole-building claim.",
+  "browser": "Actual three-width Chromium images individually inspected; recognizable complete asset, no observed missing surfaces; viewport emulation only.",
+  "browser_cases": [
+    {
+      "width": 1440,
+      "sha256": "8045241714863f2b5880b94cab7a3b9fa40d6ab08b4e525e2281a2fa66955933",
+      "passed": true
+    },
+    {
+      "width": 768,
+      "sha256": "8045241714863f2b5880b94cab7a3b9fa40d6ab08b4e525e2281a2fa66955933",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "sha256": "8045241714863f2b5880b94cab7a3b9fa40d6ab08b4e525e2281a2fa66955933",
+      "passed": true
+    }
+  ],
+  "evidence": "docs/verification/gapextract06-five-browser",
+  "limitations": [
+    "Physical Android and iOS NOT TESTED",
+    "WebKit NOT TESTED",
+    "No Gallery runtime animation controls added",
+    "Illustrative not engineering or safety certified"
+  ]
+}

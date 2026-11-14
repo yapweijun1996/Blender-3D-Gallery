@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/srv/agent-workstation/workspaces/blender-escalator004-circulation-feasibility-20261113/repo/models/escalator/reports/curved-riser-candidate/sweep_candidates.py", line 65, in <module>
+    j=(i+k)%N;tested+=1;d=fast_sat(polys[i],polys[j],bs[i],bs[j])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/srv/agent-workstation/workspaces/blender-escalator004-circulation-feasibility-20261113/repo/models/escalator/reports/curved-riser-candidate/sweep_candidates.py", line 55, in fast_sat
+    return sat(a,b)
+           ^^^^^^^^
+  File "SAT", line 53, in overlap
+ZeroDivisionError: float division by zero

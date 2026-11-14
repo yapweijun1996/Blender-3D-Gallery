@@ -1,0 +1,1 @@
+Original procedural geometry and motion authored for this project. No third-party art or real-person likeness, including no real-child data. Use in owner projects is authorized; public redistribution license remains unspecified.

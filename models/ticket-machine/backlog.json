@@ -1,0 +1,40 @@
+{
+  "id": 115,
+  "slug": "ticket-machine",
+  "title": "Ticket Machine",
+  "root": "ASSET_TicketMachine",
+  "required_nodes": [
+    "Cabinet",
+    "MOVABLE_Button",
+    "MOVABLE_Ticket",
+    "Fare_Selection_Button",
+    "Coin_Return"
+  ],
+  "budget_bytes": 800000,
+  "budget_triangles": 18000,
+  "max_dimension_m": 10,
+  "expected_dimensions_m": [
+    0.56,
+    1.525,
+    0.48
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Button",
+    "MOVABLE_Ticket"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Button",
+      "location",
+      1,
+      0.008
+    ],
+    [
+      "MOVABLE_Ticket",
+      "location",
+      1,
+      -0.045
+    ]
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "glb_sha256": "601538cc74406a46c38587e9dd43782efef8ffadc90fb2ea09cbc8ffc3493586",
+  "source_sha256": "09877ea2abe83f69fb9347f1a9709438362dde577f1b69dcaf76d36df4db55f0",
+  "studio": "PASS: circular tabletop and centred pedestal/base recognizable and proportionate; contiguous supports, no floating parts observed.",
+  "browser": "Actual three-width Chromium images individually inspected; recognizable complete asset, no observed missing surfaces; viewport emulation only.",
+  "browser_cases": [
+    {
+      "width": 1440,
+      "sha256": "601538cc74406a46c38587e9dd43782efef8ffadc90fb2ea09cbc8ffc3493586",
+      "passed": true
+    },
+    {
+      "width": 768,
+      "sha256": "601538cc74406a46c38587e9dd43782efef8ffadc90fb2ea09cbc8ffc3493586",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "sha256": "601538cc74406a46c38587e9dd43782efef8ffadc90fb2ea09cbc8ffc3493586",
+      "passed": true
+    }
+  ],
+  "evidence": "docs/verification/gapextract06-five-browser",
+  "limitations": [
+    "Physical Android and iOS NOT TESTED",
+    "WebKit NOT TESTED",
+    "No Gallery runtime animation controls added",
+    "Illustrative not engineering or safety certified"
+  ]
+}

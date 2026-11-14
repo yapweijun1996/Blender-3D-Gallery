@@ -1,0 +1,6 @@
+202: Added two lift columns connecting lower chassis to deck. 204: Added under-seat and back crossbraces connecting fabric panels to side frames. 205: Rail crossbraces connect transport deck to raised guard rails. 225: Drawer front narrowed 10mm to fit inside the fixed cabinet sides. 240: Extended telescopic rod insertion so it remains in the sockets at full 240mm extension.
+204 upfront dimension estimate corrected analytically: vertical tube flat end is z=.98, not an imagined spherical cap at1.0; rear tyre extends to y=.12+.30=.42 and footplate to -.43-.11=-.54, total.96. Original 6mm tolerance and fixed budgets unchanged.
+
+Additional corrections: 211 cuff seated at ground; 223 garment-bar hangers attached to top rail; 237 rear legs extended to meet reclined rails, and front tube caps added to meet original intended overall envelope; 238 side rails narrowed to original 0.82m width; 259 stair stringers support each tread. Initial geometry snapshots preserved.
+
+The contact checker first matched only one Blender-exported duplicate because GLTFLoader strips dots from names (Front_Caster.001 becomes Front_Caster001). Fixed duplicate-name enumeration and asserted both caster/fork counts before rerunning unchanged contact predicates. Failure log retained. No contact tolerance or budget was relaxed.

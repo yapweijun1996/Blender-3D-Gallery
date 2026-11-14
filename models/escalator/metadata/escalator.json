@@ -1,0 +1,95 @@
+{
+  "id": "escalator",
+  "title": "Escalator V1 ID004",
+  "summary": "Illustrative rigid-step escalator circulation with flush landings; engineering fidelity remains under review.",
+  "description": "Original editable 58-step curved-riser circulation, independently derived guide rails, flush deck/comb surfaces and moving handrail seams. GLB animation is available; existing Gallery exposes orbit controls only.",
+  "category": "Architecture",
+  "tags": [
+    "escalator",
+    "architecture",
+    "editable",
+    "original",
+    "animated",
+    "metres",
+    "needs-review"
+  ],
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "creation_method": "Original procedural Blender Python; no external textures or copied models.",
+  "blender_version": "4.0.2",
+  "license": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "No third-party models, textures, or external source assets."
+    }
+  ],
+  "rights": "Original procedural geometry.",
+  "status": "draft",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      1.2,
+      1.6
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ],
+      "hemisphereIntensity": 2,
+      "directionalIntensity": 2.1
+    }
+  },
+  "dimensions_m": {
+    "rise_m": 3,
+    "tread_width_m": 1,
+    "incline_degrees": 30,
+    "complete_rigid_steps": 58,
+    "step_loop_seconds": 46.416666666666664,
+    "handrail_seam_loop_seconds": 40.625,
+    "nominal_speed_m_s": 0.5,
+    "return_pit_depth_m": 2.34,
+    "roller_radius_m": 0.035,
+    "roller_facets": 16,
+    "chain_rail_segments": 584,
+    "guide_rail_segments": 528,
+    "walking_deck_levels_m": [
+      0,
+      3
+    ]
+  },
+  "mechanism": {
+    "status": "NEEDS REVIEW",
+    "illustrative_step_circulation": true,
+    "matched_nominal_handrail_seam_speed": true,
+    "continuous_physical_contact_proven": false,
+    "rigid_constant_pitch_chain_proven": false,
+    "gallery_interactivity": false
+  },
+  "budgets": {
+    "triangles_max": 70000,
+    "glb_bytes_max": 6000000,
+    "mesh_primitives_max": 220
+  },
+  "accuracy_notes": "Illustrative sampled circulation, not certified mechanics. Faceted contact gaps and nonconstant attachment chord are quantified in reports/circulation-final. Physical Android/iOS/Safari untested.",
+  "provenance": {
+    "generator": "models/escalator/generate.py",
+    "dependencies": [
+      "Blender glTF exporter",
+      "kinematics.py",
+      "rail-profiles.json"
+    ],
+    "replacement_reason": "Original static ID004 lacked circulation; replace with reviewed illustrative circulation and flush deck/comb geometry while retaining static archive and all failed candidates."
+  },
+  "source": "models/escalator/sources/escalator.blend",
+  "source_sha256": "1c1f11e9cc120dc78295e32bc605914742009953e4e9d065cfcd95908bc548b8",
+  "glb_sha256": "f8f8bda8b28a4faaf1fb2b03ee2a832fe23b90621eee9ab0a24a26c1b2b89ada",
+  "verification_report": "models/escalator/reports/circulation-final/README.md",
+  "metrics": {
+    "triangles": 65408,
+    "glb_bytes": 4672692,
+    "primitives": 138
+  }
+}

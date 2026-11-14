@@ -1,0 +1,32 @@
+{
+  "id": 152,
+  "slug": "industrial-machine",
+  "title": "Industrial Machine",
+  "root": "ASSET_IndustrialMachine",
+  "required_nodes": [
+    "Column",
+    "Adjustable_Worktable",
+    "Headstock",
+    "MOVABLE_Spindle"
+  ],
+  "budget_bytes": 800000,
+  "budget_triangles": 18000,
+  "max_dimension_m": 10,
+  "expected_dimensions_m": [
+    0.7,
+    1.78,
+    0.7
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_Spindle"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_Spindle",
+      "location",
+      2,
+      -0.1
+    ]
+  ]
+}

@@ -1,0 +1,25 @@
+# POS Terminal
+
+Original V1 ID 126. Local **PASS**, release **NEEDS REVIEW** pending real Android/iOS and WebKit. No deployment.
+
+## Distinct scope
+Standalone touchscreen POS pedestal, tilt joint and cable routing; independent of cash register keyboard/drawer or self-checkout chassis.
+
+Blender +Z up/-Y front; GLB +Y up/+Z front; metre units. Components/materials remain editable. Original illustrative proportions, not a surveyed building, landmark, engineering/fire/accessibility certification or functioning payment/security/medical/vehicle system. No brands or external textures/models. See LICENSE.md for rights.
+
+## Artifacts and evidence
+- `generate.py`; `sources/pos-terminal.blend`; `exports/optimized.glb`.
+- Four final inspected studio views in `previews/` (PNG and catalog WebP). Animated types additionally have inspected `open.png`.
+- 1752 triangles, 96060 GLB bytes, 14 primitives. Fixed pre-generation budget in `backlog.json`.
+- `reports/assets.json`: Khronos, exact metric structure, named geometry and animation gates. PASS: raw first/end values and duration; all60 sampled frames clearance/contact; intended midpoint and restoration. Not physics/security/operational simulation.
+- `reports/sources.json` and `reports/source-edit/`: independent mesh/material edits saved, reopened and exported without rebuilding; original hash unchanged.
+- Browser final evidence mapping: `docs/verification/mall038/browser-final-results.json`; actual final source/export hashes in `asset-results.json`.
+
+## Reproduce
+`node models/pos-terminal/validate.mjs`
+
+`blender --background --threads 2 --python-exit-code 1 --python models/pos-terminal/inspect_sources.py`
+
+`node models/pos-terminal/verify_source_edit.mjs`
+
+Global gate: `npm test && npm run build`, then `MALL_QA_DIR=/your/evidence node scripts/test-mall038-browser.mjs`. Browser output paths all honor MALL_QA_DIR. No generic gallery clip playback UI or driving control is claimed. Vehicle wheel clips show a half-turn and return, not full-spin odometry.

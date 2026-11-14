@@ -1,0 +1,97 @@
+{
+  "result": "PASS",
+  "sha256": "e775b49289573f0bb76c79eed3794d40082f15131f351d2479f7102d63f66ee7",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416666666666667,
+    "reset": 0.0416666679084301
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_MOVABLE_Spindle",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "MOVABLE_Spindle.position",
+      "first": [
+        0,
+        1.4600000381469727,
+        0.23000000417232513
+      ],
+      "last": [
+        0,
+        1.4600000381469727,
+        0.23000000417232513
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Spindle",
+      "position": [
+        0,
+        1.4600000381469727,
+        0.23000000417232513
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Spindle",
+      "position": [
+        0,
+        1.3600000182788032,
+        0.23000000417232513
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Spindle",
+      "position": [
+        0,
+        1.4600000381469727,
+        0.23000000417232513
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        0,
+        1.46,
+        0.23
+      ],
+      "openP": [
+        0,
+        1.36,
+        0.23
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "clearance": "100mm spindle stroke, above table and guard crossbar, within guard-post spacing at17 samples; no operational machining claim",
+  "verification": "Independent raw track endpoints and Three.js Mixer poses; no Gallery component-control UI"
+}

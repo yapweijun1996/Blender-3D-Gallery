@@ -1,0 +1,61 @@
+{
+  "id": "hdb-block",
+  "name": "HDB Block",
+  "summary": "Original modular hdb block with independently editable components.",
+  "description": "Original generic reusable metric asset; repeated static architectural details grouped by structural bay/storey where appropriate.",
+  "category": "Architecture",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "metres"
+  ],
+  "status": "verified-local-needs-device-review",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/hdb-block.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp",
+      "previews/side.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "accuracy_notes": "Original generic illustrative proportions, not a surveyed building, landmark, operator installation, engineering/accessibility/safety certification or functioning payment, cooking, vehicle or access-control system. Asset-level clips only; no gallery playback UI. Physical mobile/WebKit NOT TESTED.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 70000,
+      "bytes": 4000000,
+      "mesh_primitives": 180
+    },
+    "local": "PASS",
+    "source_edit": "PASS",
+    "khronos": "PASS",
+    "browser": "PASS: desktop Chromium at 1440x900, 768x1024, 390x844",
+    "visual": "PASS: four final studio views and all three final browser views inspected",
+    "animation": "NOT APPLICABLE: static editable asset",
+    "source_sha256": "9b15bbba32addc3a98279fdbf60dcd202e72c2d4ea02f19ff8bad2a8f77f33ab",
+    "glb_sha256": "e24f78bab50bf89697e68608d3369192b70625d765a78abd7716eceb5f964a98"
+  }
+}

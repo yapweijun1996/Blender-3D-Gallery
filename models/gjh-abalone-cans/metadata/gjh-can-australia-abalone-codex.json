@@ -1,0 +1,129 @@
+{
+  "id": "gjh-can-australia-abalone-codex",
+  "name": "GJH Can — Australia Abalone (Codex flat label)",
+  "name_zh": "澳洲鲍鱼罐头",
+  "summary": "Comparison variant of the Australia abalone can whose label is an AI-generated flat artwork (Codex image generation), similar in look to the official packaging.",
+  "description": "Same can geometry as the photo-unrolled version, with a wrap-around label from an AI-generated flat artwork made from the official packshots. Crisper and free of photo seams, but its text, seals and codes are not guaranteed to match the official label.",
+  "category": "Packaged Goods",
+  "tags": [
+    "GJH",
+    "New Moon",
+    "abalone",
+    "can",
+    "packaging",
+    "australia",
+    "product",
+    "metres",
+    "codex",
+    "ai-generated-label",
+    "comparison"
+  ],
+  "status": "validated",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Deterministic Blender Python geometry (same as the photo version). Label texture is an AI-generated flat label (Codex built-in image generation, prompt and inputs recorded in label_source); not official artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/codex/gjh-can-australia-abalone-codex.glb",
+    "source": "sources/gjh-abalone-cans-codex.blend",
+    "preview": "previews/gjh-can-australia-abalone-codex.webp",
+    "texture": "textures/codex/gjh-can-australia-abalone-codex-label.jpg",
+    "flat_label": "sources/flat-labels/gjh-can-australia-abalone-flat.jpg"
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor centre",
+    "front_axis": "Blender -Y / glTF +Z",
+    "studioEnvironment": true,
+    "environmentIntensity": 1,
+    "previewLighting": {
+      "hemisphereIntensity": 0.15,
+      "directionalIntensity": 0.55,
+      "directionalPosition": [
+        -1.5,
+        2,
+        5
+      ]
+    },
+    "textureAnisotropy": 8
+  },
+  "product": {
+    "brand": "New Moon (GJH house brand)",
+    "origin": "Australia",
+    "pack_size": "425g",
+    "type_zh": "澳洲鲍鱼罐头",
+    "reference_images": {
+      "new-moon-au-425g-front.jpg": "5aa9106a7e04a5888d1ad653e0faeeefbca74a7ca389121c289cad6d5e45a34a",
+      "new-moon-au-425g-back.jpg": "37d7de5e7ef591ac7b3b64e4ddad53f355f7dd28a4a4305a55e1eed9f6b98ebd",
+      "new-moon-au-425g-nutrition.jpg": "86a69d1972b86bb80b7955c88540c917064ae89b454f5f6364f56d134bd910e4"
+    }
+  },
+  "accuracy_notes": "Same nominal dimensions as the photo version (diameter 73.5 mm; height from the measured label rows). The label is AI-generated and not official; see label_source for known differences. Real dimensions are unverified.",
+  "attribution": [
+    {
+      "credit": "Label artwork unrolled from GJH eShop official packshots recorded in Webpage-Design-Gallery assets/companies/gjh/official (manifest.json). Can geometry is original."
+    }
+  ],
+  "rights": "AI-generated reference artwork inspired by GJH / New Moon packaging; trademarks and product names belong to their owners. Used in the owner's project on the owner's confirmation; no independent licence document was supplied. Public redistribution terms have not been specified.",
+  "label_source": {
+    "kind": "AI-generated flat label (reference-based, similar look)",
+    "status": "Not official artwork. Text, numbers, seals, QR codes and barcodes may differ from the official label; do not rely on it for claims.",
+    "generator": "OpenAI Codex CLI built-in image generation (image_gen), prompted with the official eShop packshots listed under product.reference_images",
+    "file": "sources/flat-labels/gjh-can-australia-abalone-flat.jpg",
+    "file_sha256": "268534e587d0f19bc23ffd4c8cd3f2887fd091ccbee6aa6065869cd8889de959",
+    "source_pixels": [
+      1774,
+      887
+    ],
+    "front_face_centre_fraction": 0.5,
+    "layout": "left to right: picture/food face, front face, information face; wraps around the can",
+    "known_discrepancies_from_official": [
+      "Nutrition table was corrected against the official photo (cholesterol 150 mg).",
+      "Halal and award seals are generic designs, not the official marks.",
+      "QR code and barcode were redrawn by the model and were not verified or scanned."
+    ],
+    "comparison_with": "gjh-can-australia-abalone",
+    "revision": "Second pass: text corrected by Codex against the official information-face photo."
+  },
+  "metrics": {
+    "glb_bytes": 428028,
+    "triangles": 4888,
+    "vertices": 2674,
+    "primitives": 3,
+    "materials": 3,
+    "textures": 1,
+    "texture_pixels": [
+      1536,
+      748
+    ],
+    "animations": 0,
+    "dimensions": [
+      0.07750000059604645,
+      0.123989999294281,
+      0.07750000059604645
+    ],
+    "bounds": {
+      "min": [
+        -0.038750000298023224,
+        0,
+        -0.038750000298023224
+      ],
+      "max": [
+        0.038750000298023224,
+        0.123989999294281,
+        0.038750000298023224
+      ]
+    },
+    "sha256": "168d64928ab3f04ea93538ca879e2439be558f6f85567c92ee15cc5c72958078",
+    "draw_calls": 3,
+    "texture_memory_bytes": 6127616
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  }
+}

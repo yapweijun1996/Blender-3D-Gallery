@@ -1,0 +1,71 @@
+{
+  "id": "escalator",
+  "title": "Escalator V1 ID004",
+  "summary": "Original static complete escalator geometry study.",
+  "description": "A complete fixed escalator assembly with editable steps, landings, comb transition, guards, truss, return enclosure, separate maintenance panel, and rounded handrail transitions.",
+  "category": "Architecture",
+  "tags": [
+    "escalator",
+    "architecture",
+    "editable",
+    "original",
+    "static",
+    "metres",
+    "needs-review"
+  ],
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "creation_method": "Original procedural Blender Python; no external textures or copied models.",
+  "blender_version": "4.0.2",
+  "license": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "No third-party models, textures, or external source assets."
+    }
+  ],
+  "rights": "Original procedural geometry.",
+  "status": "draft",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      1.2,
+      1.6
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ],
+      "hemisphereIntensity": 2,
+      "directionalIntensity": 2.1
+    }
+  },
+  "dimensions_m": {
+    "design_rise": 3,
+    "tread_width": 1,
+    "main_incline_degrees": 30,
+    "landing_run": 1.2,
+    "rail_height_above_tread": 0.9
+  },
+  "mechanism": {
+    "status": "NEEDS REVIEW",
+    "operating_step_chain": false,
+    "matched_speed_handrail": false,
+    "gallery_interactivity": false
+  },
+  "budgets": {
+    "triangles_max": 70000,
+    "glb_bytes_max": 6000000,
+    "mesh_primitives_max": 220
+  },
+  "accuracy_notes": "Complete static illustrative escalator. Lower landing origin is0m, upper3m, enclosure extends0.6m below lower floor for a pit. No circulating step-chain animation, engineering or safety certification. Physical Android/iOS/Safari untested.",
+  "provenance": {
+    "generator": "models/escalator/generate.py",
+    "seed": null,
+    "dependencies": [
+      "Blender glTF exporter"
+    ]
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "source_sha256": "ff385a77474ccbe0207aee28dd12061834cd99577180196a3d2a2d843d00cbc9",
+  "units": "metres",
+  "scale_length": 1,
+  "meshes": 15,
+  "objects": [
+    {
+      "name": "Back",
+      "type": "MESH",
+      "parent": "ASSET_BedsideTable"
+    },
+    {
+      "name": "Bottom",
+      "type": "MESH",
+      "parent": "ASSET_BedsideTable"
+    },
+    {
+      "name": "Leg",
+      "type": "MESH",
+      "parent": "ASSET_BedsideTable"
+    },
+    {
+      "name": "Leg.001",
+      "type": "MESH",
+      "parent": "ASSET_BedsideTable"
+    },
+    {
+      "name": "Leg.002",
+      "type": "MESH",
+      "parent": "ASSET_BedsideTable"
+    },
+    {
+      "name": "Leg.003",
+      "type": "MESH",
+      "parent": "ASSET_BedsideTable"
+    },
+    {
+      "name": "MOVABLE_Drawer",
+      "type": "EMPTY",
+      "parent": "ASSET_BedsideTable"
+    },
+    {
+      "name": "Drawer_Back",
+      "type": "MESH",
+      "parent": "MOVABLE_Drawer"
+    },
+    {
+      "name": "Drawer_Floor",
+      "type": "MESH",
+      "parent": "MOVABLE_Drawer"
+    },
+    {
+      "name": "Drawer_Front",
+      "type": "MESH",
+      "parent": "MOVABLE_Drawer"
+    },
+    {
+      "name": "Drawer_Side",
+      "type": "MESH",
+      "parent": "MOVABLE_Drawer"
+    },
+    {
+      "name": "Drawer_Side.001",
+      "type": "MESH",
+      "parent": "MOVABLE_Drawer"
+    },
+    {
+      "name": "Pull",
+      "type": "MESH",
+      "parent": "MOVABLE_Drawer"
+    },
+    {
+      "name": "Side",
+      "type": "MESH",
+      "parent": "ASSET_BedsideTable"
+    },
+    {
+      "name": "Side.001",
+      "type": "MESH",
+      "parent": "ASSET_BedsideTable"
+    },
+    {
+      "name": "Top",
+      "type": "MESH",
+      "parent": "ASSET_BedsideTable"
+    }
+  ],
+  "edit_proof": {
+    "node": "Back",
+    "before": [
+      0,
+      0.19499999284744263,
+      0.4000000059604645
+    ],
+    "after": [
+      0.12300000339746475,
+      0.19499999284744263,
+      0.4000000059604645
+    ],
+    "delta_x": 0.123,
+    "output": "reports/source-edit.glb",
+    "saved_copy": "reports/source-edit.blend",
+    "material": "Tropical timber",
+    "roughness_before": 0.6800000071525574,
+    "roughness_after": 0.27,
+    "copy_sha256": "ce8c48e783ff5edb506efd6bcbb54375eb5f5e840df56dcd16e0320e97855022",
+    "result": "PASS",
+    "glb_node_delta_x": 0.12300000339746475,
+    "material_roughness_survived_save_reopen_export": true
+  }
+}

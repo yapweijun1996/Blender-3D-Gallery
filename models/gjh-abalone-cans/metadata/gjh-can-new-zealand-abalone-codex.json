@@ -1,0 +1,129 @@
+{
+  "id": "gjh-can-new-zealand-abalone-codex",
+  "name": "GJH Can — New Zealand Abalone (Codex flat label)",
+  "name_zh": "新西兰鲍鱼罐头",
+  "summary": "Comparison variant of the New Zealand abalone can whose label is an AI-generated flat artwork (Codex image generation), similar in look to the official packaging.",
+  "description": "Same can geometry as the photo-unrolled version, with a wrap-around label from an AI-generated flat artwork made from the official packshots. Crisper and free of photo seams, but its text, seals and codes are not guaranteed to match the official label.",
+  "category": "Packaged Goods",
+  "tags": [
+    "GJH",
+    "New Moon",
+    "abalone",
+    "can",
+    "packaging",
+    "new zealand",
+    "product",
+    "metres",
+    "codex",
+    "ai-generated-label",
+    "comparison"
+  ],
+  "status": "validated",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Deterministic Blender Python geometry (same as the photo version). Label texture is an AI-generated flat label (Codex built-in image generation, prompt and inputs recorded in label_source); not official artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/codex/gjh-can-new-zealand-abalone-codex.glb",
+    "source": "sources/gjh-abalone-cans-codex.blend",
+    "preview": "previews/gjh-can-new-zealand-abalone-codex.webp",
+    "texture": "textures/codex/gjh-can-new-zealand-abalone-codex-label.jpg",
+    "flat_label": "sources/flat-labels/gjh-can-new-zealand-abalone-flat.jpg"
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "floor centre",
+    "front_axis": "Blender -Y / glTF +Z",
+    "studioEnvironment": true,
+    "environmentIntensity": 1,
+    "previewLighting": {
+      "hemisphereIntensity": 0.15,
+      "directionalIntensity": 0.55,
+      "directionalPosition": [
+        -1.5,
+        2,
+        5
+      ]
+    },
+    "textureAnisotropy": 8
+  },
+  "product": {
+    "brand": "New Moon (GJH house brand)",
+    "origin": "New Zealand",
+    "pack_size": "425g",
+    "type_zh": "新西兰鲍鱼罐头",
+    "reference_images": {
+      "new-moon-nz-425g-front.jpg": "5735d60c5951e0c9fef5cbd2931b125281b410a4165ab9bd04b5b6af0c96a082",
+      "new-moon-nz-425g-back.jpg": "8cbdbeb68255d9f4b5d04a97326b8332dac653de502221d88585e981aeffc0ac",
+      "new-moon-nz-425g-nutrition.jpg": "ce52927629cdf060c9a4adecd265efb0d0f9e2e8b98ab937ab216731af718cf1"
+    }
+  },
+  "accuracy_notes": "Same nominal dimensions as the photo version (diameter 73.5 mm; height from the measured label rows). The label is AI-generated and not official; see label_source for known differences. Real dimensions are unverified.",
+  "attribution": [
+    {
+      "credit": "Label artwork unrolled from GJH eShop official packshots recorded in Webpage-Design-Gallery assets/companies/gjh/official (manifest.json). Can geometry is original."
+    }
+  ],
+  "rights": "AI-generated reference artwork inspired by GJH / New Moon packaging; trademarks and product names belong to their owners. Used in the owner's project on the owner's confirmation; no independent licence document was supplied. Public redistribution terms have not been specified.",
+  "label_source": {
+    "kind": "AI-generated flat label (reference-based, similar look)",
+    "status": "Not official artwork. Text, numbers, seals, QR codes and barcodes may differ from the official label; do not rely on it for claims.",
+    "generator": "OpenAI Codex CLI built-in image generation (image_gen), prompted with the official eShop packshots listed under product.reference_images",
+    "file": "sources/flat-labels/gjh-can-new-zealand-abalone-flat.jpg",
+    "file_sha256": "8cbdfa27692e51ca141bbd2e44566fafb2ddcdab703745275f5af68c24dde07a",
+    "source_pixels": [
+      1774,
+      887
+    ],
+    "front_face_centre_fraction": 0.503,
+    "layout": "left to right: picture/food face, front face, information face; wraps around the can",
+    "known_discrepancies_from_official": [
+      "Distributor and packer lines were corrected against the official photo (Goh Joo Hin Pte Ltd / Goh Joo Hin (KL) Sdn Bhd, Prepared Foods Processing Ltd, Palmerston North).",
+      "Halal and award seals are generic designs, not the official marks.",
+      "QR code and barcode were redrawn by the model and were not verified or scanned."
+    ],
+    "comparison_with": "gjh-can-new-zealand-abalone",
+    "revision": "Second pass: text corrected by Codex against the official information-face photo."
+  },
+  "metrics": {
+    "glb_bytes": 430052,
+    "triangles": 4888,
+    "vertices": 2674,
+    "primitives": 3,
+    "materials": 3,
+    "textures": 1,
+    "texture_pixels": [
+      1536,
+      748
+    ],
+    "animations": 0,
+    "dimensions": [
+      0.07750000059604645,
+      0.123989999294281,
+      0.07750000059604645
+    ],
+    "bounds": {
+      "min": [
+        -0.038750000298023224,
+        0,
+        -0.038750000298023224
+      ],
+      "max": [
+        0.038750000298023224,
+        0.123989999294281,
+        0.038750000298023224
+      ]
+    },
+    "sha256": "9184734e934f4c34fc178e1f073449327a38e5bc9dadd240f7193b79fe6098a0",
+    "draw_calls": 3,
+    "texture_memory_bytes": 6127616
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  }
+}

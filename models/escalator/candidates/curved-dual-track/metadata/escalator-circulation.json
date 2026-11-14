@@ -1,0 +1,54 @@
+{
+  "id": "escalator-circulation-candidate",
+  "backlog_id": 4,
+  "title": "Original curved-riser escalator circulation candidate",
+  "status": "NEEDS REVIEW",
+  "registered_in_catalog": false,
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "creation_method": "Original Blender Python geometry and sampled transform animation; no copied meshes or external textures.",
+  "license": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "units": "metres",
+  "axes": {
+    "Blender": "Z up, +Y upper-flight direction",
+    "GLB": "Y up, -Z upper-flight direction"
+  },
+  "source": "sources/escalator-circulation.blend",
+  "export": "exports/optimized.glb",
+  "source_sha256": "730485a4fe10dbaac663da1d329c6ac64e893f06728161b68d32cc8588cb2b3d",
+  "glb_sha256": "efd20a083ce6d9f50e2230bb78ebcc63ba03757bfa1891ee09540f4a6f5b05af",
+  "design": {
+    "rise_m": 3,
+    "tread_width_m": 1,
+    "incline_degrees": 30,
+    "complete_rigid_steps": 58,
+    "step_loop_seconds": 46.416666666666664,
+    "handrail_seam_loop_seconds": 40.625,
+    "nominal_speed_m_s": 0.5,
+    "return_pit_depth_m": 2.34,
+    "roller_radius_m": 0.035,
+    "roller_facets": 16,
+    "chain_rail_segments": 584,
+    "guide_rail_segments": 528,
+    "walking_deck_levels_m": [
+      0,
+      3
+    ]
+  },
+  "budgets": {
+    "triangles": 70000,
+    "glb_bytes": 6000000,
+    "mesh_primitives": 220
+  },
+  "metrics": {
+    "triangles": 65300,
+    "glb_bytes": 4665920,
+    "primitives": 137
+  },
+  "interaction": "60 zero-start GLB transform clips: 58 complete rigid steps and two physical handrail-seam markers. Uniform rubber belt is static geometry; seam transport illustrates material movement. No Gallery control UI.",
+  "limitations": [
+    "Illustrative kinematics, not engineering or safety certification.",
+    "Continuous physical roller contact and rigid constant-pitch drive links are not proven.",
+    "Measured faceting gaps are reported, not silently accepted against a new threshold.",
+    "Physical Android/iOS and Safari/WebKit untested."
+  ]
+}

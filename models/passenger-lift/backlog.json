@@ -1,0 +1,34 @@
+{
+  "id": 5,
+  "slug": "passenger-lift",
+  "title": "Passenger Lift",
+  "root": "ASSET_PassengerLift",
+  "kind": "NEW DESIGN",
+  "budget_triangles": 80000,
+  "budget_bytes": 5000000,
+  "budget_primitives": 260,
+  "expected_dimensions_m": [
+    3.2,
+    6.49,
+    3.2
+  ],
+  "max_dimension_m": 10,
+  "dimension_tolerance_m": 0.006,
+  "required_nodes": [
+    "CAB_Carriage",
+    "DOOR_CabL",
+    "DOOR_CabR",
+    "DOOR_Landing0L",
+    "DOOR_Landing0R",
+    "DOOR_Landing1L",
+    "DOOR_Landing1R",
+    "FIXED_ShaftAndLandings"
+  ],
+  "animation_nodes": [
+    "CAB_Carriage",
+    "DOOR_CabL",
+    "DOOR_CabR",
+    "DOOR_Landing0L",
+    "DOOR_Landing0R"
+  ]
+}

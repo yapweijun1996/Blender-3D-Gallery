@@ -9,11 +9,20 @@ import { chromium } from 'playwright';
 import { serveBuild, launchOptions } from './browser-test-utils.mjs';
 
 const update = process.argv.includes('--update');
-const goldenDir = 'models/gjh-abalone-cans/reports/golden';
-const slugs = ['gjh-can-new-zealand-abalone', 'gjh-can-australia-abalone', 'gjh-can-south-africa-abalone', 'gjh-can-mexico-abalone'];
+const codex = process.argv.includes('--codex');   // the AI flat-label comparison set: fewer views
+const goldenDir = codex ? 'models/gjh-abalone-cans/reports/codex/golden' : 'models/gjh-abalone-cans/reports/golden';
+const slugs = ['gjh-can-new-zealand-abalone', 'gjh-can-australia-abalone', 'gjh-can-south-africa-abalone', 'gjh-can-mexico-abalone'].map(s => codex ? s + '-codex' : s);
 // Arrow-key presses (the viewer rotates exactly 10 degrees per key) give identical camera angles on every run.
-const views = { front: [], deg45: Array(4).fill('ArrowRight'), side: Array(9).fill('ArrowRight'), reverse: Array(18).fill('ArrowRight'),
-  top: Array(9).fill('ArrowUp'), bottom: Array(12).fill('ArrowDown') };
+const turn = (key, count) => Array(count).fill(key);
+const zoom = turn('+', 5);
+const views = {
+  'r0': [], 'r0-zoom': zoom,
+  'r40': turn('ArrowRight', 4), 'r40-zoom': [...turn('ArrowRight', 4), ...zoom],   // the viewer cannot turn exactly 45 degrees
+  'r90': turn('ArrowRight', 9), 'r90-zoom': [...turn('ArrowRight', 9), ...zoom],
+  'r180': turn('ArrowRight', 18), 'r180-zoom': [...turn('ArrowRight', 18), ...zoom],
+  'r270': turn('ArrowLeft', 9), 'r270-zoom': [...turn('ArrowLeft', 9), ...zoom],
+  top: turn('ArrowUp', 9), bottom: turn('ArrowDown', 12) };
+if (codex) for (const name of Object.keys(views)) if (!['r0', 'r0-zoom', 'r90', 'r180', 'r270'].includes(name)) delete views[name];
 const MEAN_LIMIT = 2.0, BAD_PIXEL_LIMIT = 0.01; // mean abs channel difference (0-255) and share of pixels differing by > 40
 
 const server = await serveBuild();

@@ -1,0 +1,9 @@
+{
+  "initial_job": "9722b6ef-99b7-4f80-934e-fc3d50142dcf",
+  "initial_status": "FAILED after file copy, before catalog write",
+  "failure": "assert len(matches)==1: both collection and asset had id escalator",
+  "resolution": "Verified imported final bytes and archived old bytes, matched the exact prior asset object, completed only catalog/ledger writes",
+  "completion_job": "80b59bb2-2a4a-4ca9-8a9e-0f5d54869793",
+  "completion_status": "SUCCEEDED",
+  "no_test_assertions_changed": true
+}

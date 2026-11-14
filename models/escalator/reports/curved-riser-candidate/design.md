@@ -1,0 +1,9 @@
+# Curved-riser and dual-track candidate design before generation
+
+Reason: investigate a rigid curved-riser solution to the failed rectangular profile. Prior2080cee2 and b4d71d7 assets/evidence remain unchanged. This first pass is analytic polygon geometry, not an operating GLB.
+
+Public conceptual references read: https://en.wikipedia.org/wiki/Escalator (separate front/rear wheel tracks, tread/riser cleats); https://patents.google.com/patent/US8220612 (guide-track transition radius and tread/riser gap); https://patents.google.com/patent/EP4424627A1/en (horizontal passenger treads and curved riser reflecting neighbor trajectory). No patent drawing, mesh, dimension set or brand copied. These are conceptual observations, not a licensed mechanical product or engineering certification.
+
+Original candidate profile derives its concave riser from the relative motion of two constant-pitch noses: y=P-sqrt(P^2-z^2), with explicit millimetre clearance and inward thickness. Each complete step remains rigid, including tread, riser and support. No fade, scale, hidden omission or zero-thickness riser permitted. Passenger-region orientation stays horizontal. Two independently derived wheel tracks constrain the rigid orientation through concealed return/turnaround. Provisional upper transition radius1.5m reduces chord-shortening error; turn radius and guide phase are design parameters to test, not tolerances to relax.
+
+Original fixed budget70k triangles,6MB GLB,220primitives unchanged. Nonintersection threshold remains1e-6m (numerical tolerance only). Adjacent and nonadjacent full-profile polygon checks, link chord variation, track cusp/self-intersection and full-cycle closure will be assessed before Blender generation. Handrail linear speed must match step-chain travel, using its own loop period if circumference differs. No final motion proof until actual Blender/GLB raw tracks and browser extremeposes are tested.

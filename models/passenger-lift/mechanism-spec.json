@@ -1,0 +1,71 @@
+{
+  "backlog_id": 5,
+  "slug": "passenger-lift",
+  "root": "ASSET_PassengerLift",
+  "novelty": "Original independent two-stop cutaway passenger lift with travelling cab and separate synchronized bottom door cycle; not a door-only component",
+  "budgets": {
+    "triangles": 80000,
+    "bytes": 5000000,
+    "primitives": 260
+  },
+  "actual": {
+    "triangles": 7656,
+    "bytes": 422340,
+    "primitives": 80,
+    "dimensions_gltf_xyz_m": [
+      3.2,
+      6.49,
+      3.2
+    ],
+    "clear_interior_floor_xy_m": [
+      1.7,
+      1.6
+    ],
+    "headroom_m": 2.3
+  },
+  "required_nodes": [
+    "ASSET_PassengerLift",
+    "FIXED_ShaftAndLandings",
+    "CAB_Carriage",
+    "DOOR_CabL",
+    "DOOR_CabR",
+    "DOOR_Landing0L",
+    "DOOR_Landing0R",
+    "DOOR_Landing1L",
+    "DOOR_Landing1R"
+  ],
+  "modes": {
+    "doors": [
+      "DOOR_Cycle_CabL",
+      "DOOR_Cycle_CabR",
+      "DOOR_Cycle_Landing0L",
+      "DOOR_Cycle_Landing0R"
+    ],
+    "travel": [
+      "TRAVEL_Cab"
+    ]
+  },
+  "door_travel_m": 0.53,
+  "cab_travel_m": 3,
+  "animation_times_seconds": [
+    0.041666666666666664,
+    1.0416666666666667,
+    2.0416666666666665
+  ],
+  "mode_warning": "Do not play door and travel clips simultaneously. Top landing doors remain static. Illustrative animation, not operational safety simulation.",
+  "limitations": [
+    "No engineering, safety, accessibility or control-system certification",
+    "No Gallery animation controls or runtime playability claim",
+    "Physical Android/iOS and WebKit not tested",
+    "Parent source-edit and full Gallery viewport gates pending"
+  ],
+  "local_status": {
+    "structural_mechanism": "PASS",
+    "studio_visual_6views": "PASS inspected",
+    "standalone_chromium_2modes": "PASS 121 rendered samples per mode, exact pixel restoration",
+    "browser_visual_6images": "PASS inspected"
+  },
+  "visual_notes": "Recognizable open-frame two-stop lift, intact shaft rails, clearly visible bottom open aperture and distinct upper cab pose. No observed clipping, detached parts or missing materials in inspected studio and Chromium views.",
+  "failure_history": "First browser harness sampled nominal endpoint 49/24, earlier than actual float32 exported endpoint; exact pixel equality failed. Original script/log/screenshots preserved under reports/browser-motion-first-failure. Corrected actual endpoint sampling with independent nominal timing assertions and unchanged pose/clearance/pixel-equality checks. No geometry or budget relaxation.",
+  "sha256": "86bae913acdf211d89cf8de8779bb6edfa70255f7508669e02f69017ab33cc4e"
+}

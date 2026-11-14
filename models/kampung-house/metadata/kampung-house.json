@@ -1,0 +1,111 @@
+{
+  "id": "kampung-house",
+  "name": "Kampung House",
+  "summary": "Kampung House reusable original asset.",
+  "description": "Original Singapore/Malaysia city, commercial and architectural illustrative asset with independently editable components. No commercial or official logos, real personal data, or engineering certification.",
+  "category": "Architecture",
+  "tags": [
+    "singapore",
+    "malaysia",
+    "city-shells",
+    "modular",
+    "metres",
+    "editable"
+  ],
+  "status": "draft",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original deterministic Blender Python geometry; reviewed repository helpers.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/kampung-house.glb",
+    "source": "sources/kampung-house.blend",
+    "preview": "previews/hero.webp",
+    "render": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.55,
+      1
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "bottom reference"
+  },
+  "backlog_id": 293,
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. Not a medical, accessibility, engineering or safety certification.",
+  "attribution": [
+    {
+      "credit": "Original geometry; repository material/export helpers. Generic labels use Blender bundled Bfont converted to editable mesh. No external models/textures."
+    }
+  ],
+  "material_notes": "Named editable meshes/materials. AnimationMixer clips where listed, no Gallery component-control UI.",
+  "accuracy_notes": "Illustrative scene prop only. Not operational fuel, ticketing or security equipment; no accessibility, structural, electrical, traffic or safety certification. Not a real landmark or branded building.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local_asset": "PASS",
+    "structural": "PASS",
+    "semantic_geometry": "PASS: independent prop/shell contracts, vehicle radius/axle/contact/aperture/sweep checks and visual review",
+    "source_edit": "PASS: copied .blend saved/reopened; mesh translation and material roughness survive export; canonical unchanged",
+    "visual": "PASS: final exported-GLB previews and browser screenshots inspected",
+    "browser": "PASS: Chromium 1440/768/390, actual consumed GLB hash, controls/reset/reopen, no errors or overflow",
+    "animations": "NOT APPLICABLE: static asset",
+    "android": "NOT TESTED",
+    "ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "kampung-house",
+    "backlog_id": 293,
+    "glb_bytes": 215312,
+    "triangles": 3908,
+    "vertices": 7770,
+    "meshes": 38,
+    "materials": 4,
+    "dimensions": [
+      8,
+      5.800000190734863,
+      12
+    ],
+    "bounds": {
+      "min": [
+        -4,
+        0,
+        -5
+      ],
+      "max": [
+        4,
+        5.800000190734863,
+        7
+      ]
+    },
+    "sha256": "e58e3373b4290d95cffc2e5380471cc51518ccaa2a73f0e74ef44108da53e3f8",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 1500000,
+    "budget_triangles": 30000,
+    "animation_clips": 0
+  }
+}

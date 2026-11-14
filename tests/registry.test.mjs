@@ -103,8 +103,8 @@ test('catalog refuses symlink references outside the model directory', () => {
 test('demo registry resolves verified posters and legacy launch routes', () => {
   const catalog = loadCatalog();
   const actual = loadDemos(process.cwd(), catalog);
-  assert.deepEqual(actual.map(demo => demo.route), ['?page=game', '?page=solar']);
-  assert.deepEqual(actual.map(demo => demo.category), ['Game', 'Simulation']);
+  assert.deepEqual(actual.map(demo => demo.route), ['?page=game', '?page=solar', '?page=product-studio']);
+  assert.deepEqual(actual.map(demo => demo.category), ['Game', 'Simulation', 'Product']);
   for (const demo of actual) {
     const asset = catalog.collections.flatMap(collection => collection.assets).find(asset => asset.id === demo.thumbnailAssetId);
     assert.equal(demo.thumbnail, asset.thumbnail);

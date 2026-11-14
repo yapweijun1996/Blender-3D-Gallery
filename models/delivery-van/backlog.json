@@ -1,0 +1,51 @@
+{
+  "id": 149,
+  "title": "Delivery Van",
+  "slug": "delivery-van",
+  "root": "ASSET_DeliveryVan",
+  "dimensions": [
+    2.44,
+    5.4,
+    2.5
+  ],
+  "scale": 7.4,
+  "features": [
+    "CHASSIS",
+    "CABIN",
+    "CARGO",
+    "REAR",
+    "TYRE"
+  ],
+  "animation": {
+    "kind": "vehicle",
+    "wheel_radius": 0.36,
+    "track": 1.85,
+    "axles": [
+      -1.65,
+      1.55
+    ],
+    "doors": [
+      {
+        "node": "MOVABLE_RearLeft",
+        "kind": "rotation",
+        "angle": 1.1
+      },
+      {
+        "node": "MOVABLE_RearRight",
+        "kind": "rotation",
+        "angle": 1.1
+      },
+      {
+        "node": "MOVABLE_SideSlide",
+        "kind": "translation",
+        "axis": 2,
+        "travel": -0.95
+      }
+    ]
+  },
+  "budget": {
+    "triangles": 50000,
+    "bytes": 3000000,
+    "mesh_primitives": 160
+  }
+}

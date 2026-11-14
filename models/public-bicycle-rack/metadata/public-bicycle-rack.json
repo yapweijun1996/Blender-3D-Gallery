@@ -1,0 +1,130 @@
+{
+  "id": "public-bicycle-rack",
+  "name": "Public Bicycle Rack",
+  "category": "Props",
+  "tags": [
+    "sgmy",
+    "modular",
+    "editable",
+    "derived-extraction"
+  ],
+  "description": "Public Bicycle Rack; DERIVED EXTRACTION. Independent editable source and export. Illustrative only.",
+  "status": "draft",
+  "backlog_id": 175,
+  "created": "2026-11-13",
+  "author": "Blender-3D-Gallery / agent-assisted original source",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/public-bicycle-rack.glb",
+    "source": "sources/public-bicycle-rack.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewRotationY": 0,
+    "previewLighting": {
+      "hemisphereIntensity": 3.2,
+      "directionalIntensity": 3,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "provenance": {
+    "kind": "DERIVED EXTRACTION",
+    "parent_asset": "hdb-bicycle-parking-shelter",
+    "parent_commit": "3c41bcfd660c69a41fe3bb7f5f56baed6f4b4e0b",
+    "publication": "main3c41",
+    "source_files": {
+      "parent-generator.py": {
+        "original_path": "models/hdb-bicycle-parking-shelter/generate.py",
+        "sha256": "f9574dc70b19a69b42bda47c5cb318539b64ae7e0100e865acc828fc9c6f75dd"
+      },
+      "parent.glb": {
+        "original_path": "models/hdb-bicycle-parking-shelter/exports/optimized.glb",
+        "sha256": "dbffa538718db3d212e6f5f4a8ec049741a049e3e9e86ef08bce9c9d32253de5"
+      },
+      "parent-metadata.json": {
+        "original_path": "models/hdb-bicycle-parking-shelter/metadata/hdb-bicycle-parking-shelter.json",
+        "sha256": "8b04dc79e98764f38aab0e8b0b09f67fe728236060f1f233ee98d8f434363528"
+      }
+    },
+    "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+    "changes": "Select existing components and translate origin only; parent geometry and parent assets unchanged",
+    "new_design_count": false,
+    "count_toward_500": "PENDING OWNER POLICY"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "local_asset": "PASS",
+    "source_edit": "PASS: edited mesh position and material roughness survived save/reopen/export without regeneration",
+    "studio_visual": "PASS: actual exported GLB multi-angle images inspected",
+    "chromium": "PASS: three viewport sizes, actual GLB SHA, orbit/zoom/reset/reopen and inspected rendered images",
+    "derivative_count": "PENDING OWNER POLICY"
+  },
+  "counting": {
+    "classification": "DERIVED EXTRACTION",
+    "new_design": false,
+    "derivative_count_policy": "PENDING OWNER POLICY"
+  },
+  "metrics": {
+    "result": "PASS",
+    "id": "public-bicycle-rack",
+    "backlog_id": 175,
+    "glb_bytes": 29388,
+    "triangles": 564,
+    "vertices": 1056,
+    "meshes": 3,
+    "materials": 1,
+    "dimensions": [
+      0.05000008499340642,
+      0.6950000736627358,
+      0.8099999987581051
+    ],
+    "bounds": {
+      "min": [
+        -0.02500004249670321,
+        0,
+        -0.40499999937905257
+      ],
+      "max": [
+        0.02500004249670321,
+        0.6950000736627358,
+        0.40499999937905257
+      ]
+    },
+    "sha256": "72af69a02c7fae3c1cd423e847ba33878e2f9551862381c94fc4a3853bef0175",
+    "validation": {
+      "errors": 0,
+      "warnings": 0,
+      "version": "2.0.0-dev.3.10"
+    },
+    "budget_bytes": 400000,
+    "budget_triangles": 6000
+  },
+  "accuracy_notes": "Illustrative modular asset in metres, not a surveyed product or certified equipment. Unchanged geometry extracted from pinned parent; independent packaging, not a new design. Derivative count policy pending owner decision.",
+  "attribution": [
+    {
+      "credit": "Blender-3D-Gallery original procedural geometry; derived from hdb-bicycle-parking-shelter at immutable commit recorded in provenance/provenance.json",
+      "url": ""
+    }
+  ],
+  "evidence": {
+    "structural": "reports/assets.json",
+    "source_edit": "reports/source.json",
+    "visual": "reports/visual-review.json",
+    "exact_parent_geometry": "reports/extraction-validation.json"
+  }
+}

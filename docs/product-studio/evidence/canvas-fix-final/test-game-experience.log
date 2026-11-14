@@ -1,0 +1,35 @@
+
+> blender-3d-gallery@0.1.0 test:game-experience
+> node scripts/test-game-experience.mjs
+
+PASS 1 mouse handle drag and release shoots
+PASS 2 real touch handle drag and release shoots
+PASS 3 weak or reverse pull cancels
+PASS 5 weak or reverse pull cancels
+PASS 4 long pull clamps at100
+PASS 6 cancel and lost capture never shoot
+PASS 7 duplicate up and normal lost capture commit only once
+PASS 8 cue offset proportional and aim locked
+PASS 9 no impulse until actual cue contact
+PASS 10 power0.3 initial speed
+PASS 10 power0.8 initial speed
+PASS 11 moving disables further shooting
+PASS 12 pause during strike cancels and resume never fires
+PASS 13 reload never replays interrupted shot
+PASS 14 turn resolution waits for all balls to settle
+PASS 15 landscape table and controller visible without gesture scrolling
+PASS keyboard charge release and track click safety
+PASS blur cancels an uncommitted charge
+PASS resize cancels an uncommitted charge
+PASS captured pointer may release outside controller; second pointer ignored
+PASS reduced motion preserves a single contact impulse
+PASS fixed-step contact clock burst
+PASS fixed-step contact clock incremental
+PASS direct whiteball placement validates release and retains last legal point
+PASS handle accessible label and startup lock
+PASS blur during pending ownership save invalidates the shot
+PASS resize during pending ownership save invalidates the shot
+PASS tap without drag never shoots
+PASS pull clearly below the minimum release threshold cancels
+PASS exact five percent pull reaches the minimum release threshold
+PASS reset cue placement restores default preview without committing

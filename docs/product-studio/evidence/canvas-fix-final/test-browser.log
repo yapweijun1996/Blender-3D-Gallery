@@ -1,0 +1,81 @@
+
+> blender-3d-gallery@0.1.0 test:browser
+> node scripts/test-game-browser.mjs && node scripts/test-game-experience.mjs
+
+PASS gameplay keyboard shortcuts require table focus
+PASS backgrounding during shot startup cancels the impulse after the save
+PASS WebGL loss during renew cannot continue the shot
+PASS WebGL loss during checkpoint cannot continue the shot
+PASS WebGL loss during adjudication cannot continue the shot
+PASS WebGL loss closes blocking game dialogs and exposes recovery
+PASS backgrounding while new is saving preserves the pause
+PASS backgrounding while place is saving preserves the pause
+PASS backgrounding while adjudication is saving preserves the pause
+PASS leaving during a pending hidden shot cannot open a stale dialog
+PASS late Web Lock is released when the game route is abandoned
+PASS IndexedDB lease transfers when Web Locks are unavailable
+PASS mobile storage failure remains visible during play
+PASS restarting resets the match without duplicating its animation loop
+PASS missing game assets show a usable retry
+PASS invalid game assets show a usable retry
+PASS unavailable WebGL offers recovery and a working retry
+PASS graphics quality changes resolution without resetting the match
+PASS desktop graphics options open and close
+PASS touch targets and viewport remain usable at 320x568
+PASS touch targets and viewport remain usable at 360x800
+PASS touch targets and viewport remain usable at 390x844
+PASS touch targets and viewport remain usable at 1440x900
+PASS tall portrait first fold survives platform font metrics
+PASS Game to About and back to Gallery preserves navigation
+PASS resizing an active match preserves state and usable controls
+PASS reduced motion disables smooth scrolling without disabling play
+PASS assigned-group progress is available at 320px
+PASS assigned-group progress is available at 390px
+PASS secondary touch stays ignored after primary end or cancel; new gesture works
+PASS late GLB response cannot revive a disposed game route
+PASS WebGL loss during GLB loading leaves a working recovery
+PASS first entry exposes Start and the complete table
+PASS start, invalid placement, single impulse, pause and shot settlement
+PASS interrupted shot restores pre-shot checkpoint
+PASS one navigation confirmation and repeated Game navigation remains usable
+PASS touch layout 320x568
+PASS touch layout 390x844
+PASS touch layout 844x390
+PASS multi-tab ownership transfers after the first tab closes
+PASS storage failure keeps the match until an explicit discard
+PASS corrupt checkpoint falls back to a new match
+PASS eligible eight is physically potted and ends the match once
+PASS WebGL context loss before and during a match offers working reload
+PASS all gallery assets preview and download independently
+PASS WebKit shot smoke
+PASS 1 mouse handle drag and release shoots
+PASS 2 real touch handle drag and release shoots
+PASS 3 weak or reverse pull cancels
+PASS 5 weak or reverse pull cancels
+PASS 4 long pull clamps at100
+PASS 6 cancel and lost capture never shoot
+PASS 7 duplicate up and normal lost capture commit only once
+PASS 8 cue offset proportional and aim locked
+PASS 9 no impulse until actual cue contact
+PASS 10 power0.3 initial speed
+PASS 10 power0.8 initial speed
+PASS 11 moving disables further shooting
+PASS 12 pause during strike cancels and resume never fires
+PASS 13 reload never replays interrupted shot
+PASS 14 turn resolution waits for all balls to settle
+PASS 15 landscape table and controller visible without gesture scrolling
+PASS keyboard charge release and track click safety
+PASS blur cancels an uncommitted charge
+PASS resize cancels an uncommitted charge
+PASS captured pointer may release outside controller; second pointer ignored
+PASS reduced motion preserves a single contact impulse
+PASS fixed-step contact clock burst
+PASS fixed-step contact clock incremental
+PASS direct whiteball placement validates release and retains last legal point
+PASS handle accessible label and startup lock
+PASS blur during pending ownership save invalidates the shot
+PASS resize during pending ownership save invalidates the shot
+PASS tap without drag never shoots
+PASS pull clearly below the minimum release threshold cancels
+PASS exact five percent pull reaches the minimum release threshold
+PASS reset cue placement restores default preview without committing

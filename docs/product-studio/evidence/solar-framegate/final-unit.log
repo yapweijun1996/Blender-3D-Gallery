@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: NASA solar candidates are attributed, discoverable and excluded from the solar demo
+ok 1 - NASA solar candidates are attributed, discoverable and excluded from the solar demo
+  ---
+  duration_ms: 326.840205
+  type: 'test'
+  ...
+# Subtest: pending frame prevents queue buildup; every wait is nonblocking
+ok 2 - pending frame prevents queue buildup; every wait is nonblocking
+  ---
+  duration_ms: 0.551625
+  type: 'test'
+  ...
+# Subtest: context loss releases pending fence once and stops until disposal
+ok 3 - context loss releases pending fence once and stops until disposal
+  ---
+  duration_ms: 0.072125
+  type: 'test'
+  ...
+# Subtest: missing APIs, null fence, wait failure and thrown calls gracefully fall back
+ok 4 - missing APIs, null fence, wait failure and thrown calls gracefully fall back
+  ---
+  duration_ms: 0.139625
+  type: 'test'
+  ...
+# Subtest: solar scene uses attributed NASA assets without losing physical facts
+ok 5 - solar scene uses attributed NASA assets without losing physical facts
+  ---
+  duration_ms: 296.928909
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 381.406912

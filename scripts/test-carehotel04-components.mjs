@@ -1,0 +1,12 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {Box3} from 'three';import {createHash} from 'node:crypto';
+for(const s of JSON.parse(fs.readFileSync('scripts/batchcarehotel04.json'))){const p='models/'+s.slug+'/',{readGlb}=await import('../'+p+'glb.mjs'),g=await readGlb(p+'exports/'+s.slug+'.glb');g.scene.updateMatrixWorld(true);const group=n=>{const a=[];g.scene.traverse(o=>{if(o.isMesh&&(o.name===n||o.name.startsWith(n+'_')||o.name.startsWith(n+'.')||(o.name.startsWith(n)&&/^\d+$/.test(o.name.slice(n.length)))))a.push(o);});assert.ok(a.length,n);return a;},box=o=>new Box3().setFromObject(o),touch=(a,b)=>box(a).clone().expandByScalar(.0001).intersectsBox(box(b)),proof=[];
+ const bridge=(name,left,right)=>{for(const a of group(name)){assert.ok(group(left).some(b=>touch(a,b)),name+' touches '+left);assert.ok(group(right).some(b=>touch(a,b)),name+' touches '+right);}proof.push(name+' joins '+left+' and '+right);};
+ if(s.id===202)bridge('Lift_Column','Chassis','Deck');
+ if(s.id===204){assert.equal(group('Caster_Fork').length,2);assert.equal(group('Front_Caster').length,2);for(const a of group('Seat_Crossbrace'))assert.ok(touch(a,group('Seat')[0]));for(const a of group('Caster_Fork'))assert.ok(group('Front_Caster').some(b=>touch(a,b)));assert.ok(touch(group('Back_Crossbrace')[0],group('Backrest')[0]));proof.push('Seat/back crossbraces contact fabric panels; caster forks contact front wheels');}
+ if(s.id===205)bridge('Rail_Crossbrace','Transport_Frame','Rail_Brace');
+ if(s.id===211){assert.ok(Math.abs(box(group('Fabric_Cuff')[0]).min.y)<1e-5);proof.push('Rolled cuff rests at y=0');}
+ if(s.id===223)bridge('Bar_Hanger','Garment_Bar','Top_Cross_Rail');
+ if(s.id===237){for(const a of group('Foot'))assert.ok([...group('Frame'),...group('Back_Frame')].some(b=>touch(a,b)));proof.push('All four feet meet a supporting frame rail');}
+ if(s.id===259){for(const a of group('Stair_Stringer'))for(const b of group('Stair_Tread'))assert.ok(touch(a,b));proof.push('Both stair stringers intersect all three tread volumes');}
+ const report={result:'PASS',sha256:createHash('sha256').update(g.bytes).digest('hex'),checks:proof,scope:'Bounded mesh contact checks supplement rendered visual inspection; not structural or medical certification'};fs.writeFileSync(p+'reports/components.json',JSON.stringify(report,null,2)+'\n');console.log('COMPONENT_PASS',s.id,proof.length);
+}

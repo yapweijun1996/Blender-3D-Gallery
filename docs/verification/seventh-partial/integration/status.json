@@ -1,0 +1,293 @@
+[
+  {
+    "step": "preservation-start",
+    "exit_code": 0,
+    "command": [
+      "python3",
+      "docs/verification/seventh-partial/verify-preservation.py"
+    ]
+  },
+  {
+    "step": "unit",
+    "exit_code": 0,
+    "command": [
+      "python3",
+      "docs/verification/seventh-partial/unit-fixture.py"
+    ]
+  },
+  {
+    "step": "build",
+    "exit_code": 0,
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ]
+  },
+  {
+    "step": "library",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-library-browser.mjs"
+    ]
+  },
+  {
+    "step": "lifecycle",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-gallery-loading.mjs"
+    ]
+  },
+  {
+    "step": "distinct-gallery",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-seventh008-browser.mjs"
+    ]
+  },
+  {
+    "step": "cleaner-gallery",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-cleaner.mjs"
+    ]
+  },
+  {
+    "step": "roles-gallery",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-characters-six-browser.mjs"
+    ]
+  },
+  {
+    "step": "walkroles-gallery",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-characters-walk-six-browser.mjs"
+    ]
+  },
+  {
+    "step": "care-gallery",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-care-characters-browser.mjs"
+    ]
+  },
+  {
+    "step": "distinct-animation",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-seventh-partial-original-two-animation.mjs"
+    ]
+  },
+  {
+    "step": "cleaner-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-cleaner-animation.mjs"
+    ]
+  },
+  {
+    "step": "cashier-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-cashier-motion.mjs"
+    ]
+  },
+  {
+    "step": "security-guard-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-security-guard-motion.mjs"
+    ]
+  },
+  {
+    "step": "delivery-rider-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-delivery-rider-motion.mjs"
+    ]
+  },
+  {
+    "step": "chef-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-chef-motion.mjs"
+    ]
+  },
+  {
+    "step": "teacher-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-teacher-motion.mjs"
+    ]
+  },
+  {
+    "step": "warehouse-worker-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-warehouse-worker-motion.mjs"
+    ]
+  },
+  {
+    "step": "male-office-worker-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-male-office-worker-motion.mjs"
+    ]
+  },
+  {
+    "step": "female-office-worker-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-female-office-worker-motion.mjs"
+    ]
+  },
+  {
+    "step": "bus-driver-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-bus-driver-motion.mjs"
+    ]
+  },
+  {
+    "step": "hawker-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-hawker-motion.mjs"
+    ]
+  },
+  {
+    "step": "student-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-student-motion.mjs"
+    ]
+  },
+  {
+    "step": "doctor-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-doctor-motion.mjs"
+    ]
+  },
+  {
+    "step": "nurse-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-nurse-motion.mjs"
+    ]
+  },
+  {
+    "step": "construction-worker-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-construction-worker-motion.mjs"
+    ]
+  },
+  {
+    "step": "tourist-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-tourist-motion.mjs"
+    ]
+  },
+  {
+    "step": "elderly-walker-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-elderly-walker-motion.mjs"
+    ]
+  },
+  {
+    "step": "child-character-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-child-character-motion.mjs"
+    ]
+  },
+  {
+    "step": "mall-shopper-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-mall-shopper-walk.mjs"
+    ]
+  },
+  {
+    "step": "gap-gallery",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-gapextract06-browser.mjs"
+    ]
+  },
+  {
+    "step": "lift-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "models/passenger-lift/browser-motion.mjs"
+    ]
+  },
+  {
+    "step": "escalator-final-motion",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "models/escalator/reports/circulation-final/browser-motion.mjs"
+    ]
+  },
+  {
+    "step": "gallery-comparison",
+    "exit_code": 0,
+    "command": [
+      "python3",
+      "docs/verification/seventh-partial/compare-gallery.py"
+    ]
+  },
+  {
+    "step": "legacy-preview",
+    "exit_code": 0,
+    "command": [
+      "node",
+      "scripts/test-preview-config.mjs",
+      "dist",
+      "/srv/agent-workstation/workspaces/blender-seventh-partial33-20261113/repo/docs/verification/seventh-partial/integration/legacy-preview"
+    ]
+  },
+  {
+    "step": "preservation-end",
+    "exit_code": 0,
+    "command": [
+      "python3",
+      "docs/verification/seventh-partial/verify-preservation.py"
+    ]
+  }
+]

@@ -29,6 +29,7 @@ const closeMenu = setupMenu();
 let viewerController, activeViewer, activeAsset, opener;
 let gamePage = null,
   solarPage = null,
+  productStudioPage = null,
   pageController = null,
   routeRun = 0,
   mountedRoute = null;
@@ -413,7 +414,7 @@ function route() {
   const url = new URL(location.href);
   const page = url.searchParams.get("page");
   if (!page && url.hash === "#about") return "about";
-  return ["game", "solar", "demos", "about"].includes(page) ? page : "gallery";
+  return ["game", "solar", "product-studio", "demos", "about"].includes(page) ? page : "gallery";
 }
 async function syncRoute() {
   const page = route(),
@@ -428,35 +429,36 @@ async function syncRoute() {
   const raw = new URL(location.href).searchParams.get("page");
   if (
     raw &&
-    !["game", "solar", "demos", "about", "gallery", "models"].includes(raw)
+    !["game", "solar", "product-studio", "demos", "about", "gallery", "models"].includes(raw)
   ) {
     notice.hidden = false;
     notice.textContent =
       "This page could not be found. Explore the 3D model library below.";
   }
-  for (const name of ["gallery", "demos", "about", "game", "solar"])
+  for (const name of ["gallery", "demos", "about", "game", "solar", "product-studio"])
     $(`#${name}-page`).hidden = name !== page;
-  $("#demo-breadcrumb").hidden = !["game", "solar"].includes(page);
+  $("#demo-breadcrumb").hidden = !["game", "solar", "product-studio"].includes(page);
   $(".footer").hidden = page === "game";
   document.body.classList.toggle("game-page", page === "game");
-  const active = ["game", "solar"].includes(page) ? "demos" : page;
+  const active = ["game", "solar", "product-studio"].includes(page) ? "demos" : page;
   for (const link of document.querySelectorAll("nav [data-page]")) {
     if (link.dataset.page === active) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
   }
   syncModelFilters();
   syncDemoFilters();
-  document.title = `${page === "gallery" ? "3D Models" : page === "demos" ? "Interactive Demos" : page === "game" ? "Game" : page === "solar" ? "Solar System" : "About"} · Blender 3D Gallery`;
-  if (page === mountedRoute && (gamePage || solarPage || pageController))
+  document.title = `${page === "gallery" ? "3D Models" : page === "demos" ? "Interactive Demos" : page === "game" ? "Game" : page === "solar" ? "Solar System" : page === "product-studio" ? "Product Studio" : "About"} · Blender 3D Gallery`;
+  if (page === mountedRoute && (gamePage || solarPage || productStudioPage || pageController))
     return;
   const run = ++routeRun;
   pageController?.abort();
   pageController = null;
   gamePage?.dispose();
   solarPage?.dispose();
-  gamePage = solarPage = null;
+  productStudioPage?.dispose();
+  gamePage = solarPage = productStudioPage = null;
   mountedRoute = page;
-  if (page === "game" || page === "solar") {
+  if (page === "game" || page === "solar" || page === "product-studio") {
     if (dialog.open) closeViewer(false);
     const cleanUrl = new URL(location.href);
     cleanUrl.searchParams.delete("model");
@@ -470,13 +472,16 @@ async function syncRoute() {
     try {
       let module;
       if (page === "game") module = await import("./game/page.js");
-      else module = await import("./solar/page.js");
+      else if (page === "solar") module = await import("./solar/page.js");
+      else module = await import("./product-studio/page.js");
       if (run !== routeRun || controller.signal.aborted) return;
       const result =
         page === "game"
           ? await module.mountGame(root, assets, controller.signal, () =>
               navigate("gallery", true),
             )
+          : page === "product-studio"
+            ? await module.mountProductStudio(root, assetById.get("demo-food-tin"), controller.signal, [assetById.get("demo-beverage-can")].filter(Boolean))
           : await module.mountSolar(
               root,
               module.solarSceneAssets(assets),
@@ -487,9 +492,10 @@ async function syncRoute() {
         return;
       }
       if (page === "game") gamePage = result;
-      else solarPage = result;
+      else if (page === "solar") solarPage = result;
+      else productStudioPage = result;
       window.dispatchEvent(
-        new CustomEvent(page === "game" ? "game-mounted" : "solar-mounted"),
+        new CustomEvent(page === "game" ? "game-mounted" : page === "solar" ? "solar-mounted" : "product-studio-mounted"),
       );
     } catch (error) {
       if (controller.signal.aborted) return;

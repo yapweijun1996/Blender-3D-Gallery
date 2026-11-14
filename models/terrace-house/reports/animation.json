@@ -1,0 +1,111 @@
+{
+  "result": "PASS",
+  "sha256": "dd2e600fd1c825fdf06eb4f33210b26e3ae643ddd26dfa8f3d1bfbd68844cdf6",
+  "sample_times": {
+    "closed": 0.0416666679084301,
+    "open": 1.0416666666666667,
+    "reset": 2.0416667461395264
+  },
+  "clips": [
+    {
+      "name": "Demonstrate_MOVABLE_Entry_Door",
+      "duration": 2.0416667461395264,
+      "tracks": 1
+    }
+  ],
+  "raw_track_endpoints": [
+    {
+      "track": "MOVABLE_Entry_Door.quaternion",
+      "first": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "last": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mid": 24
+    }
+  ],
+  "closed": [
+    {
+      "name": "MOVABLE_Entry_Door",
+      "position": [
+        -1.9800000190734863,
+        0.25,
+        6.119999885559082
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "open": [
+    {
+      "name": "MOVABLE_Entry_Door",
+      "position": [
+        -1.9800000190734863,
+        0.25,
+        6.119999885559082
+      ],
+      "quaternion": [
+        0,
+        -0.6442176435848603,
+        0,
+        0.7648422240527584
+      ]
+    }
+  ],
+  "reset": [
+    {
+      "name": "MOVABLE_Entry_Door",
+      "position": [
+        -1.9800000190734863,
+        0.25,
+        6.119999885559082
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "expected_poses": [
+    {
+      "p": [
+        -1.98,
+        0.25,
+        6.12
+      ],
+      "q": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "openP": [
+        -1.98,
+        0.25,
+        6.12
+      ],
+      "openQ": [
+        0,
+        -0.644217687237691,
+        0,
+        0.7648421872844885
+      ]
+    }
+  ],
+  "fixed_components_unchanged": true,
+  "clearance": "Outward entry door rotates1.4rad about fixed hinge; clears facade, porch columns, threshold and lintel",
+  "verification": "Independent raw track endpoints and Three.js Mixer poses; no Gallery component-control UI"
+}

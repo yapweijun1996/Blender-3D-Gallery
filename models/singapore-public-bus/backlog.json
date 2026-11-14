@@ -1,0 +1,96 @@
+{
+  "id": 101,
+  "slug": "singapore-public-bus",
+  "title": "Singapore Public Bus",
+  "root": "ASSET_SingaporePublicBus",
+  "required_nodes": [
+    "Centre_Low_Floor",
+    "Reserved_Bay_Marking",
+    "Standee_Pole",
+    "MOVABLE_FrontEntry_A"
+  ],
+  "budget_bytes": 4000000,
+  "budget_triangles": 60000,
+  "budget_primitives": 240,
+  "max_dimension_m": 40,
+  "expected_dimensions_m": [
+    2.6,
+    3.2,
+    12.14
+  ],
+  "dimension_tolerance_m": 0.006,
+  "animation_nodes": [
+    "MOVABLE_FrontEntry_A",
+    "MOVABLE_FrontEntry_B",
+    "MOVABLE_MidEntry_A",
+    "MOVABLE_MidEntry_B",
+    "ROLL_FL",
+    "ROLL_FR",
+    "ROLL_RL",
+    "ROLL_RR",
+    "STEER_FL",
+    "STEER_FR"
+  ],
+  "animation_specs": [
+    [
+      "MOVABLE_FrontEntry_A",
+      "location",
+      1,
+      -0.64
+    ],
+    [
+      "MOVABLE_FrontEntry_B",
+      "location",
+      1,
+      0.64
+    ],
+    [
+      "MOVABLE_MidEntry_A",
+      "location",
+      1,
+      -0.64
+    ],
+    [
+      "MOVABLE_MidEntry_B",
+      "location",
+      1,
+      0.64
+    ],
+    [
+      "ROLL_FL",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_FR",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_RL",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "ROLL_RR",
+      "rotation_euler",
+      0,
+      3.141592653589793
+    ],
+    [
+      "STEER_FL",
+      "rotation_euler",
+      2,
+      0.2
+    ],
+    [
+      "STEER_FR",
+      "rotation_euler",
+      2,
+      0.2
+    ]
+  ]
+}
