@@ -640,6 +640,8 @@ nav a[aria-current="page"] {
   }
 }
 .skip-link {
+  opacity: 0;
+  pointer-events: none;
   position: fixed;
   left: 16px;
   top: -100px;
@@ -649,6 +651,8 @@ nav a[aria-current="page"] {
   background: var(--accent);
 }
 .skip-link:focus {
+  opacity: 1;
+  pointer-events: auto;
   top: 12px;
 }
 .outline-button,

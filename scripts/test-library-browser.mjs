@@ -64,7 +64,8 @@ try {
       await page.screenshot({path:path.join(artifacts,`models-${width}.png`)});
       await page.goto(server.url+'?page=demos');
       await page.getByRole('heading',{name:/^Interactive Demos/}).waitFor();
-      assert.equal(await page.locator('.demo-card').count(),2);
+      assert.equal(await page.locator('.demo-card').count(),3);
+      assert.deepEqual((await page.locator('.demo-card').evaluateAll(nodes=>nodes.map(n=>n.dataset.demoId))).sort(),['game','product-studio','solar-system']);
       assert.equal(await page.locator('canvas').count(),0);
       await noOverflow(page);
       await page.screenshot({path:path.join(artifacts,`demos-${width}.png`)});
@@ -106,8 +107,9 @@ try {
     await page.locator('#demo-category').selectOption('Game');
     assert.equal(await page.locator('.demo-card').count(),0);
     await page.getByRole('button',{name:/clear filters/i}).last().click();
-    await page.waitForFunction(()=>document.querySelectorAll('.demo-card').length===2);
-    assert.equal(await page.locator('.demo-card').count(),2);
+    await page.waitForFunction(()=>document.querySelectorAll('.demo-card').length===3);
+    assert.equal(await page.locator('.demo-card').count(),3);
+      assert.deepEqual((await page.locator('.demo-card').evaluateAll(nodes=>nodes.map(n=>n.dataset.demoId))).sort(),['game','product-studio','solar-system']);
     await page.locator('#demo-category').selectOption('Simulation');
     assert.equal(await page.locator('.demo-card').count(),1);
     await page.reload();

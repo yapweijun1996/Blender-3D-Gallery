@@ -1,0 +1,104 @@
+"""Original metric food-tin concept. Blender4.0+, no external models or branded artwork."""
+import bpy,bmesh,math,json
+from pathlib import Path
+from mathutils import Vector
+H=Path(__file__).resolve().parent
+ROOT='ASSET_DemoFoodTin'
+def empty(n,p=None,loc=(0,0,0)):
+ o=bpy.data.objects.new(n,None);bpy.context.collection.objects.link(o);o.parent=p;o.location=loc;return o
+def material(n,c,metal=0,rough=.4):
+ m=bpy.data.materials.new(n);m.use_nodes=True;p=m.node_tree.nodes['Principled BSDF'];p.inputs['Base Color'].default_value=(*c,1);p.inputs['Metallic'].default_value=metal;p.inputs['Roughness'].default_value=rough;return m
+def mesh(n,v,f,m,p):
+ d=bpy.data.meshes.new(n);d.from_pydata(v,[],f);d.update();bm=bmesh.new();bm.from_mesh(d);bmesh.ops.recalc_face_normals(bm,faces=bm.faces);bm.to_mesh(d);bm.free();o=bpy.data.objects.new(n,d);bpy.context.collection.objects.link(o);o.parent=p;d.materials.append(m);return o
+def lathe(n,profile,m,p):
+ # Positive-radius rings plus explicit axis fan when profile touches axis.
+ N=96;v=[];rings=[]
+ for r,z in profile:
+  if r==0:rings.append([len(v)]);v.append((0,0,z))
+  else:
+   rings.append(list(range(len(v),len(v)+N)));v.extend((r*math.cos(2*math.pi*i/N),r*math.sin(2*math.pi*i/N),z) for i in range(N))
+ f=[]
+ for a,b in zip(rings,rings[1:]+rings[:1]):
+  if len(a)==len(b)==1:continue
+  for i in range(N):
+   j=(i+1)%N
+   if len(a)==1:f.append((a[0],b[i],b[j]))
+   elif len(b)==1:f.append((a[i],b[0],a[j]))
+   else:f.append((a[i],b[i],b[j],a[j]))
+ o=mesh(n,v,f,m,p)
+ for poly in o.data.polygons:poly.use_smooth=abs(poly.normal.z)<.5
+ return o
+def torus(n,r,t,z,m,p,N=96,M=8,cy=0,sy=1):
+ v=[];f=[]
+ for i in range(N):
+  a=2*math.pi*i/N
+  for j in range(M):
+   b=2*math.pi*j/M;v.append(((r+t*math.cos(b))*math.cos(a),cy+(r+t*math.cos(b))*math.sin(a)*sy,z+t*math.sin(b)))
+ for i in range(N):
+  for j in range(M):f.append((i*M+j,((i+1)%N)*M+j,((i+1)%N)*M+(j+1)%M,i*M+(j+1)%M))
+ o=mesh(n,v,f,m,p)
+ for poly in o.data.polygons:poly.use_smooth=True
+ return o
+def animate(o,clip,positions,rotations=None):
+ o.animation_data_create();a=bpy.data.actions.new(clip+'_'+o.name);o.animation_data.action=a
+ for frame,pos in positions:o.location=pos;o.keyframe_insert(data_path='location',frame=frame)
+ if rotations:
+  for frame,rot in rotations:o.rotation_euler=rot;o.keyframe_insert(data_path='rotation_euler',frame=frame)
+ for fc in a.fcurves:
+  for k in fc.keyframe_points:k.interpolation='LINEAR'
+ o.animation_data.action=None;tr=o.animation_data.nla_tracks.new();tr.name=clip;st=tr.strips.new(clip,0,a);st.name=clip;st.extrapolation='NOTHING';tr.mute=True
+ return tr
+
+def export(path):
+ bpy.ops.object.select_all(action='DESELECT');root=bpy.data.objects[ROOT];root.select_set(True)
+ for o in root.children_recursive:o.select_set(True)
+ bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_yup=True,export_apply=True,export_animations=True,export_nla_strips=True,export_frame_range=True,export_force_sampling=True,export_extras=True,export_cameras=False,export_lights=False)
+def aim(o,p):o.rotation_euler=(Vector(p)-o.location).to_track_quat('-Z','Y').to_euler()
+def build():
+ bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
+ for d in ['sources','exports','previews','reports','textures']:(H/d).mkdir(exist_ok=True)
+ s=bpy.context.scene;s.unit_settings.system='METRIC';s.unit_settings.scale_length=1;s.render.fps=24;s.frame_start=0;s.frame_end=72
+ root=empty(ROOT);root['units']='metres';root['originality']='Original unbranded DEMO CONCEPT; not certified packaging';root['clip_contract']='OpenClose / Exploded, mutually exclusive,0-3seconds'
+ steel=material('Tin satin steel',(.54,.61,.66),.82,.26);inside=steel
+ body=lathe('BODY_HollowShell',[(0,.0012),(.0358,.0012),(.0367,.002),(.0367,.1079),(.0363,.1079),(.0363,.0024),(.0358,.0016),(0,.0016)],steel,root)
+ torus('RIM_Lower',.0367,.0008,.0008,steel,root)
+ torus('RIM_Upper',.0367,.0008,.1083,steel,root)
+ lid=empty('MOVABLE_Lid',root,(0,0,.1084))
+ lathe('LID_Plate',[(0,-.00018),(.0348,-.00018),(.03555,0),(.03555,.00018),(.0348,.00025),(0,.00025)],steel,lid)
+ lathe('LID_Rivet',[(0,.00025),(.0012,.00025),(.0012,.0008),(0,.0008)],steel,lid)
+ ring=empty('MOVABLE_PullRing',lid,(0,0,.0008))
+ torus('RING_Handle',.0048,.0005,0,steel,ring,N=64,M=8,cy=.0063,sy=1.3)
+ labelmat=material('Original DEMO concept label',(1,1,1),0,.55)
+ image=bpy.data.images.load(str(H/'textures'/'concept-label.png'));image.pack();tex=labelmat.node_tree.nodes.new('ShaderNodeTexImage');tex.image=image;labelmat.node_tree.links.new(tex.outputs['Color'],labelmat.node_tree.nodes['Principled BSDF'].inputs['Base Color'])
+ # Seam at rear +Y. Midwrap u=.5 is front -Y; duplicate seam vertices have explicit0/1UV.
+ N=96;v=[];uv=[]
+ for z,yy in [(.006,0),(.103,1)]:
+  for i in range(N+1):
+   u=i/N;a=math.pi/2+2*math.pi*u;v.append((.03682*math.cos(a),.03682*math.sin(a),z));uv.append((u,yy))
+ f=[(i,i+1,N+2+i,N+1+i) for i in range(N)];label=mesh('LABEL_Wrap',v,f,labelmat,root)
+ layer=label.data.uv_layers.new(name='LabelUV')
+ for poly in label.data.polygons:
+  poly.use_smooth=True
+  for li in poly.loop_indices:layer.data[li].uv=uv[label.data.loops[li].vertex_index]
+ labelmat.use_backface_culling=True
+ tracks=[]
+ tracks.append(animate(lid,'OpenClose',[(0,(0,0,.1084)),(12,(0,0,.1084)),(36,(0,0,.1534)),(60,(0,0,.1084)),(72,(0,0,.1084))]))
+ tracks.append(animate(ring,'OpenClose',[(0,(0,0,.0008)),(72,(0,0,.0008))],[(0,(0,0,0)),(12,(1.1,0,0)),(60,(1.1,0,0)),(72,(0,0,0))]))
+ tracks.append(animate(lid,'Exploded',[(0,(0,0,.1084)),(36,(0,0,.1784)),(72,(0,0,.1084))]))
+ tracks.append(animate(ring,'Exploded',[(0,(0,0,.0008)),(36,(0,0,.0258)),(72,(0,0,.0008))],[(0,(0,0,0)),(72,(0,0,0))]))
+ for tr in tracks:tr.mute=False
+ s.frame_set(0);bpy.context.view_layer.update()
+ export(H/'exports'/'demo-food-tin.glb')
+ # Source stores every NLA track muted to avoid simultaneous clip blending.
+ for tr in tracks:tr.mute=True
+ lid.location=(0,0,.1084);ring.location=(0,0,.0008);ring.rotation_euler=(0,0,0)
+ s.world.color=(.15,.15,.15);s.world.use_nodes=True;s.world.node_tree.nodes['Background'].inputs['Color'].default_value=(.19,.22,.27,1);s.world.node_tree.nodes['Background'].inputs['Strength'].default_value=.7
+ for n,loc,power,size in [('Key',(-.15,-.2,.25),12,.15),('Fill',(.18,-.05,.16),8,.12),('Rim',(0,.15,.23),16,.10)]:
+  bpy.ops.object.light_add(type='AREA',location=loc);o=bpy.context.object;o.name='STUDIO_'+n;o.data.energy=power;o.data.shape='DISK';o.data.size=size;aim(o,(0,0,.06))
+ bpy.ops.object.camera_add();s.camera=bpy.context.object;s.camera.name='STUDIO_Camera';s.camera.data.type='ORTHO';s.camera.data.ortho_scale=.17
+ s.render.engine='CYCLES';s.cycles.samples=32;s.cycles.use_denoising=False;s.render.resolution_x=s.render.resolution_y=640;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.view_settings.view_transform='AgX'
+ bpy.ops.wm.save_as_mainfile(filepath=str(H/'sources'/'demo-food-tin.blend'))
+ for name,loc,target,scale,clip,frame in [('hero',(.13,-.23,.17),(0,0,.055),.16,None,0),('rear',(.12,.23,.15),(0,0,.055),.16,None,0),('top',(.05,-.08,.28),(0,0,.06),.15,None,0),('opened',(.14,-.23,.22),(0,0,.08),.21,'OpenClose',36),('exploded',(.14,-.25,.24),(0,0,.10),.25,'Exploded',36)]:
+  for tr in tracks:tr.mute=tr.name!=clip
+  lid.location=(0,0,.1084);ring.location=(0,0,.0008);ring.rotation_euler=(0,0,0);s.frame_set(frame);s.camera.location=loc;s.camera.data.ortho_scale=scale;aim(s.camera,target);s.render.filepath=str(H/'previews'/(name+'.png'));bpy.ops.render.render(write_still=True)
+if __name__=='__main__':build()

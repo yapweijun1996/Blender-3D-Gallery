@@ -1,0 +1,102 @@
+{
+  "id": "demo-food-tin",
+  "name": "Demo Food Tin",
+  "summary": "Original unbranded DEMO / CONCEPT food tin with a hollow body, removable lid, pull ring and illustrative open/close and exploded assembly clips.",
+  "description": "Original unbranded DEMO / CONCEPT food tin with a hollow body, removable lid, pull ring and illustrative open/close and exploded assembly clips.",
+  "category": "Product Packaging",
+  "tags": [
+    "original",
+    "unbranded",
+    "demo",
+    "food-tin",
+    "packaging",
+    "editable",
+    "animated"
+  ],
+  "status": "validated",
+  "created": "2026-11-13",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "4.0.2",
+  "creation_method": "Original Blender Python geometry. Original 1024x512 graphic via label.py using licensed DejaVu Sans font; no external brand artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "source": "sources/demo-food-tin.blend",
+    "glb": "exports/demo-food-tin.glb",
+    "preview": "previews/hero.webp"
+  },
+  "display": {
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "base centre",
+    "previewRotationY": 0,
+    "studioEnvironment": true,
+    "environmentIntensity": 0.8,
+    "textureAnisotropy": 8
+  },
+  "accuracy_notes": "Illustrative removable lid, not physical pull-tab tearing, seal simulation, food safety certification or fabrication design. Desktop Chromium and viewport/touch emulation verified; physical Android/iOS and shipping Safari not tested.",
+  "rights": "Original geometry and concept artwork; reuse in the owner's projects is authorized. Public redistribution terms have not been specified. DejaVu font license is retained in textures/FONT-LICENSE.txt.",
+  "attribution": [
+    {
+      "credit": "Original geometry and DEMO concept label. DejaVu Sans font; retained font license."
+    }
+  ],
+  "metrics": {
+    "glb_bytes": 186016,
+    "triangles": 6592,
+    "primitives": 7,
+    "materials": 2,
+    "animations": 2,
+    "dimensions": [
+      0.07500000298023224,
+      0.10970000078668818,
+      0.07500000298023224
+    ],
+    "bounds": {
+      "min": [
+        -0.03750000149011612,
+        0,
+        -0.03750000149011612
+      ],
+      "max": [
+        0.03750000149011612,
+        0.10970000078668818,
+        0.03750000149011612
+      ]
+    },
+    "sha256": "4b265f78a711d95a80b730ebeaae3906f42c93fbd28f0b8c6e64c8c003eee0ee"
+  },
+  "budgets": {
+    "triangles": 12000,
+    "primitives": 12,
+    "glb_bytes": 1000000,
+    "texture_max": [
+      2048,
+      1024
+    ]
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "interaction": {
+    "root": "ASSET_DemoFoodTin",
+    "clips": [
+      "OpenClose",
+      "Exploded"
+    ],
+    "duration_seconds": 3,
+    "open_time_seconds": 1.5,
+    "mutually_exclusive": true,
+    "reset_seconds": 0,
+    "end_rest_seconds": 3
+  },
+  "qa": {
+    "structural_motion": "PASS",
+    "source_edit": "PASS",
+    "render_review": "PASS",
+    "browser": "PASS \u2014 Chromium 156 desktop and viewport/touch emulation; see docs/product-studio/evidence/canvas-fix-final",
+    "physical_mobile_safari": "NOT TESTED"
+  }
+}

@@ -6,6 +6,7 @@ import crypto from "node:crypto";
 import { chromium } from "playwright";
 import { serveBuild, launchOptions, gameReady } from "./browser-test-utils.mjs";
 const catalog = JSON.parse(await fs.readFile(new URL("../models/catalog.json", import.meta.url), "utf8"));
+const expectedDemoCount = JSON.parse(await fs.readFile(new URL("../data/demos.json", import.meta.url), "utf8")).length;
 const expectedAssetCount = catalog.collections.reduce((total, collection) => total + collection.assets.length, 0);
 const artifacts =
   process.env.TEST_ARTIFACT_DIR || "/tmp/blender-gallery-pwa-standard";
@@ -227,7 +228,7 @@ try {
         await page.setViewportSize({ width, height });
         for (const [route, input, count] of [
           ["", "#model-search", expectedAssetCount],
-          ["?page=demos", "#demo-search", 2],
+          ["?page=demos", "#demo-search", expectedDemoCount],
         ]) {
           await page.goto(server.url + route);
           await safeInsets(page);
@@ -244,6 +245,15 @@ try {
             await page.locator(route ? ".demo-card" : ".asset-card").count(),
             count,
           );
+          if (route) {
+            const expected = [["game", "?page=game"], ["solar-system", "?page=solar"], ["product-studio", "?page=product-studio"]];
+            assert.deepEqual((await page.locator(".demo-card").evaluateAll(cards => cards.map(c => c.dataset.demoId))).sort(), expected.map(([id]) => id).sort());
+            for (const [id, target] of expected) {
+              const card = page.locator(`.demo-card[data-demo-id="${id}"]`);
+              assert.equal(await card.count(), 1);
+              assert.equal(await card.locator("h2 a").getAttribute("href"), target);
+            }
+          }
           assert.equal(await page.locator("canvas").count(), 0);
           const h = await page.locator(".header").boundingBox();
           assert.ok(h.y >= insets.top - 1, "header below top inset");

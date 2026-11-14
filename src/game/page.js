@@ -522,6 +522,12 @@ export async function mountGame(root, assets, signal, onLeave) {
   handle.addEventListener("blur", () => { if (charge?.pointer === null) { cancelCharge(); ui(); draw(); } }, { signal });
   window.addEventListener("blur", () => { cancelCharge(); cancelDelivery(); ui(); draw(); }, { signal });
   window.addEventListener("resize", () => { cancelDelivery(); cancelCharge(); clearPointers(); ui(); draw(); }, { signal });
+  // The table owns touch gestures (touch-action:none). Also cancel the native
+  // touch gesture so a fast aim drag cannot leave a browser fling that consumes
+  // the next control tap. Pointer events still drive aiming and inspection.
+  viewport.addEventListener("touchstart", (e) => {
+    if (e.target.tagName === "CANVAS" && e.cancelable) e.preventDefault();
+  }, { signal, passive: false });
   viewport.addEventListener("pointerdown", (e) => {
     if (e.target.tagName !== "CANVAS" || pointer !== null || charge || intent || busy || inspection || contextLost || !ownership || !state || !["aiming", "placing"].includes(state.phase)) return;
     const point = view.point(e.clientX, e.clientY);

@@ -1,0 +1,160 @@
+TAP version 13
+# Subtest: omitted and partial preview settings retain metadata without inserting defaults
+ok 1 - omitted and partial preview settings retain metadata without inserting defaults
+  ---
+  duration_ms: 4.41862
+  type: 'test'
+  ...
+# Subtest: preview vectors reject malformed, non-finite, excessive and degenerate values
+ok 2 - preview vectors reject malformed, non-finite, excessive and degenerate values
+  ---
+  duration_ms: 0.93354
+  type: 'test'
+  ...
+# Subtest: known invalid preview fields fail authoring validation, never silently fall back
+ok 3 - known invalid preview fields fail authoring validation, never silently fall back
+  ---
+  duration_ms: 0.50375
+  type: 'test'
+  ...
+# Subtest: unknown metadata conventions and source objects remain unchanged
+ok 4 - unknown metadata conventions and source objects remain unchanged
+  ---
+  duration_ms: 0.104333
+  type: 'test'
+  ...
+# Subtest: ceiling opts into underside presentation without geometry, rotation or rights changes
+not ok 5 - ceiling opts into underside presentation without geometry, rotation or rights changes
+  ---
+  duration_ms: 864.941391
+  type: 'test'
+  location: '/srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/tests/preview-config.test.mjs:52:1'
+  failureType: 'testCodeFailure'
+  error: 'Invalid metadata display'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    validateMetadata (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/scripts/catalog.mjs:81:91)
+    loadCatalog (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/scripts/catalog.mjs:131:9)
+    TestContext.<anonymous> (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/tests/preview-config.test.mjs:53:15)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: catalog enrichment preserves every registered asset and supplies measured metadata
+not ok 6 - catalog enrichment preserves every registered asset and supplies measured metadata
+  ---
+  duration_ms: 890.206575
+  type: 'test'
+  location: '/srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/tests/registry.test.mjs:13:1'
+  failureType: 'testCodeFailure'
+  error: 'Invalid metadata display'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    validateMetadata (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/scripts/catalog.mjs:81:91)
+    loadCatalog (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/scripts/catalog.mjs:131:9)
+    TestContext.<anonymous> (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/tests/registry.test.mjs:14:19)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: Saga study retains its identity, provenance and pending redistribution policy
+not ok 7 - Saga study retains its identity, provenance and pending redistribution policy
+  ---
+  duration_ms: 242.465967
+  type: 'test'
+  location: '/srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/tests/registry.test.mjs:33:1'
+  failureType: 'testCodeFailure'
+  error: 'Invalid metadata display'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    validateMetadata (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/scripts/catalog.mjs:81:91)
+    loadCatalog (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/scripts/catalog.mjs:131:9)
+    TestContext.<anonymous> (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/tests/registry.test.mjs:34:17)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: catalog rejects duplicate identities and slugs across collections
+ok 8 - catalog rejects duplicate identities and slugs across collections
+  ---
+  duration_ms: 11.497947
+  type: 'test'
+  ...
+# Subtest: catalog rejects malformed required and optional values before coercion
+ok 9 - catalog rejects malformed required and optional values before coercion
+  ---
+  duration_ms: 54.582071
+  type: 'test'
+  ...
+# Subtest: catalog paths reject traversal, URL schemes, query fragments and encoded separators
+ok 10 - catalog paths reject traversal, URL schemes, query fragments and encoded separators
+  ---
+  duration_ms: 27.384181
+  type: 'test'
+  ...
+# Subtest: optional defaults are explicit and false download permission is retained
+ok 11 - optional defaults are explicit and false download permission is retained
+  ---
+  duration_ms: 13.718028
+  type: 'test'
+  ...
+# Subtest: catalog refuses symlink references outside the model directory
+ok 12 - catalog refuses symlink references outside the model directory
+  ---
+  duration_ms: 40.280169
+  type: 'test'
+  ...
+# Subtest: demo registry resolves verified posters and legacy launch routes
+not ok 13 - demo registry resolves verified posters and legacy launch routes
+  ---
+  duration_ms: 173.607994
+  type: 'test'
+  location: '/srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/tests/registry.test.mjs:103:1'
+  failureType: 'testCodeFailure'
+  error: 'Invalid metadata display'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    validateMetadata (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/scripts/catalog.mjs:81:91)
+    loadCatalog (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/scripts/catalog.mjs:131:9)
+    TestContext.<anonymous> (file:///srv/agent-workstation/workspaces/blender-original-tin-20261113/repo/tests/registry.test.mjs:104:19)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: demo schema rejects duplicates, missing posters, invalid routes and malformed values
+ok 14 - demo schema rejects duplicates, missing posters, invalid routes and malformed values
+  ---
+  duration_ms: 4.465829
+  type: 'test'
+  ...
+# Subtest: legacy IDs cannot be claimed by a different canonical model slug
+ok 15 - legacy IDs cannot be claimed by a different canonical model slug
+  ---
+  duration_ms: 3.945371
+  type: 'test'
+  ...
+# Subtest: metadata validates the display and text fields consumed by existing viewers
+ok 16 - metadata validates the display and text fields consumed by existing viewers
+  ---
+  duration_ms: 0.427499
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 12
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1566.110777

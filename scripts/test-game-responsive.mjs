@@ -1,4 +1,3 @@
-import { pullShot, chargePull, releasePull, setPullRatio } from "./browser-test-utils.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -144,6 +143,10 @@ try {
         results.push({ width,height,phase,projectedBall, ...data });
         if (phase === "placing") {
           const input = page.locator('#place-x');
+          await page.locator('[data-action="pause"]').tap();
+          await page.waitForFunction(()=>JSON.parse(window.render_game_to_text()).phase==='paused');
+          await page.locator('[data-action="continue"]').tap();
+          assert.equal((await readGame(page)).phase,'placing','placement pause resumes placement');
           const before = await input.inputValue(), r = await input.boundingBox();
           await page.touchscreen.tap(r.x + r.width * 0.1, r.y + r.height / 2);
           assert.notEqual(await input.inputValue(), before, `${width}x${height}: touch placement did not change`);
@@ -165,18 +168,45 @@ try {
           await cdp.send('Input.dispatchTouchEvent', {type:'touchEnd',touchPoints:[]});
           await cdp.detach();
           assert.notEqual((await readGame(page)).aim, adjusted.aim, `${width}x${height}: touch aiming did not change`);
-          await pullShot(page);
+          // This is a touch journey: do not mix a synthetic mouse pull with touch taps.
+          const handle=page.locator('#power-handle');await handle.scrollIntoViewIfNeeded();
+          const hb=await handle.boundingBox(),travel=await page.locator('#power-track').evaluate(t=>t.clientHeight-document.querySelector('#power-handle').offsetHeight);
+          const touch=await context.newCDPSession(page),tx=hb.x+hb.width/2,ty=hb.y+hb.height/2;
+          await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:tx,y:ty,id:1}]});
+          for(let step=1;step<=5;step++)await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:tx,y:ty+travel*.45*step/5,id:1}]});
+          await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await touch.detach();
           await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).phase === 'moving');
           const shot = await readGame(page);
           await page.waitForFunction((cue) => {
-            const next = JSON.parse(window.render_game_to_text()).balls[0];
-            return Math.hypot(next.x-cue.x,next.z-cue.z) > 0.002;
+            const state = JSON.parse(window.render_game_to_text()), next=state.balls[0];
+            if(state.phase==='moving' && Math.hypot(next.x-cue.x,next.z-cue.z)>0.002) {
+              // Existing deterministic QA clock prevents a real-time settle during the subsequent tap.
+              window.advanceTime(0);window.qaMotionClock=setInterval(()=>window.advanceTime(0),50);return true;
+            }
+            return false;
           }, shot.balls[0], { timeout:10000 });
+          // Capture event-time phases: a low-power shot may settle before the tap arrives.
+          // Continue must restore the phase actually paused, not an earlier polled phase.
+          await page.evaluate(() => {
+            window.qaEvents=[];for(const type of ['touchstart','touchend','pointerdown','pointerup','click'])document.addEventListener(type,e=>window.qaEvents.push([type,e.target.tagName,e.target.dataset?.action]),{capture:true});
+            document.addEventListener('click', e => {
+              if(e.target.closest('[data-action="pause"]')) window.qaPausedFrom=JSON.parse(window.render_game_to_text()).phase;
+            },{capture:true});
+            document.addEventListener('click', e => {
+              if(e.target.closest('[data-action="continue"]')) window.qaResumedTo=JSON.parse(window.render_game_to_text()).phase;
+            });
+          });
+          await page.waitForTimeout(500);
           await page.locator('[data-action="pause"]').tap();
           await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).phase === 'paused');
+          const pausedBalls=(await readGame(page)).balls;
+          await page.waitForTimeout(180);
+          assert.deepEqual((await readGame(page)).balls,pausedBalls,'paused physics must remain frozen');
           await page.locator('[data-action="continue"]').tap();
-          await page.waitForFunction(() => JSON.parse(window.render_game_to_text()).phase === 'moving');
-          await page.evaluate(() => window.advanceTime(26000));
+          const phases=await page.evaluate(()=>({from:window.qaPausedFrom,to:window.qaResumedTo}));
+          assert.equal(phases.from,'moving','pause is exercised during verified real ball motion');
+          assert.equal(phases.to,phases.from,'Continue restores the exact event-time paused phase');
+          await page.evaluate(() => {clearInterval(window.qaMotionClock);window.advanceTime(26000);});
           await page.waitForFunction(() => !['moving','adjudicating'].includes(JSON.parse(window.render_game_to_text()).phase), null, { timeout:30000 });
           await page.locator('#demo-breadcrumb a[data-page="demos"]').tap();
           await page.waitForFunction(() => !document.querySelector('#demos-page').hidden);
@@ -186,6 +216,7 @@ try {
       assert.deepEqual(pageErrors, [], `${width}x${height}: page errors`);
       console.log(`PASS responsive touch journey ${width}x${height}`);
     } catch (error) {
+      console.log('DIAGNOSTIC',JSON.stringify(await page.evaluate(()=>({state:JSON.parse(window.render_game_to_text()),from:window.qaPausedFrom,to:window.qaResumedTo,menu:document.querySelector('#game-menu')?.open,focus:document.activeElement?.tagName,events:window.qaEvents,clock:window.qaMotionClock})).catch(()=>({}))));
       errors.push(`${width}x${height}: ${error.message}`);
       await page.screenshot({ path:path.join(artifacts,`failure-${width}x${height}.png`) }).catch(() => {});
       throw error;
