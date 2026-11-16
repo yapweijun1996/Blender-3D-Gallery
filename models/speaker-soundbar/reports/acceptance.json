@@ -1,0 +1,95 @@
+{
+  "id": "speaker-soundbar",
+  "status": "draft",
+  "category": "Equipment",
+  "stores": [
+    "S13",
+    "S14"
+  ],
+  "priority": "P2",
+  "overall": "NEEDS REVIEW: manager art review pending",
+  "local_result": "PASS",
+  "glb_sha256": "ee3e3a048b2b8f473c7a72a09708f84b3590abdc0a5414e8c3a90db339fa67dd",
+  "checks": {
+    "duplicate_search": "NOT FOUND: no close match in catalog or existing metadata",
+    "blender_5_2_3_headless_generation": "PASS",
+    "clean_rebuild_byte_identity": "PASS",
+    "khronos": "PASS: 0 errors, 0 warnings",
+    "asset_geometry_and_budget": "PASS",
+    "saved_source_edit_reexport": "PASS",
+    "preview_visual_review": "PASS: hero/front/side/3q/rear PNGs inspected",
+    "npm_run_validate_assets": "PASS",
+    "npm_test": "PASS: 728 passed, 0 failed, 0 skipped",
+    "npm_run_build": "PASS; existing large-chunk advisory retained",
+    "chromium_1440x900": "PASS: actual GLB hash, orbit, reset, no recorded errors",
+    "browser_screenshot_visual_review": "PASS",
+    "generated_test_artifacts": "RESTORED with git checkout"
+  },
+  "measurements": {
+    "glb_bytes": 872436,
+    "triangles": 13632,
+    "vertices": 16255,
+    "meshes": 2,
+    "primitives": 6,
+    "materials": 3,
+    "images": 2,
+    "dimensions": [
+      1.339999958872795,
+      0.8999999761581421,
+      0.3199999928474426
+    ],
+    "nodes": {
+      "SOUNDBAR": {
+        "min": [
+          -0.6699999868869781,
+          0,
+          -0.07750000059604645
+        ],
+        "max": [
+          0.22999998927116394,
+          0.09730000048875809,
+          0.08243999630212784
+        ],
+        "size": [
+          0.8999999761581421,
+          0.09730000048875809,
+          0.15993999689817429
+        ]
+      },
+      "FLOOR_SPEAKER": {
+        "min": [
+          0.38999997079372406,
+          0,
+          -0.1599999964237213
+        ],
+        "max": [
+          0.669999971985817,
+          0.8999999761581421,
+          0.1599999964237213
+        ],
+        "size": [
+          0.2800000011920929,
+          0.8999999761581421,
+          0.3199999928474426
+        ]
+      }
+    }
+  },
+  "browser_screenshot": "/Users/admin/Documents/MallQueue/reports/speaker-soundbar-page.png",
+  "required_steps_skipped": [],
+  "resolved_failures": [
+    "UV binding and tangent extraction corrected before final validation; initial failure logs retained outside repository.",
+    "Saved/reopened bevel UV rounding is checked numerically; all positions, indices, materials and hierarchy preserved. Clean rebuild GLBs remain byte-identical.",
+    "Initial npm test had one last-collection assertion failure; inserted new collection before Pomelo STEM and reran all 728 tests successfully."
+  ],
+  "unverified": [
+    "Manager art acceptance",
+    "Physical Android and iOS",
+    "WebKit",
+    "Full 17-shop mall assembly and aggregate 200 draw-call budget",
+    "Acoustic or electrical functionality",
+    "Remote deployment"
+  ],
+  "logs": "~/Documents/MallQueue/reports/speaker-soundbar-checks",
+  "scope": "Model and additive catalog entry only; no gallery UI or workflow changes; no push."
+}

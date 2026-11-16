@@ -1,0 +1,149 @@
+{
+  "id": "speaker-soundbar",
+  "name": "Speaker and Soundbar",
+  "summary": "Unbranded 0.9 m soundbar and 0.9 m floor-standing speaker.",
+  "description": "Original graphite soundbar and floor-standing speaker with exposed driver cones, woven cloth grille panels, tactile blank buttons, reflex-port form, connector details and floor pads. Separate named nodes for stores S13 and S14.",
+  "category": "Equipment",
+  "tags": [
+    "speaker",
+    "soundbar",
+    "audio",
+    "retail",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres",
+    "S13",
+    "S14"
+  ],
+  "status": "draft",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry and two original procedural woven-cloth PNG tiles; no external assets, fonts, logos, packaging or brand text.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/speaker-soundbar.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor centre of combined display footprint",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.65,
+    "textureAnisotropy": 8,
+    "previewCameraDirection": [
+      1.2,
+      0.65,
+      3
+    ]
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "glTF X,Y,Z (width,height,depth)",
+    "size": [
+      1.339999958872795,
+      0.8999999761581421,
+      0.3199999928474426
+    ],
+    "bounds": {
+      "min": [
+        -0.6699999868869781,
+        0,
+        -0.1599999964237213
+      ],
+      "max": [
+        0.669999971985817,
+        0.8999999761581421,
+        0.1599999964237213
+      ]
+    },
+    "nodes": {
+      "SOUNDBAR": {
+        "min": [
+          -0.6699999868869781,
+          0,
+          -0.07750000059604645
+        ],
+        "max": [
+          0.22999998927116394,
+          0.09730000048875809,
+          0.08243999630212784
+        ],
+        "size": [
+          0.8999999761581421,
+          0.09730000048875809,
+          0.15993999689817429
+        ]
+      },
+      "FLOOR_SPEAKER": {
+        "min": [
+          0.38999997079372406,
+          0,
+          -0.1599999964237213
+        ],
+        "max": [
+          0.669999971985817,
+          0.8999999761581421,
+          0.1599999964237213
+        ],
+        "size": [
+          0.2800000011920929,
+          0.8999999761581421,
+          0.3199999928474426
+        ]
+      }
+    }
+  },
+  "statistics": {
+    "glb_bytes": 872436,
+    "triangles": 13632,
+    "vertices": 16255,
+    "meshes": 2,
+    "primitives": 6,
+    "materials": 3,
+    "images": 2,
+    "animations": 0,
+    "sha256": "ee3e3a048b2b8f473c7a72a09708f84b3590abdc0a5414e8c3a90db339fa67dd"
+  },
+  "accuracy_notes": "Static original audio-display props; no sound playback, acoustical measurement, electrical behavior, animation or physical certification. Soundbar and floor speaker are independent named nodes. The per-asset primitive count does not establish the complete 17-shop mall draw-call budget. Physical Android/iOS, WebKit and full mall assembly NOT TESTED.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and woven-cloth colour/normal images. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "geometry": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 20000,
+      "bytes": 1572864,
+      "materials": 3,
+      "mesh_primitives": 6
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/reproducibility.json",
+      "reports/browser.json",
+      "reports/acceptance.json"
+    ],
+    "source_editability": "PASS",
+    "deterministic_rebuild": "PASS"
+  }
+}
