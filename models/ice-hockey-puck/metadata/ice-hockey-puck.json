@@ -1,0 +1,114 @@
+{
+  "id": "ice-hockey-puck",
+  "name": "Ice Hockey Puck",
+  "summary": "Near-black satin vulcanized rubber puck with softened edges and a diamond crosshatch grip band.",
+  "description": "Near-black satin vulcanized rubber puck with softened edges and a diamond crosshatch grip band.",
+  "category": "Sports",
+  "tags": [
+    "ice-hockey-puck",
+    "sports",
+    "PBR",
+    "editable",
+    "metres",
+    "puck",
+    "rubber"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Editable 128-sided cylinder with live 0.65 mm three-segment edge bevel. Near-black satin faces and a rubber edge band using an original 1024\u00d7512 normal map analytically baked from two crossed diagonal wave height gradients. PNG retained in sources; GLB embeds JPEG. Both materials use linear base colour (0.0025, 0.0030, 0.0035), metallic 0, roughness 0.72 and reduced specular IOR level 0.08 to approximate a porous carbon-filled rubber surface with broad, weak reflections. Studio lights are unchanged. Lying flat on its lower face. This asset is a puck, not a ball.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/ice-hockey-puck.blend",
+    "source_textures": [
+      "sources/textures/ice-hockey-puck_knurl.png"
+    ],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.6,
+      1.6
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor contact point under the object centre; puck lies flat."
+  },
+  "measurements": {
+    "glb_bytes": 264000,
+    "triangles": 2044,
+    "vertices": 3546,
+    "primitives": 2,
+    "materials": 2,
+    "textures": 1,
+    "animations": 0,
+    "diameter_m": 0.0762,
+    "height_m": 0.0254,
+    "dimensions_m": [
+      0.07620000094175339,
+      0.02539999969303608,
+      0.07620000094175339
+    ],
+    "bounds_m": {
+      "min": [
+        -0.038100000470876694,
+        0,
+        -0.038100000470876694
+      ],
+      "max": [
+        0.038100000470876694,
+        0.02539999969303608,
+        0.038100000470876694
+      ]
+    },
+    "sha256": "042d128febc8b35ea8a079e2a010c9231691b352a5804e80fc652d01392469b3",
+    "features": {
+      "knurled_band": true,
+      "rubber_base_colour_linear": [
+        0.0024999999441206455,
+        0.003000000026077032,
+        0.0035000001080334187
+      ],
+      "rubber_roughness": 0.7200000286102295,
+      "rubber_specular_factor": 0.1599999964237213
+    }
+  },
+  "accuracy_notes": "The diamond band is normal detail only; side silhouette stays cylindrical. The sampled crosshatch is a simplified moulded grip pattern, not a manufacturer drawing. No logos, mass, friction, freezing behaviour or physics are simulated. Reduced specular response approximates a porous carbon-filled surface; material values are visual estimates, not laboratory measurements.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and analytical texture bakes; no external models, fonts, images or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 2,
+      "materials": 2,
+      "textures": 1
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

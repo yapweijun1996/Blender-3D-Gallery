@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "blender_version": "5.3.0",
+  "source_reopened": true,
+  "source_sha256": "2810f7621be3050ca19195c45176f852a2db68a386bd01914d369271acbf8537",
+  "original_source_unchanged": true,
+  "source": {
+    "editable_meshes": [
+      "BALL_Panels",
+      "BALL_RecessedBacking",
+      "BALL_Stitches"
+    ],
+    "panel_count": 32,
+    "layout": "ico",
+    "modifiers": "None required: editable tessellated panels and recessed backing are explicit mesh geometry",
+    "normal_map": {
+      "size": [
+        1024,
+        512
+      ],
+      "filepath": "//textures/grip_normal.png"
+    },
+    "root_properties": {
+      "units": "metres",
+      "front_axis": "Blender -Y / glTF +Z",
+      "up_axis": "Blender +Z / glTF +Y",
+      "stitch_count": 450,
+      "panel_count": 32,
+      "layout": "ico"
+    }
+  },
+  "glb_reimported": true,
+  "glb_sha256": "d1e66ae673cfa11046913e0571067204982ae1def3fce1b252f251e43e96aa4f",
+  "reimport": {
+    "objects": [
+      "ASSET_SoccerBall",
+      "MESH_SoccerBall"
+    ],
+    "mesh_objects": 1,
+    "triangles": 33848,
+    "materials": [
+      "Panel accent",
+      "Panel main",
+      "Recessed seam bed",
+      "Recessed stitching"
+    ],
+    "images": [
+      "grip_normal"
+    ],
+    "dimensions_m": [
+      0.21962,
+      0.21919,
+      0.21963
+    ]
+  }
+}

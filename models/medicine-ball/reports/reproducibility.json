@@ -1,0 +1,55 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset --skip-render builds, per-primitive vertex/triangle counts and sorted vertex positions rounded to one micrometre. -noaudio is used; the generator flushes and exits directly after synchronous background writes to avoid the host PulseAudio teardown hang. Delivery source, textures, GLB and source report restored in finally.",
+  "geometry_identical": true,
+  "byte_identical": false,
+  "runs": [
+    {
+      "sha256": "1cf33c833a21ed8b30ea185ab737746eb6816930a035a57aa4baee2c4b2d18dc",
+      "primitives": [
+        {
+          "material": "Charcoal grip rubber",
+          "vertices": 3490,
+          "triangles": 6336,
+          "positions_sha256": "98a4061047b9ca74b4e69ee251de810d75d7e741452babfeec8c3eae9749beae"
+        },
+        {
+          "material": "Muted teal grip rubber",
+          "vertices": 1455,
+          "triangles": 2688,
+          "positions_sha256": "688a74ea39787dd46915c7f009b219b1a8fc7d94978a9d18deab810842892193"
+        },
+        {
+          "material": "Valve rubber",
+          "vertices": 559,
+          "triangles": 960,
+          "positions_sha256": "0f7bf32577002e151d36d2613c016b41fcbbace2fefd692179c791ada747bd64"
+        }
+      ]
+    },
+    {
+      "sha256": "15def8e4a19c23ccd51c652f9f9782d48ac6e8ea3685dd90db129ec235c82237",
+      "primitives": [
+        {
+          "material": "Charcoal grip rubber",
+          "vertices": 3490,
+          "triangles": 6336,
+          "positions_sha256": "98a4061047b9ca74b4e69ee251de810d75d7e741452babfeec8c3eae9749beae"
+        },
+        {
+          "material": "Muted teal grip rubber",
+          "vertices": 1455,
+          "triangles": 2688,
+          "positions_sha256": "688a74ea39787dd46915c7f009b219b1a8fc7d94978a9d18deab810842892193"
+        },
+        {
+          "material": "Valve rubber",
+          "vertices": 559,
+          "triangles": 960,
+          "positions_sha256": "0f7bf32577002e151d36d2613c016b41fcbbace2fefd692179c791ada747bd64"
+        }
+      ]
+    }
+  ],
+  "delivery_restored": true
+}

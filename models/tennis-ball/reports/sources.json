@@ -1,0 +1,53 @@
+{
+  "result": "PASS",
+  "blender_version": "5.3.0",
+  "source_reopened": true,
+  "source_sha256": "bfb511d5351458aba4cb562f8a68fc029c83036b79779a75d6233f93b1fd4f25",
+  "original_source_unchanged": true,
+  "source": {
+    "editable_meshes": [
+      "COVER_A",
+      "COVER_B",
+      "SEAM_Band"
+    ],
+    "modifiers": {
+      "COVER_A": [
+        "TRIANGULATE"
+      ],
+      "COVER_B": [
+        "TRIANGULATE"
+      ],
+      "SEAM_Band": [
+        "TRIANGULATE"
+      ]
+    },
+    "root_properties": {
+      "units": "metres",
+      "front_axis": "Blender -Y / glTF +Z",
+      "up_axis": "Blender +Z / glTF +Y",
+      "panels": 2,
+      "stitch_pairs": 0,
+      "floor_adjustment_m": -7.450580596923828e-09,
+      "horizontal_adjustment_m": [
+        -0.0,
+        -2.3599714040756226e-06
+      ]
+    },
+    "normal_map": {
+      "size": [
+        1024,
+        512
+      ],
+      "filepath": "//textures/tennis-ball_grain_normal.png"
+    }
+  },
+  "glb_reimported": true,
+  "glb_sha256": "f42e212b5f7a6e41d804632d49ebb6ff41f1a5d7fef2f91b37588f028e9baca1",
+  "reimport": {
+    "mesh_objects": 1,
+    "triangles": 19584,
+    "images": [
+      "tennis-ball_grain_normal"
+    ]
+  }
+}

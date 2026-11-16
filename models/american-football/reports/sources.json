@@ -1,0 +1,82 @@
+{
+  "result": "PASS",
+  "blender_version": "5.3.0",
+  "source_reopened": true,
+  "source_sha256": "4539d3fe905b961392582f12c1bfe44ff56718894365c53c9529f40494a60ddb",
+  "original_source_unchanged": true,
+  "source": {
+    "editable_objects": [
+      "LACE_Cross_01",
+      "LACE_Cross_02",
+      "LACE_Cross_03",
+      "LACE_Cross_04",
+      "LACE_Cross_05",
+      "LACE_Cross_06",
+      "LACE_Cross_07",
+      "LACE_Cross_08",
+      "LACE_Long",
+      "LACE_WhiteStrip",
+      "PANEL_01",
+      "PANEL_02",
+      "PANEL_03",
+      "PANEL_04",
+      "SEAM_InsetBody"
+    ],
+    "modifiers": {
+      "LACE_WhiteStrip": [
+        {
+          "name": "Leather strip thickness",
+          "type": "SOLIDIFY"
+        }
+      ],
+      "PANEL_01": [
+        {
+          "name": "Panel edge thickness",
+          "type": "SOLIDIFY"
+        }
+      ],
+      "PANEL_02": [
+        {
+          "name": "Panel edge thickness",
+          "type": "SOLIDIFY"
+        }
+      ],
+      "PANEL_03": [
+        {
+          "name": "Panel edge thickness",
+          "type": "SOLIDIFY"
+        }
+      ],
+      "PANEL_04": [
+        {
+          "name": "Panel edge thickness",
+          "type": "SOLIDIFY"
+        }
+      ]
+    },
+    "root_properties": {
+      "units": "metres",
+      "front_axis": "Blender -Y / glTF +Z",
+      "up_axis": "Blender +Z / glTF +Y",
+      "panels": 4,
+      "crossing_laces": 8,
+      "long_laces": 1,
+      "length_m": 0.282575,
+      "short_circumference_m": 0.536575,
+      "long_circumference_m": 0.71755,
+      "profile_exponent": 1.081791940464,
+      "seam_width_m": 0.0013,
+      "seam_depth_m": 0.0013
+    }
+  },
+  "glb_reimported": true,
+  "glb_sha256": "53a9ad6893e88b251d2214d2699793487b6a896ad9357b9f7bb9472e88f4606b",
+  "reimport": {
+    "mesh_objects": 1,
+    "triangles": 23436,
+    "objects": [
+      "ASSET_AmericanFootball",
+      "MESH_AmericanFootball"
+    ]
+  }
+}

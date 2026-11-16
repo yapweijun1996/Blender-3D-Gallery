@@ -1,0 +1,14 @@
+[
+  {
+    "command": "blender --background -t 4 --python-exit-code 1 --python /workspace/Blender-3D-Gallery/models/softball/generate.py",
+    "exit_code": 0
+  },
+  {
+    "command": "node /workspace/Blender-3D-Gallery/models/softball/validate.mjs",
+    "exit_code": 0
+  },
+  {
+    "command": "blender --background -t 2 --python-exit-code 1 --python /workspace/Blender-3D-Gallery/models/softball/inspect_sources.py",
+    "exit_code": 0
+  }
+]

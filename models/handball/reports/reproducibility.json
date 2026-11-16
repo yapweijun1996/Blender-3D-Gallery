@@ -1,0 +1,55 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset --skip-render Blender builds; compare per-primitive vertex/triangle counts and all sorted positions rounded to 1 micrometre.",
+  "commands_exit_codes": [
+    0,
+    0
+  ],
+  "first_glb_sha256": "410fba8249fe3a5e05d316679545566664249c6f970e2239bc81a3b7bd7fedb6",
+  "second_glb_sha256": "7acb78c4285d5c9f996d3f23b58707c4de584ce625203d96e9cf4b9abcbdd703",
+  "byte_identical": false,
+  "geometry_identical": true,
+  "first_primitives": [
+    {
+      "material": "Panel accent",
+      "vertices": 4702,
+      "triangles": 8160,
+      "rounded_positions_sha256": "4c9441991348e82dacff902112fe6e9b00d58ec34be405bf837884f8aa960fbd"
+    },
+    {
+      "material": "Panel main",
+      "vertices": 9426,
+      "triangles": 16320,
+      "rounded_positions_sha256": "4b43bf5f936838efbbef1a1be1fb6c51a89310719170a62eca4ceab688733033"
+    },
+    {
+      "material": "Recessed seam bed",
+      "vertices": 2143,
+      "triangles": 3968,
+      "rounded_positions_sha256": "b3abccd6deba805bf5817dadee2becce7cc0fea8f6881a75175184bc457cb25b"
+    }
+  ],
+  "second_primitives": [
+    {
+      "material": "Panel accent",
+      "vertices": 4702,
+      "triangles": 8160,
+      "rounded_positions_sha256": "4c9441991348e82dacff902112fe6e9b00d58ec34be405bf837884f8aa960fbd"
+    },
+    {
+      "material": "Panel main",
+      "vertices": 9426,
+      "triangles": 16320,
+      "rounded_positions_sha256": "4b43bf5f936838efbbef1a1be1fb6c51a89310719170a62eca4ceab688733033"
+    },
+    {
+      "material": "Recessed seam bed",
+      "vertices": 2143,
+      "triangles": 3968,
+      "rounded_positions_sha256": "b3abccd6deba805bf5817dadee2becce7cc0fea8f6881a75175184bc457cb25b"
+    }
+  ],
+  "deliverables_restored": true,
+  "restored_glb_sha256": "53a60121c8d6c56d71f6841a0d5a8aad42ccfd0f892766b4c37682000d6a3578",
+  "note": "Byte identity is not required. Normal-map baking may vary at sub-pixel precision; compared geometry is independent of that image noise."
+}

@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset headless --skip-render builds; compare each primitive vertex and triangle counts and all vertex positions rounded to 10 micrometres, sorted with multiplicity. Byte identity is not required.",
+  "builds": [
+    {
+      "command": "blender --background --python-exit-code 1 --python models/rugby-ball/generate.py -- --skip-render",
+      "exit_code": 0,
+      "sha256": "088c25120c91d8a3ee46de181d87ad33fdc8ae79f2d5332903697b3347006e66",
+      "primitives": [
+        {
+          "material": "Generic teal bands",
+          "vertices": 1440,
+          "triangles": 2176,
+          "rounded_positions_sha256": "b68fbaddbc83cacc8646e505cca87a87f1e29a222c98443423fbc6db73ee2248"
+        },
+        {
+          "material": "Grip white rubber",
+          "vertices": 6312,
+          "triangles": 11136,
+          "rounded_positions_sha256": "80d359eae19d101ea04f97ae61f2583f4f440ac6c9de2584be0c0ce59d45c24b"
+        },
+        {
+          "material": "Recessed seam bed",
+          "vertices": 4294,
+          "triangles": 8064,
+          "rounded_positions_sha256": "46e0c3d8857ed2d5b0f0b26fc2e1ada21bdf6a0e1fa12161e43f6e9e30fa37d0"
+        }
+      ]
+    },
+    {
+      "command": "blender --background --python-exit-code 1 --python models/rugby-ball/generate.py -- --skip-render",
+      "exit_code": 0,
+      "sha256": "088c25120c91d8a3ee46de181d87ad33fdc8ae79f2d5332903697b3347006e66",
+      "primitives": [
+        {
+          "material": "Generic teal bands",
+          "vertices": 1440,
+          "triangles": 2176,
+          "rounded_positions_sha256": "b68fbaddbc83cacc8646e505cca87a87f1e29a222c98443423fbc6db73ee2248"
+        },
+        {
+          "material": "Grip white rubber",
+          "vertices": 6312,
+          "triangles": 11136,
+          "rounded_positions_sha256": "80d359eae19d101ea04f97ae61f2583f4f440ac6c9de2584be0c0ce59d45c24b"
+        },
+        {
+          "material": "Recessed seam bed",
+          "vertices": 4294,
+          "triangles": 8064,
+          "rounded_positions_sha256": "46e0c3d8857ed2d5b0f0b26fc2e1ada21bdf6a0e1fa12161e43f6e9e30fa37d0"
+        }
+      ]
+    }
+  ],
+  "geometry_identical": true,
+  "byte_identical": true,
+  "committed_outputs_restored": true,
+  "restored_sha256": {
+    "exports/optimized.glb": "088c25120c91d8a3ee46de181d87ad33fdc8ae79f2d5332903697b3347006e66",
+    "sources/rugby-ball.blend": "ac6b84686166a395807f3c987d733c81d4b05253e84d82eb41d572ba1ead53c6",
+    "reports/source-geometry.json": "98d83288ec95e9b77b8d7e575d7272f42a258d102f67bf53c72c324c7e0cdd6f",
+    "sources/textures/grip_normal.png": "409be104b70ef35f0669b94c700fa8661d317e4c9358a1e7ec885d7a016e99eb"
+  }
+}

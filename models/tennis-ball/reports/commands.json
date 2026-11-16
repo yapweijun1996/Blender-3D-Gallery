@@ -1,0 +1,14 @@
+[
+  {
+    "command": "blender --background -t 2 --python-exit-code 1 --python models/tennis-ball/generate.py",
+    "exit_code": 0
+  },
+  {
+    "command": "node models/tennis-ball/validate.mjs",
+    "exit_code": 0
+  },
+  {
+    "command": "blender --background -t 2 --python-exit-code 1 --python models/tennis-ball/inspect_sources.py",
+    "exit_code": 0
+  }
+]

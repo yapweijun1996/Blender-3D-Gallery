@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "blender_version": "5.3.0",
+  "source_reopened": true,
+  "source_sha256": "542e3028c11e92526e2b4dc278259c957239e365baefa67b08c059f5df1963e1",
+  "original_source_unchanged": true,
+  "source": {
+    "editable_meshes": [
+      "BALL_Shell",
+      "SEAM_Primary",
+      "SEAM_QuarterPair",
+      "STITCHES_SixRows"
+    ],
+    "modifiers": {
+      "BALL_Shell": [
+        "TRIANGULATE"
+      ],
+      "SEAM_Primary": [
+        "TRIANGULATE"
+      ],
+      "SEAM_QuarterPair": [
+        "TRIANGULATE"
+      ],
+      "STITCHES_SixRows": [
+        "TRIANGULATE"
+      ]
+    },
+    "root_properties": {
+      "units": "metres",
+      "front_axis": "Blender -Y / glTF +Z",
+      "up_axis": "Blender +Z / glTF +Y",
+      "panels": 4,
+      "stitch_pairs": 72,
+      "floor_adjustment_m": -0.0,
+      "horizontal_adjustment_m": [
+        -0.0,
+        3.3527612686157227e-08
+      ]
+    },
+    "normal_map": {
+      "size": [
+        1024,
+        512
+      ],
+      "filepath": "//textures/cricket-ball_grain_normal.png"
+    }
+  },
+  "glb_reimported": true,
+  "glb_sha256": "194ae6406b06471d8aa643b7e75db0cb37197b291ad008c3ab637e3db728d071",
+  "reimport": {
+    "mesh_objects": 1,
+    "triangles": 22834,
+    "images": [
+      "cricket-ball_grain_normal"
+    ]
+  }
+}

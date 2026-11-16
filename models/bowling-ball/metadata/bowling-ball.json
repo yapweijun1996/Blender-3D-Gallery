@@ -1,0 +1,121 @@
+{
+  "id": "bowling-ball",
+  "name": "Bowling Ball (Ten-Pin)",
+  "summary": "Glossy unbranded two-colour resin bowling ball with three drilled bores, a 6.5 mm finger bridge and 108 mm conventional surface spans.",
+  "description": "Glossy unbranded two-colour resin bowling ball with three drilled bores, a 6.5 mm finger bridge and 108 mm conventional surface spans.",
+  "category": "Sports",
+  "tags": [
+    "bowling-ball",
+    "sports",
+    "PBR",
+    "editable",
+    "metres",
+    "ball"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Editable UV sphere with three live manifold Boolean cylindrical cutters. Finger bores are 20 mm diameter and 55 mm deep, with a 6.5 mm edge-to-edge surface bridge (about 26.46 mm centre chord); the thumb bore is 26 mm diameter and 65 mm deep. Both thumb-to-finger spans are 108 mm, measured edge to edge along the shortest spherical surface arc. Radial cylindrical lip angles are asin(bore radius / ball radius); the common grip rotation places the fingers above the thumb on the front hemisphere so the hero and front previews show all three openings. These grip values implement the FIX-1 review specification; they are an illustrative adult conventional grip, not a fit to a particular hand. Generic navy and plum sinusoidal marbling is analytically baked from spherical coordinates to a 1024\u00d7512 base-colour PNG and embedded as JPEG. Resin roughness 0.10 with a 0.35 clear coat.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/bowling-ball.blend",
+    "source_textures": [
+      "sources/textures/bowling-ball_swirl.png"
+    ],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.6,
+      1.6
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor contact point under the ball centre."
+  },
+  "measurements": {
+    "glb_bytes": 277660,
+    "triangles": 9607,
+    "vertices": 5781,
+    "primitives": 1,
+    "materials": 1,
+    "textures": 1,
+    "animations": 0,
+    "diameter_m": 0.2159,
+    "height_m": 0.2159,
+    "dimensions_m": [
+      0.21590027958154678,
+      0.2159000039100647,
+      0.21590043604373932
+    ],
+    "bounds_m": {
+      "min": [
+        -0.10795021057128906,
+        0,
+        -0.10795029252767563
+      ],
+      "max": [
+        0.10795006901025772,
+        0.2159000039100647,
+        0.10795014351606369
+      ]
+    },
+    "sha256": "71c2b892d87287a6368fe04410bcc23402ee89f4422cac2a8d25fb0c46f93290",
+    "features": {
+      "hole_openings": 3,
+      "bridge_surface_m": 0.006532109940218674,
+      "thumb_finger_spans_surface_m": [
+        0.10799772203147434,
+        0.1079977181708815
+      ],
+      "bore_diameters_m": [
+        0.02,
+        0.02,
+        0.026
+      ],
+      "bore_depths_m": [
+        0.055,
+        0.055,
+        0.065
+      ]
+    }
+  },
+  "accuracy_notes": "Finger bores are 20 mm diameter and 55 mm deep, with a 6.5 mm edge-to-edge surface bridge. The 26 mm thumb bore is 65 mm deep; both conventional spans are 108 mm edge-to-edge surface arcs. Grip dimensions implement the FIX-1 review specification and are illustrative, not fitted to a hand. Cylindrical flat-bottom radial bores omit lip bevels, inserts, individual pitch and internal core structure. The analytic swirl approximates poured reactive resin. No mass, balance, oil interaction or performance is simulated.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and analytical texture bakes; no external models, fonts, images or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 1,
+      "materials": 1,
+      "textures": 1
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

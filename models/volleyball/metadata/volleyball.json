@@ -1,0 +1,108 @@
+{
+  "id": "volleyball",
+  "name": "Volleyball",
+  "summary": "18 spherical strips in six cube-face groups of three. Six muted teal centre strips and twelve ivory strips form a generic non-swirl layout.",
+  "description": "18 spherical strips in six cube-face groups of three. Six muted teal centre strips and twelve ivory strips form a generic non-swirl layout.",
+  "category": "Sports",
+  "tags": [
+    "volleyball",
+    "sports",
+    "ball",
+    "PBR",
+    "normal map",
+    "recessed seams",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Original deterministic Blender Python spherical panel geometry and Cycles-baked 3D Voronoi normal map; no external assets, logos or text.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/volleyball.blend",
+    "source_textures": [
+      "sources/textures/grip_normal.png"
+    ],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.6,
+      1.6
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor contact point under the ball centre; lowest actual vertex at Z=0"
+  },
+  "measurements": {
+    "glb_bytes": 483192,
+    "triangles": 13760,
+    "vertices": 7864,
+    "primitives": 3,
+    "materials": 3,
+    "textures": 1,
+    "animations": 0,
+    "dimensions_m": [
+      0.21008452773094177,
+      0.21008452773094177,
+      0.21008452773094177
+    ],
+    "bounds_m": {
+      "min": [
+        -0.10504226386547089,
+        0,
+        -0.10504226386547089
+      ],
+      "max": [
+        0.10504226386547089,
+        0.21008452773094177,
+        0.10504226386547089
+      ]
+    },
+    "diameter_m": 0.21008452488130186,
+    "circumference_m": 0.66,
+    "channel_width_m": 0.001,
+    "channel_depth_m": 0.0012,
+    "panels": 18,
+    "sha256": "ce253bc61c320b2431a004dd752dce3b6e460a2012fcab8c6076d895057a1987"
+  },
+  "accuracy_notes": "The cube-projected layout approximates traditional sewn 18-panel construction; it is not a manufacturer pattern. Fine grain is baked normal detail only; it does not alter the silhouette. Panel rims are explicit geometry over a recessed spherical bed. No internal bladder, valve, inflation, mass, bounce or physics. Diameter tolerance of 0.8 mm accounts for finite tessellation and rounded panel edges; the actual lowest vertex is translated to Z=0.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and baked texture; no external models, fonts, images or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 3,
+      "materials": 3,
+      "textures": 1
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

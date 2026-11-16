@@ -1,0 +1,108 @@
+{
+  "id": "tennis-ball",
+  "name": "Tennis Ball",
+  "summary": "Two separate optic yellow-green felt halves, bounded by a closed two-lobed S seam. The off-white rubber band is approximately 4.5 mm wide, with latitude offsets corrected for seam slope, recessed up to 0.25 mm. Felt is high-roughness with a baked grain normal map and exported sheen.",
+  "description": "Two separate optic yellow-green felt halves, bounded by a closed two-lobed S seam. The off-white rubber band is approximately 4.5 mm wide, with latitude offsets corrected for seam slope, recessed up to 0.25 mm. Felt is high-roughness with a baked grain normal map and exported sheen. Static visual asset; no physics.",
+  "category": "Sports",
+  "tags": [
+    "tennis-ball",
+    "sports",
+    "ball",
+    "PBR",
+    "normal map",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Original deterministic Blender Python surface meshes and capped seam/thread tubes; Cycles-baked procedural tangent-space normal map. No external assets or markings.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/tennis-ball.blend",
+    "source_textures": [
+      "sources/textures/tennis-ball_grain_normal.png"
+    ],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.6,
+      1.6
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Actual floor contact point under the horizontally centred exported bounds"
+  },
+  "measurements": {
+    "glb_bytes": 681320,
+    "triangles": 19584,
+    "vertices": 10324,
+    "meshes": 1,
+    "primitives": 2,
+    "materials": 2,
+    "textures": 1,
+    "animations": 0,
+    "dimensions_m": [
+      0.06698061525821686,
+      0.06699895113706589,
+      0.06697056069970131
+    ],
+    "bounds_m": {
+      "min": [
+        -0.03349030762910843,
+        7.450580596923828e-09,
+        -0.033485280349850655
+      ],
+      "max": [
+        0.03349030762910843,
+        0.06699895858764648,
+        0.033485280349850655
+      ]
+    },
+    "diameter_m": 0.067,
+    "circumference_m": 0.21048670779051615,
+    "panels": 2,
+    "stitch_pairs": 0,
+    "stitch_rows": 0,
+    "sha256": "f42e212b5f7a6e41d804632d49ebb6ff41f1a5d7fef2f91b37588f028e9baca1"
+  },
+  "accuracy_notes": "ITF Rules of Tennis 2026, Appendix I, Type 2: diameter 65.4\u201368.6 mm; midpoint 67.0 mm. The spherical two-lobed curve approximates a generic tennis seam. Felt fibers are normal detail, without individual silhouette hairs. Band width uses a local tangent approximation to a 4.5 mm spherical offset. Measured extents include raised seams/threads; nominal diameter describes the skin. Fine grain is normal detail only. Source: https://www.itftennis.com/media/7221/2026-rules-of-tennis-english.pdf",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and baked texture; no external models, fonts, images or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 2,
+      "materials": 2,
+      "textures": 1
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

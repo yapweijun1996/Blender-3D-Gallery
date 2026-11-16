@@ -1,0 +1,55 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset --skip-render Blender builds; compare per-primitive vertex/triangle counts and all sorted positions rounded to 1 micrometre.",
+  "commands_exit_codes": [
+    0,
+    0
+  ],
+  "first_glb_sha256": "ff17b07db8161117f961b6494b2f4bb626b3e9c2281c6bd675a627137cc0cbee",
+  "second_glb_sha256": "5e4cea927e83d3952c7f5673e5f32d078d73eceb5a260325bad8c29857a07d08",
+  "byte_identical": false,
+  "geometry_identical": true,
+  "first_primitives": [
+    {
+      "material": "Panel accent",
+      "vertices": 1933,
+      "triangles": 3264,
+      "rounded_positions_sha256": "075c6539f97265669d0a3f5a5769b1c64c98c1bdd75544fbe4a409f5485db663"
+    },
+    {
+      "material": "Panel main",
+      "vertices": 3788,
+      "triangles": 6528,
+      "rounded_positions_sha256": "9f4bf8b036578d6a439414e6ed5284721bfa6ea0036b8b42d0fa862fba16ea35"
+    },
+    {
+      "material": "Recessed seam bed",
+      "vertices": 2143,
+      "triangles": 3968,
+      "rounded_positions_sha256": "16d47411bf01f136c90aa7a7d3c70231495e5482496e8ffbf2cf127207cc2827"
+    }
+  ],
+  "second_primitives": [
+    {
+      "material": "Panel accent",
+      "vertices": 1933,
+      "triangles": 3264,
+      "rounded_positions_sha256": "075c6539f97265669d0a3f5a5769b1c64c98c1bdd75544fbe4a409f5485db663"
+    },
+    {
+      "material": "Panel main",
+      "vertices": 3788,
+      "triangles": 6528,
+      "rounded_positions_sha256": "9f4bf8b036578d6a439414e6ed5284721bfa6ea0036b8b42d0fa862fba16ea35"
+    },
+    {
+      "material": "Recessed seam bed",
+      "vertices": 2143,
+      "triangles": 3968,
+      "rounded_positions_sha256": "16d47411bf01f136c90aa7a7d3c70231495e5482496e8ffbf2cf127207cc2827"
+    }
+  ],
+  "deliverables_restored": true,
+  "restored_glb_sha256": "ce253bc61c320b2431a004dd752dce3b6e460a2012fcab8c6076d895057a1987",
+  "note": "Byte identity is not required. Baked image noise can vary without changing geometry."
+}

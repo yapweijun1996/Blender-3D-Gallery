@@ -1,0 +1,34 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset --skip-render builds, per-primitive vertex/triangle counts and sorted vertex positions rounded to one micrometre. -noaudio is used; the generator flushes and exits directly after synchronous background writes to avoid the host PulseAudio teardown hang. Delivery source, textures, GLB and source report restored in finally.",
+  "geometry_identical": true,
+  "byte_identical": false,
+  "runs": [
+    {
+      "sha256": "9ab02192f54986e4210a389cb4f49a805007ba86fa3b8776d39e1b68c01d99d6",
+      "primitives": [
+        {
+          "material": "Two colour reactive resin",
+          "vertices": 5781,
+          "triangles": 9607,
+          "positions_sha256": "88b779aa57cdec39a490895fecf4ee7927d1650d563b3375f986aab51521e617"
+        }
+      ]
+    },
+    {
+      "sha256": "18ea422c31e7fdfeb03f5bf0ddd6370c234b2084f3ab6584ed9aac4f43d822bf",
+      "primitives": [
+        {
+          "material": "Two colour reactive resin",
+          "vertices": 5781,
+          "triangles": 9607,
+          "positions_sha256": "88b779aa57cdec39a490895fecf4ee7927d1650d563b3375f986aab51521e617"
+        }
+      ]
+    }
+  ],
+  "delivery_restored": true,
+  "delivery_glb_sha256": "71c2b892d87287a6368fe04410bcc23402ee89f4422cac2a8d25fb0c46f93290",
+  "delivery_geometry_matches_runs": true,
+  "restored_files_verified": true
+}

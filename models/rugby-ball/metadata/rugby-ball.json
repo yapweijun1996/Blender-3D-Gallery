@@ -1,0 +1,110 @@
+{
+  "id": "rugby-ball",
+  "name": "Rugby Ball (Size 5)",
+  "summary": "Original size-5 white rugby ball with four recessed panels, plain teal bands and baked grip detail.",
+  "description": "Original size-5 white rugby ball with four recessed panels, plain teal bands and baked grip detail. Static visual asset; no simulation or physics.",
+  "category": "Sports",
+  "tags": [
+    "rugby-ball",
+    "sports",
+    "PBR",
+    "editable",
+    "metres",
+    "normal map",
+    "recessed seams"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Four separately editable white rubber panels with inward Solidify thickness and recessed seam beds. Two simple teal transverse colour bands are assigned to real panel faces. Original grip grain is Cycles-baked into a 1024\u00d7512 tangent-space normal map, embedded as JPEG. A modified prolate profile is numerically fitted to both circumference midpoints; the lower aspect ratio makes this oval blunter than the football. Original Blender Python; no external assets.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/rugby-ball.blend",
+    "source_textures": [
+      "sources/textures/grip_normal.png"
+    ],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.38,
+      0.48,
+      0.9
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor contact point under the object centre"
+  },
+  "measurements": {
+    "glb_bytes": 738084,
+    "triangles": 21376,
+    "vertices": 12046,
+    "meshes": 1,
+    "primitives": 3,
+    "materials": 3,
+    "textures": 1,
+    "animations": 0,
+    "dimensions_m": [
+      0.28999999165534973,
+      0.19098150047693707,
+      0.19098150730133057
+    ],
+    "bounds_m": {
+      "min": [
+        -0.14499999582767487,
+        2.2121962501842063e-06,
+        -0.09549075365066528
+      ],
+      "max": [
+        0.14499999582767487,
+        0.19098371267318726,
+        0.09549075365066528
+      ]
+    },
+    "panels": 4,
+    "long_circumference_m": 0.7550000560135413,
+    "short_circumference_m": 0.6,
+    "sha256": "088c25120c91d8a3ee46de181d87ad33fdc8ae79f2d5332903697b3347006e66"
+  },
+  "accuracy_notes": "World Rugby Law 2 size-5 midpoints: length 290 mm (280\u2013300), end-to-end circumference 755 mm (740\u2013770), width circumference 600 mm (580\u2013620), giving a 190.986 mm body width. The contour approximates an inflated competition ball, not a manufacturer drawing. Grip pimples are represented by an irregular baked Voronoi normal map; the silhouette is smooth. Bands follow the mesh grid and are intentionally generic.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and baked textures where present; no external models, fonts, images, logos or product markings."
+    },
+    {
+      "credit": "Dimension reference only; no artwork or geometry copied.",
+      "source": "https://passport.world.rugby/media/dafo2cbl/2501en-world-rugby-laws-2025-compressed.pdf"
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 3,
+      "materials": 3,
+      "textures": 1
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

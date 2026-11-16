@@ -1,0 +1,67 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset --skip-render Blender builds; compare per-primitive vertex/triangle counts and all sorted positions rounded to 1 micrometre.",
+  "commands_exit_codes": [
+    0,
+    0
+  ],
+  "first_glb_sha256": "a77a4533298ad0baf67b0ec83fed3c265cff9b1e74876936ab16ba6018012bbc",
+  "second_glb_sha256": "c7912eda108f3cd319c6fb0e6491b2bf1abf7b48d87f5c562385bcf6416ee87b",
+  "byte_identical": false,
+  "geometry_identical": true,
+  "first_primitives": [
+    {
+      "material": "Panel accent",
+      "vertices": 4757,
+      "triangles": 8160,
+      "rounded_positions_sha256": "995afdc6bd979099e7ac4e933a53948bedbcaa5102490f1fb6ce1c94c263243f"
+    },
+    {
+      "material": "Panel main",
+      "vertices": 9343,
+      "triangles": 16320,
+      "rounded_positions_sha256": "750a95e2320835a932ec6864fcd8cf2d1a527882341116f039f4251b033dedc0"
+    },
+    {
+      "material": "Recessed seam bed",
+      "vertices": 2143,
+      "triangles": 3968,
+      "rounded_positions_sha256": "a41cc030c304b164c298d55ae2a7b7f1fb5b0738ce64ab218b94c6ed4a600469"
+    },
+    {
+      "material": "Recessed stitching",
+      "vertices": 5400,
+      "triangles": 5400,
+      "rounded_positions_sha256": "02353af65b70b826b7483e59f48c86279f8b88aa1e9377a50eaf5e0a0a08f283"
+    }
+  ],
+  "second_primitives": [
+    {
+      "material": "Panel accent",
+      "vertices": 4757,
+      "triangles": 8160,
+      "rounded_positions_sha256": "995afdc6bd979099e7ac4e933a53948bedbcaa5102490f1fb6ce1c94c263243f"
+    },
+    {
+      "material": "Panel main",
+      "vertices": 9343,
+      "triangles": 16320,
+      "rounded_positions_sha256": "750a95e2320835a932ec6864fcd8cf2d1a527882341116f039f4251b033dedc0"
+    },
+    {
+      "material": "Recessed seam bed",
+      "vertices": 2143,
+      "triangles": 3968,
+      "rounded_positions_sha256": "a41cc030c304b164c298d55ae2a7b7f1fb5b0738ce64ab218b94c6ed4a600469"
+    },
+    {
+      "material": "Recessed stitching",
+      "vertices": 5400,
+      "triangles": 5400,
+      "rounded_positions_sha256": "02353af65b70b826b7483e59f48c86279f8b88aa1e9377a50eaf5e0a0a08f283"
+    }
+  ],
+  "deliverables_restored": true,
+  "restored_glb_sha256": "d1e66ae673cfa11046913e0571067204982ae1def3fce1b252f251e43e96aa4f",
+  "note": "Byte identity is not required. Normal-map baking may vary at sub-pixel precision; compared geometry is independent of that image noise."
+}

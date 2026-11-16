@@ -1,0 +1,108 @@
+{
+  "id": "soccer-ball",
+  "name": "Soccer Ball (Size 5)",
+  "summary": "32 spherical panels: 12 black pentagons and 20 warm-white hexagons, derived by truncating an icosahedron at one third of every edge. Slightly puffed panel crowns, recessed edge skirts and 450 geometric stitch bridges.",
+  "description": "32 spherical panels: 12 black pentagons and 20 warm-white hexagons, derived by truncating an icosahedron at one third of every edge. Slightly puffed panel crowns, recessed edge skirts and 450 geometric stitch bridges.",
+  "category": "Sports",
+  "tags": [
+    "soccer-ball",
+    "sports",
+    "ball",
+    "PBR",
+    "normal map",
+    "recessed seams",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Original deterministic Blender Python spherical panel geometry and Cycles-baked 3D Voronoi normal map; no external assets, logos or text.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/soccer-ball.blend",
+    "source_textures": [
+      "sources/textures/grip_normal.png"
+    ],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.6,
+      1.6
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor contact point under the ball centre; lowest actual vertex at Z=0"
+  },
+  "measurements": {
+    "glb_bytes": 1257892,
+    "triangles": 33848,
+    "vertices": 21643,
+    "primitives": 4,
+    "materials": 4,
+    "textures": 1,
+    "animations": 0,
+    "dimensions_m": [
+      0.21962295472621918,
+      0.2196338176727295,
+      0.21919043362140656
+    ],
+    "bounds_m": {
+      "min": [
+        -0.10981147736310959,
+        0,
+        -0.10959521681070328
+      ],
+      "max": [
+        0.10981147736310959,
+        0.2196338176727295,
+        0.10959521681070328
+      ]
+    },
+    "diameter_m": 0.21963382146681557,
+    "circumference_m": 0.69,
+    "channel_width_m": 0.0012,
+    "channel_depth_m": 0.0014,
+    "panels": 32,
+    "sha256": "d1e66ae673cfa11046913e0571067204982ae1def3fce1b252f251e43e96aa4f"
+  },
+  "accuracy_notes": "The thread bridges are a simplified regular stitch pattern beneath the panel crowns, rather than a scanned seam construction. Fine grain is baked normal detail only; it does not alter the silhouette. Panel rims are explicit geometry over a recessed spherical bed. No internal bladder, valve, inflation, mass, bounce or physics. Diameter tolerance of 0.8 mm accounts for finite tessellation and rounded panel edges; the actual lowest vertex is translated to Z=0.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and baked texture; no external models, fonts, images or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 4,
+      "materials": 4,
+      "textures": 1
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

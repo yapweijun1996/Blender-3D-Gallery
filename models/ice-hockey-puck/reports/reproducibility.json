@@ -1,0 +1,46 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset --skip-render builds, per-primitive vertex/triangle counts and sorted vertex positions rounded to one micrometre. -noaudio is used; the generator flushes and exits directly after synchronous background writes to avoid the host PulseAudio teardown hang. Delivery source, textures, GLB and source report restored in finally.",
+  "geometry_identical": true,
+  "byte_identical": false,
+  "runs": [
+    {
+      "sha256": "30fb30cf395c238ac93f9d403aa781af9b8e66ab05d13302b8e0192240cbe9b0",
+      "primitives": [
+        {
+          "material": "Smooth black faces",
+          "vertices": 3030,
+          "triangles": 1276,
+          "positions_sha256": "e987f89f4458cabce47ca6fa8cb0f7f4f9f569d40a11b0bea33ac88585545da9"
+        },
+        {
+          "material": "Vulcanized black rubber",
+          "vertices": 516,
+          "triangles": 768,
+          "positions_sha256": "c13f2944809d7c9e59e5bea662786ec920ca71466063fba88d3e92a25e381bd3"
+        }
+      ]
+    },
+    {
+      "sha256": "47c72c727d1cce365e63bee109a0113fde2a8c232f86b9a4e867b9a60f5922b8",
+      "primitives": [
+        {
+          "material": "Smooth black faces",
+          "vertices": 3030,
+          "triangles": 1276,
+          "positions_sha256": "e987f89f4458cabce47ca6fa8cb0f7f4f9f569d40a11b0bea33ac88585545da9"
+        },
+        {
+          "material": "Vulcanized black rubber",
+          "vertices": 516,
+          "triangles": 768,
+          "positions_sha256": "c13f2944809d7c9e59e5bea662786ec920ca71466063fba88d3e92a25e381bd3"
+        }
+      ]
+    }
+  ],
+  "delivery_restored": true,
+  "delivery_glb_sha256": "042d128febc8b35ea8a079e2a010c9231691b352a5804e80fc652d01392469b3",
+  "delivery_geometry_matches_runs": true,
+  "restored_files_verified": true
+}

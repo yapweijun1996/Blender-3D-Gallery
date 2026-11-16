@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset headless --skip-render builds; compare each primitive vertex and triangle counts and all vertex positions rounded to 10 micrometres, sorted with multiplicity. Byte identity is not required.",
+  "builds": [
+    {
+      "command": "blender --background --python-exit-code 1 --python models/american-football/generate.py -- --skip-render",
+      "exit_code": 0,
+      "sha256": "53a9ad6893e88b251d2214d2699793487b6a896ad9357b9f7bb9472e88f4606b",
+      "primitives": [
+        {
+          "material": "Ivory lace",
+          "vertices": 1311,
+          "triangles": 2060,
+          "rounded_positions_sha256": "117c72b92b7a1ecbcc524cb1b2fd009500103aac37557c0a5c31e3b50d44f0ed"
+        },
+        {
+          "material": "Pebbled brown leather",
+          "vertices": 7176,
+          "triangles": 13312,
+          "rounded_positions_sha256": "157bf2529a46a45579d31fbe510c655766789b6ab38e6bb8eee63d0c841f41c4"
+        },
+        {
+          "material": "Recessed seam bed",
+          "vertices": 4294,
+          "triangles": 8064,
+          "rounded_positions_sha256": "37b218946c611719b6300b6578320bfb2c743dd639927da806b7c4333a9a68f6"
+        }
+      ]
+    },
+    {
+      "command": "blender --background --python-exit-code 1 --python models/american-football/generate.py -- --skip-render",
+      "exit_code": 0,
+      "sha256": "4b413dbc5a12d83c0170651e6c708cda8ca08ec08d5be23ff1d0f32e566855c6",
+      "primitives": [
+        {
+          "material": "Ivory lace",
+          "vertices": 1311,
+          "triangles": 2060,
+          "rounded_positions_sha256": "117c72b92b7a1ecbcc524cb1b2fd009500103aac37557c0a5c31e3b50d44f0ed"
+        },
+        {
+          "material": "Pebbled brown leather",
+          "vertices": 7176,
+          "triangles": 13312,
+          "rounded_positions_sha256": "157bf2529a46a45579d31fbe510c655766789b6ab38e6bb8eee63d0c841f41c4"
+        },
+        {
+          "material": "Recessed seam bed",
+          "vertices": 4294,
+          "triangles": 8064,
+          "rounded_positions_sha256": "37b218946c611719b6300b6578320bfb2c743dd639927da806b7c4333a9a68f6"
+        }
+      ]
+    }
+  ],
+  "geometry_identical": true,
+  "byte_identical": false,
+  "committed_outputs_restored": true,
+  "restored_sha256": {
+    "exports/optimized.glb": "53a9ad6893e88b251d2214d2699793487b6a896ad9357b9f7bb9472e88f4606b",
+    "sources/american-football.blend": "4539d3fe905b961392582f12c1bfe44ff56718894365c53c9529f40494a60ddb",
+    "reports/source-geometry.json": "57e66f2aabd0cb28c7d57403f8ecdfb0db57d5603a5200c8f1e4de3d968381f4",
+    "sources/textures/grip_normal.png": "db5857f0fb23965e889fb4d0f2a6a40bb4b367d45fd742050a2242417f1e033e"
+  }
+}

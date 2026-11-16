@@ -1,0 +1,15 @@
+{
+  "blender_version": "5.3.0",
+  "port": 9878,
+  "tools_called": [
+    "execute_blender_code",
+    "look"
+  ],
+  "factory_reset_before_model": true,
+  "checks": "Prototype 280 mm cover; saved editable shell and valve opened. Material viewport screenshot failed when the connection closed; headless PNG review used instead.",
+  "errors": [
+    "get_addon_status: No module named blender_mcp.config",
+    "look material angles: Connection closed before receiving any data; subsequent MCP calls reported Not connected to Blender."
+  ],
+  "fallback": "Deterministic headless Blender builds, GLB validation, source reopen/reimport and all four PNG previews reviewed. No external assets or downloads."
+}

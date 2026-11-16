@@ -1,0 +1,112 @@
+{
+  "id": "american-football",
+  "name": "American Football",
+  "summary": "Original professional-size brown leather football with four recessed panels and eight crossing white laces.",
+  "description": "Original professional-size brown leather football with four recessed panels and eight crossing white laces. Static visual asset; no simulation or physics.",
+  "category": "Sports",
+  "tags": [
+    "american-football",
+    "sports",
+    "PBR",
+    "editable",
+    "metres",
+    "normal map",
+    "recessed seams"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Four separately editable brown leather panels with inward Solidify thickness, a continuous inset seam bed, one white leather lace strip, eight crossing lace curves and one long lace curve. A 1024\u00d7512 tangent-space normal map is Cycles-baked from original 3D Voronoi grain and embedded as JPEG. The profile is a pointed modified prolate spheroid numerically fitted to both circumference midpoints. Original Blender Python; no external assets.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/american-football.blend",
+    "source_textures": [
+      "sources/textures/grip_normal.png"
+    ],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.38,
+      0.48,
+      0.9
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor contact point under the object centre"
+  },
+  "measurements": {
+    "glb_bytes": 780796,
+    "triangles": 23436,
+    "vertices": 12781,
+    "meshes": 1,
+    "primitives": 3,
+    "materials": 3,
+    "textures": 1,
+    "animations": 0,
+    "dimensions_m": [
+      0.28257501125335693,
+      0.17455054810557158,
+      0.17079217731952667
+    ],
+    "bounds_m": {
+      "min": [
+        -0.14128750562667847,
+        2.473683025527862e-06,
+        -0.08539608865976334
+      ],
+      "max": [
+        0.14128750562667847,
+        0.1745530217885971,
+        0.08539608865976334
+      ]
+    },
+    "panels": 4,
+    "long_circumference_m": 0.7175500536659588,
+    "short_circumference_m": 0.536575,
+    "crossing_laces": 8,
+    "long_laces": 1,
+    "sha256": "53a9ad6893e88b251d2214d2699793487b6a896ad9357b9f7bb9472e88f4606b"
+  },
+  "accuracy_notes": "NFL professional size midpoint: length 282.575 mm (11\u201311.25 in), long circumference 717.55 mm (28\u201328.5 in), short circumference 536.575 mm (21\u201321.25 in). The task\u2019s approximate 11 in length is represented by the official range midpoint. The parametric leather contour approximates inflated leather; it is not a manufacturer drawing. Grain affects shading only. Lace ends are buried in the shell; individual punched holes and internal bladder are omitted.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and baked textures where present; no external models, fonts, images, logos or product markings."
+    },
+    {
+      "credit": "Dimension reference only; no artwork or geometry copied.",
+      "source": "https://operations.nfl.com/rules-officiating/nfl-football-basics/football-terms"
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 3,
+      "materials": 3,
+      "textures": 1
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

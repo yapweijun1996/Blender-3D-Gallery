@@ -1,0 +1,33 @@
+{
+  "blender_version": "5.3.0",
+  "port": 9877,
+  "tools_called": [
+    "get_addon_status",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+  ],
+  "factory_reset_before_model": true,
+  "checks": "Factory-empty prototype tested satin rubber with unchanged studio lights. Final saved source reopened and both material colours, roughness and specular values printed. Rendered MCP angle screenshots checked side, top and underside; final PNGs reviewed separately.",
+  "errors": [
+    "get_addon_status: No module named 'blender_mcp.config'",
+    "First prototype build immediately after factory reset failed: AttributeError: 'Context' object has no attribute 'object'. Retried successfully in a separate MCP call after the GUI context refreshed."
+  ],
+  "fallback": "Headless deterministic build is delivery authority; Node GLTFLoader and Khronos validator checks plus source reopen/GLB reimport. Missing Node dependencies were installed only in /tmp through MCP; local shell npm failed with EAI_AGAIN. Node resolver hook in /tmp used to locate those dependencies.",
+  "previous_session": {
+    "blender_version": "5.3.0",
+    "port": 9878,
+    "tools_called": [
+      "execute_blender_code",
+      "look"
+    ],
+    "factory_reset_before_model": true,
+    "checks": "Factory reset and cylinder prototype attempted. Saved source load and viewport screenshot attempted after connection loss; headless PNG review used instead.",
+    "errors": [
+      "get_addon_status: No module named blender_mcp.config",
+      "execute_blender_code and look final inspection: Not connected to Blender.",
+      "execute_blender_code prototype: Context has no attribute object after reset; continued headless."
+    ],
+    "fallback": "Deterministic headless Blender builds, GLB validation, source reopen/reimport and all four PNG previews reviewed. No external assets or downloads."
+  }
+}

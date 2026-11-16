@@ -1,0 +1,40 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset headless --skip-render builds; compare each primitive vertex and triangle counts and all vertex positions rounded to 10 micrometres, sorted with multiplicity. Byte identity is not required.",
+  "builds": [
+    {
+      "command": "blender --background --python-exit-code 1 --python models/sepak-takraw-ball/generate.py -- --skip-render",
+      "exit_code": 0,
+      "sha256": "5710fb068bae73e57fbaba63e4c55b0db7560dde3e85690b5b35654682953f1d",
+      "primitives": [
+        {
+          "material": "Golden synthetic woven strips",
+          "vertices": 11520,
+          "triangles": 23040,
+          "rounded_positions_sha256": "ad396537accfddb7bd4084cd51df20feb4200395cafd6ce7d945e9abdf041f7e"
+        }
+      ]
+    },
+    {
+      "command": "blender --background --python-exit-code 1 --python models/sepak-takraw-ball/generate.py -- --skip-render",
+      "exit_code": 0,
+      "sha256": "5710fb068bae73e57fbaba63e4c55b0db7560dde3e85690b5b35654682953f1d",
+      "primitives": [
+        {
+          "material": "Golden synthetic woven strips",
+          "vertices": 11520,
+          "triangles": 23040,
+          "rounded_positions_sha256": "ad396537accfddb7bd4084cd51df20feb4200395cafd6ce7d945e9abdf041f7e"
+        }
+      ]
+    }
+  ],
+  "geometry_identical": true,
+  "byte_identical": true,
+  "committed_outputs_restored": true,
+  "restored_sha256": {
+    "exports/optimized.glb": "5710fb068bae73e57fbaba63e4c55b0db7560dde3e85690b5b35654682953f1d",
+    "sources/sepak-takraw-ball.blend": "9911e4a33c85122063cdf53756e92aeafaadfb0e28cc287c5936d2244f57a953",
+    "reports/source-geometry.json": "71318b5d570a3213932b6855d2a9a0ac77297f2b52f7ea4fc6ff1007e4c18bc1"
+  }
+}

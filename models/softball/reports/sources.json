@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "blender_version": "5.3.0",
+  "source_reopened": true,
+  "source_sha256": "81650f88abb6f7097bbe8f0c63ee93b3283065795db66ec8c75011523d7f3575",
+  "original_source_unchanged": true,
+  "source": {
+    "editable_meshes": [
+      "COVER_A",
+      "COVER_B",
+      "SEAM_Band",
+      "STITCHES_Double"
+    ],
+    "modifiers": {
+      "COVER_A": [
+        "TRIANGULATE"
+      ],
+      "COVER_B": [
+        "TRIANGULATE"
+      ],
+      "SEAM_Band": [
+        "TRIANGULATE"
+      ],
+      "STITCHES_Double": [
+        "TRIANGULATE"
+      ]
+    },
+    "root_properties": {
+      "units": "metres",
+      "front_axis": "Blender -Y / glTF +Z",
+      "up_axis": "Blender +Z / glTF +Y",
+      "panels": 2,
+      "stitch_pairs": 88,
+      "floor_adjustment_m": 0.00011464589624665678,
+      "horizontal_adjustment_m": [
+        -0.0,
+        -0.00030135735869407654
+      ]
+    },
+    "normal_map": {
+      "size": [
+        1024,
+        512
+      ],
+      "filepath": "//textures/softball_grain_normal.png"
+    }
+  },
+  "glb_reimported": true,
+  "glb_sha256": "2fb25b6d1f40ae893d563e425f5c8e7ed2b60de1c99f7a1740218a92cfa57a68",
+  "reimport": {
+    "mesh_objects": 1,
+    "triangles": 27328,
+    "images": [
+      "softball_grain_normal"
+    ]
+  }
+}

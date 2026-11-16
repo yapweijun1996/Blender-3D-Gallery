@@ -1,0 +1,62 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset headless generate.py --skip-render runs; per-material primitive vertex/triangle counts and sorted complete vertex positions rounded to 10 micrometres.",
+  "geometry_identical": true,
+  "reviewed_geometry_identical": true,
+  "byte_identical": true,
+  "builds": [
+    {
+      "exit_code": 0,
+      "glb_sha256": "2fb25b6d1f40ae893d563e425f5c8e7ed2b60de1c99f7a1740218a92cfa57a68",
+      "primitives": [
+        {
+          "material": "Cover",
+          "vertices": 9352,
+          "triangles": 18048,
+          "rounded_positions_sha256": "821868333afaf64bb4f7d2a2907425efedc731fd555e549e9054985a49a1157c"
+        },
+        {
+          "material": "Seam",
+          "vertices": 965,
+          "triangles": 1536,
+          "rounded_positions_sha256": "41ee3e81ecf1a14fb979e44c637b646246351d75cfc10385369fd2e03a6d30cc"
+        },
+        {
+          "material": "Stitches",
+          "vertices": 6340,
+          "triangles": 7744,
+          "rounded_positions_sha256": "13ca7d72c61ecc7e119d8f525f0c6f80eb7fa69f3079f32c840f46fbaf09d5cc"
+        }
+      ]
+    },
+    {
+      "exit_code": 0,
+      "glb_sha256": "2fb25b6d1f40ae893d563e425f5c8e7ed2b60de1c99f7a1740218a92cfa57a68",
+      "primitives": [
+        {
+          "material": "Cover",
+          "vertices": 9352,
+          "triangles": 18048,
+          "rounded_positions_sha256": "821868333afaf64bb4f7d2a2907425efedc731fd555e549e9054985a49a1157c"
+        },
+        {
+          "material": "Seam",
+          "vertices": 965,
+          "triangles": 1536,
+          "rounded_positions_sha256": "41ee3e81ecf1a14fb979e44c637b646246351d75cfc10385369fd2e03a6d30cc"
+        },
+        {
+          "material": "Stitches",
+          "vertices": 6340,
+          "triangles": 7744,
+          "rounded_positions_sha256": "13ca7d72c61ecc7e119d8f525f0c6f80eb7fa69f3079f32c840f46fbaf09d5cc"
+        }
+      ]
+    }
+  ],
+  "outputs_restored": true,
+  "restored_glb_sha256": "2fb25b6d1f40ae893d563e425f5c8e7ed2b60de1c99f7a1740218a92cfa57a68",
+  "restored_source_sha256": "81650f88abb6f7097bbe8f0c63ee93b3283065795db66ec8c75011523d7f3575",
+  "restored_outputs_verified": true,
+  "note": "Geometry determinism is required; texture/export byte identity is not promised."
+}

@@ -1,0 +1,104 @@
+{
+  "id": "golf-ball",
+  "name": "Golf Ball",
+  "summary": "White urethane golf ball with 362 geometric dimples in an icosahedral layout.",
+  "description": "White urethane golf ball with 362 geometric dimples in an icosahedral layout.",
+  "category": "Sports",
+  "tags": [
+    "golf-ball",
+    "sports",
+    "PBR",
+    "editable",
+    "metres",
+    "ball"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Frequency-six subdivision of an icosahedron gives 362 symmetric dimple centres. The dual cells carry circular inset rings, with approximately 0.28 mm bowl depth; cell borders are welded into an editable cover. No texture is needed for the visible dimples.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/golf-ball.blend",
+    "source_textures": [],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.6,
+      1.6
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor contact point under the ball centre."
+  },
+  "measurements": {
+    "glb_bytes": 545640,
+    "triangles": 30240,
+    "vertices": 15122,
+    "primitives": 1,
+    "materials": 1,
+    "textures": 0,
+    "animations": 0,
+    "diameter_m": 0.04267,
+    "height_m": 0.04267,
+    "dimensions_m": [
+      0.042669907212257385,
+      0.04259001463651657,
+      0.0425468310713768
+    ],
+    "bounds_m": {
+      "min": [
+        -0.021334953606128693,
+        0,
+        -0.0212734155356884
+      ],
+      "max": [
+        0.021334953606128693,
+        0.04259001463651657,
+        0.0212734155356884
+      ]
+    },
+    "sha256": "89be7d9185a73f8e53c00c8787b8c519742334fad2d2407fbb652419f738088e",
+    "features": {
+      "dimples": 362
+    }
+  },
+  "accuracy_notes": "The 42.67 mm design envelope is measured at the outer land vertices. Dimples and tessellation reduce the axis extents by up to 0.2 mm. The mesh is translated by its lowest vertex so the floor datum is exact. Original dimple layout approximates a manufactured urethane cover; aerodynamic performance and conformity are not certified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and analytical texture bakes; no external models, fonts, images or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 1,
+      "materials": 1,
+      "textures": 0
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

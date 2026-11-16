@@ -1,0 +1,110 @@
+{
+  "id": "badminton-shuttlecock",
+  "name": "Badminton Shuttlecock (Feather)",
+  "summary": "Original feather shuttlecock with sixteen solid vanes and shafts, two thread bands and a rounded white cork.",
+  "description": "Original feather shuttlecock with sixteen solid vanes and shafts, two thread bands and a rounded white cork. Static visual asset; no simulation or physics.",
+  "category": "Sports",
+  "tags": [
+    "badminton-shuttlecock",
+    "sports",
+    "PBR",
+    "editable",
+    "metres",
+    "feathers",
+    "shuttlecock"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Sixteen separately editable cupped solid feather vanes with live Solidify modifiers, sixteen bevelled quill curves, fine geometric barb strokes, two closed thread-binding curves, and a white-covered cork base with a true hemispherical bottom. All feathers are thin opaque geometry; no alpha textures or text. Original Blender Python; no external assets.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/badminton-shuttlecock.blend",
+    "source_textures": [],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.38,
+      0.48,
+      0.9
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor contact point under the object centre"
+  },
+  "measurements": {
+    "glb_bytes": 854380,
+    "triangles": 19454,
+    "vertices": 15263,
+    "meshes": 1,
+    "primitives": 4,
+    "materials": 4,
+    "textures": 0,
+    "animations": 0,
+    "dimensions_m": [
+      0.06352545320987701,
+      0.08465813845396042,
+      0.06352545320987701
+    ],
+    "bounds_m": {
+      "min": [
+        -0.03176272660493851,
+        0,
+        -0.03176272660493851
+      ],
+      "max": [
+        0.03176272660493851,
+        0.08465813845396042,
+        0.03176272660493851
+      ]
+    },
+    "feathers": 16,
+    "thread_bands": 2,
+    "feather_length_m": 0.066,
+    "tip_circle_diameter_m": 0.063,
+    "base_diameter_m": 0.0265,
+    "sha256": "04e09fc506553c5c0ed587ebce0c0e53aadc1c79156ef40ce5fc1e990b35735c"
+  },
+  "accuracy_notes": "BWF Laws 2.2.1\u20132.2.5 midpoints: 16 feathers, 66 mm feather length measured from the top of the base (62\u201370), 63 mm feather-tip circle (58\u201368), and 26.5 mm base diameter (25\u201328). The rounded base is 22 mm tall. Overall height is approximately 84.57 mm: the 62\u201370 mm rule refers to feather length above the base, not total shuttlecock height. The 66 mm feather length follows the shaft centreline from the top of the cork. The full outer tip envelope can be less than 1 mm larger than the 63 mm shaft-tip circle because quills and vanes have thickness. Barbs are a sparse geometric suggestion, not individual microscopic fibres. Feather asymmetry, knots and natural wear are simplified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and baked textures where present; no external models, fonts, images, logos or product markings."
+    },
+    {
+      "credit": "Dimension reference only; no artwork or geometry copied.",
+      "source": "https://system.bwfbadminton.com/documents/folder_1_81/Regulations/Laws/Part%20II%20Section%201A%20-%20Laws%20of%20Badminton%20-%20May%202017.pdf"
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 4,
+      "materials": 4,
+      "textures": 0
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "id": "medicine-ball",
+  "name": "Medicine Ball (Rubber, ~6 kg look)",
+  "summary": "Two-tone charcoal and teal textured rubber medicine ball with a small fill valve.",
+  "description": "Two-tone charcoal and teal textured rubber medicine ball with a small fill valve.",
+  "category": "Sports",
+  "tags": [
+    "medicine-ball",
+    "sports",
+    "PBR",
+    "editable",
+    "metres",
+    "ball"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Editable UV sphere with broad teal equatorial band and charcoal poles. A 1024\u00d7512 tangent-space normal map sampled from a deterministic periodic height field supplies fine moulded grip texture. Small flattened black rubber fill valve at the front. Maps are original analytical bakes, not external images.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/medicine-ball.blend",
+    "source_textures": [
+      "sources/textures/medicine-ball_grip.png"
+    ],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.6,
+      1.6
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor contact point under the ball centre."
+  },
+  "measurements": {
+    "glb_bytes": 417848,
+    "triangles": 9984,
+    "vertices": 5504,
+    "primitives": 3,
+    "materials": 3,
+    "textures": 2,
+    "animations": 0,
+    "diameter_m": 0.28,
+    "height_m": 0.28,
+    "dimensions_m": [
+      0.280000239610672,
+      0.2800000011920929,
+      0.28039999306201935
+    ],
+    "bounds_m": {
+      "min": [
+        -0.14000019431114197,
+        0,
+        -0.14000000059604645
+      ],
+      "max": [
+        0.14000004529953003,
+        0.2800000011920929,
+        0.1403999924659729
+      ]
+    },
+    "sha256": "73a19004e3770c46987598bc0f36f4804316206d1b1b610ea58ac750abf7ef83",
+    "features": {
+      "fill_valves": 1
+    }
+  },
+  "accuracy_notes": "Diameter and two-tone treatment are generic. Grip grain is a normal map and does not alter the silhouette; the periodic moulded texture compresses near UV poles. The fill valve is a shallow geometric insert, without an internal passage. No mass, bounce, deformation or fill contents are simulated.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and analytical texture bakes; no external models, fonts, images or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 3,
+      "materials": 3,
+      "textures": 2
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

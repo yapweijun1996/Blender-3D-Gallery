@@ -1,0 +1,108 @@
+{
+  "id": "table-tennis-ball",
+  "name": "Table Tennis Ball (40 mm)",
+  "summary": "White matte ABS sphere with a faint equatorial join: smoothly recessed by at most 0.03 mm. A very subtle baked surface normal gives matte plastic texture. No text, stars, logos or stamps.",
+  "description": "White matte ABS sphere with a faint equatorial join: smoothly recessed by at most 0.03 mm. A very subtle baked surface normal gives matte plastic texture. No text, stars, logos or stamps. Static visual asset; no physics.",
+  "category": "Sports",
+  "tags": [
+    "table-tennis-ball",
+    "sports",
+    "ball",
+    "PBR",
+    "normal map",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Original deterministic Blender Python surface meshes and capped seam/thread tubes; Cycles-baked procedural tangent-space normal map. No external assets or markings.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/table-tennis-ball.blend",
+    "source_textures": [
+      "sources/textures/table-tennis-ball_grain_normal.png"
+    ],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.6,
+      1.6
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Actual floor contact point under the horizontally centred exported bounds"
+  },
+  "measurements": {
+    "glb_bytes": 515008,
+    "triangles": 16128,
+    "vertices": 8383,
+    "meshes": 1,
+    "primitives": 1,
+    "materials": 1,
+    "textures": 1,
+    "animations": 0,
+    "dimensions_m": [
+      0.039951764047145844,
+      0.03999999910593033,
+      0.03995177149772644
+    ],
+    "bounds_m": {
+      "min": [
+        -0.019975878298282623,
+        0,
+        -0.01997588947415352
+      ],
+      "max": [
+        0.01997588574886322,
+        0.03999999910593033,
+        0.019975882023572922
+      ]
+    },
+    "diameter_m": 0.04,
+    "circumference_m": 0.12566370614359174,
+    "panels": 2,
+    "stitch_pairs": 0,
+    "stitch_rows": 0,
+    "sha256": "337d4680ca9560864a0462781541cdd1260abd8dedb74b063fb3bca312088ee0"
+  },
+  "accuracy_notes": "ITTF Statutes 2026, Laws of Table Tennis 2.3.1: spherical ball, diameter 40 mm. Fixed nominal size, so no range midpoint applies. The ball is an opaque outer shell; wall thickness, mass, bounce and interior are not modeled. The two molded hemispheres are represented by one continuous sphere with a shallow join. The groove is deliberately subtle. Measured extents include raised seams/threads; nominal diameter describes the skin. Fine grain is normal detail only. Source: https://documents.ittf.sport/sites/default/files/public/2026-02/2026_Statutes_v1_consolidated_clean.pdf",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and baked texture; no external models, fonts, images or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 1,
+      "materials": 1,
+      "textures": 1
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

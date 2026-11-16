@@ -1,0 +1,110 @@
+{
+  "id": "sepak-takraw-ball",
+  "name": "Sepak Takraw Ball",
+  "summary": "Original hollow synthetic takraw ball with six woven ribbons and twelve real pentagonal openings.",
+  "description": "Original hollow synthetic takraw ball with six woven ribbons and twelve real pentagonal openings. Static visual asset; no simulation or physics.",
+  "category": "Sports",
+  "tags": [
+    "sepak-takraw-ball",
+    "sports",
+    "PBR",
+    "editable",
+    "metres",
+    "woven",
+    "open lattice"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Six original closed synthetic ribbons following the six great circles whose normals are the six antipodal axes of an icosahedron. Their arrangement is the spherical icosidodecahedral layout. Wide ribbons close the twenty triangular regions into junctions and leave twelve pentagonal holes. Each ribbon alternates over and under its five neighbours at ten pairwise crossings, with complementary radial offsets. Ribbons have real thickness and an open hollow centre; no internal sphere or texture opacity. Original Blender Python; no external assets.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/sepak-takraw-ball.blend",
+    "source_textures": [],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.38,
+      0.48,
+      0.9
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor contact point under the object centre"
+  },
+  "measurements": {
+    "glb_bytes": 416216,
+    "triangles": 23040,
+    "vertices": 11520,
+    "meshes": 1,
+    "primitives": 1,
+    "materials": 1,
+    "textures": 0,
+    "animations": 0,
+    "dimensions_m": [
+      0.13687323033809662,
+      0.13687323033809662,
+      0.13687321543693542
+    ],
+    "bounds_m": {
+      "min": [
+        -0.06843661516904831,
+        0,
+        -0.06843660771846771
+      ],
+      "max": [
+        0.06843661516904831,
+        0.13687323033809662,
+        0.06843660771846771
+      ]
+    },
+    "strips": 6,
+    "pentagonal_openings": 12,
+    "triangular_junctions": 20,
+    "see_through": true,
+    "circumference_m": 0.43,
+    "sha256": "5710fb068bae73e57fbaba63e4c55b0db7560dde3e85690b5b35654682953f1d"
+  },
+  "accuracy_notes": "Task-selected men\u2019s circumference midpoint 430 mm (420\u2013440), giving a 136.873 mm spherical envelope. The linked School Games Federation of India rules specify 420\u2013440 mm for men and twelve holes / twenty intersections. Some later ISTAF-derived rules instead use 410\u2013430 mm; this model deliberately follows the task\u2019s explicit range. Twenty triangular junction regions are distinguished from the thirty pairwise great-circle crossing points. Broad ribbons overlap at the small triangular junction regions; the model approximates pressed synthetic weave and does not simulate deformation/contact. The continuous crown and offsets approximate moulded strip edges. The actual tessellated envelope is centred in X/Z and rests at the minimum mesh vertex; radial extent defines the 430 mm circumference.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and baked textures where present; no external models, fonts, images, logos or product markings."
+    },
+    {
+      "credit": "Dimension reference only; no artwork or geometry copied.",
+      "source": "https://www.sgfi.org.in/Content/FileUpload/PDF/RULES_SEPAKTAKRAW.pdf"
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 1,
+      "materials": 1,
+      "textures": 0
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

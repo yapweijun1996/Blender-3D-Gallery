@@ -1,0 +1,108 @@
+{
+  "id": "baseball",
+  "name": "Baseball",
+  "summary": "Two separate white leather figure-eight covers, narrow recessed seam, and exactly 108 V-shaped double stitches (216 separate red tube strands), with capped ends embedded into the cover. Subtle leather grain is a baked normal map.",
+  "description": "Two separate white leather figure-eight covers, narrow recessed seam, and exactly 108 V-shaped double stitches (216 separate red tube strands), with capped ends embedded into the cover. Subtle leather grain is a baked normal map. Static visual asset; no physics.",
+  "category": "Sports",
+  "tags": [
+    "baseball",
+    "sports",
+    "ball",
+    "PBR",
+    "normal map",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Original deterministic Blender Python surface meshes and capped seam/thread tubes; Cycles-baked procedural tangent-space normal map. No external assets or markings.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/baseball.blend",
+    "source_textures": [
+      "sources/textures/baseball_grain_normal.png"
+    ],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.6,
+      1.6
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Actual floor contact point under the horizontally centred exported bounds"
+  },
+  "measurements": {
+    "glb_bytes": 955728,
+    "triangles": 25824,
+    "vertices": 16391,
+    "meshes": 1,
+    "primitives": 3,
+    "materials": 3,
+    "textures": 1,
+    "animations": 0,
+    "dimensions_m": [
+      0.07376586645841599,
+      0.07392785011325032,
+      0.07430579513311386
+    ],
+    "bounds_m": {
+      "min": [
+        -0.03688293322920799,
+        0,
+        -0.03715289756655693
+      ],
+      "max": [
+        0.03688293322920799,
+        0.07392785011325032,
+        0.03715289756655693
+      ]
+    },
+    "diameter_m": 0.07377627387024809,
+    "circumference_m": 0.231775,
+    "panels": 2,
+    "stitch_pairs": 108,
+    "stitch_rows": 0,
+    "sha256": "4d3ff4cc2627a106eb9b4d344333a98ba9b5eb5f1c4cd566705dd7c8f6f87c14"
+  },
+  "accuracy_notes": "MLB Official Baseball Rules, rule 3.01: circumference 9\u20139.25 inches; midpoint 9.125 in = 231.775 mm, diameter 73.776 mm. The Library of Congress confirms 108 double stitches. The spherical two-lobed cover boundary is an original approximation, not a manufacturing cutting pattern. Thread cross-sections are six-sided and stylized; no interior core, individual thread fibers or stitch holes are modeled. Measured extents include raised seams/threads; nominal diameter describes the skin. Fine grain is normal detail only. Source: https://blogs.loc.gov/loc/2018/03/baseballs-the-heart-of-the-matter/",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and baked texture; no external models, fonts, images or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 3,
+      "materials": 3,
+      "textures": 1
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

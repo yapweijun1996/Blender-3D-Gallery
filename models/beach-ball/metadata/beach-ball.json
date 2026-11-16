@@ -1,0 +1,105 @@
+{
+  "id": "beach-ball",
+  "name": "Beach Ball",
+  "summary": "Inflated glossy vinyl beach ball with six bright gore panels, white end caps and a small valve plug.",
+  "description": "Inflated glossy vinyl beach ball with six bright gore panels, white end caps and a small valve plug.",
+  "category": "Sports",
+  "tags": [
+    "beach-ball",
+    "sports",
+    "PBR",
+    "editable",
+    "metres",
+    "ball"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Editable sphere with exactly six 60-degree coloured gore regions and two disconnected white polar caps. Gore boundary vertices are recessed 1.5 mm to represent shallow vinyl welds; the adjoining faces slope into these channels. A flattened white valve plug sits in the upper cap. Glossy nonmetal vinyl with clear coat; no images or external assets.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/beach-ball.blend",
+    "source_textures": [],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.6,
+      1.6
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor contact point under the ball centre."
+  },
+  "measurements": {
+    "glb_bytes": 250256,
+    "triangles": 9984,
+    "vertices": 5709,
+    "primitives": 7,
+    "materials": 7,
+    "textures": 0,
+    "animations": 0,
+    "diameter_m": 0.5,
+    "height_m": 0.5,
+    "dimensions_m": [
+      0.49892979860305786,
+      0.5008800029754639,
+      0.5000001490116119
+    ],
+    "bounds_m": {
+      "min": [
+        -0.2494649738073349,
+        0,
+        -0.25
+      ],
+      "max": [
+        0.24946482479572296,
+        0.5008800029754639,
+        0.25000014901161194
+      ]
+    },
+    "sha256": "ff8a4450a5c71f66262161d64fbca4649a71dbcbf6cf5c99833e05f960760fe8",
+    "features": {
+      "coloured_gores": 6,
+      "white_caps": 2
+    }
+  },
+  "accuracy_notes": "Inflation is represented as a spherical static shell. Welds taper into the end caps and use a simplified recessed strip instead of layered film. The valve is a small geometric plug without hinge, bore or inflation simulation. Panel colours are generic; slight extent differences follow weld recesses and the plug.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and analytical texture bakes; no external models, fonts, images or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 7,
+      "materials": 7,
+      "textures": 0
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

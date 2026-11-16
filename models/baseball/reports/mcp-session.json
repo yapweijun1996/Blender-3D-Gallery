@@ -1,0 +1,71 @@
+{
+  "blender_version": "5.3.0",
+  "port": 9877,
+  "shared_startup": [
+    {
+      "tool": "get_addon_status",
+      "result": "ERROR",
+      "error": "Error checking addon status: No module named 'blender_mcp.config'"
+    },
+    {
+      "tool": "get_scene_info",
+      "result": "PASS",
+      "checked": "Connected initial scene and default objects"
+    }
+  ],
+  "tools": [
+    "execute_blender_code",
+    "look"
+  ],
+  "sessions": [
+    {
+      "tool": "execute_blender_code",
+      "action": "read_factory_settings(use_empty=True), then procedural sphere prototype",
+      "checked": "Nominal real-world radius and surface construction"
+    }
+  ],
+  "saved_source_inspection": {
+    "tool": "execute_blender_code",
+    "action": "open_mainfile models/baseball/sources/baseball.blend",
+    "checked": "Editable cover, seam and/or stitch objects; real dimensions or stitch vertex counts"
+  },
+  "visual_check": {
+    "tool": "look",
+    "mode": "angles",
+    "shading": "material",
+    "views": [
+      "front",
+      "three_quarter"
+    ],
+    "result": "PASS",
+    "checked": "Silhouette, generic unbranded colors, visible seam construction and ball identity"
+  },
+  "external_assets_used": false,
+  "preview_review": {
+    "result": "PASS",
+    "views": [
+      "hero.png",
+      "front.png",
+      "side.png",
+      "3q.png"
+    ],
+    "method": "Opened every PNG through model contact sheets; inspected identity, materials, seams/stitches and framing. Contact sheet preserved in reports/preview-contact-sheet.png."
+  },
+  "final_optimized_source_check": {
+    "tools": [
+      "execute_blender_code",
+      "look"
+    ],
+    "mode": "camera",
+    "shading": "material",
+    "result": "PASS",
+    "checked": "Final 160-sample cover mesh, two covers, 108 pairs / 5184 editable thread vertices; unbranded white leather and red stitches"
+  },
+  "additional_rendered_check": {
+    "tool": "look",
+    "mode": "camera",
+    "shading": "rendered",
+    "max_size": 384,
+    "result": "PASS"
+  }
+}

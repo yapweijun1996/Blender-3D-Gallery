@@ -1,0 +1,35 @@
+{
+  "blender_version": "5.3.0",
+  "port": 9879,
+  "tools": [
+    "get_addon_status",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+  ],
+  "factory_reset_before_model": true,
+  "prototype": "Prolate body midpoint study",
+  "checks": [
+    "Loaded saved .blend in live MCP Blender",
+    "Inspected model in solid viewport camera or angle screenshot",
+    "Reviewed geometry and generic materials; final Cycles PNGs reviewed separately"
+  ],
+  "errors": [
+    {
+      "tool": "get_addon_status",
+      "error": "No module named 'blender_mcp.config'"
+    },
+    {
+      "tool": "execute_blender_code",
+      "error": "After factory reset, Context had no object; retried successfully via bpy.data.objects / view_layer active"
+    },
+    {
+      "tool": "look",
+      "error": "Initial unlit prototype screenshot was black; later inspected saved model in solid camera viewport"
+    }
+  ],
+  "notes": "MCP camera framing was set explicitly for the saved source. Tool look returns the viewport screenshot in the conversation. Headless Blender produces deliverables.",
+  "viewport_checks": [
+    "Pointed four-panel contour, eight crossing laces and white long lace in camera viewport"
+  ]
+}

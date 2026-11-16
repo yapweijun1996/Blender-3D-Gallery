@@ -1,0 +1,76 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset headless --skip-render builds; compare each primitive vertex and triangle counts and all vertex positions rounded to 10 micrometres, sorted with multiplicity. Byte identity is not required.",
+  "builds": [
+    {
+      "command": "blender --background --python-exit-code 1 --python models/badminton-shuttlecock/generate.py -- --skip-render",
+      "exit_code": 0,
+      "sha256": "04e09fc506553c5c0ed587ebce0c0e53aadc1c79156ef40ce5fc1e990b35735c",
+      "primitives": [
+        {
+          "material": "Cream binding thread",
+          "vertices": 1806,
+          "triangles": 3072,
+          "rounded_positions_sha256": "588ac53c02f4d045620ee0a842bf39d745cb5d94f34a5a7349617212d1bbeef5"
+        },
+        {
+          "material": "Feather shafts",
+          "vertices": 2992,
+          "triangles": 4736,
+          "rounded_positions_sha256": "f8f41e59eb162865782d2ac7ba9a19e8776b38f68a56e0f31bf34fa750b2df6b"
+        },
+        {
+          "material": "Ivory feather vanes",
+          "vertices": 9632,
+          "triangles": 9984,
+          "rounded_positions_sha256": "d5a037e2693578bb88cbedccc12817d94bfba96c942cac17ec2b40bca439adc5"
+        },
+        {
+          "material": "White cork cover",
+          "vertices": 833,
+          "triangles": 1662,
+          "rounded_positions_sha256": "191edc31e3f6797969deb27a19a24db7c8e6f726e3bdb08fe9075717d9d9be96"
+        }
+      ]
+    },
+    {
+      "command": "blender --background --python-exit-code 1 --python models/badminton-shuttlecock/generate.py -- --skip-render",
+      "exit_code": 0,
+      "sha256": "04e09fc506553c5c0ed587ebce0c0e53aadc1c79156ef40ce5fc1e990b35735c",
+      "primitives": [
+        {
+          "material": "Cream binding thread",
+          "vertices": 1806,
+          "triangles": 3072,
+          "rounded_positions_sha256": "588ac53c02f4d045620ee0a842bf39d745cb5d94f34a5a7349617212d1bbeef5"
+        },
+        {
+          "material": "Feather shafts",
+          "vertices": 2992,
+          "triangles": 4736,
+          "rounded_positions_sha256": "f8f41e59eb162865782d2ac7ba9a19e8776b38f68a56e0f31bf34fa750b2df6b"
+        },
+        {
+          "material": "Ivory feather vanes",
+          "vertices": 9632,
+          "triangles": 9984,
+          "rounded_positions_sha256": "d5a037e2693578bb88cbedccc12817d94bfba96c942cac17ec2b40bca439adc5"
+        },
+        {
+          "material": "White cork cover",
+          "vertices": 833,
+          "triangles": 1662,
+          "rounded_positions_sha256": "191edc31e3f6797969deb27a19a24db7c8e6f726e3bdb08fe9075717d9d9be96"
+        }
+      ]
+    }
+  ],
+  "geometry_identical": true,
+  "byte_identical": true,
+  "committed_outputs_restored": true,
+  "restored_sha256": {
+    "exports/optimized.glb": "04e09fc506553c5c0ed587ebce0c0e53aadc1c79156ef40ce5fc1e990b35735c",
+    "sources/badminton-shuttlecock.blend": "07096a4c9407431d5dba3b9e07d8c4e2effea78fb4e0c013dad501548c9d684d",
+    "reports/source-geometry.json": "7aea392b895412053293ffa8b3afb6f583b56ec99f1e2a4439c4d36e63ebaeb3"
+  }
+}

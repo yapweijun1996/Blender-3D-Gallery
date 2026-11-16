@@ -1,0 +1,108 @@
+{
+  "id": "softball",
+  "name": "Softball (12 in)",
+  "summary": "Two optic yellow figure-eight covers, a narrow recessed seam, and exactly 88 raised red double-stitch pairs (176 separate tube strands). Each cover has 88 stitch locations; leather grain is a baked normal map.",
+  "description": "Two optic yellow figure-eight covers, a narrow recessed seam, and exactly 88 raised red double-stitch pairs (176 separate tube strands). Each cover has 88 stitch locations; leather grain is a baked normal map. Static visual asset; no physics.",
+  "category": "Sports",
+  "tags": [
+    "softball",
+    "sports",
+    "ball",
+    "PBR",
+    "normal map",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "store": null,
+  "priority": "P2",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Original deterministic Blender Python surface meshes and capped seam/thread tubes; Cycles-baked procedural tangent-space normal map. No external assets or markings.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/softball.blend",
+    "source_textures": [
+      "sources/textures/softball_grain_normal.png"
+    ],
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.6,
+      1.6
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Actual floor contact point under the horizontally centred exported bounds"
+  },
+  "measurements": {
+    "glb_bytes": 977064,
+    "triangles": 27328,
+    "vertices": 16657,
+    "meshes": 1,
+    "primitives": 3,
+    "materials": 3,
+    "textures": 1,
+    "animations": 0,
+    "dimensions_m": [
+      0.09704482555389404,
+      0.09715708726434968,
+      0.0976596549153328
+    ],
+    "bounds_m": {
+      "min": [
+        -0.04852241277694702,
+        0,
+        -0.0488298274576664
+      ],
+      "max": [
+        0.04852241277694702,
+        0.09715708726434968,
+        0.0488298274576664
+      ]
+    },
+    "diameter_m": 0.09706127866436474,
+    "circumference_m": 0.304927,
+    "panels": 2,
+    "stitch_pairs": 88,
+    "stitch_rows": 0,
+    "sha256": "2fb25b6d1f40ae893d563e425f5c8e7ed2b60de1c99f7a1740218a92cfa57a68"
+  },
+  "accuracy_notes": "WBSC Official Rules of Softball 2026\u20132029, Fast Pitch, ball specification: 11 7/8\u201312 1/8 in, and at least 88 stitches on each cover using two needles. This task specifies the decimal range 11.88\u201312.13 in; its exact midpoint 12.005 in = 304.927 mm is used (within the official range). The WBSC stitch wording concerns flat seam style; the task requests raised stitches, represented here with the same 88-location two-needle construction. Cover pattern and six-sided thread are original approximations; no hidden core or individual fibers. Measured extents include raised seams/threads; nominal diameter describes the skin. Fine grain is normal detail only. Source: https://static.wbsc.org/uploads/federations/0/cms/documents/b5f6e3da-619d-2aa4-0d25-2ec00549b45d.pdf",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, materials and baked texture; no external models, fonts, images or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "browser": "NOT TESTED",
+    "budget": {
+      "triangles": 40000,
+      "bytes": 1572864,
+      "mesh_primitives": 3,
+      "materials": 3,
+      "textures": 1
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/sources.json"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset headless generate.py --skip-render runs; per-material primitive vertex/triangle counts and sorted complete vertex positions rounded to 10 micrometres.",
+  "geometry_identical": true,
+  "reviewed_geometry_identical": true,
+  "byte_identical": false,
+  "builds": [
+    {
+      "exit_code": 0,
+      "glb_sha256": "047a0c17732d3ed9fea8d2ad2d69349fcbaa22c6f15423182e4ade516e0e157d",
+      "primitives": [
+        {
+          "material": "Cover",
+          "vertices": 8383,
+          "triangles": 16128,
+          "rounded_positions_sha256": "99ecd603a89babc2fa3bcfe0a68c0ac5c038f05cf52ddce3c32090a090ec75c9"
+        }
+      ]
+    },
+    {
+      "exit_code": 0,
+      "glb_sha256": "b2aa3e211ab73fa4acc554d90319b4434742568283b43ff646b3dae0be21b5b9",
+      "primitives": [
+        {
+          "material": "Cover",
+          "vertices": 8383,
+          "triangles": 16128,
+          "rounded_positions_sha256": "99ecd603a89babc2fa3bcfe0a68c0ac5c038f05cf52ddce3c32090a090ec75c9"
+        }
+      ]
+    }
+  ],
+  "outputs_restored": true,
+  "restored_glb_sha256": "337d4680ca9560864a0462781541cdd1260abd8dedb74b063fb3bca312088ee0",
+  "restored_source_sha256": "2bd4a3f39d7d7af55738ff453a288625df1db0fc6f78e5aff661b21abf9229df",
+  "restored_outputs_verified": true,
+  "note": "Geometry determinism is required; texture/export byte identity is not promised."
+}

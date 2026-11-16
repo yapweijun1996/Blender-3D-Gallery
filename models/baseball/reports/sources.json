@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "blender_version": "5.3.0",
+  "source_reopened": true,
+  "source_sha256": "52cca0bd1b555d522be8a38ddcbbff6adc86e729a25c776eb01ee51fcc79bbf7",
+  "original_source_unchanged": true,
+  "source": {
+    "editable_meshes": [
+      "COVER_A",
+      "COVER_B",
+      "SEAM_Band",
+      "STITCHES_Double"
+    ],
+    "modifiers": {
+      "COVER_A": [
+        "TRIANGULATE"
+      ],
+      "COVER_B": [
+        "TRIANGULATE"
+      ],
+      "SEAM_Band": [
+        "TRIANGULATE"
+      ],
+      "STITCHES_Double": [
+        "TRIANGULATE"
+      ]
+    },
+    "root_properties": {
+      "units": "metres",
+      "front_axis": "Blender -Y / glTF +Z",
+      "up_axis": "Blender +Z / glTF +Y",
+      "panels": 2,
+      "stitch_pairs": 108,
+      "floor_adjustment_m": 0.00016512034926563501,
+      "horizontal_adjustment_m": [
+        -0.0,
+        -0.00026671960949897766
+      ]
+    },
+    "normal_map": {
+      "size": [
+        1024,
+        512
+      ],
+      "filepath": "//textures/baseball_grain_normal.png"
+    }
+  },
+  "glb_reimported": true,
+  "glb_sha256": "4d3ff4cc2627a106eb9b4d344333a98ba9b5eb5f1c4cd566705dd7c8f6f87c14",
+  "reimport": {
+    "mesh_objects": 1,
+    "triangles": 25824,
+    "images": [
+      "baseball_grain_normal"
+    ]
+  }
+}

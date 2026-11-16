@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "method": "Two independent factory-reset headless generate.py --skip-render runs; per-material primitive vertex/triangle counts and sorted complete vertex positions rounded to 10 micrometres.",
+  "geometry_identical": true,
+  "reviewed_geometry_identical": true,
+  "byte_identical": true,
+  "builds": [
+    {
+      "exit_code": 0,
+      "glb_sha256": "098899c57c7e56055e0db8369416103592fb8d6933b25c4124195865c15d92cc",
+      "primitives": [
+        {
+          "material": "Felt",
+          "vertices": 9357,
+          "triangles": 18048,
+          "rounded_positions_sha256": "11c185d00ddaf132eb6a6515d4db9ebc8ab43bc5cc78eba4b50701b8e81c3172"
+        },
+        {
+          "material": "Rubber seam",
+          "vertices": 967,
+          "triangles": 1536,
+          "rounded_positions_sha256": "962c7514657e250b5db1ee0a66727f9a28bf8f9e4e207e32bdf4f4096d73807c"
+        }
+      ]
+    },
+    {
+      "exit_code": 0,
+      "glb_sha256": "098899c57c7e56055e0db8369416103592fb8d6933b25c4124195865c15d92cc",
+      "primitives": [
+        {
+          "material": "Felt",
+          "vertices": 9357,
+          "triangles": 18048,
+          "rounded_positions_sha256": "11c185d00ddaf132eb6a6515d4db9ebc8ab43bc5cc78eba4b50701b8e81c3172"
+        },
+        {
+          "material": "Rubber seam",
+          "vertices": 967,
+          "triangles": 1536,
+          "rounded_positions_sha256": "962c7514657e250b5db1ee0a66727f9a28bf8f9e4e207e32bdf4f4096d73807c"
+        }
+      ]
+    }
+  ],
+  "outputs_restored": true,
+  "restored_glb_sha256": "f42e212b5f7a6e41d804632d49ebb6ff41f1a5d7fef2f91b37588f028e9baca1",
+  "restored_source_sha256": "bfb511d5351458aba4cb562f8a68fc029c83036b79779a75d6233f93b1fd4f25",
+  "restored_outputs_verified": true,
+  "note": "Geometry determinism is required; texture/export byte identity is not promised."
+}

@@ -1,0 +1,29 @@
+{
+  "blender_version": "5.3.0",
+  "port": 9879,
+  "tools": [
+    "execute_blender_code",
+    "look"
+  ],
+  "factory_reset_before_model": true,
+  "prototype": "White rubber adult oval proportion study",
+  "checks": [
+    "Loaded saved .blend in live MCP Blender",
+    "Inspected model in solid viewport camera or angle screenshot",
+    "Reviewed geometry and generic materials; final Cycles PNGs reviewed separately"
+  ],
+  "errors": [
+    {
+      "tool": "get_addon_status",
+      "error": "No module named 'blender_mcp.config'"
+    }
+  ],
+  "notes": "MCP camera framing was set explicitly for the saved source. Tool look returns the viewport screenshot in the conversation. Headless Blender produces deliverables.",
+  "initial_session_probe": {
+    "get_addon_status": "failed: No module named 'blender_mcp.config'",
+    "get_scene_info": "default cube, camera, light"
+  },
+  "viewport_checks": [
+    "Blunter oval, four recessed seams, white/teal generic transverse bands in camera viewport"
+  ]
+}

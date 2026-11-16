@@ -1,0 +1,15 @@
+{
+  "blender_version": "5.3.0",
+  "port": 9878,
+  "tools_called": [
+    "execute_blender_code",
+    "look"
+  ],
+  "factory_reset_before_model": true,
+  "checks": "Prototype 500 mm sphere with six 60 degree gore plan. Saved source load and viewport screenshot attempted after connection loss; headless PNG review used instead.",
+  "errors": [
+    "get_addon_status: No module named blender_mcp.config",
+    "execute_blender_code and look final inspection: Not connected to Blender."
+  ],
+  "fallback": "Deterministic headless Blender builds, GLB validation, source reopen/reimport and all four PNG previews reviewed. No external assets or downloads."
+}
