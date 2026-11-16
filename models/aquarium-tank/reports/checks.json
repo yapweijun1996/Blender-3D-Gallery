@@ -1,0 +1,127 @@
+{
+  "result": "PASS",
+  "id": "aquarium-tank",
+  "status": "draft / NEEDS REVIEW",
+  "date": "2026-11-16",
+  "glb_sha256": "d7bcd16762cc78c5022454f773061d4287b6fe70f8ec43a4c41acbb4e07cfd3d",
+  "commands": [
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/aquarium-tank/generate.py",
+      "result": "PASS",
+      "version": "5.2.3 LTS"
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/aquarium-tank/generate.py -- --views=front,side",
+      "result": "PASS"
+    },
+    {
+      "command": "node models/aquarium-tank/prepare_previews.mjs",
+      "result": "PASS"
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/aquarium-tank/inspect_sources.py",
+      "result": "PASS"
+    },
+    {
+      "command": "node models/aquarium-tank/validate.mjs --source-edit",
+      "result": "PASS",
+      "khronos": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 2,
+        "info_review": "Two intentional empty swim-bound marker nodes."
+      }
+    },
+    {
+      "command": "npm run validate:assets",
+      "result": "PASS"
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "passed": 728,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "warning": "Existing bundle size advisory over 500 kB."
+    },
+    {
+      "command": "node models/aquarium-tank/check_browser.mjs",
+      "result": "PASS",
+      "viewport": [
+        1440,
+        900
+      ],
+      "draw_calls_per_frame": 5
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS"
+    }
+  ],
+  "duplicate_search": {
+    "result": "NOT FOUND: close aquarium model",
+    "metadata_files_searched": 633,
+    "fields": [
+      "id",
+      "name",
+      "tags"
+    ],
+    "related_but_distinct": [
+      "pond: low outdoor basin",
+      "malaysia-outdoor-water-tank: opaque utility tank",
+      "mosque-courtyard-fountain: fountain",
+      "fish-koi: separate fish"
+    ]
+  },
+  "visual_review": {
+    "result": "PASS",
+    "views": [
+      "hero.png",
+      "front.png",
+      "side.png",
+      "3q.png",
+      "1440x900 actual model page",
+      "keyboard orbit"
+    ],
+    "notes": "Clean neutral cabinet, clearly edged glazing and waterline, rocks and planted ends, open centre. Orthographic camera-floor intersection corrected."
+  },
+  "deterministic_export": {
+    "result": "PASS",
+    "evidence": "Two procedural rebuild exports (accepted and final orthographic run) produced the same GLB SHA-256. Source file bytes are not claimed identical."
+  },
+  "resolved_attempts": [
+    "Removed duplicate reversed leaf faces; use the shared double-sided palette material.",
+    "Corrected swim bound marker ordering after Blender-to-glTF Z-axis reversal.",
+    "48 collapsed grip bevel triangles fixed by limiting bevel width below half thickness.",
+    "Initial repository/test run preceded WebP creation; images were completed and checks rerun.",
+    "Preserved the existing final catalog collection required by an existing test; new entry inserted before it.",
+    "Local Pillow unavailable; used installed Chromium canvas for deterministic WebP conversion.",
+    "Browser response matcher corrected for Vite fingerprinted URLs; loaded bytes verified by SHA-256."
+  ],
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Full 17-shop mall assembly and sustained performance",
+    "Separate koi placement/animation",
+    "Engineering and animal-care suitability"
+  ],
+  "generated_test_artifacts": "Restored models/demo-beverage-can/reports/structure-motion.json with git checkout; no existing model changes retained.",
+  "publication": "Local branch commit only; no push or deployment.",
+  "raw_logs": "/Users/admin/Documents/MallQueue/reports/aquarium-tank-evidence",
+  "artifact_sha256": {
+    "generate.py": "49f9534aafb18c8f122f06c67d74f83f84971c64b04d7fa155ede208537449e2",
+    "previews/3q.png": "f96bc92de2064d2e7c6e2a3f2f512c1f79db3aafdc547d694a585150adaef9b7",
+    "previews/3q.webp": "01facc9b4778a3484fbac5cc7672482b31dc4c667993b222ab0fa701193a5429",
+    "previews/front.png": "ec1bcaaf5638549f272058c37b1cf23afab81b5c4373778a0bee5836451911e4",
+    "previews/front.webp": "ad9519e47ab7ec337eb48be9ba35b722687c231375a339445ea2e717954cbb39",
+    "previews/hero.png": "04df90ad1a34fc4148d9b9c4971021359ce86efd2fb07984892f5461cb4fc5e7",
+    "previews/hero.webp": "b2500dbb5212da1717f1decf6deef09da0e710e4545ab4d836d1e7752322d6f5",
+    "previews/side.png": "ed950ec7f6fa5fcfd558fa537b66a9bad3a14e66750f09ac60e4483c0e72c39a",
+    "previews/side.webp": "1dab85f756379203724219334599360dc65ceea4a6ffc928f19ff9ff4c92136c",
+    "sources/aquarium-tank.blend": "f67276f13a516010c8b979dca242c337d2efc11fda25feaad5376e47e525caf1"
+  }
+}
