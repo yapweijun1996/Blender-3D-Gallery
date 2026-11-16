@@ -11,13 +11,15 @@ from pathlib import Path
 import bpy
 import bmesh
 import numpy as np
-from mathutils import Vector
+from mathutils import Euler, Matrix, Vector
 
 ROOT = Path(__file__).resolve().parent
 TAU = math.tau
 PALETTE = {"white": "F4F2FA", "ink": "2A2838", "purple": "8B5CF6", "lavender": "D9CCF7"}
 SCENE = None
 M = {}
+OUTLINE_SCALE = 1.45
+SIDES = [(-1, "R"), (1, "L")]  # Anatomical sides: +X is the character's left.
 
 
 def linear(v):
@@ -52,9 +54,12 @@ def materials():
         "purple": material("Violet | #8B5CF6", PALETTE["purple"], .60),
         "lavender": material("Lavender | #D9CCF7", PALETTE["lavender"], .62),
         "hood": material("Purple hood lining", "65458D", .85),
+        "hood_roll": material("Saturated violet hood roll", "8454C5", .85),
+        "fin_inset": material("Soft lavender fin inset", "E7DFF5", .74),
         "edge": material("Ink outline | inverted hull", "242130", 1),
         "light": material("Violet emission | eyes and rings", "8B5CF6", .32, emission=2.5),
         "light_core": material("Lavender emission core", "D9CCF7", .35, emission=2.2),
+        "eye_core": material("Soft lavender eye emission core", "D9CCF7", .42, emission=1.45),
         "heart": material("Heart emission", "C780FA", .45, emission=2.5),
         "seam": material("Lavender seam", "C2B5DB", .82),
     })
@@ -95,6 +100,7 @@ def mesh(name, vertices, faces, mat, parent=None, smooth=True, outline=0):
 
 
 def add_outline(ob, width=.0015):
+    width *= OUTLINE_SCALE
     data = ob.data.copy()
     data.name = ob.name + "_InvertedHullMesh"
     data.materials.clear()
@@ -280,15 +286,15 @@ def face_panel(parent, expression="happy", prefix="Face"):
         bmesh.ops.reverse_faces(bm, faces=list(bm.faces)); bm.to_mesh(ob.data); bm.free()
     edge = [verts[1 + (rings - 1) * segments + i] for i in range(segments)]
     tube(prefix + "/ScreenGasket", edge, .0024, M["ink"], group, 6, closed=True)
-    for side, label in [(-1, "L"), (1, "R")]:
+    for side, label in SIDES:
         cx = side * .113
         def surface(x, z):
             return (x, screen_front(x, z) - .0035, z)
         if expression == "happy":
-            pts = [surface(cx + .049 * math.cos(t), .593 + .050 * math.sin(t)) for t in np.linspace(.12, math.pi - .12, 22)]
-            rounded_stroke(prefix + "/HappyArc_" + label, pts, .009, M["light"], group)
-            core = [(x, y - .006, z) for x, y, z in pts]
-            rounded_stroke(prefix + "/HappyArcCore_" + label, core, .0055, M["light_core"], group)
+            pts = [surface(cx + .065 * math.cos(t), .588 + .056 * math.sin(t)) for t in np.linspace(.12, math.pi - .12, 22)]
+            rounded_stroke(prefix + "/HappyArc_" + label, pts, .0125, M["light"], group, sides=12)
+            core = [(x, y - .0075, z) for x, y, z in pts]
+            rounded_stroke(prefix + "/HappyArcCore_" + label, core, .008, M["eye_core"], group, sides=12)
         elif expression == "sleep":
             pts = [surface(cx + t, .618) for t in np.linspace(-.037, .037, 6)]
             rounded_stroke(prefix + "/SleepBar_" + label, pts, .008, M["light"], group)
@@ -306,6 +312,19 @@ def face_panel(parent, expression="happy", prefix="Face"):
                 bm = bmesh.new(); bm.from_mesh(ob.data); bmesh.ops.reverse_faces(bm, faces=list(bm.faces)); bm.to_mesh(ob.data); bm.free()
         else:
             raise ValueError(expression)
+    if expression == "happy":
+        # Keep the wide strokes shallow against the curved screen, including at side angles.
+        bpy.context.view_layer.update()
+        for ob in group.children:
+            if ob.type != "MESH" or "HappyArc" not in ob.name:
+                continue
+            inverse = ob.matrix_local.inverted()
+            for vertex in ob.data.vertices:
+                p = ob.matrix_local @ vertex.co
+                surface_y = screen_front(p.x, p.z)
+                p.y = surface_y - .0015 + .25 * (p.y - surface_y)
+                vertex.co = inverse @ p
+            ob.data.update()
     return group
 
 
@@ -326,7 +345,7 @@ def lathe_x(name, side, rows, z, mat, parent, n=40, outline=0):
 def headphones(parent, prefix="Ears/Headphones"):
     group = empty(prefix, parent)
     group["module"] = "headphones"
-    for side, label in [(-1, "L"), (1, "R")]:
+    for side, label in SIDES:
         base = prefix + "/" + label
         lathe_x(base + "_Cushion", side, [(.280, .085), (.289, .111), (.310, .118), (.323, .113)], .649, M["hood"], group, outline=.0015)
         lathe_x(base + "_WhiteCollar", side, [(.300, .113), (.307, .119), (.319, .119), (.325, .114)], .649, M["white"], group)
@@ -366,18 +385,18 @@ def polygon_solid(name, points, depth, mat, parent, bevel=.003, outline=.0015):
 def wing_fins(parent, prefix="Ears/WingFins"):
     group = empty(prefix, parent)
     group["module"] = "ear_fins"
-    for side, label in [(-1, "L"), (1, "R")]:
+    for side, label in SIDES:
         points = [(side * x, y, z) for x, y, z in [(.268, -.035, .728), (.321, -.016, .818), (.295, .018, .891), (.172, .070, 1.006), (.179, .026, .896), (.215, -.027, .793)]]
         polygon_solid(prefix + "/" + label + "_WhiteFin", points, (.065, .120, .140, .030, .130, .095), M["white"], group, .005, .0018)
         inner = [(side * x, y - .002, z) for x, y, z in [(.267, -.033, .758), (.303, -.014, .820), (.281, .018, .879), (.187, .058, .976), (.198, .025, .887), (.230, -.024, .800)]]
-        polygon_solid(prefix + "/" + label + "_LavenderInset", inner, .003, M["lavender"], group, .002, 0)
+        polygon_solid(prefix + "/" + label + "_LavenderInset", inner, .003, M["fin_inset"], group, .002, 0)
     return group
 
 
 def ball_antennas(parent, prefix="Ears/BallAntennas"):
     group = empty(prefix, parent)
     group["module"] = "antennas"
-    for side, label in [(-1, "L"), (1, "R")]:
+    for side, label in SIDES:
         pts = [(side * .168, .014, .858), (side * .192, .028, .944), (side * .220, .044, 1.013)]
         tube(prefix + "/" + label + "_Stem", pts, .009, M["ink"], group, 10, outline=.0012)
         ellipsoid(prefix + "/" + label + "_Ball", pts[-1], (.025,) * 3, M["purple"], group, 20, 12, outline=.0015)
@@ -390,7 +409,7 @@ def text_geometry(name, content, loc, size, mat, parent, extrude=.0005):
     data.body = content; data.size = size; data.align_x = "CENTER"
     data.align_y = "CENTER"; data.extrude = extrude; data.bevel_depth = .0002
     if content == "GJH":
-        data.offset = .0008
+        data.offset = size * .027
     data.bevel_resolution = 1; data.resolution_u = 5
     ob = bpy.data.objects.new(name, data); SCENE.collection.objects.link(ob)
     ob.parent = parent; ob.location = loc; ob.rotation_euler.x = math.pi / 2
@@ -406,8 +425,8 @@ def hood(parent, prefix):
     pts = []
     for a in np.linspace(-.12, math.pi + .12, 28):
         pts.append((.134 * math.cos(a), .082 * math.sin(a) + .008, .385 + .010 * math.sin(a)))
-    tube(prefix + "/BackHoodRoll", pts, .026, M["hood"], parent, 10, outline=.0016)
-    for side, label in [(-1, "L"), (1, "R")]:
+    tube(prefix + "/BackHoodRoll", pts, .026, M["hood_roll"], parent, 10, outline=.0016)
+    for side, label in SIDES:
         pts = [(side * .137, -.035, .405), (side * .095, -.085, .421), (side * .024, -.113, .395), (0, -.114, .380), (side * .076, -.103, .394)]
         polygon_solid(prefix + "/" + label + "_FoldedHood", pts, .018, M["hood"], parent, .0045, .0012)
         tube(prefix + "/" + label + "_HoodPiping", pts[:4], .003, M["purple"], parent, 8)
@@ -429,8 +448,9 @@ def outfit(parent, style="white_hoodie", prefix="Outfit"):
     else:
         pts = [(.077 * math.cos(a), .058 * math.sin(a), .382) for a in np.linspace(0, TAU, 32, endpoint=False)]
         tube(prefix + "/PlainCollar", pts, .007, M["lavender"], group, 8, closed=True)
-    for side, label in [(-1, "L"), (1, "R")]:
+    for side, label in SIDES:
         arm = empty(prefix + "/" + label + "_SleeveSocket", group, (side * .139, 0, .343))
+        arm["pose_role"] = "arm"; arm["anatomical_side"] = label
         arm.rotation_euler.y = -side * .59
         sleeve_rows = [(-.162, .040, .048, 0), (-.156, .052, .056, 0), (-.131, .060, .063, 0), (-.075, .065, .064, 0), (-.025, .059, .059, 0), (.008, .036, .043, 0), (.014, .010, .014, 0)]
         loft(prefix + "/" + label + "_" + style + "Sleeve", sleeve_rows, fabric, arm, 20, 2.5, .0014, soften=True)
@@ -441,13 +461,13 @@ def outfit(parent, style="white_hoodie", prefix="Outfit"):
     if jacket:
         # White center undershirt and two shaped dark jacket fronts.
         polygon_solid(prefix + "/Jacket_Undershirt", [(-.047, -.111, .193), (.047, -.111, .193), (.045, -.106, .351), (0, -.105, .372), (-.045, -.106, .351)], .005, M["cloth"], group, .002, 0)
-        for side, label in [(-1, "L"), (1, "R")]:
+        for side, label in SIDES:
             polygon_solid(prefix + "/Jacket_" + label + "_Front", [(side * .045, -.120, .189), (side * .146, -.100, .202), (side * .126, -.098, .335), (side * .063, -.113, .363)], .006, M["ink"], group, .004, .001)
             polygon_solid(prefix + "/Jacket_" + label + "_Pocket", [(side * .080, -.126, .221), (side * .122, -.113, .227), (side * .122, -.113, .255), (side * .080, -.126, .244)], .003, M["hood"], group, .002, .0008)
             tube(prefix + "/Jacket_" + label + "_Zipper", [(side * .045, -.125, .201), (side * .047, -.121, .343)], .0018, M["lavender"], group, 6)
         text_geometry(prefix + "/Jacket_GJH", "GJH", (0, -.122, .302), .027, M["purple"], group)
     elif not plain:
-        text_geometry(prefix + "/Hoodie_GJH", "GJH", (0, -.109, .291), .061, M["purple"], group, .0008)
+        text_geometry(prefix + "/Hoodie_GJH", "GJH", (0, -.113, .290), .078, M["purple"], group, .0015)
         # Subtle kangaroo pocket seam, kept below the wordmark.
         pts = [(-.091, -.108, .239), (-.068, -.114, .219), (0, -.115, .216), (.068, -.114, .219), (.091, -.108, .239)]
         tube(prefix + "/Hoodie_PocketSeam", pts, .0011, M["seam"], group, 6)
@@ -458,13 +478,15 @@ def body_base(parent, prefix="Body"):
     group = empty(prefix, parent)
     ellipsoid(prefix + "/NeckConnector", (0, .015, .405), (.052, .045, .020), M["ink"], group, 20, 12)
     loft(prefix + "/BlackShorts", [(.134, .099, .073, .005), (.146, .140, .085, .005), (.178, .151, .090, .005), (.194, .143, .086, .005)], M["ink"], group, 28, 3, .0014)
-    for side, label in [(-1, "L"), (1, "R")]:
+    for side, label in SIDES:
         leg = empty(prefix + "/" + label + "_Leg", group, (side * .091, .005, 0))
+        leg["pose_role"] = "leg"; leg["anatomical_side"] = label
         leg.rotation_euler.y = side * .035
         loft(prefix + "/" + label + "_WhiteLeg", [(.018, .053, .063, -.010), (.030, .061, .070, -.006), (.078, .066, .072, 0), (.133, .073, .078, 0), (.160, .070, .074, 0)], M["white"], leg, 20, 3, .0014, soften=True)
         bevel_box(prefix + "/" + label + "_PurpleSquarePatch", (0, -.0735, .066), (.046, .003, .037), .002, M["purple"], leg, 0, 2)
         bevel_box(prefix + "/" + label + "_BlackShoe", (0, -.013, .021), (.119, .150, .042), .019, M["ink"], leg, .0015, 4)
         arm = empty(prefix + "/" + label + "_HandSocket", group, (side * .139, 0, .343))
+        arm["pose_role"] = "arm"; arm["anatomical_side"] = label
         arm.rotation_euler.y = -side * .59
         ellipsoid(prefix + "/" + label + "_BlackMitten", (0, -.002, -.169), (.049, .047, .037), M["ink"], arm, 24, 14, power=2.35, outline=.0014)
     return group
@@ -477,7 +499,7 @@ def accessory(parent, style, prefix="Accessory"):
         bevel_box(prefix + "/Backpack_Main", (0, .137, .282), (.207, .112, .221), .032, M["purple"], group, .0015, 4)
         bevel_box(prefix + "/Backpack_FrontPocket", (0, .198, .232), (.165, .030, .086), .016, M["lavender"], group, .0012, 3)
         tube(prefix + "/Backpack_Handle", [(-.035, .142, .386), (-.030, .143, .420), (.030, .143, .420), (.035, .142, .386)], .009, M["ink"], group, 8)
-        for side, label in [(-1, "L"), (1, "R")]:
+        for side, label in SIDES:
             pts = [(side * .077, .153, .382), (side * .106, .033, .374), (side * .107, -.079, .339), (side * .127, -.101, .253), (side * .130, -.019, .208), (side * .080, .138, .196)]
             tube(prefix + "/Backpack_" + label + "_Strap", pts, .012, M["ink"], group, 8)
             bevel_box(prefix + "/Backpack_" + label + "_Clasp", (side * .054, .218, .258), (.020, .010, .030), .005, M["hood"], group, 0)
@@ -533,7 +555,56 @@ def normalize_character(root):
     return factor
 
 
-def build_character(name="GJHChibiVisitor", expression="happy", ears="wing_fins", outfit_style="white_hoodie", accessories=()):
+def rotate_about(ob, pivot, angles):
+    pivot = Vector(pivot)
+    ob.matrix_local = (Matrix.Translation(pivot) @ Euler(angles, "XYZ").to_matrix().to_4x4()
+                       @ Matrix.Translation(-pivot) @ ob.matrix_local)
+
+
+def pose_character(root, head, body, clothes, accessories, pose):
+    """Author static transforms; no armature, skin, animation, or runtime posing needed."""
+    if pose not in ("stand", "wave"):
+        raise ValueError(pose)
+    root["pose"] = pose
+    legs = [o for o in body.children if o.get("pose_role") == "leg"]
+    if pose == "wave":
+        # Both sockets share the same transform, so the mitten follows its sleeve.
+        for ob in descendants(body) + descendants(clothes):
+            if ob.get("pose_role") != "arm":
+                continue
+            if ob["anatomical_side"] == "L":
+                ob.location = (.155, -.020, .347)
+                ob.rotation_euler = (-.18, -2.20, -.08)
+                ob.scale = (1, 1, 1.45)
+            else:
+                ob.rotation_euler = (-.10, .92, .04)
+        # Keep the short legs independent of the torso lean, then seat each sole.
+        for leg in legs:
+            leg.parent = root
+            if leg["anatomical_side"] == "R":
+                rotate_about(leg, (-.091, .005, .145), (0, .22, -.12))
+                leg.location.y -= .062
+                leg.location.x -= .012
+            else:
+                leg.rotation_euler.y = -.045
+                leg.location.y += .020
+        rotate_about(head, (0, 0, .405), (0, math.radians(2), math.radians(6)))
+        tilt = empty("Pose/BodyTilt", root, (0, 0, .165))
+        tilt["lean_degrees"] = -6.0
+        for ob in [head, body, clothes] + accessories:
+            ob.parent = tilt
+            ob.location -= tilt.location
+        tilt.rotation_euler.y = math.radians(-6)
+        root["raised_hand"] = "anatomical left (+X in the frontal view)"
+        root["stepping_leg"] = "anatomical right, forward by 0.062 m before normalization"
+        root["head_turn_degrees"] = 6.0
+    # A posed foot must contact the floor even when rotated or shifted forward.
+    for leg in legs:
+        low, _ = world_bounds(descendants(leg))
+        leg.location.z -= low[2]
+
+
+def build_character(name="GJHChibiVisitor", expression="happy", ears="wing_fins", outfit_style="white_hoodie", accessories=(), pose="wave"):
     root = empty(name)
     root["expression"] = expression; root["ears"] = ears; root["outfit"] = outfit_style
     root["accessories"] = ",".join(accessories) or "none"
@@ -567,7 +638,7 @@ def build_character(name="GJHChibiVisitor", expression="happy", ears="wing_fins"
     elif ears != "headphones":
         raise ValueError(ears)
     # Thin seams on the white forehead, derived from the actual helmet surface.
-    for side, label in [(-1, "L"), (1, "R")]:
+    for side, label in SIDES:
         pts = []
         for z in np.linspace(.795, .911, 18):
             x = side * (.106 - .027 * ((z - .795) / .116))
@@ -575,11 +646,12 @@ def build_character(name="GJHChibiVisitor", expression="happy", ears="wing_fins"
             if q < .997:
                 pts.append((x, shell_front(x, z) - .001, z))
         tube("Head/" + label + "_PanelSeam", pts, .00085, M["seam"], head, 5)
-    body_base(root)
-    outfit(root, outfit_style)
-    for style in accessories:
-        accessory(root, style)
+    body = body_base(root)
+    clothes = outfit(root, outfit_style)
+    extra = [accessory(root, style) for style in accessories]
+    pose_character(root, head, body, clothes, extra, pose)
     normalize_character(root)
+    root["raised_hand_exceeds_one_metre"] = False
     return root
 
 
@@ -613,19 +685,34 @@ def build_kit(default_root):
     return row
 
 
-def export_glb(path, objects):
+def export_glb(path, objects, canonical_root=True):
     bpy.ops.object.select_all(action="DESELECT")
     for ob in objects:
         ob.hide_set(False)
         ob.select_set(True)
     bpy.context.view_layer.objects.active = objects[0]
-    bpy.ops.export_scene.gltf(
-        filepath=str(path), export_format="GLB", use_selection=True,
-        export_yup=True, export_apply=True, export_animations=False,
-        export_cameras=False, export_lights=False, export_extras=True,
-        export_texcoords=False, export_normals=True, export_materials="EXPORT",
-        export_image_format="NONE", export_attributes=False,
-    )
+    # Source roots are distinct, but every required GLB has the canonical root.
+    root = objects[0]
+    previous_name = root.name
+    other = bpy.data.objects.get("GJHChibiVisitor") if canonical_root else None
+    if other == root:
+        other = None
+    if other:
+        other.name = "ExportInactiveRoot"
+    if canonical_root:
+        root.name = "GJHChibiVisitor"
+    try:
+        bpy.ops.export_scene.gltf(
+            filepath=str(path), export_format="GLB", use_selection=True,
+            export_yup=True, export_apply=True, export_animations=False,
+            export_cameras=False, export_lights=False, export_extras=True,
+            export_texcoords=False, export_normals=True, export_materials="EXPORT",
+            export_image_format="NONE", export_attributes=False,
+        )
+    finally:
+        root.name = previous_name
+        if other:
+            other.name = "GJHChibiVisitor"
     return inspect_glb(path)
 
 
@@ -680,6 +767,7 @@ def setup_studio():
     SCENE.render.image_settings.file_format = "PNG"
     SCENE.render.image_settings.color_mode = "RGBA"
     SCENE.render.film_transparent = True
+    SCENE.view_layers[0].use_pass_emit = True
     SCENE.view_settings.view_transform = "Standard"
     SCENE.view_settings.look = "None"
     SCENE.view_settings.exposure = 0
@@ -704,15 +792,14 @@ def apply_compositing():
     if "Type" in glare.inputs:
         glare.inputs["Type"].default_value = "Fog Glow"
         glare.inputs["Quality"].default_value = "High"
-        glare.inputs["Strength"].default_value = .70
-        glare.inputs["Size"].default_value = .38
+        glare.inputs["Strength"].default_value = 1.4
+        glare.inputs["Size"].default_value = .50
     else:
         glare.glare_type = "FOG_GLOW"; glare.quality = "HIGH"
     if "Threshold" in glare.inputs:
-        glare.inputs["Threshold"].default_value = 1.2
+        glare.inputs["Threshold"].default_value = .6
     else:
-        glare.threshold = 1.2
-    tree.links.new(layer.outputs["Image"], glare.inputs["Image"])
+        glare.threshold = .6
     # A generated studio-only gradient avoids a horizon in orthographic views.
     # It never belongs to the model and is created after both texture-free exports.
     yy, xx = np.mgrid[0:1024, 0:1024].astype(np.float32)
@@ -730,12 +817,32 @@ def apply_compositing():
     if "Factor" in over.inputs:
         over.inputs["Factor"].default_value = 1
         tree.links.new(image_node.outputs["Image"], over.inputs["Background"])
-        tree.links.new(glare.outputs["Image"], over.inputs["Foreground"])
+        tree.links.new(layer.outputs["Image"], over.inputs["Foreground"])
     else:
         over.inputs[0].default_value = 1
         tree.links.new(image_node.outputs["Image"], over.inputs[1])
-        tree.links.new(glare.outputs["Image"], over.inputs[2])
-    tree.links.new(over.outputs["Image"], out.inputs["Image"])
+        tree.links.new(layer.outputs["Image"], over.inputs[2])
+    # Bloom the emission pass only: white porcelain and fabric should not glow.
+    emission = layer.outputs.get("Emission") or layer.outputs.get("Emit")
+    tree.links.new(emission, glare.inputs["Image"])
+    glow = glare.outputs.get("Glare")
+    if glow is None:
+        glare.mix = 1
+        glow = glare.outputs["Image"]
+    if hasattr(SCENE, "compositing_node_group"):
+        add = tree.nodes.new("ShaderNodeMix"); add.data_type = "RGBA"
+        add.blend_type = "ADD"; add.clamp_result = False
+        add.inputs[0].default_value = 1
+        first = next(i for i in add.inputs if i.identifier == "A_Color")
+        second = next(i for i in add.inputs if i.identifier == "B_Color")
+        result = next(o for o in add.outputs if o.identifier == "Result_Color")
+    else:
+        add = tree.nodes.new("CompositorNodeMixRGB")
+        add.blend_type = "ADD"; add.inputs[0].default_value = 1
+        first, second, result = add.inputs[1], add.inputs[2], add.outputs["Image"]
+    tree.links.new(over.outputs["Image"], first)
+    tree.links.new(glow, second)
+    tree.links.new(result, out.inputs["Image"])
 
 
 def render_views(row, quick=False):
@@ -744,24 +851,18 @@ def render_views(row, quick=False):
     views = [("front", (0, -4, .52)), ("side", (4, 0, .52)), ("back", (0, 4, .52)), ("3q", (1.65, -3.3, 1.18))]
     if quick:
         views = [views[0], views[3]]
-    SCENE.render.image_settings.file_format = "WEBP"
-    SCENE.render.image_settings.quality = 88
     for view, loc in views:
         SCENE.camera.location = loc; aim(SCENE.camera, (0, 0, .505))
         SCENE.camera.data.ortho_scale = 1.22 if view != "3q" else 1.25
-        SCENE.render.filepath = str(ROOT / "previews" / (view + ".webp"))
+        SCENE.render.filepath = str(ROOT / "previews" / (view + ".png"))
         print("RENDER_VIEW", view, flush=True)
         bpy.ops.render.render(write_still=True)
 
 
 def compare_with_sheet():
     # Image layout only: source reference and actual Blender output remain unmodified.
-    sheet_path = ROOT / "design-sheet.png"
-    if not sheet_path.is_file():
-        print("SKIP_PRIVATE_REFERENCE_COMPARISON: design-sheet.png is not redistributed", flush=True)
-        return
-    front = bpy.data.images.load(str(ROOT / "previews/front.webp"), check_existing=False)
-    sheet = bpy.data.images.load(str(sheet_path), check_existing=False)
+    front = bpy.data.images.load(str(ROOT / "previews/front.png"), check_existing=False)
+    sheet = bpy.data.images.load(str(ROOT / "design-sheet.png"), check_existing=False)
     w, h = 2560, 1024
     canvas = np.ones((h, w, 4), dtype=np.float32)
     canvas[:, :, :3] = (.92, .89, .97)
@@ -781,6 +882,30 @@ def compare_with_sheet():
         bpy.data.images.remove(im)
 
 
+def compare_revisions():
+    # The immutable R1 baseline is copied from this working copy before any edits.
+    paths = [ROOT / "reports/r1/previews/front.png", ROOT / "previews/front.png"]
+    canvas = np.ones((1024, 2048, 4), dtype=np.float32)
+    for i, path in enumerate(paths):
+        im = bpy.data.images.load(str(path), check_existing=False)
+        assert tuple(im.size) == (1024, 1024), (path, tuple(im.size))
+        canvas[:, i * 1024:(i + 1) * 1024] = np.array(im.pixels[:], dtype=np.float32).reshape(1024, 1024, 4)
+        bpy.data.images.remove(im)
+    result = bpy.data.images.new("R1 standing left - R2 waving right", width=2048, height=1024, alpha=True)
+    result.pixels.foreach_set(canvas.ravel())
+    result.filepath_raw = str(ROOT / "previews/compare-r1-r2.png")
+    result.file_format = "PNG"; result.save()
+    bpy.data.images.remove(result)
+
+
+def gallery_preview():
+    im = bpy.data.images.load(str(ROOT / "previews/front.png"), check_existing=False)
+    im.scale(256, 256)
+    im.filepath_raw = str(ROOT / "previews/gallery-size.png")
+    im.file_format = "PNG"; im.save()
+    bpy.data.images.remove(im)
+
+
 def main():
     global SCENE
     parser = argparse.ArgumentParser()
@@ -790,6 +915,7 @@ def main():
     parser.add_argument("--ears", choices=["wing_fins", "ball_antennas", "headphones"], default="wing_fins")
     parser.add_argument("--outfit", choices=["white_hoodie", "black_jacket", "plain_top"], default="white_hoodie")
     parser.add_argument("--accessories", nargs="*", choices=["backpack", "belt_bag", "id_badge"], default=[])
+    parser.add_argument("--pose", choices=["wave", "stand"], default="wave", help="Pose for the optional custom export only")
     args = parser.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
     bpy.ops.wm.read_factory_settings(use_empty=True)
     SCENE = bpy.context.scene
@@ -804,29 +930,46 @@ def main():
     metrics["default"]["blender_bounds"] = world_bounds(descendants(root))
     assert metrics["default"]["triangles"] < 40000, metrics["default"]
     assert metrics["default"]["bytes"] < 2 * 1024 ** 2, metrics["default"]
-    row = build_kit(root)
-    metrics["kit"] = export_glb(ROOT / "exports/gjh-chibi-visitor-blender-kit.glb", descendants(root))
+    stand = build_character("GJHChibiVisitor_Stand", pose="stand")
+    metrics["stand"] = export_glb(ROOT / "exports/gjh-chibi-visitor-blender-stand.glb", descendants(stand))
+    metrics["stand"]["blender_bounds"] = world_bounds(descendants(stand))
+    assert metrics["stand"]["triangles"] < 40000 and metrics["stand"]["bytes"] < 2 * 1024 ** 2
+    row = build_kit(stand)
+    metrics["kit"] = export_glb(ROOT / "exports/gjh-chibi-visitor-blender-kit.glb", descendants(stand))
     assert metrics["kit"]["bytes"] < 5 * 1024 ** 2, metrics["kit"]
-    if (args.expression, args.ears, args.outfit, args.accessories) != ("happy", "wing_fins", "white_hoodie", []):
-        custom = build_character("GJHChibiVisitor_Custom", args.expression, args.ears, args.outfit, args.accessories)
-        metrics["custom"] = export_glb(ROOT / "exports/gjh-chibi-visitor-custom.glb", descendants(custom))
+    if (args.expression, args.ears, args.outfit, args.accessories, args.pose) != ("happy", "wing_fins", "white_hoodie", [], "wave"):
+        custom = build_character("GJHChibiVisitor_Custom", args.expression, args.ears, args.outfit, args.accessories, args.pose)
+        metrics["custom"] = export_glb(ROOT / "exports/gjh-chibi-visitor-custom.glb", descendants(custom), canonical_root=False)
         for ob in descendants(custom):
             ob.hide_render = True; ob.hide_set(True)
     setup_studio()
     apply_compositing()
-    for ob in descendants(row):
+    for ob in descendants(stand):
         ob.hide_render = True; ob.hide_set(True)
     SCENE.camera.location = (1.65, -3.3, 1.18); aim(SCENE.camera, (0, 0, .505))
     bpy.ops.object.select_all(action="DESELECT")
     root.select_set(True); bpy.context.view_layer.objects.active = root
     SCENE["asset_contract"] = "Native metres; glTF +Y up, +Z front, feet Y=0; no textures"
-    SCENE["source_notes"] = "KIT_MountRow hidden for studio views only; all mounts are visible in kit GLB."
+    SCENE["source_notes"] = "Wave visible; GJHChibiVisitor_Stand and KIT_MountRow hidden for studio only. Kit GLB stands with 13 visible mounts."
     SCENE["generator"] = "generate.py"
     bpy.context.preferences.filepaths.save_version = 0
     bpy.ops.wm.save_as_mainfile(filepath=str(ROOT / "gjh-chibi-visitor.blend"), compress=True)
     if not args.no_render:
         render_views(row, args.quick)
         compare_with_sheet()
+        compare_revisions()
+        gallery_preview()
+        if not args.quick:
+            for ob in descendants(root):
+                ob.hide_render = True
+            for ob in descendants(stand):
+                ob.hide_render = False
+            for ob in descendants(row):
+                ob.hide_render = True
+            SCENE.camera.location = (0, -4, .52); aim(SCENE.camera, (0, 0, .505))
+            SCENE.camera.data.ortho_scale = 1.22
+            SCENE.render.filepath = str(ROOT / "previews/stand-front.png")
+            bpy.ops.render.render(write_still=True)
     (ROOT / "reports/generation.json").write_text(json.dumps(metrics, indent=2) + "\n")
     print("GENERATION_COMPLETE", json.dumps(metrics), flush=True)
 

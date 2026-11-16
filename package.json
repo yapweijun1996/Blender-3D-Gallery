@@ -7,7 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "npm run validate:assets && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "validate:assets": "node scripts/validate-assets.mjs",
+    "validate:assets": "node scripts/validate-assets.mjs && node models/gjh-chibi-visitor/validate.mjs",
     "test": "node --test tests/*.test.mjs",
     "test:browser": "node scripts/test-game-browser.mjs && node scripts/test-game-experience.mjs",
     "test:pwa": "node scripts/test-pwa-browser.mjs",

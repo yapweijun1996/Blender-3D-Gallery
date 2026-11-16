@@ -1,8 +1,8 @@
 {
   "id": "gjh-chibi-visitor-blender",
   "name": "GJH Chibi Visitor",
-  "summary": "Primary Blender-built GJH Chibi Visitor: an original static procedural interpretation with a happy face, white hoodie, wing fins, and headphones.",
-  "description": "The primary Blender-built GJH Chibi Visitor is a static, one-metre procedural character with a rounded white helmet, purple happy face screen, wing fins, headphones, white hoodie, and GJH chest lettering.",
+  "summary": "Primary Blender-built GJH Chibi Visitor with a static round-two wave pose, larger happy eyes, bolder GJH lettering, and a white hoodie.",
+  "description": "The primary Blender-built GJH Chibi Visitor is a static, one-metre procedural character in a mild wave pose, with its anatomical left hand raised, a rounded white helmet, purple happy face screen, wing fins, headphones, white hoodie, and GJH chest lettering.",
   "category": "Characters",
   "tags": [
     "GJH",
@@ -18,7 +18,7 @@
   "created": "2026-11-16",
   "author": "Original owner-project procedural model",
   "blender_version": "5.2.3 LTS",
-  "creation_method": "Deterministic procedural character geometry and materials generated with Blender from generate.py and exported as glTF 2.0 GLB.",
+  "creation_method": "Deterministic procedural character geometry and materials generated with Blender from generate.py. The round-two default export is a static wave pose; the source also exports neutral standing and all-modules kit GLBs.",
   "generator": "generate.py",
   "paths": {
     "glb": "exports/gjh-chibi-visitor-blender.glb",
@@ -28,13 +28,14 @@
     "preview": "previews/front.webp",
     "side_preview": "previews/side.webp",
     "back_preview": "previews/back.webp",
-    "three_quarter_preview": "previews/3q.webp"
+    "three_quarter_preview": "previews/3q.webp",
+    "stand_glb": "exports/gjh-chibi-visitor-blender-stand.glb"
   },
   "display": {
     "previewRotationY": 0,
     "previewCameraDirection": [
       0,
-      0.15,
+      0.1,
       1
     ],
     "units": "metres",
@@ -42,7 +43,7 @@
     "origin": "feet at floor Y=0",
     "front_axis": "+Z"
   },
-  "accuracy_notes": "The owner's character-sheet image is private and is not redistributed. This procedural model is a close interpretation, not an exact match: it uses a symmetric standing pose rather than the hero illustration's waving hand, tilt, and perspective; mathematically regular helmet contours; fins that are thicker and more angular in three-quarter views; a slightly more rectangular visor with physical reflections; and Bfont mesh lettering rather than a trace of the sheet's GJH lettering. The hoodie collar is more geometric, the cloth has fewer folds, and the pocket seam is a procedural addition. Cuffs, shorts, and shoes are simplified solids. Inverted-hull outlines have uniform width, and PBR shading is not cel shading. Alternate expressions, outfits, and accessories are available in source builders and a visible kit library, not as selectable gallery variants or animated facial transitions. Exact sheet fidelity remains unverified.",
+  "accuracy_notes": "The private character-sheet image is not redistributed. The round-two default is a static, mildly leaned wave with the anatomical left hand raised and a stepping right leg; it is not a rigged or animated wave, and its perspective and asymmetry are milder than the illustration. Raised purple Bfont mesh lettering is larger and bolder but is not an exact trace of the illustrated chunky letters. The wider, thicker happy arcs and violet emission remain renderer-dependent, and bloom is not guaranteed. Helmet contours, visor shoulders, collar and fins remain regular geometric forms; the fins and collar are angular from side and rear views, physical screen reflections differ from painted highlights, and cloth folds, cuffs, shorts, shoes and the pocket seam are simplified interpretations. Inverted-hull outlines remain uniform rather than hand-drawn, and the PBR response is not cel shading. Expressions, outfits and accessories remain separate source/kit modules without gallery wardrobe switching or animated facial transitions. Exact fidelity to the private sheet remains unverified.",
   "attribution": [
     {
       "credit": "Original procedural character geometry and materials generated with Blender 5.2.3 LTS for the owner’s project; no third-party model is included."
@@ -53,14 +54,38 @@
   ],
   "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
   "metrics": {
-    "glb_bytes": 694260,
-    "triangles": 38628,
-    "vertices": 19710,
+    "glb_bytes": 705712,
+    "triangles": 39332,
+    "vertices": 20062,
     "animations": 0
   },
   "validation": {
     "errors": 0,
     "warnings": 0,
     "validator": "2.0.0-dev.3.10"
+  },
+  "geometry": {
+    "units": "metres",
+    "coordinate_order": "glTF X, Y, Z",
+    "bounds_glTF_m": {
+      "min": [
+        -0.43915856559797767,
+        9.761146821385402e-10,
+        -0.23486734294780168
+      ],
+      "max": [
+        0.3614102843854713,
+        0.9999999957435435,
+        0.23814682057993303
+      ],
+      "dimensions": [
+        0.8005688499834489,
+        0.9999999947674288,
+        0.47301416352773473
+      ]
+    },
+    "height_metres": 0.9999999947674288,
+    "raised_left_hand_max_y_metres": 0.5710543547765367,
+    "feet_at_floor_y_metres": 0
   }
 }

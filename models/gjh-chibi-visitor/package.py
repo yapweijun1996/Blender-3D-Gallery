@@ -197,7 +197,7 @@ def metadata_for(variant: str, metrics: dict) -> dict:
         },
         "display": {
             "previewRotationY": 0,
-            "previewCameraDirection": [0, 0.15, 1],
+            "previewCameraDirection": [0, 0.1, 1],
             "units": "metres",
             "up_axis": "Unity +Y / glTF +Y",
             "origin": "feet at floor Y=0",

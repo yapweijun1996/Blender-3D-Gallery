@@ -6,14 +6,16 @@ The Blender-built GJH Chibi Visitor is the primary gallery model. Three earlier 
 
 | Gallery asset | Build | GLB bytes | Triangles | Vertices | Animation clips |
 | --- | --- | ---: | ---: | ---: | ---: |
-| GJH Chibi Visitor | Blender 5.2.3 LTS | 694,260 | 38,628 | 19,710 | 0 |
+| GJH Chibi Visitor, round-two wave | Blender 5.2.3 LTS | 705,712 | 39,332 | 20,062 | 0 |
 | GJH Chibi Visitor (Unity experiment, terra) | Unity 6000.0.85f2 | 38,328 | 10,848 | 800 | 0 |
 | GJH Chibi Visitor (Unity experiment, sol) | Unity 6000.0.85f2 | 135,980 | 14,352 | 3,236 | 0 |
 | GJH Chibi Visitor (Unity experiment, astra) | Unity 6000.0.85f2 | 100,344 | 14,736 | 2,272 | 0 |
 
 Measurements come from the packaged GLBs. Triangle counts include mesh instances in the scene; vertex counts are unique stored position accessors.
 
-The Blender folder also contains exports/gjh-chibi-visitor-blender-kit.glb, an all-modules reference library. It measures 3,068,504 bytes, 166,044 triangles, 95,232 vertices, and zero animation clips. The catalog registers the default GLB; the kit remains in the source folder for inspection.
+The wave GLB has measured glTF bounds of X -0.439159 to 0.361410 m, Y 0 to 1.000000 m, and Z -0.234867 to 0.238147 m. Its measured height is 0.999999995 m (1.0 m rounded); the raised left hand reaches Y 0.571054 m. The neutral stand measures 705,616 bytes, 39,332 triangles, 20,062 vertices, and zero animation clips.
+
+The Blender folder also contains exports/gjh-chibi-visitor-blender-kit.glb, an all-modules reference library. It measures 3,083,148 bytes, 167,452 triangles, 95,936 vertices, and zero animation clips. It stays below the 175,000-triangle and 5 MiB kit checks. The catalog registers only the default wave GLB; the stand and kit remain in the source folder for inspection.
 
 ## Blender source and reproduction
 
@@ -35,6 +37,6 @@ The variants differ in face and clothing details: terra uses sharper chevron eye
 
 All four catalog entries use the same rights statement: “Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.” Gallery downloads are disabled.
 
-The owner's character-sheet image is private and is not redistributed. The Blender model is a close procedural interpretation; exact matching remains unverified. The symmetric standing pose omits the hero illustration's waving hand, tilt, and perspective; the fins are thicker and more angular in three-quarter views; and the visor and physical reflections differ from the painted reference. The hoodie collar, cuffs, shorts, shoes, pocket seam, and Bfont chest lettering are simplified interpretations. Uniform inverted-hull outlines and PBR shading differ from variable hand-drawn linework and cel shading. Alternate expressions, outfits, and accessories remain available in source builders and the kit library. The gallery displays the static default model without runtime wardrobe switching or facial transitions.
+The owner's character-sheet image is private and is not redistributed. The Blender default now has a static, mildly leaned wave with the anatomical left hand raised and the right leg stepping forward; it is not an articulated or animated gesture, and its asymmetry and perspective are milder than the illustration. The larger raised purple Bfont lettering is still not an exact trace of the chunky illustrated mark. The broader happy arcs emit purple light, while bloom depends on the renderer. The helmet, visor shoulders, collar, and fins remain regular geometric forms; fins and collar are angular in side and rear views, and physical screen reflections differ from painted highlights. Cloth folds, cuffs, shorts, shoes, and the pocket seam are simplified. Uniform inverted-hull outlines and PBR shading differ from variable hand-drawn linework and cel shading. Alternate expressions, outfits, and accessories remain separate source/kit modules without gallery wardrobe switching or animated facial transitions. Exact fidelity to the private sheet remains unverified.
 
 The Unity comparisons also follow the written design reference. Their accuracy notes record the missing private sheet and each model's simplifications.

@@ -1,6 +1,6 @@
 # GJH Chibi Visitor: design reference
 
-Status: the Blender-built model at models/gjh-chibi-visitor/blender/ is the primary gallery entry. The terra, sol, and astra Unity builds remain as earlier experimental comparisons. Exact fidelity to the owner's private character sheet remains unverified.
+Status: the Blender-built model at models/gjh-chibi-visitor/blender/ is the primary gallery entry. Its round-two default is a static wave pose; the terra, sol, and astra Unity builds remain earlier experimental comparisons. Exact fidelity to the owner's private character sheet remains unverified.
 
 Source: the owner's “GJH Chibi Visitor, New Design, Modular” character sheet. The sheet image is a private reference and is not embedded here or redistributed.
 
@@ -32,7 +32,7 @@ Example combinations on the sheet: goggles, cap, scarf, cat ears.
 - No external textures. Emissive purple must survive export.
 - Budget: under 15,000 triangles and under 2 MiB (same ceiling as gjh-mall-visitor).
 
-The Blender primary's default GLB exceeds the target triangle budget at 38,628 measured triangles and 694,260 bytes. The source docs explain the outline meshes and include the separately measured module kit.
+The round-two Blender default measures 39,332 triangles, 20,062 vertices, 705,712 bytes, zero animation clips, and 0.999999995 m height (1.0 m rounded). It remains above this document's original 15,000-triangle target, while meeting the round-two asset check of fewer than 40,000 triangles and 2 MiB. The raised anatomical left hand reaches Y 0.571054 m, below the helmet top. The R2 source docs explain the outlined geometry and include separate neutral-standing and all-modules exports; the kit measures 167,452 triangles and 3,083,148 bytes.
 
 ## Authoring and gallery status
 
