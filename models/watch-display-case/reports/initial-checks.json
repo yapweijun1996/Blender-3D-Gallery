@@ -1,0 +1,30 @@
+{
+  "geometry_and_format": {
+    "result": "FAIL",
+    "triangles": 22132,
+    "color_accessor_errors": 12,
+    "repair": "One-segment bevels reduce geometry; vertex colours capped below one avoid bevel interpolation overshoot."
+  },
+  "appearance": {
+    "result": "REVISED after visual review",
+    "issue": "Glazing too milky; white sheen washed out the tray.",
+    "repair": "Lower alpha and remove sheen; inspect final renders."
+  },
+  "premature_repo_checks": {
+    "result": "FAIL",
+    "npm_test": {
+      "passed": 723,
+      "failed": 5,
+      "total": 728
+    },
+    "cause": "Checks launched before hero.webp was rendered.",
+    "repair": "Rerun after the thumbnail exists; tests and runtime unchanged."
+  },
+  "browser_search": {
+    "result": "FAIL harness query",
+    "cause": "Search queried the hyphenated model id; the gallery matches display name/tags. All model-loading, texture-decode, orbit/zoom/reset and close checks passed before search.",
+    "repair": "Query watch, await the first matching card link (a card has separate image/title links), and keep all assertions.",
+    "second_harness_error": "An unqualified locator matched both valid image/title links. Fixed with first(), consistent with the existing library browser harness."
+  },
+  "rebuild": "See reproducibility-initial.json for exporter triangle-order nondeterminism and correction."
+}

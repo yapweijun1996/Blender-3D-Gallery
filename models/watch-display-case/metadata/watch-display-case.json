@@ -1,0 +1,125 @@
+{
+  "id": "watch-display-case",
+  "name": "Watch Display Case",
+  "summary": "Counter-height glass-top showcase with a velvet-look tray, eight generic watches on cushions and edge lighting.",
+  "description": "Original static procedural display counter for store S15, priority P2. Four round and four square watch faces have geometric hands and baton markers without readable text. Champagne hardware, pale cabinet panels, a recessed plinth and two rear access panels.",
+  "category": "Retail",
+  "tags": [
+    "watch",
+    "showcase",
+    "glass-top",
+    "velvet-tray",
+    "round-face",
+    "square-face",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres",
+    "S15",
+    "P2"
+  ],
+  "status": "draft",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry, vertex colours and a generated emission mask; no external assets, fonts, brands or real packaging.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/watch-display-case.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor centre of base footprint",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.7,
+    "previewCameraDirection": [
+      1.6,
+      1.5,
+      2.5
+    ]
+  },
+  "accuracy_notes": "Static illustrative showcase, not a surveyed fixture or operational watch simulation. Velvet is a texture-free rough matte finish; the edge strip uses an original emission mask. Glazing is lightweight alpha blend. No brands or readable text. Full mall integration, physical devices and WebKit are unverified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, vertex colours, materials and 4 x 2 emission mask. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 20000,
+      "bytes": 1572864,
+      "materials": 3,
+      "mesh_primitives": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/reproducibility.json",
+      "reports/browser.json",
+      "reports/acceptance.json"
+    ],
+    "geometry": "PASS",
+    "source_editability": "PASS",
+    "browser": "PASS Chromium 1440 x 900",
+    "render_review": "PASS hero/front/side/3q and actual browser screenshot visually inspected",
+    "reproducibility": "PASS independent exact-byte rebuild"
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "width,height,depth (glTF X,Y,Z)",
+    "size": [
+      1,
+      0.9600000381469727,
+      0.5
+    ],
+    "bounds": {
+      "min": [
+        -0.5,
+        0,
+        -0.25
+      ],
+      "max": [
+        0.5,
+        0.9600000381469727,
+        0.25
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 763804,
+    "triangles": 14260,
+    "vertices": 16631,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "images": 1,
+    "animations": 0,
+    "sha256": "69cd2083b6b66ac31c6e40480b1192ef2a290abd5f2e8baf17a74723e7cc12f3",
+    "zero_area_triangles": 0,
+    "editable_mesh_parts": 231,
+    "watch_count": 8,
+    "round_faces": 4,
+    "square_faces": 4,
+    "cushions": 8,
+    "edge_strips": 2,
+    "glass_panels": 5,
+    "minimum_watch_to_top_glass_clearance_metres": 0.13601994514465332
+  }
+}

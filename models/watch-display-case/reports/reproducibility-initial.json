@@ -1,0 +1,6 @@
+{
+  "result": "FAIL byte identity; identical geometry",
+  "cause": "Blender exporter changes triangle ordering in the soft-surface index buffer between processes. JSON, vertices, normals, colours, UVs and exact oriented triangle multisets match.",
+  "different_bytes": 7024,
+  "repair": "Canonicalize per-primitive triangle index ordering without changing vertex attributes or winding."
+}

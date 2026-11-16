@@ -1,0 +1,71 @@
+{
+  "result": "PASS local acceptance; manager art review pending",
+  "id": "watch-display-case",
+  "category": "Retail",
+  "store": "S15",
+  "priority": "P2",
+  "status": "draft / NEEDS REVIEW",
+  "verified_at_utc": "2026-11-16T13:11:57.957625+00:00",
+  "glb_sha256": "69cd2083b6b66ac31c6e40480b1192ef2a290abd5f2e8baf17a74723e7cc12f3",
+  "source_sha256": "f7724b63552da0278f8006bbebccf7e6023ac7dac5636812f5b9951748fafd5b",
+  "measured": {
+    "glb_bytes": 763804,
+    "triangles": 14260,
+    "vertices": 16631,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "images": 1,
+    "animations": 0,
+    "dimensions": [
+      1,
+      0.9600000381469727,
+      0.5
+    ],
+    "bounds": {
+      "min": [
+        -0.5,
+        0,
+        -0.25
+      ],
+      "max": [
+        0.5,
+        0.9600000381469727,
+        0.25
+      ]
+    }
+  },
+  "checks": {
+    "Blender 5.2.3 headless generation": "PASS",
+    "node models/watch-display-case/validate.mjs": "PASS; Khronos zero errors and zero warnings",
+    "Blender saved-source inspection and controlled edit": "PASS",
+    "node models/watch-display-case/verify_source_edit.mjs": "PASS",
+    "independent clean-directory deterministic rebuild": "PASS exact bytes",
+    "four rendered PNG/WebP views": "PASS generated and visually inspected",
+    "npm run validate:assets": "PASS exit 0",
+    "npm test": "PASS 728/728, exit 0",
+    "npm run build": "PASS exit 0; complete final preview set",
+    "node models/watch-display-case/verify_page.mjs": "PASS Chromium 1440 x 900, validated GLB hash, PNG decode, orbit/zoom/reset/disposal/search and no console errors",
+    "git diff --check": "PASS"
+  },
+  "screenshot": {
+    "path": "/Users/admin/Documents/MallQueue/reports/watch-display-case-page.png",
+    "width": 1440,
+    "height": 900,
+    "sha256": "b3bba371c7466658ec34ea3c3a3d1030f8c392f8819e92c36842803ad8aa058b",
+    "visual_review": "PASS"
+  },
+  "duplicate_search": "NOT FOUND: 586 existing catalog assets, 629 metadata files; see duplicate-search.json",
+  "initial_failures": "Retained in initial-checks.json, initial logs, khronos-initial.json and reproducibility-initial.json; repaired and rerun",
+  "test_generated_artifacts": "Restored models/demo-beverage-can/reports/structure-motion.json using git checkout; no unrelated model diff",
+  "skipped_required_checks": [],
+  "unverified": [
+    "Manager art approval",
+    "Physical Android and iOS",
+    "WebKit",
+    "Complete 17-shop 70 x 60 m mall integration and 200 draw-call performance",
+    "Operational watches, opening mechanism and load/safety certification",
+    "Push, deployment and public redistribution permission"
+  ],
+  "log_directory": "~/Documents/MallQueue/reports/watch-display-case-checks"
+}

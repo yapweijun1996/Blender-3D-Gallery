@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Error: strict mode violation: locator('#catalog [data-asset-id="watch-display-case"]') resolved to 2 elements:
+    1) <a class="asset-image" data-asset-id="watch-display-case" aria-label="Preview Watch Display Case in 3D" href="/Blender-3D-Gallery/?q=watch&model=watch-display-case">…</a> aka getByRole('link', { name: 'Preview Watch Display Case in' })
+    2) <a data-asset-id="watch-display-case" href="/Blender-3D-Gallery/?q=watch&model=watch-display-case">Watch Display Case</a> aka getByRole('link', { name: 'Watch Display Case', exact: true })
+
+Call log:
+[2m  - waiting for locator('#catalog [data-asset-id="watch-display-case"]') to be visible[22m
+
+    at /Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/watch-display-case/verify_page.mjs:75:71 {
+  log: [
+    `  - waiting for locator('#catalog [data-asset-id="watch-display-case"]') to be visible`
+  ]
+}
+
+Node.js v24.22.2

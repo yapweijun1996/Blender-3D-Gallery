@@ -1,0 +1,118 @@
+Initial launch before the generated hero thumbnail existed.
+Full original log: ~/Documents/MallQueue/reports/watch-display-case-checks/tests-initial.log
+
+ℹ tests 728
+ℹ suites 0
+ℹ pass 723
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 140360.352333
+
+✖ failing tests:
+
+test at tests/catalog.test.mjs:73:1
+✖ catalog accepts embedded core resources and self-contained data URIs (2553.0075ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "ENOENT: no such file or directory, lstat '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/watch-display-case/previews/hero.webp'"
+      at TestContext.<anonymous> (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/tests/catalog.test.mjs:91:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, lstat '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/watch-display-case/previews/hero.webp'
+        at Object.realpathSync (node:fs:2872:29)
+        at containedFile (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:125:23)
+        at loadCatalog (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:138:7)
+        at file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/tests/catalog.test.mjs:91:29
+        at getActual (node:assert:611:5)
+        at strict.doesNotThrow (node:assert:779:32)
+        at TestContext.<anonymous> (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/tests/catalog.test.mjs:91:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }
+
+test at tests/catalog.test.mjs:107:1
+✖ billiards catalog includes each physical asset and the legacy scene (1883.201208ms)
+  Error: ENOENT: no such file or directory, lstat '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/watch-display-case/previews/hero.webp'
+      at Object.realpathSync (node:fs:2872:29)
+      at containedFile (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:125:23)
+      at loadCatalog (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:138:7)
+      at TestContext.<anonymous> (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/tests/catalog.test.mjs:108:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'lstat',
+    path: '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/watch-display-case/previews/hero.webp'
+  }
+
+test at tests/catalog.test.mjs:122:1
+✖ individual GLBs have only their own root and a zero origin (1860.894292ms)
+  Error: ENOENT: no such file or directory, lstat '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/watch-display-case/previews/hero.webp'
+      at Object.realpathSync (node:fs:2872:29)
+      at containedFile (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:125:23)
+      at loadCatalog (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:138:7)
+      at TestContext.<anonymous> (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/tests/catalog.test.mjs:123:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'lstat',
+    path: '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/watch-display-case/previews/hero.webp'
+  }
+
+test at tests/catalog.test.mjs:139:1
+✖ assembled scene retains all 21 roots at their assembled locations (1835.471792ms)
+  Error: ENOENT: no such file or directory, lstat '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/watch-display-case/previews/hero.webp'
+      at Object.realpathSync (node:fs:2872:29)
+      at containedFile (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:125:23)
+      at loadCatalog (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:138:7)
+      at TestContext.<anonymous> (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/tests/catalog.test.mjs:140:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'lstat',
+    path: '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/watch-display-case/previews/hero.webp'
+  }
+
+test at tests/catalog.test.mjs:147:1
+✖ number marks follow the ball surface on opposite sides (1675.692166ms)
+  Error: ENOENT: no such file or directory, lstat '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/watch-display-case/previews/hero.webp'
+      at Object.realpathSync (node:fs:2872:29)
+      at containedFile (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:125:23)
+      at loadCatalog (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:138:7)
+      at TestContext.<anonymous> (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/tests/catalog.test.mjs:148:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'lstat',
+    path: '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/watch-display-case/previews/hero.webp'
+  }
