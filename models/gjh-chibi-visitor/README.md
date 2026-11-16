@@ -21,11 +21,15 @@ The Blender folder also contains exports/gjh-chibi-visitor-blender-kit.glb, an a
 
 See [blender/README.md](blender/README.md) for the generator, editable source, measured exports, preview camera, and reproduction details.
 
-From models/gjh-chibi-visitor/blender/, reproduce the Blender source, GLBs, and WebP views with:
+From `models/gjh-chibi-visitor/blender/`, reproduce the Blender source, GLBs, and PNG views with:
 
     blender --background --python generate.py
 
-Use Blender **5.2.3 LTS** for the recorded build. The generator does not require the private character-sheet image. It skips the optional side-by-side sheet comparison when that image is absent.
+Use Blender **5.2.3 LTS** for the recorded build. The generator does not require the private character-sheet image or the R1 comparison image. It skips each optional comparison and prints the missing input image paths.
+
+To convert the generated PNG views to the WebP previews used by the gallery, run this separate command from the same directory (requires Python Pillow):
+
+    python3 convert-previews.py
 
 ## Unity experiments
 

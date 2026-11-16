@@ -19,7 +19,7 @@ Use Blender **5.2.3 LTS**. From this directory, run:
 
     blender --background --python generate.py
 
-The generator uses Blender's bundled `bpy`, `bmesh`, and NumPy modules. It recreates the editable scene, wave, stand, and kit GLBs, 1024 × 1024 PNG views, and `reports/generation.json`. The optional comparison to the private character sheet is omitted when `design-sheet.png` is absent; that image is not included here or embedded in the scene.
+The generator uses Blender's bundled `bpy`, `bmesh`, and NumPy modules. It recreates the editable scene, wave, stand, and kit GLBs, 1024 × 1024 PNG views, and `reports/generation.json`. The optional character-sheet comparison is skipped with a log message when `design-sheet.png` is absent. The optional R1 comparison is skipped with a log message when `reports/r1/previews/front.png` is absent. Neither reference image is included here or embedded in the scene.
 
 The tracked previews are WebP conversions of the generated PNGs. With Python Pillow installed, run:
 
@@ -38,6 +38,8 @@ The GLBs use glTF 2.0, native metres, +Y up, +Z front, and a scene root named `G
 | All-modules kit | 3,083,148 | 167,452 | 95,936 | 0 |
 
 Triangle counts include each mesh instance in the scene. Vertex counts sum unique stored position accessors. The gallery default is below the R2 checks of 40,000 triangles and 2 MiB. The stand uses the same checks. The kit is below 175,000 triangles and 5 MiB; it is not registered in `models/catalog.json`. The Khronos glTF Validator reports zero errors and zero warnings for each export.
+
+In generated `reports/roundtrip.json`, triangle and bounds fields describe the character only; the inspection excludes the kit's 13-mount row. Those fields are not whole-kit measurements. The complete kit export, including its mounts, measures 167,452 triangles as listed above.
 
 The default wave's measured glTF bounds are X -0.439159 to 0.361410 m, Y 0.000000001 to 0.999999996 m, and Z -0.234867 to 0.238147 m. The measured height is 0.999999995 m, reported as **1.0 m** when rounded. The raised anatomical left hand reaches Y 0.571054 m; it does not extend above the helmet in this build. Both shoes touch the floor within measurement tolerance.
 

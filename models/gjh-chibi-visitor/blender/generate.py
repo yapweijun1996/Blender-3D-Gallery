@@ -898,6 +898,15 @@ def compare_revisions():
     bpy.data.images.remove(result)
 
 
+def run_optional_comparison(name, compare, input_paths):
+    missing = [path for path in input_paths if not path.is_file()]
+    if missing:
+        missing_names = ", ".join(path.relative_to(ROOT).as_posix() for path in missing)
+        print(f"OPTIONAL_COMPARISON_SKIPPED {name}: missing input image(s): {missing_names}", flush=True)
+        return
+    compare()
+
+
 def gallery_preview():
     im = bpy.data.images.load(str(ROOT / "previews/front.png"), check_existing=False)
     im.scale(256, 256)
@@ -956,8 +965,16 @@ def main():
     bpy.ops.wm.save_as_mainfile(filepath=str(ROOT / "gjh-chibi-visitor.blend"), compress=True)
     if not args.no_render:
         render_views(row, args.quick)
-        compare_with_sheet()
-        compare_revisions()
+        run_optional_comparison(
+            "compare_with_sheet",
+            compare_with_sheet,
+            [ROOT / "previews/front.png", ROOT / "design-sheet.png"],
+        )
+        run_optional_comparison(
+            "compare_revisions",
+            compare_revisions,
+            [ROOT / "reports/r1/previews/front.png", ROOT / "previews/front.png"],
+        )
         gallery_preview()
         if not args.quick:
             for ob in descendants(root):
