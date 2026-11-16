@@ -1,57 +1,40 @@
 # GJH Chibi Visitor
 
-This comparison set contains three independent Unity builds of the same written GJH Chibi Visitor concept. The terra, sol, and astra AI models generated their own geometry using the Unity editor builder; they are visual alternatives, not three interchangeable parts of one mesh.
+The Blender-built GJH Chibi Visitor is the primary gallery model. Three earlier Unity experiments remain as independent comparison builds; their IDs, GLBs, source files, and preview files are preserved.
 
-## Variants
+## Assets
 
-| Variant | Visible distinction |
-| --- | --- |
-| terra | Angular happy-eye chevrons and a compact, simpler face and chest mark. |
-| sol | Broad face screen with curved happy arcs, a rounded hood roll, and a more layered hoodie. |
-| astra | Curved happy arcs with more layered ring headphones and clothing accents. |
+| Gallery asset | Build | GLB bytes | Triangles | Vertices | Animation clips |
+| --- | --- | ---: | ---: | ---: | ---: |
+| GJH Chibi Visitor | Blender 5.2.3 LTS | 694,260 | 38,628 | 19,710 | 0 |
+| GJH Chibi Visitor (Unity experiment, terra) | Unity 6000.0.85f2 | 38,328 | 10,848 | 800 | 0 |
+| GJH Chibi Visitor (Unity experiment, sol) | Unity 6000.0.85f2 | 135,980 | 14,352 | 3,236 | 0 |
+| GJH Chibi Visitor (Unity experiment, astra) | Unity 6000.0.85f2 | 100,344 | 14,736 | 2,272 | 0 |
 
-All three share a white rounded helmet and hoodie, purple accents, tall fins, black face screen, headphones, short limbs, and a default happy expression. Their GLBs have the `GJHChibiVisitor` scene root, use +Y up and +Z forward, contain no external resources, and contain no animation clips.
+Measurements come from the packaged GLBs. Triangle counts include mesh instances in the scene; vertex counts are unique stored position accessors.
 
-## Measurements
+The Blender folder also contains exports/gjh-chibi-visitor-blender-kit.glb, an all-modules reference library. It measures 3,068,504 bytes, 166,044 triangles, 95,232 vertices, and zero animation clips. The catalog registers the default GLB; the kit remains in the source folder for inspection.
 
-These values are measured from the packaged GLBs. Triangle counts include each mesh instance in the scene; vertex counts count unique stored position accessors, matching the gallery's catalog metrics.
+## Blender source and reproduction
 
-| Variant | GLB bytes | Triangles | Vertices | Animation clips | Front preview |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| terra | 38,328 | 10,848 | 800 | 0 | under 150 KiB |
-| sol | 135,980 | 14,352 | 3,236 | 0 | under 150 KiB |
-| astra | 100,344 | 14,736 | 2,272 | 0 | under 150 KiB |
+See [blender/README.md](blender/README.md) for the generator, editable source, measured exports, preview camera, and reproduction details.
 
-## Reproduce
+From models/gjh-chibi-visitor/blender/, reproduce the Blender source, GLBs, and WebP views with:
 
-The three source Unity projects use Unity **6000.0.85f2** and `com.unity.cloud.gltfast` **6.21.0**. Each project README records its Unity build and GLB reimport commands. Generate the GLB and four PNG previews in the source project first. The packaging step below only reads the Unity projects; it copies each `Assets/Editor/ChibiBuilder.cs`, GLB, and PNG previews into this repository.
+    blender --background --python generate.py
 
-Install Pillow for the optional packaging dependency, then run from the repository root:
+Use Blender **5.2.3 LTS** for the recorded build. The generator does not require the private character-sheet image. It skips the optional side-by-side sheet comparison when that image is absent.
 
-```sh
-python3 -m pip install Pillow
-python3 models/gjh-chibi-visitor/package.py \
-  --terra-project /Users/admin/Documents/Unity/ChibiMallGuide \
-  --sol-project /Users/admin/Documents/Unity/ChibiMallGuide-sol \
-  --astra-project /Users/admin/Documents/Unity/ChibiMallGuide-astra
-npm run validate:assets
-node models/gjh-chibi-visitor/validate.mjs
-npm test
-npm run build
-```
+## Unity experiments
 
-The packager converts the four faithful 1024-pixel renders per variant to WebP, reducing the front thumbnail below 150 KiB. It also recomputes GLB accessor min/max values from the embedded vertex data. Unity's sol and astra exports rounded some declared bounds by a few floating-point units; this corrects that metadata only and leaves vertex/index data unchanged. It then measures file bytes, triangles, vertices, and animation clips from the resulting GLB and writes each variant's `metadata.json` and the collection registration.
+The terra, sol, and astra entries are earlier experimental comparisons generated independently in Unity. Their source files remain at terra/source/ChibiBuilder.cs, sol/source/ChibiBuilder.cs, and astra/source/ChibiBuilder.cs, with Unity 6000.0.85f2 and glTFast 6.21.0 recorded in each metadata file. Each is an independent comparison build with its own geometry.
 
-## Character-sheet fidelity
+The variants differ in face and clothing details: terra uses sharper chevron eyes and a compact chest treatment; sol has a broader screen, rounded hood roll, and layered hoodie; astra has more layered headphone rings and clothing accents. Each GLB uses the GJHChibiVisitor root, +Y up, +Z forward, and no animation clips.
 
-The owner's original character-sheet image was not included with the inputs. The models follow the written design reference in [`docs/gjh-chibi-visitor-design.md`](../../docs/gjh-chibi-visitor-design.md); exact proportions and sheet fidelity cannot be confirmed. The screen sits proud of the helmet in side view, the fins use simplified straight-sided geometry, and hoodie seams and accessories are stylized. The design reference lists alternate expressions, outfits, and accessories, but each gallery GLB exports only the happy expression with the white hoodie. These comparison assets do not represent the complete modular concept sheet or an official GJH spokesperson.
+## Rights and fidelity
 
-The variants differ in face and clothing detail: terra uses sharper chevron eyes and a more compact chest treatment; sol uses a broader screen and rounded hood roll; astra has more layered headphone rings and clothing accents. These are visible differences in the supplied previews, not a claim of exact sheet matching.
+All four catalog entries use the same rights statement: “Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.” Gallery downloads are disabled.
 
-## Rights
+The owner's character-sheet image is private and is not redistributed. The Blender model is a close procedural interpretation; exact matching remains unverified. The symmetric standing pose omits the hero illustration's waving hand, tilt, and perspective; the fins are thicker and more angular in three-quarter views; and the visor and physical reflections differ from the painted reference. The hoodie collar, cuffs, shorts, shoes, pocket seam, and Bfont chest lettering are simplified interpretations. Uniform inverted-hull outlines and PBR shading differ from variable hand-drawn linework and cel shading. Alternate expressions, outfits, and accessories remain available in source builders and the kit library. The gallery displays the static default model without runtime wardrobe switching or facial transitions.
 
-The gallery metadata uses the same rights wording as the existing GJH Mall Visitor entry:
-
-> Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.
-
-Gallery downloads are disabled for these assets. This does not define a public redistribution license; rights and third-party marks in any future reference material would need their own review.
+The Unity comparisons also follow the written design reference. Their accuracy notes record the missing private sheet and each model's simplifications.

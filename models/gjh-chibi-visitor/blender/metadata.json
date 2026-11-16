@@ -1,0 +1,66 @@
+{
+  "id": "gjh-chibi-visitor-blender",
+  "name": "GJH Chibi Visitor",
+  "summary": "Primary Blender-built GJH Chibi Visitor: an original static procedural interpretation with a happy face, white hoodie, wing fins, and headphones.",
+  "description": "The primary Blender-built GJH Chibi Visitor is a static, one-metre procedural character with a rounded white helmet, purple happy face screen, wing fins, headphones, white hoodie, and GJH chest lettering.",
+  "category": "Characters",
+  "tags": [
+    "GJH",
+    "mascot",
+    "character",
+    "chibi",
+    "robot",
+    "Blender",
+    "procedural",
+    "static"
+  ],
+  "status": "validated",
+  "created": "2026-11-16",
+  "author": "Original owner-project procedural model",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Deterministic procedural character geometry and materials generated with Blender from generate.py and exported as glTF 2.0 GLB.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/gjh-chibi-visitor-blender.glb",
+    "source": "gjh-chibi-visitor.blend",
+    "generator": "generate.py",
+    "kit_glb": "exports/gjh-chibi-visitor-blender-kit.glb",
+    "preview": "previews/front.webp",
+    "side_preview": "previews/side.webp",
+    "back_preview": "previews/back.webp",
+    "three_quarter_preview": "previews/3q.webp"
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0,
+      0.15,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "glTF +Y",
+    "origin": "feet at floor Y=0",
+    "front_axis": "+Z"
+  },
+  "accuracy_notes": "The owner's character-sheet image is private and is not redistributed. This procedural model is a close interpretation, not an exact match: it uses a symmetric standing pose rather than the hero illustration's waving hand, tilt, and perspective; mathematically regular helmet contours; fins that are thicker and more angular in three-quarter views; a slightly more rectangular visor with physical reflections; and Bfont mesh lettering rather than a trace of the sheet's GJH lettering. The hoodie collar is more geometric, the cloth has fewer folds, and the pocket seam is a procedural addition. Cuffs, shorts, and shoes are simplified solids. Inverted-hull outlines have uniform width, and PBR shading is not cel shading. Alternate expressions, outfits, and accessories are available in source builders and a visible kit library, not as selectable gallery variants or animated facial transitions. Exact sheet fidelity remains unverified.",
+  "attribution": [
+    {
+      "credit": "Original procedural character geometry and materials generated with Blender 5.2.3 LTS for the owner’s project; no third-party model is included."
+    },
+    {
+      "credit": "Blender-bundled Bfont creates the GJH chest lettering as mesh geometry; no external font file is included."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 694260,
+    "triangles": 38628,
+    "vertices": 19710,
+    "animations": 0
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  }
+}
