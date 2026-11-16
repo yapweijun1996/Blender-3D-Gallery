@@ -1,5 +1,5 @@
 # Pomelo STEM
 
-This collection contains the original Blender-built Pomelo STEM fruit mascot. The registered default is a static one-metre hero pose; the asset folder also keeps a neutral standing export and a kit containing six static expressions.
+This collection contains the original Blender-built Pomelo STEM fruit mascot. The registered GLB is rigged and includes `Idle`, `Wave`, and `Blink` clips; the asset folder also keeps a neutral stand and a six-expression kit.
 
-See [mascot/README.md](mascot/README.md) for reproduction, measured geometry, fidelity notes, and validation details.
+See [mascot/README.md](mascot/README.md) for reproduction, measured export values, animation notes, and remaining differences.

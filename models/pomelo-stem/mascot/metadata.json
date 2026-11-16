@@ -1,8 +1,8 @@
 {
   "id": "pomelo-stem-mascot",
   "name": "Pomelo STEM Mascot",
-  "summary": "Original procedural Pomelo STEM fruit mascot with a static hero pose and six-expression kit.",
-  "description": "An original fruit mascot built procedurally in Blender. The registered export is a static, one-metre happy hero pose; the source folder also contains a standing export and a kit with six static expressions.",
+  "summary": "Rigged Pomelo STEM fruit mascot with Idle, Wave, and Blink animation clips.",
+  "description": "An original one-metre fruit mascot built procedurally in Blender. The registered GLB has a 20-joint skin and three animation clips; the source folder also contains a neutral stand and a six-expression kit.",
   "category": "Characters",
   "tags": [
     "Pomelo STEM",
@@ -12,14 +12,15 @@
     "character",
     "Blender",
     "procedural",
-    "static",
+    "rigged",
+    "animated",
     "expressions"
   ],
   "status": "validated",
   "created": "2026-11-16",
   "author": "Original owner-project procedural model",
   "blender_version": "5.2.3 LTS",
-  "creation_method": "Procedural character geometry and materials generated with Blender from generate.py; the registered hero is static, with standing and six-expression kit GLBs kept as additional source exports.",
+  "creation_method": "Procedural character geometry, materials, and armature generated with Blender from generate.py.",
   "generator": "generate.py",
   "root_node": "PomeloStemMascot",
   "paths": {
@@ -33,7 +34,13 @@
     "back_preview": "previews/back.webp",
     "three_quarter_preview": "previews/3q.webp",
     "expressions_preview": "previews/expressions.webp",
-    "preview_converter": "convert-previews.py"
+    "preview_converter": "convert-previews.py",
+    "animation_previews": [
+      "previews/anim-wave-strip.png",
+      "previews/anim-wave-3q-strip.png",
+      "previews/anim-idle-strip.png",
+      "previews/anim-blink-strip.png"
+    ]
   },
   "display": {
     "previewRotationY": 0,
@@ -47,7 +54,7 @@
     "origin": "feet at floor Y=0",
     "front_axis": "+Z"
   },
-  "accuracy_notes": "A strict independent reviewer estimated visual similarity to the owner's design board at about 67%. Colour, hand and foot shape, face depth, and expression scale remain visibly different; the shell reads greener and less lemon-yellow, the inset is shallower, and hands and shoes are simplified. The model is more regular and upright than the illustration. Its main proportions meet the board's targets: head height is 63.8% of total height, head width is about 77% of total height, and body width is about 62% of head width. The kit contains separate static expressions, not shape keys or animation. The private board is not redistributed.",
+  "accuracy_notes": "This is a procedural interpretation of a private design, not an exact reconstruction or independently approved match; no visual-similarity percentage is measured. The accepted R4 middle yellow-green #CBE85A palette is retained. The fruit and face contours are more regular than the illustration, and fitted-surface overlaps remain. The R5 Wave arm uses rounded capsule links with intentional joint overlap; finite sampled QA does not prove continuous collision-free motion. Wave loop velocity continuity has not been proven, so runtimes should blend into and out of Wave. The outlines are inverted hulls and require backface culling; disable outline shadow casting. The mesh is not a watertight print model.",
   "attribution": [
     {
       "credit": "Original procedural character geometry and materials generated with Blender 5.2.3 LTS for the owner's project; no third-party model is included."
@@ -58,50 +65,139 @@
   ],
   "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
   "metrics": {
-    "glb_bytes": 671820,
-    "triangles": 37616,
-    "vertices": 19228,
-    "animations": 0
+    "glb_bytes": 967908,
+    "triangles": 39832,
+    "vertices": 20476,
+    "animations": 3
+  },
+  "skeleton": {
+    "joint_count": 20
+  },
+  "animation_clips": [
+    {
+      "name": "Idle",
+      "duration_seconds": 2.5
+    },
+    {
+      "name": "Wave",
+      "duration_seconds": 1.5
+    },
+    {
+      "name": "Blink",
+      "duration_seconds": 3
+    }
+  ],
+  "geometry": {
+    "units": "metres",
+    "coordinate_order": "glTF X, Y, Z",
+    "bounds_glTF_m": {
+      "min": [
+        -0.38784563541412354,
+        0,
+        -0.2666170001029968
+      ],
+      "max": [
+        0.38784563541412354,
+        1.0000001192092896,
+        0.2704116106033325
+      ],
+      "dimensions": [
+        0.7756912708282471,
+        1.0000001192092896,
+        0.5370286107063293
+      ]
+    },
+    "height_metres": 1.0000001192092896
   },
   "additional_exports": {
     "stand": {
-      "glb_bytes": 672108,
-      "triangles": 37616,
-      "vertices": 19228,
-      "animations": 0
+      "glb_bytes": 968248,
+      "triangles": 39832,
+      "vertices": 20476,
+      "animations": 3,
+      "joint_count": 20,
+      "animation_clips": [
+        {
+          "name": "Idle",
+          "duration_seconds": 2.5
+        },
+        {
+          "name": "Wave",
+          "duration_seconds": 1.5
+        },
+        {
+          "name": "Blink",
+          "duration_seconds": 3
+        }
+      ],
+      "bounds_glTF_m": {
+        "min": [
+          -0.38784563541412354,
+          0,
+          -0.2666170001029968
+        ],
+        "max": [
+          0.38784563541412354,
+          1.0000001192092896,
+          0.2704116106033325
+        ],
+        "dimensions": [
+          0.7756912708282471,
+          1.0000001192092896,
+          0.5370286107063293
+        ]
+      }
     },
     "kit": {
-      "glb_bytes": 3608244,
-      "triangles": 264404,
-      "vertices": 134966,
-      "animations": 0
+      "glb_bytes": 4441836,
+      "triangles": 277820,
+      "vertices": 142500,
+      "animations": 3,
+      "joint_count": 26,
+      "animation_clips": [
+        {
+          "name": "Idle",
+          "duration_seconds": 2.5
+        },
+        {
+          "name": "Wave",
+          "duration_seconds": 1.5
+        },
+        {
+          "name": "Blink",
+          "duration_seconds": 3
+        }
+      ],
+      "bounds_glTF_m": {
+        "min": [
+          -2.75,
+          0,
+          -1.8166170120239258
+        ],
+        "max": [
+          2.75,
+          1.0000001192092896,
+          0.2704116106033325
+        ],
+        "dimensions": [
+          5.5,
+          1.0000001192092896,
+          2.0870286226272583
+        ]
+      },
+      "expression_mounts": [
+        "Mount_01_Expression_Happy",
+        "Mount_02_Expression_Laugh",
+        "Mount_03_Expression_Surprised",
+        "Mount_04_Expression_Wink",
+        "Mount_05_Expression_Thinking",
+        "Mount_06_Expression_Sad"
+      ]
     }
   },
   "validation": {
     "errors": 0,
     "warnings": 0,
     "validator": "2.0.0-dev.3.10"
-  },
-  "geometry": {
-    "units": "metres",
-    "coordinate_order": "glTF X, Y, Z",
-    "bounds_glTF_m": {
-      "min": [
-        -0.3875870406627655,
-        -1.6880221664905548e-9,
-        -0.2664150595664978
-      ],
-      "max": [
-        0.3875870406627655,
-        1.0000000094878487,
-        0.2670615017414093
-      ],
-      "dimensions": [
-        0.775174081325531,
-        1.000000011175871,
-        0.5334765613079071
-      ]
-    },
-    "height_metres": 1.000000011175871
   }
 }
