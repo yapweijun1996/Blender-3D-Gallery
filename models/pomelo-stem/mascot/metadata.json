@@ -1,0 +1,107 @@
+{
+  "id": "pomelo-stem-mascot",
+  "name": "Pomelo STEM Mascot",
+  "summary": "Original procedural Pomelo STEM fruit mascot with a static hero pose and six-expression kit.",
+  "description": "An original fruit mascot built procedurally in Blender. The registered export is a static, one-metre happy hero pose; the source folder also contains a standing export and a kit with six static expressions.",
+  "category": "Characters",
+  "tags": [
+    "Pomelo STEM",
+    "pomelo",
+    "fruit",
+    "mascot",
+    "character",
+    "Blender",
+    "procedural",
+    "static",
+    "expressions"
+  ],
+  "status": "validated",
+  "created": "2026-11-16",
+  "author": "Original owner-project procedural model",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Procedural character geometry and materials generated with Blender from generate.py; the registered hero is static, with standing and six-expression kit GLBs kept as additional source exports.",
+  "generator": "generate.py",
+  "root_node": "PomeloStemMascot",
+  "paths": {
+    "glb": "exports/pomelo-stem-mascot.glb",
+    "source": "pomelo-stem-mascot.blend",
+    "generator": "generate.py",
+    "stand_glb": "exports/pomelo-stem-mascot-stand.glb",
+    "kit_glb": "exports/pomelo-stem-mascot-kit.glb",
+    "preview": "previews/front.webp",
+    "side_preview": "previews/side.webp",
+    "back_preview": "previews/back.webp",
+    "three_quarter_preview": "previews/3q.webp",
+    "expressions_preview": "previews/expressions.webp",
+    "preview_converter": "convert-previews.py"
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0,
+      0,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "glTF +Y",
+    "origin": "feet at floor Y=0",
+    "front_axis": "+Z"
+  },
+  "accuracy_notes": "A strict independent reviewer estimated visual similarity to the owner's design board at about 67%. Colour, hand and foot shape, face depth, and expression scale remain visibly different; the shell reads greener and less lemon-yellow, the inset is shallower, and hands and shoes are simplified. The model is more regular and upright than the illustration. Its main proportions meet the board's targets: head height is 63.8% of total height, head width is about 77% of total height, and body width is about 62% of head width. The kit contains separate static expressions, not shape keys or animation. The private board is not redistributed.",
+  "attribution": [
+    {
+      "credit": "Original procedural character geometry and materials generated with Blender 5.2.3 LTS for the owner's project; no third-party model is included."
+    },
+    {
+      "credit": "Generic mesh/export helpers adapted from an authorized read-only example."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 671820,
+    "triangles": 37616,
+    "vertices": 19228,
+    "animations": 0
+  },
+  "additional_exports": {
+    "stand": {
+      "glb_bytes": 672108,
+      "triangles": 37616,
+      "vertices": 19228,
+      "animations": 0
+    },
+    "kit": {
+      "glb_bytes": 3608244,
+      "triangles": 264404,
+      "vertices": 134966,
+      "animations": 0
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "geometry": {
+    "units": "metres",
+    "coordinate_order": "glTF X, Y, Z",
+    "bounds_glTF_m": {
+      "min": [
+        -0.3875870406627655,
+        -1.6880221664905548e-9,
+        -0.2664150595664978
+      ],
+      "max": [
+        0.3875870406627655,
+        1.0000000094878487,
+        0.2670615017414093
+      ],
+      "dimensions": [
+        0.775174081325531,
+        1.000000011175871,
+        0.5334765613079071
+      ]
+    },
+    "height_metres": 1.000000011175871
+  }
+}
