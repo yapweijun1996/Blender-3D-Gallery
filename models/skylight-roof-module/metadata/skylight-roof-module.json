@@ -1,0 +1,112 @@
+{
+  "id": "skylight-roof-module",
+  "name": "Skylight Roof Module",
+  "summary": "A tileable 4 m square atrium skylight with sixteen pale aqua glass panes, satin steel framing, graphite seals and matching half-width boundary members.",
+  "description": "A tileable 4 m square atrium skylight with sixteen pale aqua glass panes, satin steel framing, graphite seals and matching half-width boundary members.",
+  "category": "Shopping Mall",
+  "tags": [
+    "mall",
+    "atrium",
+    "skylight",
+    "glass",
+    "steel",
+    "roof",
+    "tileable",
+    "modular",
+    "original",
+    "procedural",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry and materials; no external assets, textures, fonts, brands or lettering.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/skylight-roof-module.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      1,
+      1.5,
+      1.2
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.65
+  },
+  "dimensions_metres": {
+    "width": 4,
+    "height": 0.2240000069141388,
+    "depth": 4
+  },
+  "origin": "Floor centre at the roof frame underside; translate Y to the intended roof elevation.",
+  "tiling": {
+    "repeat_pitch_metres": 4,
+    "placement_axes": [
+      "glTF X",
+      "glTF Z"
+    ],
+    "edge_rule": "Two clipped half members form one full shared member. Translate without scaling.",
+    "assembly_test": "3 x 3 actual-export grid; twelve matching seams; axis-aligned placement only."
+  },
+  "measured": {
+    "glb_bytes": 461512,
+    "triangles": 8788,
+    "vertices": 16888,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "textures": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -2,
+        0,
+        -2
+      ],
+      "max": [
+        2,
+        0.2240000069141388,
+        2
+      ]
+    },
+    "sha256": "48624507af21bb4a47c660793644371b50220a22cce1cf34eade1503d63aedbe",
+    "chromium_draw_calls_per_frame": 4
+  },
+  "material_notes": "Three shared materials. Pale aqua glass is double-sided alpha BLEND 0.30; no refraction or transmission. Studio floor and lighting excluded from export.",
+  "accuracy_notes": "Original visual roof module. Structural load, drainage, weatherproofing, building compliance, physical devices and complete-mall performance are not verified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "asset": "PASS",
+    "repository": "PASS",
+    "chromium": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 20000,
+      "bytes": 1572864,
+      "mesh_primitives": 3
+    },
+    "evidence": "../reports/checks.json",
+    "local": "PASS"
+  }
+}

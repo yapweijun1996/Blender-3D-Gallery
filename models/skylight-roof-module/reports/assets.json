@@ -1,0 +1,115 @@
+{
+  "result": "PASS",
+  "id": "skylight-roof-module",
+  "glb_bytes": 461512,
+  "triangles": 8788,
+  "vertices": 16888,
+  "meshes": 3,
+  "primitives": 3,
+  "materials": 3,
+  "textures": 0,
+  "animations": 0,
+  "dimensions": [
+    4,
+    0.2240000069141388,
+    4
+  ],
+  "bounds": {
+    "min": [
+      -2,
+      0,
+      -2
+    ],
+    "max": [
+      2,
+      0.2240000069141388,
+      2
+    ]
+  },
+  "min_triangle_area_m2": 7.71766686114006e-8,
+  "sha256": "48624507af21bb4a47c660793644371b50220a22cce1cf34eade1503d63aedbe",
+  "budget": {
+    "triangles": 20000,
+    "bytes": 1572864,
+    "mesh_primitives": 3
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "tile_test": {
+    "grid": [
+      3,
+      3
+    ],
+    "pitch_metres": 4,
+    "matching_seams": 12,
+    "profiles": {
+      "EXPORT_FRAME_Steel/X": {
+        "matching": true,
+        "profile_vertices": 168
+      },
+      "EXPORT_FRAME_Steel/Z": {
+        "matching": true,
+        "profile_vertices": 56
+      },
+      "EXPORT_GLASS_Panes/X": {
+        "matching": true,
+        "profile_vertices": 0
+      },
+      "EXPORT_GLASS_Panes/Z": {
+        "matching": true,
+        "profile_vertices": 0
+      },
+      "EXPORT_SEAL_Graphite/X": {
+        "matching": true,
+        "profile_vertices": 84
+      },
+      "EXPORT_SEAL_Graphite/Z": {
+        "matching": true,
+        "profile_vertices": 4
+      }
+    }
+  },
+  "parts": {
+    "EXPORT_FRAME_Steel": {
+      "min": [
+        -2,
+        0,
+        -2
+      ],
+      "max": [
+        2,
+        0.2240000069141388,
+        2
+      ],
+      "triangles": 6504
+    },
+    "EXPORT_GLASS_Panes": {
+      "min": [
+        -1.9500000476837158,
+        0.1899999976158142,
+        -1.9500000476837158
+      ],
+      "max": [
+        1.9500000476837158,
+        0.2019999921321869,
+        1.9500000476837158
+      ],
+      "triangles": 192
+    },
+    "EXPORT_SEAL_Graphite": {
+      "min": [
+        -2,
+        0.17999999225139618,
+        -2
+      ],
+      "max": [
+        2,
+        0.20000000298023224,
+        2
+      ],
+      "triangles": 2092
+    }
+  }
+}

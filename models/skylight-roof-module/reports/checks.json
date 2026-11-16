@@ -1,0 +1,80 @@
+{
+  "result": "PASS",
+  "asset_validation": {
+    "command": "node models/skylight-roof-module/validate.mjs",
+    "result": "PASS",
+    "khronos_errors": 0,
+    "khronos_warnings": 0
+  },
+  "source_inspection": {
+    "command": "/opt/homebrew/bin/blender --background --python models/skylight-roof-module/inspect_sources.py",
+    "result": "PASS"
+  },
+  "npm_validate_assets": {
+    "command": "npm run validate:assets",
+    "result": "PASS"
+  },
+  "npm_test": {
+    "command": "npm test",
+    "result": "PASS",
+    "tests": 728,
+    "passed": 728,
+    "failed": 0,
+    "skipped": 0
+  },
+  "npm_build": {
+    "command": "npm run build",
+    "result": "PASS",
+    "warnings": [
+      "Existing Vite chunk-size advisory."
+    ]
+  },
+  "chromium": {
+    "result": "PASS",
+    "viewport": [
+      1440,
+      900
+    ],
+    "browser": "156.0.8078.4",
+    "loaded_sha256": "48624507af21bb4a47c660793644371b50220a22cce1cf34eade1503d63aedbe",
+    "screenshot": "/Users/admin/Documents/MallQueue/reports/skylight-roof-module-page.png",
+    "max_draw_calls_per_frame": 4,
+    "canvas": [
+      1058,
+      495
+    ],
+    "horizontal_overflow": false,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+    "errors": [],
+    "scope": "Single model in headless Chromium; complete mall and physical devices not tested."
+  },
+  "reproducibility": {
+    "result": "PASS",
+    "exit_code": 0,
+    "before_sha256": "48624507af21bb4a47c660793644371b50220a22cce1cf34eade1503d63aedbe",
+    "after_sha256": "48624507af21bb4a47c660793644371b50220a22cce1cf34eade1503d63aedbe",
+    "scope": "Byte-identical GLB rebuild in Blender 5.2.3; source file byte equality not asserted."
+  },
+  "visual_review": {
+    "hero": "INSPECTED",
+    "front": "INSPECTED",
+    "side": "INSPECTED",
+    "3q": "INSPECTED",
+    "actual_glb_2x2": "INSPECTED",
+    "chromium_1440x900": "INSPECTED"
+  },
+  "initial_attempts": [
+    "Initial npm test failed because it ran before hero.webp existed and because the existing final-collection rule required inserting the new collection before Pomelo STEM. Both were corrected; all 728 tests passed on full rerun.",
+    "First browser harness waited for the source GLB path; production Vite uses a hashed filename. Corrected the response matcher; browser byte hash matched and the full check passed."
+  ],
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Complete-mall performance",
+    "Structural, weatherproofing and drainage suitability",
+    "Source manual-edit/re-export test",
+    "Quarter-turn tiling"
+  ],
+  "publication": "Local commit only; no push or deployment.",
+  "full_logs_directory": "/Users/admin/Documents/MallQueue/reports/skylight-roof-module-checks"
+}

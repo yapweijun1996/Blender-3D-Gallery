@@ -1,0 +1,1 @@
+Original procedural geometry and materials authored for the owner's project. No external assets were used. Reuse in the owner's projects is authorized. Public redistribution terms have not been specified; public downloads remain disabled.
