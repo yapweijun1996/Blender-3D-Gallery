@@ -1,0 +1,148 @@
+{
+  "id": "koi-fish",
+  "name": "Koi Fish",
+  "summary": "Original small three-colour ornamental koi with an embedded looping body, tail and pectoral swim.",
+  "description": "Lightweight P3 atrium pond koi. Original analytic geometry, pearl/red/ink vertex colours, rounded paired fins, forked caudal, opercular creases and four short barbels. A separate mall-sized delivery because the existing fish-koi files do not meet this task budgets.",
+  "category": "Fish",
+  "tags": [
+    "koi",
+    "ornamental-fish",
+    "atrium",
+    "pond",
+    "water-feature",
+    "swimming",
+    "animated",
+    "low-poly",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres",
+    "P3"
+  ],
+  "status": "draft",
+  "priority": "P3",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic analytic Blender Python geometry and vertex colours. No external models, textures, reference images, fonts or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/koi-fish.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp",
+      "previews/top.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor centre of reference pose envelope",
+    "previewCameraDirection": [
+      1.4,
+      0.9,
+      1
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.3,
+    "previewLighting": {
+      "hemisphereIntensity": 0.8,
+      "directionalIntensity": 1.4
+    }
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "glTF X,Y,Z (width,height,length), metres",
+    "size": [
+      0.11200000100855646,
+      0.0863266417446169,
+      0.300356557446693
+    ],
+    "bounds": {
+      "min": [
+        -0.05600000050427823,
+        6.645813592545333e-9,
+        -0.15017827424550947
+      ],
+      "max": [
+        0.05600000050427823,
+        0.0863266483904305,
+        0.15017828320118354
+      ]
+    },
+    "sampled_swim_bounds": {
+      "min": [
+        -0.05671194292881328,
+        6.576071091420365e-9,
+        -0.15017827424550947
+      ],
+      "max": [
+        0.05671194292881328,
+        0.08632664839046966,
+        0.15017828320118354
+      ],
+      "samples": 25
+    }
+  },
+  "statistics": {
+    "glb_bytes": 543120,
+    "triangles": 15388,
+    "vertices": 7734,
+    "mesh_definitions": 1,
+    "rendered_mesh_nodes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "images": 0,
+    "animations": 1,
+    "sha256": "ca5f34786a8a305abe89ece924d4abcfbac690fdc26a92f5f12e3b1cd49f0f4b",
+    "chromium_draw_calls_per_frame": 3
+  },
+  "animation": {
+    "name": "Swim_Loop",
+    "start_seconds": 0,
+    "end_seconds": 3,
+    "period_seconds": 3,
+    "tail_displacement_m": 0.042084581505249234,
+    "body_displacement_m": 0.005488029811313965,
+    "head_displacement_m": 0,
+    "endpoint_error_m": 9.795318983408817e-11,
+    "root_motion": false
+  },
+  "material_notes": "Three shared opaque vertex-colour materials; no textures, transparency, external resources or exported lights. One exported mesh definition split into three material primitives.",
+  "accuracy_notes": "Original stylized ornamental koi; artist-tuned in-place swimming, not taxonomic identification, an animal-care specification, water simulation or pond navigation. Transform the whole loaded glTF scene; the skinned mesh is a scene root. Physical devices, WebKit and full-mall performance are not tested.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, analytic pigment islands and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner’s projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "asset": "PASS",
+    "source_editability": "PASS",
+    "browser": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 20000,
+      "bytes": 1572864,
+      "materials": 3,
+      "mesh_primitives": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/duplicate-audit.json",
+      "reports/browser.json",
+      "reports/checks.json",
+      "reports/reproducibility.json"
+    ]
+  }
+}

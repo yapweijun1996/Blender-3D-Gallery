@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "id": "koi-fish",
+  "glb_sha256": "ca5f34786a8a305abe89ece924d4abcfbac690fdc26a92f5f12e3b1cd49f0f4b",
+  "source_sha256": "bd7fba17baa85176303d8a570cba97c0b9191bd98c45174da02672b7ab6ef32e",
+  "checks": [
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/koi-fish/generate.py",
+      "result": "PASS",
+      "version": "5.2.3 LTS"
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/koi-fish/inspect_sources.py",
+      "result": "PASS"
+    },
+    {
+      "command": "node models/koi-fish/validate.mjs --source-edit",
+      "result": "PASS",
+      "khronos_errors": 0,
+      "khronos_warnings": 0
+    },
+    {
+      "command": "npm run validate:assets",
+      "result": "PASS",
+      "exit_code": 0
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "exit_code": 0,
+      "passed": 728,
+      "failed": 0
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "exit_code": 0,
+      "note": "Vite reports an existing large application chunk warning."
+    },
+    {
+      "command": "node models/koi-fish/check_browser.mjs",
+      "result": "PASS",
+      "exit_code": 0,
+      "viewport": [
+        1440,
+        900
+      ]
+    }
+  ],
+  "reproducibility": "PASS identical GLB hashes in two complete independent builds",
+  "visual_review": "PASS hero, front, side, 3q, top and actual GLB runtime screenshots inspected",
+  "restored_test_artifact": "models/demo-beverage-can/reports/structure-motion.json",
+  "limitations": [
+    "Physical devices and WebKit not tested.",
+    "No full mall draw-call or performance measurement.",
+    "No actual pond assembly, trajectory or water simulation."
+  ],
+  "initial_issues_corrected": [
+    "Vertex colours outside 0..1 clamped by the generator.",
+    "Non-root skinned mesh warning resolved by scene-root mesh export.",
+    "Degenerate pelvic fin triangles removed by a finite web edge.",
+    "Nondeterministic quad tessellation replaced by explicit fixed triangulation."
+  ],
+  "external_logs": "~/Documents/MallQueue/reports/koi-fish-checks/"
+}

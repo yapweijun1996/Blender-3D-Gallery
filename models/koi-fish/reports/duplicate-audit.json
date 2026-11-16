@@ -1,0 +1,98 @@
+{
+  "decision": "BUILD_NEW_UNSUITABLE_EXISTING",
+  "search": "Catalog id, name, tags and all model metadata ids; koi, carp and Chinese koi aliases.",
+  "matches": [
+    {
+      "file": "models/singapore-fish/koi/exports/model.glb",
+      "sha256": "4d1ce5f9b6d2e96a4390a780c3cd9069889e99d165d69aef6c004f393c34c74d",
+      "bytes": 197816,
+      "triangles": 4124,
+      "mesh_definitions": 35,
+      "rendered_mesh_nodes": 36,
+      "primitive_definitions": 37,
+      "materials": 8,
+      "dimensions_xyz_m": [
+        0.4932407526363094,
+        0.3163223701052453,
+        0.22055898132553037
+      ],
+      "bounds_m": {
+        "min": [
+          -0.21599999527931166,
+          -0.14674209522701295,
+          -0.10901796590696951
+        ],
+        "max": [
+          0.2772407573569977,
+          0.16958027487823232,
+          0.11154101541856086
+        ]
+      },
+      "clip": {
+        "name": "Swim_Loop",
+        "start_s": 0,
+        "end_s": 2,
+        "period_s": 2,
+        "tracks": 33
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0
+      },
+      "limitations": [
+        "CPU measurement uses texture stubs; no visual claim from this loader.",
+        "No full mall scene draw-call or physical-device performance measurement."
+      ]
+    },
+    {
+      "file": "models/fish-realism-release/koi/model.glb",
+      "sha256": "06a0650ac1808b78fd5d57b713a1ee48b78f86647f9bd7d041bde408d617543f",
+      "bytes": 4492976,
+      "triangles": 77182,
+      "mesh_definitions": 17,
+      "rendered_mesh_nodes": 17,
+      "primitive_definitions": 17,
+      "materials": 6,
+      "dimensions_xyz_m": [
+        3.5795877125166626,
+        1.2514212269907838,
+        0.6409166575667178
+      ],
+      "bounds_m": {
+        "min": [
+          -1.650010854198153,
+          -0.601747089337644,
+          -0.3409152052446174
+        ],
+        "max": [
+          1.9295768583185093,
+          0.6496741376531399,
+          0.30000145232210035
+        ]
+      },
+      "clip": {
+        "name": "Swim_Loop",
+        "start_s": 0.0416666679084301,
+        "end_s": 3.5416667461395264,
+        "period_s": 3.5000000782310963,
+        "tracks": 33
+      },
+      "khronos": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 14
+      },
+      "limitations": [
+        "CPU measurement uses texture stubs; no visual claim from this loader.",
+        "No full mall scene draw-call or physical-device performance measurement."
+      ]
+    }
+  ],
+  "findings": [
+    "Both existing versions contain real cyclic Swim_Loop clips; previews were visually inspected.",
+    "Current catalog fish-koi exceeds this task triangle, byte and material hard limits; the legacy file also exceeds the three-material limit.",
+    "Neither old file provides the requested approximately 0.30 m +Z-front floor-centred delivery.",
+    "New original koi-fish follows the explicit task exception for unsuitable existing assets. Existing models are unchanged."
+  ]
+}
