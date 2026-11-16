@@ -1,0 +1,129 @@
+{
+  "result": "PASS: local technical acceptance; manager art review pending",
+  "id": "pharmacy-counter",
+  "category": "Equipment",
+  "status": "draft / NEEDS REVIEW",
+  "stores": [
+    "S04",
+    "S05",
+    "S12"
+  ],
+  "priority": "P2",
+  "glb_sha256": "e8cdaf35ecdd025a97d4e34a0c3da5d33ec3d0eb3aa4c787ff8980d8b3bbab5b",
+  "source_sha256": "44a12d7b8a1ae5a72b8b5455ce24423e107ac63760bbcf7f7abfedeac34bb119",
+  "build": {
+    "build": "3ca0980d777b0113"
+  },
+  "checks": [
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/pharmacy-counter/generate.py",
+      "result": "PASS",
+      "version": "5.2.3 LTS"
+    },
+    {
+      "command": "node models/pharmacy-counter/validate.mjs",
+      "result": "PASS",
+      "khronos_errors": 0,
+      "khronos_warnings": 0,
+      "nondegenerate_triangles": true,
+      "aperture_rays": "9 clear aperture rays and 3 raised-glass hits"
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/pharmacy-counter/inspect_sources.py",
+      "result": "PASS",
+      "closed_manifold_source_parts": 62
+    },
+    {
+      "command": "node models/pharmacy-counter/verify_source_edit.mjs",
+      "result": "PASS",
+      "checks": "Original-source byte identity; saved shelf and material edits survive re-export; edited GLB Khronos clean"
+    },
+    {
+      "command": "Fresh temporary directory with only generate.py; headless build --skip-render",
+      "result": "PASS",
+      "checks": "Identical GLB SHA-256; no external generation inputs"
+    },
+    {
+      "command": "npm run validate:assets",
+      "result": "PASS",
+      "exit_code": 0,
+      "log": "/Users/admin/Documents/MallQueue/reports/pharmacy-counter-checks/validate-assets.log"
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "exit_code": 0,
+      "passed": 728,
+      "failed": 0,
+      "skipped": 0,
+      "log": "/Users/admin/Documents/MallQueue/reports/pharmacy-counter-checks/npm-test.log"
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "exit_code": 0,
+      "build": {
+        "build": "3ca0980d777b0113"
+      },
+      "warning": "Shared JavaScript chunks exceed the Vite 500 kB warning threshold",
+      "log": "/Users/admin/Documents/MallQueue/reports/pharmacy-counter-checks/build.log"
+    },
+    {
+      "command": "node models/pharmacy-counter/verify_page.mjs",
+      "result": "PASS",
+      "exit_code": 0,
+      "checks": "1440x900 Chromium; 200 response and exact GLB hash; complete catalog membership; orbit/reset; no console errors; screenshot inspected",
+      "screenshot": "/Users/admin/Documents/MallQueue/reports/pharmacy-counter-page.png"
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS",
+      "exit_code": 0
+    }
+  ],
+  "visual_review": {
+    "result": "PASS: local preview inspection; manager review pending",
+    "views_rendered_and_viewed": [
+      "hero",
+      "front",
+      "side",
+      "3q",
+      "rear"
+    ],
+    "observations": "Clean full-width countertop and blank header, thin glazing rails, readable small queue numerals, visible dispensing cubbies and a clear central pickup opening."
+  },
+  "duplicate_search": {
+    "result": "NOT FOUND: close complete pharmacy counter assembly",
+    "catalog_assets": 588,
+    "metadata_files": 631,
+    "comparison": "reports/duplicate-search.json"
+  },
+  "initial_failure": {
+    "check": "npm test",
+    "passed": 727,
+    "failed": 1,
+    "cause": "Existing Pomelo STEM test requires its collection to remain last",
+    "resolution": "Inserted new pharmacy collection immediately before Pomelo STEM, preserving all previous content and relative order; reran full suite successfully",
+    "log": "/Users/admin/Documents/MallQueue/reports/pharmacy-counter-checks/npm-test-initial-order-failure.log"
+  },
+  "generated_test_artifacts": {
+    "restored_with_git_checkout": [
+      "models/demo-beverage-can/reports/structure-motion.json"
+    ],
+    "existing_model_content_preserved": true
+  },
+  "not_found": [
+    "Close existing complete pharmacy counter assembly"
+  ],
+  "required_checks_skipped": [],
+  "not_verified": [
+    "Manager art approval",
+    "Physical Android/iOS",
+    "WebKit",
+    "Complete 17-shop mall performance or 200-draw-call budget",
+    "Staff aisle clearance or medical/storage/hygiene/structural/accessibility compliance",
+    "Operational queue or dispensing behavior",
+    "Remote deployment/publication"
+  ],
+  "scope": "Only new pharmacy-counter files and one catalog registration. No gallery UI, existing model, workflow or dependency change. Local commit only; no push."
+}

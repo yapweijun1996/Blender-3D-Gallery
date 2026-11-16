@@ -1,0 +1,129 @@
+{
+  "id": "pharmacy-counter",
+  "name": "Pharmacy Counter",
+  "summary": "Unbranded pharmacy service counter with a glazed pass-through, open dispensing rack, blank overhead sign, queue display and pickup tray.",
+  "description": "Original compact floor-standing pharmacy station for stores S04, S05 and S12. The rear-edge dispensing rack is open on both sides and stays within the counter footprint; the staff working aisle is outside the asset. The queue screen has static original seven-segment numerals only.",
+  "category": "Equipment",
+  "tags": [
+    "pharmacy",
+    "counter",
+    "dispensing",
+    "pass-through",
+    "glass-partition",
+    "pickup-tray",
+    "queue-display",
+    "blank-sign",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres",
+    "S04",
+    "S05",
+    "S12",
+    "P2"
+  ],
+  "status": "draft",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures, fonts, packaging or brands. Static queue numerals are original seven-segment mesh geometry.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/pharmacy-counter.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor centre of the complete counter footprint",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "previewCameraDirection": [
+      1.5,
+      0.8,
+      3
+    ]
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "glTF X,Y,Z (width,height,depth)",
+    "size": [
+      3,
+      2.2200000286102295,
+      0.800000011920929
+    ],
+    "bounds": {
+      "min": [
+        -1.5,
+        0,
+        -0.4000000059604645
+      ],
+      "max": [
+        1.5,
+        2.2200000286102295,
+        0.4000000059604645
+      ]
+    },
+    "service_height": 0.8999999761581421,
+    "pass_through_width": 0.8139999508857727,
+    "pass_through_height_above_worktop": 0.30400002002716064,
+    "pass_through_clear_height_above_tray_lips": 0.2639999985694885,
+    "dispensing_shelf_top_heights": [
+      0.9259999990463257,
+      1.224000096321106,
+      1.5220000743865967,
+      1.8200000524520874
+    ]
+  },
+  "statistics": {
+    "glb_bytes": 260664,
+    "triangles": 6696,
+    "vertices": 9062,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "sha256": "e8cdaf35ecdd025a97d4e34a0c3da5d33ec3d0eb3aa4c787ff8980d8b3bbab5b",
+    "editable_source_parts": 62
+  },
+  "accuracy_notes": "Static illustrative asset; queue digits do not change, glazing does not move and there is no dispensing or medical logic. Rear-edge rack, no enclosed medicine cabinet or independent sliding window. Staff aisle, medical/storage, hygiene, structural, accessibility and safety compliance are unverified. Three material primitives do not establish complete-mall draw-call performance. Physical Android/iOS and WebKit NOT TESTED.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and three shared materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "geometry": "PASS",
+    "source_editability": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 20000,
+      "bytes": 1572864,
+      "materials": 3,
+      "mesh_primitives": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/reproducibility.json",
+      "reports/duplicate-search.json",
+      "reports/acceptance.json"
+    ]
+  },
+  "source_sha256": "44a12d7b8a1ae5a72b8b5455ce24423e107ac63760bbcf7f7abfedeac34bb119"
+}
