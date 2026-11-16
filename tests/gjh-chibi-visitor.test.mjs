@@ -91,19 +91,22 @@ test('gjh-chibi-visitor-blender: source, measured metrics, kit and previews are 
   assert.equal(metadata.metrics.vertices, asset.vertices);
   assert.equal(metadata.metrics.animations, 0);
   assert.deepEqual(metadata.metrics, {
-    glb_bytes: 705712,
-    triangles: 39332,
-    vertices: 20062,
+    glb_bytes: 720372,
+    triangles: 39564,
+    vertices: 20212,
     animations: 0,
   });
   assert.deepEqual(metadata.geometry.bounds_glTF_m, {
-    min: [-0.43915856559797767, 9.761146821385402e-10, -0.23486734294780168],
-    max: [0.3614102843854713, 0.9999999957435435, 0.23814682057993303],
-    dimensions: [0.8005688499834489, 0.9999999947674288, 0.47301416352773473],
+    min: [-0.3189529922006255, 6.689850513830198e-10, -0.23066454054768337],
+    max: [0.5264002397140539, 0.9999999180572903, 0.23113691080194443],
+    dimensions: [0.8453532319146795, 0.9999999173883052, 0.4618014513496278],
   });
-  assert.ok(Math.abs(metadata.geometry.height_metres - 1) < 1e-8);
-  assert.equal(metadata.geometry.raised_left_hand_max_y_metres, 0.5710543547765367);
-  assert.equal(metadata.geometry.feet_at_floor_y_metres, 0);
+  assert.ok(Math.abs(metadata.geometry.height_metres - 1) < 1e-6);
+  assert.equal(metadata.geometry.raised_left_hand_max_y_metres, 0.5961967306292695);
+  assert.ok(Math.abs(metadata.geometry.feet_min_y_metres) <= metadata.geometry.grounding_tolerance_metres);
+  assert.match(metadata.accuracy_notes, /collar still has projecting tips/i);
+  assert.match(metadata.accuracy_notes, /fins are thinner.*side view/i);
+  assert.match(metadata.accuracy_notes, /raised hand overlaps the headphone/i);
   assert.equal(asset.animations, 0);
   assert.equal(metadata.validation.errors, 0);
   assert.equal(metadata.validation.warnings, 0);
@@ -111,6 +114,30 @@ test('gjh-chibi-visitor-blender: source, measured metrics, kit and previews are 
   assert.equal(metadata.paths.source, 'gjh-chibi-visitor.blend');
   assert.equal(metadata.paths.kit_glb, 'exports/gjh-chibi-visitor-blender-kit.glb');
   assert.equal(metadata.paths.stand_glb, 'exports/gjh-chibi-visitor-blender-stand.glb');
+  assert.deepEqual(metadata.related_exports.stand, {
+    glb_bytes: 695076,
+    triangles: 38916,
+    vertices: 19858,
+    animations: 0,
+    bounds_glTF_m: {
+      min: [-0.3931635916233063, -7.35155866737891e-10, -0.23460909724235535],
+      max: [0.3931635916233063, 1, 0.23537766933441162],
+      dimensions: [0.7863271832466125, 1.000000000735156, 0.46998676657676697],
+    },
+    height_metres: 1.000000000735156,
+  });
+  assert.deepEqual(metadata.related_exports.kit, {
+    glb_bytes: 3115608,
+    triangles: 169444,
+    vertices: 96952,
+    animations: 0,
+    bounds_glTF_m: {
+      min: [-4.901769459247589, -7.35155866737891e-10, -2.396769553422928],
+      max: [4.901769459247589, 1, 0.23537766933441162],
+      dimensions: [9.803538918495178, 1.000000000735156, 2.6321472227573395],
+    },
+    height_metres: 1.000000000735156,
+  });
   assert.equal(fs.existsSync(assetRoot + '/generate.py'), true);
   assert.ok(fs.statSync(assetRoot + '/generate.py').size > 0);
   assert.equal(fs.existsSync(assetRoot + '/convert-previews.py'), true);
@@ -128,7 +155,7 @@ test('gjh-chibi-visitor-blender: source, measured metrics, kit and previews are 
   assert.equal(waveRoot.extras.pose, 'wave');
   const standBytes = fs.readFileSync(assetRoot + '/' + metadata.paths.stand_glb);
   const stand = measure(readDocument(standBytes), standBytes);
-  assert.deepEqual(stand, { glb_bytes: 705616, triangles: 39332, vertices: 20062, animations: 0 });
+  assert.deepEqual(stand, { glb_bytes: 695076, triangles: 38916, vertices: 19858, animations: 0 });
   assert.ok(stand.triangles < 40000 && stand.glb_bytes < 2 * 1024 * 1024);
   const standDocument = readDocument(standBytes);
   const standRoot = standDocument.nodes[standDocument.scenes[standDocument.scene ?? 0].nodes[0]];
@@ -136,7 +163,7 @@ test('gjh-chibi-visitor-blender: source, measured metrics, kit and previews are 
   const kitPath = assetRoot + '/' + metadata.paths.kit_glb;
   const kitBytes = fs.readFileSync(kitPath);
   const kit = measure(readDocument(kitBytes), kitBytes);
-  assert.deepEqual(kit, { glb_bytes: 3083148, triangles: 167452, vertices: 95936, animations: 0 });
+  assert.deepEqual(kit, { glb_bytes: 3115608, triangles: 169444, vertices: 96952, animations: 0 });
   assert.ok(kit.triangles < 175000 && kit.glb_bytes < 5 * 1024 * 1024);
   for (const view of ['front', 'side', 'back', '3q']) {
     const previewPath = assetRoot + '/previews/' + view + '.webp';

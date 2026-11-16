@@ -328,7 +328,7 @@ def main() -> None:
         collection = {"id": "gjh-chibi-visitor", "name": "GJH Chibi Visitor"}
         catalog["collections"].append(collection)
     collection["description"] = (
-        "Primary Blender-built GJH Chibi Visitor, with three earlier independent experimental comparisons built in Unity by the terra, sol, and astra AI models."
+        "Primary Blender-built R3 GJH Chibi Visitor with a static bent-elbow wave, soft hood and collar, and slender swept fins; three earlier independent Unity experiments remain as comparisons."
     )
     primary = next(
         (asset for asset in collection.get("assets", []) if asset.get("id") == "gjh-chibi-visitor-blender"),

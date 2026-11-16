@@ -149,11 +149,24 @@ async function validateAsset({ id, root, file = id + '.glb', kind = 'unity', reg
     assert.ok(Math.abs(hand.max[1] - metadata.geometry.raised_left_hand_max_y_metres) < 1e-6, 'Raised hand height matches measured metadata');
     assert.ok(Math.abs(fullBounds.min[1]) < 1e-6, 'Default shoes meet the floor');
     const sceneRoot = document.nodes[document.scenes[document.scene ?? 0].nodes[0]];
-    assert.equal(sceneRoot.extras?.pose, 'wave', 'Catalog default GLB uses the R2 wave pose');
+    assert.equal(sceneRoot.extras?.pose, 'wave', 'Catalog default GLB uses the R3 static wave pose');
   } else if (kind === 'stand') {
     const sceneRoot = document.nodes[document.scenes[document.scene ?? 0].nodes[0]];
     assert.equal(sceneRoot.extras?.pose, 'stand', 'Alternative export remains neutral standing');
     assert.ok(Math.abs(fullBounds.dimensions[1] - 1) < 1e-6, 'Stand model height is one metre within measurement tolerance');
+  }
+  if (kind === 'stand' || kind === 'kit') {
+    const metadata = JSON.parse(fs.readFileSync(root + '/metadata.json', 'utf8'));
+    const measuredExport = {
+      ...measured,
+      bounds_glTF_m: fullBounds,
+      height_metres: fullBounds.dimensions[1],
+    };
+    assert.deepEqual(metadata.related_exports?.[kind], measuredExport, `${kind} measured metadata`);
+    if (kind === 'kit') {
+      const sceneRoot = document.nodes[document.scenes[document.scene ?? 0].nodes[0]];
+      assert.equal(sceneRoot.extras?.pose, 'stand', 'Kit character remains in its neutral standing pose');
+    }
   }
   const result = await validateBytes(new Uint8Array(bytes));
   console.log(`${id}: ${measured.glb_bytes} bytes; ${measured.triangles} triangles; ${measured.vertices} vertices; ${measured.animations} clips; ${result.issues.numErrors} errors; ${result.issues.numWarnings} warnings`);

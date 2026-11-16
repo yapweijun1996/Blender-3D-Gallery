@@ -18,7 +18,7 @@ TAU = math.tau
 PALETTE = {"white": "F4F2FA", "ink": "2A2838", "purple": "8B5CF6", "lavender": "D9CCF7"}
 SCENE = None
 M = {}
-OUTLINE_SCALE = 1.45
+OUTLINE_SCALE = 1.80
 SIDES = [(-1, "R"), (1, "L")]  # Anatomical sides: +X is the character's left.
 
 
@@ -57,9 +57,9 @@ def materials():
         "hood_roll": material("Saturated violet hood roll", "8454C5", .85),
         "fin_inset": material("Soft lavender fin inset", "E7DFF5", .74),
         "edge": material("Ink outline | inverted hull", "242130", 1),
-        "light": material("Violet emission | eyes and rings", "8B5CF6", .32, emission=2.5),
-        "light_core": material("Lavender emission core", "D9CCF7", .35, emission=2.2),
-        "eye_core": material("Soft lavender eye emission core", "D9CCF7", .42, emission=1.45),
+        "light": material("Violet emission | eyes and rings", "7940F2", .50, emission=1.5),
+        "light_core": material("Lavender emission core", "B697FA", .60, emission=.75),
+        "eye_core": material("Soft lavender eye emission core", "B697FA", .60, emission=.70),
         "heart": material("Heart emission", "C780FA", .45, emission=2.5),
         "seam": material("Lavender seam", "C2B5DB", .82),
     })
@@ -68,6 +68,10 @@ def materials():
     p.inputs["Base Color"].default_value = (0, 0, 0, 1)
     p.inputs["Emission Color"].default_value = rgba("242130")
     p.inputs["Emission Strength"].default_value = 1
+    M["fin_gradient"] = material("Porcelain with gradual lavender fin inset", "FFFFFF", .74)
+    tint = M["fin_gradient"].node_tree.nodes.new("ShaderNodeVertexColor")
+    tint.layer_name = "FinTint"
+    M["fin_gradient"].node_tree.links.new(tint.outputs["Color"], M["fin_gradient"].node_tree.nodes.get("Principled BSDF").inputs["Base Color"])
 
 
 def empty(name, parent=None, loc=(0, 0, 0)):
@@ -103,6 +107,9 @@ def add_outline(ob, width=.0015):
     width *= OUTLINE_SCALE
     data = ob.data.copy()
     data.name = ob.name + "_InvertedHullMesh"
+    # Ink must not inherit the fin's color channel or tint its exported shell.
+    for attribute in list(data.color_attributes):
+        data.color_attributes.remove(attribute)
     data.materials.clear()
     data.materials.append(M["edge"])
     bm = bmesh.new()
@@ -292,9 +299,9 @@ def face_panel(parent, expression="happy", prefix="Face"):
             return (x, screen_front(x, z) - .0035, z)
         if expression == "happy":
             pts = [surface(cx + .065 * math.cos(t), .588 + .056 * math.sin(t)) for t in np.linspace(.12, math.pi - .12, 22)]
-            rounded_stroke(prefix + "/HappyArc_" + label, pts, .0125, M["light"], group, sides=12)
+            rounded_stroke(prefix + "/HappyArc_" + label, pts, .0125, M["light"], group, sides=8)
             core = [(x, y - .0075, z) for x, y, z in pts]
-            rounded_stroke(prefix + "/HappyArcCore_" + label, core, .008, M["eye_core"], group, sides=12)
+            rounded_stroke(prefix + "/HappyArcCore_" + label, core, .006, M["eye_core"], group, sides=8)
         elif expression == "sleep":
             pts = [surface(cx + t, .618) for t in np.linspace(-.037, .037, 6)]
             rounded_stroke(prefix + "/SleepBar_" + label, pts, .008, M["light"], group)
@@ -385,11 +392,46 @@ def polygon_solid(name, points, depth, mat, parent, bevel=.003, outline=.0015):
 def wing_fins(parent, prefix="Ears/WingFins"):
     group = empty(prefix, parent)
     group["module"] = "ear_fins"
+    # Lofted lenticular sections: 30 mm maximum thickness, swept back in +Y.
+    # Catmull-Rom interpolation rounds the silhouette without thick bevel slabs.
+    rows = np.array([
+        [.731, .265, -.025, .004, .004],
+        [.768, .272, -.009, .028, .011],
+        [.814, .272, .013, .043, .015],
+        [.861, .254, .042, .044, .013],
+        [.910, .228, .073, .032, .011],
+        [.956, .201, .101, .019, .008],
+        [.991, .183, .122, .008, .0045],
+        [1.006, .177, .132, .0012, .0012],
+    ])
+    samples = []
+    for j in range(len(rows) - 1):
+        p0, p1, p2, p3 = rows[max(j - 1, 0)], rows[j], rows[j + 1], rows[min(j + 2, len(rows) - 1)]
+        for t in (0, .5):
+            samples.append(.5 * (2 * p1 + (-p0 + p2) * t + (2*p0 - 5*p1 + 4*p2 - p3) * t*t + (-p0 + 3*p1 - 3*p2 + p3) * t*t*t))
+    samples.append(rows[-1])
     for side, label in SIDES:
-        points = [(side * x, y, z) for x, y, z in [(.268, -.035, .728), (.321, -.016, .818), (.295, .018, .891), (.172, .070, 1.006), (.179, .026, .896), (.215, -.027, .793)]]
-        polygon_solid(prefix + "/" + label + "_WhiteFin", points, (.065, .120, .140, .030, .130, .095), M["white"], group, .005, .0018)
-        inner = [(side * x, y - .002, z) for x, y, z in [(.267, -.033, .758), (.303, -.014, .820), (.281, .018, .879), (.187, .058, .976), (.198, .025, .887), (.230, -.024, .800)]]
-        polygon_solid(prefix + "/" + label + "_LavenderInset", inner, .003, M["fin_inset"], group, .002, 0)
+        vertices, faces, colors = [], [], []
+        n = 16
+        white, lavender = np.array(rgba(PALETTE["white"])), np.array(rgba("D7C6F1"))
+        for j, (z, cx, cy, width, depth) in enumerate(samples):
+            for i in range(n):
+                a = TAU * i / n
+                vertices.append((side * (cx + width * math.cos(a)), cy + depth * math.sin(a), z))
+                blend = max(0, -math.sin(a)) ** 2 * math.sin(math.pi * j / (len(samples)-1)) ** .45
+                colors.append(white * (1 - blend) + lavender * blend)
+        for j in range(len(samples)-1):
+            for i in range(n):
+                a, b = j*n+i, j*n+(i+1)%n
+                faces.append((a, b, b+n, a+n))
+        faces.extend([tuple(reversed(range(n))), tuple((len(samples)-1)*n+i for i in range(n))])
+        ob = mesh(prefix + "/" + label + "_WhiteFin", vertices, faces, M["fin_gradient"], group)
+        attribute = ob.data.color_attributes.new(name="FinTint", type="FLOAT_COLOR", domain="POINT")
+        for item, color in zip(attribute.data, colors):
+            item.color = color
+        add_outline(ob, .0015)
+        ob["max_section_thickness_m"] = .030
+        ob["inset"] = "Continuous vertex-color gradient; no texture or raised inset plate"
     return group
 
 
@@ -420,17 +462,48 @@ def text_geometry(name, content, loc, size, mat, parent, extrude=.0005):
     return ob
 
 
+def soft_sweep(name, points, widths, depths, mat, parent, outline=.0013, sides=14):
+    """Closed, smoothly shaded cloth volume with tapered end sections."""
+    vertices, faces = [], []
+    points = [Vector(p) for p in points]
+    for j, p in enumerate(points):
+        tangent = (points[min(j+1, len(points)-1)] - points[max(0, j-1)]).normalized()
+        u = tangent.cross(Vector((0, 0, 1))).normalized()
+        v = tangent.cross(u).normalized()
+        for i in range(sides):
+            a = TAU * i / sides
+            vertices.append(p + widths[j]*math.cos(a)*u + depths[j]*math.sin(a)*v)
+    for j in range(len(points)-1):
+        for i in range(sides):
+            a, b = j*sides+i, j*sides+(i+1)%sides
+            faces.append((a, b, b+sides, a+sides))
+    faces.extend([tuple(reversed(range(sides))), tuple((len(points)-1)*sides+i for i in range(sides))])
+    return mesh(name, vertices, faces, mat, parent, outline=outline)
+
+
 def hood(parent, prefix):
-    # Thick rear cowl, with an open front V formed by two folded lapels.
-    pts = []
-    for a in np.linspace(-.12, math.pi + .12, 28):
-        pts.append((.134 * math.cos(a), .082 * math.sin(a) + .008, .385 + .010 * math.sin(a)))
-    tube(prefix + "/BackHoodRoll", pts, .026, M["hood_roll"], parent, 10, outline=.0016)
+    # Fabric covers the neck; the back roll is gathered, rounded and U-shaped.
+    loft(prefix + "/SoftInnerCowl", [(.377,.069,.051,.009), (.391,.094,.064,.009),
+         (.416,.093,.061,.008), (.434,.067,.045,.009)], M["hood"], parent, 16, 2, 0, soften=True)
+    pts, widths, depths = [], [], []
+    for t in np.linspace(0, 1, 25):
+        a = -.23 + (math.pi + .46)*t
+        fullness = math.sin(math.pi*t) ** .45
+        pts.append((.121*math.cos(a), .078*math.sin(a)+.008, .397+.006*math.sin(a)))
+        widths.append(.003 + .029*fullness)
+        depths.append(.003 + .031*fullness*(1+.065*math.cos(6*a)))
+    soft_sweep(prefix + "/BackHoodRoll", pts, widths, depths, M["hood_roll"], parent, .0015)
     for side, label in SIDES:
-        pts = [(side * .137, -.035, .405), (side * .095, -.085, .421), (side * .024, -.113, .395), (0, -.114, .380), (side * .076, -.103, .394)]
-        polygon_solid(prefix + "/" + label + "_FoldedHood", pts, .018, M["hood"], parent, .0045, .0012)
-        tube(prefix + "/" + label + "_HoodPiping", pts[:4], .003, M["purple"], parent, 8)
-        tube(prefix + "/" + label + "_Drawstring", [(side * .086, -.110, .376), (side * .091, -.118, .341), (side * .088, -.122, .314)], .0032, M["ink"], parent, 6)
+        controls = np.array([[side*.132,-.026,.405], [side*.106,-.082,.425], [side*.056,-.114,.404], [side*.005,-.119,.380]])
+        pts, widths, depths = [], [], []
+        for t in np.linspace(0, 1, 16):
+            pts.append((1-t)**3*controls[0]+3*(1-t)**2*t*controls[1]+3*(1-t)*t*t*controls[2]+t**3*controls[3])
+            widths.append(.002 + .015*math.sin(math.pi*t)**.65)
+            depths.append(.002 + .013*math.sin(math.pi*t)**.65)
+        soft_sweep(prefix + "/" + label + "_FoldedHood", pts, widths, depths, M["hood"], parent, .001)
+        piping = [(p[0],p[1]-.009,p[2]+.008*math.sin(math.pi*j/15)) for j,p in enumerate(pts)]
+        rounded_stroke(prefix + "/" + label + "_HoodPiping", piping, .0022, M["purple"], parent, 6)
+        tube(prefix + "/" + label + "_Drawstring", [(side*.086,-.110,.387), (side*.089,-.119,.365), (side*.085,-.123,.338), (side*.088,-.122,.314)], .0032, M["ink"], parent, 6)
         bevel_box(prefix + "/" + label + "_Aglet", (side * .088, -.124, .316), (.008, .007, .015), .002, M["lavender"], parent, 0, 2)
 
 
@@ -453,7 +526,7 @@ def outfit(parent, style="white_hoodie", prefix="Outfit"):
         arm["pose_role"] = "arm"; arm["anatomical_side"] = label
         arm.rotation_euler.y = -side * .59
         sleeve_rows = [(-.162, .040, .048, 0), (-.156, .052, .056, 0), (-.131, .060, .063, 0), (-.075, .065, .064, 0), (-.025, .059, .059, 0), (.008, .036, .043, 0), (.014, .010, .014, 0)]
-        loft(prefix + "/" + label + "_" + style + "Sleeve", sleeve_rows, fabric, arm, 20, 2.5, .0014, soften=True)
+        loft(prefix + "/" + label + "_" + style + "Sleeve", sleeve_rows, fabric, arm, 16, 2.5, .0014, soften=True)
         loft(prefix + "/" + label + "_Cuff", [(-.164, .043, .050, 0), (-.157, .051, .056, 0), (-.144, .055, .059, 0)], M["lavender"], arm, 24, 2.4, .001)
         if not plain:
             for k in range(2):
@@ -476,7 +549,7 @@ def outfit(parent, style="white_hoodie", prefix="Outfit"):
 
 def body_base(parent, prefix="Body"):
     group = empty(prefix, parent)
-    ellipsoid(prefix + "/NeckConnector", (0, .015, .405), (.052, .045, .020), M["ink"], group, 20, 12)
+    # The shared soft cowl covers this region; no exposed rigid neck connector.
     loft(prefix + "/BlackShorts", [(.134, .099, .073, .005), (.146, .140, .085, .005), (.178, .151, .090, .005), (.194, .143, .086, .005)], M["ink"], group, 28, 3, .0014)
     for side, label in SIDES:
         leg = empty(prefix + "/" + label + "_Leg", group, (side * .091, .005, 0))
@@ -561,6 +634,95 @@ def rotate_about(ob, pivot, angles):
                        @ Matrix.Translation(-pivot) @ ob.matrix_local)
 
 
+def bend_wave_sleeve(socket):
+    """Bake a curved elbow into the mesh, including its cuff, stripes and outline."""
+    # Uniform axial samples avoid stretching the neutral sleeve's sparse rings
+    # into a visibly angular elbow, while costing less than another subdivision.
+    sleeve = next(o for o in socket.children if o.name.endswith("Sleeve"))
+    name, fabric = sleeve.name, sleeve.data.materials[0]
+    for ob in list(sleeve.children_recursive) + [sleeve]:
+        bpy.data.objects.remove(ob, do_unlink=True)
+    controls = np.array([[-.162,.040,.048,0], [-.144,.055,.059,0], [-.100,.061,.063,0],
+                         [-.055,.063,.062,0], [-.014,.050,.052,0], [.010,.030,.035,0], [.016,.002,.002,0]])
+    rows = []
+    for j in range(len(controls)-1):
+        p0,p1,p2,p3 = controls[max(0,j-1)], controls[j], controls[j+1], controls[min(len(controls)-1,j+2)]
+        for t in (0,.25,.5,.75):
+            rows.append(.5*(2*p1+(-p0+p2)*t+(2*p0-5*p1+4*p2-p3)*t*t+(-p0+3*p1-3*p2+p3)*t*t*t))
+    rows.append(controls[-1])
+    loft(name, rows, fabric, socket, 18, 2.5, .0014)
+    # Give the cuff a real overlap, so its lip cannot intersect the sleeve hull.
+    cuff = next(o for o in socket.children if "_Cuff" in o.name)
+    for ob in [cuff] + list(cuff.children_recursive):
+        for vertex in ob.data.vertices:
+            vertex.co.x *= 1.075
+            vertex.co.y *= 1.075
+    # Printed stripes follow the new sleeve surface instead of clipping through it.
+    rows = np.array(rows)
+    for stripe in [o for o in socket.children if "_SleevePanel_" in o.name]:
+        stripe_name = stripe.name
+        center_z = stripe.location.z
+        bpy.data.objects.remove(stripe, do_unlink=True)
+        verts, faces = [], []
+        for j in range(5):
+            z = center_z - .007 + .014*j/4
+            width = np.interp(z, rows[:,0], rows[:,1])
+            depth = np.interp(z, rows[:,0], rows[:,2])
+            for i in range(11):
+                x = (-1+2*i/10)*(.035 if j in (0,4) else .0375)
+                y = -depth*max(.001,1-abs(x/width)**2.5)**(1/2.5)-.0020
+                verts.append((x,y,z))
+        for j in range(4):
+            for i in range(10):
+                a = j*11+i
+                faces.append((a,a+1,a+12,a+11))
+        stripe = mesh(stripe_name, verts, faces, M["purple"], socket)
+        if stripe.data.polygons[0].normal.y > 0:
+            bm = bmesh.new(); bm.from_mesh(stripe.data)
+            bmesh.ops.reverse_faces(bm, faces=list(bm.faces)); bm.to_mesh(stripe.data); bm.free()
+    # Two cubic spans share a tangent at the elbow; the lower arm turns upward.
+    spans = [np.array([[0,0,0], [.055,0,.006], [.120,-.004,.010], [.155,-.012,.053]]),
+             np.array([[.155,-.012,.053], [.190,-.020,.096], [.231,-.052,.180], [.255,-.058,.220]])]
+    def frame(t):
+        j = 0 if t < .48 else 1
+        u = t/.48 if j == 0 else (t-.48)/.52
+        p = spans[j]
+        center = (1-u)**3*p[0]+3*(1-u)**2*u*p[1]+3*(1-u)*u*u*p[2]+u**3*p[3]
+        tangent = Vector(3*(1-u)**2*(p[1]-p[0])+6*(1-u)*u*(p[2]-p[1])+3*u*u*(p[3]-p[2])).normalized()
+        across = Vector((0,1,0)).cross(-tangent).normalized()
+        depth = (-tangent).cross(across).normalized()
+        return Vector(center), across, depth
+    bpy.context.view_layer.update()
+    inverse_socket = socket.matrix_world.inverted()
+    for ob in socket.children_recursive:
+        if ob.type != "MESH":
+            continue
+        to_socket = inverse_socket @ ob.matrix_world
+        inverse = to_socket.inverted()
+        for vertex in ob.data.vertices:
+            p = to_socket @ vertex.co
+            c, across, depth = frame(-p.z/.160)
+            vertex.co = inverse @ (c + p.x*across + p.y*depth)
+        ob.data.update()
+    socket.rotation_euler = (0,0,0)
+    socket.location = (.155, 0, .343)
+    upper = Vector(spans[0][-1]-spans[0][0])
+    lower = Vector(spans[1][-1]-spans[1][0])
+    socket["elbow_centerline_bend_degrees"] = math.degrees(upper.angle(lower))
+
+
+def open_wave_mitten(socket):
+    for ob in list(socket.children_recursive):
+        bpy.data.objects.remove(ob, do_unlink=True)
+    socket.rotation_euler = (0,0,0)
+    socket.location = (.155, 0, .343)
+    palm = ellipsoid("Body/L_BlackMitten", (.279,-.067,.263), (.047,.036,.065), M["ink"], socket, 24, 14, power=2.25, outline=.0016)
+    palm.rotation_euler.y = .46
+    thumb = ellipsoid("Body/L_OpenMittenThumb", (.240,-.076,.247), (.025,.031,.034), M["ink"], socket, 16, 10, outline=.0012)
+    thumb.rotation_euler.y = -.45
+    socket["gesture"] = "Open mitten palm, lifted fingers and separated thumb; static mesh"
+
+
 def pose_character(root, head, body, clothes, accessories, pose):
     """Author static transforms; no armature, skin, animation, or runtime posing needed."""
     if pose not in ("stand", "wave"):
@@ -568,40 +730,53 @@ def pose_character(root, head, body, clothes, accessories, pose):
     root["pose"] = pose
     legs = [o for o in body.children if o.get("pose_role") == "leg"]
     if pose == "wave":
-        # Both sockets share the same transform, so the mitten follows its sleeve.
-        for ob in descendants(body) + descendants(clothes):
-            if ob.get("pose_role") != "arm":
-                continue
+        # The wave has its own baked sleeve curvature; standing meshes stay neutral.
+        for ob in [o for o in descendants(body) + descendants(clothes) if o.get("pose_role") == "arm"]:
             if ob["anatomical_side"] == "L":
-                ob.location = (.155, -.020, .347)
-                ob.rotation_euler = (-.18, -2.20, -.08)
-                ob.scale = (1, 1, 1.45)
+                if "SleeveSocket" in ob.name:
+                    bend_wave_sleeve(ob)
+                else:
+                    open_wave_mitten(ob)
             else:
-                ob.rotation_euler = (-.10, .92, .04)
+                ob.rotation_euler = (.18, .72, -.12)
         # Keep the short legs independent of the torso lean, then seat each sole.
         for leg in legs:
             leg.parent = root
             if leg["anatomical_side"] == "R":
-                rotate_about(leg, (-.091, .005, .145), (0, .22, -.12))
-                leg.location.y -= .062
-                leg.location.x -= .012
+                rotate_about(leg, (-.091, .005, .145), (-.10, .25, -.18))
+                leg.location.y -= .110
+                leg.location.x -= .024
             else:
                 leg.rotation_euler.y = -.045
-                leg.location.y += .020
-        rotate_about(head, (0, 0, .405), (0, math.radians(2), math.radians(6)))
+                leg.location.y += .035
+        rotate_about(head, (0, 0, .405), (0, math.radians(4), math.radians(3)))
         tilt = empty("Pose/BodyTilt", root, (0, 0, .165))
-        tilt["lean_degrees"] = -6.0
+        tilt["lean_degrees"] = 7.0
         for ob in [head, body, clothes] + accessories:
             ob.parent = tilt
             ob.location -= tilt.location
-        tilt.rotation_euler.y = math.radians(-6)
+        tilt.rotation_euler.y = math.radians(7)
         root["raised_hand"] = "anatomical left (+X in the frontal view)"
-        root["stepping_leg"] = "anatomical right, forward by 0.062 m before normalization"
-        root["head_turn_degrees"] = 6.0
+        root["stepping_leg"] = "anatomical right, forward by 0.110 m before normalization; left back 0.035 m"
+        root["head_turn_degrees"] = 3.0
+        root["head_tilt_toward_hand_degrees"] = 11.0
     # A posed foot must contact the floor even when rotated or shifted forward.
     for leg in legs:
         low, _ = world_bounds(descendants(leg))
         leg.location.z -= low[2]
+        bpy.context.view_layer.update()
+        # Extend the physical sole within the existing outline down to its contact
+        # plane. Hiding outlines must not leave a 2-3 mm floating shoe surface.
+        for shoe in [o for o in leg.children if "_BlackShoe" in o.name]:
+            floor, _ = world_bounds([shoe])
+            gap = floor[2]
+            inverse = shoe.matrix_world.inverted()
+            for vertex in shoe.data.vertices:
+                p = shoe.matrix_world @ vertex.co
+                weight = max(0, 1-(p.z-gap)/.012)
+                p.z -= gap*weight
+                vertex.co = inverse @ p
+            shoe.data.update()
 
 
 def build_character(name="GJHChibiVisitor", expression="happy", ears="wing_fins", outfit_style="white_hoodie", accessories=(), pose="wave"):
@@ -609,7 +784,7 @@ def build_character(name="GJHChibiVisitor", expression="happy", ears="wing_fins"
     root["expression"] = expression; root["ears"] = ears; root["outfit"] = outfit_style
     root["accessories"] = ",".join(accessories) or "none"
     head = empty("Head", root)
-    ellipsoid("Head/WhiteHelmet", (0, 0, HEAD_CENTER), (HEAD_A, HEAD_B, HEAD_C), M["white"], head, 56, 28, HEAD_P, .002)
+    ellipsoid("Head/WhiteHelmet", (0, 0, HEAD_CENTER), (HEAD_A, HEAD_B, HEAD_C), M["white"], head, 48, 24, HEAD_P, .002)
     rear_vertices, rear_faces = [], []
     for j in range(9):
         for i in range(33):
@@ -651,7 +826,10 @@ def build_character(name="GJHChibiVisitor", expression="happy", ears="wing_fins"
     extra = [accessory(root, style) for style in accessories]
     pose_character(root, head, body, clothes, extra, pose)
     normalize_character(root)
-    root["raised_hand_exceeds_one_metre"] = False
+    low, high = world_bounds(descendants(root))
+    root["height_m"] = high[2] - low[2]
+    hands = [o for o in descendants(root) if o.type == "MESH" and "L_BlackMitten" in o.name]
+    root["raised_hand_exceeds_one_metre"] = world_bounds(hands)[1][2] > 1 if hands else False
     return root
 
 
@@ -708,6 +886,8 @@ def export_glb(path, objects, canonical_root=True):
             export_cameras=False, export_lights=False, export_extras=True,
             export_texcoords=False, export_normals=True, export_materials="EXPORT",
             export_image_format="NONE", export_attributes=False,
+            export_vertex_color="NAME", export_vertex_color_name="FinTint",
+            export_all_vertex_colors=False,
         )
     finally:
         root.name = previous_name
@@ -720,7 +900,12 @@ def inspect_glb(path):
     raw = path.read_bytes()
     length = struct.unpack_from("<I", raw, 12)[0]
     doc = json.loads(raw[20:20 + length])
-    triangles = sum(doc["accessors"][p["indices"]]["count"] // 3 for m in doc.get("meshes", []) for p in m["primitives"])
+    # Count each scene instance, including shared mesh data and outline hulls.
+    def count_node(index):
+        node = doc["nodes"][index]
+        own = sum(doc["accessors"][p["indices"]]["count"] // 3 for p in doc["meshes"][node["mesh"]]["primitives"]) if "mesh" in node else 0
+        return own + sum(count_node(child) for child in node.get("children", []))
+    triangles = sum(count_node(i) for i in doc["scenes"][doc.get("scene", 0)]["nodes"])
     info = {"bytes": len(raw), "triangles": triangles, "meshes": len(doc.get("meshes", [])), "nodes": len(doc.get("nodes", [])),
             "materials": len(doc.get("materials", [])), "images": len(doc.get("images", [])), "animations": len(doc.get("animations", [])),
             "outline_nodes": sum(n.get("name", "").endswith("__Outline") for n in doc["nodes"]),
@@ -883,17 +1068,18 @@ def compare_with_sheet():
 
 
 def compare_revisions():
-    # The immutable R1 baseline is copied from this working copy before any edits.
-    paths = [ROOT / "reports/r1/previews/front.png", ROOT / "previews/front.png"]
-    canvas = np.ones((1024, 2048, 4), dtype=np.float32)
+    # Top: archived R2 front/side. Bottom: current R3 front/side.
+    paths = [ROOT / f"{folder}/{view}.png" for folder in ("reports/r2/previews", "previews") for view in ("front", "side")]
+    canvas = np.ones((2048, 2048, 4), dtype=np.float32)
     for i, path in enumerate(paths):
         im = bpy.data.images.load(str(path), check_existing=False)
         assert tuple(im.size) == (1024, 1024), (path, tuple(im.size))
-        canvas[:, i * 1024:(i + 1) * 1024] = np.array(im.pixels[:], dtype=np.float32).reshape(1024, 1024, 4)
+        x, y = (i % 2) * 1024, (1 - i // 2) * 1024
+        canvas[y:y+1024, x:x+1024] = np.array(im.pixels[:], dtype=np.float32).reshape(1024, 1024, 4)
         bpy.data.images.remove(im)
-    result = bpy.data.images.new("R1 standing left - R2 waving right", width=2048, height=1024, alpha=True)
+    result = bpy.data.images.new("R2 front and side above - R3 front and side below", width=2048, height=2048, alpha=True)
     result.pixels.foreach_set(canvas.ravel())
-    result.filepath_raw = str(ROOT / "previews/compare-r1-r2.png")
+    result.filepath_raw = str(ROOT / "previews/compare-r2-r3.png")
     result.file_format = "PNG"; result.save()
     bpy.data.images.remove(result)
 
@@ -970,11 +1156,12 @@ def main():
             compare_with_sheet,
             [ROOT / "previews/front.png", ROOT / "design-sheet.png"],
         )
-        run_optional_comparison(
-            "compare_revisions",
-            compare_revisions,
-            [ROOT / "reports/r1/previews/front.png", ROOT / "previews/front.png"],
-        )
+        if not args.quick:
+            run_optional_comparison(
+                "compare_revisions",
+                compare_revisions,
+                [ROOT / f"{folder}/{view}.png" for folder in ("reports/r2/previews", "previews") for view in ("front", "side")],
+            )
         gallery_preview()
         if not args.quick:
             for ob in descendants(root):

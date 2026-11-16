@@ -1,54 +1,58 @@
-# GJH Chibi Visitor — Blender primary
+# GJH Chibi Visitor — Blender primary, round 3
 
-This folder contains the primary Blender-built model and reproducible source for round two. The catalog registers the static wave pose as `gjh-chibi-visitor-blender`; the neutral stand and all-modules kit are included for inspection only. The model is an original procedural interpretation of the owner's concept, and exact matching to the private character sheet remains unverified.
+This folder contains the primary Blender-built model and its procedural source. The catalog registers the static R3 wave as `gjh-chibi-visitor-blender`; the neutral stand and all-modules kit are included for inspection. This is an original procedural interpretation of a private character sheet, not an exact or independently approved match.
 
 ## Files
 
-- `generate.py`: procedural geometry, materials, exports, and rendered PNG views.
-- `convert-previews.py`: converts the rendered PNG masters to gallery WebP previews.
-- `gjh-chibi-visitor.blend`: editable R2 source scene and named hierarchy.
-- `exports/gjh-chibi-visitor-blender.glb`: default static wave pose, registered in the gallery.
-- `exports/gjh-chibi-visitor-blender-stand.glb`: neutral standing alternative.
-- `exports/gjh-chibi-visitor-blender-kit.glb`: standing model and visible mounts for all 13 modules.
-- `previews/front.webp`, `side.webp`, `back.webp`, and `3q.webp`: 1024 × 1024 views of the default wave export.
-- `metadata.json`: measured default-export metrics and bounds, display settings, attribution, and accuracy notes.
+- `generate.py`: deterministic procedural geometry, materials, three GLB exports, and studio renders.
+- `convert-previews.py`: converts generated PNG renders to the four gallery WebP previews.
+- `gjh-chibi-visitor.blend`: editable R3 source scene with the wave, stand, and module kit.
+- `exports/gjh-chibi-visitor-blender.glb`: registered default wave.
+- `exports/gjh-chibi-visitor-blender-stand.glb`: neutral standing version.
+- `exports/gjh-chibi-visitor-blender-kit.glb`: standing character with 13 visible module mounts.
+- `previews/front.webp`, `side.webp`, `back.webp`, and `3q.webp`: 1024 × 1024 views of the default export.
+- `metadata.json`: measured GLB sizes, triangle and vertex counts, bounds, height, and Blender version.
 
 ## Reproduce
 
-Use Blender **5.2.3 LTS**. From this directory, run:
+Use Blender **5.2.3 LTS** from this directory:
 
     blender --background --python generate.py
 
-The generator uses Blender's bundled `bpy`, `bmesh`, and NumPy modules. It recreates the editable scene, wave, stand, and kit GLBs, 1024 × 1024 PNG views, and `reports/generation.json`. The optional character-sheet comparison is skipped with a log message when `design-sheet.png` is absent. The optional R1 comparison is skipped with a log message when `reports/r1/previews/front.png` is absent. Neither reference image is included here or embedded in the scene.
+The generator uses Blender's bundled `bpy`, `bmesh`, and NumPy modules. It creates the `.blend`, all three GLBs, studio PNG renders, and `reports/generation.json`. The character-sheet and R2 comparison images are optional; when absent, the generator prints `OPTIONAL_COMPARISON_SKIPPED` and completes the regular exports.
 
-The tracked previews are WebP conversions of the generated PNGs. With Python Pillow installed, run:
+R3 reproduction was checked in a fresh temporary directory containing only `generate.py`, with no `design-sheet.png` and no `reports/r2/`. Blender completed both optional comparison skips, generated all three GLBs, and each generated SHA-256 matched the shipped GLB. The saved blend and GLBs do not embed the private character sheet.
+
+The gallery previews are WebP conversions of the rendered PNGs. With Python Pillow installed, run:
 
     python3 convert-previews.py
 
-This uses WebP quality 88 for the 1024 × 1024 front thumbnail (34,830 bytes, under 150 KiB) and quality 86 for the other views.
-
-The GLBs use glTF 2.0, native metres, +Y up, +Z front, and a scene root named `GJHChibiVisitor`. They are self-contained, texture-free, static, and unrigged. Purple emission uses `KHR_materials_emissive_strength`.
+The front preview is **35,128 bytes**, below 150 KiB. The other views use WebP quality 86.
 
 ## Measured exports
 
-| Export | Bytes | Triangles | Vertices | Animation clips |
-| --- | ---: | ---: | ---: | ---: |
-| Default wave | 705,712 | 39,332 | 20,062 | 0 |
-| Neutral stand | 705,616 | 39,332 | 20,062 | 0 |
-| All-modules kit | 3,083,148 | 167,452 | 95,936 | 0 |
+Measurements below are decoded from the shipped GLBs. Triangle counts include each mesh instance in the scene. Vertex counts sum unique stored POSITION accessors. All three exports are self-contained glTF 2.0, texture-free, static, and unrigged, with metres, +Y up, +Z front, and the `GJHChibiVisitor` root. Purple emission uses `KHR_materials_emissive_strength`.
 
-Triangle counts include each mesh instance in the scene. Vertex counts sum unique stored position accessors. The gallery default is below the R2 checks of 40,000 triangles and 2 MiB. The stand uses the same checks. The kit is below 175,000 triangles and 5 MiB; it is not registered in `models/catalog.json`. The Khronos glTF Validator reports zero errors and zero warnings for each export.
+| Export | Bytes | Triangles | Vertices | Animation clips | Measured height (m) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Default wave | 720,372 | 39,564 | 20,212 | 0 | 0.999999917 |
+| Neutral stand | 695,076 | 38,916 | 19,858 | 0 | 1.000000001 |
+| All-modules kit | 3,115,608 | 169,444 | 96,952 | 0 | 1.000000001 |
 
-In generated `reports/roundtrip.json`, triangle and bounds fields describe the character only; the inspection excludes the kit's 13-mount row. Those fields are not whole-kit measurements. The complete kit export, including its mounts, measures 167,452 triangles as listed above.
+The default and stand are each below 40,000 triangles and 2 MiB. The kit is below 5 MiB; its size and bounds include all 13 mounts. Full-precision measurements are stored in `metadata.json` and checked by `../validate.mjs`.
 
-The default wave's measured glTF bounds are X -0.439159 to 0.361410 m, Y 0.000000001 to 0.999999996 m, and Z -0.234867 to 0.238147 m. The measured height is 0.999999995 m, reported as **1.0 m** when rounded. The raised anatomical left hand reaches Y 0.571054 m; it does not extend above the helmet in this build. Both shoes touch the floor within measurement tolerance.
+| Export | Minimum glTF XYZ (m) | Maximum glTF XYZ (m) |
+| --- | --- | --- |
+| Wave | (-0.318953, 0.000000, -0.230665) | (0.526400, 1.000000, 0.231137) |
+| Stand | (-0.393164, 0.000000, -0.234609) | (0.393164, 1.000000, 0.235378) |
+| Whole kit | (-4.901769, 0.000000, -2.396770) | (4.901769, 1.000000, 0.235378) |
 
-## Gallery presentation
+The default raised mitten reaches Y=0.596196731 m. The measured model height is 0.999999917 m (1.000 m rounded). Both physical shoe surfaces and inverted-hull outlines meet Y=0 within 0.000001 m. The whole kit spans approximately 9.803539 × 1.000000 × 2.632147 m because its 13 mounts are arranged in a display row.
 
-`display.previewCameraDirection` is `[0, 0.1, 1]`, a near-front view that keeps the face, chest lettering, and raised hand visible. The gallery normalizes this direction and fits camera distance automatically. `docs/assets.md` defines no camera-distance or zoom override, so the metadata does not invent one. The task report records this remaining framing limitation.
+## R3 changes and remaining differences
 
-## Character-sheet fidelity
+R3 rebuilds the hood as a rounded roll and covered inner cowl, softens the folded collar, thins and rounds the swept fins, bends the raised sleeve and mitten, leans the body and head, and gives the feet a clearer step. The stand and kit remain neutral. Lavender fin gradients export in `COLOR_0`; violet and lavender emission and wider inverted-hull outlines remain present in the GLBs.
 
-R2 adds a static, mildly leaned wave with the anatomical left hand raised and a stepping right leg. It is not an articulated elbow or animated wave; the pose and perspective remain milder than the hero illustration. Raised purple Bfont lettering is larger and bolder but is not an exact trace of the illustrated chunky mark. The wider, thicker happy arcs emit purple light, though renderer-dependent bloom is not guaranteed.
+The hood collar still has projecting tips. The fins are thinner than the character sheet shows in side view, and the raised hand overlaps the headphone silhouette. The wave is a baked pose, not a rigged or animated gesture. Helmet and visor contours, headphones, folds, boots, shorts, and Bfont lettering remain simplified. PBR highlights and uniform outlines differ from the illustration; bloom depends on the renderer. The private sheet is not redistributed, and no exact-fidelity score or independent art approval is claimed.
 
-The helmet contours, visor shoulders, collar, and fins remain regular geometric forms. The collar and fins are angular from side and rear views, and physical screen reflections differ from painted highlights. Cloth folds, cuffs, shorts, shoes, and the pocket seam are simplified. Uniform inverted-hull outlines do not reproduce variable pen pressure, and the PBR response is not cel shading. Expressions, outfits, and accessories remain separate source/kit modules without gallery wardrobe switching or animated facial transitions. The private character sheet is not redistributed, and exact fidelity remains unverified.
+The metadata records measured geometry and file values only. The stand and kit remain local source-folder alternatives; the catalog registers only the default wave.
