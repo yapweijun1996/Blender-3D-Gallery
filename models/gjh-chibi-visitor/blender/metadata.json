@@ -1,8 +1,8 @@
 {
   "id": "gjh-chibi-visitor-blender",
   "name": "GJH Chibi Visitor",
-  "summary": "Blender-built R3 GJH Chibi Visitor with a soft hood and collar, slender swept fins, and a static bent-elbow wave.",
-  "description": "A one-metre procedural robot character with a white hoodie, purple GJH lettering, violet happy eyes, and headphone rings. The default is a static wave with an open mitten, curved elbow, body and head lean toward the raised arm, and a grounded forward step.",
+  "summary": "Rigged R6 GJH Chibi Visitor with Wave, Idle, and Blink animation clips.",
+  "description": "A one-metre procedural robot character with a white hoodie, purple GJH lettering, violet happy eyes, and headphone rings. The default GLB is skinned with 14 joints and includes three animation clips.",
   "category": "Characters",
   "tags": [
     "GJH",
@@ -12,13 +12,14 @@
     "robot",
     "Blender",
     "procedural",
-    "static"
+    "rigged",
+    "animated"
   ],
   "status": "validated",
   "created": "2026-11-16",
   "author": "Original owner-project procedural model",
   "blender_version": "5.2.3 LTS",
-  "creation_method": "Deterministic procedural geometry and materials generated headlessly with Blender from generate.py. R3 exports a static bent-elbow wave, a neutral standing version, and a standing all-modules kit.",
+  "creation_method": "Deterministic procedural geometry, materials, and rig generated headlessly with Blender from generate.py.",
   "generator": "generate.py",
   "paths": {
     "glb": "exports/gjh-chibi-visitor-blender.glb",
@@ -43,10 +44,10 @@
     "origin": "feet at floor Y=0",
     "front_axis": "+Z"
   },
-  "accuracy_notes": "R3 softens the hood and collar, removes the exposed rigid neck connector, thins and rounds the swept fins, and adds a baked elbow bend, open mitten, lean, and clearer step. The hood collar still has projecting tips; the fins are thinner than the character sheet shows in side view; and the raised hand overlaps the headphone silhouette. The gesture is a static mesh pose with no rig or animation. Fin inset gradients use COLOR_0. Emission and bolder inverted-hull outlines survive GLB export, while bloom remains renderer-dependent. Helmet and visor contours, headphones, clothing folds, boots, shorts, and Bfont lettering remain simplified geometric interpretations. PBR shading and uniform outlines differ from the illustration. The private character sheet is not redistributed, and exact fidelity or independent art approval is not claimed.",
+  "accuracy_notes": "This is an original procedural interpretation, not an exact reconstruction or an independently approved match. The hood collar retains projecting tips, the ear fins remain thinner than the design sheet in side view, and the hand reaches the lower edge of the nearby ear cup at the Wave peak. Helmet and visor contours, headphone details, clothing folds, boots, shorts, and chest lettering remain simplified; PBR shading and uniform outlines differ from the illustrated linework. The first and loop-end Wave pose differs from the unanimated rest pose, so runtimes should blend into and out of Wave. The private design sheet is not redistributed.",
   "attribution": [
     {
-      "credit": "Original procedural character geometry and materials generated with Blender 5.2.3 LTS for the owner’s project; no third-party model is included."
+      "credit": "Original procedural character geometry and materials generated with Blender 5.2.3 LTS for the owner's project; no third-party model is included."
     },
     {
       "credit": "Blender-bundled Bfont creates the GJH chest lettering as mesh geometry; no external font file is included."
@@ -54,127 +55,75 @@
   ],
   "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
   "metrics": {
-    "glb_bytes": 720372,
-    "triangles": 39564,
-    "vertices": 20212,
-    "animations": 0
+    "glb_bytes": 1046056,
+    "triangles": 39052,
+    "vertices": 19960,
+    "animations": 3
   },
-  "validation": {
-    "errors": 0,
-    "warnings": 0,
-    "validator": "2.0.0-dev.3.10"
+  "skeleton": {
+    "joint_count": 14
   },
+  "animation_clips": [
+    {
+      "name": "Wave",
+      "duration_seconds": 1.5
+    },
+    {
+      "name": "Idle",
+      "duration_seconds": 2.5
+    },
+    {
+      "name": "Blink",
+      "duration_seconds": 3
+    }
+  ],
   "geometry": {
     "units": "metres",
     "coordinate_order": "glTF X, Y, Z",
     "bounds_glTF_m": {
       "min": [
-        -0.3189529922006255,
-        6.689850513830198e-10,
-        -0.23066454054768337
+        -0.3189530372619629,
+        1.862645149230957e-9,
+        -0.23066452145576477
       ],
       "max": [
-        0.5264002397140539,
-        0.9999999180572903,
-        0.23113691080194443
+        0.5261052846908569,
+        0.9999999403953552,
+        0.23113690316677094
       ],
       "dimensions": [
-        0.8453532319146795,
-        0.9999999173883052,
-        0.4618014513496278
+        0.8450583219528198,
+        0.9999999385327101,
+        0.4618014246225357
       ]
     },
-    "height_metres": 0.9999999173883052,
-    "raised_left_hand_max_y_metres": 0.5961967306292695,
-    "feet_min_y_metres": 6.689850513830198e-10,
-    "grounding_tolerance_metres": 0.000001,
-    "grounding_scope": "Both physical shoe surfaces and inverted-hull outlines",
-    "shoe_bounds_glTF_m": {
-      "L": {
-        "physical": {
-          "min": [
-            0.02961975928677065,
-            6.689850513830198e-10,
-            -0.09897324815392494
-          ],
-          "max": [
-            0.14514626661424476,
-            0.046850631101415484,
-            0.04657565429806709
-          ],
-          "dimensions": [
-            0.1155265073274741,
-            0.04685063043243043,
-            0.14554890245199203
-          ]
-        },
-        "with_outline": {
-          "min": [
-            0.027017211168694655,
-            6.689850513830198e-10,
-            -0.10156659409403801
-          ],
-          "max": [
-            0.14774881473232077,
-            0.049453182810087475,
-            0.049168992787599564
-          ],
-          "dimensions": [
-            0.12073160356362611,
-            0.04945318214110242,
-            0.15073558688163757
-          ]
-        }
-      },
-      "R": {
-        "physical": {
-          "min": [
-            -0.21007686888324995,
-            7.545801539166064e-9,
-            0.04226292128261999
-          ],
-          "max": [
-            -0.08092708618579715,
-            0.06977681046976725,
-            0.19909846950214866
-          ],
-          "dimensions": [
-            0.1291497826974528,
-            0.06977680292396571,
-            0.15683554821952866
-          ]
-        },
-        "with_outline": {
-          "min": [
-            -0.21265988079435544,
-            2.291527981257424e-9,
-            0.03965181411787161
-          ],
-          "max": [
-            -0.07834407017191397,
-            0.07235717432005316,
-            0.20170954037055305
-          ],
-          "dimensions": [
-            0.13431581062244147,
-            0.07235717202852518,
-            0.16205772625268144
-          ]
-        }
-      }
-    }
+    "height_metres": 0.9999999385327101
   },
-  "revision": 3,
   "related_exports": {
     "stand": {
-      "glb_bytes": 695076,
-      "triangles": 38916,
-      "vertices": 19858,
-      "animations": 0,
+      "glb_bytes": 988716,
+      "triangles": 38084,
+      "vertices": 19442,
+      "animations": 3,
+      "joint_count": 14,
+      "animation_clips": [
+        {
+          "name": "Wave",
+          "duration_seconds": 1.5
+        },
+        {
+          "name": "Idle",
+          "duration_seconds": 2.5
+        },
+        {
+          "name": "Blink",
+          "duration_seconds": 3
+        }
+      ],
       "bounds_glTF_m": {
         "min": [
           -0.3931635916233063,
-          -7.35155866737891e-10,
+          0,
           -0.23460909724235535
         ],
         "max": [
@@ -184,35 +133,56 @@
         ],
         "dimensions": [
           0.7863271832466125,
-          1.000000000735156,
+          1,
           0.46998676657676697
         ]
       },
-      "height_metres": 1.000000000735156
+      "height_metres": 1
     },
     "kit": {
-      "glb_bytes": 3115608,
-      "triangles": 169444,
-      "vertices": 96952,
-      "animations": 0,
+      "glb_bytes": 4334380,
+      "triangles": 167780,
+      "vertices": 103151,
+      "animations": 3,
+      "joint_count": 14,
+      "animation_clips": [
+        {
+          "name": "Wave",
+          "duration_seconds": 1.5
+        },
+        {
+          "name": "Idle",
+          "duration_seconds": 2.5
+        },
+        {
+          "name": "Blink",
+          "duration_seconds": 3
+        }
+      ],
       "bounds_glTF_m": {
         "min": [
-          -4.901769459247589,
-          -7.35155866737891e-10,
-          -2.396769553422928
+          -4.901769638061523,
+          0,
+          -2.3967695236206055
         ],
         "max": [
-          4.901769459247589,
+          4.901769638061523,
           1,
           0.23537766933441162
         ],
         "dimensions": [
-          9.803538918495178,
-          1.000000000735156,
-          2.6321472227573395
+          9.803539276123047,
+          1,
+          2.632147192955017
         ]
       },
-      "height_metres": 1.000000000735156
+      "height_metres": 1
     }
+  },
+  "revision": 6,
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
   }
 }

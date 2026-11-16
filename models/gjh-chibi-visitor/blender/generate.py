@@ -11,7 +11,7 @@ from pathlib import Path
 import bpy
 import bmesh
 import numpy as np
-from mathutils import Euler, Matrix, Vector
+from mathutils import Euler, Matrix, Quaternion, Vector
 
 ROOT = Path(__file__).resolve().parent
 TAU = math.tau
@@ -20,6 +20,20 @@ SCENE = None
 M = {}
 OUTLINE_SCALE = 1.80
 SIDES = [(-1, "R"), (1, "L")]  # Anatomical sides: +X is the character's left.
+CLIPS = {"Wave": 45, "Idle": 60, "Blink": 72}
+CLIP_FPS = {"Wave": 30, "Idle": 24, "Blink": 24}
+
+
+def smoothstep(a, b, x):
+    t = max(0.0, min(1.0, (x-a)/(b-a)))
+    return t*t*(3-2*t)
+
+
+def sleeve_weights(t, side):
+    forearm = smoothstep(.32, .65, t)
+    shoulder = smoothstep(-.02, .16, t)
+    return {"Torso": 1-shoulder, "UpperArm."+side: shoulder*(1-forearm),
+            "Forearm."+side: shoulder*forearm}
 
 
 def linear(v):
@@ -335,7 +349,7 @@ def face_panel(parent, expression="happy", prefix="Face"):
     return group
 
 
-def lathe_x(name, side, rows, z, mat, parent, n=40, outline=0):
+def lathe_x(name, side, rows, z, mat, parent, n=32, outline=0):
     verts, faces = [], []
     for x, radius in rows:
         for i in range(n):
@@ -354,7 +368,7 @@ def headphones(parent, prefix="Ears/Headphones"):
     group["module"] = "headphones"
     for side, label in SIDES:
         base = prefix + "/" + label
-        lathe_x(base + "_Cushion", side, [(.280, .085), (.289, .111), (.310, .118), (.323, .113)], .649, M["hood"], group, outline=.0015)
+        lathe_x(base + "_Cushion", side, [(.280, .085), (.289, .111), (.310, .118), (.323, .113)], .649, M["hood"], group, n=32, outline=.0015)
         lathe_x(base + "_WhiteCollar", side, [(.300, .113), (.307, .119), (.319, .119), (.325, .114)], .649, M["white"], group)
         lathe_x(base + "_DarkCup", side, [(.322, .108), (.328, .119), (.348, .122), (.370, .112), (.380, .098)], .649, M["ink"], group, outline=.0015)
         lathe_x(base + "_OuterDisc", side, [(.378, .093), (.383, .088)], .649, M["hood"], group)
@@ -362,7 +376,7 @@ def headphones(parent, prefix="Ears/Headphones"):
         tube(base + "_EmissionRing", pts, .0085, M["light"], group, 8, closed=True)
         core = [(x + side * .006, y, z) for x, y, z in pts]
         tube(base + "_EmissionRingCore", core, .0045, M["light_core"], group, 8, closed=True)
-        lathe_x(base + "_InnerSpeaker", side, [(.382, .069), (.387, .063)], .649, M["ink"], group)
+        lathe_x(base + "_InnerSpeaker", side, [(.382, .069), (.387, .063)], .649, M["ink"], group, n=32)
     return group
 
 
@@ -642,8 +656,8 @@ def bend_wave_sleeve(socket):
     name, fabric = sleeve.name, sleeve.data.materials[0]
     for ob in list(sleeve.children_recursive) + [sleeve]:
         bpy.data.objects.remove(ob, do_unlink=True)
-    controls = np.array([[-.162,.040,.048,0], [-.144,.055,.059,0], [-.100,.061,.063,0],
-                         [-.055,.063,.062,0], [-.014,.050,.052,0], [.010,.030,.035,0], [.016,.002,.002,0]])
+    controls = np.array([[-.162,.040,.048,0], [-.144,.055,.059,0], [-.100,.052,.054,0],
+                         [-.055,.052,.054,0], [-.014,.050,.052,0], [.010,.030,.035,0], [.016,.002,.002,0]])
     rows = []
     for j in range(len(controls)-1):
         p0,p1,p2,p3 = controls[max(0,j-1)], controls[j], controls[j+1], controls[min(len(controls)-1,j+2)]
@@ -681,8 +695,8 @@ def bend_wave_sleeve(socket):
             bm = bmesh.new(); bm.from_mesh(stripe.data)
             bmesh.ops.reverse_faces(bm, faces=list(bm.faces)); bm.to_mesh(stripe.data); bm.free()
     # Two cubic spans share a tangent at the elbow; the lower arm turns upward.
-    spans = [np.array([[0,0,0], [.055,0,.006], [.120,-.004,.010], [.155,-.012,.053]]),
-             np.array([[.155,-.012,.053], [.190,-.020,.096], [.231,-.052,.180], [.255,-.058,.220]])]
+    spans = [np.array([[0,0,0], [.045,-.018,-.035], [.100,-.038,-.060], [.140,-.055,-.045]]),
+             np.array([[.140,-.055,-.045], [.180,-.072,-.030], [.225,-.105,.005], [.255,-.125,.030]])]
     def frame(t):
         j = 0 if t < .48 else 1
         u = t/.48 if j == 0 else (t-.48)/.52
@@ -701,6 +715,10 @@ def bend_wave_sleeve(socket):
         inverse = to_socket.inverted()
         for vertex in ob.data.vertices:
             p = to_socket @ vertex.co
+            for bone, weight in sleeve_weights(-p.z/.160, "L").items():
+                if weight > 0:
+                    group = ob.vertex_groups.get(bone) or ob.vertex_groups.new(name=bone)
+                    group.add([vertex.index], weight, "REPLACE")
             c, across, depth = frame(-p.z/.160)
             vertex.co = inverse @ (c + p.x*across + p.y*depth)
         ob.data.update()
@@ -709,6 +727,14 @@ def bend_wave_sleeve(socket):
     upper = Vector(spans[0][-1]-spans[0][0])
     lower = Vector(spans[1][-1]-spans[1][0])
     socket["elbow_centerline_bend_degrees"] = math.degrees(upper.angle(lower))
+    lengths = []
+    for p in spans:
+        t = np.linspace(0, 1, 1001)[:, None]
+        points = (1-t)**3*p[0]+3*(1-t)**2*t*p[1]+3*(1-t)*t*t*p[2]+t**3*p[3]
+        lengths.append(float(np.linalg.norm(np.diff(points, axis=0), axis=1).sum()))
+    socket["centerline_span_lengths_authored_m"] = lengths
+    socket["centerline_total_authored_m"] = sum(lengths)
+    assert sum(lengths) < .3691497084  # R3 authored sleeve centerline, before normalization.
 
 
 def open_wave_mitten(socket):
@@ -716,15 +742,32 @@ def open_wave_mitten(socket):
         bpy.data.objects.remove(ob, do_unlink=True)
     socket.rotation_euler = (0,0,0)
     socket.location = (.155, 0, .343)
-    palm = ellipsoid("Body/L_BlackMitten", (.279,-.067,.263), (.047,.036,.065), M["ink"], socket, 24, 14, power=2.25, outline=.0016)
-    palm.rotation_euler.y = .46
-    thumb = ellipsoid("Body/L_OpenMittenThumb", (.240,-.076,.247), (.025,.031,.034), M["ink"], socket, 16, 10, outline=.0012)
-    thumb.rotation_euler.y = -.45
-    socket["gesture"] = "Open mitten palm, lifted fingers and separated thumb; static mesh"
+    # A broad, flattened palm faces Blender -Y (glTF +Z). The two shallow
+    # fingertip valleys read at thumbnail size without modelling separate digits.
+    palm = ellipsoid("Body/L_BlackMitten", (.284,-.145,.085), (.06325,.0368,.0874), M["ink"], socket, 28, 14, power=2.45)
+    for v in palm.data.vertices:
+        x, y, z = v.co
+        top = max(0, min(1, (z-.030)/.046))**3
+        notch = sum(math.exp(-((x-s)/.008)**2) for s in (-.016,.017))
+        v.co.z -= .0045*top*notch
+    palm.data.update()
+    palm.rotation_euler.y = .30
+    add_outline(palm, .0016)
+    # The thumb joins only the heel of the palm, leaving a visible web notch.
+    thumb = ellipsoid("Body/L_OpenMittenThumb", (.216,-.148,.068), (.02645,.0322,.0506), M["ink"], socket, 16, 10, outline=.0012)
+    thumb.rotation_euler.y = -.60
+    # Subtle dark lavender stitch marks reinforce the grouped fingers on the palm.
+    for i, x in enumerate((-.0184,.01955)):
+        points = []
+        for z in np.linspace(.046,.0736,6):
+            y = -.0368*max(.001, 1-abs(x/.06325)**2.45-abs(z/.0874)**2.45)**(1/2.45)-.0008
+            points.append((x,y,z))
+        tube("Body/L_FingerSeam_"+str(i+1), points, .0012, M["hood"], palm, 5)
+    socket["gesture"] = "Open graphite mitten palm, splayed thumb, two shallow finger valleys; static mesh"
 
 
 def pose_character(root, head, body, clothes, accessories, pose):
-    """Author static transforms; no armature, skin, animation, or runtime posing needed."""
+    """Author the compact rest pose before skin binding."""
     if pose not in ("stand", "wave"):
         raise ValueError(pose)
     root["pose"] = pose
@@ -863,6 +906,319 @@ def build_kit(default_root):
     return row
 
 
+def stash_action(owner, clip, action):
+    track = owner.animation_data.nla_tracks.new()
+    track.name = clip
+    strip = track.strips.new(clip, 0, action)
+    strip.blend_type = "REPLACE"
+    strip.extrapolation = "NOTHING"
+    track.mute = True
+    owner.animation_data.action = None
+
+
+def bind_mesh(ob, rig, parent, weights):
+    world = ob.matrix_world.copy()
+    ob.data.transform(world)
+    ob.parent = parent
+    ob.matrix_world = Matrix.Identity(4)
+    ob.vertex_groups.clear()
+    for bone in sorted({name for row in weights for name, value in row.items() if value > 0}):
+        group = ob.vertex_groups.new(name=bone)
+        for i, row in enumerate(weights):
+            if row.get(bone, 0) > 0:
+                group.add([i], row[bone], "REPLACE")
+    modifier = ob.modifiers.new("Skin including ink hull", "ARMATURE")
+    modifier.object = rig
+    modifier.use_deform_preserve_volume = False  # Match glTF linear blend skinning.
+    ob["skin_binding"] = "Normalized explicit weights; ink copies physical vertex weights"
+
+
+def rig_character(root):
+    """Bind the accepted rest geometry; all mesh nodes use identity transforms."""
+    bpy.context.view_layer.update()
+    objects = descendants(root)
+    meshes = [o for o in objects if o.type == "MESH"]
+    head = next(o for o in objects if o.name.split(".")[0] == "Head")
+    clothes = next(o for o in objects if o.get("module") == "outfit")
+    body = next(o for o in objects if o.name.split(".")[0] == "Body")
+    factor = root["normalization_scale"]
+    head_matrix = head.matrix_world.copy()
+    def authored(ob, point):
+        return ob.matrix_world @ (Vector(point)*factor)
+    specs = [
+        ("Root", Vector((0,0,0)), Vector((0,0,.08)), None),
+        ("Hips", authored(body, (0,0,.165)), authored(body, (0,0,.230)), "Root"),
+        ("Torso", authored(body, (0,0,.230)), authored(body, (0,0,.385)), "Hips"),
+        ("Head", authored(head, (0,0,.405)), authored(head, (0,0,.730)), "Torso"),
+    ]
+    sockets = {}
+    for side, label in SIDES:
+        socket = next(o for o in objects if o.get("pose_role") == "arm" and
+                      o.get("anatomical_side") == label and "SleeveSocket" in o.name)
+        sockets[label] = socket
+        if label == "L" and root["pose"] == "wave":
+            shoulder, elbow, wrist = [authored(socket, p) for p in
+                                     ((0,0,0), (.140,-.055,-.045), (.255,-.125,.030))]
+            tip = authored(socket, (.284,-.145,.155))
+        else:
+            shoulder, elbow, wrist, tip = [authored(socket, (0,0,z)) for z in (0,-.075,-.154,-.205)]
+        specs.extend([
+            ("UpperArm."+label, shoulder, elbow, "Torso"),
+            ("Forearm."+label, elbow, wrist, "UpperArm."+label),
+            ("Hand."+label, wrist, tip, "Forearm."+label),
+        ])
+        leg = next(o for o in objects if o.get("pose_role") == "leg" and o.get("anatomical_side") == label)
+        specs.append(("Leg."+label, authored(leg,(0,0,.145)), authored(leg,(0,0,.021)), "Hips"))
+        specs.append(("EarFin."+label, authored(head,(side*.265,-.025,.731)),
+                      authored(head,(side*.177,.132,1.006)), "Head"))
+    weights_by_object = {}
+    for ob in meshes:
+        chain = []
+        p = ob.parent
+        while p and p != root:
+            chain.append(p)
+            p = p.parent
+        arm = next((o for o in chain if o.get("pose_role") == "arm"), None)
+        leg = next((o for o in chain if o.get("pose_role") == "leg"), None)
+        rows = []
+        if arm and ob.vertex_groups:
+            rows = [{ob.vertex_groups[g.group].name: g.weight for g in v.groups} for v in ob.data.vertices]
+        else:
+            for vertex in ob.data.vertices:
+                if arm:
+                    label = arm["anatomical_side"]
+                    if "HandSocket" in arm.name:
+                        row = {"Hand."+label: 1.0}
+                    elif "_Cuff" in ob.name:
+                        row = {"Forearm."+label: 1.0}
+                    else:
+                        p = arm.matrix_world.inverted() @ ob.matrix_world @ vertex.co
+                        row = sleeve_weights(-p.z/(.160*factor), label)
+                elif leg:
+                    row = {"Leg."+leg["anatomical_side"]: 1.0}
+                elif head in chain:
+                    fin = "_WhiteFin" in ob.name
+                    row = {("EarFin."+("L" if "/L_" in ob.name else "R")) if fin else "Head": 1.0}
+                elif "BlackShorts" in ob.name:
+                    row = {"Hips": 1.0}
+                elif clothes in chain:
+                    p = clothes.matrix_world.inverted() @ ob.matrix_world @ vertex.co
+                    w = smoothstep(.185, .290, p.z/factor)
+                    row = {"Hips": 1-w, "Torso": w}
+                else:
+                    row = {"Torso": 1.0}
+                rows.append(row)
+        weights_by_object[ob] = rows
+    # Original hulls retain the physical mesh's vertex order. This exact copy
+    # prevents small normal offsets from changing joint weights at the elbow.
+    for ob in meshes:
+        if "__Outline" in ob.name:
+            assert ob.parent in weights_by_object
+            assert len(ob.data.vertices) == len(ob.parent.data.vertices)
+            weights_by_object[ob] = weights_by_object[ob.parent]
+    data = bpy.data.armatures.new(root.name+"_Skeleton")
+    rig = bpy.data.objects.new(root.name+"_Rig", data)
+    SCENE.collection.objects.link(rig)
+    rig.parent = root
+    bpy.ops.object.select_all(action="DESELECT")
+    rig.select_set(True)
+    bpy.context.view_layer.objects.active = rig
+    bpy.ops.object.mode_set(mode="EDIT")
+    for name, a, b, parent in specs:
+        bone = data.edit_bones.new(name)
+        bone.head, bone.tail = a, b
+        if parent:
+            bone.parent = data.edit_bones[parent]
+        bone.use_deform = True
+    bpy.ops.object.mode_set(mode="OBJECT")
+    # Cache matrices first: detaching a physical mesh also moves its child hull.
+    worlds = {ob: ob.matrix_world.copy() for ob in meshes}
+    for ob in meshes:
+        ob.parent = root
+        ob.matrix_world = worlds[ob]
+    bpy.context.view_layer.update()
+    for ob in meshes:
+        bind_mesh(ob, rig, root, weights_by_object[ob])
+    # A fitted morph follows the curved display, preserving the shallow emission
+    # depth during the blink instead of pushing a scaled arc through the screen.
+    eye_meshes = [ob for ob in meshes if "HappyArc" in ob.name]
+    inverse_head = head_matrix.inverted()
+    for ob in eye_meshes:
+        ob.shape_key_add(name="Basis")
+        key = ob.shape_key_add(name="Blink")
+        for v, target in zip(ob.data.vertices, key.data):
+            p = (inverse_head @ v.co)/factor
+            z = .594 + (p.z-.594)*.08
+            q = Vector((p.x, screen_front(p.x,z)+(p.y-screen_front(p.x,p.z)), z))
+            target.co = head_matrix @ (q*factor)
+    animate_rig(rig, eye_meshes, root["pose"])
+    root["rig_bones"] = [name for name, *_ in specs]
+    root["animation_clips_seconds"] = {name: end/CLIP_FPS[name] for name,end in CLIPS.items()}
+    root["rest_pose"] = "Static bind pose, Idle and Blink retain R5; Wave has its own raised greeting entry pose"
+    return rig
+
+
+def animate_rig(rig, eye_meshes, pose):
+    rig.animation_data_create()
+    for bone in rig.pose.bones:
+        bone.rotation_mode = "QUATERNION"
+    def rotation(name, axis, angle):
+        bone = rig.pose.bones[name]
+        local_axis = bone.bone.matrix_local.to_3x3().inverted() @ Vector(axis)
+        bone.rotation_quaternion = Quaternion(local_axis, angle)
+    for clip, end in CLIPS.items():
+        action = bpy.data.actions.new(rig.name+"/"+clip)
+        rig.animation_data.action = action
+        for frame in range(end+1):
+            u = frame/end
+            for bone in rig.pose.bones:
+                bone.location = (0,0,0)
+                bone.rotation_quaternion = (1,0,0,0)
+                bone.scale = (1,1,1)
+            if clip == "Wave":
+                phase = 2*TAU*u + 2*TAU/3
+                if pose == "wave":
+                    # The greeting has a raised entry pose; the R5 bind stays intact.
+                    # 44 degrees at the elbow, 18 degrees at the shoulder, with
+                    # quarter-cycle shoulder overlap and delayed head/body follow.
+                    upper = -50 + 9*math.cos(phase)
+                    lower = 60 + 22*math.sin(phase)
+                    rotation("UpperArm.L", (0,1,0), math.radians(upper))
+                    bone = rig.pose.bones["UpperArm.L"]
+                    axis = bone.bone.matrix_local.to_3x3().inverted() @ Vector((0,0,1))
+                    bone.rotation_quaternion = Quaternion(axis, math.radians(-20)) @ bone.rotation_quaternion
+                    rotation("Forearm.L", (0,1,0), math.radians(lower))
+                    rotation("Hand.L", (0,1,0), math.radians(8 + 3*math.sin(phase-.3)))
+                    bone = rig.pose.bones["Hand.L"]
+                    axis = bone.bone.matrix_local.to_3x3().inverted() @ Vector((0,0,1))
+                    bone.rotation_quaternion = bone.rotation_quaternion @ Quaternion(axis, math.radians(20))
+                    rotation("Torso", (0,1,0), math.radians(2*math.sin(phase-.25)))
+                    rotation("Head", (0,1,0), math.radians(-28 + 3*math.sin(phase-.5)))
+                    bounce = .5-.5*math.cos(phase)
+                    hips = rig.pose.bones["Hips"]
+                    drop = -.0035*bounce
+                    hips.location = hips.bone.matrix_local.to_3x3().inverted() @ Vector((0,0,drop))
+                    for label in ("L", "R"):
+                        leg = rig.pose.bones["Leg."+label]
+                        squash = 1-.025*bounce
+                        leg.scale = (squash, squash, squash)
+                        # A uniform small squash about each floor contact keeps
+                        # physical soles and their ink hulls exactly grounded.
+                        correction = -leg.bone.head_local.z*(1-squash)-drop
+                        leg.location = leg.bone.matrix_local.to_3x3().inverted() @ Vector((0,0,correction))
+                else:
+                    # Neutral variants retain their original Wave gesture.
+                    pulse = math.sin(TAU*u)**2
+                    tilt = math.sin(math.pi*u)**2
+                    rotation("Forearm.L", (0,1,0), math.radians(24)*pulse)
+                    rotation("Hand.L", (0,1,0), math.radians(-7)*pulse)
+                    rotation("Head", (0,1,0), math.radians(-3)*tilt)
+                rotation("EarFin.L", (1,0,0), math.radians(1.5)*math.sin(TAU*u))
+            elif clip == "Idle":
+                breath = math.sin(math.pi*u)**2
+                torso = rig.pose.bones["Torso"]
+                torso.location = torso.bone.matrix_local.to_3x3().inverted() @ Vector((0,0,.0045*breath))
+                torso.scale = (1+.008*breath, 1+.008*breath, 1+.004*breath)
+                rotation("Head", (0,1,0), math.radians(-.7)*math.sin(TAU*u))
+                for sign,label in SIDES:
+                    rotation("EarFin."+label, (1,0,0), sign*math.radians(2)*math.sin(TAU*u))
+            for bone in rig.pose.bones:
+                for channel in ("location", "rotation_quaternion", "scale"):
+                    bone.keyframe_insert(channel, frame=frame, group=bone.name)
+        stash_action(rig, clip, action)
+    for ob in eye_meshes:
+        keys = ob.data.shape_keys
+        keys.animation_data_create()
+        key = keys.key_blocks["Blink"]
+        for clip,end in CLIPS.items():
+            action = bpy.data.actions.new(ob.name+"/"+clip)
+            keys.animation_data.action = action
+            samples = [(0,0),(30,0),(32,.7),(33,1),(34,1),(36,0),(72,0)] if clip == "Blink" else [(0,0),(end,0)]
+            for frame,value in samples:
+                key.value = value
+                key.keyframe_insert("value", frame=frame)
+            stash_action(keys, clip, action)
+        key.value = 0
+    for bone in rig.pose.bones:
+        bone.matrix_basis = Matrix.Identity(4)
+    SCENE.frame_set(0)
+
+
+def bind_kit(row, rig):
+    meshes = [o for o in descendants(row) if o.type == "MESH"]
+    worlds = {o:o.matrix_world.copy() for o in meshes}
+    for ob in meshes:
+        ob.parent = row
+        ob.matrix_world = worlds[ob]
+    bpy.context.view_layer.update()
+    for ob in meshes:
+        bind_mesh(ob, rig, row, [{"Root":1.0} for _ in ob.data.vertices])
+        ob["kit_display"] = True
+
+
+def finalize_glb(path):
+    """Losslessly pack rigid weights and use validator-compatible skin roots."""
+    raw = path.read_bytes()
+    length = struct.unpack_from("<I", raw, 12)[0]
+    doc = json.loads(raw[20:20+length])
+    binary = bytearray(raw[28+length:])
+    # Author/export Idle and Blink at their original 24 Hz, byte for byte.
+    # Wave has 46 authored samples; remap only its time accessors to 30 Hz.
+    wave = next((a for a in doc.get("animations", []) if a["name"] == "Wave"), {"samplers": []})
+    wave_inputs = {s["input"] for s in wave["samplers"]}
+    other_inputs = {s["input"] for a in doc.get("animations", []) if a != wave for s in a["samplers"]}
+    assert not wave_inputs & other_inputs
+    for index in wave_inputs:
+        accessor = doc["accessors"][index]
+        view = doc["bufferViews"][accessor["bufferView"]]
+        offset = view.get("byteOffset", 0) + accessor.get("byteOffset", 0)
+        times = np.frombuffer(binary, dtype="<f4", count=accessor["count"], offset=offset)
+        times[:] = np.rint(times*24)/30
+        accessor["min"], accessor["max"] = [float(times.min())], [float(times.max())]
+    replacements = {}
+    weights = {p["attributes"]["WEIGHTS_0"] for m in doc["meshes"] for p in m["primitives"]
+               if "WEIGHTS_0" in p["attributes"]}
+    for index in sorted(weights):
+        a = doc["accessors"][index]
+        if a["componentType"] != 5126:
+            continue
+        v = doc["bufferViews"][a["bufferView"]]
+        assert not a.get("byteOffset",0) and v.get("byteStride",16) == 16
+        values = np.frombuffer(binary, dtype="<f4", count=a["count"]*4, offset=v["byteOffset"])
+        if np.all((values == 0) | (values == 1)):
+            # UNORM8 encodes 0 and 1 exactly. Blended weights remain FLOAT.
+            replacements[a["bufferView"]] = (values*255).astype(np.uint8).tobytes()
+            a["componentType"] = 5121
+            a["normalized"] = True
+            if "byteStride" in v:
+                v["byteStride"] = 4
+    packed = bytearray()
+    for i,view in enumerate(doc["bufferViews"]):
+        packed.extend(b"\0"*((-len(packed))%4))
+        block = replacements.get(i, binary[view["byteOffset"]:view["byteOffset"]+view["byteLength"]])
+        view["byteOffset"], view["byteLength"] = len(packed), len(block)
+        packed.extend(block)
+    doc["buffers"][0]["byteLength"] = len(packed)
+    # glTF ignores parents of skinned mesh nodes. Our nodes have baked identity
+    # transforms; make them scene roots to remove NODE_SKINNED_MESH_NON_ROOT.
+    skinned = {i for i,n in enumerate(doc["nodes"]) if "skin" in n}
+    for n in doc["nodes"]:
+        if "children" in n:
+            n["children"] = [i for i in n["children"] if i not in skinned]
+            if not n["children"]:
+                del n["children"]
+    for scene in doc["scenes"]:
+        scene["nodes"] = list(dict.fromkeys(scene["nodes"]+sorted(skinned)))
+    if doc.get("animations"):
+        doc["animations"] = sorted(doc["animations"], key=lambda a:list(CLIPS).index(a["name"]))
+    header = json.dumps(doc, separators=(",",":"), ensure_ascii=False).encode()
+    header += b" "*((-len(header))%4)
+    packed.extend(b"\0"*((-len(packed))%4))
+    total = 12+8+len(header)+8+len(packed)
+    path.write_bytes(struct.pack("<4sII",b"glTF",2,total)+struct.pack("<I4s",len(header),b"JSON")+
+                     header+struct.pack("<I4s",len(packed),b"BIN\0")+packed)
+
+
 def export_glb(path, objects, canonical_root=True):
     bpy.ops.object.select_all(action="DESELECT")
     for ob in objects:
@@ -882,7 +1238,15 @@ def export_glb(path, objects, canonical_root=True):
     try:
         bpy.ops.export_scene.gltf(
             filepath=str(path), export_format="GLB", use_selection=True,
-            export_yup=True, export_apply=True, export_animations=False,
+            export_yup=True, export_apply=False, export_animations=True,
+            export_animation_mode="ACTIONS", export_merge_animation="NLA_TRACK",
+            export_force_sampling=True, export_frame_range=False,
+            export_skins=True, export_rest_position_armature=True,
+            export_anim_single_armature=False,
+            export_optimize_animation_size=True,
+            export_optimize_animation_keep_anim_armature=False,
+            export_optimize_animation_keep_anim_object=False,
+            export_optimize_disable_viewport=False,
             export_cameras=False, export_lights=False, export_extras=True,
             export_texcoords=False, export_normals=True, export_materials="EXPORT",
             export_image_format="NONE", export_attributes=False,
@@ -893,6 +1257,7 @@ def export_glb(path, objects, canonical_root=True):
         root.name = previous_name
         if other:
             other.name = "GJHChibiVisitor"
+    finalize_glb(path)
     return inspect_glb(path)
 
 
@@ -987,15 +1352,16 @@ def apply_compositing():
         glare.threshold = .6
     # A generated studio-only gradient avoids a horizon in orthographic views.
     # It never belongs to the model and is created after both texture-free exports.
-    yy, xx = np.mgrid[0:1024, 0:1024].astype(np.float32)
-    xx = xx / 1023; yy = yy / 1023
+    size = round(SCENE.render.resolution_x*SCENE.render.resolution_percentage/100)
+    yy, xx = np.mgrid[0:size, 0:size].astype(np.float32)
+    xx = xx / (size-1); yy = yy / (size-1)
     t = np.clip(.24 + .56 * yy + .23 * np.exp(-((xx - .38) ** 2 + (yy - .65) ** 2) / .20), 0, 1)
     lower = np.array(rgba("D4C4EF")[:3]); upper = np.array(rgba("F6F1FF")[:3])
-    pixels = np.ones((1024, 1024, 4), dtype=np.float32)
+    pixels = np.ones((size, size, 4), dtype=np.float32)
     pixels[:, :, :3] = lower[None, None, :] * (1 - t[:, :, None]) + upper[None, None, :] * t[:, :, None]
     shadow = .20 * np.exp(-((xx - .5) / .20) ** 2 - ((yy - .091) / .014) ** 2)
     pixels[:, :, :3] *= 1 - shadow[:, :, None]
-    backdrop = bpy.data.images.new("Studio procedural lavender gradient", width=1024, height=1024, alpha=True, float_buffer=True)
+    backdrop = bpy.data.images.new("Studio procedural lavender gradient", width=size, height=size, alpha=True, float_buffer=True)
     backdrop.pixels.foreach_set(pixels.ravel()); backdrop.pack()
     image_node = tree.nodes.new("CompositorNodeImage"); image_node.image = backdrop
     over = tree.nodes.new("CompositorNodeAlphaOver")
@@ -1037,49 +1403,74 @@ def render_views(row, quick=False):
     if quick:
         views = [views[0], views[3]]
     for view, loc in views:
-        SCENE.camera.location = loc; aim(SCENE.camera, (0, 0, .505))
-        SCENE.camera.data.ortho_scale = 1.22 if view != "3q" else 1.25
+        target = (.14, 0, .505) if view in ("front", "back") else (0, 0, .505)
+        SCENE.camera.location = Vector(loc) + Vector((target[0],0,0))
+        aim(SCENE.camera, target)
+        SCENE.camera.data.ortho_scale = 1.28 if view in ("front", "back") else (1.25 if view == "3q" else 1.22)
         SCENE.render.filepath = str(ROOT / "previews" / (view + ".png"))
         print("RENDER_VIEW", view, flush=True)
         bpy.ops.render.render(write_still=True)
-
-
-def compare_with_sheet():
-    # Image layout only: source reference and actual Blender output remain unmodified.
-    front = bpy.data.images.load(str(ROOT / "previews/front.png"), check_existing=False)
-    sheet = bpy.data.images.load(str(ROOT / "design-sheet.png"), check_existing=False)
-    w, h = 2560, 1024
-    canvas = np.ones((h, w, 4), dtype=np.float32)
-    canvas[:, :, :3] = (.92, .89, .97)
-    for image, x, target_w in [(front, 0, 1024), (sheet, 1024, 1536)]:
-        iw, ih = image.size
-        pixels = np.array(image.pixels[:], dtype=np.float32).reshape(ih, iw, 4)
-        tw, th = target_w, round(ih * target_w / iw)
-        ix = np.minimum((np.arange(tw) * iw / tw).astype(int), iw - 1)
-        iy = np.minimum((np.arange(th) * ih / th).astype(int), ih - 1)
-        y = (h - th) // 2
-        canvas[y:y + th, x:x + tw] = pixels[iy[:, None], ix[None, :]]
-    result = bpy.data.images.new("Front render beside supplied design sheet", width=w, height=h, alpha=True)
-    result.pixels.foreach_set(canvas.ravel())
-    result.filepath_raw = str(ROOT / "previews/compare-with-sheet.png")
-    result.file_format = "PNG"; result.save()
-    for im in (front, sheet, result):
-        bpy.data.images.remove(im)
+    if not quick:
+        palm = next(o for o in SCENE.objects if o.type == "MESH" and o.name == "Body/L_BlackMitten")
+        low, high = world_bounds([palm])
+        target = (Vector(low)+Vector(high))*.5 + Vector((-.015,0,-.025))
+        SCENE.camera.location = target + Vector((0,-3,.12))
+        aim(SCENE.camera, target)
+        SCENE.camera.data.ortho_scale = .34
+        SCENE.render.filepath = str(ROOT/"previews/hand-closeup.png")
+        bpy.ops.render.render(write_still=True)
 
 
 def compare_revisions():
-    # Top: archived R2 front/side. Bottom: current R3 front/side.
-    paths = [ROOT / f"{folder}/{view}.png" for folder in ("reports/r2/previews", "previews") for view in ("front", "side")]
-    canvas = np.ones((2048, 2048, 4), dtype=np.float32)
-    for i, path in enumerate(paths):
-        im = bpy.data.images.load(str(path), check_existing=False)
-        assert tuple(im.size) == (1024, 1024), (path, tuple(im.size))
-        x, y = (i % 2) * 1024, (1 - i // 2) * 1024
-        canvas[y:y+1024, x:x+1024] = np.array(im.pixels[:], dtype=np.float32).reshape(1024, 1024, 4)
-        bpy.data.images.remove(im)
-    result = bpy.data.images.new("R2 front and side above - R3 front and side below", width=2048, height=2048, alpha=True)
+    # R4 on top, R5 below. All tiles come from actual renders.
+    views = ("front", "3q", "side", "front")
+    canvas = np.ones((1104, 2048, 4), dtype=np.float32)
+    canvas[:, :, :3] = (.17, .14, .24)
+    for row, folder in enumerate(("reports/r4/previews", "previews")):
+        for col, view in enumerate(views):
+            im = bpy.data.images.load(str(ROOT / folder / (view+".png")), check_existing=False)
+            iw, ih = im.size
+            pixels = np.array(im.pixels[:], dtype=np.float32).reshape(ih, iw, 4)
+            if col == 3:
+                # Equal 400px crop extents and identical camera framing.
+                bottom = 440 if row == 0 else 190
+                pixels = pixels[bottom:bottom+400, 624:1024]
+            h, w = pixels.shape[:2]
+            ix = np.minimum((np.arange(512)*w/512).astype(int),w-1)
+            iy = np.minimum((np.arange(512)*h/512).astype(int),h-1)
+            y, x = (1-row)*552, col*512
+            canvas[y:y+512,x:x+512] = pixels[iy[:,None],ix[None,:]]
+            bpy.data.images.remove(im)
+    # Minimal bitmap labels avoid external font or Pillow dependencies.
+    glyphs = {
+        "R": ["11110","10001","10001","11110","10100","10010","10001"],
+        "3": ["11110","00001","00001","01110","00001","00001","11110"],
+        "4": ["10010","10010","10010","11111","00010","00010","00010"],
+        "5": ["11111","10000","10000","11110","00001","00001","11110"],
+        "F": ["11111","10000","10000","11110","10000","10000","10000"],
+        "O": ["01110","10001","10001","10001","10001","10001","01110"],
+        "N": ["10001","11001","11001","10101","10011","10011","10001"],
+        "T": ["11111","00100","00100","00100","00100","00100","00100"],
+        "Q": ["01110","10001","10001","10001","10101","10010","01101"],
+        "S": ["01111","10000","10000","01110","00001","00001","11110"],
+        "I": ["11111","00100","00100","00100","00100","00100","11111"],
+        "D": ["11110","10001","10001","10001","10001","10001","11110"],
+        "E": ["11111","10000","10000","11110","10000","10000","11111"],
+        "H": ["10001","10001","10001","11111","10001","10001","10001"],
+        "A": ["01110","10001","10001","11111","10001","10001","10001"],
+    }
+    for row, revision in enumerate(("R4", "R5")):
+        for col, label in enumerate(("FRONT", "3Q", "SIDE", "HAND")):
+            for k, char in enumerate(revision+"  "+label):
+                for gy, line in enumerate(glyphs.get(char, [])):
+                    for gx, bit in enumerate(line):
+                        if bit == "1":
+                            x = col*512+18+k*18+gx*3
+                            y = (1-row)*552+518+(6-gy)*3
+                            canvas[y:y+3,x:x+3,:3] = (.94,.90,1.0)
+    result = bpy.data.images.new("R4 above R5 - front, 3q, side, hand detail", width=2048, height=1104, alpha=True)
     result.pixels.foreach_set(canvas.ravel())
-    result.filepath_raw = str(ROOT / "previews/compare-r2-r3.png")
+    result.filepath_raw = str(ROOT / "previews/compare-r4-r5.png")
     result.file_format = "PNG"; result.save()
     bpy.data.images.remove(result)
 
@@ -1101,9 +1492,179 @@ def gallery_preview():
     bpy.data.images.remove(im)
 
 
+def animation_owners(scene):
+    owners = []
+    for ob in scene.objects:
+        if ob.animation_data:
+            owners.append(ob)
+        if ob.type == "MESH" and ob.data.shape_keys and ob.data.shape_keys.animation_data:
+            owners.append(ob.data.shape_keys)
+    return owners
+
+
+def activate_clip(scene, clip, frame):
+    for ob in scene.objects:
+        if ob.type == "ARMATURE":
+            for bone in ob.pose.bones:
+                bone.matrix_basis = Matrix.Identity(4)
+        if ob.type == "MESH" and ob.data.shape_keys:
+            for key in ob.data.shape_keys.key_blocks[1:]:
+                key.value = 0
+    matched = 0
+    offsets = []
+    for owner in animation_owners(scene):
+        owner.animation_data.action = None
+        for track in owner.animation_data.nla_tracks:
+            track.mute = track.name != clip
+            matched += not track.mute
+            if not track.mute:
+                offsets.append(track.strips[0].frame_start-track.strips[0].action_frame_start)
+    assert matched, (clip, [o.name for o in animation_owners(scene)])
+    # Blender's glTF importer places time zero at scene frame one.
+    frame = frame*scene.render.fps/CLIP_FPS[clip] + min(offsets)
+    scene.frame_set(int(frame), subframe=frame-int(frame))
+    bpy.context.view_layer.update()
+
+
+def contact_sheet(paths, frames, destination, fps=24):
+    size, bar = 512, 32
+    columns = 3 if len(paths) == 6 else 4
+    rows = math.ceil(len(paths)/columns)
+    canvas = np.ones((rows*(size+bar), columns*size, 4), dtype=np.float32)
+    canvas[:,:,:3] = (.17,.14,.24)
+    digits = ["111101101101111", "010110010010111", "111001111100111", "111001111001111",
+              "101101111001001", "111100111001111", "111100111101111", "111001001001001",
+              "111101111101111", "111101111001111"]
+    for i,(path,frame) in enumerate(zip(paths,frames)):
+        im = bpy.data.images.load(str(path), check_existing=False)
+        im.scale(size,size)
+        pixels = np.array(im.pixels[:], dtype=np.float32).reshape(size,size,4)
+        x, y = (i%columns)*size, (rows-1-i//columns)*(size+bar)
+        canvas[y:y+size,x:x+size] = pixels
+        bpy.data.images.remove(im)
+        for k,c in enumerate(f"{frame/fps:.2f}"):
+            pattern = digits[int(c)] if c.isdigit() else "000000000000010"
+            for j,bit in enumerate(pattern):
+                if bit == "1":
+                    xx, yy = x+15+k*16+(j%3)*4, y+size+6+(4-j//3)*4
+                    canvas[yy:yy+4,xx:xx+4,:3] = (.94,.90,1)
+    result = bpy.data.images.new(destination.stem, width=columns*size, height=rows*(size+bar), alpha=True)
+    result.pixels.foreach_set(canvas.ravel())
+    result.filepath_raw = str(destination)
+    result.file_format = "PNG"
+    result.save()
+    bpy.data.images.remove(result)
+
+
+def render_imported_clips():
+    """Every animation preview is rendered from the delivered GLB, not the source rig."""
+    global SCENE
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    SCENE = bpy.context.scene
+    SCENE.render.fps = 30
+    bpy.ops.import_scene.gltf(filepath=str(ROOT/"exports/gjh-chibi-visitor-blender.glb"))
+    setup_studio()
+    SCENE.render.resolution_x = SCENE.render.resolution_y = 512
+    apply_compositing()
+    folder = ROOT/"previews/animation-frames"
+    folder.mkdir(exist_ok=True)
+    samples = {"Wave":[0,6,11,17,23,28,34,40], "Idle":[0,12,24,36,48,60], "Blink":[0,30,32,33,34,36]}
+    playback = {"Wave":list(range(45)), "Idle":list(range(0,60,6)), "Blink":[0,30,31,32,33,34,35,36]}
+    report = {}
+    for clip,frames in samples.items():
+        SCENE.camera.location = (1.65,-3.3,1.18)
+        aim(SCENE.camera, (.06,0,.505))
+        SCENE.camera.data.ortho_scale = 1.25
+        for frame in sorted(set(frames+playback[clip])):
+            activate_clip(SCENE,clip,frame)
+            path = folder/f"{clip.lower()}-{frame:02d}.png"
+            SCENE.render.filepath = str(path)
+            print("RENDER_IMPORTED_ANIMATION",clip,frame,flush=True)
+            bpy.ops.render.render(write_still=True)
+        paths = [folder/f"{clip.lower()}-{frame:02d}.png" for frame in frames]
+        contact_sheet(paths,frames,ROOT/f"previews/anim-{clip.lower()}-strip.png",CLIP_FPS[clip])
+        report[clip] = {"frames":frames,"seconds":[f/CLIP_FPS[clip] for f in frames],"playback_frames":playback[clip],
+                        "fps":CLIP_FPS[clip],"duration_frames":CLIPS[clip],"source":"exported GLB fresh import"}
+        if clip == "Wave":
+            review = list(range(0,45,3))
+            contact_sheet([folder/f"wave-{f:02d}.png" for f in review],review,
+                          ROOT/"previews/wave-review-3q.png",30)
+            SCENE.camera.location = (.14,-4,.52)
+            aim(SCENE.camera, (.14,0,.505))
+            SCENE.camera.data.ortho_scale = 1.28
+            for frame in review:
+                activate_clip(SCENE,clip,frame)
+                SCENE.render.filepath = str(folder/f"wave-front-{frame:02d}.png")
+                bpy.ops.render.render(write_still=True)
+            contact_sheet([folder/f"wave-front-{f:02d}.png" for f in review],review,
+                          ROOT/"previews/wave-review-front.png",30)
+            report[clip]["review_front_frames"] = review
+            report[clip]["review_3q_frames"] = review
+    (ROOT/"reports/animation-preview-samples.json").write_text(json.dumps(report,indent=2)+"\n")
+
+
+def compare_wave_revisions():
+    """Render both GLBs at their measured highest hand frame, with identical cameras."""
+    global SCENE
+    folder = ROOT/"previews/comparison-frames"
+    folder.mkdir(exist_ok=True)
+    peaks = {}
+    for label,path in (("r5",ROOT/"reports/r5-baseline/exports/gjh-chibi-visitor-blender.glb"),
+                       ("r6",ROOT/"exports/gjh-chibi-visitor-blender.glb")):
+        bpy.ops.wm.read_factory_settings(use_empty=True)
+        SCENE = bpy.context.scene
+        SCENE.render.fps = 30
+        bpy.ops.import_scene.gltf(filepath=str(path))
+        palm = bpy.data.objects['Body/L_BlackMitten']
+        heights = []
+        for frame in range(46):
+            activate_clip(SCENE,"Wave",frame)
+            evaluated = palm.evaluated_get(bpy.context.evaluated_depsgraph_get())
+            data = evaluated.to_mesh()
+            heights.append(max((evaluated.matrix_world @ v.co).z for v in data.vertices))
+            evaluated.to_mesh_clear()
+        peak = max(range(46),key=lambda f:heights[f])
+        peaks[label] = {"frame_at_30fps":peak,"seconds":peak/30,"hand_top_m":heights[peak]}
+        setup_studio(); apply_compositing()
+        SCENE.render.resolution_x = SCENE.render.resolution_y = 512
+        for view,loc,target,scale in (("front",(.14,-4,.52),(.14,0,.505),1.28),
+                                      ("3q",(1.65,-3.3,1.18),(.06,0,.505),1.25)):
+            activate_clip(SCENE,"Wave",peak)
+            SCENE.camera.location = loc; aim(SCENE.camera,target)
+            SCENE.camera.data.ortho_scale = scale
+            SCENE.render.filepath = str(folder/f"{label}-{view}.png")
+            bpy.ops.render.render(write_still=True)
+    canvas = np.ones((1104,1024,4),dtype=np.float32)
+    canvas[:,:,:3] = (.17,.14,.24)
+    glyphs = {"R":["11110","10001","10001","11110","10100","10010","10001"],
+              "5":["11111","10000","10000","11110","00001","00001","11110"],
+              "6":["01110","10000","10000","11110","10001","10001","01110"],
+              "F":["11111","10000","10000","11110","10000","10000","10000"],
+              "3":["11110","00001","00001","01110","00001","00001","11110"],
+              "Q":["01110","10001","10001","10001","10101","10010","01101"]}
+    for row,label in enumerate(("r5","r6")):
+        for col,view in enumerate(("front","3q")):
+            image = bpy.data.images.load(str(folder/f"{label}-{view}.png"),check_existing=False)
+            x,y = col*512,(1-row)*552
+            canvas[y:y+512,x:x+512] = np.array(image.pixels[:],dtype=np.float32).reshape(512,512,4)
+            bpy.data.images.remove(image)
+            for k,char in enumerate(label.upper()+"  "+("F" if view=="front" else "3Q")):
+                for gy,line in enumerate(glyphs.get(char,[])):
+                    for gx,bit in enumerate(line):
+                        if bit == "1":
+                            xx,yy = x+18+k*18+gx*3,y+518+(6-gy)*3
+                            canvas[yy:yy+3,xx:xx+3,:3] = (.94,.90,1)
+    image = bpy.data.images.new("R5 above R6 - wave peak",width=1024,height=1104,alpha=True)
+    image.pixels.foreach_set(canvas.ravel())
+    image.filepath_raw = str(ROOT/"previews/compare-r5-r6.png")
+    image.file_format = "PNG"; image.save(); bpy.data.images.remove(image)
+    (ROOT/"reports/wave-comparison.json").write_text(json.dumps(peaks,indent=2)+"\n")
+
+
 def main():
     global SCENE
     parser = argparse.ArgumentParser()
+    parser.add_argument("--static-preview", action="store_true")
     parser.add_argument("--quick", action="store_true", help="Render front and three-quarter only for iteration")
     parser.add_argument("--no-render", action="store_true")
     parser.add_argument("--expression", choices=["happy", "sleep", "excited", "heart"], default="happy")
@@ -1120,20 +1681,29 @@ def main():
         (ROOT / name).mkdir(exist_ok=True)
     materials()
     root = build_character()
+    rig = rig_character(root) if not args.static_preview else None
     metrics = {"blender_version": bpy.app.version_string, "palette": PALETTE}
     metrics["default"] = export_glb(ROOT / "exports/gjh-chibi-visitor-blender.glb", descendants(root))
     metrics["default"]["blender_bounds"] = world_bounds(descendants(root))
     assert metrics["default"]["triangles"] < 40000, metrics["default"]
     assert metrics["default"]["bytes"] < 2 * 1024 ** 2, metrics["default"]
+    if args.static_preview:
+        setup_studio()
+        apply_compositing()
+        render_views(empty("IterationOnly"), args.quick)
+        return
     stand = build_character("GJHChibiVisitor_Stand", pose="stand")
+    stand_rig = rig_character(stand)
     metrics["stand"] = export_glb(ROOT / "exports/gjh-chibi-visitor-blender-stand.glb", descendants(stand))
     metrics["stand"]["blender_bounds"] = world_bounds(descendants(stand))
     assert metrics["stand"]["triangles"] < 40000 and metrics["stand"]["bytes"] < 2 * 1024 ** 2
     row = build_kit(stand)
+    bind_kit(row, stand_rig)
     metrics["kit"] = export_glb(ROOT / "exports/gjh-chibi-visitor-blender-kit.glb", descendants(stand))
     assert metrics["kit"]["bytes"] < 5 * 1024 ** 2, metrics["kit"]
     if (args.expression, args.ears, args.outfit, args.accessories, args.pose) != ("happy", "wing_fins", "white_hoodie", [], "wave"):
         custom = build_character("GJHChibiVisitor_Custom", args.expression, args.ears, args.outfit, args.accessories, args.pose)
+        rig_character(custom)
         metrics["custom"] = export_glb(ROOT / "exports/gjh-chibi-visitor-custom.glb", descendants(custom), canonical_root=False)
         for ob in descendants(custom):
             ob.hide_render = True; ob.hide_set(True)
@@ -1147,20 +1717,40 @@ def main():
     SCENE["asset_contract"] = "Native metres; glTF +Y up, +Z front, feet Y=0; no textures"
     SCENE["source_notes"] = "Wave visible; GJHChibiVisitor_Stand and KIT_MountRow hidden for studio only. Kit GLB stands with 13 visible mounts."
     SCENE["generator"] = "generate.py"
+    for action in bpy.data.actions:
+        if action.name.endswith(("/Idle", "/Blink")):
+            for layer in action.layers:
+                for strip in layer.strips:
+                    for bag in strip.channelbags:
+                        for curve in bag.fcurves:
+                            for key in curve.keyframe_points:
+                                key.co.x *= 1.25
+                                key.handle_left.x *= 1.25
+                                key.handle_right.x *= 1.25
+    for owner in animation_owners(SCENE):
+        for track in owner.animation_data.nla_tracks:
+            for strip in track.strips:
+                strip.action_frame_end = strip.action.frame_range[1]
+                strip.frame_end = strip.action.frame_range[1]
+    SCENE.render.fps = 30
+    rig.animation_data.action = next(t.strips[0].action for t in rig.animation_data.nla_tracks if t.name == "Wave")
+    SCENE.frame_start = 0
+    SCENE.frame_end = CLIPS["Wave"]
+    SCENE.frame_set(0)
     bpy.context.preferences.filepaths.save_version = 0
     bpy.ops.wm.save_as_mainfile(filepath=str(ROOT / "gjh-chibi-visitor.blend"), compress=True)
+    # Static views continue to show the accepted R5 bind pose.
+    rig.animation_data.action = None
+    for bone in rig.pose.bones:
+        bone.matrix_basis = Matrix.Identity(4)
+    bpy.context.view_layer.update()
     if not args.no_render:
         render_views(row, args.quick)
-        run_optional_comparison(
-            "compare_with_sheet",
-            compare_with_sheet,
-            [ROOT / "previews/front.png", ROOT / "design-sheet.png"],
-        )
         if not args.quick:
             run_optional_comparison(
                 "compare_revisions",
                 compare_revisions,
-                [ROOT / f"{folder}/{view}.png" for folder in ("reports/r2/previews", "previews") for view in ("front", "side")],
+                [ROOT / f"{folder}/{view}.png" for folder in ("reports/r4/previews", "previews") for view in ("front", "side", "3q")],
             )
         gallery_preview()
         if not args.quick:
@@ -1174,6 +1764,9 @@ def main():
             SCENE.camera.data.ortho_scale = 1.22
             SCENE.render.filepath = str(ROOT / "previews/stand-front.png")
             bpy.ops.render.render(write_still=True)
+            render_imported_clips()
+            run_optional_comparison("compare_wave_revisions", compare_wave_revisions,
+                                    [ROOT/"reports/r5-baseline/exports/gjh-chibi-visitor-blender.glb"])
     (ROOT / "reports/generation.json").write_text(json.dumps(metrics, indent=2) + "\n")
     print("GENERATION_COMPLETE", json.dumps(metrics), flush=True)
 

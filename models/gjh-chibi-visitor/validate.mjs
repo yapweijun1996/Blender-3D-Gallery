@@ -20,6 +20,11 @@ const budgets = {
   kit: { triangles: 175000, bytes: 5 * 1024 * 1024 },
   unity: { triangles: 100000, bytes: 5 * 1024 * 1024 },
 };
+const expectedAnimationClips = [
+  { name: 'Wave', duration_seconds: 1.5 },
+  { name: 'Idle', duration_seconds: 2.5 },
+  { name: 'Blink', duration_seconds: 3 },
+];
 
 function readGlb(bytes) {
   assert.equal(bytes.toString('ascii', 0, 4), 'glTF');
@@ -53,6 +58,24 @@ function measure(document, bytes) {
     vertices: [...positions].reduce((count, index) => count + document.accessors[index].count, 0),
     animations: document.animations?.length ?? 0,
   };
+}
+
+function measureAnimationClips(document) {
+  return (document.animations ?? []).map(animation => {
+    const duration = Math.max(0, ...animation.samplers.map(sampler => {
+      const accessor = document.accessors[sampler.input];
+      assert.ok(accessor.max?.length, `${animation.name} input accessor has a measured maximum`);
+      return Math.max(...accessor.max);
+    }));
+    return { name: animation.name, duration_seconds: duration };
+  });
+}
+
+function measureJointCount(document) {
+  const skins = document.skins ?? [];
+  if (skins.length === 0) return 0;
+  assert.equal(skins.length, 1, 'The character exports one skin');
+  return skins[0].joints.length;
 }
 
 const identity = () => [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
@@ -128,12 +151,20 @@ async function validateAsset({ id, root, file = id + '.glb', kind = 'unity', reg
   const bytes = fs.readFileSync(relative);
   const { document, binary } = readGlb(bytes);
   const sceneRoots = document.scenes[document.scene ?? 0].nodes.map(index => document.nodes[index].name);
-  assert.deepEqual(sceneRoots, ['GJHChibiVisitor'], id + ' scene root');
+  assert.ok(sceneRoots.includes('GJHChibiVisitor'), id + ' includes the named character anchor among scene roots');
   const measured = measure(document, bytes);
   const budget = budgets[kind];
   assert.ok(measured.triangles < budget.triangles, `${id} triangle budget: ${measured.triangles} < ${budget.triangles}`);
   assert.ok(measured.glb_bytes < budget.bytes, `${id} byte budget: ${measured.glb_bytes} < ${budget.bytes}`);
-  assert.equal(measured.animations, 0, `${id} remains static with zero clips`);
+  const clips = measureAnimationClips(document);
+  const jointCount = measureJointCount(document);
+  if (['default', 'stand', 'kit'].includes(kind)) {
+    assert.deepEqual(clips, expectedAnimationClips, `${id} measured animation clips`);
+    assert.equal(jointCount, 14, `${id} has 14 measured joints`);
+    assert.ok(document.nodes.filter(node => node.mesh !== undefined).every(node => node.skin !== undefined), `${id} skins every mesh node`);
+  } else {
+    assert.equal(measured.animations, 0, `${id} remains static with zero clips`);
+  }
   assert.equal(document.images?.length ?? 0, 0, `${id} has no embedded images`);
   assert.equal(document.textures?.length ?? 0, 0, `${id} has no textures`);
   assert.ok(document.buffers.every(buffer => buffer.uri === undefined), `${id} is self-contained`);
@@ -141,15 +172,15 @@ async function validateAsset({ id, root, file = id + '.glb', kind = 'unity', reg
   if (kind === 'default') {
     const metadata = JSON.parse(fs.readFileSync(root + '/metadata.json', 'utf8'));
     assert.deepEqual(metadata.metrics, measured, id + ' measured metadata');
+    assert.deepEqual(metadata.animation_clips, clips, id + ' measured animation names and durations');
+    assert.equal(metadata.skeleton?.joint_count, jointCount, id + ' measured joint count');
     assertCloseVector(fullBounds.min, metadata.geometry.bounds_glTF_m.min, id + ' bounds min');
     assertCloseVector(fullBounds.max, metadata.geometry.bounds_glTF_m.max, id + ' bounds max');
     assertCloseVector(fullBounds.dimensions, metadata.geometry.bounds_glTF_m.dimensions, id + ' bounds dimensions');
     assert.ok(Math.abs(fullBounds.dimensions[1] - 1) < 1e-6, 'Default model height is one metre within measurement tolerance');
-    const hand = measureBounds(document, binary, node => /Body\/L_BlackMitten(?:\.\d+)?(?:__Outline)?(?:\.\d+)?$/.test(node.name ?? ''));
-    assert.ok(Math.abs(hand.max[1] - metadata.geometry.raised_left_hand_max_y_metres) < 1e-6, 'Raised hand height matches measured metadata');
     assert.ok(Math.abs(fullBounds.min[1]) < 1e-6, 'Default shoes meet the floor');
     const sceneRoot = document.nodes[document.scenes[document.scene ?? 0].nodes[0]];
-    assert.equal(sceneRoot.extras?.pose, 'wave', 'Catalog default GLB uses the R3 static wave pose');
+    assert.equal(sceneRoot.extras?.pose, 'wave', 'Catalog default GLB opens at the Wave entry pose');
   } else if (kind === 'stand') {
     const sceneRoot = document.nodes[document.scenes[document.scene ?? 0].nodes[0]];
     assert.equal(sceneRoot.extras?.pose, 'stand', 'Alternative export remains neutral standing');
@@ -159,6 +190,8 @@ async function validateAsset({ id, root, file = id + '.glb', kind = 'unity', reg
     const metadata = JSON.parse(fs.readFileSync(root + '/metadata.json', 'utf8'));
     const measuredExport = {
       ...measured,
+      joint_count: jointCount,
+      animation_clips: clips,
       bounds_glTF_m: fullBounds,
       height_metres: fullBounds.dimensions[1],
     };

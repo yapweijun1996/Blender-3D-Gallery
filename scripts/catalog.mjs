@@ -164,8 +164,18 @@ export function loadCatalog(root = process.cwd()) {
       const nodes = data.scenes[data.scene ?? 0].nodes.map(
         (i) => data.nodes[i].name,
       );
-      if (asset.root && (nodes.length !== 1 || nodes[0] !== asset.root))
-        throw new Error(`Wrong root in ${asset.file}: ${nodes}`);
+      if (asset.root) {
+        const sceneRootIndices = data.scenes[data.scene ?? 0].nodes;
+        const anchorIndex = sceneRootIndices.find((index) => data.nodes[index].name === asset.root);
+        const skinRoots = sceneRootIndices.filter((index) => index !== anchorIndex);
+        const standardRoot = sceneRootIndices.length === 1 && anchorIndex !== undefined;
+        const skinnedSceneRoots = anchorIndex !== undefined && (data.skins ?? []).length === 1 &&
+          skinRoots.length > 0 && skinRoots.every((index) =>
+            data.nodes[index].mesh !== undefined && data.nodes[index].skin === 0,
+          );
+        if (!standardRoot && !skinnedSceneRoots)
+          throw new Error(`Wrong root in ${asset.file}: ${nodes}`);
+      }
       const triangles = (data.nodes ?? []).reduce((sum, node) => {
         if (node.mesh === undefined) return sum;
         return sum + data.meshes[node.mesh].primitives.reduce((count, primitive) => {

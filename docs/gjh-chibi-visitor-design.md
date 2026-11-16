@@ -1,6 +1,6 @@
 # GJH Chibi Visitor: design reference
 
-Status: the Blender-built model at models/gjh-chibi-visitor/blender/ is the primary gallery entry. Its round-two default is a static wave pose; the terra, sol, and astra Unity builds remain earlier experimental comparisons. Exact fidelity to the owner's private character sheet remains unverified.
+Status: the Blender-built model at models/gjh-chibi-visitor/blender/ is the primary gallery entry. Its R6 default is a rigged, animated wave with `Wave`, `Idle`, and `Blink` clips; the terra, sol, and astra Unity builds remain earlier experimental comparisons. Exact fidelity to the owner's private character sheet remains unverified.
 
 Source: the owner's “GJH Chibi Visitor, New Design, Modular” character sheet. The sheet image is a private reference and is not embedded here or redistributed.
 
@@ -32,11 +32,13 @@ Example combinations on the sheet: goggles, cap, scarf, cat ears.
 - No external textures. Emissive purple must survive export.
 - Budget: under 15,000 triangles and under 2 MiB (same ceiling as gjh-mall-visitor).
 
-The round-two Blender default measures 39,332 triangles, 20,062 vertices, 705,712 bytes, zero animation clips, and 0.999999995 m height (1.0 m rounded). It remains above this document's original 15,000-triangle target, while meeting the round-two asset check of fewer than 40,000 triangles and 2 MiB. The raised anatomical left hand reaches Y 0.571054 m, below the helmet top. The R2 source docs explain the outlined geometry and include separate neutral-standing and all-modules exports; the kit measures 167,452 triangles and 3,083,148 bytes.
+The earlier round-two figures above are historical. The current R6 default measures 1,046,056 bytes, 39,052 triangles, 19,960 vertices, 0.999999939 m height, and a 14-joint skin. Its clips are `Wave` (1.5 s), `Idle` (2.5 s), and `Blink` (3.0 s). The stand measures 988,716 bytes and 38,084 triangles; the all-modules kit measures 4,334,380 bytes and 167,780 triangles. Full-precision bounds and vertex counts are maintained in `models/gjh-chibi-visitor/blender/metadata.json`.
+
+`Wave` begins and repeats at a pose that differs from the unanimated rest pose. A consuming runtime should blend into and out of this clip to avoid a pose pop. The character retains projecting hood-collar tips, ear fins thinner than the reference in side view, and simplified helmet, visor, headphones, clothing, footwear, and lettering. The original fewer-than-15,000-triangle target remains unmet; the R6 default meets the current gallery budget of fewer than 40,000 triangles and 2 MiB. See the Blender README for reproduction and the complete measured export table.
 
 ## Authoring and gallery status
 
-The primary model is generated procedurally in Blender 5.2.3 LTS. Its editable scene, generator, default export, all-modules kit, WebP previews, measured metadata, and reproduction steps are in models/gjh-chibi-visitor/blender/README.md. The private sheet image is not redistributed.
+The primary model is generated procedurally in Blender 5.2.3 LTS. Its editable scene, generator, default export, all-modules kit, WebP previews, measured metadata, and reproduction steps are in models/gjh-chibi-visitor/blender/README.md. The generator reproduces the shipped GLBs without private images or earlier-round folders. The private sheet image is not redistributed.
 
 The three earlier comparison builds were generated separately in Unity 6000.0.85f2 with glTFast. Their IDs and asset files remain unchanged; metadata and gallery names identify them as Unity experiments.
 

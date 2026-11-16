@@ -2,6 +2,7 @@
 """Convert Blender's rendered PNG views into the gallery's WebP previews."""
 
 from pathlib import Path
+import json
 
 from PIL import Image
 
@@ -29,6 +30,14 @@ def main() -> None:
         Image.open(previews / f"{view}.png").convert("RGB").save(
             previews / f"{view}.webp", "WEBP", quality=86, method=6
         )
+    samples = json.loads((ROOT/'reports/animation-preview-samples.json').read_text())
+    for clip, details in samples.items():
+        frames = details['playback_frames']
+        images = [Image.open(previews/f'animation-frames/{clip.lower()}-{frame:02d}.png').convert('RGB') for frame in frames]
+        times = [round(frame*1000/details.get("fps",24)) for frame in frames+[details['duration_frames']]]
+        durations = [b-a for a,b in zip(times,times[1:])]
+        images[0].save(previews/f'anim-{clip.lower()}.webp',save_all=True,append_images=images[1:],
+                       duration=durations,loop=0,quality=88,method=6)
 
 
 if __name__ == "__main__":
