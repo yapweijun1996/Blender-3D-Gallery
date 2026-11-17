@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "id": "peanut-butter-jar-stand",
+  "status": "draft / NEEDS REVIEW",
+  "blender_version": "5.2.3 LTS",
+  "tested_glb_sha256": "42f5e1bce24dfa525305623472f42654a80fade80f79b8177cb9b6dfb4b36f28",
+  "checks": [
+    {
+      "command": "Blender --background --python generate.py",
+      "exit_code": 0,
+      "result": "PASS; final GLB reimported for four previews"
+    },
+    {
+      "command": "node models/peanut-butter-jar-stand/validate.mjs",
+      "exit_code": 0,
+      "result": "PASS; Khronos 0 errors, 0 warnings, 0 infos; no degenerate triangles"
+    },
+    {
+      "command": "Blender inspect_sources.py + node verify_source_edit.mjs",
+      "exit_code": 0,
+      "result": "PASS; 63 closed manifold source meshes, 24 supported jars, saved mesh/material edit survives re-export"
+    },
+    {
+      "command": "Isolated generate.py rebuild --skip-render",
+      "exit_code": 0,
+      "result": "PASS; byte-identical GLB SHA-256"
+    },
+    {
+      "command": "npm run validate:assets",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "result": "PASS; 737 tests, 0 failed, 0 skipped"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "result": "PASS; Vite production build"
+    },
+    {
+      "command": "node models/peanut-butter-jar-stand/browser-check.mjs",
+      "exit_code": 0,
+      "result": "PASS; 1440x900 Chromium/SwiftShader, actual GLB hash, orbit/reset/close/reopen, no errors"
+    },
+    {
+      "command": "Visual inspection of hero/front/side/3q and page screenshot",
+      "result": "PASS; images opened and inspected by the authoring agent"
+    }
+  ],
+  "scope_check": "Only the new asset folder plus one collection appended to models/catalog.json; all prior collection objects preserved; no gallery UI change.",
+  "test_artifact_restoration": "git checkout -- models/demo-beverage-can/reports/structure-motion.json; tracked file no longer modified.",
+  "exact_match": "NOT FOUND",
+  "skipped_items": [],
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Complete 17-shop mall integration and 200-draw-call scene budget",
+    "Sustained device performance",
+    "Per-jar runtime interaction, collisions and structural stability"
+  ],
+  "publication": "Local commit only; no push, rebase, deployment or workflow change."
+}
