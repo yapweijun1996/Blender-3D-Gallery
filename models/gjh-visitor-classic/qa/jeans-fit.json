@@ -1,0 +1,82 @@
+{
+  "asset": "GJH Classic Visitor — optional Jeans",
+  "status": "PASS",
+  "scope": "Evaluated Blender source meshes of each denim leg against its corresponding sneaker tongue.",
+  "blender": "5.1.2",
+  "buildOutfitSha256": "ae7bf010a00721480d097000797305a342d73e83b805923bcffd0b4cfb3b9c4f",
+  "method": "Enable one NLA action at a time. For every integer animation frame including both endpoints, build BVHs from the two evaluated world-space meshes and test polygon overlap. Repeat for both feet.",
+  "frames": 193,
+  "meshPairChecks": 386,
+  "perClip": {
+    "idle": {
+      "frames": 67,
+      "beforeIntersectingFramesBySide": {
+        "L": 67,
+        "R": 67
+      },
+      "finalIntersectingFramesBySide": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    "walk": {
+      "frames": 31,
+      "beforeIntersectingFramesBySide": {
+        "L": 31,
+        "R": 31
+      },
+      "finalIntersectingFramesBySide": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    "run": {
+      "frames": 21,
+      "beforeIntersectingFramesBySide": {
+        "L": 21,
+        "R": 21
+      },
+      "finalIntersectingFramesBySide": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    "sit": {
+      "frames": 37,
+      "beforeIntersectingFramesBySide": {
+        "L": 37,
+        "R": 37
+      },
+      "finalIntersectingFramesBySide": {
+        "L": 0,
+        "R": 0
+      }
+    },
+    "stand_up": {
+      "frames": 37,
+      "beforeIntersectingFramesBySide": {
+        "L": 37,
+        "R": 37
+      },
+      "finalIntersectingFramesBySide": {
+        "L": 0,
+        "R": 0
+      }
+    }
+  },
+  "classicGeometrySha256BeforeAndAfter": "712a816d79de53f0585ae2900904cf42ba819ea54e337e849f3fc3866ef04675",
+  "classicGeometryDigestScope": "Object names, base vertex positions and face indices across default slots, ordered by slot and object name.",
+  "visualReview": [
+    {
+      "pose": "Standing, sit action frame 0",
+      "result": "PASS",
+      "observation": "Both violet tongues have complete upper edges with denim tucked behind. The white laces remain visible."
+    },
+    {
+      "pose": "Seated, sit action frame 36",
+      "result": "PASS",
+      "observation": "Both tongue tips remain continuous across their width. The denim no longer cuts a central notch into either tongue."
+    }
+  ],
+  "limits": "Source-level test with integer frame sampling. This report does not evaluate the exported GLB, fractional-frame contacts or intersections with other shoe surfaces."
+}

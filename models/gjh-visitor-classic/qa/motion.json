@@ -1,0 +1,124 @@
+{
+  "source": "GJH-Classic-Visitor.glb",
+  "sha256": "fdc6c27259ce8793c72aef61e6024a43a1e8b06c45af003ab9a4e539990d9066",
+  "blender": "5.1.2",
+  "samples_per_clip": 121,
+  "seat_height_m": 0.14225,
+  "seat_front_edge_blender_y_m": 0.045,
+  "support_check_blender_y_m": 0.095,
+  "contact_tolerance_m": 0.0005,
+  "upper_thigh_faces_tested": 28,
+  "upper_thigh_test": "13 clip times, 12 orbit angles, upper thigh center visibility excluding sight lines through the open cuffs",
+  "cuff_boundary_edges": [
+    8,
+    8,
+    8,
+    8
+  ],
+  "clips": {
+    "idle": {
+      "duration_s": 2.2,
+      "lowest_sole_m": 5.636160693711645e-08,
+      "highest_sole_m": 6.24524005843341e-08,
+      "max_stance_vertical_error_m": 6.24524005843341e-08,
+      "visible_upper_thigh_probes": 0,
+      "passed": true
+    },
+    "walk": {
+      "duration_s": 1.0,
+      "lowest_sole_m": -6.53422757750377e-05,
+      "highest_sole_m": 0.033999964594841,
+      "max_stance_vertical_error_m": 6.53422757750377e-05,
+      "visible_upper_thigh_probes": 0,
+      "forward_speed_m_s": 0.19166666666666668,
+      "max_support_phase_slip_m": 8.355180422470188e-06,
+      "passed": true
+    },
+    "run": {
+      "duration_s": 0.6666666666666666,
+      "lowest_sole_m": -0.0003245265397708863,
+      "highest_sole_m": 0.058999959379434586,
+      "max_stance_vertical_error_m": 0.0003245265397708863,
+      "visible_upper_thigh_probes": 0,
+      "forward_speed_m_s": 0.58125,
+      "max_support_phase_slip_m": 6.243348121648395e-05,
+      "passed": true
+    },
+    "sit": {
+      "duration_s": 1.2,
+      "lowest_sole_m": -5.6050186685752124e-05,
+      "highest_sole_m": 6.24524005843341e-08,
+      "max_stance_vertical_error_m": 5.6050186685752124e-05,
+      "visible_upper_thigh_probes": 0,
+      "seated_gap_m": -1.4750719070422136e-05,
+      "rear_support_gap_m": -1.4750719070422136e-05,
+      "minimum_seat_gap_m": -1.4750719070422136e-05,
+      "passed": true
+    },
+    "stand_up": {
+      "duration_s": 1.2,
+      "lowest_sole_m": -5.613137182081118e-05,
+      "highest_sole_m": 6.24524005843341e-08,
+      "max_stance_vertical_error_m": 5.613137182081118e-05,
+      "visible_upper_thigh_probes": 0,
+      "seated_gap_m": -1.4750719070422136e-05,
+      "rear_support_gap_m": -1.4750719070422136e-05,
+      "minimum_seat_gap_m": -1.4750719070422136e-05,
+      "passed": true
+    }
+  },
+  "scope": "Classic outfit. Geometric checks in background Blender. Seat limited to the shorts over the seat plane.",
+  "finger_isolation": {
+    "Thumb.L": {
+      "driven_m": 0.012753720855608797,
+      "other_fingers_max_m": 0.0,
+      "passed": true
+    },
+    "Index.L": {
+      "driven_m": 0.013018224810106581,
+      "other_fingers_max_m": 0.0,
+      "passed": true
+    },
+    "Middle.L": {
+      "driven_m": 0.014151514456055322,
+      "other_fingers_max_m": 0.0,
+      "passed": true
+    },
+    "Ring.L": {
+      "driven_m": 0.013197552818184754,
+      "other_fingers_max_m": 0.0,
+      "passed": true
+    },
+    "Pinky.L": {
+      "driven_m": 0.011421685535833616,
+      "other_fingers_max_m": 0.0,
+      "passed": true
+    },
+    "Thumb.R": {
+      "driven_m": 0.012753721938661372,
+      "other_fingers_max_m": 0.0,
+      "passed": true
+    },
+    "Index.R": {
+      "driven_m": 0.013018193528826074,
+      "other_fingers_max_m": 0.0,
+      "passed": true
+    },
+    "Middle.R": {
+      "driven_m": 0.014151550570813812,
+      "other_fingers_max_m": 0.0,
+      "passed": true
+    },
+    "Ring.R": {
+      "driven_m": 0.013197542397108351,
+      "other_fingers_max_m": 0.0,
+      "passed": true
+    },
+    "Pinky.R": {
+      "driven_m": 0.011421706323898894,
+      "other_fingers_max_m": 0.0,
+      "passed": true
+    }
+  },
+  "passed": true
+}

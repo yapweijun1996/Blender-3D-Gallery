@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1536" height="256" viewBox="0 0 1536 256">
+<defs>
+  <linearGradient id="iris" x2="0.18" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#332025"/><stop offset=".40" stop-color="#533027"/><stop offset=".72" stop-color="#794433"/><stop offset="1" stop-color="#ba7251"/></linearGradient>
+  <linearGradient id="sclera" x2="0" y2="1"><stop stop-color="#d9bfc0"/><stop offset=".46" stop-color="#fff7ed"/><stop offset="1" stop-color="#fff8ed"/></linearGradient>
+  <linearGradient id="mouth" x2="0" y2="1"><stop stop-color="#742d35"/><stop offset="1" stop-color="#b04442"/></linearGradient>
+  <radialGradient id="blush"><stop stop-color="#f48a7d" stop-opacity=".72"/><stop offset=".46" stop-color="#fb9a89" stop-opacity=".47"/><stop offset="1" stop-color="#ffa590" stop-opacity="0"/></radialGradient>
+  <path id="socket" d="M22 154 C20 102 52 46 106 34 C163 19 212 53 224 104 C237 157 211 204 171 219 C123 239 67 220 43 199 C30 184 23 167 22 154Z"/>
+  <clipPath id="clip"><use xlink:href="#socket"/></clipPath>
+  <g id="eye">
+    <use xlink:href="#socket" fill="url(#sclera)"/>
+    <g clip-path="url(#clip)">
+      <ellipse cx="120" cy="141" rx="73" ry="94" fill="#4f2c2b"/>
+      <ellipse cx="120" cy="140" rx="68" ry="89" fill="url(#iris)"/>
+      <ellipse cx="120" cy="123" rx="48" ry="58" fill="#352127"/>
+      <path d="M69 183 Q95 217 127 213 Q153 212 174 186 Q156 226 123 227 Q87 227 69 199Z" fill="#d68b60" opacity=".64"/>
+    </g>
+    <path d="M19 152 C8 95 45 32 104 19 C153 8 202 34 222 74 Q227 81 237 78 Q236 89 229 97 Q233 115 226 139 C220 76 167 35 110 44 C64 50 28 93 19 152Z" fill="#342127"/>
+    <path d="M198 205 Q210 194 218 178" fill="none" stroke="#a56c60" stroke-linecap="round" stroke-width="3"/>
+  </g>
+</defs>
+<use xlink:href="#eye"/>
+<ellipse cx="94" cy="85" rx="17" ry="21" transform="rotate(23 94 85)" fill="#fffdf7"/><circle cx="154" cy="177" r="6" fill="#fce4c7"/>
+<g transform="translate(512 0) scale(-1 1)"><use xlink:href="#eye"/></g>
+<ellipse cx="360" cy="85" rx="17" ry="21" transform="rotate(23 360 85)" fill="#fffdf7"/><circle cx="423" cy="177" r="6" fill="#fce4c7"/>
+<g transform="translate(512)"><path d="M18 159 C55 95 107 53 158 67 C190 75 219 102 239 138 C204 110 173 97 148 96 C106 94 70 117 38 151 Q25 164 18 159Z" fill="#523127"/></g>
+<g transform="translate(768)"><path d="M21 72 C45 66 82 72 124 72 C167 72 208 66 234 70 C238 143 188 206 130 208 C70 210 26 159 21 81Z" fill="#9b4642"/><path d="M27 78 Q123 88 228 75 C218 148 179 195 129 196 C77 196 38 149 27 78Z" fill="url(#mouth)"/><path d="M41 78 Q126 85 214 76 Q210 89 198 98 Q125 108 58 98Z" fill="#fff7e8"/><path d="M59 160 C90 122 154 121 196 150 C171 196 111 218 74 176Z" fill="#f88074"/></g>
+<g transform="translate(1024)"><ellipse cx="128" cy="128" rx="124" ry="108" fill="url(#blush)"/></g>
+<g transform="translate(1280)"><path d="M38 152 C51 91 126 70 198 117 C167 115 147 132 151 158 C137 143 127 129 141 114 C108 101 71 123 55 157Z" fill="#db8770" opacity=".8"/></g>
+</svg>
