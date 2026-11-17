@@ -1,0 +1,219 @@
+{
+  "id": "lounge-sofa-bench",
+  "name": "Lounge Sofa, Bench and Slim Table",
+  "summary": "Rounded three-seat sofa, matching backless bench and a shared slim table for mall rest areas.",
+  "description": "Original staggered lounge group with three separate sofa seat and back cushions, two bench pads, upholstery welt seams, recessed graphite supports and a rounded warm-toned table between the seating depth envelopes. Neutral greige fabric; no brands, text, external models or textures.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "rest-area",
+    "sofa",
+    "three-seat",
+    "backless-bench",
+    "slim-table",
+    "seating",
+    "neutral-fabric",
+    "original",
+    "procedural",
+    "metres",
+    "medium-priority"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "creation_method": "Original deterministic Blender Python geometry and three shared opaque Principled BSDF materials. No external assets.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/lounge-sofa-bench.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor centre of combined footprint",
+    "previewCameraDirection": [
+      1.2,
+      1.1,
+      2.5
+    ]
+  },
+  "accuracy_notes": "Static visual seating group. Furniture footprint excludes occupied legroom and circulation; staggered seats face the open front, and the narrow table serves their offset ends. No sitting logic, collision, cloth simulation, load rating or manufacturing certification. Full-mall 200-draw-call budget, physical Android/iOS and WebKit are unverified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. Folder and QA conventions adapted from self-checkout-machine; evaluated material batching follows the repository practice. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "deployment": "NOT DEPLOYED",
+    "budget": {
+      "triangles": 14999,
+      "bytes": 1572863,
+      "materials": 3,
+      "mesh_primitives": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/duplicate-search.json",
+      "reports/browser.json",
+      "reports/reproducibility.json",
+      "reports/checks.json",
+      "reports/visual-review.json",
+      "reports/source-edit.json"
+    ],
+    "geometry": "PASS",
+    "source_editability": "PASS",
+    "asset_validation": "PASS",
+    "glb_validation": "PASS: zero errors and warnings",
+    "unit_tests": "PASS: 737 passed, 0 failed, 0 skipped",
+    "build": "PASS",
+    "deterministic_rebuild": "PASS: isolated procedural rebuild matches delivered GLB byte for byte",
+    "chromium": "PASS: 1440x900, actual GLB hash, 3 draw calls, orbit/reset/refresh/close/reopen, no errors",
+    "visual_review": "PASS: hero, front, side, 3q and actual Chromium 1440x900 page inspected"
+  },
+  "blender_version": "5.2.3 LTS",
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "glTF X,Y,Z (width,height,depth)",
+    "size": [
+      3,
+      0.7999999523162842,
+      1.5
+    ],
+    "bounds": {
+      "min": [
+        -1.5,
+        0,
+        -0.75
+      ],
+      "max": [
+        1.5,
+        0.7999999523162842,
+        0.75
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 248240,
+    "triangles": 12972,
+    "vertices": 6974,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "sha256": "e5f826d8a76e7bf25f832b0cb9df250274e76b9b02a4bdf58f0955ea154d8043"
+  },
+  "measured_subassemblies": {
+    "BENCH_Backless": {
+      "axis_order": "Blender X,Y,Z (width,depth,height)",
+      "min": [
+        -0.5,
+        -0.75,
+        0
+      ],
+      "max": [
+        1.100000023841858,
+        -0.3700000047683716,
+        0.44999998807907104
+      ],
+      "size": [
+        1.600000023841858,
+        0.3799999952316284,
+        0.44999998807907104
+      ],
+      "parts": [
+        "BENCH_Foot",
+        "BENCH_Foot.001",
+        "BENCH_Foot.002",
+        "BENCH_Foot.003",
+        "BENCH_RecessedUnderframe",
+        "BENCH_SeatCushion_1",
+        "BENCH_SeatCushion_2",
+        "BENCH_SeatWelt_1",
+        "BENCH_SeatWelt_2",
+        "BENCH_UpholsteredBase"
+      ]
+    },
+    "SOFA_ThreeSeat": {
+      "axis_order": "Blender X,Y,Z (width,depth,height)",
+      "min": [
+        -1.5,
+        -0.10000002384185791,
+        0
+      ],
+      "max": [
+        0.5,
+        0.75,
+        0.7999999523162842
+      ],
+      "size": [
+        2,
+        0.8500000238418579,
+        0.7999999523162842
+      ],
+      "parts": [
+        "SOFA_BackCushion_1",
+        "SOFA_BackCushion_2",
+        "SOFA_BackCushion_3",
+        "SOFA_BackShell",
+        "SOFA_Foot",
+        "SOFA_Foot.001",
+        "SOFA_Foot.002",
+        "SOFA_Foot.003",
+        "SOFA_RecessedUnderframe",
+        "SOFA_RoundedArm",
+        "SOFA_RoundedArm.001",
+        "SOFA_SeatCushion_1",
+        "SOFA_SeatCushion_2",
+        "SOFA_SeatCushion_3",
+        "SOFA_SeatWelt_1",
+        "SOFA_SeatWelt_2",
+        "SOFA_SeatWelt_3",
+        "SOFA_UpholsteredBase"
+      ]
+    },
+    "TABLE_SlimShared": {
+      "axis_order": "Blender X,Y,Z (width,depth,height)",
+      "min": [
+        0.6500000357627869,
+        -0.3449999988079071,
+        0
+      ],
+      "max": [
+        1.5,
+        -0.125,
+        0.5
+      ],
+      "size": [
+        0.8499999642372131,
+        0.2199999988079071,
+        0.5
+      ],
+      "parts": [
+        "TABLE_BladeSupport",
+        "TABLE_BladeSupport.001",
+        "TABLE_FloorShoe",
+        "TABLE_FloorShoe.001",
+        "TABLE_RoundedTop",
+        "TABLE_UnderTopReveal"
+      ]
+    }
+  },
+  "source_mesh_parts": 34
+}

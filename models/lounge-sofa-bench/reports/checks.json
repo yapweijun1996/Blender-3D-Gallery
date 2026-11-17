@@ -1,0 +1,82 @@
+{
+  "result": "PASS",
+  "commands": [
+    {
+      "command": "Blender 5.2.3 isolated generate.py --skip-render",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "reports/reproducibility.json"
+    },
+    {
+      "command": "Blender 5.2.3 generate.py --export-source --views front,side,3q",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "reports/render-final.log"
+    },
+    {
+      "command": "Blender 5.2.3 inspect_sources.py",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "reports/source-edit.json"
+    },
+    {
+      "command": "node models/lounge-sofa-bench/validate.mjs (includes Khronos)",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "reports/assets.json"
+    },
+    {
+      "command": "npm run validate:assets",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "reports/validate-assets.log"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "result": "PASS",
+      "passed": 737,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "reports/npm-test.log",
+      "scope": "After asset registration; subsequent changes only package the lightweight thumbnail and record QA metadata"
+    },
+    {
+      "command": "npm run build (final thumbnail/metadata state)",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "reports/build-final.log"
+    },
+    {
+      "command": "node models/lounge-sofa-bench/check-browser.mjs",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "reports/browser.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ],
+  "corrected_attempts": [
+    {
+      "command": "Initial generate.py render",
+      "exit_code": 143,
+      "reason": "Stopped own initial rendering after inspecting a studio floor clipping artifact in front view. Adjusted front/side camera heights and rerendered. Hero and exported geometry were unchanged."
+    }
+  ],
+  "artifact_restore": "git checkout -- models/demo-beverage-can/reports/structure-motion.json; no other tracked generated artifacts remained",
+  "not_found": [
+    "Exact existing sofa/backless-bench/shared-table group",
+    "Relevant KB memory"
+  ],
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Full 17-shop mall performance or 200-draw-call aggregate",
+    "Occupied legroom, circulation, collision or sitting integration"
+  ],
+  "publication": "Local commit only; no push, rebase, release or deployment",
+  "log_normalization": "Trailing whitespace and excess terminal blank lines removed; diagnostic messages preserved"
+}

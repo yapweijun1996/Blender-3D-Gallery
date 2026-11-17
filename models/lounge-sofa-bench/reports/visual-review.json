@@ -1,0 +1,68 @@
+{
+  "result": "PASS",
+  "method": "Direct visual inspection of every listed image",
+  "images": {
+    "hero": {
+      "path": "previews/hero.png",
+      "pixels": [
+        900,
+        900
+      ],
+      "sha256": "196dd5c594f5d2b59d845c0ca334bcb4fed41f0ebfabaa986eb1d830ad3d5b48"
+    },
+    "front": {
+      "path": "previews/front.png",
+      "pixels": [
+        900,
+        900
+      ],
+      "sha256": "e3efff357b435f19b911b20d729d78b8f79c0997374614391fde617e3c2c6e5f"
+    },
+    "side": {
+      "path": "previews/side.png",
+      "pixels": [
+        900,
+        900
+      ],
+      "sha256": "c6d931e6fd69b21024e44049c95a236a5780b8f794cb320bbb59c294abfc4c4a"
+    },
+    "3q": {
+      "path": "previews/3q.png",
+      "pixels": [
+        900,
+        900
+      ],
+      "sha256": "d247c23cf8b35a1759c62472593d91af4b1a07644df273e390732316860c5089"
+    },
+    "model_page": {
+      "path": "/Users/admin/Documents/MallQueue/reports/lounge-sofa-bench-page.png",
+      "pixels": [
+        1440,
+        900
+      ],
+      "sha256": "b562beec73634b39ba4a8e2f447fef51ee89d6efa1f2861a3b253b48db16a66f"
+    },
+    "card_thumbnail": {
+      "path": "previews/hero.webp",
+      "pixels": [
+        512,
+        512
+      ],
+      "bytes": 5758,
+      "sha256": "0a10a4354fb010b91fd1aed9e0518aa83d268114748e272c6d3563b12fbe1c42"
+    }
+  },
+  "observations": [
+    "Three distinct sofa seat/back pads and two matching backless bench pads are readable",
+    "Rounded modern proportions, matte neutral upholstery and matching graphite supports",
+    "Slim unbranded warm table sits between offset seating depth envelopes",
+    "Complete furniture visible; corrected front and side studio views have no floor clipping",
+    "Actual Chromium page shows the delivered furniture with functioning orbit/reset",
+    "Lightweight WebP card thumbnail visually inspected"
+  ],
+  "correction": "Initial front camera was too low and showed studio floor clipping. Interrupted the initial render after hero/front, raised front and side cameras to 2.2 m, and completed front/side/3q rendering. GLB geometry and hero are unchanged.",
+  "limits": [
+    "Compact furniture envelope excludes occupied legroom and circulation",
+    "No physical-device, full-mall performance, safety or fabrication certification"
+  ]
+}
