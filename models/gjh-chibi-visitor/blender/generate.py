@@ -20,8 +20,8 @@ SCENE = None
 M = {}
 OUTLINE_SCALE = 1.80
 SIDES = [(-1, "R"), (1, "L")]  # Anatomical sides: +X is the character's left.
-CLIPS = {"Wave": 45, "Idle": 60, "Blink": 72}
-CLIP_FPS = {"Wave": 30, "Idle": 24, "Blink": 24}
+CLIPS = {"Wave": 45, "Idle": 60, "Blink": 72, "Cheer": 48, "Jump": 36}
+CLIP_FPS = {"Wave": 30, "Idle": 24, "Blink": 24, "Cheer": 30, "Jump": 30}
 
 
 def smoothstep(a, b, x):
@@ -1053,7 +1053,8 @@ def rig_character(root):
             target.co = head_matrix @ (q*factor)
     animate_rig(rig, eye_meshes, root["pose"])
     root["rig_bones"] = [name for name, *_ in specs]
-    root["animation_clips_seconds"] = {name: end/CLIP_FPS[name] for name,end in CLIPS.items()}
+    root["animation_clips_seconds"] = {name: end/CLIP_FPS[name] for name,end in CLIPS.items()
+                                      if root["pose"] == "wave" or name not in ("Cheer", "Jump")}
     root["rest_pose"] = "Static bind pose, Idle and Blink retain R5; Wave has its own raised greeting entry pose"
     return rig
 
@@ -1066,7 +1067,8 @@ def animate_rig(rig, eye_meshes, pose):
         bone = rig.pose.bones[name]
         local_axis = bone.bone.matrix_local.to_3x3().inverted() @ Vector(axis)
         bone.rotation_quaternion = Quaternion(local_axis, angle)
-    for clip, end in CLIPS.items():
+    clips = {name:end for name,end in CLIPS.items() if pose == "wave" or name not in ("Cheer", "Jump")}
+    for clip, end in clips.items():
         action = bpy.data.actions.new(rig.name+"/"+clip)
         rig.animation_data.action = action
         for frame in range(end+1):
@@ -1122,6 +1124,8 @@ def animate_rig(rig, eye_meshes, pose):
                 rotation("Head", (0,1,0), math.radians(-.7)*math.sin(TAU*u))
                 for sign,label in SIDES:
                     rotation("EarFin."+label, (1,0,0), sign*math.radians(2)*math.sin(TAU*u))
+            elif clip in ("Cheer", "Jump"):
+                animate_new_pose(rig, clip, frame, rotation)
             for bone in rig.pose.bones:
                 for channel in ("location", "rotation_quaternion", "scale"):
                     bone.keyframe_insert(channel, frame=frame, group=bone.name)
@@ -1130,7 +1134,7 @@ def animate_rig(rig, eye_meshes, pose):
         keys = ob.data.shape_keys
         keys.animation_data_create()
         key = keys.key_blocks["Blink"]
-        for clip,end in CLIPS.items():
+        for clip,end in clips.items():
             action = bpy.data.actions.new(ob.name+"/"+clip)
             keys.animation_data.action = action
             samples = [(0,0),(30,0),(32,.7),(33,1),(34,1),(36,0),(72,0)] if clip == "Blink" else [(0,0),(end,0)]
@@ -1142,6 +1146,62 @@ def animate_rig(rig, eye_meshes, pose):
     for bone in rig.pose.bones:
         bone.matrix_basis = Matrix.Identity(4)
     SCENE.frame_set(0)
+
+
+def motion_curve(frame, keys):
+    """Zero-slope pose transitions, sampled at 30 Hz before glTF export."""
+    for (a, av), (b, bv) in zip(keys, keys[1:]):
+        if frame <= b:
+            return av + (bv-av)*smoothstep(a, b, frame)
+    return keys[-1][1]
+
+
+def animate_new_pose(rig, clip, frame, rotation):
+    """Reuse the accepted compact rig without arm translation or scaling."""
+    curve = lambda keys: motion_curve(frame, keys)
+    if clip == "Cheer":
+        lift = curve([(0,0),(5,-.10),(17,1),(27,1),(44,0),(48,0)])
+        height = curve([(0,0),(10,0),(18,.055),(27,0),(48,0)])
+        dip = curve([(0,0),(7,-.018),(12,.004),(20,0),(28,-.018),(39,0),(48,0)])
+        lean = curve([(0,0),(8,2),(18,-5),(28,-3),(44,0),(48,0)])
+        rotation("UpperArm.L", (0,1,0), math.radians(-34*lift))
+        rotation("Forearm.L", (0,1,0), math.radians(24*lift))
+        rotation("Hand.L", (0,1,0), math.radians(-8*lift))
+        rotation("UpperArm.R", (0,1,0), math.radians(85*lift))
+        upper = rig.pose.bones["UpperArm.R"]
+        axis = upper.bone.matrix_local.to_3x3().inverted() @ Vector((0,0,1))
+        upper.rotation_quaternion = Quaternion(axis, math.radians(45*lift)) @ upper.rotation_quaternion
+        rotation("Forearm.R", (0,1,0), math.radians(10*lift))
+        rotation("Hand.R", (0,1,0), math.radians(-10*lift))
+        lag = curve([(0,0),(10,-3),(21,5),(31,-4),(40,1.5),(46,0),(48,0)])
+    else:
+        lift = curve([(0,0),(7,-.22),(14,.65),(20,.70),(26,-.18),(33,0),(36,0)])
+        height = curve([(0,0),(9,0),(16,.18),(24,0),(36,0)])
+        dip = curve([(0,0),(6,-.032),(9,.008),(16,.010),(23,0),(27,-.035),(34,0),(36,0)])
+        lean = curve([(0,0),(7,6),(14,-3),(21,-2),(27,5),(34,0),(36,0)])
+        rotation("UpperArm.L", (0,1,0), math.radians(-28*lift))
+        rotation("Forearm.L", (0,1,0), math.radians(18*lift))
+        rotation("Hand.L", (0,1,0), math.radians(-6*lift))
+        rotation("UpperArm.R", (0,1,0), math.radians(90*lift))
+        rotation("Forearm.R", (0,1,0), math.radians(8*lift))
+        lag = curve([(0,0),(8,-6),(17,7),(26,-7),(31,3),(35,0),(36,0)])
+    def translate(name, vector):
+        bone = rig.pose.bones[name]
+        bone.location = bone.bone.matrix_local.to_3x3().inverted() @ Vector(vector)
+    translate("Root", (0,0,height))
+    translate("Hips", (0,0,dip))
+    # Each rigid shoe/leg squashes around its own floor contact. Compensating
+    # hip motion leaves both soles exactly at the root's airborne height.
+    for label in ("L", "R"):
+        leg = rig.pose.bones["Leg."+label]
+        squash = 1+dip/leg.bone.head_local.z
+        leg.scale = (squash, squash, squash)
+        correction = -leg.bone.head_local.z*(1-squash)-dip
+        translate("Leg."+label, (0,0,correction))
+    rotation("Torso", (1,0,0), math.radians(lean))
+    rotation("Head", (1,0,0), math.radians(-.35*lean+.18*lag))
+    for sign,label in SIDES:
+        rotation("EarFin."+label, (1,0,0), math.radians(lag))
 
 
 def bind_kit(row, rig):
@@ -1163,10 +1223,9 @@ def finalize_glb(path):
     doc = json.loads(raw[20:20+length])
     binary = bytearray(raw[28+length:])
     # Author/export Idle and Blink at their original 24 Hz, byte for byte.
-    # Wave has 46 authored samples; remap only its time accessors to 30 Hz.
-    wave = next((a for a in doc.get("animations", []) if a["name"] == "Wave"), {"samplers": []})
-    wave_inputs = {s["input"] for s in wave["samplers"]}
-    other_inputs = {s["input"] for a in doc.get("animations", []) if a != wave for s in a["samplers"]}
+    # Remap only 30 Hz clips; preserve all accepted 24 Hz accessors exactly.
+    wave_inputs = {s["input"] for a in doc.get("animations", []) if CLIP_FPS[a["name"]] == 30 for s in a["samplers"]}
+    other_inputs = {s["input"] for a in doc.get("animations", []) if CLIP_FPS[a["name"]] != 30 for s in a["samplers"]}
     assert not wave_inputs & other_inputs
     for index in wave_inputs:
         accessor = doc["accessors"][index]
@@ -1600,6 +1659,27 @@ def render_imported_clips():
                           ROOT/"previews/wave-review-front.png",30)
             report[clip]["review_front_frames"] = review
             report[clip]["review_3q_frames"] = review
+    for clip in ("Cheer", "Jump"):
+        frames = list(range(0, CLIPS[clip]+1, 3))
+        for view, location in (("3q", (1.65,-3.3,1.18)), ("front", (.10,-4,.58))):
+            SCENE.camera.location = location
+            aim(SCENE.camera, (.10,0,.60))
+            SCENE.camera.data.ortho_scale = 1.48
+            paths = []
+            for frame in frames:
+                activate_clip(SCENE,clip,frame)
+                filename = f"{clip.lower()}-{frame:02d}.png" if view == "3q" else f"{clip.lower()}-front-{frame:02d}.png"
+                path = folder/filename
+                paths.append(path)
+                SCENE.render.filepath = str(path)
+                print("RENDER_IMPORTED_ANIMATION",clip,view,frame,flush=True)
+                bpy.ops.render.render(write_still=True)
+            suffix = "-3q" if view == "3q" else ""
+            contact_sheet(paths, frames, ROOT/f"previews/anim-{clip.lower()}-strip{suffix}.png", 30)
+        report[clip] = {"frames":frames,"seconds":[f/30 for f in frames],
+                        "playback_frames":frames[:-1],"fps":30,"duration_frames":CLIPS[clip],
+                        "review_front_frames":frames,"review_3q_frames":frames,
+                        "source":"exported GLB fresh import"}
     (ROOT/"reports/animation-preview-samples.json").write_text(json.dumps(report,indent=2)+"\n")
 
 

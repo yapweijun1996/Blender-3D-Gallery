@@ -20,10 +20,15 @@ const budgets = {
   kit: { triangles: 175000, bytes: 5 * 1024 * 1024 },
   unity: { triangles: 100000, bytes: 5 * 1024 * 1024 },
 };
-const expectedAnimationClips = [
+const r6AnimationClips = [
   { name: 'Wave', duration_seconds: 1.5 },
   { name: 'Idle', duration_seconds: 2.5 },
   { name: 'Blink', duration_seconds: 3 },
+];
+const r7AnimationClips = [
+  ...r6AnimationClips,
+  { name: 'Cheer', duration_seconds: 1.600000023841858 },
+  { name: 'Jump', duration_seconds: 1.2000000476837158 },
 ];
 
 function readGlb(bytes) {
@@ -159,7 +164,8 @@ async function validateAsset({ id, root, file = id + '.glb', kind = 'unity', reg
   const clips = measureAnimationClips(document);
   const jointCount = measureJointCount(document);
   if (['default', 'stand', 'kit'].includes(kind)) {
-    assert.deepEqual(clips, expectedAnimationClips, `${id} measured animation clips`);
+    const expectedClips = kind === 'default' ? r7AnimationClips : r6AnimationClips;
+    assert.deepEqual(clips, expectedClips, `${id} measured animation clips`);
     assert.equal(jointCount, 14, `${id} has 14 measured joints`);
     assert.ok(document.nodes.filter(node => node.mesh !== undefined).every(node => node.skin !== undefined), `${id} skins every mesh node`);
   } else {

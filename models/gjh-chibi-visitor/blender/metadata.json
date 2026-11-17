@@ -1,8 +1,8 @@
 {
   "id": "gjh-chibi-visitor-blender",
   "name": "GJH Chibi Visitor",
-  "summary": "Rigged R6 GJH Chibi Visitor with Wave, Idle, and Blink animation clips.",
-  "description": "A one-metre procedural robot character with a white hoodie, purple GJH lettering, violet happy eyes, and headphone rings. The default GLB is skinned with 14 joints and includes three animation clips.",
+  "summary": "Rigged R7 GJH Chibi Visitor with Wave, Idle, Blink, Cheer, and Jump animation clips.",
+  "description": "A one-metre procedural robot character with a white hoodie, purple GJH lettering, violet happy eyes, and headphone rings. The default GLB is skinned with 14 joints and includes five animation clips.",
   "category": "Characters",
   "tags": [
     "GJH",
@@ -44,7 +44,7 @@
     "origin": "feet at floor Y=0",
     "front_axis": "+Z"
   },
-  "accuracy_notes": "This is an original procedural interpretation, not an exact reconstruction or an independently approved match. The hood collar retains projecting tips, the ear fins remain thinner than the design sheet in side view, and the hand reaches the lower edge of the nearby ear cup at the Wave peak. Helmet and visor contours, headphone details, clothing folds, boots, shorts, and chest lettering remain simplified; PBR shading and uniform outlines differ from the illustrated linework. The first and loop-end Wave pose differs from the unanimated rest pose, so runtimes should blend into and out of Wave. The private design sheet is not redistributed.",
+  "accuracy_notes": "This is an original procedural interpretation, not an exact reconstruction or an independently approved match. The hood collar retains projecting tips, the ear fins remain thinner than the design sheet in side view, and the hand reaches the lower edge of the nearby ear cup at the Wave peak. Helmet and visor contours, headphone details, clothing folds, boots, shorts, and chest lettering remain simplified; PBR shading and uniform outlines differ from the illustrated linework. Wave begins and ends away from the unanimated rest pose, so runtimes should blend into and out of Wave. Cheer and Jump are sampled checks, not guarantees for continuous-time collisions, arbitrary views, accessory combinations, or cross-clip blends. The private design sheet is not redistributed.",
   "attribution": [
     {
       "credit": "Original procedural character geometry and materials generated with Blender 5.2.3 LTS for the owner's project; no third-party model is included."
@@ -55,10 +55,10 @@
   ],
   "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
   "metrics": {
-    "glb_bytes": 1046056,
+    "glb_bytes": 1078772,
     "triangles": 39052,
     "vertices": 19960,
-    "animations": 3
+    "animations": 5
   },
   "skeleton": {
     "joint_count": 14
@@ -75,6 +75,14 @@
     {
       "name": "Blink",
       "duration_seconds": 3
+    },
+    {
+      "name": "Cheer",
+      "duration_seconds": 1.600000023841858
+    },
+    {
+      "name": "Jump",
+      "duration_seconds": 1.2000000476837158
     }
   ],
   "geometry": {
@@ -179,7 +187,7 @@
       "height_metres": 1
     }
   },
-  "revision": 6,
+  "revision": 7,
   "validation": {
     "errors": 0,
     "warnings": 0,
