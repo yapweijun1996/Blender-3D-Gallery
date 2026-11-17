@@ -1,10 +1,21 @@
 {
   "result": "PASS",
+  "review_round": 2,
   "commands": [
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/glass-storefront-module/generate.py",
+      "exit_code": 0,
+      "scope": "Fresh procedural source and GLB; all eight Blender previews; fixed render seed 0."
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/glass-storefront-module/inspect_sources.py -- --source-edit",
+      "exit_code": 0,
+      "scope": "Reopen saved source; door dimensions and pivot connections; temporary saved-edit export."
+    },
     {
       "command": "node models/glass-storefront-module/validate.mjs --source-edit",
       "exit_code": 0,
-      "scope": "Khronos, geometry, scale, materials, opening, colliders, repeat seams and source-edit export"
+      "scope": "Khronos 0 errors/0 warnings; geometry, scale, transparent vertex gradient, opening, colliders, seams and source-edit export."
     },
     {
       "command": "npm run validate:assets",
@@ -20,12 +31,12 @@
     {
       "command": "npm run build",
       "exit_code": 0,
-      "notes": "Final production build passed after all Blender previews completed; existing bundle-size advisory only."
+      "notes": "Production build passed using the final GLB, metadata and hero thumbnail. Supplementary Blender PNGs are not build imports. Existing bundle-size advisory only."
     },
     {
       "command": "node models/glass-storefront-module/verify_browser.mjs",
       "exit_code": 0,
-      "scope": "1440/390 production viewer with matching final GLB hash, keyboard controls, zero console errors/overflow; four decoded real-GLB contact panels at each width, measured triangles and two draw calls."
+      "scope": "1440/390 production viewer with matching final GLB hash, keyboard controls, zero console errors/overflow; Closed/Open front and three-quarter contact panels on gallery grey with matching lighting; two draw calls per visual variant."
     }
   ],
   "visual_review": {
@@ -36,18 +47,17 @@
       "side.png",
       "3q.png",
       "open-hero.png",
+      "open-front.png",
       "open-side.png",
       "open-3q.png",
       "contact-1440.png",
       "contact-390.png",
-      "external 1440 and 390 gallery screenshots",
-      "open-front.png"
+      "external 1440 and 390 gallery screenshots"
     ],
-    "notes": "Viewed all eight regenerated Blender previews, both final contact sheets and requested 1440 px gallery screenshot; door proportions, pivot connections, rim visibility and transmitted grid inspected. Earlier contact readiness timeouts remain recorded in initial-observations.json; final shared-context checks passed without increasing the 30 s wait."
+    "notes": "Viewed all eight regenerated Blender previews and both final contact sheets. Replaced and personally viewed the requested 1440 x 900 page screenshot plus 390 x 900 page screenshot. Darker hairline rims resolve pane boundaries, door meeting seam and transom gap against gallery grey; feathered vertex reflection tint gives clear faces a visible surface. Grid remains visible through glazing; Open passage remains empty. No visible logos, text, coarse frame or new hardware overlap. Round 2 browser run passed unchanged readiness limits with no failures; earlier-round observations remain historical."
   },
   "not_found": [
-    "docs/references/gjh-mall-concept-board.png",
-    "exact existing storefront match"
+    "docs/references/gjh-mall-concept-board.png"
   ],
   "not_verified": [
     "physical Android/iOS",
@@ -58,14 +68,14 @@
   "existing_models_modified": false,
   "gallery_ui_modified": false,
   "published": false,
-  "delivery_sha256": "b21828e03a2094bee84ab8459cab3e166488e1699cebe63fb8a2d9aa8fbd0609",
-  "source_sha256": "a327736bb97949c0e0e4853fb9b08cfd2c9c0d47c5aa25473db0f2fd7f5b83ed",
-  "reproducibility": "PASS: two fresh generator builds under Blender 5.2.3 produced identical GLB SHA-256 b21828e03a2094bee84ab8459cab3e166488e1699cebe63fb8a2d9aa8fbd0609. Fixed render seed 0; all eight Blender previews regenerated. No byte identity across Blender versions is claimed.",
-  "review_round": 1,
+  "catalog": "Unchanged: registered dimensions and description remain correct. The gallery derives changed byte/triangle/vertex counts from the GLB at build time.",
+  "delivery_sha256": "dfc2999c7377271cfea9b8d174c6edc3fa5135f41c69106811424f4fa996e6ff",
+  "source_sha256": "1716ddb23c879e43617908eaec603101b6925682043bfa573d832c44ba15edeb",
+  "reproducibility": "PASS: two fresh generator builds under Blender 5.2.3, including an isolated directory with only generate.py as input, produced identical GLB bytes. The full preview rebuild retained the same GLB hash. See reproducibility.json; no identity across Blender versions is claimed.",
   "changes": [
-    "Reduced door leaf height from 2.67 m to a measured 2.2499998807907104 m; connected patches to floor bearings and transom receivers with coaxial pins.",
-    "Lowered matching Open transom and collider lintel to a measured 2.2799999713897705 m clear height; retained 1.0 m clear width.",
-    "One shared transparent material uses RGBA vertex tint for clear faces and narrow polished rims; larger pulls retain the 0.12 m envelope.",
-    "QA contact sheets share one renderer/environment; four decoded real-GLB panels retain both viewports, lighting, geometry counts and draw-call checks."
+    "Strengthened 7 mm polished rim and bevel tint within the existing shared glass material; dimensions, hardware and opening unchanged.",
+    "Added feathered diagonal reflection tint using planar face strips and RGBA vertex colors; measured export retains 0.18-0.30 face opacity, no textures/refraction or extra draw calls.",
+    "Matched real-GLB QA contact background, lights and environment intensity to the stock gallery; rechecked both variants at 1440/390 px.",
+    "Updated measured metadata, README, validation reports, previews and artifact hashes. Restored the beverage-can test artifact."
   ]
 }

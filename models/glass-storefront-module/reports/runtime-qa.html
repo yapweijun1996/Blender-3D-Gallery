@@ -14,7 +14,7 @@
 {"imports":{"three":"../../../node_modules/three/build/three.module.js","three/addons/":"../../../node_modules/three/examples/jsm/"}}
 </script>
 <h1>Glass Storefront Module</h1>
-<p>3.0 × 3.6 m · 3.0 m repeat pitch · Open passage 1.0 × 2.28 m</p>
+<p>3.0 × 3.6 m · 3.0 m repeat pitch · Open passage 1.0 × 2.28 m · Gallery grey background and lighting</p>
 <main></main>
 <script type="module">
 import * as THREE from 'three';
@@ -25,16 +25,18 @@ const records = [];
 // Share one context and one environment across all four real-GLB renders.
 const renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
 renderer.setPixelRatio(1);
-renderer.setClearColor(0xe2ded5);
+renderer.setClearColor(0x657078);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NoToneMapping;
 const scene = new THREE.Scene();
 const pmrem = new THREE.PMREMGenerator(renderer);
 const environment = new RoomEnvironment();
 const env = pmrem.fromScene(environment, .04);
 scene.environment = env.texture;
 scene.environmentIntensity = .7;
-scene.add(new THREE.HemisphereLight(0xffffff, 0x666051, 2));
+scene.add(new THREE.HemisphereLight(0xffffff, 0x535b53, 2));
 const light = new THREE.DirectionalLight(0xffffff, 2.1);
-light.position.set(-3, 7, 5);
+light.position.set(4, 7, 5);
 scene.add(light);
 // The procedural studio grid is never exported in the GLB.
 const grid = new THREE.GridHelper(14, 14, 0xaea594, 0xcac1b1);

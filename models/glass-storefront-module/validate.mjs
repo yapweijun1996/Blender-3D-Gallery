@@ -69,8 +69,11 @@ for (const [i, variant] of ['Closed', 'Open'].entries()) {
       const colors = g.attributes.color;
       assert.equal(colors?.itemSize, 4, 'glass vertex tint and opacity exported');
       const alpha = Array.from({length:colors.count}, (_, j) => colors.getW(j) * o.material.opacity);
-      assert.ok(Math.min(...alpha) > .10 && Math.min(...alpha) < .16, 'clear glass faces');
-      assert.ok(Math.max(...alpha) > .50 && Math.max(...alpha) < .65, 'tinted polished edges');
+      assert.ok(Math.min(...alpha) > .16 && Math.min(...alpha) < .20, 'clear glass faces');
+      assert.ok(Math.max(...alpha) > .75 && Math.max(...alpha) < .80, 'tinted polished edges');
+      const faceAlpha = alpha.filter(a => a < .4);
+      assert.ok(Math.max(...faceAlpha) - Math.min(...faceAlpha) > .10, 'soft reflection gradient');
+      assert.ok(Math.max(...faceAlpha) <= .301, 'face transparency retained');
     }
   });
   assert.equal(primitives, 2, 'merged transparent / metal primitives');

@@ -76,34 +76,71 @@ def rod(name, a, b, radius, mat, parent):
 
 
 def glass_panel(name, loc, dims, mat, parent):
-    """One closed slab with a 5 mm polished rim; COLOR_0 shares one material."""
+    """Closed slab, hairline polished rim and soft reflection tint in COLOR_0."""
     w, d, h = dims
-    bevel, rim = .002, .005
+    bevel, rim = .002, .007
     vertices, faces, colors = [], [], []
-    face_color = linear((.78, .92, .88)) + (.13,)
-    rim_color = linear((.36, .64, .55)) + (.36,)
-    edge_color = linear((.26, .53, .45)) + (.58,)
+    rim_color = linear((.20, .46, .37)) + (.68,)
+    edge_color = linear((.14, .36, .29)) + (.78,)
+
+    def face_tint(strength):
+        base, reflection = linear((.64, .83, .77)), linear((.96, .99, .96))
+        return tuple(a + (b - a) * strength for a, b in zip(base, reflection)) + (.18 + .12 * strength,)
+
+    # Clip planar faces into a few diagonal strips. Interpolated vertex colors
+    # suggest a broad, feathered studio reflection without textures, extra
+    # surfaces or a shader. Shared world coordinates continue across pane seams.
+    bands = [(-5, 0), (-1.10, 0), (-.85, .25), (-.65, .70), (-.40, 1),
+             (-.15, .70), (.05, .25), (.30, 0), (.55, 0), (.65, .22), (.75, 0), (5, 0)]
+
+    def diagonal(p):
+        return loc[0] + p[0] + .36 * (loc[2] + p[1] - 1.8)
+
+    def clip(poly, boundary, above):
+        result = []
+        for a, b in zip(poly, poly[1:] + poly[:1]):
+            da, db = diagonal(a) - boundary, diagonal(b) - boundary
+            inside_a, inside_b = (da >= 0, db >= 0) if above else (da <= 0, db <= 0)
+            if inside_a:
+                result.append(a)
+            if inside_a != inside_b:
+                t = da / (da - db)
+                result.append(tuple(a[i] + t * (b[i] - a[i]) for i in range(2)))
+        return result
+
+    def surface(y, reverse=False):
+        rectangle = [(sx * (w / 2 - rim), sz * (h / 2 - rim))
+                     for sx, sz in [(-1, -1), (1, -1), (1, 1), (-1, 1)]]
+        for (low, start), (high, end) in zip(bands, bands[1:]):
+            polygon = clip(clip(rectangle, low, True), high, False)
+            if len(polygon) < 3:
+                continue
+            offset = len(vertices)
+            vertices.extend((x, y, z) for x, z in polygon)
+            indices = list(range(offset, len(vertices)))
+            faces.append(tuple(reversed(indices)) if reverse else tuple(indices))
+            colors.append([face_tint(start + (end - start) * (diagonal(p) - low) / (high - low))
+                           for p in (list(reversed(polygon)) if reverse else polygon)])
+
     rings = [(rim, -d / 2), (bevel, -d / 2), (0, -d / 2 + bevel),
              (0, d / 2 - bevel), (bevel, d / 2), (rim, d / 2)]
     for inset, y in rings:
         vertices.extend((sx * (w / 2 - inset), y, sz * (h / 2 - inset))
                         for sx, sz in [(-1, -1), (1, -1), (1, 1), (-1, 1)])
-    faces.append((0, 1, 2, 3))
-    colors.append(face_color)
     for ring in range(5):
         for corner in range(4):
             nxt = (corner + 1) % 4
             faces.append((4 * ring + corner, 4 * (ring + 1) + corner,
                           4 * (ring + 1) + nxt, 4 * ring + nxt))
-            colors.append(rim_color if ring in [0, 4] else edge_color)
-    faces.append((23, 22, 21, 20))
-    colors.append(face_color)
+            colors.append([rim_color if ring in [0, 4] else edge_color] * 4)
+    surface(-d / 2)
+    surface(d / 2, reverse=True)
     mesh = bpy.data.meshes.new(name)
     mesh.from_pydata(vertices, [], faces)
     mesh.update()
     tint = mesh.color_attributes.new(name='GlazingTint', type='FLOAT_COLOR', domain='CORNER')
-    for polygon, color in zip(mesh.polygons, colors):
-        for loop in polygon.loop_indices:
+    for polygon, corner_colors in zip(mesh.polygons, colors):
+        for loop, color in zip(polygon.loop_indices, corner_colors):
             tint.data[loop].color = color
     o = bpy.data.objects.new(name, mesh)
     bpy.context.scene.collection.objects.link(o)
@@ -327,7 +364,7 @@ def main():
         s = bpy.context.scene
         s.unit_settings.system = 'METRIC'
         s.unit_settings.scale_length = 1
-        glass = material('Glass_PaleAqua_Alpha', (1, 1, 1), 0, .055, .13)
+        glass = material('Glass_PaleAqua_Alpha', (1, 1, 1), 0, .055, .18)
         tint = glass.node_tree.nodes.new('ShaderNodeVertexColor')
         tint.layer_name = 'GlazingTint'
         shader = glass.node_tree.nodes['Principled BSDF']
