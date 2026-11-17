@@ -36,6 +36,7 @@ def bounds(objects):
 
 
 measurements = []
+clearances = []
 closed_count = 0
 for obj in (o for o in root.children_recursive if o.type == 'MESH'):
     bm = bmesh.new()
@@ -65,7 +66,14 @@ for index, bottle in enumerate(bottles):
             assert maximum[0] < other_min[0], 'same-tier bottle spacing'
     if tier < 3:
         next_shelf_min, _ = bounds([bpy.data.objects[f'RACK_Shelf_T{tier + 1}']])
-        assert next_shelf_min[2] - maximum[2] > .015, 'shelf above clears cap'
+        next_rail_min, _ = bounds([bpy.data.objects[f'RACK_BlankPriceRail_T{tier + 1}']])
+        shelf_gap = next_shelf_min[2] - maximum[2]
+        front_gap = next_rail_min[2] - maximum[2]
+        assert shelf_gap >= .075 - 1e-6, f'{bottle.name}: shelf headroom {shelf_gap:.6f} m'
+        assert front_gap >= .070 - 1e-6, f'{bottle.name}: front access headroom {front_gap:.6f} m'
+        clearances.append({'name': bottle.name, 'tier': tier,
+                           'shelf_underside_clearance_m': shelf_gap,
+                           'front_rail_clearance_m': front_gap})
     measurements.append({'name': bottle.name, 'tier': tier,
                          'height_m': maximum[2] - minimum[2],
                          'width_m': maximum[0] - minimum[0],
@@ -79,6 +87,9 @@ report = {
     'closed_manifold_parts': closed_count,
     'flush_blank_bands': len(bottles), 'overlapping_label_sleeves': 0,
     'same_tier_overlap': False, 'shelf_contacts': 'PASS',
+    'minimum_shelf_underside_clearance_m': min(c['shelf_underside_clearance_m'] for c in clearances),
+    'minimum_front_rail_clearance_m': min(c['front_rail_clearance_m'] for c in clearances),
+    'clearances': clearances,
     'materials': len(bpy.data.materials), 'external_libraries': 0,
     'images': 0, 'text_objects': 0, 'bottles': measurements,
 }

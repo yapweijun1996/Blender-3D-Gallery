@@ -10,5 +10,24 @@
     "geometry_gate": "PASS: final exported triangles are nondegenerate, under 18000, and use 3 shared material primitives.",
     "final_browser_visual": "PASS: normal and enlarged final screenshots show clean bands.",
     "before_screenshot": "~/Documents/MallQueue/reports/condiment-bottle-jar-set-page-before-flush-bands.png"
+  },
+  "advisor_round_1": {
+    "review": "~/Documents/MallQueue/advisor/condiment-bottle-jar-set-r1.md",
+    "finding": "Bottom 0.30 m bottles had only 16 mm below the next shelf and their caps were obscured by the front rail in the gallery view.",
+    "repair": "Raise middle/top shelf surfaces from 0.435/0.745 m to 0.500/0.820 m; extend front uprights with the top shelf. Retain all 16 bottles, their heights and the 0.90 x 0.35 x 1.10 m rack envelope.",
+    "measured_clearances_m": [
+      {
+        "tier": 1,
+        "shelf_underside_clearance_m": 0.08100000023841858,
+        "front_rail_clearance_m": 0.07499998807907104
+      },
+      {
+        "tier": 2,
+        "shelf_underside_clearance_m": 0.07599997520446777,
+        "front_rail_clearance_m": 0.06999999284744263
+      }
+    ],
+    "regression": "The strengthened source gate failed the original source at 0.016000 m, then passed the rebuilt source; minimum 0.075 m shelf headroom and 0.070 m front-rail headroom.",
+    "baseline_failure_log": "condiment-bottle-jar-set-r1-clearance-before.log"
   }
 }

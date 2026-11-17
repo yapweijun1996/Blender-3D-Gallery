@@ -1,30 +1,30 @@
 {
   "result": "PASS",
-  "reviewer": "Agent visual inspection of final rendered PNGs",
+  "reviewer": "Agent visual inspection after advisor round 1",
   "views": {
     "hero.png": {
-      "sha256": "f5f7df90360915b5fff0bc89cddd55babe51c7f91040faaaecfdbf3921d8d6e8",
+      "sha256": "b0c8cddfa4a591a178c04abe7ea133cbaa31b7ca8677c60bac612344a2af5ab7",
       "dimensions_px": [
         768,
         768
       ]
     },
     "front.png": {
-      "sha256": "99e758937ed8b96fc1d4f17748939262c320d50e6ace5e3c2f9ed10fde47b864",
+      "sha256": "ae08ff08012e38fadf19c49861e9d0be79f7a997d99ce1c93746b2da6f11df4a",
       "dimensions_px": [
         768,
         768
       ]
     },
     "side.png": {
-      "sha256": "f8f71d82cd565a6fd541e91048edc6e6b2e75eff25749cedb6459880ebed7d6a",
+      "sha256": "a88d98f8f59248e9a7e85bed577793cfa4c0152d0d15073354d3d650a1ada543",
       "dimensions_px": [
         768,
         768
       ]
     },
     "3q.png": {
-      "sha256": "a0ebc4d7550365dbc971529e41ddd100b18eb4f7b7b91274a4c24e8b371380a8",
+      "sha256": "87c8c3da3964b88c0e7648080aa7b4c034c5c255fdb0adee63d219a1f2cbef13",
       "dimensions_px": [
         768,
         768
@@ -32,18 +32,17 @@
     }
   },
   "observations": [
-    "Clean three-tier rack proportions; foot-centred silhouette, blank framed header and plain price strips.",
-    "Sixteen evenly spaced soy-style bottles in three clearly distinct sizes; warm blank bands and neutral caps.",
-    "Dark amber bodies read as filled condiment bottles; no brands, readable text or peanut-butter jars.",
-    "Front and side views show supported bases and shelf-to-cap clearance.",
-    "Final flush band faces retain clean source renders without overlapping label shells."
+    "Four regenerated Blender previews inspected: front, side, hero and opposite three-quarter.",
+    "Raised middle/top shelves retain the 1.10 m rack envelope and the three original bottle heights; feet and bottle bases remain supported.",
+    "Front and hero views clearly show the large bottle caps below the middle shelf, with visible access space above them.",
+    "The source measures bottom/middle cap-to-shelf gaps of 81/76 mm and cap-to-front-rail gaps of 75/70 mm.",
+    "Sixteen dark amber soy-style bottles, neutral caps, blank colour bands, price rails and header remain brand-neutral; no readable text, logos or peanut-butter jars."
   ],
   "limitations": "Agent visual review only; human art sign-off and complete mall integration remain unverified.",
   "browser_visual_review": {
     "result": "PASS",
     "screenshot": "/Users/admin/Documents/MallQueue/reports/condiment-bottle-jar-set-page.png",
-    "screenshot_sha256": "3ce801272591c980d7a7f8ee0ed4a87e960f3aa70db5a214a3f348f167189089",
-    "detail_screenshot": "~/Documents/MallQueue/reports/condiment-bottle-jar-set-detail.png",
-    "observations": "Final normal and enlarged Chromium screenshots inspected; blank bands are clean, with previous label-shell speckles removed."
+    "screenshot_sha256": "87420d748c07a06ed6dbfae081c12e74cfd64a9ee1fd2500fc153b5ed63f3b0b",
+    "observations": "Replacement 1440 x 900 production-gallery screenshot opened and inspected. All five bottom bottle caps are identifiable with a visible gap below the next front rail. Blank bands remain clean and the complete rack fits in the viewport."
   }
 }

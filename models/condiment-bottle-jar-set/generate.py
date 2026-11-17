@@ -15,7 +15,8 @@ SLUG = 'condiment-bottle-jar-set'
 ROOT = 'ASSET_CondimentBottleJarSet'
 SEGMENTS = 24
 TARGET = (0, 0, .55)
-SHELF_TOPS = (.095, .435, .745)
+# Keep full-size bottles and at least 70 mm of access below the next front rail.
+SHELF_TOPS = (.095, .500, .820)
 IVORY = (.81, .80, .74)
 GRAPHITE = (.23, .28, .27)
 CAP = (.29, .30, .27)
@@ -153,7 +154,9 @@ def build():
             box(f'RACK_Foot_{x}_{y}', (x, y, .012), (.09, .065, .024), metal, GRAPHITE, root)
     for x in (-.416, .416):
         box(f'RACK_RearUpright_{x}', (x, .142, .547), (.028, .028, 1.046), metal, GRAPHITE, root)
-        box(f'RACK_FrontUpright_{x}', (x, -.135, .407), (.024, .024, .766), metal, GRAPHITE, root)
+        front_top = SHELF_TOPS[-1] + .045
+        box(f'RACK_FrontUpright_{x}', (x, -.135, (front_top + .024) / 2),
+            (.024, .024, front_top - .024), metal, GRAPHITE, root)
         for tier, top in enumerate(SHELF_TOPS, 1):
             box(f'RACK_SideSupport_T{tier}_{x}', (x, .005, top - .026),
                 (.022, .284, .032), metal, GRAPHITE, root)

@@ -13,6 +13,16 @@ The delivery export batches those parts into three shared material primitives.
 Vertex colours supply the blank band colours without extra materials or textures.
 Opaque amber shells approximate dark liquid for low-cost mall rendering.
 
+Advisor round 1 raises the middle and top shelf surfaces to 0.500 m and 0.820 m,
+while retaining the 0.30/0.22/0.12 m bottle heights and 1.10 m rack height.
+Measured cap clearance below the next shelf is 81 mm on the bottom tier and
+76 mm on the middle tier; the lower front price rails leave 75 mm and 70 mm.
+The source inspection checks both overhead clearance and front access, so the
+previous 16 mm bottom shelf gap fails the gate.
+The rebuilt GLB remains 14,092 triangles, 13,848 vertices and 586,196 bytes:
+one mesh, three shared materials/primitives, no images and no animations.
+The existing catalog entry has no changed numerical fields and is retained.
+
 ```sh
 /opt/homebrew/bin/blender --background --python-exit-code 1 --python models/condiment-bottle-jar-set/generate.py
 node models/condiment-bottle-jar-set/convert-preview.mjs

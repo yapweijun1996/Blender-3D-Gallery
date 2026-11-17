@@ -1,74 +1,110 @@
 {
   "result": "PASS",
   "id": "condiment-bottle-jar-set",
-  "status": "draft; local acceptance complete; human art review pending",
-  "tested_glb_sha256": "5e1eac9c16e1c38057ba0363d5f38d95bf78a79113743df126316f64df56008c",
+  "status": "draft; advisor round 1 repair verified locally; independent art re-review pending",
+  "tested_glb_sha256": "446340800ac7d02490c71217ee59f8f36ff639dbd4c63c0b31ac524a142501bb",
+  "advisor_review": "~/Documents/MallQueue/advisor/condiment-bottle-jar-set-r1.md",
   "commands": [
     {
-      "command": "Blender 5.2.3 --background --python-exit-code 1 --python generate.py",
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/condiment-bottle-jar-set/generate.py",
+      "log": "condiment-bottle-jar-set-r1-generate.log",
       "result": "PASS",
       "exit_code": 0
     },
     {
-      "command": "node validate.mjs (Khronos and geometry quality gate)",
+      "command": "node models/condiment-bottle-jar-set/convert-preview.mjs",
+      "log": "condiment-bottle-jar-set-r1-preview-encode.log",
       "result": "PASS",
-      "exit_code": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "node models/condiment-bottle-jar-set/validate.mjs",
+      "log": "condiment-bottle-jar-set-r1-validate.log",
       "validator_errors": 0,
-      "validator_warnings": 0
-    },
-    {
-      "command": "Blender inspect_sources.py + node verify_source_edit.mjs",
+      "validator_warnings": 0,
       "result": "PASS",
       "exit_code": 0
     },
     {
-      "command": "Blender verify_rebuild.py",
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/condiment-bottle-jar-set/inspect_sources.py",
+      "log": "condiment-bottle-jar-set-r1-sources.log",
       "result": "PASS",
-      "exit_code": 0,
-      "byte_identical_glb": true
+      "exit_code": 0
+    },
+    {
+      "command": "node models/condiment-bottle-jar-set/verify_source_edit.mjs",
+      "log": "condiment-bottle-jar-set-r1-source-edit.log",
+      "result": "PASS",
+      "exit_code": 0
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/condiment-bottle-jar-set/verify_rebuild.py",
+      "log": "condiment-bottle-jar-set-r1-rebuild.log",
+      "byte_identical_glb": true,
+      "result": "PASS",
+      "exit_code": 0
     },
     {
       "command": "npm run validate:assets",
+      "log": "condiment-bottle-jar-set-r1-validate-assets.log",
       "result": "PASS",
-      "exit_code": 0,
-      "log": "condiment-bottle-jar-set-validate-assets-final.log"
+      "exit_code": 0
     },
     {
       "command": "npm test",
-      "result": "PASS",
-      "exit_code": 0,
+      "log": "condiment-bottle-jar-set-r1-npm-test.log",
       "passed": 737,
       "failed": 0,
       "skipped": 0,
-      "log": "condiment-bottle-jar-set-npm-test-final.log"
+      "result": "PASS",
+      "exit_code": 0
     },
     {
       "command": "npm run build",
-      "result": "PASS",
-      "exit_code": 0,
+      "log": "condiment-bottle-jar-set-r1-build.log",
       "note": "Vite reports a bundle chunk-size warning.",
-      "log": "condiment-bottle-jar-set-build-final.log"
+      "result": "PASS",
+      "exit_code": 0
     },
     {
-      "command": "node check-browser.mjs",
+      "command": "node models/condiment-bottle-jar-set/check-browser.mjs",
+      "log": "condiment-bottle-jar-set-r1-browser.log",
       "result": "PASS",
-      "exit_code": 0,
-      "log": "condiment-bottle-jar-set-browser-final.log"
+      "exit_code": 0
     }
   ],
   "external_log_directory": "~/Documents/MallQueue/reports/",
-  "visual_review": "Four final Blender PNGs plus normal/enlarged Chromium screenshots inspected.",
-  "catalog": "Own collection appended at end in existing Mall Fixtures category; all earlier entries unchanged; excluded from singapore-fish.",
-  "scope": "Only the new model folder and catalog changed. Test-generated demo-beverage-can structure-motion.json restored with git checkout.",
+  "visual_review": "All four regenerated Blender PNGs and the replacement default production-gallery screenshot opened and inspected.",
+  "catalog": "Existing standalone Mall Fixtures collection retained; numerical cost metrics are unchanged and the catalog has no changed numeric fields, so models/catalog.json is unchanged. Excluded from singapore-fish.",
+  "scope": "Only this model folder revised. Test-generated demo-beverage-can structure-motion.json restored with git checkout; pre-existing glass-storefront-module report edits preserved.",
   "not_verified": [
     "Physical Android/iOS",
     "WebKit",
     "Full 17-shop mall integration and performance",
     "Collision and product interaction",
-    "Publication or deployment"
+    "Publication or deployment",
+    "Independent advisor re-review"
   ],
+  "regression_evidence": {
+    "original_source": "Expected failure: strengthened source inspection rejects the original bottom shelf gap at 0.016000 m; exit code 1.",
+    "baseline_log": "condiment-bottle-jar-set-r1-clearance-before.log",
+    "rebuilt_source": "PASS: shelf headroom at least 0.075 m and front-rail headroom at least 0.070 m, within 1e-6 m numerical tolerance.",
+    "clearances_bottom_to_middle": [
+      {
+        "tier": 1,
+        "shelf_underside_clearance_m": 0.08100000023841858,
+        "front_rail_clearance_m": 0.07499998807907104
+      },
+      {
+        "tier": 2,
+        "shelf_underside_clearance_m": 0.07599997520446777,
+        "front_rail_clearance_m": 0.06999999284744263
+      }
+    ]
+  },
   "corrected_initial_findings": [
     "Thin-header bevel generated 24 zero-area triangles; bevel reduced and strict gate rerun.",
-    "Overlapping label shells speckled in Chromium; replaced with flush material bands and all affected checks rerun."
+    "Overlapping label shells speckled in Chromium; replaced with flush material bands and all affected checks rerun.",
+    "Advisor round 1: raised middle/top shelves and matching front uprights to expose bottom caps and provide access space without shrinking bottles or increasing rack height or runtime cost."
   ]
 }
