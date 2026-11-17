@@ -1,0 +1,90 @@
+{
+  "result": "PASS",
+  "id": "medicine-health-box-set",
+  "category": "Mall Fixtures",
+  "status": "draft",
+  "priority": "P2",
+  "stores": [
+    "S05",
+    "S12"
+  ],
+  "blender_version": "5.2.3 LTS",
+  "measurements": {
+    "glb_bytes": 560188,
+    "triangles": 9624,
+    "vertices": 13864,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "dimensions": [
+      0.6000000238418579,
+      1.7000000476837158,
+      0.3499999940395355
+    ],
+    "bounds": {
+      "min": [
+        -0.30000001192092896,
+        0,
+        -0.17499999701976776
+      ],
+      "max": [
+        0.30000001192092896,
+        1.7000000476837158,
+        0.17499999701976776
+      ]
+    },
+    "sha256": "9a0b11b759110b9f1721dcdc73684743e5a901185354427f237d5e1e2a3f7c8e"
+  },
+  "checks": {
+    "deterministic_rebuild": "PASS: byte-identical GLB",
+    "source_reopen_edit_export": "PASS",
+    "source_closed_parts_contacts_and_clearance": "PASS",
+    "asset_gate": "PASS",
+    "khronos": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "npm_run_validate_assets": {
+      "result": "PASS",
+      "exit_code": 0,
+      "log": "reports/validate-assets.log"
+    },
+    "npm_test": {
+      "result": "PASS",
+      "exit_code": 0,
+      "passed": 737,
+      "failed": 0,
+      "skipped": 0,
+      "log": "reports/npm-test.log"
+    },
+    "npm_run_build": {
+      "result": "PASS",
+      "exit_code": 0,
+      "log": "reports/build-final.log"
+    },
+    "chromium_1440x900": "PASS: load, hash, orbit, reset, refresh and viewed screenshot",
+    "catalog_append_only": "PASS: all prior collection entries preserved"
+  },
+  "harness_correction": "Initial browser assertion expected a source /models/ URL; Vite fingerprints production URLs under /assets/. Retain the failure log and validate the actual response bytes against the measured GLB SHA-256.",
+  "build_notes": [
+    "Vite reports a large-chunk advisory; no gallery code or build configuration changed."
+  ],
+  "not_found": [
+    "Close duplicate model",
+    "Relevant KB memory"
+  ],
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Full 17-shop integration",
+    "Assembled mall 200-draw-call performance",
+    "Physical load and safety",
+    "Deployment/publication"
+  ],
+  "test_artifact_restoration": "git checkout -- models/demo-beverage-can/reports/structure-motion.json",
+  "git_scope": [
+    "models/medicine-health-box-set/",
+    "models/catalog.json"
+  ],
+  "publication": "Local commit only; no push or rebase."
+}

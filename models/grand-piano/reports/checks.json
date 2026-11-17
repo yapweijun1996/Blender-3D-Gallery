@@ -1,0 +1,115 @@
+{
+  "result": "PASS",
+  "id": "grand-piano",
+  "status": "draft / NEEDS REVIEW",
+  "blender_version": "5.2.3 LTS",
+  "checks": [
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/grand-piano/generate.py",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "source-geometry.json"
+    },
+    {
+      "command": "node models/grand-piano/validate.mjs",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "assets.json; khronos.json",
+      "khronos_errors": 0,
+      "khronos_warnings": 0
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/grand-piano/inspect_sources.py",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "sources.json",
+      "closed_manifold_source_meshes": 232
+    },
+    {
+      "command": "node models/grand-piano/verify_source_edit.mjs",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "sources.json"
+    },
+    {
+      "command": "Independent clean procedural rebuild with --skip-render in a temporary directory",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "reproducibility.json"
+    },
+    {
+      "command": "npm run validate:assets",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "npm-validate.log"
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "exit_code": 0,
+      "tests": 737,
+      "pass": 737,
+      "fail": 0,
+      "skipped": 0,
+      "evidence": "npm-test.log"
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "npm-build.log",
+      "notes": "Vite reports bundle chunks over 500 kB; no UI or dependency change in this task."
+    },
+    {
+      "command": "node models/grand-piano/check_browser.mjs",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "browser.json",
+      "viewport": [
+        1440,
+        900
+      ]
+    }
+  ],
+  "visual_review": {
+    "result": "AGENT REVIEW COMPLETE; human approval unverified",
+    "inspected": [
+      "../previews/hero.png",
+      "../previews/front.png",
+      "../previews/side.png",
+      "../previews/3q.png",
+      "/Users/admin/Documents/MallQueue/reports/grand-piano-page.png"
+    ],
+    "observations": "Plain glossy black curved case, raised supported lid, visible keyboard and pedals, three castered legs, and matching bench; no text or logos."
+  },
+  "earlier_attempts": [
+    {
+      "result": "CORRECTED",
+      "issue": "Initial detailed bevels produced 39672 triangles, exceeding the 25000 triangle limit.",
+      "resolution": "Simplified bevel rings and thin string/pin geometry; final 15180 triangles."
+    },
+    {
+      "result": "CORRECTED",
+      "issue": "First centred-width assertion failed: opened lid projected 9.38 mm past the bass case edge.",
+      "resolution": "Adjusted the original lid outline at its hinge; final complete width 1.5 m and floor-centred bounds pass."
+    }
+  ],
+  "restored_test_artifact": "models/demo-beverage-can/reports/structure-motion.json restored using git checkout",
+  "not_found": [
+    "Existing grand-piano duplicate; electronic-keyboard explicitly assessed as different equipment."
+  ],
+  "unverified": [
+    "Human art approval",
+    "Physical Android/iOS devices",
+    "WebKit",
+    "Full S15 mall/podium integration",
+    "Target-hardware performance",
+    "All pairwise component intersection clearances"
+  ],
+  "out_of_scope": [
+    "Audio and playable keys",
+    "Lid or pedal animation",
+    "Gallery UI changes",
+    "Publishing and push"
+  ]
+}

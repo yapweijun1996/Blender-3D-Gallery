@@ -1,0 +1,130 @@
+{
+  "id": "vehicle-etag-display-stand",
+  "name": "Vehicle E-Tag Display Stand",
+  "summary": "Six generic windscreen-mount toll tags on a small sloped S16 countertop display.",
+  "description": "Original petrol-blue counter fixture with a solid sloped riser, two rows of three ivory rounded toll-tag devices, blank smoke-coloured windows, rear mounting pads, shallow retaining stops and one blank sign card. No text, logos or external assets.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "S16",
+    "P2",
+    "vehicle",
+    "e-tag",
+    "electronic-toll-tag",
+    "windscreen-mount",
+    "countertop",
+    "display-stand",
+    "sloped-riser",
+    "six-devices",
+    "blank-window",
+    "blank-sign-card",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry and three shared PBR materials; no external models, images, textures, fonts, packaging or logos.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/vehicle-etag-display-stand.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp",
+      "previews/rear.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Counter contact centre",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "previewCameraDirection": [
+      1.4,
+      1.1,
+      3
+    ]
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "glTF X,Y,Z (width,height,depth)",
+    "size": [
+      0.5,
+      0.4000000059604645,
+      0.3499999940395355
+    ],
+    "bounds": {
+      "min": [
+        -0.25,
+        0,
+        -0.17499999701976776
+      ],
+      "max": [
+        0.25,
+        0.4000000059604645,
+        0.17499999701976776
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 150980,
+    "triangles": 6528,
+    "vertices": 4528,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "sha256": "07fbe5b702c6837a11e09fb579d0272e56e657f6467447a74b7eda3a146eb056"
+  },
+  "content": {
+    "toll_tags": 6,
+    "blank_windows": 6,
+    "mounting_pads": 12,
+    "riser_angle_degrees": 30.000000834826057,
+    "mount_contact_max_residual_m": 4.991009883159592e-09
+  },
+  "source_statistics": {
+    "mesh_parts": 56,
+    "materials": 3,
+    "text_objects": 0
+  },
+  "accuracy_notes": "Static visual retail fixture, with generic illustrative devices. No electronic toll function, product specifications or electrical certification. Blank windows and sign contain no graphics or text. Full mall integration and frame rate, physical Android/iOS and WebKit are unverified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "geometry": "PASS",
+    "source_editability": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 12000,
+      "bytes": 614400,
+      "materials": 3,
+      "mesh_primitives": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/reproducibility.json",
+      "reports/duplicate-search.json",
+      "reports/browser.json"
+    ]
+  }
+}

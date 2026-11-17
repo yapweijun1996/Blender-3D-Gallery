@@ -1,0 +1,118 @@
+{
+  "id": "grand-piano",
+  "name": "Grand Piano with Bench",
+  "summary": "Original 88-key baby grand with a raised lid, three pedals, castered legs and matching bench.",
+  "description": "Brand-neutral black-lacquer baby grand for the S15 showroom podium, with curved bentside, propped open lid, open music desk and a simplified brass harp. Static visual equipment.",
+  "category": "Equipment",
+  "tags": [
+    "grand piano",
+    "baby grand",
+    "88 keys",
+    "bench",
+    "raised lid",
+    "music",
+    "S15",
+    "P1",
+    "mall",
+    "editable",
+    "metres"
+  ],
+  "status": "draft",
+  "store": "S15",
+  "priority": "P1",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry and shared procedural materials; no external assets or text.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/grand-piano.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1.1,
+      0.9,
+      1.7
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor centre of the complete piano-and-bench footprint"
+  },
+  "measurements": {
+    "glb_bytes": 523560,
+    "triangles": 15180,
+    "vertices": 17881,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "textures": 0,
+    "animations": 0,
+    "dimensions_m": [
+      1.5,
+      1.8118597865104675,
+      2.3449999690055847
+    ],
+    "bounds_m": {
+      "min": [
+        -0.75,
+        0,
+        -1.1725000143051147
+      ],
+      "max": [
+        0.75,
+        1.8118597865104675,
+        1.17249995470047
+      ]
+    },
+    "key_count": 88,
+    "white_keys": 52,
+    "black_keys": 36,
+    "white_key_top_m": 0.755,
+    "black_key_top_m": 0.771,
+    "sha256": "99c65386e19fd7202d71cbdc0a8dfa0cca82339b7f08f000b15f66104fe5f323",
+    "piano_dimensions_m": [
+      1.5,
+      1.8118597,
+      1.75
+    ],
+    "case_top_m": 0.993,
+    "bench_dimensions_m": [
+      0.66,
+      0.55,
+      0.36
+    ]
+  },
+  "accuracy_notes": "Dimensions use glTF XYZ (width, height, depth). Piano footprint is measured separately from the complete set; the 1.812 m raised-lid envelope exceeds the 0.993 m case top. 88 keys A0-C8: 52 white and 36 black. The bench is separate geometry within the same asset. Static display: no audio, key actuation, lid animation or engineering-grade internal mechanism. String courses are simplified. Full S15 assembly, physical devices and hardware performance are unverified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials; no external models, fonts, textures or logos."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 24999,
+      "bytes": 1572863,
+      "mesh_primitives": 3,
+      "materials": 3
+    },
+    "evidence": "../reports/assets.json",
+    "checks_evidence": "../reports/checks.json"
+  }
+}

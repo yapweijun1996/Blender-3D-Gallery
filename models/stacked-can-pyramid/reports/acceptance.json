@@ -1,0 +1,68 @@
+{
+  "id": "stacked-can-pyramid",
+  "status": "PASS",
+  "duplicate_search": {
+    "result": "NOT FOUND: no existing unlabelled can pyramid or stepped display",
+    "catalog_assets_searched_before_build": 598,
+    "metadata_json_files_searched_before_build": 643,
+    "related_non_matches": [
+      "demo-food-tin: a single animated concept tin, no display stack",
+      "demo-beverage-can: a single concept beverage can",
+      "gjh-abalone-cans: branded single-can packaging variants",
+      "supermarket-aisle: shelving and carton rows, no can display"
+    ]
+  },
+  "checks": {
+    "geometry_budget": "PASS",
+    "khronos": "PASS: 0 errors, 0 warnings",
+    "saved_source_and_controlled_edit": "PASS",
+    "saved_source_reexport_hash": "PASS",
+    "rendered_previews_visual_review": "PASS: hero/front/side/3q",
+    "npm_run_validate_assets": {
+      "result": "PASS",
+      "log": "/tmp/stacked-can-pyramid-validate-assets-final.log",
+      "exit_code": 0
+    },
+    "npm_test": {
+      "result": "PASS",
+      "tests": 737,
+      "pass": 737,
+      "fail": 0,
+      "skipped": 0,
+      "log": "/tmp/stacked-can-pyramid-tests-final.log",
+      "exit_code": 0
+    },
+    "npm_run_build": {
+      "result": "PASS",
+      "log": "/tmp/stacked-can-pyramid-build-final.log",
+      "note": "Vite chunk-size advisory; build exit 0.",
+      "exit_code": 0
+    },
+    "chromium_1440x900": "PASS: actual GLB hash, rotation, zoom, reset, 3 observed draws per frame, no errors"
+  },
+  "initial_attempts": [
+    {
+      "result": "FAIL",
+      "check": "Material gate",
+      "reason": "Blender default double-sided material; fixed by enabling backface culling and regenerated."
+    },
+    {
+      "result": "FAIL",
+      "check": "First npm validation and unit run",
+      "reason": "Started before hero.webp existed; added 19166-byte thumbnail. First unit run 733/737 pass, four missing-thumbnail failures; final complete rerun recorded separately."
+    },
+    {
+      "result": "FAIL",
+      "check": "First independent edited-material probe",
+      "reason": "Probe expected underscored material name. Corrected to actual exported name; geometry and material edit subsequently independently verified."
+    }
+  ],
+  "not_verified": [
+    "Physical mobile devices",
+    "WebKit",
+    "17-shop assembled mall placement, collisions and performance",
+    "Physical can stacking stability",
+    "Remote deployment or publication"
+  ],
+  "scope": "Models only; separate collection appended in existing Mall Fixtures category; no existing model, UI or workflow edits; no push or rebase."
+}

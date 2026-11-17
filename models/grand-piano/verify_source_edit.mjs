@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import validator from 'gltf-validator';
+
+const dir = fileURLToPath(new URL('.', import.meta.url));
+const report = JSON.parse(fs.readFileSync(dir + 'reports/sources.json'));
+const original = fs.readFileSync(dir + 'exports/optimized.glb');
+const edited = fs.readFileSync(report.edited_glb);
+const load = bytes => new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+const a = await load(original), b = await load(edited);
+const name = 'MESH_Warm_brass';
+const first = a.scene.getObjectByName(name), second = b.scene.getObjectByName(name);
+assert.ok(first && second);
+assert.notDeepEqual(first.geometry.attributes.position.array, second.geometry.attributes.position.array);
+assert.ok(Math.abs(second.material.roughness - 0.62) < 1e-6);
+const result = await validator.validateBytes(new Uint8Array(edited));
+assert.equal(result.issues.numErrors, 0);
+assert.equal(result.issues.numWarnings, 0);
+report.saved_edit_export = 'PASS: changed mesh coordinates and material survived saved-source re-export';
+fs.writeFileSync(dir + 'reports/sources.json', JSON.stringify(report, null, 2) + '\n');
+console.log(report.saved_edit_export);

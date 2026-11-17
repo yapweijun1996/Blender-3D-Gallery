@@ -1,0 +1,38 @@
+{
+  "result": "PASS",
+  "id": "medicine-health-box-set",
+  "browser": "headless Chromium",
+  "browser_version": "156.0.8078.4",
+  "graphics": "SwiftShader software rendering",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "route": "?model=medicine-health-box-set",
+  "screenshot": "/Users/admin/Documents/MallQueue/reports/medicine-health-box-set-page.png",
+  "requested_glbs": [
+    {
+      "path": "/Blender-3D-Gallery/assets/optimized-BoREdf9K.glb",
+      "status": 200,
+      "sha256": "9a0b11b759110b9f1721dcdc73684743e5a901185354427f237d5e1e2a3f7c8e"
+    },
+    {
+      "path": "/Blender-3D-Gallery/assets/optimized-BoREdf9K.glb",
+      "status": 200,
+      "sha256": "9a0b11b759110b9f1721dcdc73684743e5a901185354427f237d5e1e2a3f7c8e"
+    }
+  ],
+  "errors": [],
+  "checks": [
+    "Direct model route",
+    "Real GLB response hash matches measured export",
+    "Canvas ready and actual WebGL draw calls",
+    "Pointer orbit redraw",
+    "Reset control",
+    "Page refresh"
+  ],
+  "limitations": [
+    "Screenshot requires visual review",
+    "No physical mobile, WebKit or full mall performance test"
+  ]
+}

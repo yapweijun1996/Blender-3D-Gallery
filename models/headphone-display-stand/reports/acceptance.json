@@ -1,0 +1,76 @@
+{
+  "result": "PASS",
+  "publication_status": "LOCAL DRAFT / MANAGER REVIEW",
+  "id": "headphone-display-stand",
+  "checks": {
+    "duplicate_search": "NOT FOUND",
+    "blender_headless_generation": "PASS",
+    "source_reopen_and_saved_edit": "PASS",
+    "deterministic_glb_rebuild": "PASS",
+    "four_previews_rendered_and_visually_inspected": "PASS",
+    "asset_geometry_gate": "PASS",
+    "khronos": "PASS (0 errors, 0 warnings)",
+    "npm_run_validate_assets": "PASS",
+    "npm_test": "PASS (737/737, 0 skipped)",
+    "npm_run_build": "PASS (chunk-size advisory)",
+    "chromium_1440x900_model_page": "PASS",
+    "loaded_glb_hash_matches": "PASS",
+    "keyboard_orbit_and_close": "PASS",
+    "page_screenshot_visually_inspected": "PASS",
+    "generated_existing_test_artifact_restored": "PASS",
+    "catalog_only_appends_own_collection": "PASS"
+  },
+  "measured": {
+    "glb_bytes": 431772,
+    "triangles": 18084,
+    "vertices": 13340,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "dimensions": [
+      0.6000000238418579,
+      1.399999976158142,
+      0.4000000059604645
+    ],
+    "sha256": "ab0e91d44e12b0f41e76383ee914fe5cd7e29cb8839ea458df2a77f672e9ba54"
+  },
+  "previews": {
+    "files": [
+      "previews/hero.png",
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ],
+    "resolution": [
+      768,
+      768
+    ]
+  },
+  "evidence": [
+    "assets.json",
+    "khronos.json",
+    "sources.json",
+    "reproducibility.json",
+    "browser.json",
+    "duplicate-search.json"
+  ],
+  "command_logs": {
+    "blender": "/Users/admin/Documents/MallQueue/reports/headphone-display-stand-blender.log",
+    "rebuild": "/Users/admin/Documents/MallQueue/reports/headphone-display-stand-rebuild.log",
+    "validate-assets": "/Users/admin/Documents/MallQueue/reports/headphone-display-stand-validate-assets.log",
+    "test": "/Users/admin/Documents/MallQueue/reports/headphone-display-stand-test.log",
+    "build": "/Users/admin/Documents/MallQueue/reports/headphone-display-stand-build.log",
+    "browser": "/Users/admin/Documents/MallQueue/reports/headphone-display-stand-browser.log"
+  },
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Full 17-shop mall assembly, overall 200-draw-call budget or frame rate",
+    "Remote publication/deployment (not requested)"
+  ],
+  "initial_findings_resolved": [
+    "First geometry exceeded triangle budget; reduced bevel segments from 3 to 2",
+    "Thin-plate bevel clamp created degenerate triangles; limited bevel to 45% of the thinnest dimension",
+    "Low front camera exposed studio-floor edge; raised front camera and rerendered"
+  ]
+}

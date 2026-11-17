@@ -1,0 +1,145 @@
+{
+  "id": "medicine-health-box-set",
+  "name": "Medicine and Health Box Display",
+  "summary": "Five-tier floor stand with twenty plain cartons and six supplement bottles for S05 and S12.",
+  "description": "Original upright retail fixture with assorted folded cartons, capped opaque bottles, blank coloured bands, a blank header and five blank shelf rails. No text, brand marks, medical cross or real product packaging.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "S05",
+    "S12",
+    "P2",
+    "medicine",
+    "health-supplement",
+    "cartons",
+    "bottles",
+    "five-tier",
+    "retail-display",
+    "blank-header",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry and three shared vertex-colour materials; no external models, images, textures, fonts or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/medicine-health-box-set.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor centre of plinth footprint",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.3,
+    "previewCameraDirection": [
+      1.5,
+      0.8,
+      3
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 0.9,
+      "directionalIntensity": 1.35,
+      "directionalPosition": [
+        -3,
+        5,
+        4
+      ]
+    }
+  },
+  "accuracy_notes": "Static illustrative S05/S12 P2 retail fixture. Plain cartons and opaque supplement bottles, blank header and shelf rails; no readable text, real product packaging or medical cross. No stocking or purchase interaction, physical load certification, full 17-shop scene integration, physical Android/iOS, WebKit or assembled-mall performance testing.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, vertex colours and shared materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "geometry": "PASS",
+    "source_editability": "PASS",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 18000,
+      "bytes": 1572864,
+      "materials": 3,
+      "mesh_primitives": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/reproducibility.json",
+      "reports/duplicate-search.json",
+      "reports/visual-review.json",
+      "reports/browser.json",
+      "reports/acceptance.json"
+    ]
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "width, height, depth (glTF X,Y,Z)",
+    "size": [
+      0.6000000238418579,
+      1.7000000476837158,
+      0.3499999940395355
+    ],
+    "bounds": {
+      "min": [
+        -0.30000001192092896,
+        0,
+        -0.17499999701976776
+      ],
+      "max": [
+        0.30000001192092896,
+        1.7000000476837158,
+        0.17499999701976776
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 560188,
+    "triangles": 9624,
+    "vertices": 13864,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "sha256": "9a0b11b759110b9f1721dcdc73684743e5a901185354427f237d5e1e2a3f7c8e",
+    "carton_count": 20,
+    "bottle_count": 6,
+    "tier_count": 5,
+    "cartons_bottom_to_top": [
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "bottles_bottom_to_top": [
+      0,
+      0,
+      2,
+      2,
+      2
+    ],
+    "editable_mesh_parts": 70
+  }
+}

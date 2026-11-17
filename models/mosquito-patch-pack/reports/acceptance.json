@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "id": "mosquito-patch-pack",
+  "status": "draft",
+  "manager_review": "PENDING",
+  "glb_sha256": "e8e1b38c4a7d99c3347abbb7c24c8677f68527d80804521a2c07eb96bc86dac7",
+  "checks": {
+    "duplicate_search": "NOT FOUND: no close match",
+    "original_geometry": "PASS: no images, libraries, fonts or external assets",
+    "source_reopened_and_saved_edit": "PASS",
+    "generator_only_rebuild": "PASS: byte-identical GLB",
+    "dimensions_and_floor_origin": "PASS",
+    "geometry_and_budget": "PASS",
+    "khronos": "PASS: 0 errors, 0 warnings, 0 infos, 0 hints",
+    "preview_review": "PASS: hero/front/side/3q PNG and WebP visually inspected",
+    "npm_run_validate_assets": "PASS: exit 0",
+    "npm_test": "PASS: 737 passed, 0 failed, 0 skipped",
+    "npm_run_build": "PASS: exit 0",
+    "chromium_1440x900": "PASS: matching GLB, orbit, close, reopen, no errors; orbit observed 3 draw calls",
+    "catalog": "PASS: own collection appended; prior collections unchanged; existing Mall Fixtures category",
+    "generated_test_artifacts": "RESTORED: git checkout -- models/demo-beverage-can/reports/structure-motion.json",
+    "final_page_visual_review": "PASS: final 1440x900 screenshot inspected after asset-specific lighting adjustment",
+    "final_build": "PASS: build rerun after preview-lighting metadata change; includes validate:assets"
+  },
+  "build_warning": "Existing application chunk larger than 500 kB after minification. No application code changed.",
+  "limitations": [
+    "No physical iOS/Android or WebKit test",
+    "No assembled 17-shop mall performance or 200-call total scene certification",
+    "No push, publication or deployment",
+    "No chemical, efficacy, medical or safety verification"
+  ]
+}

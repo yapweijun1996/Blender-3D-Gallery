@@ -1,0 +1,132 @@
+{
+  "id": "mosquito-patch-pack",
+  "name": "Mosquito Patch Pack Display",
+  "summary": "Two-tier counter display with sixteen blank six-patch packs and one enlarged hero pack for S04.",
+  "description": "Original sage counter fixture with four lanes on each of two stepped tiers. Two flat packs per lane, blank ivory cards, six generic sand-coloured round patches per card and a shallow clear formed window. One enlarged pack stands in a rear cradle. No text, logos, external assets or real product packaging.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "S04",
+    "P2",
+    "mosquito-patch",
+    "blister-packs",
+    "countertop",
+    "two-tier",
+    "blank-card",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry and three shared vertex-colour materials; no external models, images, textures, fonts or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/mosquito-patch-pack.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor centre of the base footprint; place on a counter in the mall.",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.35,
+    "previewCameraDirection": [
+      1.2,
+      0.7,
+      3
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 0.85,
+      "directionalIntensity": 1.2,
+      "directionalPosition": [
+        -3,
+        5,
+        4
+      ]
+    }
+  },
+  "accuracy_notes": "Static illustrative display for S04 P2. Blank generic packs; no chemical formulation, efficacy, medical or safety claim. Shallow alpha-blended clear windows approximate PET without refraction. Stock packs deliberately overlap in depth; rear packs and lower hero patches are partly occluded. Physical Android/iOS, WebKit and complete 17-shop mall performance NOT TESTED.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, vertex colours and three shared materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 11999,
+      "bytes": 1572864,
+      "materials": 3,
+      "mesh_primitives": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/reproducibility.json",
+      "reports/browser.json",
+      "reports/acceptance.json"
+    ]
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "width, height, depth (glTF X,Y,Z)",
+    "size": [
+      0.5,
+      0.3499999940395355,
+      0.30000001192092896
+    ],
+    "bounds": {
+      "min": [
+        -0.25,
+        0,
+        -0.15000000596046448
+      ],
+      "max": [
+        0.25,
+        0.3499999940395355,
+        0.15000000596046448
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 529120,
+    "triangles": 9680,
+    "vertices": 12992,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "sha256": "e8e1b38c4a7d99c3347abbb7c24c8677f68527d80804521a2c07eb96bc86dac7",
+    "zero_area_triangles": 0,
+    "regular_pack_count": 16,
+    "hero_pack_count": 1,
+    "patch_count": 102,
+    "editable_mesh_parts": 164,
+    "regular_card_width_height_m": [
+      0.10000000149011612,
+      0.14000000059604645
+    ],
+    "hero_card_width_height_m": [
+      0.14000000059604645,
+      0.19599999487400055
+    ]
+  }
+}
