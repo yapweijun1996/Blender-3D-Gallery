@@ -1,0 +1,78 @@
+{
+  "result": "PASS",
+  "checks": [
+    {
+      "command": "node models/vehicle-etag-display-stand/validate.mjs",
+      "exit_code": 0,
+      "result": "PASS",
+      "khronos_errors": 0,
+      "khronos_warnings": 0
+    },
+    {
+      "command": "Blender --background --python-exit-code 1 --python models/vehicle-etag-display-stand/inspect_sources.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node models/vehicle-etag-display-stand/verify_source_edit.mjs",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm run validate:assets",
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "/tmp/vehicle-etag-validate-assets.log"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "result": "PASS",
+      "passed": 737,
+      "failed": 0,
+      "skipped": 0,
+      "log": "/tmp/vehicle-etag-npm-test.log"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "/tmp/vehicle-etag-build.log"
+    },
+    {
+      "command": "node models/vehicle-etag-display-stand/check_browser.mjs",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "browser.json"
+    }
+  ],
+  "build_info": {
+    "build": "b76beba055b1b248"
+  },
+  "visual_review": {
+    "views": [
+      "hero",
+      "front",
+      "side",
+      "3q",
+      "rear"
+    ],
+    "result": "PASS",
+    "observations": "Six clearly separated rounded blank-window units, flush mounting pads and retaining stops on a solid sloped riser; blank sign card; clean frame proportions. All five rendered PNGs and the built-page screenshot were inspected.",
+    "human_art_signoff": "NOT VERIFIED"
+  },
+  "warnings": [
+    "Vite reports minified chunks over 500 kB and overlapping plugin timing totals; build exited 0."
+  ],
+  "not_found": [
+    "Existing matching e-tag/toll-tag/transponder asset (catalog and metadata search)"
+  ],
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Electronic toll operation or product specifications",
+    "Full mall integration, total draw calls and frame rate",
+    "Deployment or release"
+  ],
+  "scope": "New asset folder and one appended collection only; no UI changes, rebase or push."
+}
