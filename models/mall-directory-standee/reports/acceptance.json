@@ -1,0 +1,119 @@
+{
+  "id": "mall-directory-standee",
+  "status": "draft",
+  "local_checks": "PASS",
+  "owner_art_review": "PENDING",
+  "base_commit": "3d4fbde6e3e554249a939214c069be2e8e6ca026",
+  "checks": [
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python generate.py",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "generate.log"
+    },
+    {
+      "command": "node models/mall-directory-standee/validate.mjs",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": [
+        "assets.json",
+        "khronos.json",
+        "asset-check.log"
+      ]
+    },
+    {
+      "command": "saved native source inspection and source re-export",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": [
+        "source.json",
+        "source-reexport.log",
+        "source-glb-check.log"
+      ]
+    },
+    {
+      "command": "isolated generator-only rebuild",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "reproducibility.json"
+    },
+    {
+      "command": "npm run validate:assets",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "validate-assets.log"
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "exit_code": 0,
+      "tests": 737,
+      "passed": 737,
+      "failed": 0,
+      "evidence": "npm-test.log"
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "build.log"
+    },
+    {
+      "command": "node models/mall-directory-standee/check_page.mjs",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "browser.json"
+    }
+  ],
+  "visual_inspection": {
+    "result": "PASS",
+    "reviewer": "Codex visual inspection; not owner sign-off",
+    "previews": [
+      "hero.png",
+      "front.png",
+      "side.png",
+      "3q.png",
+      "rear.png"
+    ],
+    "browser_screenshot": "/Users/admin/Documents/MallQueue/reports/mall-directory-standee-page.png",
+    "observations": "Clean proportions, blank opposed panels, visible plain locator dots, thin base, top light bar, no text or artwork; complete model visible in Chromium."
+  },
+  "measured": {
+    "glb_bytes": 142988,
+    "triangles": 3316,
+    "vertices": 4959,
+    "primitives": 5,
+    "materials": 3,
+    "animations": 0,
+    "degenerate_triangles": 0,
+    "dimensions": [
+      0.8999999761581421,
+      1.9000000730156898,
+      0.3499999940395355
+    ],
+    "sha256": "639fd4bb992d9453326c04dc936f727d870368fcee8a0cacc651d9a8cf59b4e6"
+  },
+  "source_sha256": "6d95f93a526cbd910eed6fab4a30186b216f2315a7af019640bce0a1aa44f87a",
+  "generated_artifacts_restored": [
+    "models/demo-beverage-can/reports/structure-motion.json"
+  ],
+  "not_found": [
+    "Exact existing object/function/feature match"
+  ],
+  "skipped": [],
+  "not_verified": [
+    "Owner art sign-off",
+    "Physical Android/iOS",
+    "WebKit",
+    "Full 17-shop mall integration and 200-draw-call whole-scene budget",
+    "Physical installation stability",
+    "Live publication"
+  ],
+  "corrections": [
+    {
+      "evidence": "asset-check-initial.log",
+      "cause": "Initial validator mistakenly called Vector3.length on a Three.js Color; changed to inspect numeric emissive components. All assertions were subsequently executed successfully."
+    }
+  ],
+  "scope": "New model folder and appended catalog collection only; no existing model, UI, workflow, rebase or push."
+}
