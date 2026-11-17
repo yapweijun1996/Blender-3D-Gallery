@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "review": "advisor round 1",
+  "finding": "Adjacent inward sleeves intersected near the centre of the round rack.",
+  "changes": [
+    "Inward sleeve reach reduced to 0.165 m, sleeve sections narrowed, shirt cuffs lowered by 0.020 m and cuff trim matched to the new sections.",
+    "Ten garment positions, radial angles, garment types and all hanger/rail geometry preserved."
+  ],
+  "baseline": {
+    "source_sha256": "03061a8732c76f9cc7b5d80a406513b1bc76802dc1c0e58b552c209b28c2be52",
+    "intersecting_sleeve_pairs": 8,
+    "intersecting_mesh_pairs_including_cuffs": 20,
+    "minimum_inner_sleeve_separating_plane_gap_metres": -0.038366278633475304
+  },
+  "final": {
+    "source_sha256": "e26a97addd62871a124605aa04c4cce7eda257404beb9f44bc6043ce7bb82468",
+    "garment_pairs_tested": 45,
+    "mesh_pairs_tested": 5208,
+    "intersecting_mesh_pairs": 0,
+    "minimum_inner_sleeve_gap_lower_bound_metres": 0.013175219297409058
+  },
+  "intermediate_check": "The first narrowed-sleeve candidate had zero triangle overlaps but failed the conservative 5 mm separating-plane clearance gate. Sleeve sections were narrowed further before the final rebuild.",
+  "catalog": "Unchanged: measured counts, byte size and dimensions are unchanged; the existing entry contains no revised numeric fields.",
+  "limitations": [
+    "BVH checks surface intersections, not arbitrary solid containment. A separate separating-plane check proves positive clearance between adjacent inward sleeves/cuffs.",
+    "Cloth simulation, manufacturing fit and full mall performance are not verified."
+  ]
+}

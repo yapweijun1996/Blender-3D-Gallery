@@ -52,8 +52,9 @@ try {
   await page.mouse.move(rect.x + rect.width * .64, rect.y + rect.height * .52, { steps: 8 });
   await page.mouse.up();
   await page.waitForFunction(before => window.qaDraws > before, before);
+  const beforeReset = await page.evaluate(() => window.qaDraws);
   await page.locator('#reset-view').click();
-  await page.waitForFunction(before => window.qaDraws > before + 3, before);
+  await page.waitForFunction(before => window.qaDraws > before + 3, beforeReset);
   await page.screenshot({ path: screenshot });
   assert.deepEqual(errors, []);
   const report = { result: 'PASS', viewport: [1440, 900], chromium: browser.version(),

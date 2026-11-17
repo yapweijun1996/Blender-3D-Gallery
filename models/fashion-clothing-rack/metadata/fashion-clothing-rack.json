@@ -76,7 +76,9 @@
       "reports/browser.json",
       "reports/reproducibility.json",
       "reports/checks.json",
-      "reports/visual-review.json"
+      "reports/visual-review.json",
+      "reports/clearance.json",
+      "reports/advisor-round1.json"
     ],
     "geometry": "PASS",
     "source_editability": "PASS",
@@ -84,7 +86,7 @@
     "asset_validation": "PASS",
     "unit_tests": "PASS: 737 passed, 0 failed, 0 skipped",
     "chromium": "PASS",
-    "visual_review": "PASS; hero, front, side, 3q and 1440x900 real model page inspected",
+    "visual_review": "PASS; four 900px previews, top and three 640px close orbit views, and replacement 1440x900 real model page inspected",
     "build": "PASS"
   },
   "blender_version": "5.2.3 LTS",
@@ -106,7 +108,7 @@
       "min": [
         -1.3843164443969727,
         -0.539850652217865,
-        0.0
+        0
       ],
       "max": [
         -0.34705087542533875,
@@ -124,7 +126,7 @@
       "min": [
         0.18431633710861206,
         -0.30000001192092896,
-        0.0
+        0
       ],
       "max": [
         1.3843164443969727,
@@ -142,7 +144,7 @@
       "min": [
         0.18431633710861206,
         -0.30000001192092896,
-        0.0
+        0
       ],
       "max": [
         1.3843164443969727,
@@ -186,6 +188,15 @@
     "materials": 3,
     "images": 0,
     "animations": 0,
-    "sha256": "c2994d3b34285866e5ace3c1837bf393dd922b730a9293bb146f5f5329d559c0"
+    "sha256": "f359f19b223083e461d688bd029315bab7b165f3ed5b8065c6747340242b1d04"
+  },
+  "garment_clearance": {
+    "advisor_round": 1,
+    "garment_pairs_checked": 45,
+    "cross_garment_mesh_pairs_checked": 5208,
+    "surface_intersections": 0,
+    "minimum_inner_sleeve_gap_lower_bound_metres": 0.013175219297409058,
+    "method": "World-space triangle BVH intersections and separating planes for adjacent inward sleeves including cuffs",
+    "exclusions": "Own-garment seams and rail-hook contacts"
   }
 }

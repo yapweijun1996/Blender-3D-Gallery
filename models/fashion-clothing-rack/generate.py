@@ -175,13 +175,19 @@ def hanging_garment(index, kind, color, parent, cotton, matte, steel):
     if kind != 'Dress':
         for sign in (-1, 1):
             start = Vector((sign * .133, 0, 1.366))
-            end = Vector((sign * (.216 if kind == 'Shirt' else .225), .002, 1.265 if kind == 'Shirt' else .93))
+            # The inner side occupies a narrower wedge near the rack centre.
+            # Let it fall close to the torso instead of flaring into its neighbours.
+            reach = .165 if sign == -1 else (.216 if kind == 'Shirt' else .225)
+            cuff_z = (1.245 if sign == -1 else 1.265) if kind == 'Shirt' else .93
+            end = Vector((sign * reach, .002, cuff_z))
             direction = (end - start).normalized()
             rotation = direction.to_track_quat('Z', 'Y').to_matrix()
             length = (end - start).length
-            rings_sleeve = [(0, .061, .038), (length * .52, .054, .032), (length, .043, .027)]
+            widths = ((.045, .032), (.038, .028), (.031, .024)) if sign == -1 else ((.061, .038), (.054, .032), (.043, .027))
+            rings_sleeve = [(z, width, depth) for z, (width, depth) in zip((0, length * .52, length), widths)]
             cloth_loft(f'SLEEVE_{index:02d}_{sign}', rings_sleeve, cotton, group, color, segments=12, axis=(start, rotation))
-            points = [start + rotation @ Vector((.043 * math.cos(math.tau * i / 8), .027 * math.sin(math.tau * i / 8), length)) for i in range(8)]
+            cuff_width, cuff_depth = widths[-1]
+            points = [start + rotation @ Vector((cuff_width * math.cos(math.tau * i / 8), cuff_depth * math.sin(math.tau * i / 8), length)) for i in range(8)]
             tube(f'CUFF_{index:02d}_{sign}', points, .003, cotton, group, tuple(v * .9 for v in color), sides=4, closed=True)
     if kind == 'Jacket':
         # Shallow folded lapels and a front seam distinguish the jackets from tees.
@@ -352,6 +358,18 @@ def render_views():
         aim(scene.camera, TARGET)
         scene.render.filepath = str(HERE / 'previews' / (name + '.png'))
         bpy.ops.render.render(write_still=True)
+    if '--clearance-views' in sys.argv:
+        rack = bpy.data.objects['RACK_Round'].matrix_world.translation
+        target = rack + Vector((0, 0, 1.30))
+        scene.camera.data.ortho_scale = 1.25
+        scene.render.resolution_x = scene.render.resolution_y = 640
+        scene.cycles.samples = 12
+        for name, offset in [('top', (0, 0, 3)), ('front', (1.2, -2, .5)),
+                             ('side', (2, .6, .5)), ('rear', (-1.2, 2, .5))]:
+            scene.camera.location = target + Vector(offset)
+            aim(scene.camera, target)
+            scene.render.filepath = str(HERE / 'reports' / ('clearance-' + name + '.png'))
+            bpy.ops.render.render(write_still=True)
 
 
 def main():

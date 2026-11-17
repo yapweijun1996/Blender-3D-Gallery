@@ -1,41 +1,70 @@
 {
   "result": "PASS",
   "reviewer": "Codex visual inspection",
+  "advisor_round": 1,
   "views": [
     {
       "file": "previews/hero.png",
       "width": 900,
       "height": 900,
-      "sha256": "af156610c0db70fb7008a1e6c145110bd1a8881caac25cc63833f027b1241db4",
+      "sha256": "244c94ed4771750af9dc3b082df7ae13bf3ff46a7ac862150fa8f0c736076a8c",
       "inspected": true
     },
     {
       "file": "previews/front.png",
       "width": 900,
       "height": 900,
-      "sha256": "41f00d8d19c1cc6020dc88d9e4d47990d619fd3c4478344f1f03626c3cad0081",
+      "sha256": "292ba2aec5503a01be3ea7a68830c595f3fc7530c2c3da1db5f191d35299e86f",
       "inspected": true
     },
     {
       "file": "previews/side.png",
       "width": 900,
       "height": 900,
-      "sha256": "608ce1e69afe069399e8735cc85029ccdef6359048477646937c1310533b411c",
+      "sha256": "7284b82eb738116a98962d95d9d1e728afcef5208887670d9c9518e19815c091",
       "inspected": true
     },
     {
       "file": "previews/3q.png",
       "width": 900,
       "height": 900,
-      "sha256": "47245445b6bc5ed5df647f9129ec37ca4f32481831e64319fc0284440b1ce0c2",
+      "sha256": "debc5645ad814449e4b3d112bae08affcb9e30732816521c517b706be17a206a",
+      "inspected": true
+    },
+    {
+      "file": "reports/clearance-top.png",
+      "width": 640,
+      "height": 640,
+      "sha256": "c9dbb9cbb6880436d047e5ae1d11706a1764cadaa9c38d8a6a637c7239d091f7",
+      "inspected": true
+    },
+    {
+      "file": "reports/clearance-front.png",
+      "width": 640,
+      "height": 640,
+      "sha256": "b8644f9e47152c34cfe8b4072bd0bd584f0c6aada2e17a281d6517d7edca628e",
+      "inspected": true
+    },
+    {
+      "file": "reports/clearance-side.png",
+      "width": 640,
+      "height": 640,
+      "sha256": "8d39a92635f0201d284ce3e7e956767d23b9ab73c3bff9740ff28f893aeda9de",
+      "inspected": true
+    },
+    {
+      "file": "reports/clearance-rear.png",
+      "width": 640,
+      "height": 640,
+      "sha256": "e288c6207a899ff5704e7b8a82940b5c8ce99a4fcace1dd4b5f7cf2bdd8c9df2",
       "inspected": true
     }
   ],
   "notes": [
-    "Round rail and ten populated radial hangers; shirt, jacket and long dress silhouettes are visible across views.",
-    "Warm neutral tabletop, slender metal frame and three layered folded-clothes stacks have clean, believable proportions.",
-    "Front studio floor edge corrected by raising the preview camera; final replacement inspected.",
-    "Chromium screenshot inspected after the real GLB loaded; existing viewer framing retained."
+    "Top view shows separate inner sleeves and cuffs around the centre post; ten individual hangers remain connected to the round rail.",
+    "Three close orbit views show clean shirt and jacket silhouettes without the previous inward sleeve crossings.",
+    "Hero, front, side and 3q views retain the round rack, dress and folded table proportions and plain colours.",
+    "Replacement 1440x900 Chromium page screenshot inspected after the actual final GLB loaded; existing viewer framing retained."
   ],
   "limitations": [
     "No cloth simulation or physical fit certification",
@@ -43,7 +72,7 @@
   ],
   "page_screenshot": {
     "path": "/Users/admin/Documents/MallQueue/reports/fashion-clothing-rack-page.png",
-    "sha256": "f92171597857c5d0aa4486a8d7429ab177cc9e506d79668c65eee6c89e8edf72",
+    "sha256": "68622772455e25412ce0d9465dc1b778b54e9782095cc6587ae26689dc4df525",
     "inspected": true
   }
 }

@@ -1,9 +1,9 @@
 {
   "result": "PASS",
-  "tested_glb_sha256": "c2994d3b34285866e5ace3c1837bf393dd922b730a9293bb146f5f5329d559c0",
+  "tested_glb_sha256": "f359f19b223083e461d688bd029315bab7b165f3ed5b8065c6747340242b1d04",
   "commands": [
     {
-      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/fashion-clothing-rack/generate.py",
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/fashion-clothing-rack/generate.py -- --skip-render",
       "exit_code": 0,
       "result": "PASS",
       "blender_version": "5.2.3 LTS"
@@ -12,6 +12,11 @@
       "command": "node models/fashion-clothing-rack/validate.mjs",
       "exit_code": 0,
       "result": "PASS; geometry budgets, origin, axes, finite normals/positions and nondegenerate triangles; Khronos 0 errors/warnings"
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/fashion-clothing-rack/inspect_clearance.py",
+      "exit_code": 0,
+      "result": "PASS; 45 garment pairs / 5208 mesh pairs; zero surface intersections, minimum inward sleeve/cuff separating-plane gap 13.175 mm"
     },
     {
       "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/fashion-clothing-rack/inspect_sources.py",
@@ -27,7 +32,7 @@
       "command": "npm run validate:assets",
       "exit_code": 0,
       "result": "PASS",
-      "catalog_glbs_validated": 610
+      "catalog_glbs_validated": 628
     },
     {
       "command": "npm test",
@@ -47,6 +52,11 @@
       ]
     },
     {
+      "command": "Isolated rebuild with only final generate.py and --skip-render",
+      "exit_code": 0,
+      "result": "PASS; byte-identical GLB"
+    },
+    {
       "command": "node models/fashion-clothing-rack/check_browser.mjs",
       "exit_code": 0,
       "result": "PASS; loaded hash, WebGL, orbit, reset and zero browser/HTTP errors",
@@ -56,14 +66,9 @@
       ]
     },
     {
-      "command": "Isolated rebuild with only final generate.py and --skip-render",
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/fashion-clothing-rack/generate.py -- --export-source --view clearance --clearance-views",
       "exit_code": 0,
-      "result": "PASS; byte-identical GLB"
-    },
-    {
-      "command": "Front-only rendering from the saved source using updated render_views()",
-      "exit_code": 0,
-      "result": "PASS; corrected final preview visually inspected"
+      "result": "PASS; four 640px diagnostic views rendered; saved-source GLB export hash unchanged"
     }
   ],
   "resolved_initial_findings": [
@@ -79,5 +84,17 @@
     "17-shop complete mall frame rate and total draw calls",
     "Cloth simulation and physical manufacturing fit"
   ],
-  "publication": "Local asset only; push, rebase, merge and deployment not performed"
+  "publication": "Local asset only; push, rebase, merge and deployment not performed",
+  "advisor_round": 1,
+  "resolved_advisor_findings": [
+    "Reproduced 8 inward sleeve/sleeve pairs and 20 intersecting mesh pairs including cuffs. Narrowed and lowered the inward sleeves; final saved-source check finds zero cross-garment surface intersections.",
+    "An intermediate zero-overlap candidate still failed the conservative 5 mm projection clearance requirement; final sections provide a minimum 13.175 mm lower bound."
+  ],
+  "preview_rendering": {
+    "standard_previews": "Four 900px previews rendered and visually inspected",
+    "initial_command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/fashion-clothing-rack/generate.py -- --clearance-views",
+    "initial_exit_code": 143,
+    "reason": "Stopped deliberately after all four standard previews were saved, before supplementary rendering; rerendered all diagnostics using the final 640px / 12-sample settings with exit code 0."
+  },
+  "catalog": "Unchanged; all measured statistics except SHA256, and all dimensions remain identical to the previous revision."
 }

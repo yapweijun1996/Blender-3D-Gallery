@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "source_sha256": "e26a97addd62871a124605aa04c4cce7eda257404beb9f44bc6043ce7bb82468",
+  "method": "World-space triangle BVH overlap, epsilon 0; AABB rejection only skips disjoint pairs. Adjacent inner sleeves plus cuffs also require a separating-plane gap above 5 mm.",
+  "scope": "All meshes belonging to different garments, including hangers. Own-garment seams and rail-hook contacts are excluded.",
+  "garment_pairs": 45,
+  "mesh_pairs": 5208,
+  "intersecting_mesh_pairs": [],
+  "inner_sleeve_gaps": [
+    {
+      "a": "GARMENT_01_Shirt",
+      "b": "GARMENT_02_Jacket",
+      "separating_plane_gap_metres": 0.013242550194263458
+    },
+    {
+      "a": "GARMENT_02_Jacket",
+      "b": "GARMENT_03_Shirt",
+      "separating_plane_gap_metres": 0.013175219297409058
+    },
+    {
+      "a": "GARMENT_03_Shirt",
+      "b": "GARMENT_04_Shirt",
+      "separating_plane_gap_metres": 0.013425741344690323
+    },
+    {
+      "a": "GARMENT_06_Shirt",
+      "b": "GARMENT_07_Jacket",
+      "separating_plane_gap_metres": 0.013242565095424652
+    },
+    {
+      "a": "GARMENT_07_Jacket",
+      "b": "GARMENT_08_Shirt",
+      "separating_plane_gap_metres": 0.013175223022699356
+    },
+    {
+      "a": "GARMENT_08_Shirt",
+      "b": "GARMENT_09_Shirt",
+      "separating_plane_gap_metres": 0.013425752520561218
+    },
+    {
+      "a": "GARMENT_09_Shirt",
+      "b": "GARMENT_10_Shirt",
+      "separating_plane_gap_metres": 0.013425655663013458
+    },
+    {
+      "a": "GARMENT_10_Shirt",
+      "b": "GARMENT_01_Shirt",
+      "separating_plane_gap_metres": 0.013425722718238834
+    }
+  ],
+  "minimum_inner_sleeve_gap_lower_bound_metres": 0.013175219297409058
+}
