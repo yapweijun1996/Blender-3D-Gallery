@@ -1,8 +1,8 @@
 {
   "id": "escalator-detail",
   "name": "Escalator Detail",
-  "summary": "Lightweight static 3.6m-rise escalator with 18 independent steps and a blank signage post.",
-  "description": "Original compact escalator module with ribbed separate steps, rounded-return handrails, segmented glass balustrades, two toothed comb plates and a blank signpost. Nominal 1m tread width, 6m footprint length and 3.6m deck rise. Static visual geometry for the GJH Virtual Mall.",
+  "summary": "Lightweight static 3.6m-rise escalator with 22 independent steps and a blank signage post.",
+  "description": "Original compact escalator module with 22 ribbed separate steps, flattened terminal transitions, continuous raised skirts, rounded-return handrails, segmented glass balustrades, two toothed comb plates and a blank signpost. Nominal 1m tread width, 6m footprint length and 3.6m deck rise. Static visual geometry for the GJH Virtual Mall.",
   "category": "Mall Fixtures",
   "tags": [
     "mall",
@@ -70,7 +70,11 @@
       "STEP_015",
       "STEP_016",
       "STEP_017",
-      "STEP_018"
+      "STEP_018",
+      "STEP_019",
+      "STEP_020",
+      "STEP_021",
+      "STEP_022"
     ],
     "step_pivot": "Tread centre of each independent rigid step; glTF positions are measured in reports/assets.json",
     "front": "Lower entry at +Z; upper landing at -Z",
@@ -80,9 +84,7 @@
       3.7029998302459717
     ],
     "deck_rise_m": 3.5999998301267624,
-    "step_pitch_m": 0.28333330154418945,
-    "step_rise_m": 0.19999998807907104,
-    "incline_degrees": 35.21759438786265,
+    "step_pitch_m": 0.23181819915771484,
     "fixed_nodes": [
       "FRAME_Chassis",
       "HANDRAIL_Belts",
@@ -91,14 +93,73 @@
       "COMB_Plates",
       "SIGNAGE_BlankPost"
     ],
-    "runtime": "Static rest pose only. Future animation must author hidden return steps and landing transitions. No animation, passenger transport, collider or interaction logic is included."
+    "runtime": "Static rest pose only. Future animation must author hidden return steps and animate the landing transitions. No animation, passenger transport, collider or interaction logic is included.",
+    "step_surface_levels_m": [
+      0.10300000011920929,
+      0.10300000011920929,
+      0.15300000458955765,
+      0.27299999445676804,
+      0.46299999207258224,
+      0.6845384687185287,
+      0.9060768932104111,
+      1.1276153773069382,
+      1.3491538017988205,
+      1.5706923454999924,
+      1.7922307699918747,
+      2.013769194483757,
+      2.235307738184929,
+      2.4568460434675217,
+      2.6783845871686935,
+      2.8999231308698654,
+      3.121461436152458,
+      3.34299997985363,
+      3.5330000445246696,
+      3.6529999300837517,
+      3.702999882400036,
+      3.702999882400036
+    ],
+    "step_rises_m": [
+      0,
+      0.05000000447034836,
+      0.11999998986721039,
+      0.1899999976158142,
+      0.2215384766459465,
+      0.22153842449188232,
+      0.2215384840965271,
+      0.22153842449188232,
+      0.22153854370117188,
+      0.22153842449188232,
+      0.22153842449188232,
+      0.22153854370117188,
+      0.22153830528259277,
+      0.22153854370117188,
+      0.22153854370117188,
+      0.22153830528259277,
+      0.22153854370117188,
+      0.19000006467103958,
+      0.11999988555908203,
+      0.04999995231628418,
+      0
+    ],
+    "maximum_step_rise_m": 0.22153854370117188,
+    "maximum_incline_degrees": 43.7010671520842,
+    "transition": {
+      "flat_treads_per_terminal": 2,
+      "comb_above_tread_m": [
+        0.00899999588727951,
+        0.009000249207019806
+      ],
+      "skirt_sample_count": 396,
+      "minimum_skirt_top_cover_m": 0.11877765552017383,
+      "minimum_skirt_bottom_cover_m": 0.03288434016284958
+    }
   },
   "dimensions": {
     "units": "metres",
     "axis_order": "width, height, depth (glTF X,Y,Z)",
     "size": [
       1.3200000524520874,
-      4.640987396240234,
+      4.640999794006348,
       6
     ],
     "bounds": {
@@ -109,25 +170,25 @@
       ],
       "max": [
         0.6600000262260437,
-        4.640987396240234,
+        4.640999794006348,
         3
       ]
     }
   },
   "statistics": {
-    "glb_bytes": 681428,
-    "triangles": 14820,
-    "vertices": 26406,
-    "stored_meshes": 24,
-    "mesh_primitives": 25,
+    "glb_bytes": 843808,
+    "triangles": 18500,
+    "vertices": 32715,
+    "stored_meshes": 28,
+    "mesh_primitives": 29,
     "materials": 3,
     "transparent_primitives": 1,
     "images": 0,
     "animations": 0,
-    "independent_step_nodes": 18,
-    "sha256": "e54f0dda0fdfdc97d32aa1f4aa34422ba8a5a0049b467c6a4537680b398e8f08"
+    "independent_step_nodes": 22,
+    "sha256": "f17936fdd8884cecae7f895f6118d59867b01a78f100fb98b669f6d91224192d"
   },
-  "accuracy_notes": "Dimensions and statistics are measured from the delivered GLB. Approximate 1m width refers to the clear tread; the outside casing measures 1.32m. The 6m run includes two short landings; incline is approximately 35.2 degrees. Blue-green glass uses closed alpha-blended geometry with backface culling and no transmission pass. Source parts may intersect at assembled joints. This static visual module has no hidden circulation mechanism, collider, passenger logic or engineering certification. Full mall integration, aggregate 200 draw-call budget, physical mobile devices and WebKit are not verified.",
+  "accuracy_notes": "Dimensions and statistics are measured from the delivered GLB. The 1m clear tread sits inside a 1.32m casing. The 6m footprint includes short landings and two flush treads per terminal; risers open and close gradually. The compact central incline measures approximately 43.7 degrees. Continuous raised skirts enclose step side envelopes; actual surface and casing checks are recorded in reports/assets.json. Blue-green glass uses closed alpha-blended geometry with backface culling and no transmission pass. Source parts may intersect at assembled joints. This static visual study has no hidden circulation mechanism, collider, passenger logic or engineering certification. Full mall integration, aggregate 200 draw-call budget, physical mobile devices and WebKit are not verified.",
   "attribution": [
     {
       "credit": "Original procedural geometry and three shared materials; no external assets."

@@ -1,8 +1,8 @@
 {
   "result": "PASS",
-  "release_status": "Draft; local verification complete; owner review pending",
+  "release_status": "Draft; advisor round 1 corrections locally verified; owner review pending",
   "branch": "mall-models",
-  "glb_sha256": "e54f0dda0fdfdc97d32aa1f4aa34422ba8a5a0049b467c6a4537680b398e8f08",
+  "glb_sha256": "f17936fdd8884cecae7f895f6118d59867b01a78f100fb98b669f6d91224192d",
   "checks": [
     {
       "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python generate.py",
@@ -73,16 +73,15 @@
       "result": "PASS"
     }
   ],
-  "visual_review": "All four final Blender previews and 1440x900 Chromium screenshot inspected.",
+  "visual_review": "All four regenerated Blender previews and the replaced 1440x900 Chromium screenshot inspected.",
   "measured_model_draw_calls_per_recorded_frame": [
-    25
+    29
   ],
   "initial_failures_resolved": [
-    "Terminal glass duplicate endpoint and sign inset bevel degeneracy corrected; actual final minimum triangle area is recorded in assets.json.",
-    "Browser wait initially used source filename; adjusted to Vite hashed delivery URLs while keeping byte-hash equality."
+    "First round-1 candidate failed the new casing raycast because lower tread corners extended below the shell. Deepened the casing; all 396 side samples now pass. See validation-round1-initial.log."
   ],
-  "catalog": "Own collection appended last in existing Mall Fixtures category. All previous catalog entries unchanged.",
-  "restored_test_artifact": "git checkout -- models/demo-beverage-can/reports/structure-motion.json",
+  "catalog": "Existing escalator-detail collection and category retained. Only its summary step count changes from 18 to 22; all other catalog entries are unchanged.",
+  "restored_test_artifact": "Post-test models/demo-beverage-can/reports/structure-motion.json matches HEAD; restored if modified.",
   "not_verified": [
     "Full 17-shop 70x60m mall assembly and aggregate 200 draw-call budget",
     "Physical Android/iOS",
@@ -91,5 +90,33 @@
     "Owner art approval",
     "Deployment or publication"
   ],
-  "push_performed": false
+  "push_performed": false,
+  "advisor_round_1": {
+    "issues_addressed": [
+      "Flat terminal transitions",
+      "Continuous skirt hides step sides and gaps"
+    ],
+    "measured": {
+      "glb_bytes": 843808,
+      "triangles": 18500,
+      "materials": 3,
+      "independent_step_nodes": 22,
+      "deck_rise_m": 3.5999998301267624,
+      "step_pitch_m": 0.23181819915771484,
+      "maximum_step_rise_m": 0.22153854370117188,
+      "maximum_incline_degrees": 43.7010671520842,
+      "transition": {
+        "flat_treads_per_terminal": 2,
+        "comb_above_tread_m": [
+          0.00899999588727951,
+          0.009000249207019806
+        ],
+        "skirt_sample_count": 396,
+        "minimum_skirt_top_cover_m": 0.11877765552017383,
+        "minimum_skirt_bottom_cover_m": 0.03288434016284958
+      }
+    },
+    "screenshot_sha256": "896a94c782f4091c00745e76865fb9858ec4e452732f3c917b903e36c48775f6",
+    "historical_logs": "Initial/second generation and validation logs retained from the original delivery; final logs and the current JSON reports identify this revision."
+  }
 }

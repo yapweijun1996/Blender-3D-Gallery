@@ -61,7 +61,8 @@ try {
   await fs.mkdir(path.dirname(screenshot),{recursive:true});
   await page.screenshot({path:screenshot});
   const draws=await page.evaluate(()=>({draw_calls:window.qaDrawCalls,draw_calls_by_frame:window.qaDrawsByFrame}));
-  assert.ok(draws.draw_calls_by_frame.some(n=>n===25),'25 model primitives rendered in a frame');
+  const assets=JSON.parse(await fs.readFile(new URL('reports/assets.json',import.meta.url)));
+  assert.ok(draws.draw_calls_by_frame.some(n=>n===assets.mesh_primitives),'measured model primitives rendered in a frame');
   await page.reload({waitUntil:'domcontentloaded'});
   await ready();
   await page.locator('#close-viewer').click();

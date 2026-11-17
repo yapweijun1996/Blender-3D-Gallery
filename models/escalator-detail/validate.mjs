@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
-import {Box3, Vector3} from 'three';
+import {Box3, Vector3, Raycaster} from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import validator from 'gltf-validator';
 
@@ -39,7 +39,7 @@ assert.ok(Math.abs(dimensions[0]-1.32)<1e-6,'outside casing width');
 assert.ok(Math.abs(dimensions[2]-6)<1e-6,'overall run');
 const group = root.getObjectByName('STEPS_FutureMotion');
 assert.ok(group);
-assert.equal(group.children.length,18);
+assert.equal(group.children.length,22);
 const steps = [...group.children].sort((a,b)=>a.name.localeCompare(b.name));
 const stepMeasures=[];
 for (let i=0;i<steps.length;i++) {
@@ -50,11 +50,11 @@ for (let i=0;i<steps.length;i++) {
   const b=new Box3().setFromObject(o,true);
   const d=b.getSize(new Vector3()).toArray();
   assert.ok(Math.abs(d[0]-1)<1e-6,'nominal 1m tread width');
-  assert.ok(o.position.z>-.001-2.41 && o.position.z<2.41+.001);
+  assert.ok(o.position.z>-2.55 && o.position.z<2.55);
   if (i) {
-    assert.ok(Math.abs(o.position.y-steps[i-1].position.y-.2)<1e-6,'uniform rise');
-    assert.ok(Math.abs(o.position.z-steps[i-1].position.z+5.1/18)<1e-6,'uniform travel pitch');
-    assert.ok(b.min.z>new Box3().setFromObject(steps[i-1],true).min.z-5.1/18-1e-6);
+    assert.ok(o.position.y>=steps[i-1].position.y-1e-6,'nondecreasing treads');
+    assert.ok(o.position.y-steps[i-1].position.y<.23,'bounded central riser');
+    assert.ok(Math.abs(o.position.z-steps[i-1].position.z+5.1/22)<1e-6,'uniform travel pitch');
   }
   stepMeasures.push({name:o.name,pivot:o.position.toArray(),bounds:{min:b.min.toArray(),max:b.max.toArray()}});
 }
@@ -83,8 +83,8 @@ root.traverse(o=>{
 });
 assert.ok(triangles<20000);
 assert.ok(bytes.length<1.5*1024*1024);
-assert.equal(json.meshes.length,24);
-assert.equal(parts.length,25); // Signpost has steel and graphite primitives.
+assert.equal(json.meshes.length,steps.length+6);
+assert.equal(parts.length,steps.length+7); // Signpost has steel and graphite primitives.
 const landing=root.getObjectByName('LANDING_Plates');
 const p=landing.geometry.attributes.position;
 const levels=[[],[]];
@@ -95,6 +95,47 @@ for(let i=0;i<p.count;i++) {
 const deckLevels=levels.map(v=>Math.max(...v));
 const measuredRise=deckLevels[1]-deckLevels[0];
 assert.ok(Math.abs(measuredRise-3.6)<1e-6,'3.6m deck level difference');
+// Inspect delivered surfaces, independently of the generator's height schedule.
+const surfaceLevels=stepMeasures.map(s=>s.bounds.max[1]);
+const rises=surfaceLevels.slice(1).map((y,i)=>y-surfaceLevels[i]);
+for (const i of [0,1]) assert.ok(Math.abs(surfaceLevels[i]-deckLevels[0])<1e-6,'flush lower treads');
+for (const i of [20,21]) assert.ok(Math.abs(surfaceLevels[i]-deckLevels[1])<1e-6,'flush upper treads');
+assert.ok(Math.abs(rises[0])<1e-6 && Math.abs(rises.at(-1))<1e-6,'flat terminals');
+for(let i=1;i<4;i++) {
+  assert.ok(rises[i]>rises[i-1]+.02,'lower risers open gradually');
+  assert.ok(rises.at(-i-1)>rises.at(-i)+.02,'upper risers close gradually');
+}
+const comb=root.getObjectByName('COMB_Plates');
+const combLevels=[[],[]];
+for(let i=0;i<comb.geometry.attributes.position.count;i++) {
+  const v=new Vector3().fromBufferAttribute(comb.geometry.attributes.position,i).applyMatrix4(comb.matrixWorld);
+  combLevels[v.z>0 ? 0 : 1].push(v.y);
+}
+const combOffsets=combLevels.map((v,i)=>Math.max(...v)-surfaceLevels[i===0 ? 0 : 21]);
+assert.ok(combOffsets.every(v=>v>=0 && v<.012),'comb to tread height difference below 12mm');
+// Raycast actual casing on both sides across every tread, including its edges.
+const frame=root.getObjectByName('FRAME_Chassis');
+const ray=new Raycaster();
+let minimumTopCover=Infinity,minimumBottomCover=Infinity,skirtSamples=0;
+for(const step of stepMeasures) {
+  for(const side of [-1,1]) for(let j=0;j<=8;j++) {
+    const z=step.bounds.min[2]+(step.bounds.max[2]-step.bounds.min[2])*j/8;
+    ray.set(new Vector3(side*.505,10,z),new Vector3(0,-1,0));
+    const top=ray.intersectObject(frame,false)[0];
+    assert.ok(top,'casing above tread side');
+    const topCover=top.point.y-step.bounds.max[1];
+    assert.ok(topCover>.015,'skirt hides nosings and gaps');
+    ray.set(new Vector3(side*.505,-1,z),new Vector3(0,1,0));
+    const bottom=ray.intersectObject(frame,false)[0];
+    assert.ok(bottom,'casing below tread side');
+    const bottomCover=step.bounds.min[1]-bottom.point.y;
+    assert.ok(bottomCover>0,'step does not protrude below casing');
+    minimumTopCover=Math.min(minimumTopCover,topCover);
+    minimumBottomCover=Math.min(minimumBottomCover,bottomCover);
+    skirtSamples++;
+  }
+}
+const maxRise=Math.max(...rises),pitch=steps[0].position.z-steps[1].position.z;
 const report={result:'PASS',id:'escalator-detail',glb_bytes:bytes.length,triangles,vertices,
   stored_meshes:json.meshes.length,mesh_primitives:parts.length,materials:json.materials.length,
   transparent_primitives:parts.filter(p=>p.material==='Blue green balustrade glass').length,
@@ -102,9 +143,11 @@ const report={result:'PASS',id:'escalator-detail',glb_bytes:bytes.length,triangl
   bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()},
   tread_width_m:new Box3().setFromObject(steps[0],true).getSize(new Vector3()).x,
   walking_surface_levels_m:deckLevels,deck_rise_m:measuredRise,
-  step_pitch_m:steps[0].position.z-steps[1].position.z,
-  step_rise_m:steps[1].position.y-steps[0].position.y,
-  incline_degrees:Math.atan2(steps[1].position.y-steps[0].position.y,steps[0].position.z-steps[1].position.z)*180/Math.PI,
+  step_pitch_m:pitch,step_surface_levels_m:surfaceLevels,step_rises_m:rises,
+  maximum_step_rise_m:maxRise,maximum_incline_degrees:Math.atan2(maxRise,pitch)*180/Math.PI,
+  transition:{flat_treads_per_terminal:2,comb_above_tread_m:combOffsets,
+    skirt_sample_count:skirtSamples,minimum_skirt_top_cover_m:minimumTopCover,
+    minimum_skirt_bottom_cover_m:minimumBottomCover},
   minimum_triangle_area_m2:minimumArea,steps:stepMeasures,
   sha256:createHash('sha256').update(bytes).digest('hex'),
   validation:{errors:validation.issues.numErrors,warnings:validation.issues.numWarnings,version:validator.version()},

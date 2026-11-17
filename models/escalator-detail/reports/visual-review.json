@@ -1,42 +1,48 @@
 {
   "result": "PASS",
-  "reviewer": "Codex visual inspection",
-  "glb_sha256": "e54f0dda0fdfdc97d32aa1f4aa34422ba8a5a0049b467c6a4537680b398e8f08",
+  "reviewer": "Codex visual inspection; advisor round 1 corrections",
+  "glb_sha256": "f17936fdd8884cecae7f895f6118d59867b01a78f100fb98b669f6d91224192d",
   "views": [
     {
       "path": "previews/hero.png",
-      "sha256": "ced316f3fdf3cd61f176209c000749a12314a2253ce56c342930dffde6a3842f"
+      "sha256": "a77f1931586ef3d4fd643dcd2a50e1d4a3702fbd62c4b4e3db5b9beb82b09c40"
     },
     {
       "path": "previews/front.png",
-      "sha256": "09c0dc368cb0f83bf0caadc568606f1a2f2a9508da41476cc934dd40742df78c"
+      "sha256": "17b0b2b0cde3a36b6a7bd8e060281dea407d693816ee8bde2d602b61f7ba674c"
     },
     {
       "path": "previews/side.png",
-      "sha256": "fed71d51d0f81ed9b04cff0a8d4a6c8c8908311ad99132b2216ef434cce76b5a"
+      "sha256": "92345ab171564b95921cc497040779f891a9ffe343c1e3a156063109d2df4b88"
     },
     {
       "path": "previews/3q.png",
-      "sha256": "055de6862a8ecbf13e9d27b494b3cbc2ab87512e51cd360788e9c6abdf8b684a"
+      "sha256": "eebe04ad8d9acfba5cb92292543d5a9e2a1defd3cbb7bdcc6d7097c1595bacb4"
     }
   ],
   "findings": [
-    "Complete model framed in all four views with consistent steel, graphite and blue-green palette.",
-    "Step rib geometry, glass expansion joints, rounded handrail returns, comb plates and blank signpost visible.",
-    "Narrow escalator proportions match a nominal 1m tread over a 6m footprint.",
-    "Short landings and static geometry are deliberate visual simplifications; installation and future motion need scene-specific work."
+    "Inspected all four regenerated Blender previews: full object is framed with the original steel, graphite and blue-green palette.",
+    "Two deck-flush independent treads at each terminal lead into gradually opening/closing risers; the former 20cm entry jump is removed.",
+    "Reverse three-quarter and side views show a continuous metal skirt beneath the glass channel without the former repeated exposed tread sides and gaps.",
+    "Handrails and glass follow the flattened terminal profile; ribbed treads, comb plates and blank signage remain visible.",
+    "The fixed 6m footprint and 3.6m rise require a compact central incline of approximately 43.7 degrees; engineering suitability is not verified."
   ],
   "corrected_geometry_issues": [
-    "Duplicate terminal-glass profile endpoint removed.",
-    "Thin sign inset bevel reduced to prevent collapsed triangles."
+    "Replaced the uniform 18-step rise with 22 separate rigid steps, deck-flush ends and graduated risers.",
+    "Raised and reshaped skirts and glass base channels; deepened the casing after the first candidate exposed lower tread corners."
   ],
   "limitations": [
     "Agent visual review only; owner art approval pending.",
-    "Full mall assembly, safety and target-device performance are not verified."
+    "Full mall assembly, physical devices, safety and transport engineering are not verified."
   ],
   "chromium_screenshot_review": {
     "result": "PASS",
     "path": "/Users/admin/Documents/MallQueue/reports/escalator-detail-page.png",
-    "findings": "Actual model visible and fully framed; 18 ribbed steps, two rails, transparent side panels and blank signpost are visible. Gallery shows the measured counts and no animation clips."
+    "sha256": "896a94c782f4091c00745e76865fb9858ec4e452732f3c917b903e36c48775f6",
+    "viewport": [
+      1440,
+      900
+    ],
+    "findings": "Viewed the replaced screenshot. Complete revised escalator and terminal transitions are visible, the side silhouette is enclosed, and the gallery displays 18,500 triangles, 32,715 vertices, 3 materials and no animations."
   }
 }

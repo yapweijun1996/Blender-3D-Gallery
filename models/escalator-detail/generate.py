@@ -13,11 +13,36 @@ from mathutils import Vector
 HERE = Path(__file__).resolve().parent
 SLUG = 'escalator-detail'
 ROOT = 'ASSET_EscalatorDetail'
-COUNT = 18
+COUNT = 22
 RUN = 5.1
 PITCH = RUN / COUNT
-RISE = 3.6 / COUNT
 DECK = .10
+# Two flush treads at either terminal, three increasing/decreasing risers,
+# and a constant-rise central flight. The complete deck rise remains 3.6 m.
+RISERS = [0, .05, .12, .19] + [2.88 / 13] * 13 + [.19, .12, .05, 0]
+LEVELS = [DECK]
+for rise in RISERS:
+    LEVELS.append(LEVELS[-1] + rise)
+STATIONS = [(-2.55, DECK)]
+STATIONS += [(-2.55 + (i + .5) * PITCH, z) for i, z in enumerate(LEVELS)]
+STATIONS.append((2.55, DECK + 3.6))
+# Remove collinear stations to keep the extruded casing faces well conditioned.
+TRACK = []
+for station in STATIONS:
+    while len(TRACK) >= 2:
+        a, b = TRACK[-2:]
+        cross = (b[0]-a[0])*(station[1]-b[1])-(b[1]-a[1])*(station[0]-b[0])
+        if abs(cross) > 1e-10:
+            break
+        TRACK.pop()
+    TRACK.append(station)
+
+
+def track_height(y):
+    for (a, za), (b, zb) in zip(TRACK, TRACK[1:]):
+        if y <= b:
+            return za + (zb-za)*(y-a)/(b-a)
+    return TRACK[-1][1]
 
 
 def material(name, rgb, metal=0, rough=.4, alpha=1):
@@ -110,11 +135,11 @@ def merge(objects, name, parent, pivot=(0,0,0)):
 def belt(side, mat):
     # Closed belt centreline: two horizontal terminals, inclined flight and
     # rounded newel returns. Eight-sided belt section avoids round pipe styling.
-    path = [(-2.65,1.02),(-2.55,1.02),(2.55,4.62),(2.65,4.62)]
+    path = [(-2.65,1.02)] + [(y,z+.92) for y,z in TRACK] + [(2.65,4.62)]
     for i in range(1,17):
         a = math.pi/2-math.pi*i/16
         path.append((2.65+.28*math.cos(a),4.34+.28*math.sin(a)))
-    path += [(2.55,4.06),(-2.55,.46),(-2.65,.46)]
+    path += [(y,z+.36) for y,z in reversed(TRACK)] + [(-2.65,.46)]
     for i in range(1,16):
         a = -math.pi/2-math.pi*i/16
         path.append((-2.65+.28*math.cos(a),.74+.28*math.sin(a)))
@@ -140,23 +165,27 @@ def build():
     root['front_axis'] = 'Blender -Y / glTF +Z'
     root['scope'] = 'Static illustrative escalator; no animation, collider or transport logic'
     steps = empty('STEPS_FutureMotion',root)
-    steps['runtime_role'] = '18 independent rigid step nodes; future motion is scene-owned'
+    steps['runtime_role'] = '22 independent rigid step nodes; future motion is scene-owned'
     steel = material('Satin stainless steel',(.64,.68,.70),.68,.32)
     rubber = material('Graphite handrail and insets',(.065,.080,.091),.05,.48)
     glass = material('Blue green balustrade glass',(.47,.73,.77),.08,.17,.27)
 
     # Sloped supporting cassette, shallow terminal plinths and skirt trims.
-    profile = [(-3,0),(-2.55,0),(2.55,3.28),(3,3.28),(3,3.69),
-               (2.55,3.69),(-2.55,.09),(-3,.09)]
+    # A continuous raised skirt covers the complete tread/riser side envelopes.
+    # Its glass channel follows the same flattened terminal transitions.
+    casing_track = [(-3,DECK)] + TRACK + [(3,DECK+3.6)]
+    profile = [(y,max(0,z-.40)) for y,z in casing_track]
+    profile += [(y,z+.24) for y,z in reversed(casing_track)]
     for side in [-1,1]:
         x0,x1 = sorted([side*.50,side*.66])
         o = profile_x('CASING_Side',profile,x0,x1,steel,'FRAME_Chassis')
         b = o.modifiers.new('Casing edge', 'BEVEL'); b.width=.008; b.segments=2
         o.modifiers.new('Casing normals','WEIGHTED_NORMAL')
-        bar('SKIRT_DarkInlay',(side*.573,-2.55,.19),(side*.573,2.55,3.79),
-            .045,.04,rubber,'HANDRAIL_Belts')
-        bar('GLASS_BaseChannel',(side*.61,-2.55,.27),(side*.61,2.55,3.87),
-            .052,.035,steel,'FRAME_Chassis')
+        for (a,za),(b,zb) in zip(TRACK,TRACK[1:]):
+            bar('SKIRT_DarkInlay',(side*.505,a,za+.205),(side*.505,b,zb+.205),
+                .018,.025,rubber,'HANDRAIL_Belts')
+            bar('GLASS_BaseChannel',(side*.61,a,za+.25),(side*.61,b,zb+.25),
+                .052,.035,steel,'FRAME_Chassis')
         for y,z in [(-2.76,.12),(2.76,3.72)]:
             box('NEWEL_Foot',(side*.61,y,z+.17),(.075,.18,.34),steel,'FRAME_Chassis',.012)
         belt(side,rubber)
@@ -164,20 +193,22 @@ def build():
         for j in range(6):
             a = -2.55+j*RUN/6+.009
             b = -2.55+(j+1)*RUN/6-.009
-            lowa = DECK+(a+2.55)*3.6/RUN+.20
-            lowb = DECK+(b+2.55)*3.6/RUN+.20
-            profile_x('GLASS_FlightPanel',[(a,lowa),(b,lowb),(b,lowb+.65),(a,lowa+.65)],
+            samples = [(a,track_height(a))] + [(y,z) for y,z in TRACK if a<y<b] + [(b,track_height(b))]
+            yz = [(y,z+.25) for y,z in samples] + [(y,z+.85) for y,z in reversed(samples)]
+            profile_x('GLASS_FlightPanel',yz,
                       side*.61-.006,side*.61+.006,glass,'BALUSTRADE_Glass')
         for end,base in [(-1,DECK),(1,DECK+3.6)]:
             c = end*2.65
-            yz = [(end*2.55,base+.20)]
+            yz = [(end*2.55,base+.25)]
             for j in range(17):
                 a = -math.pi/2+math.pi*j/16
                 yz.append((c+end*.215*math.cos(a),base+.525+.325*math.sin(a)))
             yz += [(end*2.55,base+.85)]
             profile_x('GLASS_RoundedTerminal',yz,side*.61-.006,side*.61+.006,glass,'BALUSTRADE_Glass')
     # An underside pan follows the incline; it does not add a pit or floor slab.
-    bar('PAN_Underside',(0,-2.55,.028),(0,2.55,3.308),1.0,.05,steel,'FRAME_Chassis')
+    for (a,za),(b,zb) in zip(TRACK,TRACK[1:]):
+        bar('PAN_Underside',(0,a,max(.028,za-.372)),(0,b,max(.028,zb-.372)),
+            1.0,.05,steel,'FRAME_Chassis')
     box('BASE_Lower',(0,-2.775,.035),(1.32,.45,.07),steel,'FRAME_Chassis')
     box('BASE_Upper',(0,2.775,3.45),(1.32,.45,.34),steel,'FRAME_Chassis')
     for label,y,z in [('Lower',-2.775,DECK),('Upper',2.775,DECK+3.6)]:
@@ -197,13 +228,17 @@ def build():
     for i in range(COUNT):
         name = f'STEP_{i+1:03d}'
         y = -2.55+(i+.5)*PITCH
-        z = DECK+(i+1)*RISE
-        parts = [box(name+'_Body',(0,y,z-.1025),(1.0,PITCH-.004,.195),steel,name)]
+        z = LEVELS[i]
+        rise = z-LEVELS[max(0,i-1)]
+        bottom = z-.035-rise
+        parts = [box(name+'_Body',(0,y,(z-.005+bottom)/2),
+                     (1.0,PITCH-.004,z-.005-bottom),steel,name)]
         # Individual raised ribs are geometry, not texture; they remain one step mesh.
         for j in range(23):
             x = -.462+j*.042
             parts.append(box(name+'_TreadRib',(x,y,z-.001),(.018,PITCH-.014,.007),steel,name))
-            parts.append(box(name+'_RiserRib',(x,y-PITCH/2+.001,z-.103),(.018,.008,.181),steel,name))
+            parts.append(box(name+'_RiserRib',(x,y-PITCH/2+.001,(z-.012+bottom+.008)/2),
+                             (.018,.008,z-.020-bottom),steel,name))
         parts.append(box(name+'_Nose',(0,y-PITCH/2+.001,z-.001),(1.0,.014,.008),steel,name))
         step = merge(parts,name,steps,(0,y,z))
         step['delivery_mesh'] = name
