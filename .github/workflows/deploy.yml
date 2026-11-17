@@ -3,23 +3,42 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      validate_assets:
+        description: Run full asset validation before deploying
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   build:
-    timeout-minutes: 90
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/docs/
+            !/output/
+            !/tests/
+            !*.blend
+            !*.blend1
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24'
           cache: npm
-      - run: npm ci
-      - run: npm run build
+      - run: npm ci --no-audit --no-fund
+      - name: Validate all assets when requested
+        if: github.event_name == 'workflow_dispatch' && inputs.validate_assets
+        run: |
+          git sparse-checkout disable
+          npm run validate:assets
+      - run: npm run build:deploy
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
