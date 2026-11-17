@@ -1,0 +1,24 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: browser consumed the tested GLB
++ actual - expected
+
++ []
+- [
+-   'f35ed7ddd167adfb903920a64cd7672af518d7b000b9c358980a505cffc43b14'
+- ]
+
+    at file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/seasonal-christmas-decor/check_page.mjs:73:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [],
+  expected: [
+    'f35ed7ddd167adfb903920a64cd7672af518d7b000b9c358980a505cffc43b14'
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.2
