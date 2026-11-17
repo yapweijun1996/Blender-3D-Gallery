@@ -1,0 +1,83 @@
+{
+  "result": "PASS",
+  "tested_glb_sha256": "c2994d3b34285866e5ace3c1837bf393dd922b730a9293bb146f5f5329d559c0",
+  "commands": [
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/fashion-clothing-rack/generate.py",
+      "exit_code": 0,
+      "result": "PASS",
+      "blender_version": "5.2.3 LTS"
+    },
+    {
+      "command": "node models/fashion-clothing-rack/validate.mjs",
+      "exit_code": 0,
+      "result": "PASS; geometry budgets, origin, axes, finite normals/positions and nondegenerate triangles; Khronos 0 errors/warnings"
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/fashion-clothing-rack/inspect_sources.py",
+      "exit_code": 0,
+      "result": "PASS; saved source and disposable saved mesh/material edit"
+    },
+    {
+      "command": "node models/fashion-clothing-rack/verify_source_edit.mjs",
+      "exit_code": 0,
+      "result": "PASS; actual edited GLB geometry/material and Khronos"
+    },
+    {
+      "command": "npm run validate:assets",
+      "exit_code": 0,
+      "result": "PASS",
+      "catalog_glbs_validated": 610
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests": 737,
+      "passed": 737,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "result": "PASS",
+      "warnings": [
+        "Vite reports some shared application chunks above 500 kB; no gallery code changes in this task."
+      ]
+    },
+    {
+      "command": "node models/fashion-clothing-rack/check_browser.mjs",
+      "exit_code": 0,
+      "result": "PASS; loaded hash, WebGL, orbit, reset and zero browser/HTTP errors",
+      "viewport": [
+        1440,
+        900
+      ]
+    },
+    {
+      "command": "Isolated rebuild with only final generate.py and --skip-render",
+      "exit_code": 0,
+      "result": "PASS; byte-identical GLB"
+    },
+    {
+      "command": "Front-only rendering from the saved source using updated render_views()",
+      "exit_code": 0,
+      "result": "PASS; corrected final preview visually inspected"
+    }
+  ],
+  "resolved_initial_findings": [
+    "Initial geometry: 24884 triangles and 96 degenerate button-bevel triangles; reduced tiny bands and removed tiny button bevels. Final: 19268 triangles, zero degenerates.",
+    "Initial combined X origin offset: about 6.6 mm; replaced bounding-box corner centring with actual mesh vertex bounds. Final origin is the exact combined floor centre within float precision."
+  ],
+  "restored_test_artifacts": [
+    "models/demo-beverage-can/reports/structure-motion.json"
+  ],
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "17-shop complete mall frame rate and total draw calls",
+    "Cloth simulation and physical manufacturing fit"
+  ],
+  "publication": "Local asset only; push, rebase, merge and deployment not performed"
+}

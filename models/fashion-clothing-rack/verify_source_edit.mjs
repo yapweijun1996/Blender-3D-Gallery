@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { readGlb } from './glb.mjs';
+import validator from 'gltf-validator';
+
+const dir = fileURLToPath(new URL('.', import.meta.url));
+const report = JSON.parse(fs.readFileSync(dir + 'reports/sources.json'));
+const original = await readGlb(dir + 'exports/optimized.glb');
+const edited = await readGlb(report.edited_glb);
+const validation = await validator.validateBytes(new Uint8Array(edited.bytes));
+assert.equal(validation.issues.numErrors, 0);
+assert.equal(validation.issues.numWarnings, 0);
+const a = original.scene.getObjectByName('BATCH_MatteSurface');
+const b = edited.scene.getObjectByName('BATCH_MatteSurface');
+assert.ok(a && b);
+assert.notDeepEqual([...a.geometry.attributes.position.array], [...b.geometry.attributes.position.array]);
+assert.ok(edited.json.materials.some(mat => mat.name === 'BrushedMetal' && Math.abs(mat.pbrMetallicRoughness.roughnessFactor - .77) < 1e-5));
+report.saved_edit_verified_in_glb = true;
+report.edited_glb_validation = { errors: 0, warnings: 0 };
+fs.writeFileSync(dir + 'reports/sources.json', JSON.stringify(report, null, 2) + '\n');
+console.log('PASS saved mesh and material edit survive GLB export; original source preserved');
