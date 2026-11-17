@@ -18,6 +18,8 @@ const expectedClips = [
   {name: 'Idle', duration_seconds: 2.5},
   {name: 'Wave', duration_seconds: 1.5},
   {name: 'Blink', duration_seconds: 3},
+  {name: 'Cheer', duration_seconds: 1.600000023841858},
+  {name: 'Jump', duration_seconds: 1.2000000476837158},
 ];
 
 function readGlb(filename) {
@@ -111,10 +113,10 @@ test('Pomelo STEM registers one rigged character asset', () => {
   assert.equal(asset.license, expectedLicense);
   assert.match(asset.description, /original.*fruit mascot/i);
   assert.match(asset.description, /skinned/i);
-  assert.match(asset.description, /Idle, Wave, and Blink/i);
+  assert.match(asset.description, /Idle, Wave, Blink, Cheer, and Jump/i);
   assert.ok(asset.tags.includes('rigged'));
   assert.ok(asset.tags.includes('animated'));
-  assert.equal(asset.animations, 3);
+  assert.equal(asset.animations, 5);
   assert.deepEqual(asset.details.display.previewCameraDirection, [0, 0, 1]);
   assert.equal(asset.details.display.front_axis, '+Z');
   assert.equal(fs.existsSync(`${root}/catalog-entry.draft.json`), false);
@@ -133,7 +135,7 @@ test('Pomelo STEM metadata matches the registered animated GLB', () => {
   assert.equal(metadata.root_node, 'PomeloStemMascot');
   assert.equal(metadata.rights, expectedLicense);
   assert.deepEqual(measure(document, bytes), metadata.metrics);
-  assert.equal(metadata.metrics.animations, 3);
+  assert.equal(metadata.metrics.animations, 5);
   assert.equal(metadata.blender_version, '5.2.3 LTS');
   assert.equal(metadata.skeleton.joint_count, 20);
   assert.deepEqual(metadata.animation_clips, expectedClips);

@@ -1,8 +1,8 @@
 {
   "id": "pomelo-stem-mascot",
   "name": "Pomelo STEM Mascot",
-  "summary": "Rigged Pomelo STEM fruit mascot with Idle, Wave, and Blink animation clips.",
-  "description": "An original one-metre fruit mascot built procedurally in Blender. The registered GLB has a 20-joint skin and three animation clips; the source folder also contains a neutral stand and a six-expression kit.",
+  "summary": "Rigged Pomelo STEM fruit mascot with Idle, Wave, Blink, Cheer, and Jump animation clips.",
+  "description": "An original one-metre fruit mascot built procedurally in Blender. The registered GLB has a skinned 20-joint rig and five animation clips; the source folder also contains a neutral stand and a six-expression kit.",
   "category": "Characters",
   "tags": [
     "Pomelo STEM",
@@ -14,7 +14,9 @@
     "procedural",
     "rigged",
     "animated",
-    "expressions"
+    "expressions",
+    "cheer",
+    "jump"
   ],
   "status": "validated",
   "created": "2026-11-16",
@@ -36,10 +38,14 @@
     "expressions_preview": "previews/expressions.webp",
     "preview_converter": "convert-previews.py",
     "animation_previews": [
+      "previews/anim-idle-strip.png",
       "previews/anim-wave-strip.png",
       "previews/anim-wave-3q-strip.png",
-      "previews/anim-idle-strip.png",
-      "previews/anim-blink-strip.png"
+      "previews/anim-blink-strip.png",
+      "previews/anim-cheer-strip.png",
+      "previews/anim-cheer-3q-strip.png",
+      "previews/anim-jump-strip.png",
+      "previews/anim-jump-3q-strip.png"
     ]
   },
   "display": {
@@ -54,7 +60,7 @@
     "origin": "feet at floor Y=0",
     "front_axis": "+Z"
   },
-  "accuracy_notes": "This is a procedural interpretation of a private design, not an exact reconstruction or independently approved match; no visual-similarity percentage is measured. The accepted R4 middle yellow-green #CBE85A palette is retained. The fruit and face contours are more regular than the illustration, and fitted-surface overlaps remain. The R5 Wave arm uses rounded capsule links with intentional joint overlap; finite sampled QA does not prove continuous collision-free motion. Wave loop velocity continuity has not been proven, so runtimes should blend into and out of Wave. The outlines are inverted hulls and require backface culling; disable outline shadow casting. The mesh is not a watertight print model.",
+  "accuracy_notes": "This is a procedural interpretation of a private design; no visual-similarity percentage has been measured. The accepted middle yellow-green palette is retained, while fruit and face contours remain more regular than the reference. Cheer raises compact fists to the lower-cheek area; the preserved short arms do not reach over the oversized head. Wave loop velocity continuity has not been proven, so runtimes should blend into and out of Wave. The six expression figures in the kit remain static alternatives. Existing fitted overlaps and neck shading remain. The outlines are inverted hulls and require backface culling; disable their shadow casting in consuming renderers. No owner art approval is claimed.",
   "attribution": [
     {
       "credit": "Original procedural character geometry and materials generated with Blender 5.2.3 LTS for the owner's project; no third-party model is included."
@@ -65,10 +71,10 @@
   ],
   "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
   "metrics": {
-    "glb_bytes": 967908,
+    "glb_bytes": 1007676,
     "triangles": 39832,
     "vertices": 20476,
-    "animations": 3
+    "animations": 5
   },
   "skeleton": {
     "joint_count": 20
@@ -84,7 +90,15 @@
     },
     {
       "name": "Blink",
-      "duration_seconds": 3
+      "duration_seconds": 3.0
+    },
+    {
+      "name": "Cheer",
+      "duration_seconds": 1.600000023841858
+    },
+    {
+      "name": "Jump",
+      "duration_seconds": 1.2000000476837158
     }
   ],
   "geometry": {
@@ -93,7 +107,7 @@
     "bounds_glTF_m": {
       "min": [
         -0.38784563541412354,
-        0,
+        0.0,
         -0.2666170001029968
       ],
       "max": [
@@ -111,10 +125,10 @@
   },
   "additional_exports": {
     "stand": {
-      "glb_bytes": 968248,
+      "glb_bytes": 1008012,
       "triangles": 39832,
       "vertices": 20476,
-      "animations": 3,
+      "animations": 5,
       "joint_count": 20,
       "animation_clips": [
         {
@@ -127,13 +141,21 @@
         },
         {
           "name": "Blink",
-          "duration_seconds": 3
+          "duration_seconds": 3.0
+        },
+        {
+          "name": "Cheer",
+          "duration_seconds": 1.600000023841858
+        },
+        {
+          "name": "Jump",
+          "duration_seconds": 1.2000000476837158
         }
       ],
       "bounds_glTF_m": {
         "min": [
           -0.38784563541412354,
-          0,
+          0.0,
           -0.2666170001029968
         ],
         "max": [
@@ -149,10 +171,10 @@
       }
     },
     "kit": {
-      "glb_bytes": 4441836,
+      "glb_bytes": 4481948,
       "triangles": 277820,
       "vertices": 142500,
-      "animations": 3,
+      "animations": 5,
       "joint_count": 26,
       "animation_clips": [
         {
@@ -165,13 +187,21 @@
         },
         {
           "name": "Blink",
-          "duration_seconds": 3
+          "duration_seconds": 3.0
+        },
+        {
+          "name": "Cheer",
+          "duration_seconds": 1.600000023841858
+        },
+        {
+          "name": "Jump",
+          "duration_seconds": 1.2000000476837158
         }
       ],
       "bounds_glTF_m": {
         "min": [
           -2.75,
-          0,
+          0.0,
           -1.8166170120239258
         ],
         "max": [
@@ -199,5 +229,6 @@
     "errors": 0,
     "warnings": 0,
     "validator": "2.0.0-dev.3.10"
-  }
+  },
+  "revision": "R6"
 }

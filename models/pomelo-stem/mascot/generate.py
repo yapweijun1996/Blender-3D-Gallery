@@ -21,7 +21,8 @@ ROOT = Path(__file__).resolve().parent
 TAU = math.tau
 SCENE = None
 M = {}
-CLIPS = {"Idle": 60, "Wave": 36, "Blink": 72}
+CLIPS = {"Idle": 60, "Wave": 36, "Blink": 72, "Cheer": 48, "Jump": 36}
+CLIP_FPS = {name: (30 if name in ('Cheer', 'Jump') else 24) for name in CLIPS}
 EXPRESSIONS = ("happy", "laugh", "surprised", "wink", "thinking", "sad")
 PALETTE = {"pomelo": "CBE85A", "cream": "FFFBE6", "leaf": "4A9F2D", "blush": "FFB6B6", "eye": "293226"}
 
@@ -382,8 +383,77 @@ def rig_character(root):
     animate_rig(rig,eyes,arms,f)
     root['rig_bones']=[name for name,*_ in specs]
     root['rest_pose']='Original R4 meshes preserved; short capsule links folded inside torso; exact loop seam'
-    root['animation_clips_seconds']={name:end/24 for name,end in CLIPS.items()}
+    root['animation_clips_seconds']={name:end/CLIP_FPS[name] for name,end in CLIPS.items()}
     return rig
+
+
+def celebration_pose(rig, clip, frame, factor, rotation, move):
+    """Reuse the two concealed R5 capsules as compact links for both hands.
+
+    The short upper link crosses inside the torso during anticipation, then
+    supports the left mitten. The longer link stays on the right. Absolute
+    bone targets keep both links rigid despite their original serial hierarchy.
+    No mesh, bind matrix, weight, morph or accepted animation is changed.
+    """
+    def curve(keys, t=frame):
+        for (a, x), (b, y) in zip(keys, keys[1:]):
+            if t <= b:
+                return x + (y-x)*smoothstep(a, b, t)
+        return keys[-1][1]
+    if clip == 'Cheer':
+        deploy = curve([(0,0),(5,1),(41,1),(47,0),(48,0)])
+        lift = curve([(0,0),(5,0),(15,1),(28,1),(41,0),(48,0)])
+        hop = .065 * max(0, 1-((frame-17)/8)**2) if 9 < frame < 25 else 0
+        squash = curve([(0,0),(5,1),(10,0),(24,0),(27,.8),(35,0),(48,0)])
+        stretch = curve([(0,0),(10,0),(16,1),(22,.5),(25,0),(48,0)])
+        lean = -4.0*lift
+    else:
+        deploy = curve([(0,0),(5,1),(29,1),(35,0),(36,0)])
+        lift = curve([(0,0),(7,-.35),(13,.8),(19,1),(26,.2),(29,0),(36,0)])
+        hop = .175 * max(0, 1-((frame-18)/8)**2) if 10 < frame < 26 else 0
+        squash = curve([(0,0),(7,1),(10,0),(26,0),(29,.85),(35,0),(36,0)])
+        stretch = curve([(0,0),(9,0),(14,1),(21,.7),(26,0),(36,0)])
+        lean = curve([(0,0),(7,3),(13,-3),(21,-1),(29,2),(35,0),(36,0)])
+    # Root remains fixed so the six expression mounts stay completely still.
+    for side in ('L','R'):
+        move('Leg.'+side,(0,0,hop/factor))
+    move('Body', (0,0,hop/factor-.026*squash+.006*stretch))
+    rotation('Body',(1,0,0),math.radians(lean))
+    # Crouch/extend the compact torso over the feet without nonuniform ancestor
+    # scale: glTF TRS interpolation would otherwise shear the rigid arm links.
+    # Delay the flexible leaf chain after the impulse, with exact rest holds.
+    end=CLIPS[clip]
+    envelope=smoothstep(2,9,frame)*(1-smoothstep(end-10,end-2,frame))
+    for name,delay,amplitude in [('Stem',0,3),('LeafBase.L',1,5),
+                                 ('LeafBase.R',1,5),('LeafTip.L',3,8),('LeafTip.R',3,8)]:
+        rotation(name,(1,0,0),math.radians(amplitude)*math.sin((frame-10-delay)*math.pi/9)*envelope)
+    rest_a,rest_b,rest_c=wave_arm_rest(rig['arm_pose'])
+    upper=rest_b-rest_a; fore=rest_c-rest_b
+    left_hand=Vector((-rest_c.x,rest_c.y,rest_c.z))
+    # A thumb-sized left link and the longer right link remain thick and round.
+    # Both palms arc forward before rising in front of the lower cheeks.
+    left_a=Vector((-.185,-.085,rest_c.z-.040))
+    left_a=rest_a.lerp(left_a,deploy)
+    left_a.y+=.085*math.sin(math.pi*deploy)
+    if rig['arm_pose']=='stand':
+        left_a.z+=.040*deploy
+    left_a+=Vector((0,-.025*max(0,lift),.050*max(0,lift)))
+    left_direction=Vector((-.32,-.80,.51)).normalized()
+    left_q=Quaternion().slerp(upper.normalized().rotation_difference(left_direction),deploy)
+    left_b=left_a+left_q @ upper
+    forward=.116*max(0,lift)+.018*math.sin(math.pi*max(0,lift))
+    left_c=left_hand+Vector((.024*max(0,lift),-forward,.077*lift))
+    right_a=rest_b+Vector((.035*deploy,-.095*deploy,
+                          .020*deploy*(1-max(0,lift))+.025*max(0,lift)))
+    if rig['arm_pose']=='stand':
+        right_a.z+=.040*deploy
+    right_q=Quaternion().slerp(fore.normalized().rotation_difference(Vector((.40,-.70,.59)).normalized()),max(0,lift))
+    right_c=right_a+right_q @ fore
+    # At rest the right forearm begins at rest_b, preserving the old pose.
+    return [('Arm.R',rest_a,left_a,left_q),
+            ('Forearm.R',rest_b,right_a,right_q),
+            ('Hand.R',rest_c,right_c,Quaternion((0,1,0),math.radians(-45)*max(0,lift))),
+            ('Hand.L',left_hand,left_c,Quaternion((0,1,0),math.radians(45)*max(0,lift)))]
 
 
 def animate_rig(rig, eyes, arms, factor):
@@ -459,10 +529,16 @@ def animate_rig(rig, eyes, arms, factor):
                     for side,label in [(-1,'L'),(1,'R')]:
                         rotation('LeafBase.'+label,(0,1,0),side*math.radians(1.4)*math.sin(TAU*(frame-12)/9.5)*follow)
                         rotation('LeafTip.'+label,(1,0,0),math.radians(2)*math.sin(TAU*(frame-13)/9.5)*follow)
+            if clip in ('Cheer','Jump'):
+                arm_targets=celebration_pose(rig,clip,frame,factor,rotation,move)
             if arm_targets:
                 bpy.context.view_layer.update()
                 body=rig.pose.bones['Body']
                 body_deform=body.matrix @ body.bone.matrix_local.inverted()
+                if clip in ('Cheer','Jump'):
+                    # Squash the torso without stretching any cream link/palm.
+                    loc,rot,scale=body_deform.decompose()
+                    body_deform=Matrix.Translation(loc) @ rot.to_matrix().to_4x4()
                 floor=Vector((0,0,rig['normalization_floor']))
                 for name,rest,posed,rotation_q in arm_targets:
                     deform=Matrix.Translation(posed*factor+floor) @ rotation_q.to_matrix().to_4x4() @ Matrix.Translation(-rest*factor-floor)
@@ -522,6 +598,25 @@ def finalize_glb(path):
     doc = json.loads(raw[20:20+length])
     binary = raw[28+length:]
     replacements = {}
+    # Keep the accepted 24 Hz clips byte-identical. New actions are authored
+    # at 30 Hz; give them private time accessors before immutable-buffer sharing.
+    for animation in doc.get('animations',[]):
+        fps=CLIP_FPS[animation['name']]
+        if fps==24:continue
+        inputs={}
+        for sampler in animation['samplers']:
+            old=sampler['input']
+            if old not in inputs:
+                a=dict(doc['accessors'][old]);v=doc['bufferViews'][a['bufferView']]
+                values=np.frombuffer(binary,dtype='<f4',count=a['count'],offset=v['byteOffset']+a.get('byteOffset',0))
+                values=(np.rint(values*24)/fps).astype('<f4')
+                view_index=len(doc['bufferViews'])
+                doc['bufferViews'].append({'byteOffset':0,'byteLength':values.nbytes,'buffer':0})
+                replacements[view_index]=values.tobytes()
+                a.update(bufferView=view_index,min=[float(values.min())],max=[float(values.max())])
+                a.pop('byteOffset',None)
+                inputs[old]=len(doc['accessors']);doc['accessors'].append(a)
+            sampler['input']=inputs[old]
     weights = {p["attributes"]["WEIGHTS_0"] for m in doc["meshes"] for p in m["primitives"]
                if "WEIGHTS_0" in p["attributes"]}
     for index in sorted(weights):
@@ -584,6 +679,8 @@ def animation_owners(scene):
 
 
 def activate_clip(scene, clip, frame):
+    # Public frame numbers use the clip's native rate, in source and reimports.
+    frame *= scene.render.fps / CLIP_FPS[clip]
     for ob in scene.objects:
         if ob.type == "ARMATURE":
             for bone in ob.pose.bones:
@@ -1392,13 +1489,17 @@ def render_imported_clips():
     folder=ROOT/'previews/animation-frames';folder.mkdir(exist_ok=True)
     samples={'Idle':[0,5,11,16,22,27,33,38,44,49,55,60],
              'Wave':[0,3,6,9,12,15,18,21,24,27,30,36],
-             'Blink':[0,12,24,28,30,31,33,35,36,38,48,72]}
+             'Blink':[0,12,24,28,30,31,33,35,36,38,48,72],
+             'Cheer':[0,5,9,12,15,18,22,25,28,34,41,48],
+             'Jump':[0,5,7,10,13,16,18,22,26,29,33,36]}
     report={}
     for clip,frames in samples.items():
         views=[('front',(0,-4,.65))]
-        if clip=='Wave':views.append(('3q',(1.6,-3.6,1.10)))
+        if clip in ('Wave','Cheer','Jump'):views.append(('3q',(1.6,-3.6,1.10)))
         for view,loc in views:
             SCENE.camera.location=loc;aim(SCENE.camera,(.04,0,.50));SCENE.camera.data.ortho_scale=1.30
+            if clip in ('Cheer','Jump'):
+                aim(SCENE.camera,(0,0,.57));SCENE.camera.data.ortho_scale=1.50
             suffix='' if view=='front' else '-'+view
             items,labels=[],[]
             for i,frame in enumerate(frames):
@@ -1410,8 +1511,8 @@ def render_imported_clips():
                 x,y=(i%4)*384,(2-i//4)*424
                 items.append((path,x,y,384,384));labels.append((f'F{frame:02d}',x+16,y+392))
             image_canvas('anim-'+clip.lower()+suffix+'-strip',items,1536,1272,labels=labels)
-            report[clip+suffix]={'frames':frames,'seconds':[v/24 for v in frames],
-                               'view':view,'duration_seconds':CLIPS[clip]/24,
+            report[clip+suffix]={'frames':frames,'seconds':[v/CLIP_FPS[clip] for v in frames],
+                               'fps':CLIP_FPS[clip],'view':view,'duration_seconds':CLIPS[clip]/CLIP_FPS[clip],
                                'source':'fresh import of default exported GLB'}
     (ROOT/'reports/animation-preview-samples.json').write_text(json.dumps(report,indent=2)+'\n')
 
@@ -1459,6 +1560,12 @@ def main():
         custom.name = 'Alternative_Custom'; visibility(custom, False)
         root.name = 'PomeloStemMascot'
     setup_studio(); apply_compositing()
+    # Source playback uses the original 24 fps scene; NLA strips reconcile the
+    # two native rates. Exported glTF times were normalized independently above.
+    for owner in animation_owners(SCENE):
+        for track in owner.animation_data.nla_tracks:
+            if track.name in ('Cheer','Jump'):
+                track.strips[0].scale=24/CLIP_FPS[track.name]
     SCENE['asset_contract'] = 'Native metres; glTF +Y up, front +Z; feet Y=0; real geometry; no textures'
     SCENE['source_notes'] = 'Alternative_Stand and KIT_ExpressionMountRow hidden only for studio; kit exports all mounts visible'
     SCENE['generator'] = 'generate.py'

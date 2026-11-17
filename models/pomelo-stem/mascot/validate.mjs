@@ -9,6 +9,13 @@ const validator = require('gltf-validator');
 const root = path.dirname(fileURLToPath(import.meta.url));
 const metadata = JSON.parse(fs.readFileSync(path.join(root, 'metadata.json'), 'utf8'));
 const near = (actual, expected, tolerance = 1e-8) => Math.abs(actual - expected) <= tolerance;
+const expectedClips = [
+  {name: 'Idle', duration_seconds: 2.5},
+  {name: 'Wave', duration_seconds: 1.5},
+  {name: 'Blink', duration_seconds: 3},
+  {name: 'Cheer', duration_seconds: 1.600000023841858},
+  {name: 'Jump', duration_seconds: 1.2000000476837158},
+];
 
 function check(condition, message) {
   if (!condition) throw new Error(message);
@@ -95,7 +102,7 @@ function measure(document, binary, bytes, filename) {
   check(!(document.images?.length || document.textures?.length), `${filename}: unexpected image or texture`);
   check((document.buffers ?? []).every(buffer => buffer.uri === undefined), `${filename}: external buffer URI`);
   check((document.skins ?? []).length === 1, `${filename}: expected one skin`);
-  check((document.animations ?? []).length === 3, `${filename}: expected three animation clips`);
+  check((document.animations ?? []).length === expectedClips.length, `${filename}: expected five animation clips`);
 
   const scene = document.scenes?.[document.scene ?? 0];
   check(scene && scene.nodes?.length > 0, `${filename}: scene roots required`);
@@ -224,7 +231,8 @@ check(metadata.display?.previewCameraDirection?.[2] > 0, 'preview camera must fa
 check(metadata.rights === "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.", 'license wording');
 check(fs.statSync(path.join(root, 'pomelo-stem-mascot.blend')).size > 0, 'missing Blender source file');
 for (const preview of ['front.webp', 'side.webp', 'back.webp', '3q.webp', 'expressions.webp',
-  'anim-wave-strip.png', 'anim-wave-3q-strip.png', 'anim-idle-strip.png', 'anim-blink-strip.png']) {
+  'anim-idle-strip.png', 'anim-wave-strip.png', 'anim-wave-3q-strip.png', 'anim-blink-strip.png',
+  'anim-cheer-strip.png', 'anim-cheer-3q-strip.png', 'anim-jump-strip.png', 'anim-jump-3q-strip.png']) {
   check(fs.statSync(path.join(root, 'previews', preview)).size > 0, `missing preview ${preview}`);
 }
 check(fs.statSync(path.join(root, 'previews/front.webp')).size < 150 * 1024, 'front thumbnail exceeds 150 KiB');
@@ -242,11 +250,13 @@ for (const [key, filename] of [
   check(validation.issues.numWarnings === 0, `${filename}: Khronos warnings`);
   const {document, binary} = readGlb(bytes, filename);
   const measured = measure(document, binary, bytes, filename);
-  const expectedClips = ['Idle', 'Wave', 'Blink'];
-  check(measured.animation_clips.map(clip => clip.name).join(',') === expectedClips.join(','),
-    `${filename}: expected Idle, Wave, and Blink clips in order`);
-  check([2.5, 1.5, 3].every((duration, index) => near(measured.animation_clips[index].duration_seconds, duration)),
-    `${filename}: unexpected animation duration`);
+  check(measured.animation_clips.length === expectedClips.length, `${filename}: clip count`);
+  for (let index = 0; index < expectedClips.length; index++) {
+    check(measured.animation_clips[index].name === expectedClips[index].name,
+      `${filename}: animation name mismatch at ${index}`);
+    check(near(measured.animation_clips[index].duration_seconds, expectedClips[index].duration_seconds),
+      `${filename}: unexpected duration for ${expectedClips[index].name}`);
+  }
 
   if (key === 'default') {
     checkMetricFields(measured, {...metadata.metrics, joint_count: metadata.skeleton?.joint_count,
