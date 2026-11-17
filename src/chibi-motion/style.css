@@ -1,0 +1,16 @@
+.motion-studio { padding: 2rem 0 4rem; }
+.motion-studio h1 { margin: 0; font: 500 clamp(2rem,5vw,4rem)/1.1 Georgia,serif; }
+.motion-studio header p { margin: .6rem 0 1.5rem; }
+.motion-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(200px,260px); gap:1.5rem; }
+.motion-stage { height:clamp(320px,62vh,640px); border-radius:12px; overflow:hidden; background:#eeeaf1; }
+.motion-stage canvas { width:100%; height:100%; display:block; touch-action:none; }
+.motion-studio fieldset { align-self:start; min-width:0; padding:1.2rem; border:1px solid #8887; border-radius:10px; }
+.motion-studio legend { padding:0 .35rem; font:1.4rem Georgia,serif; }
+.motion-clips { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+.motion-clips button { min-height:42px; border:1px solid #807687; border-radius:6px; background:transparent; color:inherit; cursor:pointer; }
+.motion-clips [aria-pressed=true] { background:#e8dcfa; color:#372445; }
+.motion-studio label,.motion-studio output { display:block; margin:1rem 0 .5rem; }
+.motion-studio input { width:100%; accent-color:#9161bb; }
+.motion-studio output { font-variant-numeric:tabular-nums; }
+.motion-studio fieldset p { font-size:.85rem; margin-bottom:0; }
+@media(max-width:680px){.motion-layout{grid-template-columns:1fr}.motion-stage{height:48vh;min-height:280px}}
