@@ -36,3 +36,5 @@ The [calibration note](calibration.md) retains a failed test assumption and its 
 Update the owning chapter first, run relevant probes, then prepare and review its KB payload. Preserve existing KB IDs/categories and private visibility; read current metadata before replacing it. Verify content after writing and run representative retrieval questions. Updating this handbook does not register a Skill, change a scene, install an extension, or authorize a Git release.
 
 [Character study closeout — 2026-11-17](2026-11-17-closeout.md) records the completed portrait, reusable Skill, KB maintenance and verification limits.
+
+[Delivery closeout — 2026-11-18](../2026-11-18-closeout.md) records the lighting delivery, fast Pages workflow, lossless optimization, project Skills and KB/tool synchronization for this chat.

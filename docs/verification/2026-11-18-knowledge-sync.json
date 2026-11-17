@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-18",
+  "scope": "Blender-3D-Gallery delivery closeout",
+  "source_revision": "6ab9fdd703c289ddbfcda31ade44e1d75e566396",
+  "skills": [
+    {
+      "id": "gallery:fast-pages-deployment",
+      "version": "1.0.0",
+      "source": ".agents/skills/gallery-fast-deploy/SKILL.md",
+      "sha256": "5388696044e56dd594de89ec0326c466cd6db6f68998a4aca9a5aaa636003a73",
+      "definition_validation": "PASS",
+      "registry_write_confirmed": true,
+      "exact_readback": true,
+      "exact_id_search_top_match": true
+    },
+    {
+      "id": "blender:lossless-glb-png",
+      "version": "1.0.0",
+      "source": ".agents/skills/glb-lossless-png/SKILL.md",
+      "sha256": "7398733fa9de9daf991e410b6f3be034750232debcd65be8d85ef4b6d7738836",
+      "definition_validation": "PASS",
+      "registry_write_confirmed": true,
+      "exact_readback": true,
+      "exact_id_search_top_match": true
+    }
+  ],
+  "tools": [
+    {
+      "name": "gallery_select_deployment_inputs",
+      "version": "1.0.0",
+      "source": "scripts/deployment-inputs.mjs",
+      "sha256": "e7668647cbf6ae8d38102e61a48e5c03c4e2911a9cbc91a31f26c122141bc7fb",
+      "registry_write_confirmed": true,
+      "exact_source_hash_readback": true,
+      "trust_status": "draft",
+      "execution_in_registry": "NOT_RUN"
+    },
+    {
+      "name": "glb_lossless_png_recompress",
+      "version": "1.0.0",
+      "source": "scripts/optimize-glb-png.py",
+      "sha256": "6cc43bf36d87cc4ebccb7a31ec92e09006b915e775eb20023a3212f5a0cae765",
+      "registry_write_confirmed": true,
+      "exact_source_hash_readback": true,
+      "trust_status": "draft",
+      "execution_in_registry": "NOT_RUN"
+    }
+  ],
+  "knowledge": [
+    {
+      "record": "CI/CD, Test Matrix, Performance and Security Quality Gates",
+      "updated_in_place": true,
+      "exact_readback": true,
+      "search_top_match": true,
+      "original_proposal_preserved": true
+    },
+    {
+      "record": "3D Model Asset Standard, GLB, Metadata Contract and Validation",
+      "updated_in_place": true,
+      "exact_readback": true,
+      "search_top_match": true,
+      "original_proposal_preserved": true
+    }
+  ],
+  "visibility": "Existing private KB and registry visibility preserved",
+  "retrieval_limit": "Bounded searches returned the intended top matches; complete source bodies were separately read back. Search previews were truncated.",
+  "runtime_limit": "Recorded host tests do not imply generic future-input validation or registry runtime trust."
+}

@@ -21,3 +21,9 @@ The fixture verifies scalar factor transfer, not texture decoding or lighting. A
 Bake only the channels required by the delivery contract. The [Cycles baking manual](https://docs.blender.org/manual/en/5.1/render/cycles/baking.html) explains active image-node targets and edge margins. Preserve the procedural source and bake settings, not only the resulting PNG. Recheck the GLB after export, because its packed image/channel layout can differ from the authoring view.
 
 [Texel Density Checker](https://extensions.blender.org/add-ons/texel-density-checker/) can assist this work. Its official listing is verified; execution in this project's UI or background environment has not yet been tested.
+
+## Lossless PNG delivery
+
+Pixel equality alone does not prove unchanged colour interpretation. The tested GLB optimizer replaces only PNG IDAT chunks and preserves all other chunks byte-for-byte, including sRGB, gamma, chromaticity, EXIF and physical dimensions. It requires an identical header and independently compares decoded pixels, dimensions, mode and metadata. Non-image GLB buffers and scene/material/skin/animation definitions need their own comparisons.
+
+The recorded profile is embedded, single-frame 8-bit RGB/RGBA PNG in a single-buffer GLB. A candidate is adopted only when smaller. A smaller transfer payload does not establish lower texture memory or faster rendering. See [tool contracts](../tools.md) and [the two measured batches](../verification/model-downloads/README.md).

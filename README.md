@@ -42,6 +42,8 @@ Use Node.js 24, then run `npm ci`, `npm run dev`, or `npm run build`. Vite produ
 
 To roll back, revert the problematic commit on `main` and let the same workflow deploy the restored build.
 
+[Fast deployment contract](docs/deployment.md) · [Maintenance tool contracts](docs/tools.md) · [Work closeout, 2026-11-18](docs/2026-11-18-closeout.md)
+
 ## Play and test
 
 Open **Interactive Demos → Game** or `?page=game`, start a two-player match, drag the cue ball to a legal position, aim, then pull the left handle down and release. The handle also supports keyboard charging with arrows and release with Space/Enter. See Rules & controls for the casual ruleset. App options contains installation help and Make available offline; install alone does not download the game pack.

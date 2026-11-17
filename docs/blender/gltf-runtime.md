@@ -25,3 +25,9 @@ Use an explicit selection and review actual binary output. A GLB container does 
 The [renderer](https://threejs.org/docs/pages/WebGLRenderer) and [material](https://threejs.org/docs/pages/Material.html) documentation explain sorting and multi-pass transparency. Do not infer a guaranteed speedup from a lower object count. Attribute `drawCalls`, triangles and frame-time results to the measured build/view/backend; a software-renderer timeout is not a successful hardware-independent result.
 
 Structural validation and an independent loader check are in [quality and delivery](quality-delivery.md). Neither establishes visual browser compatibility by itself.
+
+## Deployment input closure
+
+A model catalog alone may omit resources needed by an application. The gallery additionally imports shelf LODs, manifests, character customization code and Solar demo GLBs. Its deployment selector combines catalog paths with literal model references and Vite globs. Compare a minimal checkout's complete production output with the regular checkout after changing this selection logic.
+
+An exact build-cache identity must include the selected file paths and their committed blob identities. File byte counts or a catalog timestamp do not identify the content. The [deployment contract](../deployment.md) records cold and cache-hit runs, published build identity checks and the scope of the parser.
