@@ -43,3 +43,7 @@ The first new shell additions are [mall-solid-wall](../../models/mall-solid-wall
 No batch PR, commit, publication, or new production model is implied by this planning document.
 
 The next local shell slice adds a [1.2 m corner floor tile](../../models/mall-floor-corner-tile/README.md) and [45° mitred trim pair](../../models/mall-floor-mitred-trim/README.md). Their outside-corner arrangement replaces the earlier square-cap example in the corridor preview. One actual-GLB arrangement has been checked; other corner types, the proposed 2 m grid and complete assembly acceptance remain open.
+
+## Architectural lighting
+
+The [ten-fixture collection](../verification/mall-lighting-ten/README.md) supplies editable sources and close-up and mid-distance GLBs for P0 items `MALL-LGT-001`–`005` and `007`–`011`. The 1.8 m rail works with the separately catalogued [track spotlight](../../models/mall-track-spotlight/README.md), item `006`. The [two-rail assembly](../../models/mall-track-light-rail/README.md) shows how to place two existing lamp heads on a continuous run.
