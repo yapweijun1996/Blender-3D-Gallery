@@ -3,6 +3,32 @@ import * as THREE from "three";
 const DEFAULT_HEIGHT_FILL = 0.75;
 const DEFAULT_WIDTH_FILL = 0.9;
 
+/** Keep the renderer backing size and perspective projection aligned to CSS pixels. */
+export function syncViewerSize(container, renderer, camera, pixelRatio = renderer.getPixelRatio()) {
+  const { width, height } = container.getBoundingClientRect();
+  if (!(width > 0 && height > 0)) {
+    return { sizeChanged: false, aspectChanged: false, pixelRatioChanged: false };
+  }
+  if (!(Number.isFinite(pixelRatio) && pixelRatio > 0)) {
+    throw new RangeError("Viewer pixel ratio must be positive and finite");
+  }
+
+  const currentSize = renderer.getSize(new THREE.Vector2());
+  const sizeChanged = currentSize.x !== width || currentSize.y !== height;
+  const aspect = width / height;
+  const aspectChanged = camera.aspect !== aspect;
+  const pixelRatioChanged = renderer.getPixelRatio() !== pixelRatio;
+
+  if (pixelRatioChanged) renderer.setPixelRatio(pixelRatio);
+  if (sizeChanged) renderer.setSize(width, height, false);
+  if (aspectChanged) {
+    camera.aspect = aspect;
+    camera.updateProjectionMatrix();
+  }
+
+  return { sizeChanged, aspectChanged, pixelRatioChanged };
+}
+
 function fitViewerPoints(
   bounds,
   camera,

@@ -4,7 +4,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 import createFishMotion from "./fish-motion.js";
 import { acquireModelViewerRenderer } from "./model-viewer-renderer.js";
-import { fitViewerObject } from "./viewer-framing.js";
+import { fitViewerObject, syncViewerSize } from "./viewer-framing.js";
 
 export default async function createViewer(
   container,
@@ -24,6 +24,8 @@ export default async function createViewer(
   let visitorDemo;
   let lastDraw = 0;
   let studio;
+  let model;
+  let frameForResize;
   const rendererLease = acquireModelViewerRenderer();
   const { renderer } = rendererLease;
   renderer.toneMapping = THREE.NoToneMapping;
@@ -84,7 +86,6 @@ export default async function createViewer(
   light.position.fromArray(lighting?.directionalPosition ?? [4, 7, 5]);
   scene.add(light);
   let frame = 0;
-  let model;
   let disposed = false;
   let draw = () => {};
   const invalidate = () => {
@@ -104,15 +105,22 @@ export default async function createViewer(
   };
   document.addEventListener("visibilitychange", visibility);
   const resize = () => {
-    const { clientWidth: width, clientHeight: height } = container;
-    if (!width || !height) return;
-    renderer.setSize(width, height, false);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-    invalidate();
+    const { sizeChanged, aspectChanged, pixelRatioChanged } = syncViewerSize(
+      container,
+      renderer,
+      camera,
+      Math.min(window.devicePixelRatio, 2),
+    );
+    if (sizeChanged || aspectChanged) {
+      if (model && frameForResize) frameForResize();
+      else invalidate();
+    } else if (pixelRatioChanged) {
+      invalidate();
+    }
   };
   const observer = new ResizeObserver(resize);
   observer.observe(container);
+  window.addEventListener("resize", resize);
   const disposeModel = (object) => {
     object?.traverse((child) => {
       child.geometry?.dispose();
@@ -137,6 +145,7 @@ export default async function createViewer(
     disposed = true;
     cancelAnimationFrame(frame);
     observer.disconnect();
+    window.removeEventListener("resize", resize);
     controls.removeEventListener("change", invalidate);
     document.removeEventListener("visibilitychange", visibility);
     controls.dispose();
@@ -228,7 +237,7 @@ export default async function createViewer(
           : new THREE.Vector3(1, 0.9, 1)
     ).normalize();
     const frameObject = (visibleObject, viewDirection) => {
-      resize();
+      syncViewerSize(container, renderer, camera, Math.min(window.devicePixelRatio, 2));
       const frame = fitViewerObject(visibleObject, camera, viewDirection);
       camera.near = Math.max(frame.radius * 0.001, Number.EPSILON);
       camera.far = Math.max(frame.radius * 50, frame.distance * 12 + frame.radius);
@@ -247,6 +256,13 @@ export default async function createViewer(
         controls.enableDamping = damping;
       }
       invalidate();
+    };
+    frameForResize = () => {
+      if (!model) return;
+      const viewDirection = camera.position.clone().sub(controls.target);
+      if (viewDirection.lengthSq() === 0) viewDirection.copy(direction);
+      else viewDirection.normalize();
+      frameObject(cartDemo?.group ?? model, viewDirection);
     };
     const frameVehicle = (viewDirection, target = model) => {
       // Include open doors in the bounds so a preset never cuts them off.

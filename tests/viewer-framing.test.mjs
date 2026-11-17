@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { Box3, CylinderGeometry, Mesh, PerspectiveCamera, Vector3 } from "three";
-import { fitViewerBounds, fitViewerObject } from "../src/viewer-framing.js";
+import { fitViewerBounds, fitViewerObject, syncViewerSize } from "../src/viewer-framing.js";
 
 const direction = new Vector3(1, 0.9, 1).normalize();
 
@@ -81,6 +81,79 @@ test("viewer framing fits model bounds across desktop and mobile aspect ratios",
       }
     }
   }
+});
+
+test("viewer resize keeps projection and renderer dimensions aligned, then refits", () => {
+  let width = 1;
+  let height = 1;
+  let pixelRatio = 1;
+  const renderer = {
+    domElement: { width: 1, height: 1 },
+    getPixelRatio: () => pixelRatio,
+    getSize: target => target.set(width, height),
+    setPixelRatio(value) {
+      pixelRatio = value;
+      this.domElement.width = Math.floor(width * pixelRatio);
+      this.domElement.height = Math.floor(height * pixelRatio);
+    },
+    setSize(nextWidth, nextHeight) {
+      width = nextWidth;
+      height = nextHeight;
+      this.domElement.width = Math.floor(width * pixelRatio);
+      this.domElement.height = Math.floor(height * pixelRatio);
+    },
+  };
+  const camera = new PerspectiveCamera(35, 1, 0.001, 1000);
+  const dimensions = [
+    [1058, 495, 1],
+    [960, 330, 2],
+    [190, 81, 1],
+    [350, 371.359375, 2],
+  ];
+
+  for (const [nextWidth, nextHeight, nextPixelRatio] of dimensions) {
+    const container = {
+      getBoundingClientRect: () => ({ width: nextWidth, height: nextHeight }),
+    };
+    const change = syncViewerSize(container, renderer, camera, nextPixelRatio);
+    const aspect = nextWidth / nextHeight;
+    assert.equal(width, nextWidth);
+    assert.equal(height, nextHeight);
+    assert.equal(camera.aspect, aspect);
+    assert.equal(renderer.domElement.width, Math.floor(nextWidth * nextPixelRatio));
+    assert.equal(renderer.domElement.height, Math.floor(nextHeight * nextPixelRatio));
+    assert.ok(change.sizeChanged || change.aspectChanged || change.pixelRatioChanged);
+
+    const half = new Vector3(0.325, 1.05, 0.24);
+    const bounds = new Box3(half.clone().negate(), half);
+    const fit = fitViewerBounds(bounds, camera, direction);
+    const projected = projectedBounds(bounds, camera, fit);
+    assert.ok(projected.min.x >= -0.901 && projected.max.x <= 0.901,
+      `the model stays inside the renderer width at aspect ${aspect}`);
+    assert.ok(projected.min.y >= -0.751 && projected.max.y <= 0.751,
+      `the model stays inside the renderer height at aspect ${aspect}`);
+    assert.ok(Math.abs(projected.min.x + projected.max.x) < 0.02,
+      `the model remains horizontally centered at aspect ${aspect}`);
+    assert.ok(Math.abs(projected.min.y + projected.max.y) < 0.02,
+      `the model remains vertically centered at aspect ${aspect}`);
+  }
+
+  const unchanged = syncViewerSize({
+    getBoundingClientRect: () => ({ width, height }),
+  }, renderer, camera, pixelRatio);
+  assert.deepEqual(unchanged, {
+    sizeChanged: false,
+    aspectChanged: false,
+    pixelRatioChanged: false,
+  });
+  const hidden = syncViewerSize({
+    getBoundingClientRect: () => ({ width: 0, height: 0 }),
+  }, renderer, camera, pixelRatio);
+  assert.deepEqual(hidden, {
+    sizeChanged: false,
+    aspectChanged: false,
+    pixelRatioChanged: false,
+  });
 });
 
 test("viewer framing rejects invalid boxes, cameras, and directions", () => {
