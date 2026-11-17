@@ -1,0 +1,94 @@
+{
+  "result": "PASS",
+  "asset_id": "shelf-food-aisle",
+  "status": "draft / NEEDS REVIEW",
+  "glb_sha256": "362328303a1236cbedd093c376ce4665d6d63131e7673a8a3c47e1349d2f1ed4",
+  "checks": [
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/shelf-food-aisle/generate.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/shelf-food-aisle/inspect_sources.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/shelf-food-aisle/verify_reproducibility.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node models/shelf-food-aisle/validate.mjs --update-metadata",
+      "exit_code": 0,
+      "result": "PASS",
+      "khronos_errors": 0,
+      "khronos_warnings": 0
+    },
+    {
+      "command": "npm run validate:assets",
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "validate-assets.log"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests": 737,
+      "passed": 737,
+      "failed": 0,
+      "skipped": 0,
+      "log": "npm-test.log"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "build.log",
+      "nonfatal_warnings": [
+        "Existing application chunk-size and plugin-timing notices; no UI/dependency changes."
+      ]
+    },
+    {
+      "command": "node models/shelf-food-aisle/check_page.mjs",
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "browser.log",
+      "viewport": [
+        1440,
+        900
+      ]
+    }
+  ],
+  "visual_review": "All final Blender previews and Chromium screenshot opened and inspected.",
+  "earlier_findings": [
+    {
+      "result": "FIXED",
+      "detail": "Coplanar end-sign backing corrected before final export."
+    },
+    {
+      "result": "QA HARNESS CORRECTED",
+      "detail": "First browser attempt matched an authoring path, while Vite emits a hashed GLB URL. Final harness captures GLB responses and verifies their bytes and SHA-256. Original failure retained in browser-attempt1.log."
+    }
+  ],
+  "scope": {
+    "catalog": "Own collection appended at end; existing category Mall Fixtures.",
+    "existing_assets": "Unchanged; npm test generated report restored with git checkout.",
+    "staged_paths": [
+      "models/shelf-food-aisle/",
+      "models/catalog.json"
+    ],
+    "push": "NOT RUN",
+    "deployment": "NOT RUN"
+  },
+  "not_verified": [
+    "physical Android/iOS",
+    "WebKit",
+    "17-shop mall integration",
+    "sustained frame rate",
+    "structural loading",
+    "stocking or purchase interaction"
+  ]
+}
