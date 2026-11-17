@@ -126,6 +126,48 @@ def profile(name, center, rings, group, color, mat, segments=24, axis='Z'):
     return o
 
 
+def open_tub(name, x, group, mat):
+    # One closed shell: underside, tapered exterior, rolled rim, interior and floor.
+    rings = [(.262, .212, .022, .992), (.280, .230, .026, 1.003),
+             (.285, .235, .028, 1.102), (.292, .242, .030, 1.110),
+             (.251, .201, .023, 1.110), (.243, .193, .020, 1.102),
+             (.232, .182, .018, 1.009)]
+    verts, faces, colors = [], [], []
+    for width, depth, radius, z in rings:
+        for cx, cy, start in [(1, 1, 0), (-1, 1, 90),
+                              (-1, -1, 180), (1, -1, 270)]:
+            for step in range(4):
+                a = math.radians(start + step * 30)
+                verts.append((x + cx * (width / 2 - radius) + radius * math.cos(a),
+                              -.128 + cy * (depth / 2 - radius) + radius * math.sin(a), z))
+    n = 16
+    faces.append(tuple(reversed(range(n))))
+    colors.append('cream')
+    for k in range(len(rings) - 1):
+        for i in range(n):
+            a, b = k * n + i, k * n + (i + 1) % n
+            faces.append((a, b, b + n, a + n))
+            colors.append('cream' if k < 4 else 'steel')
+    faces.append(tuple((len(rings) - 1) * n + i for i in range(n)))
+    colors.append('steel')
+    mesh = bpy.data.meshes.new(name)
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    bm = bmesh.new()
+    bm.from_mesh(mesh)
+    bmesh.ops.recalc_face_normals(bm, faces=list(bm.faces))
+    bm.to_mesh(mesh)
+    bm.free()
+    o = bpy.data.objects.new(name, mesh)
+    bpy.context.scene.collection.objects.link(o)
+    finish(o, name, group, 'cream', mat)
+    attr = mesh.color_attributes['Color']
+    for poly, color in zip(mesh.polygons, colors):
+        for i in poly.loop_indices:
+            attr.data[i].color = linear(COLORS[color]) + (1,)
+    return o
+
+
 def canopy(group, glossy):
     # Eight radial panels, each split twice; a narrow oval umbrella fits the P1 envelope.
     verts, faces, colors = [(0, .025, 1.78)], [], []
@@ -186,7 +228,7 @@ def build(root):
     tubs['inspect_target'] = True
     tubs['flavour_count'] = 3
     flap['hinge_axis'] = 'local X; static closed pose'
-    tray['contents'] = 'three unlabelled rectangular bars; two wafer sandwiches'
+    tray['contents'] = 'three rounded ice bars with plain wood sticks; two wafer sandwiches'
     box('BOX_InsulatedCreamShell', (0, 0, .625), (1.10, .56, .65), body, 'cream', glossy, .035)
     box('BOX_CoralLowerPlinth', (0, 0, .335), (1.13, .59, .09), body, 'coral', glossy, .022)
     box('BOX_CoralWaistBand', (0, 0, .86), (1.115, .574, .06), body, 'coral', glossy, .012)
@@ -229,12 +271,9 @@ def build(root):
     # Three shallow open flavour tubs sit above the closed insulated cabinet.
     for i, (x, color) in enumerate([(-.325, 'berry'), (0, 'vanilla'), (.325, 'mint')], 1):
         prefix = 'TUB_%02d_' % i
-        box(prefix + 'CreamRim', (x, -.128, 1.009), (.285, .235, .034), tubs, 'cream', glossy, .012)
-        box(prefix + 'Recess', (x, -.128, 1.028), (.254, .204, .012), tubs, 'cocoa', glossy, .008)
-        box(prefix + 'FrozenSlab', (x, -.128, 1.038), (.23, .18, .022), tubs, color, glossy, .012)
-        for j in [-1, 1]:
-            rod(prefix + 'PortionScore', (x + j * .037, -.207, 1.049),
-                (x + j * .037, -.049, 1.049), .002, tubs, 'cream', glossy, 6)
+        open_tub(prefix + 'OpenContainer', x, tubs, glossy)
+        # Food sits inside the tapered shell, 40 mm below the rim's top surface.
+        box(prefix + 'FrozenSlab', (x, -.128, 1.040), (.232, .182, .060), tubs, color, glossy, .008)
     # Separate hinge node allows downstream inspection or future consumer animation.
     box('FLAP_RecessedGasket', (0, -.285, .635), (.77, .018, .39), body, 'cocoa', glossy, .016)
     box('FLAP_ClosedMintPanel', (0, -.302, .635), (.73, .028, .35), flap, 'mint', glossy, .018)
@@ -245,8 +284,12 @@ def build(root):
             flap, 'cream', glossy)
     box('TRAY_FrontShelf', (0, -.333, .922), (.82, .13, .025), tray, 'coral', glossy, .01)
     box('TRAY_CreamInsert', (0, -.34, .939), (.76, .105, .012), tray, 'cream', glossy, .006)
-    for i, (x, color) in enumerate([(-.285, 'berry'), (-.15, 'vanilla'), (-.015, 'mint')], 1):
-        box('BAR_%02d_PlainRectangularIce' % i, (x, -.34, .978), (.108, .077, .062), tray, color, glossy, .007)
+    tray_top = .939 + .012 / 2
+    for i, (x, color) in enumerate([(-.29, 'berry'), (-.145, 'vanilla'), (0, 'mint')], 1):
+        box('BAR_%02d_RoundedStickIce' % i, (x, -.34, tray_top + .034 / 2),
+            (.112, .052, .034), tray, color, glossy, .009)
+        box('STICK_%02d_PlainWoodGrip' % i, (x + .067, -.34, tray_top + .008 / 2),
+            (.046, .014, .008), tray, 'cocoa', glossy, .003)
     for i, x in enumerate([.155, .29], 1):
         box('WAFER_%02d_Filling' % i, (x, -.34, .972), (.105, .077, .036), tray, 'cocoa', glossy, .003)
         for z in [.95, .995]:

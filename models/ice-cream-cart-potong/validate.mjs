@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
-import {Box3, Vector3, Triangle} from 'three';
+import {Box3, Vector3, Triangle, Raycaster} from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import validator from 'gltf-validator';
 
@@ -71,13 +71,49 @@ assert.equal(tubs.userData.inspect_target, true);
 assert.ok(tubs.isMesh, 'tubs use one focused mesh');
 // Independently verify three real geometric tub groups across the counter.
 const pos = tubs.geometry.attributes.position;
+const flavourColours = [[.87, .54, .60], [1, .86, .55], [.38, .64, .51]];
+const colourBounds = (mesh, rgb) => {
+  const linear = rgb.map(v => v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4);
+  const {position, color} = mesh.geometry.attributes;
+  const points = [];
+  for (let i = 0; i < position.count; i++) {
+    if ([color.getX(i), color.getY(i), color.getZ(i)].every((v, j) => Math.abs(v - linear[j]) < 1e-5))
+      points.push(new Vector3().fromBufferAttribute(position, i).applyMatrix4(mesh.matrixWorld));
+  }
+  assert.ok(points.length, 'authored flavour colour has geometry');
+  return new Box3().setFromPoints(points);
+};
 const clusters = [-.325, 0, .325].map(x => {
   const points = Array.from({length: pos.count}, (_, i) => new Vector3().fromBufferAttribute(pos, i).applyMatrix4(tubs.matrixWorld))
     .filter(p => Math.abs(p.x - x) < .15);
   const b = new Box3().setFromPoints(points);
   assert.ok(points.length > 50 && b.getSize(new Vector3()).x > .28);
-  assert.ok(b.max.y > 1.048 && b.min.y > .99 && b.min.z > .009, 'open flavour tubs above counter and facing +Z');
+  assert.ok(b.getSize(new Vector3()).y >= .117 && b.min.y > .99 && b.min.z > .006,
+    'deep flavour containers above counter and facing +Z');
   return {min: b.min.toArray(), max: b.max.toArray()};
+});
+const ray = new Raycaster();
+const tubRecesses = flavourColours.map((rgb, i) => {
+  const food = colourBounds(tubs, rgb);
+  ray.set(new Vector3([-.325, 0, .325][i], 1.3, .128), new Vector3(0, -1, 0));
+  const hit = ray.intersectObject(tubs)[0];
+  assert.ok(hit && Math.abs(hit.point.y - food.max.y) < 1e-6, 'tub opening exposes the frozen surface');
+  const recess = clusters[i].max[1] - food.max.y;
+  assert.ok(recess >= .039 && recess <= .041, 'food is recessed 40 mm below the rim');
+  return {food_min: food.min.toArray(), food_max: food.max.toArray(), recess_metres: recess};
+});
+const tray = root.getObjectByName('TRAY_BarsAndWafers');
+const trayContacts = flavourColours.map((rgb, i) => {
+  const bar = colourBounds(tray, rgb);
+  const size = bar.getSize(new Vector3());
+  assert.ok(size.x / size.z > 2 && size.y > .03, 'elongated rounded ice bar');
+  ray.set(new Vector3([-.29, -.145, 0][i], 1.2, .38), new Vector3(0, -1, 0));
+  const support = ray.intersectObject(tray)[0];
+  assert.ok(support, 'tray liner below ice bar');
+  const gap = bar.min.y - support.point.y;
+  assert.ok(Math.abs(gap) < 1e-6, 'exported ice bar touches liner without floating or penetration');
+  assert.ok(parts.TRAY_BarsAndWafers.source_parts.includes(`STICK_0${i + 1}_PlainWoodGrip`));
+  return {bar_min: bar.min.toArray(), bar_max: bar.max.toArray(), liner_top: support.point.y, gap_metres: gap};
 });
 assert.ok(parts.SERVICE_Flap.max[2] > .33, 'service flap on +Z front');
 assert.ok(parts.TRAY_BarsAndWafers.max[2] > .39, 'tray on +Z front');
@@ -115,7 +151,7 @@ const report = {result: 'PASS', id: spec.slug, triangles: visibleTriangles + col
   glb_bytes: bytes.length, visible_mesh_nodes: spec.features.length, visible_primitives: visualPrimitives,
   materials: doc.materials.length, textures: 0, animations: 0, dimensions_metres_gltf: dimensions,
   bounds: {min: bounds.min.toArray(), max: bounds.max.toArray()}, palette_colors: palette.size,
-  tub_bounds: clusters, min_triangle_area_m2: minArea,
+  tub_bounds: clusters, tub_recesses: tubRecesses, tray_contacts: trayContacts, min_triangle_area_m2: minArea,
   collider: {default_scene_visible: false, material: null, min: cb.min.toArray(), max: cb.max.toArray()},
   sha256: createHash('sha256').update(bytes).digest('hex'),
   validation: {errors: khronos.issues.numErrors, warnings: khronos.issues.numWarnings},

@@ -1,7 +1,7 @@
 {
   "result": "PASS",
   "blender_version": "5.2.3 LTS",
-  "source_mesh_objects": 81,
+  "source_mesh_objects": 75,
   "flavour_tubs": 3,
   "large_wheels": 2,
   "rear_casters": 1,
@@ -13,6 +13,49 @@
   "font_objects": 0,
   "collider_hidden": true,
   "collider_materials": 0,
+  "tub_geometry": [
+    {
+      "container": "TUB_01_OpenContainer",
+      "interior_floor": 1.0089999437332153,
+      "food_recess_metres": 0.040000081062316895
+    },
+    {
+      "container": "TUB_02_OpenContainer",
+      "interior_floor": 1.0089999437332153,
+      "food_recess_metres": 0.040000081062316895
+    },
+    {
+      "container": "TUB_03_OpenContainer",
+      "interior_floor": 1.0089999437332153,
+      "food_recess_metres": 0.040000081062316895
+    }
+  ],
+  "tray_contacts": [
+    {
+      "part": "BAR_01_RoundedStickIce",
+      "gap_metres": 0.0
+    },
+    {
+      "part": "STICK_01_PlainWoodGrip",
+      "gap_metres": 0.0
+    },
+    {
+      "part": "BAR_02_RoundedStickIce",
+      "gap_metres": 0.0
+    },
+    {
+      "part": "STICK_02_PlainWoodGrip",
+      "gap_metres": 0.0
+    },
+    {
+      "part": "BAR_03_RoundedStickIce",
+      "gap_metres": 0.0
+    },
+    {
+      "part": "STICK_03_PlainWoodGrip",
+      "gap_metres": 0.0
+    }
+  ],
   "source_parts": [
     "BELL_Bracket",
     "BELL_GoldenDome",
@@ -48,29 +91,23 @@
     "WHEEL_MainTyre_Left",
     "WHEEL_MainTyre_Right",
     "WHEEL_RearCaster",
-    "TUB_01_CreamRim",
     "TUB_01_FrozenSlab",
-    "TUB_01_PortionScore",
-    "TUB_01_PortionScore.001",
-    "TUB_01_Recess",
-    "TUB_02_CreamRim",
+    "TUB_01_OpenContainer",
     "TUB_02_FrozenSlab",
-    "TUB_02_PortionScore",
-    "TUB_02_PortionScore.001",
-    "TUB_02_Recess",
-    "TUB_03_CreamRim",
+    "TUB_02_OpenContainer",
     "TUB_03_FrozenSlab",
-    "TUB_03_PortionScore",
-    "TUB_03_PortionScore.001",
-    "TUB_03_Recess",
+    "TUB_03_OpenContainer",
     "FLAP_ClosedMintPanel",
     "FLAP_Grip",
     "FLAP_HandleShadow",
     "FLAP_LowerHinge",
     "FLAP_LowerHinge.001",
-    "BAR_01_PlainRectangularIce",
-    "BAR_02_PlainRectangularIce",
-    "BAR_03_PlainRectangularIce",
+    "BAR_01_RoundedStickIce",
+    "BAR_02_RoundedStickIce",
+    "BAR_03_RoundedStickIce",
+    "STICK_01_PlainWoodGrip",
+    "STICK_02_PlainWoodGrip",
+    "STICK_03_PlainWoodGrip",
     "TRAY_CreamInsert",
     "TRAY_FrontShelf",
     "WAFER_01_EmbossedGrid",

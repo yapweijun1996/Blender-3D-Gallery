@@ -3,8 +3,9 @@
 Original brand-neutral three-wheel Singapore-style push cart for store S03.
 The P1 envelope takes precedence: approximately 1.4 m wide × 0.8 m deep ×
 1.8 m high, including the narrow oval umbrella. Closed insulated cabinet,
-closed service flap, three separate flavour tubs, handlebar, thumb bell and
-five plain rectangular bar/wafer samples. No lettering, logos or external assets.
+closed service flap, three open flavour tubs, handlebar, thumb bell, three
+rounded ice bars with plain wood sticks and two layered wafer sandwiches.
+No lettering, logos or external assets.
 
 Original asset; reuse in the owner's projects is authorized.
 
@@ -55,3 +56,19 @@ Neither provides this object and feature set. Concept board: NOT FOUND at
 
 Measured export evidence: `reports/assets.json`; format: `reports/khronos.json`;
 browser checks and source inspection are recorded under `reports/`.
+
+## Advisor round 1
+
+Replaced the stacked tub plates with continuous hollow containers: tapered
+outer walls, rolled rims, inner walls and a floor. Each tub is 118 mm high;
+the three coloured frozen surfaces sit 40 mm below the rim. The independent
+`FLAVOUR_ThreeTubs` node is preserved. Tray bars are elongated and rounded,
+with simple wood sticks; bars and sticks rest on the liner at 0.945 m without
+the previous 2 mm gap. The adjacent wafer layers are preserved.
+
+Measured GLB: 6,468 triangles (6,456 visible + 12 collider), 428,400 bytes,
+10,560 visible vertices, two materials, no textures, five visible mesh nodes
+and six visual primitives. Envelope remains 1.400 × 0.800 × 1.800 m (W/D/H).
+Gallery vertex totals include the collider's additional 24 vertices.
+`reports/reproducibility.json` records byte-identical GLB checks for a fresh
+procedural rebuild and re-export from the saved Blender source.

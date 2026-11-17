@@ -1,4 +1,5 @@
 {
+  "revision": "advisor round 1",
   "blender": "5.2.3 LTS",
   "node": "24.22.2",
   "khronos_validator": "2.0.0-dev.3.10",
@@ -11,42 +12,79 @@
   "build": "PASS",
   "gallery_ui_changed": false,
   "test_generated_structure_motion_restored": true,
+  "measurements": {
+    "triangles": 6468,
+    "visible_triangles": 6456,
+    "collider_triangles": 12,
+    "vertices": 10560,
+    "glb_bytes": 428400,
+    "materials": 2,
+    "textures": 0,
+    "visible_primitives": 6,
+    "dimensions_metres_gltf": [
+      1.399999976158142,
+      1.7999999523162842,
+      0.800000011920929
+    ],
+    "sha256": "db54fd066c307702c45b74b7124b73326f7f116dfc276fbf84253f98e6586e71"
+  },
+  "khronos": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "reproducibility": "PASS: fresh procedural rebuild and saved-source export are byte-identical",
+  "browser": "PASS: 1440x900 and 390x844; exact GLB hash, six draw calls, no errors",
+  "visual_review": "reports/visual-review.md",
   "files": {
     "generate.py": {
-      "bytes": 19398,
-      "sha256": "705d26d405e73e54964dcfa06a8845512b08df472cd351cc1a92089856911636"
+      "bytes": 21152,
+      "sha256": "b21c13561201597c55f47c78302da093f3e6b0713bbb4e031df451703dbfd7c6"
+    },
+    "validate.mjs": {
+      "bytes": 9655,
+      "sha256": "618850f1bdf92c7296c31e729b2616d47561f594adc1da4e9d4958cde5468d3f"
+    },
+    "inspect_sources.py": {
+      "bytes": 3969,
+      "sha256": "7c8f93e85521e12e9c4a5dbbc46d7613d15f9be20aa30347f31b3ddf0691a2ed"
     },
     "sources/ice-cream-cart-potong.blend": {
-      "bytes": 142191,
-      "sha256": "8c3177d41b77663352b1726f865369844b31493f589479cef3762f25626ea74f"
+      "bytes": 141679,
+      "sha256": "3eb89f4e4ec6fd9e941035b6e04fb228e3414f04f7d18bc22887df5591bf7f5e"
     },
     "exports/optimized.glb": {
-      "bytes": 414248,
-      "sha256": "d561e491bf213eece432b56eaf69b4197527af59736beaada7a7cdc17be5a413"
+      "bytes": 428400,
+      "sha256": "db54fd066c307702c45b74b7124b73326f7f116dfc276fbf84253f98e6586e71"
     },
     "previews/hero.png": {
-      "bytes": 718883,
-      "sha256": "1898d8483fd92cc122dbae3f0dd076c15824bcb962044184c73b61742d12e9a2"
+      "bytes": 713876,
+      "sha256": "8cc38ca8c81d87b5efc5ade1c2d5d9bcdd82530bfd9e40ccbf2902b4c46f370f"
     },
     "previews/front.png": {
-      "bytes": 653775,
-      "sha256": "29f9ee92194d92e7e1064050750098e20149277ae08623dd5e1d2aa14ced1ebc"
+      "bytes": 651324,
+      "sha256": "fa4f14edd7ab7e7104facb72e03eb1e9b7e32d1f61bab4baa7a00e98ba59c826"
     },
     "previews/side.png": {
-      "bytes": 644944,
-      "sha256": "ddda8759abc6591f750d4ed78700136ac11758700fbae480bba0f945adf90db7"
+      "bytes": 644967,
+      "sha256": "f1a1d3924ff251ce2e6b53b50c18c93159a361df4926bee1a311b3d42e831e64"
     },
     "previews/3q.png": {
-      "bytes": 713404,
-      "sha256": "096bb5a5919d8048ac1568d929ea5796d0361a08a724ed1e8239070441e87700"
+      "bytes": 710653,
+      "sha256": "a6baec3a130858c9b19d9f89165516c04a01992796cbb4306c3b0e8c749a2f38"
     },
     "previews/contact-1440.png": {
-      "bytes": 735946,
-      "sha256": "8ea6caff1ecd9f913ab04e72a61a2c611c8c07dd64a827e58bed861d3af3f9bf"
+      "bytes": 729075,
+      "sha256": "9fbe53021b8d2e707ccbd510a5b7af075f97498ef2b3890a41e0e6cf27925592"
     },
     "previews/contact-390.png": {
-      "bytes": 122912,
-      "sha256": "02c9dedfd584703befaf639ae9f8e6c12db72c470f9a98a09410553b3dcb522b"
+      "bytes": 122132,
+      "sha256": "2573a8e20b2e17e0f05a70a8ce576e5922f49397fe084aed22edcb01c4df6fa1"
     }
+  },
+  "gallery_page_screenshot": {
+    "path": "/Users/admin/Documents/MallQueue/reports/ice-cream-cart-potong-page.png",
+    "viewed": true,
+    "bytes": 117154,
+    "sha256": "2922893b20aa11046cfa4b9e3ac55283abcc6f0a2a549074469f033424b3e52e"
   }
 }

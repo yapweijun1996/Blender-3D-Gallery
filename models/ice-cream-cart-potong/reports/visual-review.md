@@ -1,21 +1,27 @@
-# Final visual review
+# Advisor round 1 visual review
 
-Viewed the final 768 px hero, front, side and three-quarter Blender renders,
-the actual production-gallery screenshots at 1440×900 and 390×844, and both
-1440 px / 390 px contact sheets. The cream, coral and mint palette, softened
-cabinet, oval scalloped umbrella and simple dark wheels form a clean silhouette.
-All three flavour tubs, five plain tray samples, rear handle and thumb bell are
-present; the service flap reads from the +Z front. Views retain the complete
-cart without clipping. Source and gallery rendering use different existing
-lighting/tone-mapping paths; the gallery palette is brighter.
+Viewed the final hero, front, side and three-quarter Blender views in both
+1440 px and 390 px contact sheets, and opened the replaced 1440×900 gallery
+page screenshot at `/Users/admin/Documents/MallQueue/reports/ice-cream-cart-potong-page.png`.
 
-The reference concept board was not present. Physical devices, WebKit,
-in-mall placement/collision and downstream Inspect focus controls were not
-tested. The independent tub node and the inactive collision scene were tested
-structurally; the delivered gallery UI is unchanged.
+The three 118 mm tall tubs have continuous rounded walls, rolled rims and
+visible inner edges. Their pink, vanilla and mint frozen surfaces sit 40 mm
+below the rim and read as separate servings from the default gallery view.
+`FLAVOUR_ThreeTubs` remains independently addressable. The tray carries three
+elongated rounded ice bars with contrasting brown wood sticks, alongside the
+original two layered wafer sandwiches. Front and side views show the samples
+resting on the liner. Independent exported geometry measurements find a zero
+gap between each ice bar and the liner; saved-source checks also verify each
+wood stick's contact and the real hollow tub floors.
 
-Initial failed checks are retained in the three `asset-check-*-failure.log` /
-`asset-check-initial.log` files. Corrections applied before the final pass:
-update transforms before parenting rods, limit bevel width on thin panels, and
-clamp evaluated vertex-colour interpolation to the legal 0–1 range. Final
-format/geometry/source/browser checks pass without lowering their thresholds.
+The warm palette, cart silhouette, umbrella, wheels, handle and bell remain
+consistent with the original. No logos or readable text are present on the
+asset. Gallery lighting is brighter than the Blender studio. All views retain
+the full cart without clipping; the narrow contact sheet necessarily reduces
+the smallest tray details.
+
+Final headless Chromium checks at 1440×900 and 390×844 loaded the exact final
+GLB SHA-256 with no recorded errors and six draw calls per render. Orbit,
+zoom, exact reset and close/reopen passed. Physical phones, WebKit, S03 world
+placement/collision and downstream Inspect controls remain unverified.
+Historical `asset-check-*-failure.log` files describe initial creation attempts.
