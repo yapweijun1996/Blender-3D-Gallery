@@ -96,23 +96,30 @@ def build(root):
     bench = empty('BENCH_Backless', root)
     table = empty('TABLE_SlimShared', root)
 
-    # Staggered parallel furniture envelopes; front is Blender -Y / glTF +Z.
-    sx, sy = -.5, .325
-    box('SOFA_UpholsteredBase', (sx, sy, .255), (2, .85, .25), fabric, sofa, .095, 6)
-    box('SOFA_RecessedUnderframe', (sx, sy, .145), (1.78, .65, .055), metal, sofa, .015)
+    # Open L layout; front is Blender -Y / glTF +Z. The 2.2 m depth is
+    # deliberate: a 1.6 m perpendicular bench needs usable space at the sofa.
+    sx, sy = -.5, .675
+    # The base overlaps the INSIDE of the full-height arms. Coincident outer
+    # base/arm faces previously left a dark horizontal slit on each side.
+    box('SOFA_UpholsteredBase', (sx, sy, .255), (1.74, .85, .25), fabric, sofa, .095, 6)
+    box('SOFA_RecessedUnderframe', (sx, sy, .1375), (1.62, .58, .045), metal, sofa, .015)
     for x in (sx - .82, sx + .82):
         for y in (sy - .29, sy + .29):
             box('SOFA_Foot', (x, y, .065), (.048, .048, .13), metal, sofa, .009, 3)
     for x in (sx - .905, sx + .905):
-        box('SOFA_RoundedArm', (x, sy, .40), (.19, .81, .44), fabric, sofa, .085, 6)
-    box('SOFA_BackShell', (sx, .67, .59), (1.80, .16, .42), fabric, sofa, .073, 6)
+        box('SOFA_RoundedArm', (x, sy, .375), (.19, .81, .49), fabric, sofa, .085, 6)
+    box('SOFA_BackShell', (sx, sy + .345, .59), (1.80, .16, .42), fabric, sofa, .073, 6)
     for i, x in enumerate((sx - .546, sx, sx + .546), 1):
-        box(f'SOFA_SeatCushion_{i}', (x, .228, .406), (.53, .59, .15), fabric, sofa, .065, 6)
-        piping(f'SOFA_SeatWelt_{i}', x, .228, .497, .557, .428, fabric, sofa)
-        pad = box(f'SOFA_BackCushion_{i}', (x, .557, .627), (.53, .185, .315), fabric, sofa, .064, 6)
+        box(f'SOFA_SeatCushion_{i}', (x, sy - .097, .406), (.53, .59, .15), fabric, sofa, .065, 6)
+        piping(f'SOFA_SeatWelt_{i}', x, sy - .097, .497, .557, .428, fabric, sofa)
+        pad = box(f'SOFA_BackCushion_{i}', (x, sy + .232, .627), (.53, .185, .315), fabric, sofa, .064, 6)
         pad.rotation_euler.x = -.085
 
-    bx, by = .3, -.56
+    # Build in local coordinates so the backless bench remains editable.
+    # Its inward use side faces Blender -X; both ends remain open.
+    bench.location = (1.31, -.3, 0)
+    bench.rotation_euler.z = math.pi / 2
+    bx, by = 0, 0
     box('BENCH_UpholsteredBase', (bx, by, .265), (1.56, .34, .15), fabric, bench, .055, 5)
     box('BENCH_RecessedUnderframe', (bx, by, .178), (1.40, .27, .045), metal, bench, .012)
     for x in (bx - .67, bx + .67):
@@ -122,8 +129,11 @@ def build(root):
         box(f'BENCH_SeatCushion_{i}', (x, by, .385), (.792, .38, .13), fabric, bench, .057, 6)
         piping(f'BENCH_SeatWelt_{i}', x, by, .758, .346, .402, fabric, bench)
 
-    # Shared reach table lies strictly between the sofa and bench depth envelopes.
-    tx, ty = 1.075, -.235
+    # The long edge serves both bench pads; the upper end is within reach of
+    # the right sofa seat, outside all three sofa seat-width legroom strips.
+    table.location = (.51, -.3, 0)
+    table.rotation_euler.z = math.pi / 2
+    tx, ty = 0, 0
     box('TABLE_RoundedTop', (tx, ty, .486), (.85, .22, .028), surface, table, .013, 5)
     box('TABLE_UnderTopReveal', (tx, ty, .464), (.78, .17, .018), metal, table, .007)
     for x in (tx - .265, tx + .265):
@@ -136,6 +146,7 @@ def measure_source():
     bpy.context.view_layer.update()
     depsgraph = bpy.context.evaluated_depsgraph_get()
     groups = {}
+    part_bounds = {}
     for group in root.children:
         coords = []
         parts = []
@@ -143,7 +154,11 @@ def measure_source():
             if obj.type != 'MESH':
                 continue
             evaluated = obj.evaluated_get(depsgraph)
-            coords.extend(evaluated.matrix_world @ Vector(corner) for corner in evaluated.bound_box)
+            corners = [evaluated.matrix_world @ Vector(corner) for corner in evaluated.bound_box]
+            coords.extend(corners)
+            part_bounds[obj.name] = {
+                'min': [min(v[i] for v in corners) for i in range(3)],
+                'max': [max(v[i] for v in corners) for i in range(3)]}
             parts.append(obj.name)
         minimum = [min(v[i] for v in coords) for i in range(3)]
         maximum = [max(v[i] for v in coords) for i in range(3)]
@@ -155,7 +170,7 @@ def measure_source():
               'root_location': list(root.location), 'source_mesh_parts': len(parts),
               'source_materials': sorted({m.name for o in parts for m in o.data.materials}),
               'source_text_objects': sum(o.type == 'FONT' for o in root.children_recursive),
-              'subassemblies': groups}
+              'subassemblies': groups, 'part_bounds': part_bounds}
     (HERE / 'reports/sources.json').write_text(json.dumps(report, indent=2) + '\n')
     return report
 
@@ -241,9 +256,11 @@ def studio():
 def render_views():
     scene = bpy.context.scene
     for name, position in [('hero', (2.6, -5, 3.0)), ('front', (0, -6, 2.2)),
-                           ('side', (6, 0, 2.2)), ('3q', (-3.7, -5, 3.8))]:
+                           ('side', (6, 0, 2.2)), ('3q', (-3.7, -5, 3.8)),
+                           ('rear', (-3.7, 5, 3.0)), ('top', (0, 0, 6))]:
         if '--views' in sys.argv and name not in sys.argv[sys.argv.index('--views') + 1].split(','):
             continue
+        scene.camera.data.ortho_scale = 4.25 if name in ('3q', 'rear') else 3.65
         scene.camera.location = position
         aim(scene.camera, TARGET)
         scene.render.filepath = str(HERE / 'previews' / (name + '.png'))
@@ -251,7 +268,7 @@ def render_views():
     # Keep the gallery card light while retaining full-size inspection PNGs.
     hero = HERE / 'previews/hero.png'
     if hero.exists():
-        subprocess.run(['python3', '-c',
+        subprocess.run(['/usr/bin/python3', '-c',
                         'from PIL import Image; import sys; '
                         'Image.open(sys.argv[1]).resize((512,512), Image.Resampling.LANCZOS)'
                         '.save(sys.argv[2], format="WEBP", quality=84, method=6)',

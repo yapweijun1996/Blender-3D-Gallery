@@ -8,7 +8,7 @@
         900,
         900
       ],
-      "sha256": "196dd5c594f5d2b59d845c0ca334bcb4fed41f0ebfabaa986eb1d830ad3d5b48"
+      "sha256": "88ecdd996310c45828e18b469903bfd8037ab5f4ae63e3393f8c4896181444d1"
     },
     "front": {
       "path": "previews/front.png",
@@ -16,7 +16,7 @@
         900,
         900
       ],
-      "sha256": "e3efff357b435f19b911b20d729d78b8f79c0997374614391fde617e3c2c6e5f"
+      "sha256": "00e1ba51621e58640cb2988932899db2b705c7dd48f231768b541affaaedd0cf"
     },
     "side": {
       "path": "previews/side.png",
@@ -24,7 +24,7 @@
         900,
         900
       ],
-      "sha256": "c6d931e6fd69b21024e44049c95a236a5780b8f794cb320bbb59c294abfc4c4a"
+      "sha256": "88b44c590b1b5dbe0da77fa86a008fbf12c313998537e30f5b56f29c8af56203"
     },
     "3q": {
       "path": "previews/3q.png",
@@ -32,7 +32,23 @@
         900,
         900
       ],
-      "sha256": "d247c23cf8b35a1759c62472593d91af4b1a07644df273e390732316860c5089"
+      "sha256": "6b2b258c34a191f1d9d8a6b50bb9e5142ed80e2547064efbd2ebbea9bd1f6e60"
+    },
+    "rear": {
+      "path": "previews/rear.png",
+      "pixels": [
+        900,
+        900
+      ],
+      "sha256": "fb237139b60ec0c256619f7fa347d4e19cddd6c97ec9b6d3d730e4bfc7613dec"
+    },
+    "top": {
+      "path": "previews/top.png",
+      "pixels": [
+        900,
+        900
+      ],
+      "sha256": "9dbea052f3bc7e2ac89d74bdc5e4bd452f686f576305167c4aac0d78f35ed6ee"
     },
     "model_page": {
       "path": "/Users/admin/Documents/MallQueue/reports/lounge-sofa-bench-page.png",
@@ -40,7 +56,8 @@
         1440,
         900
       ],
-      "sha256": "b562beec73634b39ba4a8e2f447fef51ee89d6efa1f2861a3b253b48db16a66f"
+      "bytes": 110876,
+      "sha256": "5e22372a673d00094773b22717c1eae831e7e32a6dde86b3c3e1a7a2c9836827"
     },
     "card_thumbnail": {
       "path": "previews/hero.webp",
@@ -48,21 +65,22 @@
         512,
         512
       ],
-      "bytes": 5758,
-      "sha256": "0a10a4354fb010b91fd1aed9e0518aa83d268114748e272c6d3563b12fbe1c42"
+      "bytes": 5986,
+      "sha256": "4f9bcfcda067de7aa95a25990c1eba85d1d0fb5a606f74eea45b96f354b460c6"
     }
   },
   "observations": [
-    "Three distinct sofa seat/back pads and two matching backless bench pads are readable",
-    "Rounded modern proportions, matte neutral upholstery and matching graphite supports",
-    "Slim unbranded warm table sits between offset seating depth envelopes",
-    "Complete furniture visible; corrected front and side studio views have no floor clipping",
-    "Actual Chromium page shows the delivered furniture with functioning orbit/reset",
-    "Lightweight WebP card thumbnail visually inspected"
+    "All three sofa seat fronts are open; the perpendicular backless bench no longer blocks them",
+    "The inner slim table serves both bench pads and the right sofa seat; remaining sofa seats have open legroom without individual table reach",
+    "Both upholstered outer arm sides remain continuous in the oblique, side and reverse views; graphite frame stays recessed",
+    "Full furniture fits the corrected oblique and reverse frames; top view confirms the open L layout",
+    "Actual Chromium 1440x900 page shows the validated GLB, 12972 triangles, 6962 vertices and three materials",
+    "Lightweight 512px WebP card thumbnail inspected"
   ],
-  "correction": "Initial front camera was too low and showed studio floor clipping. Interrupted the initial render after hero/front, raised front and side cameras to 2.2 m, and completed front/side/3q rendering. GLB geometry and hero are unchanged.",
+  "correction": "Expanded oblique/reverse orthographic scale from 3.65 to 4.25 m after the initial oblique view touched image edges. Re-rendered 3q, rear and top; hero/front/side retained from the first round-1 pass.",
   "limits": [
-    "Compact furniture envelope excludes occupied legroom and circulation",
-    "No physical-device, full-mall performance, safety or fabrication certification"
+    "Furniture footprint deliberately increased from 3 x 1.5 to 3 x 2.2 m",
+    "Projected clear strips are geometric allowances, not human occupancy or accessibility certification",
+    "Physical devices, full-mall performance, collision and manufacturing safety are unverified"
   ]
 }

@@ -1,9 +1,9 @@
 {
   "result": "PASS",
   "id": "lounge-sofa-bench",
-  "glb_bytes": 248240,
+  "glb_bytes": 247964,
   "triangles": 12972,
-  "vertices": 6974,
+  "vertices": 6962,
   "meshes": 3,
   "primitives": 3,
   "materials": 3,
@@ -12,37 +12,107 @@
   "dimensions": [
     3,
     0.7999999523162842,
-    1.5
+    2.200000047683716
   ],
   "bounds": {
     "min": [
       -1.5,
       0,
-      -0.75
+      -1.100000023841858
     ],
     "max": [
       1.5,
       0.7999999523162842,
-      0.75
+      1.100000023841858
     ]
   },
-  "sha256": "e5f826d8a76e7bf25f832b0cb9df250274e76b9b02a4bdf58f0955ea154d8043",
+  "sha256": "4d178ed32757fd731a7586c23f648ce7afb8f71cd3277d0c76d5ca77bb9e7e00",
   "validation": {
     "errors": 0,
     "warnings": 0
   },
-  "minimum_seating_table_gap_m": 0.02499997615814209,
+  "layout": {
+    "arrangement": "Open L: sofa faces +Z; perpendicular backless bench uses inward -X side",
+    "furniture_footprint_m": [
+      3,
+      2.200000047683716
+    ],
+    "original_target_m": [
+      3,
+      1.5
+    ],
+    "tradeoff": "Depth increased by 0.7 m to preserve full-size seating and open sofa exits",
+    "sofa_clear_legroom_m": 0.6,
+    "bench_inner_clear_legroom_m": 0.5,
+    "bench_table_gap_m": 0.49999988079071045,
+    "sofa_right_seat_front_to_table_m": 0.38765962831562095,
+    "sofa_lanes_blender_xy": [
+      {
+        "min": [
+          -1.3109999895095825,
+          -0.35
+        ],
+        "max": [
+          -0.781000018119812,
+          0.25
+        ]
+      },
+      {
+        "min": [
+          -0.7649999856948853,
+          -0.35
+        ],
+        "max": [
+          -0.23500001430511475,
+          0.25
+        ]
+      },
+      {
+        "min": [
+          -0.218999981880188,
+          -0.35
+        ],
+        "max": [
+          0.3109999895095825,
+          0.25
+        ]
+      }
+    ],
+    "bench_lanes_blender_xy": [
+      {
+        "min": [
+          0.619999885559082,
+          -1.100000023841858
+        ],
+        "max": [
+          1.119999885559082,
+          -0.30799999833106995
+        ]
+      },
+      {
+        "min": [
+          0.619999885559082,
+          -0.2919999957084656
+        ],
+        "max": [
+          1.119999885559082,
+          0.5
+        ]
+      }
+    ],
+    "scope": "Evaluated AABB projection and reach allowances; not a human sitting simulation or accessibility certification"
+  },
   "parts": {
     "BATCH_GraphiteMetal": {
       "min": [
-        -1.3899999856948853,
+        -1.3440001010894775,
         0,
-        -0.6499999761581421
+        -0.9889999628067017
       ],
       "max": [
-        1.465000033378601,
+        1.4509999752044678,
         0.4729999899864197,
-        0.7010000348091125
+        1
       ],
       "triangles": 3380
     },
@@ -50,25 +120,25 @@
       "min": [
         -1.5,
         0.12999999523162842,
-        -0.75
+        -1.100000023841858
       ],
       "max": [
-        1.100000023841858,
+        1.5,
         0.7999999523162842,
-        0.75
+        1.100000023841858
       ],
       "triangles": 9164
     },
     "BATCH_WarmTableSurface": {
       "min": [
-        0.6500000357627869,
+        0.3999999761581421,
         0.47200000286102295,
-        0.125
+        -0.125
       ],
       "max": [
-        1.5,
+        0.6200000047683716,
         0.5,
-        0.3449999988079071
+        0.7250000238418579
       ],
       "triangles": 428
     }

@@ -1,0 +1,115 @@
+{
+  "round": 1,
+  "review": "/Users/admin/Documents/MallQueue/advisor/lounge-sofa-bench-r1.md",
+  "original_rules": "/Users/admin/Documents/MallQueue/tasks/lounge-sofa-bench.md",
+  "before": {
+    "footprint_m": [
+      3,
+      1.5
+    ],
+    "glb_bytes": 248240,
+    "triangles": 12972,
+    "vertices": 6974
+  },
+  "after": {
+    "dimensions": [
+      3,
+      0.7999999523162842,
+      2.200000047683716
+    ],
+    "glb_bytes": 247964,
+    "triangles": 12972,
+    "vertices": 6962,
+    "meshes": 3,
+    "materials": 3,
+    "primitives": 3,
+    "sha256": "4d178ed32757fd731a7586c23f648ce7afb8f71cd3277d0c76d5ca77bb9e7e00",
+    "validation": {
+      "errors": 0,
+      "warnings": 0
+    }
+  },
+  "changes": [
+    "Turned the full-size 1.6 m backless bench perpendicular, outside every sofa seat front lane",
+    "Placed the slim table inside the L: 0.5 m from the bench, aligned with both bench pads; upper end serves the right sofa seat",
+    "Expanded the furniture footprint to 3 x 2.2 m, explicitly prioritizing usable full-size seats over the original 1.5 m depth target",
+    "Extended upholstered arm sides to base-bottom height and narrowed the base to remove coincident outer side faces",
+    "Inset the graphite underframe beneath the fabric; preserved the same 34 editable source parts and 3 export batches"
+  ],
+  "layout": {
+    "arrangement": "Open L: sofa faces +Z; perpendicular backless bench uses inward -X side",
+    "furniture_footprint_m": [
+      3,
+      2.200000047683716
+    ],
+    "original_target_m": [
+      3,
+      1.5
+    ],
+    "tradeoff": "Depth increased by 0.7 m to preserve full-size seating and open sofa exits",
+    "sofa_clear_legroom_m": 0.6,
+    "bench_inner_clear_legroom_m": 0.5,
+    "bench_table_gap_m": 0.49999988079071045,
+    "sofa_right_seat_front_to_table_m": 0.38765962831562095,
+    "sofa_lanes_blender_xy": [
+      {
+        "min": [
+          -1.3109999895095825,
+          -0.35
+        ],
+        "max": [
+          -0.781000018119812,
+          0.25
+        ]
+      },
+      {
+        "min": [
+          -0.7649999856948853,
+          -0.35
+        ],
+        "max": [
+          -0.23500001430511475,
+          0.25
+        ]
+      },
+      {
+        "min": [
+          -0.218999981880188,
+          -0.35
+        ],
+        "max": [
+          0.3109999895095825,
+          0.25
+        ]
+      }
+    ],
+    "bench_lanes_blender_xy": [
+      {
+        "min": [
+          0.619999885559082,
+          -1.100000023841858
+        ],
+        "max": [
+          1.119999885559082,
+          -0.30799999833106995
+        ]
+      },
+      {
+        "min": [
+          0.619999885559082,
+          -0.2919999957084656
+        ],
+        "max": [
+          1.119999885559082,
+          0.5
+        ]
+      }
+    ],
+    "scope": "Evaluated AABB projection and reach allowances; not a human sitting simulation or accessibility certification"
+  },
+  "limits": [
+    "Table is within reach of the right sofa seat; other sofa seats retain open fronts without individual table reach",
+    "Projected clear strips and reach distances are geometric design allowances, not human occupancy or accessibility certification",
+    "Additional mall circulation, collision integration and physical-device performance remain unverified"
+  ]
+}

@@ -1,17 +1,18 @@
 {
   "result": "PASS",
+  "round": 1,
   "commands": [
     {
-      "command": "Blender 5.2.3 isolated generate.py --skip-render",
+      "command": "Blender 5.2.3 generate.py --skip-render",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "reports/generate.log"
+    },
+    {
+      "command": "python3 models/lounge-sofa-bench/check_rebuild.py",
       "exit_code": 0,
       "result": "PASS",
       "evidence": "reports/reproducibility.json"
-    },
-    {
-      "command": "Blender 5.2.3 generate.py --export-source --views front,side,3q",
-      "exit_code": 0,
-      "result": "PASS",
-      "evidence": "reports/render-final.log"
     },
     {
       "command": "Blender 5.2.3 inspect_sources.py",
@@ -26,6 +27,12 @@
       "evidence": "reports/assets.json"
     },
     {
+      "command": "Blender 5.2.3 generate.py --export-source --views 3q,rear,top",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "reports/render-final.log"
+    },
+    {
       "command": "npm run validate:assets",
       "exit_code": 0,
       "result": "PASS",
@@ -35,23 +42,29 @@
       "command": "npm test",
       "exit_code": 0,
       "result": "PASS",
+      "evidence": "reports/npm-test.log",
       "passed": 737,
       "failed": 0,
-      "skipped": 0,
-      "evidence": "reports/npm-test.log",
-      "scope": "After asset registration; subsequent changes only package the lightweight thumbnail and record QA metadata"
+      "skipped": 0
     },
     {
-      "command": "npm run build (final thumbnail/metadata state)",
+      "command": "npm run build",
       "exit_code": 0,
       "result": "PASS",
-      "evidence": "reports/build-final.log"
+      "evidence": "reports/build.log"
     },
     {
-      "command": "node models/lounge-sofa-bench/check-browser.mjs",
+      "command": "node models/lounge-sofa-bench/check-browser.mjs (isolated from this task's Blender render)",
       "exit_code": 0,
       "result": "PASS",
       "evidence": "reports/browser.json"
+    },
+    {
+      "command": "./node_modules/.bin/vite build (final QA metadata state)",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "reports/build-final.log",
+      "scope": "After final QA statements; model bytes, description, statistics, camera and thumbnail match the successful Chromium run"
     },
     {
       "command": "git diff --check",
@@ -61,22 +74,35 @@
   ],
   "corrected_attempts": [
     {
-      "command": "Initial generate.py render",
+      "command": "First round-1 preview pass",
       "exit_code": 143,
-      "reason": "Stopped own initial rendering after inspecting a studio floor clipping artifact in front view. Adjusted front/side camera heights and rerendered. Hero and exported geometry were unchanged."
+      "reason": "Stopped this task's own render after noticing oblique framing touched the image edges; widened framing and completed corrected views",
+      "evidence": "reports/render-first-r1.log"
+    },
+    {
+      "command": "Manual thumbnail refresh with default python3",
+      "exit_code": 1,
+      "reason": "Homebrew Python 3.15 lacked Pillow; generator now uses verified /usr/bin/python3 with Pillow 11.3.0; final render/thumbnail conversion exited 0"
+    },
+    {
+      "command": "First round-1 Chromium check during Blender rendering",
+      "exit_code": 1,
+      "reason": "GLB response wait exceeded the existing 30s limit. Paused this task's render and reran unchanged browser checks successfully, then resumed/completed rendering. Timeout cause is not conclusively identified",
+      "evidence": "reports/browser-first-r1.log"
     }
   ],
-  "artifact_restore": "git checkout -- models/demo-beverage-can/reports/structure-motion.json; no other tracked generated artifacts remained",
+  "artifact_restore": "git restore -- models/demo-beverage-can/reports/structure-motion.json; verified unchanged",
+  "duplicate_search": "Original pre-build search retained in reports/duplicate-search.json; no new asset or collection created in round 1",
   "not_found": [
-    "Exact existing sofa/backless-bench/shared-table group",
-    "Relevant KB memory"
+    "Exact existing sofa/backless-bench/shared-table match in the original duplicate search"
   ],
+  "skipped": [],
   "not_verified": [
-    "Physical Android/iOS",
-    "WebKit",
-    "Full 17-shop mall performance or 200-draw-call aggregate",
-    "Occupied legroom, circulation, collision or sitting integration"
+    "Human occupied ergonomics or accessibility compliance",
+    "Collision/sitting integration and additional mall circulation",
+    "Physical Android/iOS and WebKit",
+    "Full 17-shop mall performance or 200-draw-call aggregate"
   ],
   "publication": "Local commit only; no push, rebase, release or deployment",
-  "log_normalization": "Trailing whitespace and excess terminal blank lines removed; diagnostic messages preserved"
+  "log_normalization": "ANSI display codes, trailing whitespace and excess terminal blank lines removed; diagnostics preserved"
 }

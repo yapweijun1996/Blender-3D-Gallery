@@ -2,7 +2,7 @@
   "id": "lounge-sofa-bench",
   "name": "Lounge Sofa, Bench and Slim Table",
   "summary": "Rounded three-seat sofa, matching backless bench and a shared slim table for mall rest areas.",
-  "description": "Original staggered lounge group with three separate sofa seat and back cushions, two bench pads, upholstery welt seams, recessed graphite supports and a rounded warm-toned table between the seating depth envelopes. Neutral greige fabric; no brands, text, external models or textures.",
+  "description": "Original open L-shaped lounge group with three sofa seat and back cushions, a perpendicular two-pad backless bench, upholstery welts, recessed graphite supports and an inner slim shared table. Measured furniture envelope 3.0 x 2.2 m. Neutral greige fabric; no brands, text, external models or textures.",
   "category": "Mall Fixtures",
   "tags": [
     "mall",
@@ -30,7 +30,9 @@
     "additional_previews": [
       "previews/front.png",
       "previews/side.png",
-      "previews/3q.png"
+      "previews/3q.png",
+      "previews/rear.png",
+      "previews/top.png"
     ]
   },
   "display": {
@@ -45,7 +47,7 @@
       2.5
     ]
   },
-  "accuracy_notes": "Static visual seating group. Furniture footprint excludes occupied legroom and circulation; staggered seats face the open front, and the narrow table serves their offset ends. No sitting logic, collision, cloth simulation, load rating or manufacturing certification. Full-mall 200-draw-call budget, physical Android/iOS and WebKit are unverified.",
+  "accuracy_notes": "Static visual seating group. The original 3 x 1.5 m target is expanded to a measured 3 x 2.2 m furniture footprint to retain a full-size perpendicular bench and open sofa exits. Projected clear strips provide 0.6 m in front of each sofa seat and 0.5 m on the inner bench side; the table serves both bench pads and the right sofa seat. Extra mall circulation is required. These geometric allowances do not certify occupied ergonomics or accessible circulation. No sitting logic, collision, cloth simulation, load rating or manufacturing certification. Full-mall 200-draw-call budget, physical Android/iOS and WebKit are unverified.",
   "attribution": [
     {
       "credit": "Original procedural geometry and materials. Folder and QA conventions adapted from self-checkout-machine; evaluated material batching follows the repository practice. No external assets."
@@ -74,17 +76,18 @@
       "reports/reproducibility.json",
       "reports/checks.json",
       "reports/visual-review.json",
-      "reports/source-edit.json"
+      "reports/source-edit.json",
+      "reports/advisor-round-1.json"
     ],
-    "geometry": "PASS",
+    "geometry": "PASS: measured open L layout, clear seat strips, recessed frame, floor-centred bounds",
     "source_editability": "PASS",
     "asset_validation": "PASS",
     "glb_validation": "PASS: zero errors and warnings",
     "unit_tests": "PASS: 737 passed, 0 failed, 0 skipped",
     "build": "PASS",
-    "deterministic_rebuild": "PASS: isolated procedural rebuild matches delivered GLB byte for byte",
-    "chromium": "PASS: 1440x900, actual GLB hash, 3 draw calls, orbit/reset/refresh/close/reopen, no errors",
-    "visual_review": "PASS: hero, front, side, 3q and actual Chromium 1440x900 page inspected"
+    "deterministic_rebuild": "PASS: isolated procedural rebuild matches delivered GLB byte for byte and all source measurements",
+    "chromium": "PASS: 1440x900, actual GLB hash, 3 draw calls, orbit/reset/refresh/close/reopen, no errors; isolated rerun after initial response timeout",
+    "visual_review": "PASS: hero, front, side, 3q, rear, top, WebP thumbnail and actual Chromium 1440x900 page inspected"
   },
   "blender_version": "5.2.3 LTS",
   "dimensions": {
@@ -93,48 +96,48 @@
     "size": [
       3,
       0.7999999523162842,
-      1.5
+      2.200000047683716
     ],
     "bounds": {
       "min": [
         -1.5,
         0,
-        -0.75
+        -1.100000023841858
       ],
       "max": [
         1.5,
         0.7999999523162842,
-        0.75
+        1.100000023841858
       ]
     }
   },
   "statistics": {
-    "glb_bytes": 248240,
+    "glb_bytes": 247964,
     "triangles": 12972,
-    "vertices": 6974,
+    "vertices": 6962,
     "meshes": 3,
     "primitives": 3,
     "materials": 3,
     "images": 0,
     "animations": 0,
-    "sha256": "e5f826d8a76e7bf25f832b0cb9df250274e76b9b02a4bdf58f0955ea154d8043"
+    "sha256": "4d178ed32757fd731a7586c23f648ce7afb8f71cd3277d0c76d5ca77bb9e7e00"
   },
   "measured_subassemblies": {
     "BENCH_Backless": {
       "axis_order": "Blender X,Y,Z (width,depth,height)",
       "min": [
-        -0.5,
-        -0.75,
+        1.119999885559082,
+        -1.100000023841858,
         0
       ],
       "max": [
-        1.100000023841858,
-        -0.3700000047683716,
+        1.5,
+        0.5,
         0.44999998807907104
       ],
       "size": [
+        0.38000011444091797,
         1.600000023841858,
-        0.3799999952316284,
         0.44999998807907104
       ],
       "parts": [
@@ -154,12 +157,12 @@
       "axis_order": "Blender X,Y,Z (width,depth,height)",
       "min": [
         -1.5,
-        -0.10000002384185791,
+        0.25,
         0
       ],
       "max": [
         0.5,
-        0.75,
+        1.100000023841858,
         0.7999999523162842
       ],
       "size": [
@@ -191,18 +194,18 @@
     "TABLE_SlimShared": {
       "axis_order": "Blender X,Y,Z (width,depth,height)",
       "min": [
-        0.6500000357627869,
-        -0.3449999988079071,
+        0.3999999761581421,
+        -0.7250000238418579,
         0
       ],
       "max": [
-        1.5,
-        -0.125,
+        0.6200000047683716,
+        0.125,
         0.5
       ],
       "size": [
-        0.8499999642372131,
-        0.2199999988079071,
+        0.2200000286102295,
+        0.8500000238418579,
         0.5
       ],
       "parts": [
@@ -215,5 +218,76 @@
       ]
     }
   },
-  "source_mesh_parts": 34
+  "source_mesh_parts": 34,
+  "layout": {
+    "arrangement": "Open L: sofa faces +Z; perpendicular backless bench uses inward -X side",
+    "furniture_footprint_m": [
+      3,
+      2.200000047683716
+    ],
+    "original_target_m": [
+      3,
+      1.5
+    ],
+    "tradeoff": "Depth increased by 0.7 m to preserve full-size seating and open sofa exits",
+    "sofa_clear_legroom_m": 0.6,
+    "bench_inner_clear_legroom_m": 0.5,
+    "bench_table_gap_m": 0.49999988079071045,
+    "sofa_right_seat_front_to_table_m": 0.38765962831562095,
+    "sofa_lanes_blender_xy": [
+      {
+        "min": [
+          -1.3109999895095825,
+          -0.35
+        ],
+        "max": [
+          -0.781000018119812,
+          0.25
+        ]
+      },
+      {
+        "min": [
+          -0.7649999856948853,
+          -0.35
+        ],
+        "max": [
+          -0.23500001430511475,
+          0.25
+        ]
+      },
+      {
+        "min": [
+          -0.218999981880188,
+          -0.35
+        ],
+        "max": [
+          0.3109999895095825,
+          0.25
+        ]
+      }
+    ],
+    "bench_lanes_blender_xy": [
+      {
+        "min": [
+          0.619999885559082,
+          -1.100000023841858
+        ],
+        "max": [
+          1.119999885559082,
+          -0.30799999833106995
+        ]
+      },
+      {
+        "min": [
+          0.619999885559082,
+          -0.2919999957084656
+        ],
+        "max": [
+          1.119999885559082,
+          0.5
+        ]
+      }
+    ],
+    "scope": "Evaluated AABB projection and reach allowances; not a human sitting simulation or accessibility certification"
+  }
 }
