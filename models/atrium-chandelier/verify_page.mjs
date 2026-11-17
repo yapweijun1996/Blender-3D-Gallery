@@ -53,12 +53,18 @@ try {
   await fs.mkdir(directory,{recursive:true});
   const screenshot=path.join(directory,'atrium-chandelier-page.png');
   await page.screenshot({path:screenshot});
+  // Inspect the revised gem facets under the same production page lighting.
+  await canvas.focus();
+  for(let i=0;i<5;i++) await page.keyboard.press('+');
+  await page.waitForTimeout(700);
+  const closeup=path.join(directory,'atrium-chandelier-closeup.png');
+  await canvas.screenshot({path:closeup});
   assert.deepEqual(errors,[]);
   const result={result:'PASS',viewport:[1440,900],browser:browser.version(),headless:true,
     software_webgl:true,production_build:true,glb_response_path:new URL(response.url()).pathname,
     glb_response_sha256:hash(received),
     actual_glb_loaded:true,webgl_draws_observed:await page.evaluate(()=>window.qaDrawCalls),
-    keyboard_orbit_and_reset:'PASS',canvas_count:1,page_errors:errors,screenshot,
+    keyboard_orbit_and_reset:'PASS',canvas_count:1,page_errors:errors,screenshot,closeup,
     limitations:['No physical-device, WebKit, assembled-mall lighting or full-scene performance validation.']};
   await fs.writeFile(new URL('reports/browser.json',import.meta.url),JSON.stringify(result,null,2)+'\n');
   console.log(JSON.stringify(result,null,2));

@@ -85,20 +85,23 @@ def rod(name, a, b, radius, mat, segments=12):
     return o
 
 
-def drop(name, x, y, top, length, mat):
-    # Eight-sided pointed prism with a small crown and staggered bevel facets.
+def drop(name, x, y, top, length, width, rotation, mat):
+    # Compact cut gemstone: short crown, offset girdle and a short pavilion tip.
+    # Flat triangle normals preserve alternating reflections in the web studio.
     vertices = [(x, y, top), (x, y, top-length)]
-    for z, radius, phase in [(top-.055, .037, 0),
-                             (top-.115, .057, 0),
-                             (top-length+.105, .041, math.pi/8)]:
-        vertices.extend((x+radius*math.cos(i*math.pi/4+phase),
-                         y+radius*math.sin(i*math.pi/4+phase), z) for i in range(8))
+    bands = [(.08, .27, 0), (.24, .80, 0),
+             (.44, 1.0, math.pi/8), (.76, .70, math.pi/8)]
+    for fraction, scale, phase in bands:
+        vertices.extend((x+width*scale*math.cos(i*math.pi/4+phase+rotation),
+                         y+width*scale*math.sin(i*math.pi/4+phase+rotation),
+                         top-length*fraction) for i in range(8))
     faces = []
     for i in range(8):
         j = (i+1) % 8
-        faces.extend([(0, 2+i, 2+j), (18+i, 1, 18+j),
-                      (2+i, 10+i, 10+j, 2+j),
-                      (10+i, 18+i, 18+j), (10+i, 18+j, 10+j)])
+        faces.extend([(0, 2+i, 2+j), (26+i, 1, 26+j)])
+        for band in range(len(bands)-1):
+            a, b = 2+band*8, 2+(band+1)*8
+            faces.extend([(a+i, b+i, b+j), (a+i, b+j, a+j)])
     o = mesh(name, vertices, faces, mat, 'CRYSTAL_Pendants')
     o['role'] = 'Faceted crystal-like opaque drop; no transmission pass'
     return o
@@ -112,7 +115,7 @@ def build():
     root['front_axis'] = 'Blender -Y / glTF +Z'
     root['light_node'] = 'LIGHT_Ring'
     metal = material('Satin champagne steel', (.68, .66, .60), .72, .29)
-    crystal = material('Faceted pearl crystal', (.86, .93, .95), .22, .16)
+    crystal = material('Faceted smoke-blue crystal', (.48, .64, .70), .48, .10)
     led = material('Warm white ring diffuser', (1, .94, .83), 0, .30, 3)
     # Ceiling contact is exactly 2 m above the unplaced asset's floor datum.
     rod('CEILING_Plate', (0, 0, 1.94), (0, 0, 2), .25, metal, 64)
@@ -145,12 +148,14 @@ def build():
             index += 1
             angle = j*2*math.pi/count+math.pi/12
             x, y = radius*math.cos(angle), radius*math.sin(angle)
-            length = [.34, .42, .50][ring-1]
-            wire = [.12+.035*(j % 3), .15+.04*(j % 2), .245-.04*(j % 2)][ring-1]
+            length = [.24, .28, .31][ring-1]
+            width = [.038, .040, .042][ring-1]
+            # The longest inner wire keeps the lowest gem tip at the floor datum.
+            wire = [.12+.035*(j % 3), .15+.04*(j % 2), .435-.04*(j % 2)][ring-1]
             top = height-.055-wire
             rod(f'DROP_{index:02d}_Wire', (x, y, top-.01), (x, y, height-.045), .0035, metal, 8)
             rod(f'DROP_{index:02d}_Ferrule', (x, y, top-.025), (x, y, top+.015), .014, metal)
-            drop(f'DROP_{index:02d}_Crystal', x, y, top, length, crystal)
+            drop(f'DROP_{index:02d}_Crystal', x, y, top, length, width, angle, crystal)
 
 
 def export(path):

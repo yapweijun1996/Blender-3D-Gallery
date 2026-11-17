@@ -1,7 +1,15 @@
 {
   "result": "PASS",
   "asset_id": "atrium-chandelier",
+  "revision": "Advisor round 1",
   "status": "draft / local validation complete; owner review pending",
+  "advisor_issue": "Opaque white icicle-like pendants lacked refined crystal facet contrast.",
+  "changes": [
+    "Drop lengths 0.34/0.42/0.50 m reduced to 0.24/0.28/0.31 m; maximum circumscribed diameters 0.076/0.080/0.084 m.",
+    "Added an offset girdle and shorter crown/pavilion facets; oriented gems around each ring.",
+    "Darker smoke-blue shared crystal material, metallic 0.48 and roughness 0.10; still opaque with no transmission.",
+    "Extended inner wires to preserve lowest-tip Y=0 and the 3 x 2 x 3 m envelope."
+  ],
   "checks": [
     {
       "command": "node models/atrium-chandelier/validate.mjs",
@@ -10,7 +18,7 @@
       "khronos_warnings": 0
     },
     {
-      "command": "npm run validate:assets",
+      "command": "npm run validate:assets (invoked by npm run build)",
       "result": "PASS"
     },
     {
@@ -23,7 +31,7 @@
     {
       "command": "npm run build",
       "result": "PASS",
-      "note": "Vite emitted its nonblocking >500 kB chunk-size warning."
+      "note": "Nonblocking Vite >500 kB chunk-size and plugin timing warnings."
     },
     {
       "command": "node models/atrium-chandelier/verify_page.mjs",
@@ -32,8 +40,9 @@
         1440,
         900
       ],
-      "glb_sha256": "dd38e05584ce57f01a5323951254ef63c47fbea61b57ece525fc0ef5bfe5fb26",
-      "screenshot_visually_inspected": true
+      "glb_sha256": "aa03f81d9115e134ec9fec3de0cd01fff4e403e66288c4300f709c972c8f3963",
+      "screenshot_visually_inspected": true,
+      "closeup_visually_inspected": true
     },
     {
       "check": "Saved-source edit and re-export",
@@ -44,53 +53,87 @@
       "result": "PASS"
     },
     {
-      "check": "hero/front/side/3q visual review",
+      "check": "hero/front/side/3q/hero.jpg visual review",
       "result": "PASS"
     },
     {
-      "check": "Catalog append only; existing collections unchanged; existing category; not in singapore-fish",
+      "check": "Existing own collection in Mall Fixtures, outside singapore-fish",
+      "result": "PASS"
+    },
+    {
+      "check": "Catalog unchanged: no stored metrics; loader measures the updated GLB",
+      "result": "PASS"
+    },
+    {
+      "check": "demo-beverage-can test artifact restored",
       "result": "PASS"
     }
   ],
-  "checked_glb_sha256": "dd38e05584ce57f01a5323951254ef63c47fbea61b57ece525fc0ef5bfe5fb26",
-  "resolved_attempts": [
-    {
-      "stage": "Asset gate",
-      "finding": "Blender default materials exported as double-sided.",
-      "resolution": "Enabled backface culling for all three shared materials; regenerated and passed."
+  "measured": {
+    "glb_bytes": 481624,
+    "triangles": 13836,
+    "vertices": 16472,
+    "dimensions": [
+      3,
+      2,
+      3
+    ],
+    "bounds": {
+      "min": [
+        -1.5,
+        0,
+        -1.5
+      ],
+      "max": [
+        1.5,
+        2,
+        1.5
+      ]
     },
-    {
-      "stage": "Asset gate harness",
-      "finding": "Three.js Color has no length() method.",
-      "resolution": "Used getHex() to verify non-emissive frame/crystals; passed."
-    },
-    {
-      "stage": "First Chromium attempt",
-      "finding": "Source-path response predicate timed out because Vite fingerprints the production GLB filename.",
-      "resolution": "Capture the single actual GLB response and compare bytes by SHA-256; final test passed.",
-      "failed_log": "/tmp/atrium-chandelier-browser.log"
+    "materials": 3,
+    "mesh_primitives": 3,
+    "pendant_components": 24,
+    "pendant_dimensions": {
+      "height_range_m": [
+        0.2399999499320984,
+        0.3100000023841858
+      ],
+      "max_horizontal_span_m": 0.08328137546777725
     }
-  ],
+  },
+  "checked_glb_sha256": "aa03f81d9115e134ec9fec3de0cd01fff4e403e66288c4300f709c972c8f3963",
   "logs": [
     {
-      "file": "/tmp/atrium-chandelier-validate-assets.log",
-      "sha256": "011f38d266133c2983457368a3bdd3e44394ae032d0dd53a829abbdd97e3b8ed"
+      "file": "/tmp/atrium-chandelier-r1-generate.log",
+      "sha256": "b5558ee73089a0b9b14343f7b9a57402f9aebe983e756ba936103e932fbba063"
     },
     {
-      "file": "/tmp/atrium-chandelier-npm-test.log",
-      "sha256": "8f8d319956ea2b531f38729decaef202af3103098b2e4abaa47fa076b2d7d9c7"
+      "file": "/tmp/atrium-chandelier-r1-rebuild.log",
+      "sha256": "e0cca35a6edf6826de77e176e8fe2ff55e5f0fc59b301f32fbba7d7f2a828d3a"
     },
     {
-      "file": "/tmp/atrium-chandelier-build-final.log",
-      "sha256": "69e8c21c9f9cc5b2719527138373b7e1b39db23fb117fc1b1c81b241ce6ad339"
+      "file": "/tmp/atrium-chandelier-r1-source-export.log",
+      "sha256": "3fa359747c77e2cfeb1b2a1930543d072c776fb4781a445b3aec8ce686c0ed74"
     },
     {
-      "file": "/tmp/atrium-chandelier-custom-gate.log",
-      "sha256": "35a371d5f906a67338f37dd1ab322a45e0012138caba9d468b0d4683a2632bb4"
+      "file": "/tmp/atrium-chandelier-r1-source-edit.log",
+      "sha256": "121bae6902947eb9043c5125c9091a9a21a2c14911920ddb878d4d6b8c5d596a"
     },
     {
-      "file": "/tmp/atrium-chandelier-browser-final.log",
-      "sha256": "cbc772b9c324e61b9ef434bf276a91898bc68fcf8ccf70c5e2f6641daaf8918e"
+      "file": "/tmp/atrium-chandelier-r1-gate.log",
+      "sha256": "1694c418070163f2be429b48545443682ecdd2274b053045fe13757862f55b7f"
+    },
+    {
+      "file": "/tmp/atrium-chandelier-r1-npm-test.log",
+      "sha256": "2f24a2cff4cac9db47b90bc6a5cdbb1b35a5109429f002ac71430c1d32292272"
+    },
+    {
+      "file": "/tmp/atrium-chandelier-r1-build.log",
+      "sha256": "6ddb90ed65dbc31b192bf14a5e326ef65310143f4cb50a24be1a0e2b54c7d630"
+    },
+    {
+      "file": "/tmp/atrium-chandelier-r1-browser.log",
+      "sha256": "290278ce00753a7269b0b98ec1b4e6c415d3ee1999d741c393a91514c798868e"
     }
   ],
   "not_verified": [

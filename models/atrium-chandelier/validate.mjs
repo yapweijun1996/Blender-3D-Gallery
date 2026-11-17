@@ -88,11 +88,23 @@ for(let i=0;i<(pi?.count ?? p.count);i+=3) {
 }
 const pendantCount=new Set(parent.map((_,i)=>find(i))).size;
 assert.equal(pendantCount,24);
+const dropBounds=new Map();
+for(let i=0;i<p.count;i++) {
+  const component=find(ids[i]);
+  if(!dropBounds.has(component)) dropBounds.set(component,new Box3());
+  dropBounds.get(component).expandByPoint(new Vector3().fromBufferAttribute(p,i).applyMatrix4(pendant.matrixWorld));
+}
+const dropSizes=[...dropBounds.values()].map(b=>b.getSize(new Vector3()));
+const pendantDimensions={
+  height_range_m:[Math.min(...dropSizes.map(s=>s.y)),Math.max(...dropSizes.map(s=>s.y))],
+  max_horizontal_span_m:Math.max(...dropSizes.flatMap(s=>[s.x,s.z]))
+};
 const report={result:'PASS',id:'atrium-chandelier',glb_bytes:bytes.length,triangles,vertices,
   stored_meshes:json.meshes.length,mesh_primitives:parts.length,opaque_draw_calls_per_pass:parts.length,
   materials:json.materials.length,images:0,animations:0,dimensions,
   bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()},minimum_triangle_area_m2:minimumArea,
   concentric_light_tiers:tiers,measured_led_tier_vertex_counts:tierCounts,pendant_components:pendantCount,
+  pendant_dimensions:pendantDimensions,
   sha256:createHash('sha256').update(bytes).digest('hex'),
   validation:{errors:validation.issues.numErrors,warnings:validation.issues.numWarnings,version:validator.version()},
   budget:{triangles_exclusive:20000,bytes_exclusive:1572864,materials_max:3,mesh_primitives:3},parts};
