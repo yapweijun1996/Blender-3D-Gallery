@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import validator from 'gltf-validator';
+const bytes = await readFile(new URL('./character.glb', import.meta.url));
+const report = await validator.validateBytes(new Uint8Array(bytes));
+assert.equal(report.issues.numErrors, 0);
+assert.equal(report.issues.numWarnings, 0);
+assert.equal(report.info.totalTriangleCount, 10522);
+assert.equal(report.info.hasSkins, true);
+const doc = JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)));
+assert.deepEqual(doc.animations.map(a => a.name).sort(), ['run', 'sit']);
+assert.equal(doc.skins.length, 1);
+assert.equal(doc.skins[0].joints.length, 65);
+console.log('PASS: zero glTF errors and warnings; 65 joints, 10,522 triangles, run and sit');
