@@ -1,0 +1,59 @@
+{
+  "result": "PASS",
+  "id": "led-strip-sign-module",
+  "status": "draft; local QA passed; manager review pending",
+  "sha256": "f614c4ff9e4b411b586c71d44c66247f370e1163ba4d89dcc20f5f9226da3202",
+  "commands": [
+    {
+      "command": "Blender 5.2.3 --background --python generate.py",
+      "exit_code": 0
+    },
+    {
+      "command": "node models/led-strip-sign-module/validate.mjs",
+      "exit_code": 0,
+      "khronos_errors": 0,
+      "khronos_warnings": 0
+    },
+    {
+      "command": "npm run validate:assets",
+      "exit_code": 0
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "passed": 737,
+      "failed": 0
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "warning": "Existing application chunks exceed 500 kB; no gallery code changed"
+    },
+    {
+      "command": "node models/led-strip-sign-module/check_browser.mjs",
+      "exit_code": 0
+    }
+  ],
+  "source_editability": "PASS",
+  "isolated_rebuild": "PASS; byte-identical GLB",
+  "visual_review": "PASS; five GLB reimport previews and model-page screenshot inspected",
+  "initial_browser_failure": {
+    "artifact": "reports/browser-initial.log",
+    "cause": "The test incorrectly expected an unbundled GLB path; production Vite fingerprints asset filenames",
+    "resolution": "Match GLB response by type and verify exact SHA-256; final production-build rerun PASS"
+  },
+  "catalog_registration": "Own collection appended at end in existing Mall Fixtures category; prior entries unchanged",
+  "restored_test_artifact": "models/demo-beverage-can/reports/structure-motion.json",
+  "not_found": [
+    "Exact existing model with this object, recessed LED function and bracket"
+  ],
+  "skipped_items": [],
+  "not_verified": [
+    "mall Bloom integration",
+    "physical devices",
+    "WebKit",
+    "assembled-mall performance",
+    "publication"
+  ],
+  "publication": "Not pushed or deployed"
+}
