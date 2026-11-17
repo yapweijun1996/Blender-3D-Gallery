@@ -1,18 +1,19 @@
 {
   "result": "PASS",
   "id": "deepavali-lamps-rangoli",
-  "advisor_round": 1,
+  "advisor_round": 2,
   "owner_review": "PENDING",
-  "tested_glb_sha256": "959732837e18ae2a19d74908936a097befa1ffc851ba78a3ed2a099177529726",
+  "tested_glb_sha256": "9ce01b5173252cdfa71e196e124e20fcbbc2c2dd688935177ef609873e30d22c",
+  "generator_sha256": "dc219a3c9d3d827250f200529b6bbca5f863d46c03cd29e8ac0e24a78a0adb56",
   "changes": [
-    "42 layered, scalloped marigold heads with varied orientation replace 50 rounded heads; two posts and feet carry a crossbar threaded through four hanger loops, with cord ends reaching their lower rims.",
-    "All 12 flames are 90 mm tall with a 48 mm local maximum width; ivory bodies and gold cores contrast with clay wicks and gold oil.",
-    "Included 2 x 2 x 0.012 m square floor beneath the 2.4 m round mosaic; documented ground and overhang interface."
+    "The circular mosaic now has four ground-reaching exterior caps and a stepped central underside seated on the 2 x 2 m floor without volume overlap. Matching clay and 40 mm chamfered corners make a continuous base; the original twelve-fold top tessellation is unchanged.",
+    "Two complete feet moved to rear corners at Blender X=+/-0.93 m, Y=0.93 m. Posts, shorter crossbar, cords and all four hanger loops align with that depth and the new span.",
+    "Added source and exported-geometry checks for ground support, floor-volume separation, complete foot bearing and minimum edge-to-circle clearance; added low preview and actual-browser support views."
   ],
   "measurements": {
-    "glb_bytes": 464324,
-    "triangles": 19640,
-    "vertices": 14221,
+    "glb_bytes": 466400,
+    "triangles": 19686,
+    "vertices": 14296,
     "primitives": 3,
     "materials": 3,
     "dimensions": [
@@ -21,24 +22,93 @@
       2.4000000953674316
     ]
   },
+  "features": {
+    "clay_diyas": 12,
+    "flame_meshes": 12,
+    "hanging_garlands": 2,
+    "marigold_heads": 42,
+    "included_square_floor_dimensions": [
+      2,
+      0.012000000104308128,
+      2
+    ],
+    "support_posts": 2,
+    "lamp_group_dimensions": [
+      1.8924000263214111,
+      0.15999999269843102,
+      1.8924000263214111
+    ],
+    "support_feet": 2,
+    "foot_to_rangoli_radial_clearance_m": 0.06499045358415234,
+    "foot_to_floor_edge_clearance_m": 0.018000006675720215,
+    "ground_supported_overhang_perimeter_vertices": 92,
+    "lamp_group_bounds": {
+      "min": [
+        -0.9462000131607056,
+        0.019999999552965164,
+        -0.9462000131607056
+      ],
+      "max": [
+        0.9462000131607056,
+        0.17999999225139618,
+        0.9462000131607056
+      ]
+    },
+    "rangoli_diameter": 2.4000000953674316,
+    "rangoli_surface_thickness": 0.007999999895691872,
+    "rangoli_thickness": 0.019999999552965164,
+    "rangoli_colours": 3,
+    "rotational_symmetry_order": 12,
+    "garlands": [
+      {
+        "min": [
+          -1.0031812191009521,
+          1.2228748798370361,
+          -1.0039552450180054
+        ],
+        "max": [
+          -0.05607835203409195,
+          1.9315497875213623,
+          -0.881493866443634
+        ],
+        "flowers": 21
+      },
+      {
+        "min": [
+          0.052096202969551086,
+          1.224488377571106,
+          -1.0045028924942017
+        ],
+        "max": [
+          1.0019105672836304,
+          1.9305241107940674,
+          -0.8826102018356323
+        ],
+        "flowers": 21
+      }
+    ]
+  },
   "checks": {
     "Blender 5.2.3 headless procedural build": "PASS",
-    "fresh-build byte reproducibility": "PASS",
+    "fresh-build byte reproducibility": "PASS: two complete fresh builds have identical GLB bytes",
     "saved source reopening / 115 manifold positive-volume meshes": "PASS",
     "saved-copy geometry and material edit / export / independent GLTFLoader + Khronos validation": "PASS",
-    "all six source previews visually inspected": "PASS",
+    "continuous ground support and square-floor volume separation": "PASS: 92 exterior perimeter samples reach ground; source triangles below square top are outside its volume",
+    "complete rear-foot floor support and circular clearance": "PASS: conservative radial clearance 64.99045 mm; floor-edge clearance 18.00001 mm",
+    "all seven source previews visually inspected": "PASS",
     "Khronos validator": "PASS: zero errors, warnings, infos and hints",
     "npm run validate:assets": "PASS: exit 0",
     "npm test": "PASS: 737 tests, zero failures",
     "npm run build": "PASS: exit 0; existing large-chunk advisory warning",
-    "headless Chromium 1440x900": "PASS: see browser.json; default screenshot replaced and viewed",
-    "all twelve flame silhouettes in actual GLB browser closeup": "PASS: inspected",
+    "headless Chromium 1440x900": "PASS: consumed final GLB twice, three draw calls, orbit/pan/zoom/reset, close/reopen, zero console/page/HTTP errors",
+    "default screenshot replaced and viewed": "PASS",
+    "actual GLB front/top/low and twelve-flame closeup viewed": "PASS",
     "demo-beverage-can generated test artifact restored": "PASS"
   },
   "screenshots": {
     "default_page": {
       "file": "/Users/admin/Documents/MallQueue/reports/deepavali-lamps-rangoli-page.png",
-      "sha256": "05ee4afccd8f25ac052ba9521f1929230b83a6bbc5453c79c41e7690639be4bb",
+      "sha256": "ddf3e4d735ee81c6d801983e23c7515002f11297accf9d418fa85897de031fdf",
       "viewed": true,
       "dimensions": [
         1440,
@@ -47,7 +117,22 @@
     },
     "lamps_closeup": {
       "file": "/Users/admin/Documents/MallQueue/reports/deepavali-lamps-rangoli-lamps-closeup.png",
-      "sha256": "150e8896e89f1a2b2079663fbd9329cc2c5616518bf5fcfc57f017a83c8e8ffa",
+      "sha256": "3ba2026531a6181621dbe7ce572cb789da8a00d56c0219d1dc6750f9474fa556",
+      "viewed": true
+    },
+    "front": {
+      "file": "/Users/admin/Documents/MallQueue/reports/deepavali-lamps-rangoli-front-browser.png",
+      "sha256": "6d969e3f2b3222a9f2391921620c86a704f8cd036590d3c4b44dd26dc57652e4",
+      "viewed": true
+    },
+    "top": {
+      "file": "/Users/admin/Documents/MallQueue/reports/deepavali-lamps-rangoli-top-browser.png",
+      "sha256": "3e51541a68f554a4b4b51e015e46c2e38ef466323bf6a31965be8a073bc6ce93",
+      "viewed": true
+    },
+    "low": {
+      "file": "/Users/admin/Documents/MallQueue/reports/deepavali-lamps-rangoli-low-browser.png",
+      "sha256": "5cf0b76c2f77edc331e1e50e7ca4d07539f5c98fba1f639cbc7383c721ab2d2b",
       "viewed": true
     }
   },
@@ -57,26 +142,37 @@
     "side.png",
     "3q.png",
     "top.png",
+    "low.png",
     "lamps.png"
   ],
   "resolved_check_attempts": [
     {
-      "check": "Initial reduced-sampling mosaic",
-      "result": "FAIL: twelve-fold colour symmetry",
-      "resolution": "Use 120 radial samples and a five-sample border period, preserving 24 marks; rerun passed."
+      "check": "Legacy uniform plaque / ivory square assumptions",
+      "result": "FAIL after deliberate geometry and material changes",
+      "resolution": "Measure the clay square and stepped mosaic while retaining all original budget, lamp-count, flame and twelve-fold colour symmetry checks."
     },
     {
-      "check": "Edited-copy mosaic symmetry",
-      "result": "FAIL: edited lamp-base coordinates were included in the mosaic sample",
-      "resolution": "Measure actual plaque components by their vertical bounds; canonical and edited exports both passed."
+      "check": "Initial source floor-volume assertion",
+      "result": "FAIL: it also classified triangles lying on the square bearing plane as below that plane",
+      "resolution": "Clip actual triangles strictly below the bearing plane and require those areas to stay outside the square volume; final source checks passed."
     }
   ],
   "not_verified": [
     "Physical Android / iOS",
     "WebKit browser engine",
     "Full 17-shop mall integration and sustained frame rates",
-    "Structural rigging / live fire safety certification",
+    "Structural rigging / live fire certification",
     "Deployment / release"
   ],
+  "command_logs": {
+    "build-render": "/tmp/deepavali-r2-build-render.log",
+    "validator": "/tmp/deepavali-r2-validator.log",
+    "source": "/tmp/deepavali-r2-source.log",
+    "edited-validation": "/tmp/deepavali-r2-edited-validation.log",
+    "validate-assets": "/tmp/deepavali-r2-validate-assets.log",
+    "npm-test": "/tmp/deepavali-r2-npm-test.log",
+    "npm-build": "/tmp/deepavali-r2-npm-build.log",
+    "browser": "/tmp/deepavali-r2-browser.log"
+  },
   "git_scope": "Only models/deepavali-lamps-rangoli/ and models/catalog.json; local commit on mall-models; no push or rebase"
 }

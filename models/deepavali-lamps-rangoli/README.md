@@ -2,7 +2,8 @@
 
 Original P3 mall decoration in the existing Festivals & Local Life category.
 Twelve hollow clay diyas with wicks and wide ivory-and-gold teardrop flames
-stand on a 2.4 m round, 8 mm thick rangoli mosaic above an included 2 x 2 m floor.
+stand on a 2.4 m round rangoli with an 8 mm mosaic surface above an included
+2 x 2 m chamfered clay floor. The circular exterior has a ground-reaching skirt.
 The original geometric twelve-petal tessellation uses three plain colours.
 Two hanging U-shaped garlands have 21 marigold heads each, with three staggered
 scalloped petal tiers and varied orientation. Four fixing loops interlock with
@@ -13,17 +14,23 @@ Metres; origin at floor centre; Blender +Z up / -Y front, exported glTF +Y up /
 Export merges geometry into three shared opaque material primitives. No
 external geometry, images, fonts, textures, brands, text or religious figures.
 Flames are static geometry without light sources or animation. The square floor
-spans X/Z [-1, 1] in glTF, from Y=0 to 0.012 m; the mosaic rests at Y=0.012 to
-0.020 m and intentionally overhangs the square edges. All twelve lamps rest on
-the mosaic inside the square footprint. Support feet rest on the square floor.
-Place the origin on the host's level ground plane at Y=0.
+spans X/Z [-1, 1] in glTF, from Y=0 to 0.012 m. The mosaic top is at Y=0.020 m;
+its underside steps from Y=0.012 over the square down to Y=0 outside it. Four
+closed circular caps eliminate the unsupported rim without overlapping the
+square-floor volume. Matching terracotta and 40 mm corner chamfers connect the
+two outlines. All twelve lamps rest on the mosaic inside the square footprint.
+The two feet now sit at X=+/-0.93 m, Z=-0.93 m, clear of the circular mosaic;
+posts, crossbar and garland hangers share that rear depth. Measured minimum
+foot clearance is 64.99 mm from the rangoli radius and 18.00 mm from the floor
+edges. Place the origin on the host's level ground plane at Y=0.
 
-Advisor round 1 measurements: 19,640 triangles; 464,324 GLB bytes (453.4 KiB);
-14,221 exported vertices; three materials, meshes and measured browser draw
+Advisor round 2 measurements: 19,686 triangles; 466,400 GLB bytes (455.5 KiB);
+14,296 exported vertices; three materials, meshes and measured browser draw
 calls; overall 2.400 x 1.988 x 2.400 m (glTF X/Y/Z). The measured lamp-and-flame
 footprint is 1.8924 x 1.8924 m. No textures, animations or degenerate triangles.
 Khronos: zero errors and zero warnings. `reports/assets.json` records the exact
-bounds and hash. The `lamps.png` preview provides a close view of all twelve flames.
+bounds and hash. The `lamps.png` preview provides a close view of all twelve
+flames; `low.png` exposes the grounded skirt and clear support feet.
 
 From the repository root:
 

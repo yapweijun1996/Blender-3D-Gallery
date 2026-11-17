@@ -38,12 +38,30 @@ def main():
         bm.free()
     floor = bpy.data.objects['RANGOLI_OriginalTwelvePetalMosaic']
     assert abs(floor.dimensions.x-2.4) < 1e-6 and abs(floor.dimensions.y-2.4) < 1e-6
-    assert abs(floor.dimensions.z-.008) < 1e-6
+    assert abs(floor.dimensions.z-.020) < 1e-6
     floor_dimensions = list(floor.dimensions)
     square = bpy.data.objects['FLOOR_TwoMetreSquare']
     assert all(abs(a-b) < 1e-6 for a, b in zip(square.dimensions, (2, 2, .012)))
     square_dimensions = list(square.dimensions)
     assert abs(floor.location.z-.012) < 1e-6
+    assert abs(min(v.co.z for v in floor.data.vertices)+floor.location.z) < 1e-6
+    # The stepped underside has no volume inside the square-floor solid:
+    # below its top plane, mosaic faces are confined to the four exterior caps.
+    floor.data.calc_loop_triangles()
+    for triangle in floor.data.loop_triangles:
+        points = [floor.data.vertices[i].co for i in triangle.vertices]
+        if all(p.z >= -1e-6 for p in points):
+            continue
+        clipped = []
+        for a, b in zip(points, points[1:]+points[:1]):
+            if a.z <= 0:
+                clipped.append(a)
+            if (a.z < 0 < b.z) or (b.z < 0 < a.z):
+                clipped.append(a.lerp(b, -a.z/(b.z-a.z)))
+        if len(clipped) >= 3 and (clipped[1]-clipped[0]).cross(clipped[2]-clipped[0]).length > 1e-10:
+            assert any(all(sign*p[axis] >= 1-1e-6 for p in clipped)
+                       for axis, sign in [(0, 1), (0, -1), (1, 1), (1, -1)]), [tuple(p) for p in clipped]
+    foot_clearances = []
     assert len([o for o in objects if o.name.startswith('MARIGOLD_')]) == 42
     for j in range(2):
         foot = bpy.data.objects['FRAME_Foot_%02d' % j]
@@ -51,6 +69,18 @@ def main():
         assert abs(min(v.co.z for v in foot.data.vertices)-.012) < 1e-6
         assert abs(min(v.co.z for v in post.data.vertices)-.032) < 1e-6
         assert abs(max(v.co.z for v in post.data.vertices)-1.96) < 1e-6
+        points = [v.co for v in foot.data.vertices]
+        outline = [p for p in points if abs(p.z-.012) < 1e-6]
+        distances = []
+        for a, b in zip(outline, outline[1:]+outline[:1]):
+            edge = b-a
+            t = max(0, min(1, -a.dot(edge)/edge.length_squared))
+            closest = a+t*edge
+            distances.append((closest.x**2+closest.y**2)**.5-1.2)
+        clearance = min(distances)
+        assert clearance > .06
+        assert all(abs(p.x) < 1 and abs(p.y) < 1 and abs(p.x)+abs(p.y) < 1.96 for p in points)
+        foot_clearances.append(clearance)
     for j in range(12):
         flame = bpy.data.objects['FLAME_Teardrop_%02d' % (j+1)]
         assert flame.data.materials[0].name == 'RiceIvory'
@@ -59,6 +89,7 @@ def main():
         # The bar's 17 mm radius fits through the loop's 27 mm inner radius
         # with a 5 mm centre offset; the string reaches the loop's lower rim.
         assert abs(hanger.location.z-1.955) < 1e-6
+        assert abs(hanger.location.y-.93) < 1e-6
     bpy.context.view_layer.update()
     groups = {}
     for group in root.children:
@@ -99,7 +130,9 @@ def main():
               'units': 'metres', 'origin': [0, 0, 0], 'materials': 3,
               'rangoli_dimensions_blender_xyz': floor_dimensions,
               'included_square_floor_dimensions_blender_xyz': square_dimensions,
-              'support': 'Two posts with feet on the square floor, shared crossbar and four interlocking hanger loops',
+              'foot_to_rangoli_radial_clearances_m': foot_clearances,
+              'ground_interface': 'Circular exterior caps reach ground; central underside rests on square floor without volume overlap',
+              'support': 'Two posts at rear square corners with fully supported feet clear of the mosaic, aligned crossbar and four interlocking hanger loops',
               'groups_blender_xyz': groups,
               'saved_source_export_byte_identical': True,
               'copy_edit': 'CLAY_Bowl_01 local X scaled by .92; clay roughness changed to .83; saved, reopened and exported',

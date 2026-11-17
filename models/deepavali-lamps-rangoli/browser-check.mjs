@@ -83,6 +83,20 @@ try {
   await page.waitForTimeout(500);
   const closeup = path.join(reportDir, spec.slug+'-lamps-closeup.png');
   await canvas.screenshot({ path: closeup });
+  const supportViews = {};
+  for (const [name, keys] of [
+    ['front', ['ArrowLeft', 'ArrowLeft']],
+    ['top', Array(5).fill('ArrowUp')],
+    ['low', ['ArrowDown', 'ArrowDown']]
+  ]) {
+    await page.locator('#reset-view').click();
+    await canvas.focus();
+    for (const key of keys) await page.keyboard.press(key);
+    await page.waitForTimeout(400);
+    const file = path.join(reportDir, spec.slug+'-'+name+'-browser.png');
+    await canvas.screenshot({ path: file });
+    supportViews[name] = file;
+  }
   const graphics = await page.evaluate(() => {
     const gl = document.querySelector('#viewport canvas').getContext('webgl2');
     // Browser screenshots provide the visible evidence; this records the actual
@@ -100,8 +114,9 @@ try {
   assert.deepEqual(errors, []);
   const report = { result: 'PASS', viewport: [1440, 900], browser: await browser.version(),
     id: spec.slug, consumed_glb_sha256: hashes, screenshot, lamps_closeup: closeup,
+    support_views: supportViews,
     checks: ['direct model page', 'visible WebGL geometry', 'keyboard orbit and zoom', 'pixel-identical reset',
-      'twelve-flame closeup using orbit/pan/zoom', 'close disposes canvas', 'reopen',
+      'twelve-flame closeup using orbit/pan/zoom', 'front/top/low support views', 'close disposes canvas', 'reopen',
       'no console/page/HTTP errors', 'no horizontal overflow'],
     measured_draw_calls: 3, measured_triangles_per_model_frame: assets.triangles,
     graphics: { version: graphics.version, renderer: graphics.renderer },

@@ -2,7 +2,7 @@
   "id": "deepavali-lamps-rangoli",
   "name": "Deepavali Lamps & Rangoli",
   "summary": "Twelve clay diyas, a round geometric rangoli and two hanging marigold garlands.",
-  "description": "Original twelve-diya display with wide ivory-and-gold static flames, an included 2 x 2 m square floor, a raised 2.4 m round three-colour geometric rangoli, and two supported marigold garlands of 21 layered flower heads each. Hollow clay bowls, wicks and a freestanding two-post frame; no text, brands, religious figures or external assets.",
+  "description": "Original twelve-diya display with wide ivory-and-gold static flames, an included 2 x 2 m chamfered clay floor, a ground-supported 2.4 m round three-colour geometric rangoli, and two supported marigold garlands of 21 layered flower heads each. Hollow clay bowls, wicks and a freestanding two-post frame on clear rear-corner feet; no text, brands, religious figures or external assets.",
   "category": "Festivals & Local Life",
   "tags": [
     "mall",
@@ -34,7 +34,8 @@
       "previews/side.png",
       "previews/3q.png",
       "previews/top.png",
-      "previews/lamps.png"
+      "previews/lamps.png",
+      "previews/low.png"
     ]
   },
   "display": {
@@ -58,18 +59,18 @@
     "front_axis": "Blender -Y / glTF +Z",
     "origin": "floor centre"
   },
-  "accuracy_notes": "Measured export dimensions are X width, Y height, Z depth. The included 2 x 2 m square floor spans X/Z [-1, 1], with its underside at Y=0 and top at Y=0.012 m. The 2.4 m round, 8 mm rangoli rests on it at Y=0.012 to 0.020 m and intentionally overhangs the square edges. All twelve lamps fit inside the square and rest at Y=0.020 m. Two support feet sit on the square floor; posts carry a crossbar with four interlocking garland loops. No host ceiling attachment is required. The host supplies a level ground plane at Y=0. Flames are static meshes without emitted lights or simulation. Physical rigging, devices, WebKit and full-mall performance are not verified.",
+  "accuracy_notes": "Measured export dimensions are X width, Y height, Z depth. The included 2 x 2 m chamfered square floor spans X/Z [-1, 1], from Y=0 to 0.012 m. The 2.4 m mosaic has an 8 mm top layer at Y=0.012 to 0.020 m; its four exterior circular caps extend to Y=0 without overlapping the square-floor volume. Matching terracotta surfaces and 40 mm corner chamfers form a continuous ground base. All twelve lamps fit inside the square and rest at Y=0.020 m. Support feet centred at X=+/-0.93 m, Z=-0.93 m are fully supported, with measured radial clearance of 64.99 mm from the 1.2 m rangoli radius and 18.00 mm from the square-floor edges. Posts, crossbar and four garland loops share the same rear depth. Place the origin on level ground at Y=0. Flames are static meshes without emitted lights or simulation. Physical devices, WebKit and full-mall performance are not verified.",
   "attribution": [
     {
       "credit": "Original procedural geometry and materials created for the owner project. No third-party assets."
     }
   ],
   "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
-  "material_notes": "Three shared opaque materials and three delivery meshes. Terracotta: bowls, wicks and support frame; MarigoldGold: layered flower heads, oil and flame cores; RiceIvory: square floor, flame bodies, hangers and mosaic accents. The closed rangoli is tessellated without coplanar overlays.",
+  "material_notes": "Three shared opaque materials and three delivery meshes. Terracotta: ground base, bowls, wicks and support frame; MarigoldGold: layered flower heads, oil and flame cores; RiceIvory: flame bodies, hangers and mosaic accents. The closed stepped rangoli has no coplanar overlays or volume overlap with the square floor.",
   "metrics": {
-    "glb_bytes": 464324,
-    "triangles": 19640,
-    "vertices": 14221,
+    "glb_bytes": 466400,
+    "triangles": 19686,
+    "vertices": 14296,
     "primitives": 3,
     "materials": 3,
     "animations": 0,
@@ -92,7 +93,7 @@
         1.2000000476837158
       ]
     },
-    "sha256": "959732837e18ae2a19d74908936a097befa1ffc851ba78a3ed2a099177529726",
+    "sha256": "9ce01b5173252cdfa71e196e124e20fcbbc2c2dd688935177ef609873e30d22c",
     "features": {
       "clay_diyas": 12,
       "flame_meshes": 12,
@@ -109,6 +110,10 @@
         0.15999999269843102,
         1.8924000263214111
       ],
+      "support_feet": 2,
+      "foot_to_rangoli_radial_clearance_m": 0.06499045358415234,
+      "foot_to_floor_edge_clearance_m": 0.018000006675720215,
+      "ground_supported_overhang_perimeter_vertices": 92,
       "lamp_group_bounds": {
         "min": [
           -0.9462000131607056,
@@ -122,33 +127,34 @@
         ]
       },
       "rangoli_diameter": 2.4000000953674316,
-      "rangoli_thickness": 0.007999999448657036,
+      "rangoli_surface_thickness": 0.007999999895691872,
+      "rangoli_thickness": 0.019999999552965164,
       "rangoli_colours": 3,
       "rotational_symmetry_order": 12,
       "garlands": [
         {
           "min": [
-            -1.1131811141967773,
+            -1.0031812191009521,
             1.2228748798370361,
-            -0.8339552879333496
+            -1.0039552450180054
           ],
           "max": [
-            -0.07607835531234741,
+            -0.05607835203409195,
             1.9315497875213623,
-            -0.7114938497543335
+            -0.881493866443634
           ],
           "flowers": 21
         },
         {
           "min": [
-            0.07209620624780655,
+            0.052096202969551086,
             1.224488377571106,
-            -0.8345029354095459
+            -1.0045028924942017
           ],
           "max": [
-            1.1119104623794556,
+            1.0019105672836304,
             1.9305241107940674,
-            -0.7126101851463318
+            -0.8826102018356323
           ],
           "flowers": 21
         }
@@ -160,12 +166,12 @@
     "warnings": 0,
     "validator": "2.0.0-dev.3.10"
   },
-  "source_sha256": "d36442e401854fe8448792ef441b2d28eeee1eedcb6af5afefa65d28e7a74bde",
+  "source_sha256": "03f697c94d4974f4df5b857b58fc85cdec952e02c0f7014c43e3a369f782295c",
   "quality_gate": {
     "overall": "NEEDS REVIEW",
-    "local": "PASS: revised measured geometry, saved-source edit/re-export and Khronos checks",
-    "visual": "PASS: six Blender previews, final 1440x900 Chromium default page and twelve-flame browser closeup inspected",
-    "browser": "PASS: actual GLB hash, three draw calls, orbit/pan/zoom/reset, close/reopen, zero page/console/HTTP errors",
+    "local": "PASS: measured ground support, rear-foot clearance, manifold source edit/re-export and Khronos checks",
+    "visual": "Round 2 preview and page inspection results: reports/acceptance.json",
+    "browser": "Current GLB hash, measured draw calls and viewer lifecycle: reports/browser.json",
     "physical_android": "NOT TESTED",
     "physical_ios": "NOT TESTED",
     "webkit": "NOT TESTED",
@@ -186,7 +192,7 @@
       "reports/browser.json",
       "reports/acceptance.json"
     ],
-    "repository_checks": "PASS: npm run validate:assets; npm test (737/737); npm run build"
+    "repository_checks": "Current command results: reports/acceptance.json"
   },
-  "advisor_round": 1
+  "advisor_round": 2
 }

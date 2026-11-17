@@ -1,7 +1,7 @@
 {
   "result": "PASS",
   "blender_version": "5.2.3 LTS",
-  "source_sha256": "d36442e401854fe8448792ef441b2d28eeee1eedcb6af5afefa65d28e7a74bde",
+  "source_sha256": "03f697c94d4974f4df5b857b58fc85cdec952e02c0f7014c43e3a369f782295c",
   "source_reopened": true,
   "closed_positive_volume_meshes": 115,
   "units": "metres",
@@ -14,14 +14,19 @@
   "rangoli_dimensions_blender_xyz": [
     2.4000000953674316,
     2.4000000953674316,
-    0.00800000037997961
+    0.019999999552965164
   ],
   "included_square_floor_dimensions_blender_xyz": [
     2.0,
     2.0,
     0.012000000104308128
   ],
-  "support": "Two posts with feet on the square floor, shared crossbar and four interlocking hanger loops",
+  "foot_to_rangoli_radial_clearances_m": [
+    0.06499045358415212,
+    0.06499045358415212
+  ],
+  "ground_interface": "Circular exterior caps reach ground; central underside rests on square floor without volume overlap",
+  "support": "Two posts at rear square corners with fully supported feet clear of the mosaic, aligned crossbar and four interlocking hanger loops",
   "groups_blender_xyz": {
     "DIYA_01": {
       "min": [
@@ -169,25 +174,25 @@
     },
     "GARLAND_01": {
       "min": [
-        -1.118147850036621,
-        0.700657844543457,
+        -1.008147954940796,
+        0.8705505728721619,
         1.1953343152999878
       ],
       "max": [
-        -0.04512347653508186,
-        0.8521066904067993,
+        -0.0251234732568264,
+        1.022106647491455,
         1.9880000352859497
       ]
     },
     "GARLAND_02": {
       "min": [
-        0.04503171518445015,
-        0.7008127570152283,
+        0.025031711906194687,
+        0.8707054853439331,
         1.191340446472168
       ],
       "max": [
-        1.1282442808151245,
-        0.8519123196601868,
+        1.0182442665100098,
+        1.0219122171401978,
         1.9880000352859497
       ]
     }

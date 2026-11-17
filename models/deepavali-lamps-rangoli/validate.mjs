@@ -37,6 +37,8 @@ const floorPoints = [new Set(), new Set(), new Set()];
 const key = v => v.toArray().map(n => Math.round(n * 1e6)).join(',');
 const floorBounds = new Box3();
 const floorSolidBounds = new Box3();
+const clayPoints = [];
+let groundedPerimeterVertices = 0;
 root.traverse(o => {
   if (!o.isMesh) return;
   const p = o.geometry.attributes.position, n = o.geometry.attributes.normal, ix = o.geometry.index;
@@ -55,7 +57,8 @@ root.traverse(o => {
     const k = key(v);
     if (!unique.has(k)) { unique.set(k, points.length); parents.push(points.length); points.push(v); }
     ids.push(unique.get(k));
-    if (v.y >= .012-1e-6 && v.y <= .020 + 1e-6 &&
+    if (mi === 0) clayPoints.push(v);
+    if (v.y >= -1e-6 && v.y <= .020 + 1e-6 &&
         Math.hypot(v.x, v.z) > 1.08 && Math.hypot(v.x, v.z) <= 1.2+1e-6) {
       floorSolidBounds.expandByPoint(v);
     }
@@ -79,7 +82,7 @@ root.traverse(o => {
   // but an editable lamp must not affect the mosaic symmetry measurement.
   for (let i = 0; i < points.length; i++) {
     const v = points[i], box = boxes.get(find(i));
-    if (Math.abs(v.y-.020) < 1e-6 && box.min.y >= .012-1e-6 && box.max.y <= .020+1e-6) {
+    if (Math.abs(v.y-.020) < 1e-6 && box.min.y >= -1e-6 && box.max.y <= .020+1e-6) {
       floorPoints[mi].add(key(new Vector3(v.x, .020, v.z)));
       floorBounds.expandByPoint(v);
     }
@@ -99,11 +102,48 @@ const flowers = components.MarigoldGold.filter(b => b.min.y > 1.2 && height(b) >
 assert.equal(bowls.length, 12);
 assert.equal(flames.length, 12);
 assert.equal(flowers.length, spec.features.marigold_heads);
-const squareFloor = components.RiceIvory.find(b => Math.abs(b.min.y) < 1e-6 && Math.abs(b.max.y-.012) < 1e-6);
+const squareFloor = components.Terracotta.find(b => Math.abs(b.min.y) < 1e-6 && Math.abs(b.max.y-.012) < 1e-6 &&
+  Math.abs(b.getSize(new Vector3()).x-2) < 1e-6);
 assert.ok(squareFloor, 'included square floor geometry');
 assert.ok(squareFloor.getSize(new Vector3()).distanceTo(new Vector3(2, .012, 2)) < 1e-6);
 const framePosts = components.Terracotta.filter(b => height(b) > 1.9);
 assert.equal(framePosts.length, 2, 'two ground-supported poles');
+// Every circular overhang reaches Y=0; the rest seats on the square at Y=.012.
+// This independently checks exported coordinates and would reject the R1 gap.
+const clayCoordinates = new Set(clayPoints.map(key));
+const perimeter = new Map(clayPoints.filter(v => Math.abs(v.y-.020) < 1e-6 &&
+  Math.abs(Math.hypot(v.x, v.z)-1.2) < 1e-6).map(v => [key(v), v]));
+assert.equal(perimeter.size, 120, 'unaltered circular top perimeter');
+for (const v of perimeter.values()) {
+  const overhang = Math.max(Math.abs(v.x), Math.abs(v.z)) > 1+1e-6;
+  const bottom = new Vector3(v.x, overhang ? 0 : .012, v.z);
+  assert.ok(clayCoordinates.has(key(bottom)), 'mosaic perimeter has continuous support to its bearing plane');
+  if (overhang) groundedPerimeterVertices++;
+}
+assert.ok(groundedPerimeterVertices > 80);
+const feet = components.Terracotta.filter(b => Math.abs(b.min.y-.012) < 1e-6 &&
+  Math.abs(b.max.y-.032) < 1e-6 && Math.abs(b.getSize(new Vector3()).x-.104) < 1e-6);
+assert.equal(feet.length, 2, 'two complete feet on the square rear corners');
+let footClearance = Infinity, floorEdgeClearance = Infinity;
+for (const foot of feet) {
+  const centre = foot.getCenter(new Vector3());
+  assert.ok(centre.z < -.9, 'feet at the rear');
+  assert.ok(framePosts.some(post => Math.hypot(post.getCenter(new Vector3()).x-centre.x,
+    post.getCenter(new Vector3()).z-centre.z) < 1e-6), 'posts centred on feet');
+  const outline = [...new Map(clayPoints.filter(p => foot.containsPoint(p) && Math.abs(p.y-.012) < 1e-6)
+    .map(p => [key(p), p])).values()].sort((a, b) =>
+    Math.atan2(a.z-centre.z, a.x-centre.x)-Math.atan2(b.z-centre.z, b.x-centre.x));
+  for (let i = 0; i < outline.length; i++) {
+    const v = outline[i], end = outline[(i+1)%outline.length];
+    const dx = end.x-v.x, dz = end.z-v.z;
+    const t = Math.max(0, Math.min(1, -(v.x*dx+v.z*dz)/(dx*dx+dz*dz)));
+    footClearance = Math.min(footClearance, Math.hypot(v.x+t*dx, v.z+t*dz)-1.2);
+    floorEdgeClearance = Math.min(floorEdgeClearance, 1-Math.abs(v.x), 1-Math.abs(v.z),
+      (1.96-Math.abs(v.x)-Math.abs(v.z))/Math.SQRT2);
+  }
+}
+assert.ok(footClearance > .06, 'feet clear the entire circular mosaic by at least 60 mm');
+assert.ok(floorEdgeClearance > .01, 'entire foot polygon lies inside the chamfered square floor');
 for (const flame of flames) {
   const size = flame.getSize(new Vector3());
   assert.ok(Math.max(size.x, size.z) >= .04 && height(flame) >= .089, 'readable flame silhouette');
@@ -148,8 +188,12 @@ const report = {
   features: { clay_diyas: bowls.length, flame_meshes: flames.length, hanging_garlands: garlandBounds.length,
     marigold_heads: flowers.length, included_square_floor_dimensions: squareFloor.getSize(new Vector3()).toArray(),
     support_posts: framePosts.length, lamp_group_dimensions: lampDimensions,
+    support_feet: feet.length, foot_to_rangoli_radial_clearance_m: footClearance,
+    foot_to_floor_edge_clearance_m: floorEdgeClearance,
+    ground_supported_overhang_perimeter_vertices: groundedPerimeterVertices,
     lamp_group_bounds: { min: lampBounds.min.toArray(), max: lampBounds.max.toArray() },
-    rangoli_diameter: floorBounds.getSize(new Vector3()).x, rangoli_thickness: floorSolidBounds.getSize(new Vector3()).y,
+    rangoli_diameter: floorBounds.getSize(new Vector3()).x, rangoli_surface_thickness: .020-squareFloor.max.y,
+    rangoli_thickness: floorSolidBounds.getSize(new Vector3()).y,
     rangoli_colours: floorPoints.length, rotational_symmetry_order: 12, garlands: garlandBounds },
   limits: 'Static flame meshes; no light emission, fire simulation, rigging certification, mobile or full-mall performance verification.'
 };

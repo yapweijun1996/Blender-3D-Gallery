@@ -14,6 +14,8 @@ SLUG = 'deepavali-lamps-rangoli'
 ROOT = 'ASSET_DeepavaliLampsRangoli'
 TAU = math.tau
 MATERIALS = []
+FRAME_X = .93
+FRAME_DEPTH = .93
 
 
 def material(name, rgb):
@@ -83,7 +85,9 @@ def tube(name, points, radius, parent, mat=0, sides=8):
 
 
 def mosaic(root):
-    # A single closed 8 mm plaque. Shared ring vertices form an exact tessellation:
+    # An 8 mm surface with a stepped underside: the overhanging circular caps
+    # extend down to ground, while the centre rests on the 12 mm square floor.
+    # Shared ring vertices form an exact tessellation:
     # no coplanar overlays, textures, decals, text, icons or hidden base planes.
     n = 120
     radius_functions = [
@@ -114,15 +118,64 @@ def mosaic(root):
             faces.append((1+j*n+k, 1+(j+1)*n+k, 1+(j+1)*n+q, 1+j*n+q))
             # Repeated 24 geometric chevrons in the outer saffron band.
             colors.append(2 if j == 7 and k % 5 in (2, 3) else color)
-    bottom = len(vertices)
-    vertices.extend((1.2*math.cos(TAU*k/n), 1.2*math.sin(TAU*k/n), 0) for k in range(n))
-    centre = len(vertices)
-    vertices.append((0, 0, 0))
     last = 1+(len(radius_functions)-1)*n
+    outline = [vertices[last+k][:2] for k in range(n)]
+
+    def clip(polygon, axis, sign, outside=False):
+        """Clip the actual 120-sided perimeter, preserving exact joint edges."""
+        result = []
+        for a, b in zip(polygon, polygon[1:]+polygon[:1]):
+            da, db = sign*a[axis]-1, sign*b[axis]-1
+            inside_a, inside_b = (da >= 0, db >= 0) if outside else (da <= 0, db <= 0)
+            if inside_a:
+                result.append(a)
+            if inside_a != inside_b:
+                t = da/(da-db)
+                result.append(tuple(a[i]+t*(b[i]-a[i]) for i in range(2)))
+        return result
+
+    bottom_indices = {}
+
+    def bottom_vertex(point, z):
+        key = tuple(round(v, 10) for v in (*point, z))
+        if key not in bottom_indices:
+            bottom_indices[key] = len(vertices)
+            vertices.append((*point, z))
+        return bottom_indices[key]
+
+    def bottom_height(point):
+        return -.012 if max(abs(v) for v in point) > 1 else 0
+
+    # Outer walls retain the unchanged twelve-fold top pattern. Crossings only
+    # subdivide the underside, so the square support never distorts the rosette.
     for k in range(n):
         q = (k+1) % n
-        faces.extend([(last+k, bottom+k, bottom+q, last+q), (centre, bottom+q, bottom+k)])
-        colors.extend([0, 0])
+        a, b = outline[k], outline[q]
+        za, zb = bottom_height(a), bottom_height(b)
+        chain = [bottom_vertex(a, za)]
+        if za != zb:
+            axis = max(range(2), key=lambda i: max(abs(a[i]), abs(b[i])))
+            edge = math.copysign(1, a[axis]+b[axis])
+            t = (edge-a[axis])/(b[axis]-a[axis])
+            crossing = tuple(a[i]+t*(b[i]-a[i]) for i in range(2))
+            chain.extend([bottom_vertex(crossing, za), bottom_vertex(crossing, zb)])
+        chain.append(bottom_vertex(b, zb))
+        faces.append((last+k, *chain, last+q))
+        colors.append(0)
+
+    core = outline
+    for axis, sign in [(0, 1), (0, -1), (1, 1), (1, -1)]:
+        cap = clip(outline, axis, sign, outside=True)
+        faces.append(tuple(bottom_vertex(p, -.012) for p in reversed(cap)))
+        colors.append(0)
+        for a, b in zip(cap, cap[1:]+cap[:1]):
+            if abs(sign*a[axis]-1) < 1e-9 and abs(sign*b[axis]-1) < 1e-9:
+                faces.append((bottom_vertex(a, 0), bottom_vertex(a, -.012),
+                              bottom_vertex(b, -.012), bottom_vertex(b, 0)))
+                colors.append(0)
+        core = clip(core, axis, sign)
+    faces.append(tuple(bottom_vertex(p, 0) for p in reversed(core)))
+    colors.append(0)
     o = mesh('RANGOLI_OriginalTwelvePetalMosaic', vertices, faces, root, indices=colors)
     o['pattern'] = 'Original concentric twelve-petal geometric rosette with 24 outer chevrons'
     o['diameter_m'] = 2.4
@@ -195,9 +248,9 @@ def flower(name, centre, phase, root, mat):
 
 def garland(root, index):
     group = empty('GARLAND_%02d' % (index+1), root)
-    x0 = -1.04 if index == 0 else .14
+    x0 = -FRAME_X if index == 0 else .12
     # Uniform arc-length distribution keeps the string densely covered.
-    samples = [Vector((x0+.90*t/200, .76+.025*math.sin(math.pi*t/200),
+    samples = [Vector((x0+(FRAME_X-.12)*t/200, FRAME_DEPTH+.025*math.sin(math.pi*t/200),
                        1.86-.57*math.sin(math.pi*t/200))) for t in range(201)]
     lengths = [0]
     for a, b in zip(samples, samples[1:]):
@@ -224,18 +277,21 @@ def garland(root, index):
 
 
 def floor_and_frame(root):
-    corners = [(-1, -1), (1, -1), (1, 1), (-1, 1)]
+    # Chamfered clay corners blend into the clay circular skirt. The full
+    # 2 x 2 m floor remains, with no overlap between it and the stepped mosaic.
+    corners = [(-.96, -1), (.96, -1), (1, -.96), (1, .96),
+               (.96, 1), (-.96, 1), (-1, .96), (-1, -.96)]
     floor = loft('FLOOR_TwoMetreSquare',
-                 [[(x, y, z) for x, y in corners] for z in (0, .012)], root, 2, False)
+                 [[(x, y, z) for x, y in corners] for z in (0, .012)], root, 0, False)
     floor['interface'] = 'Included 2 x 2 m floor; underside at ground Y=0 in glTF'
     frame = empty('FRAME_GarlandSupport', root)
-    for j, x in enumerate([-.94, .94]):
+    for j, x in enumerate([-FRAME_X, FRAME_X]):
         # Feet sit on the square floor; the poles carry the shared crossbar.
         loft('FRAME_Foot_%02d' % j,
-             [[(x+.052*math.cos(TAU*k/12), .76+.052*math.sin(TAU*k/12), z)
+             [[(x+.052*math.cos(TAU*k/12), FRAME_DEPTH+.052*math.sin(TAU*k/12), z)
                for k in range(12)] for z in (.012, .032)], frame, 0)
-        tube('FRAME_Post_%02d' % j, [(x, .76, .032), (x, .76, 1.96)], .016, frame, 0)
-    tube('FRAME_Crossbar', [(-1.085, .76, 1.96), (1.085, .76, 1.96)], .017, frame, 0)
+        tube('FRAME_Post_%02d' % j, [(x, FRAME_DEPTH, .032), (x, FRAME_DEPTH, 1.96)], .016, frame, 0)
+    tube('FRAME_Crossbar', [(-1.00, FRAME_DEPTH, 1.96), (1.00, FRAME_DEPTH, 1.96)], .017, frame, 0)
 
 
 def build():
@@ -346,6 +402,7 @@ def render_views():
         ('side', (5, -.1, 2.8), (0, 0, .75)),
         ('3q', (-3.5, -4, 3.5), (0, 0, .7)),
         ('top', (0, 0, 6), (0, 0, 0)),
+        ('low', (3.4, -4.5, .48), (0, 0, .45)),
         ('lamps', (0, -2.4, 4.8), (0, 0, .07))]:
         s.camera.location = location
         aim(s.camera, target)
