@@ -111,6 +111,82 @@ def bake_gait(name, steps, running=False):
     return action
 
 
+
+def bake_foot_contacts(action, steps, stance_fraction, stride, lift):
+    """Bake level foot contacts; forward runtime motion cancels the stance trajectory."""
+    rig.animation_data.action = action
+    targets = {}
+    poles = []
+    target_actions = []
+    for side in ('Left', 'Right'):
+        foot = rig.data.bones['mixamorig:' + side + 'Foot']
+        rest = rig.matrix_world @ foot.head_local
+        target = bpy.data.objects.new('FootTarget_' + side, None)
+        bpy.context.collection.objects.link(target)
+        target.rotation_mode = 'QUATERNION'
+        target.rotation_quaternion = rig.matrix_world.to_quaternion() @ foot.matrix_local.to_quaternion()
+        targets[side] = (target, rest)
+        constraint = rig.pose.bones['mixamorig:' + side + 'Leg'].constraints.new('IK')
+        constraint.target = target
+        constraint.chain_count = 2
+        pole = bpy.data.objects.new('KneePole_' + side, None)
+        bpy.context.collection.objects.link(pole)
+        pole.location = (rest.x, rest.y - 1, .18)
+        constraint.pole_target = pole
+        constraint.pole_angle = 0
+        poles.append(pole)
+        constraint = rig.pose.bones[foot.name].constraints.new('COPY_ROTATION')
+        constraint.target = target
+        constraint.target_space = 'WORLD'
+        constraint.owner_space = 'WORLD'
+
+    for frame in range(1, steps + 2):
+        scene.frame_set(frame)
+        phase = (frame - 1) / steps
+        hip = rig.pose.bones['mixamorig:Hips']
+        hip.location = hip.bone.matrix_local.to_quaternion().inverted() @ Vector((0, 0, -.025))
+        hip.keyframe_insert(data_path='location', frame=frame, group=hip.name)
+        for side, offset in (('Left', 0), ('Right', .5)):
+            for suffix in ('ToeBase', 'Toe_End'):
+                toe = rig.pose.bones['mixamorig:' + side + suffix]
+                toe.matrix_basis.identity()
+                toe.rotation_mode = 'QUATERNION'
+                toe.keyframe_insert(data_path='rotation_quaternion', frame=frame, group=toe.name)
+            target, rest = targets[side]
+            position = (phase + offset) % 1
+            if position < stance_fraction:
+                forward = -stride / 2 + stride * position / stance_fraction
+                height = 0
+            else:
+                swing = (position - stance_fraction) / (1 - stance_fraction)
+                forward = stride / 2 - stride * swing
+                height = lift * math.sin(math.pi * swing)
+            target.location = (rest.x, rest.y + forward, rest.z + height)
+            target.keyframe_insert(data_path='location', frame=frame)
+
+    bpy.ops.object.select_all(action='DESELECT')
+    rig.select_set(True)
+    bpy.context.view_layer.objects.active = rig
+    for bone in rig.pose.bones:
+        bone.select = False
+    for side in ('Left', 'Right'):
+        for suffix in ('UpLeg', 'Leg', 'Foot'):
+            rig.pose.bones['mixamorig:' + side + suffix].select = True
+    bpy.ops.object.mode_set(mode='POSE')
+    bpy.ops.nla.bake(frame_start=1, frame_end=steps + 1, only_selected=True,
+                     visual_keying=True, clear_constraints=True,
+                     use_current_action=True, bake_types={'POSE'})
+    bpy.ops.object.mode_set(mode='OBJECT')
+    for target, _ in targets.values():
+        target_actions.append(target.animation_data.action)
+        bpy.data.objects.remove(target, do_unlink=True)
+    for pole in poles:
+        bpy.data.objects.remove(pole, do_unlink=True)
+    for target_action in target_actions:
+        if target_action and target_action.users == 0:
+            bpy.data.actions.remove(target_action)
+
+
 def set_hip_height(height):
     bone = rig.pose.bones['mixamorig:Hips']
     bone.location = bone.bone.matrix_local.to_quaternion().inverted() @ Vector((0, 0, height))
@@ -138,6 +214,8 @@ def sit_pose(frame):
 
 walk = bake_gait('Walk_InPlace', 29)
 run = bake_gait('Run_InPlace', 20, running=True)
+bake_foot_contacts(walk, 29, .60, .09, .035)
+bake_foot_contacts(run, 20, .45, .105, .045)
 idle = key_action('Idle', [1, 13, 25, 37, 49], idle_pose)
 wave = key_action('Wave', [1, 13, 25, 37, 49, 61, 73], wave_pose)
 jump = key_action('Jump', [1, 7, 13, 19, 25, 31, 37], jump_pose)
@@ -182,5 +260,5 @@ bpy.ops.object.select_all(action='DESELECT')
 rig.select_set(True)
 mesh.select_set(True)
 bpy.context.view_layer.objects.active = rig
-bpy.ops.export_scene.gltf(filepath=os.path.join(out, 'character-motion.glb'), export_format='GLB', use_selection=True, export_animations=True, export_animation_mode='ACTIONS')
+bpy.ops.export_scene.gltf(filepath=os.path.join(out, 'character-motion.glb'), export_format='GLB', use_selection=True, export_animations=True, export_animation_mode='ACTIONS', export_anim_slide_to_zero=True)
 print('Actions:', [(a.name, tuple(a.frame_range)) for a in bpy.data.actions])

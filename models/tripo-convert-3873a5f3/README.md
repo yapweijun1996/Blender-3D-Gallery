@@ -21,28 +21,36 @@ The source's creator, generation inputs, and redistribution license were not pro
 The user supplied `tripo_convert_69ed1771-0c9f-43d9-9f4f-f2101d92cb75.zip` (SHA-256 `6ece61b93f2fd8d947beaaf37c23b15398aeb778f478b103ac7e50b893eee962`). Its texture matches the first archive byte-for-byte; its FBX contains the same character and a 120-frame forward-walking action. Both source ZIP archives are retained unchanged. Tripo CLI could not locate the original task in the active account, so the existing skin was retained and the additional actions were authored locally in Blender.
 
 - `character-motion.blend`: editable Blender 5.1.2 scene with packed texture and six Actions.
-- `character-motion.glb`: skinned glTF export, 3,050,456 bytes, 10,458 triangles, one 4096×4096 JPEG texture and 65 joints.
+- `character-motion.glb`: skinned glTF export, 3,045,236 bytes, 10,458 triangles, one 4096×4096 JPEG texture and 65 joints.
 - `create_motion.py`: reproducible import, actions, floor adjustment and export procedure.
 - `review/`: representative renders from the final GLB.
 
 | Clip | Duration | Behavior |
 | --- | ---: | --- |
-| `Idle` | 2.04 s | Gentle head and torso sway. |
-| `Walk_InPlace` | 1.25 s | In-place walk sampled from frames 11–40 of the supplied walk. |
-| `Run_InPlace` | 0.88 s | Stylized jog based on the walk with increased leg movement and suspension. |
-| `Jump` | 1.54 s | Crouch, jump, and return to standing. |
-| `Sit` | 3.04 s | Lower into a seated pose, hold, and return to standing; not aligned to a specific chair. |
-| `Wave` | 3.04 s | Wave and return to standing. |
+| `Idle` | 2.00 s | Gentle head and torso sway. |
+| `Walk_InPlace` | 1.21 s | In-place walk sampled from frames 11–40 of the supplied walk. |
+| `Run_InPlace` | 0.83 s | Stylized jog based on the walk with increased leg movement and suspension. |
+| `Jump` | 1.50 s | Crouch, jump, and return to standing. |
+| `Sit` | 3.00 s | Lower into a seated pose, hold, and return to standing; not aligned to a specific chair. |
+| `Wave` | 3.00 s | Wave and return to standing. |
 
-The walk and run remove horizontal root displacement; the application must provide locomotion. Head and neck rotations in those two clips use neutral rest orientation to correct the source walk's pronounced upward tilt. A short blend closes the gait loop, and the character's vertical position is adjusted using sampled mesh bounds. All six clips have matching first and last sampled poses, but transitions between different clips should be blended.
+The walk and run are in-place clips with level, IK-baked feet during stance; the application must move the character forward at **0.12414 m/s for walk** or **0.28 m/s for run** at the original scale and 1× playback speed. Scale both speeds with playback rate and model scale. These speeds cancel the feet's backward stance motion on a level floor. At zero movement speed, in-place playback necessarily shows backward foot travel during contact. Head and neck rotations retain the neutral rest orientation. Clip samples start at time zero, avoiding an extra held frame at the loop boundary; all six clips have matching sampled endpoints. Blend between different clips.
 
-This remains a draft: gait contact and sliding are not physically solved, the jog is stylized, and sitting requires a suitable seat. On exported whole-frame samples, maximum ground penetration was about 6.1 mm for Jump and 4.7 mm for Sit; other clips had no measurable penetration at that sampling precision. Subframes, arbitrary scenes, mobile playback, and all possible camera angles have not been verified. There are no facial expression morph targets.
+This remains a draft: run is a stylized jog, chair contact is not solved, and transitions, uneven terrain, arbitrary speeds, mobile playback, and all camera angles have not been verified. The face has no expression morph targets. The final whole-frame Blender samples showed no measurable ground penetration for the six clips; this does not establish contact for every subframe or other scene.
 
 To reproduce, extract the animated ZIP preserving its `.fbm` folder and run from this directory:
 
 ```sh
 blender -b -t 4 --python create_motion.py -- /path/to/tripo_convert_69ed1771-0c9f-43d9-9f4f-f2101d92cb75.fbx
 node validate-motion.mjs
+blender -b -t 4 --python-exit-code 1 --python audit_gait.py
+blender -b -t 4 --python-exit-code 1 --python audit_chair.py
 ```
 
-The Khronos glTF Validator reported zero errors and zero warnings for the exported GLB. Desktop Chromium with Three.js loaded the actual export; every clip changed sampled skinned vertex positions, the first and last sampled poses matched, and Walk_InPlace and Run_InPlace had no horizontal hip displacement. Blender renders were inspected at representative poses, and deformed mesh minimum heights were measured at whole frames. These checks do not prove smooth transitions, complete foot contact, or production-quality deformation. GLB SHA-256: `6ad6f239a0f79a4be486d58febf278868e82399dc3144151b4b4f6b6a39862ed`; Blender SHA-256: `6b7073523af5d37df4aa73a3eb1e216696ab598537153c3f91859024b8b5bbf3`.
+The Khronos glTF Validator reports zero errors and warnings. Desktop Chromium/Three.js loaded the actual GLB, played all six clips, and confirmed endpoint equality and zero horizontal hip motion in the in-place gaits. The gait audit measures weighted sole vertices at half-frame intervals for two loops, applying the stated forward controller speeds. Maximum stance drift is 2.35 mm for walk and 2.80 mm for run; sampled stance soles remain between -0.16 mm and +0.49 mm of ground. The same audit rejects the previous GLB, whose maximum drift under the same test was 128 mm for walk and 125 mm for run. This is sampled evidence, not a guarantee for arbitrary playback or surfaces.
+
+### Chair fit check
+
+The selected comparator is the repository's `plastic-dining-chair/exports/optimized.glb` (SHA-256 `645efe38638896bf2fbcd3dce6342dbc8287cdf30a788e9ae198d0db82a2999e`). Its unscaled seat is approximately 0.4675 m above the ground, too high for this approximately 1 m stylized character's current sit. For the documented test it is uniformly scaled to 0.35 and placed at Blender `(0.01, 0.08, 0)` m; its seat top is 0.163625 m. At the seated hold, the nearest sampled hip/thigh-weighted vertex above the seat is about 7.2 mm away. Triangle intersection checks find no seat intersections but 73 overlap pairs against the two back posts. Therefore the current sit does **not** pass a chair-fit check; the pose, chair and/or backpack needs further adjustment. This is one pose and one test placement, not a full collision or ergonomic assessment. See `review/chair-side.png` and `review/chair-quarter.png`; `audit_chair.py` reproduces the geometric check without modifying the chair asset.
+
+GLB SHA-256: `74ba5bb62a5c275fd390871f6294594d5dd26ea7e5ac0a808235eeb936ef7f6d`; Blender SHA-256: `f1946c6088c47faf2289b72216e4fb33ae574fa3f9c26bdb0f02dd54d31a164c`.
