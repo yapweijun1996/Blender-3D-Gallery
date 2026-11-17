@@ -1,0 +1,75 @@
+{
+  "result": "PASS",
+  "glb_sha256": "22fc8bee8fe4e2d368a17274aa9160c8ccc93d83b40ee65c0ce117ababa0ede7",
+  "commands": [
+    {
+      "command": "Blender 5.2.3 headless generate.py",
+      "result": "PASS",
+      "log": "restaurant-food-props-rebuild-final.log"
+    },
+    {
+      "command": "Blender generate.py -- --export-source",
+      "result": "PASS",
+      "log": "restaurant-food-props-render-final.log",
+      "views_inspected": [
+        "hero",
+        "front",
+        "side",
+        "3q"
+      ]
+    },
+    {
+      "command": "node models/restaurant-food-props/validate.mjs",
+      "result": "PASS",
+      "khronos_errors": 0,
+      "khronos_warnings": 0
+    },
+    {
+      "command": "Blender inspect_sources.py; node validate.mjs reports/source-edit/edited.glb",
+      "result": "PASS",
+      "source_meshes": 11
+    },
+    {
+      "command": "Isolated generator-only rebuild",
+      "result": "PASS",
+      "identical_glb_bytes": true
+    },
+    {
+      "command": "npm run validate:assets",
+      "result": "PASS",
+      "log": "restaurant-food-props-assets.log",
+      "final_asset_rechecked_by": "npm run build (invokes validate:assets)"
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "passed": 737,
+      "failed": 0,
+      "skipped": 0,
+      "log": "restaurant-food-props-tests-final.log"
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "log": "restaurant-food-props-build-final.log",
+      "warning": "Existing large-chunk build warning retained"
+    },
+    {
+      "command": "node models/restaurant-food-props/browser-check.mjs",
+      "result": "PASS",
+      "viewport": [
+        1440,
+        900
+      ],
+      "console_errors": 0,
+      "warning": "Service Worker blocked intentionally; SwiftShader ReadPixels performance warnings recorded"
+    }
+  ],
+  "log_directory": "/Users/admin/Documents/MallQueue/reports",
+  "not_verified": [
+    "Restaurant mini-game logic and full mall integration",
+    "Whole-mall draw-call budget and physical-device frame rate",
+    "Physical Android/iOS, WebKit, deployment and manager art sign-off"
+  ],
+  "generated_test_artifact_restored": "models/demo-beverage-can/reports/structure-motion.json via git checkout"
+}

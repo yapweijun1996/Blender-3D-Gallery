@@ -1,0 +1,143 @@
+{
+  "id": "shelf-food-aisle",
+  "name": "Food Aisle Gondola Shelf",
+  "summary": "Five-level double-sided supermarket gondola with plain boxes, cans and bags.",
+  "description": "Original compact food-aisle fixture with ten shelf decks, blank price rails and two blank end signs. Unlabelled cartons, rolled-seam cans and sealed pillow bags in muted solid colours; no text, logos or real product packaging.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "supermarket",
+    "food-aisle",
+    "gondola",
+    "double-sided",
+    "five-level",
+    "price-rails",
+    "blank-end-sign",
+    "boxes",
+    "cans",
+    "bags",
+    "unlabelled",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres",
+    "P2"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry and three shared vertex-colour materials; no external models, images, textures, fonts or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/shelf-food-aisle.blend",
+    "preview": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor centre of plinth footprint",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.3,
+    "previewCameraDirection": [
+      1.6,
+      0.85,
+      3
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 0.9,
+      "directionalIntensity": 1.35,
+      "directionalPosition": [
+        -3,
+        5,
+        4
+      ]
+    }
+  },
+  "accuracy_notes": "Static illustrative retail asset. No stocking, purchase or other operational interaction; no readable text or brand marks. Full 17-shop mall integration, physical Android/iOS, WebKit, sustained performance and load certification have not been verified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, vertex colours and shared materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 20000,
+      "bytes": 1572864,
+      "materials": 3,
+      "mesh_primitives": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/duplicate-search.json",
+      "reports/reproducibility.json",
+      "reports/visual-review.json",
+      "reports/browser.json",
+      "reports/acceptance.json"
+    ],
+    "geometry": "PASS",
+    "source_editability": "PASS",
+    "reproducibility": "PASS",
+    "visual_review": "PASS",
+    "chromium": "PASS"
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "width, height, depth (glTF X,Y,Z)",
+    "size": [
+      1.2000000476837158,
+      1.8000000715255737,
+      0.5
+    ],
+    "bounds": {
+      "min": [
+        -0.6000000238418579,
+        0,
+        -0.25
+      ],
+      "max": [
+        0.6000000238418579,
+        1.8000000715255737,
+        0.25
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 1022748,
+    "triangles": 16320,
+    "vertices": 25600,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "sha256": "362328303a1236cbedd093c376ce4665d6d63131e7673a8a3c47e1349d2f1ed4",
+    "item_count": 70,
+    "item_counts": {
+      "box": 30,
+      "can": 20,
+      "bag": 20
+    },
+    "levels_per_side": 5,
+    "shelf_decks": 10,
+    "blank_price_rails": 10,
+    "blank_end_signs": 2,
+    "editable_mesh_parts": 320
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "id": "shelf-electronics-display",
+  "name": "Electronics Store Display Shelf",
+  "summary": "Brand-neutral three-tier glass-front electronics display cabinet.",
+  "description": "Original wall-style display with six plain device cartons, a tablet on a stand, a cylindrical speaker, three cables on J hooks and a blank header. No text, brands or external assets.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "electronics",
+    "display-shelf",
+    "wall-style",
+    "glass-front",
+    "boxed-devices",
+    "tablet",
+    "speaker",
+    "cables",
+    "hooks",
+    "blank-header",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres",
+    "medium-priority"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry; three shared materials and plain vertex colors; no external assets, fonts, textures, brands or real packaging.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/shelf-electronics-display.blend",
+    "preview": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Floor centre",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "previewCameraDirection": [
+      1.4,
+      0.55,
+      3
+    ]
+  },
+  "accuracy_notes": "Static visual fixture with inexpensive alpha-blended glazing; doors, tablet and speaker have no operational behavior. No electrical, installation or safety certification. Three delivery primitives are tested per asset; the complete 17-shop mall draw-call budget and frame rate are unverified. Physical Android/iOS and WebKit NOT TESTED.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 19999,
+      "bytes": 1572863,
+      "materials": 3,
+      "mesh_primitives": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/duplicate-search.json",
+      "reports/browser.json",
+      "reports/reproducibility.json",
+      "reports/checks.json"
+    ],
+    "local": "PASS",
+    "geometry": "PASS",
+    "source_editability": "PASS",
+    "deterministic_rebuild": "PASS",
+    "chromium": "PASS",
+    "visual_review": "PASS; hero, front, side and 3q PNGs inspected"
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "glTF X,Y,Z (width,height,depth)",
+    "size": [
+      1.2000000476837158,
+      1.7999999523162842,
+      0.45000001788139343
+    ],
+    "bounds": {
+      "min": [
+        -0.6000000238418579,
+        0,
+        -0.22500000894069672
+      ],
+      "max": [
+        0.6000000238418579,
+        1.7999999523162842,
+        0.22500000894069672
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 583972,
+    "triangles": 19072,
+    "vertices": 16817,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "sha256": "6d720dc07754c66730092126b4b78d32f728731cc959ebffb934d9e372fc53f0"
+  },
+  "content": {
+    "glass_front_panes": 6,
+    "shelf_decks": 4,
+    "boxed_devices": 6,
+    "cable_coils": 3,
+    "j_hooks": 3,
+    "tablets": 1,
+    "cylindrical_speakers": 1,
+    "blank_header_panels": 1,
+    "source_mesh_parts": 110,
+    "source_materials": 3,
+    "source_text_objects": 0
+  }
+}
