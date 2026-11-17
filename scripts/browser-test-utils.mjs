@@ -62,6 +62,11 @@ export const launchOptions = {
   headless: true,
   args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
 };
+export async function openModelFilters(page) {
+  const toggle = page.getByRole("button", { name: /^Filters/ });
+  if (await toggle.getAttribute("aria-expanded") === "false") await toggle.click();
+}
+
 export async function gameReady(page, url) {
   await page.goto(url + "?page=game");
   await page.waitForFunction(

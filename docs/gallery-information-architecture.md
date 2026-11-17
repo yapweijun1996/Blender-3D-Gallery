@@ -8,6 +8,8 @@ The primary navigation is **3D Models**, **Interactive Demos**, **About**, **Git
 
 The original dark editorial identity is preserved: near-black background, warm text, muted green, Georgia display headings, original brand, compact labels and thin dividers. Search, filters and the mobile menu reuse that visual language.
 
+On the landing page, the featured model uses its registered poster and opens the same viewer as a library card. Search stays visible beside a Filters button. The button expands category, type, collection and feature selectors and shows how many are active when closed. Category shortcuts and the result count remain available as visitors filter. Typing on the landing page keeps the header and search field in place. The dedicated model index opens directly at the library.
+
 ## Static-host route compatibility
 
 All URLs below are relative to `/Blender-3D-Gallery/`. Query routes work on GitHub Pages without server rewrites. Independent model detail uses the existing shareable query-addressed dialog; it is not a new physical HTML file.
@@ -16,7 +18,7 @@ All URLs below are relative to `/Blender-3D-Gallery/`. Query routes work on GitH
 | --- | --- | --- |
 | `./` | Models landing and library | Existing root retained |
 | `?page=gallery` | Models landing | Existing route alias retained |
-| `?page=models` | Models landing and library | New canonical model index route |
+| `?page=models` | Focused model library with search and filters | Canonical model index route |
 | `?page=about` | Dedicated About page | New canonical About route; old fragment remains valid |
 | `#collection` | Model library section | Existing fragment retained |
 | `#about` | About section | Existing fragment retained |
@@ -25,7 +27,7 @@ All URLs below are relative to `/Blender-3D-Gallery/`. Query routes work on GitH
 | `?page=game` | Existing casual eight-ball | Existing launch, refresh, save and PWA links retained |
 | `?page=solar` | Existing Solar System | Existing launch and direct links retained |
 
-The runtime uses query navigation with history entries. Back/forward must restore the selected page and model view. Search and filter ownership belongs to each static index, independently of the active 3D renderer. Model filters use `q`, `category` and `collection`; Demo filters use `dq` and `dc`. URL parameters preserve each index state across viewers, navigation and refresh. Leaving a demo aborts pending loading and disposes its renderer through the existing lifecycle interface. The Game's existing leave/save confirmation remains authoritative; a navigation control cannot bypass it.
+The runtime uses query navigation with history entries. Back/forward must restore the selected page and model view. Search and filter ownership belongs to each static index, independently of the active 3D renderer. Model filters use `q`, `theme`, `category`, `collection` and `feature`. Demo filters use `dq` and `dc`. URL parameters preserve each index state across viewers, navigation and refresh. Leaving a demo aborts pending loading and disposes its renderer through the existing lifecycle interface. The Game's existing leave/save confirmation remains authoritative; a navigation control cannot bypass it.
 
 ## Registry contract
 

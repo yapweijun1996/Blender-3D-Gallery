@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from 'playwright';
-import { serveBuild, launchOptions } from './browser-test-utils.mjs';
+import { serveBuild, launchOptions, openModelFilters } from './browser-test-utils.mjs';
 
 const catalog = JSON.parse(await fs.readFile(new URL('../models/catalog.json', import.meta.url), 'utf8'));
 const demoCatalog = JSON.parse(await fs.readFile(new URL('../data/demos.json', import.meta.url), 'utf8'));
@@ -63,6 +63,12 @@ try {
       await page.goto(server.url);
       assert.equal(await page.locator('#catalog .asset-card').count(),expectedAssetCount);
       await noOverflow(page);
+      const featured = page.getByRole('link', {name:/view featured model.*proton saga/i});
+      assert.equal(await featured.getAttribute('href'), '?model=proton-saga-1985');
+      await featured.locator('img').evaluate(image => image.decode());
+      const frameFit = await page.locator('#catalog .asset-image').first().evaluate(frame =>
+        Math.abs(frame.clientHeight - frame.querySelector('img').clientHeight));
+      assert.ok(frameFit <= 1, `The poster must fit its frame at ${width}px (${frameFit}px difference)`);
       await page.screenshot({path:path.join(artifacts,`models-${width}.png`)});
       await page.goto(server.url+'?page=demos');
       await page.getByRole('heading',{name:/^Interactive Demos/}).waitFor();
@@ -77,11 +83,19 @@ try {
   });
   await run('model search, combined filters, empty state and clear preserve URL state', async page => {
     await page.goto(server.url);
-    await page.locator('#model-search').fill('  eArTh  ');
-    assert.equal(await page.locator('#catalog .asset-card').count(),2);
+    const search = page.getByRole('searchbox', {name:'Search models'});
+    await search.focus();
+    const searchTop = await search.evaluate(input => input.getBoundingClientRect().top);
+    await search.fill('  eArTh  ');
+    assert.ok(Math.abs((await search.boundingBox()).y - searchTop) < 2, 'Typing keeps the search field in place');
+    assert.ok(await search.evaluate(input => document.activeElement === input));
+    assert.equal(new URL(page.url()).searchParams.get('page'), 'gallery');
+    assert.equal(await page.locator('#gallery-page .intro').isVisible(),true);
     assert.ok(await page.locator('[data-asset-id=solar-earth]').count());
     assert.ok(await page.locator('[data-asset-id=nasa-earth]').count());
+    await openModelFilters(page);
     await page.locator('#model-category').selectOption('Planets');
+    assert.deepEqual(await page.locator('#catalog .asset-image').evaluateAll(links => links.map(link => link.dataset.assetId).sort()), ['nasa-earth', 'solar-earth']);
     await page.locator('#model-collection').selectOption('billiards');
     assert.equal(await page.locator('#catalog .asset-card').count(),0);
     await page.getByRole('button',{name:/clear filters/i}).first().click();
@@ -108,11 +122,13 @@ try {
     assert.equal(await mall.count(), 1);
     for (const id of ['mall-event-booth', 'mall-glass-railing-post', 'mall-water-dispenser', 'shopping-cart'])
       assert.ok(await mall.locator(`[data-asset-id="${id}"]`).count(), id);
+    await openModelFilters(page);
     await page.locator('#model-theme').selectOption('Shopping Mall');
     assert.equal(new URL(page.url()).searchParams.get('theme'), 'Shopping Mall');
     assert.equal(await page.locator('#catalog section').count(), 1);
     await page.reload();
     assert.equal(await page.locator('#model-theme').inputValue(), 'Shopping Mall');
+    await openModelFilters(page);
     await page.locator('#model-collection').selectOption('mall-event-booth');
     assert.equal(await page.locator('#catalog .asset-card').count(), 1);
     await page.locator('[data-asset-id="mall-event-booth"]').first().click();
@@ -126,7 +142,47 @@ try {
     assert.ok(await page.locator('[data-asset-id="mall-event-booth"]').count());
     assert.equal(await page.locator('#model-category').inputValue(), 'Furniture');
     assert.ok(await page.locator('#catalog .asset-card').count() < expectedAssetCount);
+    await page.getByRole('button', {name:'Clear filters', exact:true}).click();
+    await page.waitForFunction(() => !new URL(location.href).searchParams.has('category'));
+    assert.equal(new URL(page.url()).searchParams.get('page'), 'models');
+    assert.ok(await page.getByRole('heading', {name:'Model library', level:1}).isVisible());
+    assert.equal(await page.locator('#gallery-page .intro').isVisible(), false);
   });
+  await run('mobile library keeps advanced filters accessible and category links shareable', async page => {
+    await page.goto(server.url);
+    await page.getByRole('link', {name:'Browse models', exact:true}).focus();
+    await page.keyboard.press('Enter');
+    const heading = page.getByRole('heading', {level:1, name:'Model library'});
+    assert.ok(await heading.evaluate(title => document.activeElement === title), 'Browse models focuses its new page heading');
+    await page.goto(server.url+'?page=models');
+    assert.ok(await heading.isVisible());
+    const group = page.locator('#catalog section').first();
+    assert.ok(await group.getByRole('heading', {level:2}).isVisible());
+    assert.ok(await group.getByRole('heading', {level:3}).first().isVisible());
+    const toggle = page.getByRole('button', {name:/^Filters/});
+    assert.equal(await toggle.getAttribute('aria-expanded'), 'false');
+    assert.ok(await page.locator('#model-feature').isHidden());
+    await toggle.focus();
+    await page.keyboard.press('Enter');
+    const feature = page.getByRole('combobox', {name:'Feature', exact:true});
+    await feature.selectOption('animated');
+    await toggle.click();
+    assert.equal(await toggle.getAttribute('aria-expanded'), 'false');
+    assert.equal(await feature.isVisible(), false);
+    assert.match(await toggle.innerText(), /1/);
+    const categories = page.getByRole('navigation', {name:'Model categories'});
+    await categories.getByRole('link', {name:'Nature',exact:true}).click();
+    const url = new URL(page.url());
+    assert.equal(url.searchParams.get('feature'), 'animated');
+    assert.equal(url.searchParams.get('theme'), 'Nature');
+    assert.equal(await categories.getByRole('link', {name:'Nature',exact:true}).getAttribute('aria-current'), 'true');
+    await page.getByRole('button', {name:'Clear filters', exact:true}).click();
+    await page.waitForFunction(() => !location.search.includes('theme=') && !location.search.includes('feature='));
+    assert.ok(await page.getByRole('searchbox', {name:'Search models'}).evaluate(input => document.activeElement === input));
+    assert.equal(await page.locator('#catalog .asset-card').count(), expectedAssetCount);
+    assert.equal(await categories.getByRole('link', {name:'All categories'}).getAttribute('aria-current'), 'true');
+    await noOverflow(page);
+  }, {viewport:{width:390,height:844}, hasTouch:true});
   await run('demo search/category combine and clear', async page => {
     await page.goto(server.url+'?page=demos');
     await page.locator('#demo-search').fill('  sOlAr   sYstEm ');
@@ -142,6 +198,18 @@ try {
     await page.reload();
     assert.equal(await page.locator('.demo-card').count(),1);
   });
+  await run('mobile footer source link and back-to-top remain reachable', async page => {
+    for (const index of ['models', 'demos']) {
+      await page.goto(server.url + '?page=' + index);
+      const source = page.locator('.footer a');
+      await source.scrollIntoViewIfNeeded();
+      await page.locator('#scroll-to-top').waitFor({state:'visible'});
+      // Trial taps perform the real hit test without following the external link.
+      await source.tap({trial:true, timeout:5000});
+      await page.getByRole('button', {name:/back to top/i}).tap();
+      await page.waitForFunction(() => scrollY === 0 && document.activeElement?.tagName === 'H1');
+    }
+  }, {viewport:{width:390,height:844}, hasTouch:true, reducedMotion:'reduce'});
   await run('legacy model detail direct link, refresh, metadata, related and history', async page => {
     await page.goto(server.url+'?model=pool-table');
     await viewerReady(page);

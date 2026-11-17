@@ -1,3 +1,7 @@
+export function getPageHeading(main) {
+  return [...main.querySelectorAll("h1")].find(heading => !heading.closest("[hidden]"));
+}
+
 export function setupScrollToTop(getPage) {
   const button = document.createElement("button");
   button.id = "scroll-to-top";
@@ -5,7 +9,7 @@ export function setupScrollToTop(getPage) {
   button.type = "button";
   button.textContent = "↑ Back to top";
   button.hidden = true;
-  document.body.append(button);
+  document.querySelector(".footer").before(button);
   let queued = false;
   const update = () => {
     queued = false;
@@ -47,7 +51,7 @@ export function setupScrollToTop(getPage) {
         ? "instant"
         : "smooth",
     });
-    const heading = document.querySelector("main:not([hidden]) h1");
+    const heading = getPageHeading(document.querySelector("main:not([hidden])"));
     heading?.setAttribute("tabindex", "-1");
     heading?.focus({ preventScroll: true });
   });

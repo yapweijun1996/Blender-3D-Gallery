@@ -79,111 +79,81 @@
     <p id="route-notice" class="shell route-notice" role="status" hidden></p>
     <main id="gallery-page" class="shell">
       <section class="intro" aria-labelledby="intro-title">
-        <div>
-          <p class="eyebrow">
-            <span class="dot"></span> A COLLECTION IN THE MAKING
-          </p>
-          <h1 id="intro-title">Objects worth<br /><em>looking closer.</em></h1>
-        </div>
         <div class="intro-discovery">
+          <h1 id="intro-title">Objects worth<br /><em>a closer look.</em></h1>
           <p class="intro-copy">
-            Original 3D works, made in Blender and ready to explore from every
-            angle.
+            Explore original Blender models from every angle, or try them
+            in an interactive demo.
           </p>
           <div class="explore-links">
             <a
               class="outline-button"
               href="?page=models#collection"
               data-page="gallery"
-              >Explore 3D Models ↘</a
+              >Browse models <span aria-hidden="true">↓</span></a
             ><a class="text-link" href="?page=demos" data-page="demos"
-              >Explore Interactive Demos ↗</a
+              >Interactive demos <span aria-hidden="true">↗</span></a
             >
           </div>
         </div>
+        <a id="featured-model" class="hero-model" hidden>
+          <span class="hero-frame"></span>
+          <span class="hero-caption">
+            <span><small>Featured model</small><strong></strong></span>
+            <span class="hero-view" aria-hidden="true">View in 3D ↗</span>
+          </span>
+        </a>
       </section>
-      <section
-        id="collection"
-        class="collection"
-        aria-labelledby="collection-title"
-      >
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">
-              THE COLLECTION <span class="faint">/ 001</span>
-            </p>
-            <h2 id="collection-title">
-              3D Models<span class="period">.</span>
-            </h2>
-          </div>
-          <p>EXPLORE EACH OBJECT <span aria-hidden="true">↙</span></p>
+      <section id="collection" class="collection" aria-labelledby="collection-title">
+        <div class="library-heading">
+          <h2 id="collection-title">Model library</h2>
+          <h1 id="library-page-title" tabindex="-1" hidden>Model library</h1>
+          <p id="model-count" class="result-count" role="status" aria-live="polite"></p>
         </div>
-        <p class="collection-description">
-          Individually modeled objects, made to explore and download.
-        </p>
-        <nav id="category-navigation" class="category-navigation" aria-label="Model categories"></nav>
-        <form
-          id="model-filters"
-          class="browse-controls"
-          role="search"
-          aria-label="Search 3D models"
-        >
-          <label class="search-field" for="model-search"
-            >Search models<input
-              id="model-search"
-              name="q"
-              type="search"
-              placeholder="Name, collection or keyword…"
-              autocomplete="off" /></label
-          ><label for="model-theme"
-            >Category<select id="model-theme" name="theme">
-              <option value="">All categories</option>
-            </select></label
-          ><label for="model-category"
-            >Type / subject<select id="model-category" name="category">
-              <option value="">All types</option>
-            </select></label
-          ><label for="model-collection"
-            >Collection<select id="model-collection" name="collection">
-              <option value="">All collections</option>
-            </select></label
-          ><label for="model-feature"
-            >Feature<select id="model-feature" name="feature">
-              <option value="">All features</option>
-              <option value="animated">Animated</option>
-              <option value="interactive">Interactive</option>
-            </select></label
-          ><button type="reset" class="outline-button">Clear filters</button>
+        <form id="model-filters" class="browse-controls" role="search" aria-label="Search 3D models">
+          <div class="library-search-row">
+            <label class="search-field" for="model-search">
+              <span class="search-label">Search models</span>
+              <input id="model-search" name="q" type="search" placeholder="Search models…" autocomplete="off" />
+            </label>
+            <button id="filter-toggle" class="outline-button" type="button" aria-expanded="false" aria-controls="advanced-filters">
+              Filters<span id="filter-count" hidden></span>
+            </button>
+          </div>
+          <div id="advanced-filters" hidden>
+            <label for="model-theme">Category
+              <select id="model-theme" name="theme"><option value="">All categories</option></select>
+            </label>
+            <label for="model-category">Type / subject
+              <select id="model-category" name="category"><option value="">All types</option></select>
+            </label>
+            <label for="model-collection">Collection
+              <select id="model-collection" name="collection"><option value="">All collections</option></select>
+            </label>
+            <label for="model-feature">Feature
+              <select id="model-feature" name="feature">
+                <option value="">All features</option>
+                <option value="animated">Animated</option>
+                <option value="interactive">Interactive</option>
+              </select>
+            </label>
+          </div>
         </form>
-        <h3 id="results-title" class="results-title">All models</h3>
-        <h3 id="search-results-title" class="results-title" hidden>Explore models</h3>
-        <p
-          id="model-count"
-          class="result-count"
-          role="status"
-          aria-live="polite"
-        ></p>
+        <div class="library-shortcuts">
+          <nav id="category-navigation" class="category-navigation" aria-label="Model categories"></nav>
+          <button id="clear-model-filters" type="reset" form="model-filters" hidden>Clear filters</button>
+        </div>
         <div id="catalog" class="catalog">
           <p role="status">Loading the model library…</p>
         </div>
-        <noscript
-          ><p>
-            Enable JavaScript to explore the 3D asset collection.
-          </p></noscript
-        >
-        <p class="collection-note">
-          <span class="dot"></span> Made in Blender, one object at a time.
-          <span>BUILT WITH CURIOSITY</span>
-        </p>
+        <noscript><p>Enable JavaScript to explore the 3D asset collection.</p></noscript>
       </section>
     </main>
     <main id="demos-page" class="shell" hidden>
       <section class="index-intro">
-        <p class="eyebrow">WORLDS TO STEP INTO</p>
         <h1 tabindex="-1">Interactive Demos<span class="period">.</span></h1>
         <p>
-          Explore interactive worlds, simulations, and experiments built from 3D
-          assets.
+          Play, simulate and inspect scenes built with the gallery’s 3D models.
         </p>
       </section>
       <form

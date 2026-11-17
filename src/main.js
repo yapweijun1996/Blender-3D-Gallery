@@ -4,7 +4,7 @@ import catalog from "virtual:gallery-catalog";
 import demos from "virtual:gallery-demos";
 import { setupPwa } from "./pwa/register.js";
 import { setupMenu } from "./navigation.js";
-import { setupScrollToTop } from "./scroll-to-top.js";
+import { getPageHeading, setupScrollToTop } from "./scroll-to-top.js";
 import {
   element,
   poster,
@@ -57,10 +57,10 @@ const hasInteractiveControls = (asset) =>
   asset.id === "interactive-shopping-cart" || asset.id === "gjh-mall-visitor-v2" || asset.id === "gjh-visitor-v3" || asset.collectionId === "singapore-fish";
 const isSearchMode = () => {
   const params = new URL(location.href).searchParams;
-  return params.get("page") === "models" || ["q", "theme", "category", "collection", "feature"].some((key) => params.has(key));
+  return params.get("page") === "models" || (!params.has("page") && ["q", "theme", "category", "collection", "feature"].some((key) => params.has(key)));
 };
 
-function createCard(asset) {
+function createCard(asset, searchMode) {
   const card = element("article", "asset-card");
   const link = element("a", "asset-image");
   link.href = modelUrl(asset);
@@ -71,7 +71,7 @@ function createCard(asset) {
     element("span", "asset-image-label", "VIEW IN 3D ↗"),
   );
   const body = element("div", "asset-body");
-  const heading = element("h4");
+  const heading = element(searchMode ? "h3" : "h4", "asset-title");
   const name = element("a", "", asset.name);
   name.href = modelUrl(asset);
   name.dataset.assetId = asset.id;
@@ -90,17 +90,15 @@ function createCard(asset) {
     ),
   );
   const tags = element("div", "asset-tags");
-  tags.append(element("span", "", asset.format ?? "GLB"));
   if (asset.animations > 0) tags.append(element("span", "", "Animated GLB"));
   if (hasInteractiveControls(asset)) tags.append(element("span", "", "Interactive"));
-  body.append(tags);
+  if (tags.childElementCount) body.append(tags);
   if (asset.downloadable !== false) body.append(download);
   card.append(link, body);
   return card;
 }
 function modelUrl(asset) {
   const url = new URL(location.href);
-  url.searchParams.delete("page");
   url.searchParams.set("model", asset.slug ?? asset.id);
   url.hash = "";
   return url.pathname + url.search;
@@ -115,12 +113,37 @@ function renderModels() {
     (!feature || (feature === "animated" ? a.animations > 0 : feature === "interactive" && hasInteractiveControls(a))),
   );
   const query = $("#model-search").value.trim();
-  $("#results-title").hidden = searchMode;
-  $("#search-results-title").hidden = !searchMode;
-  $("#search-results-title").textContent = query ? `Search results for “${query}”` : "Explore models";
-  $("#model-count").textContent = searchMode
-    ? `${filtered.length} ${filtered.length === 1 ? "result" : "results"} / ${assets.length} models in library`
-    : `${assets.length} models in the library`;
+  const activeFilters = [...$("#advanced-filters").querySelectorAll("select")].filter(select => select.value);
+  const filtering = Boolean(query || activeFilters.length);
+  $("#gallery-page .intro").hidden = searchMode;
+  $("#collection-title").hidden = searchMode;
+  $("#library-page-title").hidden = !searchMode;
+  $("#collection").setAttribute("aria-labelledby", searchMode ? "library-page-title" : "collection-title");
+  $("#filter-count").hidden = !activeFilters.length;
+  $("#filter-count").textContent = String(activeFilters.length);
+  $("#clear-model-filters").hidden = !filtering;
+  $("#model-count").textContent = filtering
+    ? `${filtered.length} of ${assets.length} models`
+    : `${assets.length} models`;
+
+  const categoryFilters = activeFilters.filter(select => ["theme", "category"].includes(select.name));
+  const currentUrl = new URL(location.href);
+  for (const link of $("#category-navigation").children) {
+    const { key, value } = link.dataset;
+    const selected = key
+      ? categoryFilters.length === 1 && categoryFilters[0].name === key && categoryFilters[0].value === value
+      : !categoryFilters.length;
+    if (selected)
+      link.setAttribute("aria-current", "true");
+    else link.removeAttribute("aria-current");
+
+    const url = new URL(currentUrl);
+    for (const param of ["model", "theme", "category"]) url.searchParams.delete(param);
+    url.searchParams.set("page", "models");
+    if (key) url.searchParams.set(key, value);
+    url.hash = "";
+    link.href = url.pathname + url.search;
+  }
   const fragment = document.createDocumentFragment();
   const groups = new Map();
   for (const asset of filtered) {
@@ -132,11 +155,11 @@ function renderModels() {
     section.setAttribute("aria-label", category);
     const heading = element("div", "collection-title");
     heading.append(
-      element("h3", "", category),
+      element(searchMode ? "h2" : "h3", "group-title", category),
       element("p", "", `${items.length} ${items.length === 1 ? "model" : "models"}`),
     );
     const grid = element("div", "asset-grid");
-    for (const asset of items) grid.append(createCard(asset));
+    for (const asset of items) grid.append(createCard(asset, searchMode));
     section.append(heading, grid);
     fragment.append(section);
   }
@@ -145,27 +168,34 @@ function renderModels() {
   $("#catalog").replaceChildren(fragment);
 }
 const categoryLinks = [
-  ["All models", "", ""], ["Products", "theme", "Product Packaging"],
+  ["All categories", "", ""], ["Products", "theme", "Product Packaging"],
   ["Vehicles", "category", "Vehicles"], ["Buildings", "theme", "Buildings & Architecture"],
   ["Characters", "theme", "People & Characters"], ["Retail & Mall", "theme", "Shopping Mall"],
   ["Nature", "theme", "Nature"],
 ];
 for (const [label, key, value] of categoryLinks) {
   const link = element("a", "category-link", label);
-  const url = new URL(location.href);
-  url.search = "?page=models";
-  if (key) url.searchParams.set(key, value);
-  link.href = url.pathname + url.search;
+  link.dataset.key = key;
+  link.dataset.value = value;
   $("#category-navigation").append(link);
 }
 const heroAsset = assetById.get("proton-saga-1985");
-if (heroAsset && $("#hero-poster")) $("#hero-poster").src = heroAsset.thumbnail;
+if (heroAsset) {
+  const feature = $("#featured-model");
+  feature.href = `?model=${encodeURIComponent(heroAsset.slug ?? heroAsset.id)}`;
+  feature.dataset.assetId = heroAsset.id;
+  feature.setAttribute("aria-label", `View featured model ${heroAsset.name} in 3D`);
+  feature.querySelector(".hero-frame").append(poster(heroAsset.thumbnail, heroAsset.name));
+  feature.querySelector("strong").textContent = heroAsset.name;
+  feature.hidden = false;
+}
 function renderDemos() {
   const filtered = demos.filter((d) =>
     matches(d, $("#demo-search").value, $("#demo-category").value),
   );
-  $("#demo-count").textContent =
-    `${filtered.length} ${filtered.length === 1 ? "demo" : "demos"} · ${demos.length} to explore`;
+  $("#demo-count").textContent = filtered.length === demos.length
+    ? `${demos.length} ${demos.length === 1 ? "demo" : "demos"}`
+    : `${filtered.length} of ${demos.length} ${demos.length === 1 ? "demo" : "demos"}`;
   const cards = filtered.map((demo) => {
     const card = element("article", "demo-card");
     card.dataset.demoId = demo.id;
@@ -253,12 +283,27 @@ options(
   $("#demo-category"),
   demos.map((d) => d.category),
 );
-$("#model-filters").addEventListener("input", () => {
-  if (!isSearchMode()) {
-    const url = new URL(location.href);
+$("#filter-toggle").addEventListener("click", () => {
+  const panel = $("#advanced-filters");
+  panel.hidden = !panel.hidden;
+  $("#filter-toggle").setAttribute("aria-expanded", String(!panel.hidden));
+});
+function preserveLibraryMode() {
+  const url = new URL(location.href);
+  if (url.searchParams.has("page")) return;
+  if (isSearchMode()) {
+    // A shared filter-only URL still belongs to the focused library when its last filter is cleared.
     url.searchParams.set("page", "models");
+    history.replaceState(history.state, "", url);
+  } else {
+    url.searchParams.set("page", "gallery");
     history.pushState({}, "", url);
   }
+}
+$("#model-filters").addEventListener("input", preserveLibraryMode);
+$("#model-filters").addEventListener("reset", () => {
+  preserveLibraryMode();
+  $("#model-search").focus();
 });
 const syncModelFilters = setupFilters(
   $("#model-filters"),
@@ -276,8 +321,6 @@ const syncDemoFilters = setupFilters(
   { dq: $("#demo-search"), dc: $("#demo-category") },
   renderDemos,
 );
-syncModelFilters();
-syncDemoFilters();
 
 function metadata(asset) {
   const dl = $("#viewer-metadata");
@@ -314,7 +357,7 @@ async function openViewer(asset, trigger, updateUrl = true) {
   const { signal } = viewerController;
   opener =
     trigger ||
-    document.querySelector(`[data-asset-id="${asset.id}"]`) ||
+    document.querySelector(`#catalog [data-asset-id="${asset.id}"]`) ||
     $(".brand");
   $("#viewer-title").textContent = asset.name;
   $("#viewer-category").textContent =
@@ -414,7 +457,7 @@ function closeViewer(updateUrl = true) {
   modelReturnUrl = null;
   const restore = opener?.isConnected
     ? opener
-    : document.querySelector(`[data-asset-id="${closingId}"]`) || $(".brand");
+    : document.querySelector(`#catalog [data-asset-id="${closingId}"]`) || $(".brand");
   restore?.focus();
 }
 $("#close-viewer").addEventListener("click", () => closeViewer());
@@ -477,6 +520,7 @@ function route() {
 async function syncRoute() {
   const page = route(),
     previous = mountedRoute;
+  const previousSearchMode = $("#gallery-page").classList.contains("search-mode");
   refreshScrollToTop();
   if (page !== "game" && gamePage && !gamePage.beforeLeave()) {
     history.replaceState({}, "", lastRouteUrl);
@@ -503,8 +547,8 @@ async function syncRoute() {
     if (link.dataset.page === active) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
   }
-  syncModelFilters();
-  syncDemoFilters();
+  if (page === "gallery") syncModelFilters();
+  if (page === "demos") syncDemoFilters();
   document.title = `${page === "gallery" ? "3D Models" : page === "demos" ? "Interactive Demos" : page === "game" ? "Game" : page === "solar" ? "Solar System" : page === "product-studio" ? "Product Studio" : page === "shelf-inspector" ? "Shelf Inspector" : "About"} · Blender 3D Gallery`;
   if (page === mountedRoute && (gamePage || solarPage || productStudioPage || shelfInspectorPage || pageController))
     return;
@@ -578,8 +622,9 @@ async function syncRoute() {
     if (dialog.open && page !== "gallery") closeViewer(false);
     if (page === "gallery") syncModelUrl();
   }
-  if (previous && previous !== page) {
-    const heading = $(`#${page}-page h1`);
+  const libraryViewChanged = page === "gallery" && previousSearchMode !== isSearchMode();
+  if (previous && (previous !== page || libraryViewChanged)) {
+    const heading = getPageHeading($(`#${page}-page`));
     heading?.setAttribute("tabindex", "-1");
     heading?.focus({ preventScroll: true });
   }

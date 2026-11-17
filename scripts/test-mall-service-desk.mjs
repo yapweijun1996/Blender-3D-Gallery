@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
-import { serveBuild, launchOptions } from './browser-test-utils.mjs';
+import { serveBuild, launchOptions, openModelFilters } from './browser-test-utils.mjs';
 
 // Run after npm run build. This verifies the actual production-build GLBs, not a mock viewer.
 const ids = ['mall-service-desk'];
@@ -139,6 +139,7 @@ try {
     try {
       const { page, errors, requests } = discovery;
       await page.goto(server.url, { waitUntil: 'networkidle' });
+      await openModelFilters(page);
       await page.locator('#model-collection').selectOption(collection.id);
       assert.equal(await page.locator('#catalog .asset-card').count(), 1);
       assert.equal(await page.locator('#catalog .asset-download').count(), 0);

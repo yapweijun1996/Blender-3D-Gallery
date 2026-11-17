@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {serveBuild,launchOptions} from './browser-test-utils.mjs';
+import {serveBuild,launchOptions,openModelFilters} from './browser-test-utils.mjs';
 const id='gjh-mall-visitor';
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const catalog=JSON.parse(await fs.readFile('models/catalog.json','utf8'));
@@ -31,6 +31,7 @@ try{
   page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`);if(r.url().endsWith('.glb'))responses.push(r.body().then(bytes=>({url:r.url(),hash:hash(bytes)})));});
   try{
    await page.goto(server.url,{waitUntil:'networkidle'});
+   await openModelFilters(page);
    await page.locator('#model-collection').selectOption(id);
    assert.equal(await page.locator('#catalog .asset-card').count(),1);
    assert.equal(await page.locator('#catalog .asset-download').count(),0);
