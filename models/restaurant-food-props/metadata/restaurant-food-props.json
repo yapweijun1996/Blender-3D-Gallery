@@ -1,0 +1,129 @@
+{
+  "id": "restaurant-food-props",
+  "name": "Restaurant Food Props",
+  "summary": "Ten stylised restaurant dishes and drinks on a floor-centred 1.0 x 0.6 metre serving tray.",
+  "description": "Original low-poly noodle bowl with chopsticks, rice plate, soup bowl, three pleated dumplings in a basket, two triangular sandwich halves on a plate, two cups with bent straws, salad bowl, pastry plate and sauce ramekin. One shared opaque vertex-colour material; ten independently movable service meshes plus tray. No text, logos, packaging or external assets.",
+  "category": "Food & Beverage",
+  "tags": [
+    "mall",
+    "restaurant",
+    "mini-game",
+    "food-props",
+    "tableware",
+    "noodles",
+    "rice",
+    "soup",
+    "dumplings",
+    "sandwich",
+    "drinks",
+    "tray",
+    "low-poly",
+    "vertex-colors",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry; seed 73129; one shared vertex-colour material. No external models, images, textures, fonts or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/restaurant-food-props.blend",
+    "preview": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "Tray underside centre at floor datum",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "previewCameraDirection": [
+      1.15,
+      2.2,
+      1.9
+    ]
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "glTF X,Y,Z (width,height,depth)",
+    "size": [
+      1,
+      0.22918197885155678,
+      0.6000000238418579
+    ],
+    "bounds": {
+      "min": [
+        -0.5,
+        0,
+        -0.30000001192092896
+      ],
+      "max": [
+        0.5,
+        0.22918197885155678,
+        0.30000001192092896
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 1190052,
+    "triangles": 15626,
+    "vertices": 30269,
+    "meshes": 11,
+    "primitives": 11,
+    "materials": 1,
+    "images": 0,
+    "animations": 0,
+    "sha256": "22fc8bee8fe4e2d368a17274aa9160c8ccc93d83b40ee65c0ce117ababa0ede7"
+  },
+  "accuracy_notes": "Static stylised visual props; no eating, cooking, pickup logic, colliders or animations are included. Named dish nodes allow later runtime placement. Food layers intentionally intersect within each dish. Full restaurant mini-game integration, complete mall draw-call budget/frame rate, physical Android/iOS and WebKit remain unverified. Browser and source evidence are recorded separately.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and vertex colours. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "geometry": "PASS",
+    "source_editability": "PASS",
+    "chromium_1440x900": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 19999,
+      "bytes": 1572863,
+      "materials": 3,
+      "mesh_primitives": 11
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/reproducibility.json",
+      "reports/duplicate-search.json",
+      "reports/browser.json",
+      "reports/source-edit.json",
+      "reports/visual-review.json",
+      "reports/checks.json"
+    ],
+    "visual_review": "PASS",
+    "local": "PASS"
+  },
+  "source_statistics": {
+    "mesh_parts": 11,
+    "materials": 1,
+    "text_objects": 0
+  }
+}
