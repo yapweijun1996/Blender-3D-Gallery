@@ -1,0 +1,50 @@
+{
+  "asset_id": "shelf-electronics-display",
+  "checks": {
+    "blender_headless_generation": "PASS; Blender 5.2.3 LTS",
+    "asset_specific_gate": "PASS",
+    "khronos": "PASS; 0 errors, 0 warnings",
+    "source_editability": "PASS; reopened, edited, saved and independently loaded",
+    "deterministic_rebuild": "PASS; isolated generator-only build is byte-identical",
+    "visual_review": "PASS; all four final previews inspected",
+    "validate_assets": "PASS; exit 0",
+    "npm_test": "PASS; 737 passed, 0 failed, 0 skipped",
+    "npm_build": "PASS; exit 0; existing chunk-size warning",
+    "chromium": "PASS; 1440x900, matched GLB hash, rendered pixels and keyboard rotation, no console/page/HTTP errors",
+    "generated_test_artifact": "RESTORED with git checkout"
+  },
+  "initial_findings": [
+    {
+      "issue": "Thin cylinder bevel collapsed at half-height",
+      "resolution": "Clamp bevel below height/2; geometry and native-source checks passed"
+    },
+    {
+      "issue": "Blank header coplanar with frame",
+      "resolution": "Separate surfaces; final preview has no visible z-fighting"
+    },
+    {
+      "issue": "Low orthographic studio camera exposed floor undersurface",
+      "resolution": "Raise front/side cameras; final previews inspected"
+    },
+    {
+      "issue": "Source-edit probe assumed equal unique-vertex counts",
+      "resolution": "Compare expanded indexed triangles; confirmed 324 intended X changes and unchanged Y/Z"
+    },
+    {
+      "issue": "Browser probe assumed unbundled GLB URL and globally unique heading",
+      "resolution": "Match fingerprinted GLB by SHA-256 and scope heading to viewer-title; final probe passed"
+    }
+  ],
+  "not_found": [
+    "Identical asset ID"
+  ],
+  "skipped_items": [],
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Complete 17-shop mall draw-call budget and frame rate",
+    "Production deployment",
+    "Electrical or construction certification"
+  ],
+  "scope": "Only new model directory and appended own catalog collection; no UI/workflow/existing-model changes; local commit only"
+}
