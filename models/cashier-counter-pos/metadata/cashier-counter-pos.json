@@ -1,0 +1,125 @@
+{
+  "id": "cashier-counter-pos",
+  "name": "Cashier Counter with POS",
+  "summary": "Original compact cashier counter with a blank dark touchscreen, customer card reader, receipt printer, under-counter cash drawer, two-hook bag stand, blank sign and open staff shelving. No text or branding.",
+  "description": "Original compact cashier counter with a blank dark touchscreen, customer card reader, receipt printer, under-counter cash drawer, two-hook bag stand, blank sign and open staff shelving. No text or branding.",
+  "category": "Retail",
+  "tags": [
+    "mall",
+    "retail",
+    "cashier",
+    "counter",
+    "pos",
+    "touchscreen",
+    "card-reader",
+    "receipt-printer",
+    "cash-drawer",
+    "bag-stand",
+    "blank-sign",
+    "brand-neutral",
+    "original",
+    "procedural",
+    "metres",
+    "P1"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / Codex-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python; no external assets, textures, fonts, logos or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/cashier-counter-pos.blend",
+    "preview": "previews/hero.jpg",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png",
+      "previews/reimport.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      2.3,
+      1.62,
+      -3.6
+    ]
+  },
+  "measured": {
+    "triangles": 9964,
+    "glb_bytes": 398060,
+    "meshes": 3,
+    "mesh_primitives": 3,
+    "materials": 3,
+    "dimensions_gltf_xyz_m": [
+      1.399999976158142,
+      1.421021655201912,
+      0.700000096532734
+    ],
+    "bounds_gltf_m": {
+      "min": [
+        -0.699999988079071,
+        0,
+        -0.3500000448491696
+      ],
+      "max": [
+        0.699999988079071,
+        1.421021655201912,
+        0.35000005168356446
+      ]
+    },
+    "textures": 0,
+    "animation_clips": 0,
+    "degenerate_triangles": 0,
+    "glb_sha256": "1731d2bc406a554104c84c93edb1d66979dd6309bf37978c812c9af92ce079e2",
+    "countertop_blender_xyz_m": {
+      "min": [
+        -0.699999988079071,
+        -0.3499999940395355,
+        0.9200000166893005
+      ],
+      "max": [
+        0.699999988079071,
+        0.3499999940395355,
+        0.949999988079071
+      ],
+      "dimensions": [
+        1.399999976158142,
+        0.699999988079071,
+        0.029999971389770508
+      ]
+    },
+    "source_sha256": "b2af26ec649cb991640c912d8b0034ca7a83069cccdc90f17d7d82f9f782e0f4"
+  },
+  "accuracy_notes": "Static visual model, no payment software or mechanical animation. Main screen faces staff (-Z glTF), card reader faces customer (+Z) and up. Screens, receipt and sign are blank. physical devices, WebKit, mall placement and whole-mall performance not verified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials; no third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "SOURCE_AND_GLB_PASS",
+    "budget": {
+      "triangles": 15000,
+      "bytes": 1572864,
+      "mesh_primitives": 3,
+      "materials": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/browser.json",
+      "reports/checks.json",
+      "reports/reuse.json",
+      "reports/reproducibility.json"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "initial_checks": [
+    {
+      "check": "Exported triangle area",
+      "result": "FAIL",
+      "degenerate_triangles": 248,
+      "resolution": "Clamp bevel width to 40 percent of the thinnest part dimension; final check finds zero degenerate triangles."
+    },
+    {
+      "check": "Customer reader screen normal",
+      "result": "FAIL",
+      "resolution": "Reverse reader tilt from +55 to -55 degrees; source audit now verifies customer-facing and upward normal."
+    }
+  ],
+  "final_evidence": [
+    "assets.json",
+    "sources.json",
+    "khronos.json"
+  ]
+}
