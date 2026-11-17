@@ -1,0 +1,103 @@
+{
+  "result": "PASS",
+  "asset_id": "atrium-chandelier",
+  "status": "draft / local validation complete; owner review pending",
+  "checks": [
+    {
+      "command": "node models/atrium-chandelier/validate.mjs",
+      "result": "PASS",
+      "khronos_errors": 0,
+      "khronos_warnings": 0
+    },
+    {
+      "command": "npm run validate:assets",
+      "result": "PASS"
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "tests": 737,
+      "passed": 737,
+      "failed": 0
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "note": "Vite emitted its nonblocking >500 kB chunk-size warning."
+    },
+    {
+      "command": "node models/atrium-chandelier/verify_page.mjs",
+      "result": "PASS",
+      "viewport": [
+        1440,
+        900
+      ],
+      "glb_sha256": "dd38e05584ce57f01a5323951254ef63c47fbea61b57ece525fc0ef5bfe5fb26",
+      "screenshot_visually_inspected": true
+    },
+    {
+      "check": "Saved-source edit and re-export",
+      "result": "PASS"
+    },
+    {
+      "check": "Two fresh procedural builds and saved-source export byte identity",
+      "result": "PASS"
+    },
+    {
+      "check": "hero/front/side/3q visual review",
+      "result": "PASS"
+    },
+    {
+      "check": "Catalog append only; existing collections unchanged; existing category; not in singapore-fish",
+      "result": "PASS"
+    }
+  ],
+  "checked_glb_sha256": "dd38e05584ce57f01a5323951254ef63c47fbea61b57ece525fc0ef5bfe5fb26",
+  "resolved_attempts": [
+    {
+      "stage": "Asset gate",
+      "finding": "Blender default materials exported as double-sided.",
+      "resolution": "Enabled backface culling for all three shared materials; regenerated and passed."
+    },
+    {
+      "stage": "Asset gate harness",
+      "finding": "Three.js Color has no length() method.",
+      "resolution": "Used getHex() to verify non-emissive frame/crystals; passed."
+    },
+    {
+      "stage": "First Chromium attempt",
+      "finding": "Source-path response predicate timed out because Vite fingerprints the production GLB filename.",
+      "resolution": "Capture the single actual GLB response and compare bytes by SHA-256; final test passed.",
+      "failed_log": "/tmp/atrium-chandelier-browser.log"
+    }
+  ],
+  "logs": [
+    {
+      "file": "/tmp/atrium-chandelier-validate-assets.log",
+      "sha256": "011f38d266133c2983457368a3bdd3e44394ae032d0dd53a829abbdd97e3b8ed"
+    },
+    {
+      "file": "/tmp/atrium-chandelier-npm-test.log",
+      "sha256": "8f8d319956ea2b531f38729decaef202af3103098b2e4abaa47fa076b2d7d9c7"
+    },
+    {
+      "file": "/tmp/atrium-chandelier-build-final.log",
+      "sha256": "69e8c21c9f9cc5b2719527138373b7e1b39db23fb117fc1b1c81b241ce6ad339"
+    },
+    {
+      "file": "/tmp/atrium-chandelier-custom-gate.log",
+      "sha256": "35a371d5f906a67338f37dd1ab322a45e0012138caba9d468b0d4683a2632bb4"
+    },
+    {
+      "file": "/tmp/atrium-chandelier-browser-final.log",
+      "sha256": "cbc772b9c324e61b9ef434bf276a91898bc68fcf8ccf70c5e2f6641daaf8918e"
+    }
+  ],
+  "not_verified": [
+    "Physical iOS/Android",
+    "WebKit",
+    "Assembled mall installation, Bloom and physical scene lighting",
+    "Full-scene 200 draw-call budget and sustained device performance"
+  ],
+  "external_actions": "Local commit only; no push, rebase, deployment, workflow or gallery UI changes."
+}
