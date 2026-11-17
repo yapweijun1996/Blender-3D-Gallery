@@ -15,7 +15,6 @@ TARGET = Vector((0, 0, 0.83))
 FOOTPRINT_SHIFT = 0.2975
 LID_ANGLE = math.radians(-32)
 MATERIAL_NAMES = ("Black lacquer", "Warm details")
-DEPTH_SCALE = 2.0 / 2.345
 IVORY = (0.94, 0.93, 0.88)
 BRASS = (0.65, 0.48, 0.23)
 
@@ -136,36 +135,35 @@ def tapered_leg(name, top, bottom, width_top, width_bottom, mat, root):
 
 
 def keyboard(dark, accent, root):
-    """One ivory slab and one flat pattern, with no per-key solid objects."""
-    slab = box("KEY_IvorySlab", (0, -0.7265, 0.745), (1.222, 0.253, 0.02), accent, root, 0.001)
-    tint(slab, IVORY)
-    vertices, faces = [], []
-
-    def quad(left, right, front, back, height):
-        start = len(vertices)
-        vertices.extend(((left, front, height), (right, front, height),
-                         (right, back, height), (left, back, height)))
-        faces.append(tuple(range(start, start + 4)))
-
+    """88 closed key solids; merge into the existing body material meshes on export."""
     naturals = [midi for midi in range(21, 109) if midi % 12 in (0, 2, 4, 5, 7, 9, 11)]
     black_notes = []
     for i, midi in enumerate(naturals):
-        if i:
-            x = -0.611 + i * 0.0235
-            quad(x - 0.00045, x + 0.00045, -0.853, -0.60, 0.758)
+        x = -0.611 + (i + 0.5) * 0.0235
+        white = box("KEY_White_%03d" % midi, (x, -0.7265, 0.7435),
+                    (0.0226, 0.253, 0.025), accent, root, 0)
+        tint(white, IVORY)
+        white["midi_note"] = midi
         if i < 51 and naturals[i + 1] - midi == 2:
             x = -0.611 + (i + 1) * 0.0235
-            quad(x - 0.007, x + 0.007, -0.738, -0.60, 0.762)
+            # A small leading chamfer catches light without beveling every edge.
+            profile = [(-0.738, 0.752), (-0.60, 0.752), (-0.60, 0.780),
+                       (-0.735, 0.780), (-0.738, 0.777)]
+            vertices = [(edge, y, z) for edge in (x - 0.007, x + 0.007) for y, z in profile]
+            faces = [tuple(reversed(range(5))), tuple(range(5, 10))]
+            faces += [(j, (j + 1) % 5, (j + 1) % 5 + 5, j + 5) for j in range(5)]
+            name = "KEY_Black_%03d" % (midi + 1)
+            mesh = bpy.data.meshes.new(name)
+            mesh.from_pydata(vertices, [], faces)
+            mesh.update()
+            key = bpy.data.objects.new(name, mesh)
+            bpy.context.scene.collection.objects.link(key)
+            finish(key, name, dark, root, 0)
+            key["midi_note"] = midi + 1
             black_notes.append(midi + 1)
-    mesh = bpy.data.meshes.new("Keyboard flat pattern")
-    mesh.from_pydata(vertices, [], faces)
-    mesh.update()
-    obj = bpy.data.objects.new("KEY_FlatPattern", mesh)
-    bpy.context.scene.collection.objects.link(obj)
-    finish(obj, obj.name, dark, root, 0)
-    obj["representation"] = "Flat quads: 51 divisions and 36 accidentals on one ivory slab"
-    obj["white_midi_notes"] = naturals
-    obj["black_midi_notes"] = black_notes
+    root["keyboard_representation"] = "52 separated white solids and 36 raised chamfered black solids"
+    root["white_midi_notes"] = naturals
+    root["black_midi_notes"] = black_notes
 
 
 def build(root):
@@ -194,15 +192,15 @@ def build(root):
     for i in range(28):
         x = -0.61+i*0.044
         end_y = 0.70 if x < -0.10 else max(-0.10,0.68-(x+0.1)*1.2)
-        rod("HARP_StringCourse_%02d" % i,(x,-0.32,0.87),(x*0.78-0.06,end_y,0.87),0.0016,brass,root,8)
-        rod("HARP_TuningPin_%02d" % i,(x,-0.365,0.891),(x,-0.365,0.903),0.004,brass,root,8)
+        rod("HARP_StringCourse_%02d" % i,(x,-0.32,0.87),(x*0.78-0.06,end_y,0.87),0.0016,brass,root,6)
+        rod("HARP_TuningPin_%02d" % i,(x,-0.365,0.891),(x,-0.365,0.903),0.004,brass,root,6)
     for i,(a,b) in enumerate((((-0.62,-0.28,0.889),(-0.48,0.68,0.889)),
                              ((-0.15,-0.28,0.889),(-0.27,0.73,0.889)),
                              ((0.38,-0.28,0.889),(0.06,0.55,0.889)))):
         rod("HARP_CastBrace_%d" % i,a,b,0.018,brass,root)
-    bridge = bezier(((-0.57,0.48),(-0.26,0.61),(0.12,0.20),(0.43,-0.12)),18)
+    bridge = bezier(((-0.57,0.48),(-0.26,0.61),(0.12,0.20),(0.43,-0.12)),12)
     for i,(a,b) in enumerate(zip(bridge,bridge[1:])):
-        rod("HARP_Bridge_%02d" % i,(*a,0.845),(*b,0.845),0.01,brass,root)
+        rod("HARP_Bridge_%02d" % i,(*a,0.845),(*b,0.845),0.01,brass,root,8)
 
     # The saved lid pivot follows the straight bass-side hinge, not the centre.
     lid = bpy.data.objects.new("LID_HingePivot",None)
@@ -270,13 +268,13 @@ def build(root):
 
     # Lyre columns, crossbar, pedal pivots and three discrete foot paddles.
     for sign in (-1,1):
-        rod("LYRE_Column_%s" % sign,(sign*0.115,-0.46,0.699),(sign*0.085,-0.55,0.225),0.021,dark,root)
-        rod("LYRE_Brace_%s" % sign,(sign*0.08,-0.52,0.24),(sign*0.21,-0.27,0.756),0.008,brass,root)
-    box("LYRE_Crossbar",(0,-0.55,0.223),(0.27,0.09,0.067),dark,root,0.014)
+        rod("LYRE_Column_%s" % sign,(sign*0.115,-0.46,0.699),(sign*0.085,-0.55,0.127),0.021,dark,root)
+        rod("LYRE_Brace_%s" % sign,(sign*0.08,-0.52,0.14),(sign*0.21,-0.27,0.756),0.008,brass,root)
+    box("LYRE_Crossbar",(0,-0.55,0.125),(0.27,0.09,0.067),dark,root,0.014)
     for i,x in enumerate((-0.073,0,0.073)):
-        rod("PEDAL_Link_%d" % i,(x,-0.544,0.232),(x,-0.60,0.145),0.007,brass,root)
-        pedal = box("PEDAL_Paddle_%d" % i,(x,-0.66,0.139),(0.039,0.134,0.02),brass,root,0.009)
-        pedal.rotation_euler.x = math.radians(-6)
+        rod("PEDAL_Link_%d" % i,(x,-0.544,0.13),(x,-0.60,0.059),0.007,brass,root)
+        pedal = box("PEDAL_Paddle_%d" % i,(x,-0.66,0.05),(0.039,0.134,0.02),brass,root,0.009)
+        pedal.rotation_euler.x = math.radians(6)
 
     # Matching plain bench; no seams, labels, upholstery textures or lettering.
     box("BENCH_Apron",(0,-1.29,0.445),(0.61,0.31,0.08),dark,root,0.008)
@@ -289,12 +287,6 @@ def build(root):
     # Centre the complete piano-and-bench floor footprint while keeping the root at zero.
     for child in root.children:
         child.location.y += FOOTPRINT_SHIFT
-    layout = bpy.data.objects.new("LAYOUT_CompactDepth", None)
-    bpy.context.scene.collection.objects.link(layout)
-    for child in list(root.children):
-        child.parent = layout
-    layout.parent = root
-    layout.scale.y = DEPTH_SCALE
     root["nominal_closed_case_height_m"] = 1.0
     root["lid_angle_degrees"] = 32
     root["scope"] = "Original P1 baby grand; swappable lids and separate sittable bench; no playable keys or audio"
@@ -302,8 +294,8 @@ def build(root):
     root["collision_scene"] = "COLLISION_ONLY"
     bpy.context.view_layer.update()
     for name, location, dimensions, target in (
-        ("collider_box", (0, 0.2975 * DEPTH_SCALE, 0.5155), (1.5, 1.75 * DEPTH_SCALE, 1.031), "piano_body"),
-        ("collider_box_bench", (0, -0.9925 * DEPTH_SCALE, 0.275), (0.66, 0.36 * DEPTH_SCALE, 0.55), "bench"),
+        ("collider_box", (0, FOOTPRINT_SHIFT, 0.5155), (1.5, 1.75, 1.031), "piano_body"),
+        ("collider_box_bench", (0, -1.29 + FOOTPRINT_SHIFT, 0.275), (0.66, 0.36, 0.55), "bench"),
     ):
         bpy.ops.mesh.primitive_cube_add(size=1, location=location)
         obj = bpy.context.object
@@ -380,12 +372,10 @@ def source_measurements(root):
         part = {"name": obj.name, "material": obj.data.materials[0].name,
                 "group": export_group(obj), "positions": positions}
         parts.append(part)
-    pattern = bpy.data.objects["KEY_FlatPattern"]
     return {"blender_version": bpy.app.version_string, "parts": parts,
-            "keyboard": {"representation": pattern["representation"],
-                         "white_midi_notes": list(pattern["white_midi_notes"]),
-                         "black_midi_notes": list(pattern["black_midi_notes"]),
-                         "pattern_quads": len(pattern.data.polygons)},
+            "keyboard": {"representation": root["keyboard_representation"],
+                         "white_midi_notes": list(root["white_midi_notes"]),
+                         "black_midi_notes": list(root["black_midi_notes"])},
             "editable_meshes": len(parts)}
 
 
@@ -414,8 +404,7 @@ def export(path):
                 if export_group(original) != group_name or original.data.materials[0].name != material_name:
                     continue
                 mesh = bpy.data.meshes.new_from_object(original.evaluated_get(depsgraph), depsgraph=depsgraph)
-                # Bake the complete matrix into vertices: compact depth can shear
-                # rotated rods, which an object TRS decomposition cannot preserve.
+                # Bake full evaluated matrices so saved authoring edits survive export.
                 mesh.transform(original.matrix_world)
                 copy = bpy.data.objects.new("EXPORT_Part", mesh)
                 bpy.context.scene.collection.objects.link(copy)
@@ -433,7 +422,7 @@ def export(path):
             # Bake geometry at a useful floor pivot, independent of authoring transforms.
             bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
             if group_name == "bench":
-                centre_y = -0.9925 * DEPTH_SCALE
+                centre_y = -1.29 + FOOTPRINT_SHIFT
                 for vertex in merged.data.vertices:
                     vertex.co.y -= centre_y
                 merged.location.y = centre_y
@@ -507,6 +496,14 @@ def render_views():
     for obj in bpy.data.objects[ROOT].children_recursive:
         if obj.type == "MESH" and export_group(obj) in ("lid_open", "lid_closed"):
             obj.hide_render = export_group(obj) == "lid_closed"
+    # Inspect the solid front lips and raised black keys without bench occlusion.
+    keyboard_target = Vector((0, -0.7265 + FOOTPRINT_SHIFT, 0.755))
+    scene.camera.location = keyboard_target + Vector((0.22, -1.6, 0.75))
+    scene.camera.data.ortho_scale = 1.48
+    aim(scene.camera, keyboard_target)
+    scene.render.filepath = str(HERE / "previews" / "keyboard.png")
+    bpy.ops.render.render(write_still=True)
+    scene.camera.data.ortho_scale = 3.12
 
 
 def main():

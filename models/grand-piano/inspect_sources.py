@@ -22,9 +22,9 @@ assert bpy.context.scene.unit_settings.scale_length == 1
 meshes = [obj for obj in root.children_recursive if obj.type == "MESH"]
 materials = {mat.name for obj in meshes for mat in obj.data.materials}
 assert len(materials) == 2
-assert len([obj for obj in meshes if obj.name.startswith("KEY_")]) == 2
-assert len(bpy.data.objects["KEY_FlatPattern"].data.polygons) == 87
-assert not any("midi_note" in obj for obj in meshes)
+assert len([obj for obj in meshes if obj.name.startswith("KEY_White_")]) == 52
+assert len([obj for obj in meshes if obj.name.startswith("KEY_Black_")]) == 36
+assert sorted(obj["midi_note"] for obj in meshes if obj.name.startswith("KEY_")) == list(range(21, 109))
 assert not any(obj.type == "FONT" for obj in bpy.data.objects)
 for prefix in ("CASE_", "KEY_", "LID_", "LEG_", "CASTER_", "LYRE_", "PEDAL_", "MUSIC_", "BENCH_", "HARP_"):
     assert any(obj.name.startswith(prefix) for obj in meshes), prefix
@@ -34,12 +34,8 @@ for obj in meshes:
     mesh = evaluated.to_mesh()
     bm = bmesh.new()
     bm.from_mesh(mesh)
-    if obj.name == "KEY_FlatPattern":
-        assert len(bm.faces) == 87 and all(len(face.verts) == 4 for face in bm.faces)
-        assert all(face.normal.z > 0.99 for face in bm.faces)
-    else:
-        assert all(edge.is_manifold for edge in bm.edges), obj.name
-        assert bm.calc_volume() > 0, obj.name
+    assert all(edge.is_manifold for edge in bm.edges), obj.name
+    assert bm.calc_volume() > 0, obj.name
     bm.free()
     evaluated.to_mesh_clear()
 for name in ("collider_box", "collider_box_bench"):
@@ -66,7 +62,7 @@ assert hashlib.sha256(source.read_bytes()).hexdigest() == before
 report = {
     "result": "PASS", "blender_version": bpy.app.version_string,
     "source_reopened": True, "editable_meshes": len(meshes),
-    "closed_manifold_meshes": len(meshes) - 1, "intentional_flat_pattern_meshes": 1,
+    "closed_manifold_meshes": len(meshes), "intentional_flat_pattern_meshes": 0,
     "hidden_material_free_colliders": 2, "materials": len(materials),
     "source_sha256": before, "original_source_unchanged": True,
     "edited_mesh": edited_name, "edit": "Pedal mesh X scaled by 0.85; shared metal roughness set to 0.62",

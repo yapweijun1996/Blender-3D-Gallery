@@ -36,7 +36,8 @@
       "previews/side.png",
       "previews/3q.png",
       "previews/closed-front.png",
-      "previews/closed-3q.png"
+      "previews/closed-3q.png",
+      "previews/keyboard.png"
     ]
   },
   "display": {
@@ -54,9 +55,9 @@
     "origin": "Floor centre of the complete piano-and-bench footprint"
   },
   "measurements": {
-    "glb_bytes": 415496,
-    "triangles": 7878,
-    "vertices": 12741,
+    "glb_bytes": 351336,
+    "triangles": 7972,
+    "vertices": 10137,
     "meshes": 7,
     "primitives": 7,
     "materials": 2,
@@ -65,32 +66,32 @@
     "dimensions_m": [
       1.5,
       1.8118597269058228,
-      1.999999925494194
+      2.34499990940094
     ],
     "closed_dimensions_m": [
       1.5,
       1.031000018119812,
-      1.999999925494194
+      2.34499990940094
     ],
     "bounds_m": {
       "min": [
         -0.75,
         0,
-        -1
+        -1.1725000143051147
       ],
       "max": [
         0.75,
         1.8118597269058228,
-        0.999999925494194
+        1.1724998950958252
       ]
     },
     "variants": {
       "lid_open": {
-        "triangles": 7190,
+        "triangles": 7284,
         "draw_calls": 4
       },
       "lid_closed": {
-        "triangles": 7146,
+        "triangles": 7240,
         "draw_calls": 4
       }
     },
@@ -100,12 +101,12 @@
     "bench_dimensions_m": [
       0.6600000262260437,
       0.550000011920929,
-      0.30703628063201904
+      0.35999995470046997
     ],
     "bench_pivot_m": [
       0,
       0,
-      0.8464818596839905
+      0.9925000071525574
     ],
     "seat_anchor_local_m": [
       0,
@@ -115,13 +116,21 @@
     "keyboard": {
       "white_keys": 52,
       "black_keys": 36,
-      "representation": "one ivory slab and 87 flat quads",
-      "pattern_triangles": 174
+      "representation": "52 separated white solids and 36 raised chamfered black solids",
+      "white_front_thickness_m": 0.025,
+      "white_gap_m": 0.0009,
+      "black_rise_m": 0.024
     },
-    "sha256": "8862c72135f389a5e77ea707b1f37a7fa629c186033cf64585b7357da9c9bd5a",
-    "case_top_m": 0.993
+    "sha256": "727fe758cb28cfe0fd6d2259550180a8e7b39e76dda5cfef9ee7977ace172d8e",
+    "pedal_floor_clearance_m": 0.0339921,
+    "case_top_m": 0.993,
+    "case_mesh_dimensions_m": [
+      1.5,
+      0.31699999999999995,
+      1.75
+    ]
   },
-  "accuracy_notes": "glTF XYZ dimensions (width, height, depth): complete set 1.50 x 1.031 x 2.00 m closed; raised lid needs 1.812 m vertical clearance. Flat 88-note pattern A0-C8, not playable key solids. Core glTF has no visibility flag: lid_closed is stored in opt-in VARIANT_LidClosed, collision proxies in opt-in COLLISION_ONLY; neither renders in the default scene. Bench is a separate floor-pivot node with a local seat anchor and facing direction; gameplay seating and collision registration remain the consuming application's responsibility. No audio, playable keys or continuous lid animation. Full S15 assembly, physical devices and hardware performance remain unverified.",
+  "accuracy_notes": "glTF XYZ dimensions (width, height, depth): piano footprint 1.50 x 1.75 m, case top 0.993 m above floor; complete set 1.50 x 1.031 x 2.345 m closed; raised lid needs 1.812 m vertical clearance. Dimensions follow the original task; no global depth scaling. 88 closed key solids A0-C8, merged by material; 25 mm white-key thickness and 24 mm raised black keys. Pedals clear floor by 33.992 mm. Core glTF has no visibility flag: lid_closed is stored in opt-in VARIANT_LidClosed, collision proxies in opt-in COLLISION_ONLY; neither renders in the default scene. Bench is a separate floor-pivot node with a local seat anchor and facing direction; gameplay seating and collision registration remain the responsibility of the consuming application. No audio, playable keys or continuous lid animation. Full S15 assembly, physical devices and hardware performance remain unverified.",
   "attribution": [
     {
       "credit": "Original procedural geometry and materials; no external models, fonts, textures or logos."

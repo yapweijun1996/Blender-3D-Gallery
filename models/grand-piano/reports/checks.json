@@ -1,11 +1,13 @@
 {
   "result": "PASS",
   "id": "grand-piano",
+  "revision": "advisor round 1",
+  "base_model_commit": "84cac5fc",
   "status": "draft / NEEDS REVIEW",
-  "specification": "Owner P1 override dated 2026-11-17",
+  "specification": "Original MallQueue/tasks/grand-piano.md dimensions; retained stricter existing P1 budgets",
   "blender_version": "5.2.3 LTS",
-  "glb_sha256": "8862c72135f389a5e77ea707b1f37a7fa629c186033cf64585b7357da9c9bd5a",
-  "triangles": 7878,
+  "glb_sha256": "727fe758cb28cfe0fd6d2259550180a8e7b39e76dda5cfef9ee7977ace172d8e",
+  "triangles": 7972,
   "materials": 2,
   "draw_calls_per_state": 4,
   "textures": 0,
@@ -19,18 +21,18 @@
     {
       "command": "node models/grand-piano/validate.mjs",
       "evidence": "assets.json; khronos.json",
-      "khronos_errors": 0,
-      "khronos_warnings": 0,
       "result": "PASS",
-      "exit_code": 0
+      "exit_code": 0,
+      "khronos_errors": 0,
+      "khronos_warnings": 0
     },
     {
       "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/grand-piano/inspect_sources.py",
       "evidence": "sources.json",
-      "closed_manifold_source_meshes": 155,
-      "intentional_flat_pattern_meshes": 1,
       "result": "PASS",
-      "exit_code": 0
+      "exit_code": 0,
+      "closed_manifold_source_meshes": 236,
+      "intentional_flat_pattern_meshes": 0
     },
     {
       "command": "node models/grand-piano/verify_source_edit.mjs",
@@ -41,9 +43,9 @@
     {
       "command": "Independent clean procedural rebuild with --skip-render in a temporary directory",
       "evidence": "reproducibility.json",
-      "bytes_identical": true,
       "result": "PASS",
-      "exit_code": 0
+      "exit_code": 0,
+      "bytes_identical": true
     },
     {
       "command": "npm run validate:assets",
@@ -53,24 +55,26 @@
     },
     {
       "command": "npm test",
+      "evidence": "npm-test.log",
+      "result": "PASS",
+      "exit_code": 0,
       "tests": 737,
       "pass": 737,
       "fail": 0,
-      "skipped": 0,
-      "evidence": "npm-test.log",
-      "result": "PASS",
-      "exit_code": 0
+      "skipped": 0
     },
     {
       "command": "npm run build",
       "evidence": "npm-build.log",
-      "notes": "Existing Vite bundle-size warning; no gallery UI or dependency changes.",
       "result": "PASS",
-      "exit_code": 0
+      "exit_code": 0,
+      "notes": "Existing Vite bundle-size warning."
     },
     {
       "command": "node models/grand-piano/check_browser.mjs",
       "evidence": "browser.json",
+      "result": "PASS",
+      "exit_code": 0,
       "gallery_viewports": [
         [
           1440,
@@ -84,50 +88,62 @@
       "contact_sheet_widths": [
         1440,
         390
-      ],
-      "result": "PASS",
-      "exit_code": 0
+      ]
     }
   ],
+  "advisor_resolutions": [
+    {
+      "issue": "Flat keyboard",
+      "change": "52 closed white solids with 25 mm thickness and 0.9 mm gaps; 36 chamfered black solids raised 24 mm; merged by the existing two materials."
+    },
+    {
+      "issue": "Global depth compression",
+      "change": "Removed depth scale. Original task body footprint restored to 1.50 x 1.75 m; bench depth 0.36 m; full set depth 2.345 m. Only complete-footprint centring translation remains.",
+      "evidence": "backlog.json; assets.json feature bounds; README dimension rationale"
+    },
+    {
+      "issue": "Suspended pedals",
+      "change": "Paddles lowered to 33.992 mm floor clearance; crossbar lowered, columns and braces extended, links adjusted; front/side reviewed.",
+      "contact_check_scope": "Component AABBs overlap at paddle/link/crossbar/column/brace joints; visual review. Not exhaustive intersection testing."
+    },
+    {
+      "issue": "Stale delivery report",
+      "change": "Measurements, SHA-256, metadata, README and MallQueue report now describe this validated GLB."
+    }
+  ],
+  "dimension_decision": {
+    "source": "MallQueue/tasks/grand-piano.md requests approximately 1.5 m wide x 1.75 m long x 1.0 m tall piano plus bench.",
+    "prior_claim": "No 2.0 m complete-depth requirement found in the supplied task or available MallQueue/p1/P1-RULES.md; prior local backlog/README claimed it without a dimension source."
+  },
   "visual_review": {
     "result": "AGENT REVIEW COMPLETE; human approval unverified",
     "inspected": [
       "../previews/hero.png",
       "../previews/front.png",
-      "../previews/3q.png",
       "../previews/side.png",
+      "../previews/3q.png",
       "../previews/closed-front.png",
       "../previews/closed-3q.png",
+      "../previews/keyboard.png",
       "contact-1440.png",
       "contact-390.png",
       "gallery-390.png",
       "/Users/admin/Documents/MallQueue/reports/grand-piano-page.png"
     ],
-    "observations": "Retained glossy black curved case, warm gold details, supported open lid, visible keyboard and pedals, three castered legs and matching bench. Closed variant has a folded desk and no prop. No text or logos. Both GLB states inspected at 1440 and 390 px; keyboard plane clearance increased after the initial runtime review."
+    "observations": "Raised black-key fronts and solid white-key lips read clearly in closeup; bench and body retain original depth; near-floor pedals have attached supports; glossy blank case, supported lid, hidden colliders and alternate closed lid retained. Both GLB states reviewed at 1440 and 390 px."
   },
   "revision_comparison": {
-    "previous_triangles": 15180,
-    "previous_materials": 3,
-    "previous_complete_depth_m": 2.345,
-    "final_triangles": 7878,
+    "previous_triangles": 7878,
+    "final_triangles": 7972,
+    "previous_glb_bytes": 415496,
+    "final_glb_bytes": 351336,
+    "previous_materials": 2,
     "final_materials": 2,
-    "final_complete_depth_m": 2.0
+    "previous_complete_depth_m": 2.0,
+    "final_complete_depth_m": 2.345
   },
-  "corrected_attempts": [
-    {
-      "issue": "First P1 geometry pass retained 10278 triangles including the alternate lid and collision proxies.",
-      "resolution": "Removed submillimetre rod bevel rings, reduced tiny caster radial segments and sampled the case outline at ten steps per curve; final total 7878."
-    },
-    {
-      "issue": "Copying object matrices decomposed compact-depth shear on rotated rods; component-to-GLB vertex matching failed.",
-      "resolution": "Bake complete evaluated world matrices into mesh vertices before merging; all authoring components now match their semantic exported nodes."
-    },
-    {
-      "issue": "Initial runtime contact sheets showed thin keyboard-plane interference at distance.",
-      "resolution": "Increased flat-pattern clearance; regenerated source, GLB, previews and screenshots, and repeated final acceptance."
-    }
-  ],
-  "restored_test_artifact": "models/demo-beverage-can/reports/structure-motion.json restored to HEAD after final npm test",
+  "catalog": "Existing grand-piano collection and asset pointers verified; no numeric fields in that entry and no catalog change required.",
+  "restored_test_artifact": "models/demo-beverage-can/reports/structure-motion.json restored to HEAD after npm test",
   "unverified": [
     "Human art approval",
     "Physical Android/iOS devices",

@@ -107,7 +107,7 @@ assert.ok(Math.abs(bounds.min.x + bounds.max.x) < 1e-6, 'width centred on origin
 assert.ok(Math.abs(bounds.min.z + bounds.max.z) < 1e-6, 'complete footprint centred on origin');
 assert.ok(Math.abs(dimensions[0] - 1.5) < 1e-5);
 assert.ok(dimensions[1] > 1.78 && dimensions[1] < 1.84, 'raised lid clearance');
-assert.ok(Math.abs(dimensions[2] - 2.0) < 1e-5);
+assert.ok(Math.abs(dimensions[2] - 2.345) < 1e-5, 'original body and bench proportions without global depth scaling');
 const openStats = visibleStats();
 root.remove(open);
 root.add(closed);
@@ -115,7 +115,7 @@ root.updateMatrixWorld(true);
 const closedBounds = new Box3().setFromObject(root, true);
 const closedDimensions = closedBounds.getSize(new Vector3()).toArray();
 assert.ok(Math.abs(closedDimensions[1] - 1.031) < 1e-5, 'closed lid and folded music desk fit the 1 m case');
-assert.ok(Math.abs(closedDimensions[2] - 2.0) < 1e-5);
+assert.ok(Math.abs(closedDimensions[2] - 2.345) < 1e-5);
 const closedStats = visibleStats();
 root.remove(closed);
 closedScene.add(closed);
@@ -154,15 +154,29 @@ for (const part of source.parts) {
   featureBounds[part.name] = new Box3().setFromPoints(part.positions.map(p => new Vector3(...p)));
 }
 const keyboardParts = source.parts.filter(part => part.name.startsWith('KEY_'));
-assert.equal(keyboardParts.length, 2, 'one slab and one flat pattern, no individual key objects');
-assert.equal(source.keyboard.pattern_quads, 87);
+assert.equal(keyboardParts.length, 88, '88 closed key solids, merged by material at export');
 assert.deepEqual(source.keyboard.white_midi_notes, Array.from({ length: 88 }, (_, i) => 21 + i).filter(midi => [0, 2, 4, 5, 7, 9, 11].includes(midi % 12)));
 assert.deepEqual(source.keyboard.black_midi_notes, Array.from({ length: 88 }, (_, i) => 21 + i).filter(midi => ![0, 2, 4, 5, 7, 9, 11].includes(midi % 12)));
-const pattern = source.parts.find(part => part.name === 'KEY_FlatPattern');
-assert.equal(pattern.positions.length, 87 * 4);
-for (let i = 0; i < 51; i++) {
-  const x = -0.611 + (i + 1) * 0.0235;
-  assert.ok(containsPosition('piano_body/Black lacquer', [x - 0.00045, 0.758, (0.853 - 0.2975) * (2 / 2.345)]), 'white key division faces +Z');
+const whiteKeys = keyboardParts.filter(part => part.name.startsWith('KEY_White_'));
+const blackKeys = keyboardParts.filter(part => part.name.startsWith('KEY_Black_'));
+assert.equal(whiteKeys.length, 52);
+assert.equal(blackKeys.length, 36);
+for (const [parts, notes] of [[whiteKeys, source.keyboard.white_midi_notes], [blackKeys, source.keyboard.black_midi_notes]]) {
+  assert.deepEqual(parts.map(part => Number(part.name.split('_').at(-1))), notes);
+}
+for (const part of whiteKeys) {
+  const key = featureBounds[part.name];
+  assert.ok(Math.abs(key.getSize(new Vector3()).y - 0.025) < 1e-6, 'white key front has 25 mm thickness');
+  assert.ok(key.min.y < featureBounds.CASE_Keybed.max.y && key.max.y > featureBounds.CASE_Keybed.max.y, 'white keys seat into keybed');
+  assert.ok(key.max.y > featureBounds.CASE_FrontRail.max.y + 0.01, 'white front lip clears front rail');
+}
+for (let i = 1; i < whiteKeys.length; i++) {
+  const gap = featureBounds[whiteKeys[i].name].min.x - featureBounds[whiteKeys[i - 1].name].max.x;
+  assert.ok(gap > 0.0008 && gap < 0.001, 'visible white key divisions are real gaps');
+}
+for (const part of blackKeys) {
+  const key = featureBounds[part.name];
+  assert.ok(key.min.y < 0.756 && key.max.y > 0.779, 'black key has seated solid base and raised top');
 }
 const groupedBounds = prefix => {
   const bounds = new Box3();
@@ -173,6 +187,19 @@ const groupedBounds = prefix => {
     bounds_m: { min: bounds.min.toArray(), max: bounds.max.toArray() } };
 };
 const features = Object.fromEntries(spec.features.map(prefix => [prefix, groupedBounds(prefix)]));
+assert.ok(Math.abs(features.CASE_.dimensions_m[2] - 1.75) < 1e-6, 'baby-grand body is 1.75 m deep');
+assert.ok(Math.abs(benchBounds.getSize(new Vector3()).z - 0.36) < 1e-6, 'uncompressed bench depth');
+const pedalBounds = groupedBounds('PEDAL_Paddle_');
+assert.ok(pedalBounds.bounds_m.min[1] > 0.025 && pedalBounds.bounds_m.max[1] < 0.07, 'pedals remain close to floor');
+for (let i = 0; i < 3; i++) {
+  const link = featureBounds[`PEDAL_Link_${i}`];
+  assert.ok(link.intersectsBox(featureBounds[`PEDAL_Paddle_${i}`]), 'link meets pedal');
+  assert.ok(link.intersectsBox(featureBounds.LYRE_Crossbar), 'link meets crossbar');
+}
+for (const sign of [-1, 1]) {
+  assert.ok(featureBounds[`LYRE_Column_${sign}`].intersectsBox(featureBounds.LYRE_Crossbar), 'extended lyre column meets crossbar');
+  assert.ok(featureBounds[`LYRE_Brace_${sign}`].intersectsBox(featureBounds.LYRE_Crossbar), 'brace meets lowered crossbar');
+}
 assert.equal(source.parts.filter(part => part.name.startsWith('LEG_Tapered_')).length, 3);
 assert.equal(source.parts.filter(part => part.name.startsWith('CASTER_Wheel_')).length, 3);
 assert.equal(source.parts.filter(part => part.name.startsWith('PEDAL_Paddle_')).length, 3);
@@ -188,7 +215,11 @@ const report = {
   collision_meshes: 2, collider_materials: 0, collision_hidden_from_default_scene: true,
   bench_dimensions_m: benchBounds.getSize(new Vector3()).toArray(),
   bench_pivot_m: bench.position.toArray(), seat_anchor_local_m: bench.userData.seat_anchor_local_m,
-  keyboard: { white_keys: 52, black_keys: 36, representation: 'one ivory slab and 87 flat quads', pattern_triangles: 174 },
+  keyboard: { white_keys: 52, black_keys: 36, representation: source.keyboard.representation,
+    white_front_thickness_m: Number(featureBounds[whiteKeys[0].name].getSize(new Vector3()).y.toFixed(7)),
+    white_gap_m: Number((featureBounds[whiteKeys[1].name].min.x - featureBounds[whiteKeys[0].name].max.x).toFixed(7)),
+    black_rise_m: Number((featureBounds[blackKeys[0].name].max.y - featureBounds[whiteKeys[0].name].max.y).toFixed(7)) },
+  pedal_floor_clearance_m: pedalBounds.bounds_m.min[1],
   sha256: createHash('sha256').update(bytes).digest('hex'), budget: spec.budget, features,
   validation: { errors: validation.issues.numErrors, warnings: validation.issues.numWarnings },
 };
