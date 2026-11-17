@@ -1,24 +1,31 @@
 {
   "result": "PASS",
-  "artifact_sha256": "d4e61761c12161baaf90f91565d82b149812992a4731d5e154f957cb1caf4dc4",
+  "review": "Advisor round 1 repair",
+  "artifact_sha256": "85a938fd60e5c1e0f2bc04ea0236b182ae87d5bba123513e12f3821cf54f6016",
   "previews_reviewed": [
     "hero.png",
     "front.png",
     "side.png",
-    "3q.png"
+    "3q.png",
+    "rear.png"
   ],
-  "method": "Human-facing visual inspection of Blender renders made from the actual reimported optimized.glb",
+  "gallery_screenshot_reviewed": "/Users/admin/Documents/MallQueue/reports/abalone-gift-box-display-page.png",
+  "gallery_screenshot_sha256": "2c189febd6c3a6877013ba03196b94ceb1d5c296b95fe1d78d08b72770e00352",
+  "method": "Assistant visual inspection of actual reimported-GLB Blender renders and the local production gallery screenshot using the image viewer",
   "findings": [
-    "Clean three-tier countertop proportions; 12 framed gift boxes and 24 can lids visible.",
-    "Red, champagne-gold and black lacquer bodies; no brands or text.",
-    "Clear lids, ribbon bands, blank gift cards and blank sign present; rear cradles support leaning boxes."
+    "The central sign post sits in the gap between the two middle rear boxes, with a visible seat on the rear riser and a connection to the sign frame.",
+    "Side and rear views reviewed; no post passes through a gift box. Evaluated source separation is independently measured in source.json.",
+    "The three-tier composition retains twelve clear-lid gift boxes, twenty-four plain cans, ribbon bands, blank cards and a blank sign.",
+    "No logos, brands or readable text appear on the model.",
+    "The 1440x900 gallery screenshot shows the revised single-post model and updated topology/size values."
   ],
   "corrective_checks": [
-    "Replaced collapsed bevel on thin sign panel; final independent GLB gate reports zero degenerate triangles.",
-    "Measured evaluated geometry when settling boxes onto tiers; all 12 floor contacts checked."
+    "The new clearance assertion rejected the original two-post source before the generator repair.",
+    "All twelve gift-box evaluated bounds are separated from the post along X by at least 0.003999997861683369 m.",
+    "The post foot seats flush on the rear riser; its top engages the sign frame by 0.004999935626983643 m."
   ],
   "limitations": [
     "Thin alpha glazing approximates transparency without refraction.",
-    "Assembled mall, physical devices and alternate browser engines unverified."
+    "Physical devices, other browser engines and assembled-mall integration/performance remain unverified."
   ]
 }

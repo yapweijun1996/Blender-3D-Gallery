@@ -174,8 +174,9 @@ def build():
         for col, x in enumerate([-.354, -.118, .118, .354]):
             color = [COLORS['red'], COLORS['gold'], COLORS['black']][(row + col) % 3]
             gift(row * 4 + col + 1, x, y, h, color, root, lacquer, gold, glass)
-    for x in [-.12, .12]:
-        box('Sign_Support', (x, .230, .580), (.009, .013, .270), gold, root)
+    # Seat one post in the central 20 mm box gap: 4 mm clearance on each side.
+    # Its foot rests on the rear riser; its top seats 5 mm into the sign frame.
+    box('Sign_Support', (0, .230, .580), (.012, .013, .270), gold, root)
     box('Sign_Frame', (0, .227, .805), (.37, .018, .19), gold, root, bevel=.003)
     box('BlankSignPanel', (0, .216, .805), (.349, .004, .169), lacquer, root, COLORS['card'], .0008)
     return root
@@ -260,7 +261,8 @@ def render_views(root):
     s.render.image_settings.file_format = 'PNG'
     s.view_settings.view_transform = 'AgX'
     for name, pos in [('hero', (1.4, -2.8, 1.60)), ('front', (0, -3, .80)),
-                      ('side', (3, -.05, .90)), ('3q', (-1.7, -2.7, 1.9))]:
+                      ('side', (3, -.05, .90)), ('3q', (-1.7, -2.7, 1.9)),
+                      ('rear', (1.4, 2.8, 1.60))]:
         s.camera.location = pos
         aim(s.camera, target)
         s.render.filepath = str(HERE / 'previews' / (name + '.png'))

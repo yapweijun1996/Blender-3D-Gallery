@@ -8,7 +8,7 @@
   "blank_gift_cards": 12,
   "blank_signs": 1,
   "materials": 3,
-  "source_mesh_objects": 214,
+  "source_mesh_objects": 213,
   "gifts": [
     {
       "name": "GiftBox_01",
@@ -225,6 +225,38 @@
           0.6328324675559998
         ]
       }
+    }
+  ],
+  "sign_supports": [
+    {
+      "name": "Sign_Support",
+      "bounds_blender": {
+        "min": [
+          -0.006000000052154064,
+          0.22349999845027924,
+          0.4449999928474426
+        ],
+        "max": [
+          0.006000000052154064,
+          0.23650000989437103,
+          0.7149999737739563
+        ]
+      },
+      "minimum_box_x_clearance_m": 0.003999997861683369,
+      "nearest_gift_boxes": [
+        "GiftBox_02",
+        "GiftBox_03",
+        "GiftBox_06",
+        "GiftBox_07",
+        "GiftBox_10",
+        "GiftBox_11"
+      ],
+      "riser_seat_gap_m": 0.0,
+      "frame_overlap_m": [
+        0.012000000104308128,
+        0.012500002980232239,
+        0.004999935626983643
+      ]
     }
   ]
 }

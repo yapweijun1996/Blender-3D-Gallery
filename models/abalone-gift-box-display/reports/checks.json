@@ -1,6 +1,8 @@
 {
   "result": "PASS",
-  "artifact_sha256": "d4e61761c12161baaf90f91565d82b149812992a4731d5e154f957cb1caf4dc4",
+  "review": "Advisor round 1 repair",
+  "artifact_sha256": "85a938fd60e5c1e0f2bc04ea0236b182ae87d5bba123513e12f3821cf54f6016",
+  "repair": "Replaced two intersecting posts with one 12 mm wide central post in the 20 mm gift-box gap; added evaluated clearance/connection checks and a rear GLB preview.",
   "commands": [
     {
       "command": "Blender 5.2.3 headless generate.py",
@@ -9,45 +11,57 @@
         "hero.png",
         "front.png",
         "side.png",
-        "3q.png"
-      ]
+        "3q.png",
+        "rear.png"
+      ],
+      "log": "/tmp/abalone-r1-generate.log"
     },
     {
       "command": "Blender headless inspect_sources.py",
-      "result": "PASS"
+      "result": "PASS",
+      "log": "/tmp/abalone-r1-source.log",
+      "minimum_sign_box_clearance_m": 0.003999997861683369
     },
     {
       "command": "node models/abalone-gift-box-display/validate.mjs",
       "result": "PASS",
       "khronos_errors": 0,
       "khronos_warnings": 0,
-      "degenerate_triangles": 0
+      "degenerate_triangles": 0,
+      "log": "/tmp/abalone-r1-asset.log"
     },
     {
       "command": "node models/abalone-gift-box-display/verify_source_edit.mjs",
-      "result": "PASS"
+      "result": "PASS",
+      "log": "/tmp/abalone-r1-source-edit.log"
     },
     {
       "command": "Isolated fresh procedural rebuild and exact GLB hash comparison",
-      "result": "PASS"
+      "result": "PASS",
+      "log": "/tmp/abalone-r1-rebuild.log"
+    },
+    {
+      "command": "node models/abalone-gift-box-display/convert-preview.mjs",
+      "result": "PASS",
+      "log": "/tmp/abalone-r1-preview.log"
     },
     {
       "command": "npm run validate:assets",
       "result": "PASS",
-      "log": "/tmp/abalone-gift-box-display-validate-assets-final.log"
+      "log": "/tmp/abalone-r1-validate-assets.log"
     },
     {
       "command": "npm test",
       "result": "PASS",
       "passed": 737,
       "failed": 0,
-      "log": "/tmp/abalone-gift-box-display-npm-test-final.log"
+      "log": "/tmp/abalone-r1-npm-test.log"
     },
     {
       "command": "npm run build",
       "result": "PASS",
-      "log": "/tmp/abalone-gift-box-display-build.log",
-      "advisory": "Existing Vite chunk-size advisory"
+      "log": "/tmp/abalone-r1-build.log",
+      "advisory": "Existing Vite chunk-size advisory and plugin callback timing advisory"
     },
     {
       "command": "node models/abalone-gift-box-display/check-browser.mjs",
@@ -58,16 +72,24 @@
       ],
       "max_draw_calls_per_frame": 3,
       "controls": "orbit, zoom, reset",
-      "console_errors": []
+      "console_errors": [],
+      "log": "/tmp/abalone-r1-browser.log"
     }
   ],
-  "similar_model_decision": "Exact match NOT FOUND; built a distinct original asset.",
+  "similar_model_decision": "Original creation found no exact match. Round 1 rechecked 628 catalog assets and 516 metadata files; no other exact match. Existing requested asset improved in place.",
   "existing_gjh_files_unchanged": true,
-  "catalog_change": "Only append own collection at the end; existing categories and collections preserved.",
+  "protected_gjh_file_hashes_verified": 191,
+  "catalog_change": "Unchanged: this entry stores paths and descriptive fields; scripts/catalog.mjs derives triangle and byte counts from the actual GLB.",
   "generated_test_artifacts_restored": [
     "models/demo-beverage-can/reports/structure-motion.json"
   ],
-  "initial_attempts": [
+  "regression_before_fix": {
+    "result": "EXPECTED FAIL",
+    "command": "Blender headless inspect_sources.py on the original source with the new clearance assertion",
+    "finding": "The original post has no X separation from the gift boxes; the new assertion rejected it.",
+    "log": "/tmp/abalone-r1-clearance-before.log"
+  },
+  "original_creation_initial_attempts": [
     {
       "check": "GLB geometry gate",
       "result": "FAIL",
@@ -87,5 +109,5 @@
     "Assembled 17-shop mall performance and integration",
     "Deployment/publication"
   ],
-  "push": "NOT PERFORMED; manager review required."
+  "push": "NOT PERFORMED; user explicitly prohibited push and rebase."
 }

@@ -40,10 +40,40 @@ for group in gifts:
     assert abs(minimum[2] - expected_tier) < .0001, (group.name, minimum, expected_tier)
     details.append({'name': group.name, 'cans': len(cans), 'clear_lids': len(lids),
                     'blank_cards': len(cards), 'bounds_blender': {'min': minimum, 'max': maximum}})
+
+# An X-axis gap proves separation even where the tilted boxes and post overlap
+# in depth and height. Use evaluated mesh vertices, including all bevels.
+deps = bpy.context.evaluated_depsgraph_get()
+def bounds(o):
+    points = [o.matrix_world @ v.co for v in o.evaluated_get(deps).data.vertices]
+    return ([min(p[i] for p in points) for i in range(3)],
+            [max(p[i] for p in points) for i in range(3)])
+
+supports = [o for o in parts if o.name.startswith('Sign_Support')]
+assert supports
+rear_min, rear_max = bounds(bpy.data.objects['Riser_Rear'])
+frame_min, frame_max = bounds(bpy.data.objects['Sign_Frame'])
+support_details = []
+for support in supports:
+    low, high = bounds(support)
+    gaps = [(max(g['bounds_blender']['min'][0] - high[0],
+                 low[0] - g['bounds_blender']['max'][0]), g['name']) for g in details]
+    gap, nearest = min(gaps)
+    assert gap >= .0039, (support.name, nearest, 'post/box X clearance', gap)
+    base_gap = low[2] - rear_max[2]
+    assert abs(base_gap) < 1e-6, (support.name, 'post must seat on rear riser', base_gap)
+    assert all(rear_min[i] <= low[i] < high[i] <= rear_max[i] for i in (0, 1))
+    overlap = [min(high[i], frame_max[i]) - max(low[i], frame_min[i]) for i in range(3)]
+    assert all(v > 0 for v in overlap), (support.name, 'post must connect to sign frame', overlap)
+    support_details.append({'name': support.name, 'bounds_blender': {'min': low, 'max': high},
+                            'minimum_box_x_clearance_m': gap,
+                            'nearest_gift_boxes': [name for value, name in gaps if abs(value - gap) < 1e-6],
+                            'riser_seat_gap_m': base_gap, 'frame_overlap_m': overlap})
 report = {'result': 'PASS', 'blender_version': bpy.app.version_string,
           'units': 'metres', 'editable_gift_boxes': len(gifts), 'plain_cans': 24,
           'clear_lids': 12, 'blank_gift_cards': 12, 'blank_signs': 1,
           'materials': len({m.name for o in parts for m in o.data.materials}),
-          'source_mesh_objects': len(parts), 'gifts': details}
+          'source_mesh_objects': len(parts), 'gifts': details,
+          'sign_supports': support_details}
 (HERE / 'reports/source.json').write_text(json.dumps(report, indent=2) + '\n')
 print(json.dumps(report))
