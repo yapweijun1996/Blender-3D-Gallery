@@ -55,12 +55,8 @@ root.traverse(o => {
     const k = key(v);
     if (!unique.has(k)) { unique.set(k, points.length); parents.push(points.length); points.push(v); }
     ids.push(unique.get(k));
-    if (Math.abs(v.y - .008) < 1e-6) {
-      floorPoints[mi].add(key(new Vector3(v.x, .008, v.z)));
-      floorBounds.expandByPoint(v);
-    }
-    if (v.y <= .008 + 1e-6) {
-      assert.ok(Math.hypot(v.x, v.z) <= 1.2 + 1e-6, 'circular floor');
+    if (v.y >= .012-1e-6 && v.y <= .020 + 1e-6 &&
+        Math.hypot(v.x, v.z) > 1.08 && Math.hypot(v.x, v.z) <= 1.2+1e-6) {
       floorSolidBounds.expandByPoint(v);
     }
   }
@@ -79,6 +75,15 @@ root.traverse(o => {
     if (!boxes.has(component)) boxes.set(component, new Box3());
     boxes.get(component).expandByPoint(points[i]);
   }
+  // Isolate the actual plaque components: lamp bases also touch Y=.020,
+  // but an editable lamp must not affect the mosaic symmetry measurement.
+  for (let i = 0; i < points.length; i++) {
+    const v = points[i], box = boxes.get(find(i));
+    if (Math.abs(v.y-.020) < 1e-6 && box.min.y >= .012-1e-6 && box.max.y <= .020+1e-6) {
+      floorPoints[mi].add(key(new Vector3(v.x, .020, v.z)));
+      floorBounds.expandByPoint(v);
+    }
+  }
   components[o.material.name] = [...boxes.values()];
 });
 assert.equal(degenerates, 0);
@@ -86,14 +91,23 @@ assert.equal(primitives, spec.budget.mesh_primitives);
 assert.ok(triangles <= spec.budget.triangles && bytes.length < spec.budget.bytes);
 
 // Independently recover actual connected geometry, rather than accepting names,
-// feature extras or metadata as evidence of twelve lamps and fifty flowers.
+// feature extras or metadata as evidence of the lamps, flowers and square floor.
 const height = b => b.getSize(new Vector3()).y;
-const bowls = components.Terracotta.filter(b => b.min.y >= .008-1e-6 && b.max.y < .08 && height(b) > .06);
-const flames = components.MarigoldGold.filter(b => b.min.y > .077 && b.max.y < .15 && height(b) > .06);
+const bowls = components.Terracotta.filter(b => b.min.y >= .020-1e-6 && b.max.y < .10 && height(b) > .06);
+const flames = components.RiceIvory.filter(b => b.min.y > .089 && b.max.y < .19 && height(b) > .08);
 const flowers = components.MarigoldGold.filter(b => b.min.y > 1.2 && height(b) > .08);
 assert.equal(bowls.length, 12);
 assert.equal(flames.length, 12);
-assert.equal(flowers.length, 50);
+assert.equal(flowers.length, spec.features.marigold_heads);
+const squareFloor = components.RiceIvory.find(b => Math.abs(b.min.y) < 1e-6 && Math.abs(b.max.y-.012) < 1e-6);
+assert.ok(squareFloor, 'included square floor geometry');
+assert.ok(squareFloor.getSize(new Vector3()).distanceTo(new Vector3(2, .012, 2)) < 1e-6);
+const framePosts = components.Terracotta.filter(b => height(b) > 1.9);
+assert.equal(framePosts.length, 2, 'two ground-supported poles');
+for (const flame of flames) {
+  const size = flame.getSize(new Vector3());
+  assert.ok(Math.max(size.x, size.z) >= .04 && height(flame) >= .089, 'readable flame silhouette');
+}
 const lampBounds = new Box3();
 for (const bowl of bowls) {
   lampBounds.union(bowl);
@@ -108,7 +122,7 @@ assert.ok(lampBounds.min.x >= -1 && lampBounds.max.x <= 1 && lampBounds.min.z >=
 const garlandBounds = [];
 for (const sign of [-1, 1]) {
   const group = flowers.filter(b => Math.sign(b.getCenter(new Vector3()).x) === sign);
-  assert.equal(group.length, 25, 'two distinct flower strings');
+  assert.equal(group.length, spec.features.marigold_heads/2, 'two distinct flower strings');
   const box = new Box3();
   group.forEach(b => box.union(b));
   garlandBounds.push({ min: box.min.toArray(), max: box.max.toArray(), flowers: group.length });
@@ -120,7 +134,7 @@ for (const set of floorPoints) {
   for (const item of set) {
     const [x, , z] = item.split(',').map(Number).map(n => n/1e6);
     const a = Math.PI/6;
-    const target = [x*Math.cos(a)-z*Math.sin(a), .008, x*Math.sin(a)+z*Math.cos(a)];
+    const target = [x*Math.cos(a)-z*Math.sin(a), .020, x*Math.sin(a)+z*Math.cos(a)];
     assert.ok([...set].some(k => k.split(',').map(Number).every((v, i) => Math.abs(v/1e6-target[i]) < 2e-6)), 'twelve-fold colour symmetry');
   }
 }
@@ -132,7 +146,8 @@ const report = {
   sha256: createHash('sha256').update(bytes).digest('hex'),
   validation: { errors: validation.issues.numErrors, warnings: validation.issues.numWarnings, validator: validation.validatorVersion },
   features: { clay_diyas: bowls.length, flame_meshes: flames.length, hanging_garlands: garlandBounds.length,
-    marigold_heads: flowers.length, lamp_group_dimensions: lampDimensions,
+    marigold_heads: flowers.length, included_square_floor_dimensions: squareFloor.getSize(new Vector3()).toArray(),
+    support_posts: framePosts.length, lamp_group_dimensions: lampDimensions,
     lamp_group_bounds: { min: lampBounds.min.toArray(), max: lampBounds.max.toArray() },
     rangoli_diameter: floorBounds.getSize(new Vector3()).x, rangoli_thickness: floorSolidBounds.getSize(new Vector3()).y,
     rangoli_colours: floorPoints.length, rotational_symmetry_order: 12, garlands: garlandBounds },

@@ -66,6 +66,23 @@ try {
   await page.waitForTimeout(300);
   const reset = await page.locator('#viewport canvas').screenshot();
   assert.ok(initial.equals(reset), 'reset restores original rendered view');
+  // Exercise the real viewer controls to inspect all twelve flames at a
+  // larger scale without replacing the default-page evidence above.
+  const canvas = page.locator('#viewport canvas');
+  const box = await canvas.boundingBox();
+  await canvas.focus();
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('ArrowUp');
+  await page.mouse.move(box.x+box.width/2, box.y+box.height/2);
+  await page.mouse.down({ button: 'right' });
+  await page.mouse.move(box.x+box.width/2, box.y+box.height/2-80, { steps: 12 });
+  await page.mouse.up({ button: 'right' });
+  await page.waitForTimeout(1000);
+  for (let i = 0; i < 7; i++) await page.keyboard.press('+');
+  await page.waitForTimeout(500);
+  const closeup = path.join(reportDir, spec.slug+'-lamps-closeup.png');
+  await canvas.screenshot({ path: closeup });
   const graphics = await page.evaluate(() => {
     const gl = document.querySelector('#viewport canvas').getContext('webgl2');
     // Browser screenshots provide the visible evidence; this records the actual
@@ -82,9 +99,10 @@ try {
   assert.ok(hashes.length >= 2 && hashes.every(hash => hash === assets.sha256), 'consumed GLB matches measured bytes');
   assert.deepEqual(errors, []);
   const report = { result: 'PASS', viewport: [1440, 900], browser: await browser.version(),
-    id: spec.slug, consumed_glb_sha256: hashes, screenshot,
+    id: spec.slug, consumed_glb_sha256: hashes, screenshot, lamps_closeup: closeup,
     checks: ['direct model page', 'visible WebGL geometry', 'keyboard orbit and zoom', 'pixel-identical reset',
-      'close disposes canvas', 'reopen', 'no console/page/HTTP errors', 'no horizontal overflow'],
+      'twelve-flame closeup using orbit/pan/zoom', 'close disposes canvas', 'reopen',
+      'no console/page/HTTP errors', 'no horizontal overflow'],
     measured_draw_calls: 3, measured_triangles_per_model_frame: assets.triangles,
     graphics: { version: graphics.version, renderer: graphics.renderer },
     limits: 'Desktop headless Chromium only; no physical devices, WebKit, full-mall scene or FPS verification.' };

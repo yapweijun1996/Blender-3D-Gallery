@@ -85,7 +85,7 @@ def tube(name, points, radius, parent, mat=0, sides=8):
 def mosaic(root):
     # A single closed 8 mm plaque. Shared ring vertices form an exact tessellation:
     # no coplanar overlays, textures, decals, text, icons or hidden base planes.
-    n = 144
+    n = 120
     radius_functions = [
         lambda a: .12,
         lambda a: .16,
@@ -113,7 +113,7 @@ def mosaic(root):
             q = (k+1) % n
             faces.append((1+j*n+k, 1+(j+1)*n+k, 1+(j+1)*n+q, 1+j*n+q))
             # Repeated 24 geometric chevrons in the outer saffron band.
-            colors.append(2 if j == 7 and k % 6 in (2, 3) else color)
+            colors.append(2 if j == 7 and k % 5 in (2, 3) else color)
     bottom = len(vertices)
     vertices.extend((1.2*math.cos(TAU*k/n), 1.2*math.sin(TAU*k/n), 0) for k in range(n))
     centre = len(vertices)
@@ -126,15 +126,16 @@ def mosaic(root):
     o = mesh('RANGOLI_OriginalTwelvePetalMosaic', vertices, faces, root, indices=colors)
     o['pattern'] = 'Original concentric twelve-petal geometric rosette with 24 outer chevrons'
     o['diameter_m'] = 2.4
+    o.location.z = .012
     return o
 
 
 def diya(root, j):
     group = empty('DIYA_%02d' % (j+1), root)
     angle = TAU*j/12
-    group.location = (.81*math.sin(angle), -.81*math.cos(angle), .008)
+    group.location = (.81*math.sin(angle), -.81*math.cos(angle), .020)
     group.rotation_euler.z = angle
-    n = 24
+    n = 20
     rings = []
     # Section runs from flat base up the outer wall, over the rolled clay lip,
     # then down the hollow inner wall. The top is genuinely open.
@@ -153,42 +154,43 @@ def diya(root, j):
             for k in range(n)] for z in (.031, .033)]
     loft('OIL_Inset_%02d' % (j+1), oil, group, 1)
     tube('WICK_Cotton_%02d' % (j+1), [(0, -.060, .044), (0, -.099, .066),
-         (0, -.119, .071)], .004, group, 2, 6)
+         (0, -.119, .071)], .004, group, 0, 6)
     rings = []
-    for z, r, bend in [(0, .005, 0), (.012, .011, 0), (.031, .010, .002),
-                       (.049, .004, .006), (.064, .0007, .010)]:
-        rings.append([(bend+r*math.cos(TAU*k/8), -.117+.7*r*math.sin(TAU*k/8),
+    for z, r, bend in [(0, .007, 0), (.020, .024, 0), (.043, .020, .002),
+                       (.068, .011, .006), (.090, .0008, .012)]:
+        rings.append([(bend+r*math.cos(TAU*k/8), -.117+.8*r*math.sin(TAU*k/8),
                        .070+z) for k in range(8)])
-    loft('FLAME_Teardrop_%02d' % (j+1), rings, group, 1)
-    core = [[(.0035*math.cos(TAU*k/6)+bend, -.123+.002*math.sin(TAU*k/6), z)
-             for k in range(6)] for bend, z in [(0, .076), (.001, .089), (.003, .102)]]
-    core[-1] = [(.003+.0005*math.cos(TAU*k/6), -.123+.0005*math.sin(TAU*k/6), .102)
-                for k in range(6)]
-    loft('FLAME_Core_%02d' % (j+1), core, group, 2)
+    loft('FLAME_Teardrop_%02d' % (j+1), rings, group, 2)
+    core = [[(bend+r*math.cos(TAU*k/6), -.135+.004*math.sin(TAU*k/6), z)
+             for k in range(6)] for bend, z, r in [(0, .077, .003),
+                 (.001, .091, .010), (.003, .116, .0006)]]
+    loft('FLAME_Core_%02d' % (j+1), core, group, 1)
 
 
 def flower(name, centre, phase, root, mat):
-    # Closed ruffled marigold head: alternating petal ridges, five latitude
-    # rings and two single poles avoid degenerate sphere-tip triangles.
-    n, latitude = 12, 6
+    # Three flared, scalloped petal tiers with recessed throats. The staggered
+    # six-lobed rings create real folds and shadows instead of a beaded sphere.
+    n = 18
+    profile = [(.026, -.042), (.059, -.028), (.030, -.012),
+               (.061, .002), (.023, .018), (.044, .033)]
     vertices = [(0, 0, -.047)]
-    for j in range(1, latitude):
-        t = math.pi*j/latitude
+    for j, (radius, z) in enumerate(profile):
         for k in range(n):
-            a = TAU*k/n
-            r = .047*math.sin(t)*(1+.14*math.cos(6*a+phase)*math.sin(t))
-            vertices.append((r*math.cos(a), r*math.sin(a), -.047*math.cos(t)))
-    vertices.append((0, 0, .047))
+            a = TAU*k/n + .16*(j//2)
+            fold = math.cos(6*a + phase*.13)
+            r = radius*(1 + .19*fold)
+            vertices.append((r*math.cos(a), r*math.sin(a), z + .006*fold))
+    vertices.append((0, 0, .045))
     faces = [(0, 1+(k+1) % n, 1+k) for k in range(n)]
-    for j in range(latitude-2):
+    for j in range(len(profile)-1):
         for k in range(n):
             q = (k+1) % n
             faces.append((1+j*n+k, 1+j*n+q, 1+(j+1)*n+q, 1+(j+1)*n+k))
-    last = 1+(latitude-2)*n
+    last = 1+(len(profile)-1)*n
     faces.extend((last+k, last+(k+1) % n, len(vertices)-1) for k in range(n))
     o = mesh(name, vertices, faces, root, mat, True)
     o.location = centre
-    o.rotation_euler = (.22*math.sin(phase), .31*math.cos(phase), phase)
+    o.rotation_euler = (math.pi/2+.17*math.sin(phase), phase, .20*math.cos(phase))
 
 
 def garland(root, index):
@@ -201,18 +203,19 @@ def garland(root, index):
     for a, b in zip(samples, samples[1:]):
         lengths.append(lengths[-1]+(b-a).length)
     points = []
-    for j in range(25):
-        distance = lengths[-1]*j/24
+    for j in range(21):
+        distance = lengths[-1]*j/20
         k = min(199, max(0, bisect.bisect_right(lengths, distance)-1))
         p = samples[k].lerp(samples[k+1], (distance-lengths[k])/(lengths[k+1]-lengths[k]))
         points.append(p)
         flower('MARIGOLD_%02d_%02d' % (index+1, j+1), p,
                j*1.618+index*.37, group, 1)
-    tube('CORD_%02d' % (index+1), points, .005, group, 0, 6)
+    anchors = [Vector((p.x, p.y, 1.925)) for p in (points[0], points[-1])]
+    tube('CORD_%02d' % (index+1), [anchors[0], *points, anchors[1]], .005, group, 0, 6)
     for j, p in enumerate([points[0], points[-1]]):
-        # Small ivory cord loops indicate the four intended overhead fixings.
+        # Loops interlock with the supplied crossbar and overlap the end heads.
         bpy.ops.mesh.primitive_torus_add(major_segments=12, minor_segments=6,
-            location=(p.x, p.y, 1.925), major_radius=.025, minor_radius=.003)
+            location=(p.x, p.y, 1.955), major_radius=.030, minor_radius=.003)
         o = bpy.context.object
         o.name = 'HANGER_%02d_%02d' % (index+1, j+1)
         o.rotation_euler.x = math.pi/2
@@ -220,11 +223,27 @@ def garland(root, index):
         o.data.materials.append(MATERIALS[2])
 
 
+def floor_and_frame(root):
+    corners = [(-1, -1), (1, -1), (1, 1), (-1, 1)]
+    floor = loft('FLOOR_TwoMetreSquare',
+                 [[(x, y, z) for x, y in corners] for z in (0, .012)], root, 2, False)
+    floor['interface'] = 'Included 2 x 2 m floor; underside at ground Y=0 in glTF'
+    frame = empty('FRAME_GarlandSupport', root)
+    for j, x in enumerate([-.94, .94]):
+        # Feet sit on the square floor; the poles carry the shared crossbar.
+        loft('FRAME_Foot_%02d' % j,
+             [[(x+.052*math.cos(TAU*k/12), .76+.052*math.sin(TAU*k/12), z)
+               for k in range(12)] for z in (.012, .032)], frame, 0)
+        tube('FRAME_Post_%02d' % j, [(x, .76, .032), (x, .76, 1.96)], .016, frame, 0)
+    tube('FRAME_Crossbar', [(-1.085, .76, 1.96), (1.085, .76, 1.96)], .017, frame, 0)
+
+
 def build():
     root = empty(ROOT)
     root['units'] = 'metres'
     root['front_axis'] = 'Blender -Y / glTF +Z'
-    root['scope'] = 'Static decorative display; no live fire, lights, rigging or physics simulation'
+    root['scope'] = 'Static display including square floor and freestanding garland frame; no fire or light simulation'
+    floor_and_frame(root)
     mosaic(root)
     for j in range(12):
         diya(root, j)
@@ -326,12 +345,14 @@ def render_views():
         ('front', (0, -5, 2.7), (0, 0, .75)),
         ('side', (5, -.1, 2.8), (0, 0, .75)),
         ('3q', (-3.5, -4, 3.5), (0, 0, .7)),
-        ('top', (0, 0, 6), (0, 0, 0))]:
+        ('top', (0, 0, 6), (0, 0, 0)),
+        ('lamps', (0, -2.4, 4.8), (0, 0, .07))]:
         s.camera.location = location
         aim(s.camera, target)
         bpy.context.view_layer.update()
         points = [o.matrix_world @ v.co for o in bpy.data.objects[ROOT].children_recursive
-                  if o.type == 'MESH' for v in o.data.vertices]
+                  if o.type == 'MESH' and (name != 'lamps' or o.parent.name.startswith('DIYA_'))
+                  for v in o.data.vertices]
         right = s.camera.matrix_world.to_quaternion() @ Vector((1, 0, 0))
         up = s.camera.matrix_world.to_quaternion() @ Vector((0, 1, 0))
         horizontal = [p.dot(right) for p in points]
