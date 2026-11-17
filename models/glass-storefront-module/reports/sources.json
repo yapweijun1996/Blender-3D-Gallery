@@ -27,7 +27,15 @@
       "PATCH_Left_Bottom",
       "PATCH_Left_Top",
       "PATCH_Right_Bottom",
-      "PATCH_Right_Top"
+      "PATCH_Right_Top",
+      "PIVOT_BottomSpindle_Left",
+      "PIVOT_BottomSpindle_Right",
+      "PIVOT_FloorBearing_Left",
+      "PIVOT_FloorBearing_Right",
+      "PIVOT_TopSpindle_Left",
+      "PIVOT_TopSpindle_Right",
+      "PIVOT_TransomReceiver_Left",
+      "PIVOT_TransomReceiver_Right"
     ],
     "ASSET_GlassStorefrontModule_Open": [
       "CHANNEL_Floor_Left_Open",
@@ -38,5 +46,21 @@
       "HEADER_BlankSignBand_Open"
     ]
   },
-  "external_images": 0
+  "external_images": 0,
+  "doors": {
+    "Left": {
+      "width_m": 0.4909999966621399,
+      "height_m": 2.2499998807907104,
+      "floor_gap_m": 0.0140000581741333,
+      "top_gap_m": 0.016000032424926758,
+      "pivot_connections": "PASS: overlapping bounds from floor bearing through leaf patches to transom receiver"
+    },
+    "Right": {
+      "width_m": 0.4909999966621399,
+      "height_m": 2.2499998807907104,
+      "floor_gap_m": 0.0140000581741333,
+      "top_gap_m": 0.016000032424926758,
+      "pivot_connections": "PASS: overlapping bounds from floor bearing through leaf patches to transom receiver"
+    }
+  }
 }

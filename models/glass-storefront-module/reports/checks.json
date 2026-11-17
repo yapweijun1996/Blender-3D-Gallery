@@ -20,12 +20,12 @@
     {
       "command": "npm run build",
       "exit_code": 0,
-      "notes": "Final production build passed after final export and metadata update; existing bundle-size advisory only."
+      "notes": "Final production build passed after all Blender previews completed; existing bundle-size advisory only."
     },
     {
       "command": "node models/glass-storefront-module/verify_browser.mjs",
       "exit_code": 0,
-      "scope": "1440/390 production viewer and both variant contact sheets"
+      "scope": "1440/390 production viewer with matching final GLB hash, keyboard controls, zero console errors/overflow; four decoded real-GLB contact panels at each width, measured triangles and two draw calls."
     }
   ],
   "visual_review": {
@@ -42,7 +42,8 @@
       "contact-390.png",
       "external 1440 and 390 gallery screenshots",
       "open-front.png"
-    ]
+    ],
+    "notes": "Viewed all eight regenerated Blender previews, both final contact sheets and requested 1440 px gallery screenshot; door proportions, pivot connections, rim visibility and transmitted grid inspected. Earlier contact readiness timeouts remain recorded in initial-observations.json; final shared-context checks passed without increasing the 30 s wait."
   },
   "not_found": [
     "docs/references/gjh-mall-concept-board.png",
@@ -57,7 +58,14 @@
   "existing_models_modified": false,
   "gallery_ui_modified": false,
   "published": false,
-  "delivery_sha256": "c7716d0f821166ad09b7729189f02873a7052e018937c9efd05cbd8ee6a1fd18",
-  "source_sha256": "5dd5ad30559468fb46f7b92fd59acdeb2fc77af766045b34f29e2b3b9133ec77",
-  "reproducibility": "Final generator rebuild and saved-source export completed. No byte-for-byte reproducibility across Blender versions is claimed."
+  "delivery_sha256": "b21828e03a2094bee84ab8459cab3e166488e1699cebe63fb8a2d9aa8fbd0609",
+  "source_sha256": "a327736bb97949c0e0e4853fb9b08cfd2c9c0d47c5aa25473db0f2fd7f5b83ed",
+  "reproducibility": "PASS: two fresh generator builds under Blender 5.2.3 produced identical GLB SHA-256 b21828e03a2094bee84ab8459cab3e166488e1699cebe63fb8a2d9aa8fbd0609. Fixed render seed 0; all eight Blender previews regenerated. No byte identity across Blender versions is claimed.",
+  "review_round": 1,
+  "changes": [
+    "Reduced door leaf height from 2.67 m to a measured 2.2499998807907104 m; connected patches to floor bearings and transom receivers with coaxial pins.",
+    "Lowered matching Open transom and collider lintel to a measured 2.2799999713897705 m clear height; retained 1.0 m clear width.",
+    "One shared transparent material uses RGBA vertex tint for clear faces and narrow polished rims; larger pulls retain the 0.12 m envelope.",
+    "QA contact sheets share one renderer/environment; four decoded real-GLB panels retain both viewports, lighting, geometry counts and draw-call checks."
+  ]
 }

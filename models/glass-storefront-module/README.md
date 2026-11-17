@@ -12,8 +12,8 @@ No external assets, downloaded scripts, textures, brands, logos or readable asse
 
 | Scene index | Name | Purpose |
 | --- | --- | --- |
-| 0 (default) | Closed | Two fixed glass panes, two frameless glass door leaves, four patch fittings, front/rear stainless pull handles, blank sign band and slim floor channels |
-| 1 | Open | Same module without the door pair; a measured 1.0 m × 2.72 m unobstructed opening and flush floor |
+| 0 (default) | Closed | Two fixed glass panes, two frameless glass door leaves, four patch fittings, connected floor/transom pivots, front/rear stainless pull handles, blank sign band and slim floor channels |
+| 1 | Open | Same module without the door pair; a measured 1.0 m × 2.28 m unobstructed opening and flush floor |
 | 2 | COLLISION_ONLY_Closed | Hidden, material-free `collider_box` |
 | 3 | COLLISION_ONLY_Open | Hidden, material-free `collider_box_Open`; three box volumes preserve the opening |
 
@@ -21,7 +21,13 @@ The unchanged gallery displays scene 0. A consuming Three.js app can choose `glt
 
 Both visual roots are at floor centre, X=0/Y=0/Z=0 in glTF; +Y up, front +Z; 1 unit = 1 metre. Blender authoring uses +Z up/front -Y and native Y-up glTF conversion. Repeat end planes at X ±1.5 m, with no vertical jamb or protruding end cap. A 0.22 m high blank header and 26 mm high side channels stay inside the module envelope. No threshold crosses the Open passage.
 
-Each variant exports two merged visual meshes: all glass and all metal. They share exactly two materials across both scenes. Glass uses single-sided alpha BLEND, no transmission, refraction, images or custom shader. Neutral metal is directly tintable; the blank header uses the same material. Source objects preserve independently named panes, fittings, handles and header. Merged export extras list their source parts. Doors are static; no interaction or animation is claimed.
+Each variant exports two merged visual meshes: all glass and all metal. They share exactly two materials across both scenes. Glass uses single-sided alpha BLEND and standard RGBA vertex colors: 0.13 face opacity, a 5 mm tinted polished rim (0.36 opacity), 2 mm bevels and 0.58 edge opacity. Roughness is 0.055; there is no transmission, refraction, image or custom runtime shader. Neutral metal is directly tintable; the blank header uses the same material. Source objects preserve independently named panes, fittings, handles and header. Merged export extras list their source parts. Doors are static; no interaction or animation is claimed.
+
+## Advisor round 1
+
+Door leaves are now 0.491 × 2.25 m, with a 14 mm floor gap and 16 mm transom gap. Each pair of leaf patches connects through visible coaxial spindles to floor bearings and fixed transom receivers. Wider 28 mm pull handles and tinted glass edges improve recognition at gallery scale. The Open variant removes all door hardware and retains a flush 1.0 × 2.28 m passage; its collider lintel matches the lower transom. The 3.0 × 3.6 × 0.12 m envelope, tiling and material/draw-call count are unchanged.
+
+Measured GLB: **293,952 bytes; 6,040 triangles** across all scenes (Closed 5,296; Open 696; colliders 48), **2 materials, 0 textures, 2 draw calls** per visual instance. Both variants and colliders remain below the stricter 8,000-triangle delivery budget. Two fresh generator builds under Blender 5.2.3 produced identical GLB bytes; render sampling uses a fixed seed of 0. No byte identity across Blender versions is claimed.
 
 ## Rebuild and check
 
@@ -39,9 +45,9 @@ npm run build
 node models/glass-storefront-module/verify_browser.mjs
 ```
 
-Blender 5.2.3 LTS. `hero.png`, `front.png`, `side.png`, `3q.png` and corresponding `open-*` images are real Blender renders. Contact sheets at 1440/390 px render both actual GLB scenes in Chromium; the QA grid is not exported. `hero.jpg` is the gallery thumbnail derived locally from the hero render using `sips`.
+Blender 5.2.3 LTS. `hero.png`, `front.png`, `side.png`, `3q.png` and corresponding `open-*` images are real Blender renders. Contact sheets at 1440/390 px render both actual GLB scenes in Chromium, reusing one WebGL renderer/environment before capturing four decoded PNG panels; the QA grid is not exported. `hero.jpg` is the gallery thumbnail derived locally from the hero render using `sips`.
 
-The source-edit proof changes a temporary saved copy under `/tmp/` and leaves delivery untouched. Asset checks independently load glTF, measure scale, bounds, triangles, material/scene contracts, nondegeneracy, opening rays, collider clearance and tile seams. Browser evidence records the loaded GLB hash, draw calls, keyboard orbit/zoom/reset, overflow and console errors. Physical devices, WebKit, full-mall integration and sustained performance remain unverified. No structural or safety certification.
+The source-edit proof changes a temporary saved copy under `/tmp/` and leaves delivery untouched. Asset checks independently load glTF, measure scale, bounds, triangles, material/scene contracts, nondegeneracy, opening rays, collider clearance, tile seams and exported vertex opacity. Source checks measure door proportions and verify overlapping bounds along the pivot connections. Browser evidence records the loaded GLB hash, draw calls, keyboard orbit/zoom/reset, overflow and console errors. Physical devices, WebKit, full-mall integration and sustained performance remain unverified. No structural or safety certification.
 
 ## Existing models checked
 

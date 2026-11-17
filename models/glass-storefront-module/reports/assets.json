@@ -1,13 +1,13 @@
 {
   "result": "PASS",
   "id": "glass-storefront-module",
-  "glb_bytes": 284456,
-  "triangles": 5688,
+  "glb_bytes": 293952,
+  "triangles": 6040,
   "materials": 2,
   "textures": 0,
   "animations": 0,
-  "min_triangle_area_m2": 5.780177778375915e-8,
-  "sha256": "c7716d0f821166ad09b7729189f02873a7052e018937c9efd05cbd8ee6a1fd18",
+  "min_triangle_area_m2": 2.3133409559244338e-7,
+  "sha256": "b21828e03a2094bee84ab8459cab3e166488e1699cebe63fb8a2d9aa8fbd0609",
   "validation": {
     "errors": 0,
     "warnings": 0
@@ -18,21 +18,21 @@
       "dimensions_metres_gltf": [
         3,
         3.5999999046325684,
-        0.11999999731779099
+        0.12000000476837158
       ],
       "bounds": {
         "min": [
           -1.5,
           0,
-          -0.05999999865889549
+          -0.06000000238418579
         ],
         "max": [
           1.5,
           3.5999999046325684,
-          0.05999999865889549
+          0.06000000238418579
         ]
       },
-      "visible_triangles": 4512,
+      "visible_triangles": 5296,
       "collider_triangles": 12,
       "visible_primitives": 2,
       "aperture_rays": 30,
@@ -64,7 +64,15 @@
           "PATCH_Left_Bottom",
           "PATCH_Left_Top",
           "PATCH_Right_Bottom",
-          "PATCH_Right_Top"
+          "PATCH_Right_Top",
+          "PIVOT_BottomSpindle_Left",
+          "PIVOT_BottomSpindle_Right",
+          "PIVOT_FloorBearing_Left",
+          "PIVOT_FloorBearing_Right",
+          "PIVOT_TopSpindle_Left",
+          "PIVOT_TopSpindle_Right",
+          "PIVOT_TransomReceiver_Left",
+          "PIVOT_TransomReceiver_Right"
         ]
       }
     },
@@ -87,13 +95,13 @@
           0.05999999865889549
         ]
       },
-      "visible_triangles": 1128,
+      "visible_triangles": 696,
       "collider_triangles": 36,
       "visible_primitives": 2,
       "aperture_rays": 30,
       "clear_opening_metres": [
         1,
-        2.7199997901916504
+        2.2799999713897705
       ],
       "source_parts": {
         "GLASS_FramelessPanes_Open": [

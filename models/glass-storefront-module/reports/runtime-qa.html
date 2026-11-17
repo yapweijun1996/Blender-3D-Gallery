@@ -7,14 +7,14 @@
   * {box-sizing:border-box} body {margin:0;padding:20px;background:#eee8dd;color:#343c3b;font:15px system-ui}
   h1 {font-size:22px;margin:0 0 6px} p {margin:0 0 16px} main {display:grid;grid-template-columns:1fr 1fr;gap:16px}
   section {background:#ddd9d1;border:1px solid #c5c0b8;border-radius:12px;overflow:hidden}
-  h2 {font-size:16px;margin:0;padding:10px 14px;background:#faf7f1} canvas {display:block;width:100%;aspect-ratio:1.14}
+  h2 {font-size:16px;margin:0;padding:10px 14px;background:#faf7f1} img {display:block;width:100%;aspect-ratio:1.14}
   @media(max-width:600px){body{padding:12px}main{grid-template-columns:1fr;gap:12px}h1{font-size:19px}}
 </style>
 <script type="importmap">
 {"imports":{"three":"../../../node_modules/three/build/three.module.js","three/addons/":"../../../node_modules/three/examples/jsm/"}}
 </script>
 <h1>Glass Storefront Module</h1>
-<p>3.0 × 3.6 m · 3.0 m repeat pitch · Open passage 1.0 × 2.72 m</p>
+<p>3.0 × 3.6 m · 3.0 m repeat pitch · Open passage 1.0 × 2.28 m</p>
 <main></main>
 <script type="module">
 import * as THREE from 'three';
@@ -22,31 +22,31 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 const file = await new GLTFLoader().loadAsync('../exports/optimized.glb');
 const records = [];
+// Share one context and one environment across all four real-GLB renders.
+const renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
+renderer.setPixelRatio(1);
+renderer.setClearColor(0xe2ded5);
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+const environment = new RoomEnvironment();
+const env = pmrem.fromScene(environment, .04);
+scene.environment = env.texture;
+scene.environmentIntensity = .7;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x666051, 2));
+const light = new THREE.DirectionalLight(0xffffff, 2.1);
+light.position.set(-3, 7, 5);
+scene.add(light);
+// The procedural studio grid is never exported in the GLB.
+const grid = new THREE.GridHelper(14, 14, 0xaea594, 0xcac1b1);
+grid.position.y = -.012;
+scene.add(grid);
 for (const [variant, view] of [[0,'Front'],[1,'Front'],[0,'Three-quarter'],[1,'Three-quarter']]) {
   const label = `${variant ? 'Open' : 'Closed'} · ${view}`;
   const section = document.createElement('section');
   section.innerHTML = `<h2>${label}</h2>`;
   document.querySelector('main').append(section);
-  const renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
-  renderer.setPixelRatio(1);
-  renderer.setClearColor(0xe2ded5);
-  section.append(renderer.domElement);
-  const scene = new THREE.Scene();
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  const environment = new RoomEnvironment();
-  const env = pmrem.fromScene(environment, .04);
-  scene.environment = env.texture;
-  scene.environmentIntensity = .7;
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x666051, 2));
-  const light = new THREE.DirectionalLight(0xffffff, 2.1);
-  light.position.set(-3, 7, 5);
-  scene.add(light);
   const model = file.scenes[variant].clone(true);
   scene.add(model);
-  // Procedural studio grid makes transparency visible; it is never in the GLB.
-  const grid = new THREE.GridHelper(14, 14, 0xaea594, 0xcac1b1);
-  grid.position.y = -.012;
-  scene.add(grid);
   const camera = new THREE.PerspectiveCamera(35, 1, .01, 100);
   const direction = view === 'Front' ? new THREE.Vector3(0, .04, 1) : new THREE.Vector3(.50, .18, 1);
   camera.position.copy(direction.normalize().multiplyScalar(8)).add(new THREE.Vector3(0, 1.8, 0));
@@ -65,9 +65,17 @@ for (const [variant, view] of [[0,'Front'],[1,'Front'],[0,'Three-quarter'],[1,'T
             visible_meshes:model.children[0].children.filter(n => n.isMesh).length};
   };
   records.push(draw());
-  pmrem.dispose();
-  environment.dispose();
+  const snapshot = new Image();
+  snapshot.alt = label + ' actual GLB render';
+  snapshot.src = renderer.domElement.toDataURL('image/png');
+  await snapshot.decode();
+  section.append(snapshot);
+  scene.remove(model);
 }
+pmrem.dispose();
+environment.dispose();
+env.dispose();
+renderer.dispose();
 window.qaResults = {ready:true, records};
 </script>
 </html>

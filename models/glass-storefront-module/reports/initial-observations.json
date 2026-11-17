@@ -13,7 +13,24 @@
       "check": "production screenshot",
       "result": "FAIL",
       "notes": "Full-page Page.captureScreenshot returned Unable to capture screenshot. Switched to the explicitly requested viewport capture; final 1440 x 900 and 390 x 900 captures passed. No model or gallery code changed."
+    },
+    {
+      "check": "advisor round 1 standalone contact readiness",
+      "result": "TIMEOUT",
+      "timeouts_ms": [
+        30000
+      ],
+      "notes": "Both production gallery viewports (1440/390 px) and the 1440 px contact sheet passed. The final 390 px contact sheet timed out while the full Blender preview render was still running. Exact timeout cause was not established; rerun separately after render completion."
+    },
+    {
+      "check": "advisor round 1 contact readiness in isolation",
+      "result": "TIMEOUT",
+      "timeouts_ms": [
+        30000
+      ],
+      "notes": "Repeated at 390 px after Blender completed; both actual gallery viewports and the 1440 px contact sheet still passed. A standalone 390 px diagnostic exceeded the wait but subsequently reported ready=true with four rendered canvases and no page errors. Shared renderer/environment introduced for contact sheets to avoid rebuilding four WebGL contexts and PMREM maps; geometry, lighting and assertions retained."
     }
   ],
-  "final_report": "browser.json"
+  "final_report": "browser.json",
+  "final_resolution": "Advisor round 1: final shared-context browser run passed at 1440/390 px with the unchanged 30 s readiness wait. Prior timeouts are retained above; final evidence is browser.json."
 }

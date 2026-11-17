@@ -8,6 +8,7 @@ import {chromium} from 'playwright';
 import {serveBuild, launchOptions} from '../../scripts/browser-test-utils.mjs';
 
 const dir = path.dirname(new URL(import.meta.url).pathname);
+const measured = JSON.parse(await fs.readFile(path.join(dir,'reports/assets.json')));
 const delivery = path.join(os.homedir(), 'Documents/MallQueue/reports');
 await fs.mkdir(delivery, {recursive:true});
 const source = await serveBuild('.');
@@ -59,7 +60,7 @@ try {
       canvasLabel:document.querySelector('#viewport canvas').getAttribute('aria-label')}));
     assert.equal(render.overflow, false);
     assert.equal(render.calls, 2);
-    assert.equal(render.triangles, 4512);
+    assert.equal(render.triangles, measured.variants[0].visible_triangles);
     const screenshot = path.join(delivery, `glass-storefront-module${width===1440 ? '' : '-390'}-page.png`);
     // Capture the requested viewport; the underlying catalog can be taller than
     // Chromium's full-page capture limit and is unrelated to this model check.
@@ -77,6 +78,9 @@ try {
     const record = await qa.evaluate(() => window.qaResults);
     assert.deepEqual(qaErrors, []);
     assert.ok(record.records.every(r => r.draw_calls_model_only === 2));
+    assert.deepEqual(record.records.map(r => r.rendered_triangles), [0,1,0,1].map(i => measured.variants[i].visible_triangles));
+    assert.equal(await qa.locator('main img').count(), 4);
+    assert.ok(await qa.locator('main img').evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0)));
     await qa.screenshot({path:path.join(dir,`previews/contact-${width}.png`),fullPage:true});
     results.push({kind:'variant-contact-sheet',width,...record,errors:qaErrors});
     await context.close();

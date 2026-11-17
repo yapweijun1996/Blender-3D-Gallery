@@ -22,7 +22,7 @@ assert.ok(!doc.extensionsUsed?.includes('KHR_materials_transmission'), 'no refra
 assert.equal(doc.materials.length, 2);
 const glass = doc.materials.find(m => m.name === 'Glass_PaleAqua_Alpha');
 assert.equal(glass.alphaMode, 'BLEND');
-assert.ok(glass.pbrMetallicRoughness.baseColorFactor[3] > .1 && glass.pbrMetallicRoughness.baseColorFactor[3] < .4);
+assert.ok(glass.pbrMetallicRoughness.roughnessFactor < .1);
 assert.equal(doc.scenes[doc.scene].name, 'Closed');
 assert.deepEqual(doc.scenes.map(s => s.name), ['Closed', 'Open', 'COLLISION_ONLY_Closed', 'COLLISION_ONLY_Open']);
 const load = b => new GLTFLoader().parseAsync(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength), '');
@@ -65,6 +65,13 @@ for (const [i, variant] of ['Closed', 'Open'].entries()) {
       minArea = Math.min(minArea, area);
     }
     parts[o.name] = o.userData.source_parts;
+    if (o.material.name === glass.name) {
+      const colors = g.attributes.color;
+      assert.equal(colors?.itemSize, 4, 'glass vertex tint and opacity exported');
+      const alpha = Array.from({length:colors.count}, (_, j) => colors.getW(j) * o.material.opacity);
+      assert.ok(Math.min(...alpha) > .10 && Math.min(...alpha) < .16, 'clear glass faces');
+      assert.ok(Math.max(...alpha) > .50 && Math.max(...alpha) < .65, 'tinted polished edges');
+    }
   });
   assert.equal(primitives, 2, 'merged transparent / metal primitives');
   assert.ok(triangles < spec.budget.triangles);
@@ -75,33 +82,34 @@ for (const [i, variant] of ['Closed', 'Open'].entries()) {
   if (!i) {
     assert.equal(sourceNames.filter(n => n.startsWith('PATCH_')).length, 4);
     assert.equal(sourceNames.filter(n => n.startsWith('HANDLE_')).length, 12);
+    assert.equal(sourceNames.filter(n => n.startsWith('PIVOT_')).length, 8);
   }
   // Test actual triangles through the aperture, not only declared metadata.
   const ray = new Raycaster();
   let testedRays = 0;
-  for (const x of [-.495, -.30, -.1, .1, .30, .495]) for (const y of [.015, .2, 1.3, 2.69, 2.715]) {
+  for (const x of [-.495, -.30, -.1, .1, .30, .495]) for (const y of [.006, .2, 1.3, 2.24, 2.275]) {
     ray.set(new Vector3(x, y, 1), new Vector3(0, 0, -1));
     const hits = ray.intersectObject(root, true);
     if (i) assert.equal(hits.length, 0, `1m clear opening at ${x},${y}`);
-    else if (y > .03 && y < 2.7) assert.ok(hits.length, 'closed glass blocks aperture');
+    else if (y > .014 && y < 2.264) assert.ok(hits.length, 'closed glass blocks aperture');
     testedRays++;
   }
   for (const x of [-.51, .51]) {
     ray.set(new Vector3(x, 1.3, 1), new Vector3(0, 0, -1));
     assert.ok(ray.intersectObject(root, true).length, 'fixed pane bounds opening');
   }
-  ray.set(new Vector3(0, 2.73, 1), new Vector3(0, 0, -1));
+  ray.set(new Vector3(0, 2.29, 1), new Vector3(0, 0, -1));
   assert.ok(ray.intersectObject(root, true).length, 'transom bounds head clearance');
   let measuredOpening = null;
   if (i) {
     const o = root.getObjectByName('GLASS_FramelessPanes_Open'), p = o.geometry.attributes.position;
     const points = Array.from({length:p.count}, (_, j) => new Vector3().fromBufferAttribute(p,j).applyMatrix4(o.matrixWorld));
-    const leftEdge = Math.max(...points.filter(p => p.x < -.49 && p.y < 2.71).map(p => p.x));
-    const rightEdge = Math.min(...points.filter(p => p.x > .49 && p.y < 2.71).map(p => p.x));
-    const lintel = Math.min(...points.filter(p => Math.abs(p.x) < .501 && p.y > 2.71).map(p => p.y));
+    const leftEdge = Math.max(...points.filter(p => p.x < -.49 && p.y < 2.27).map(p => p.x));
+    const rightEdge = Math.min(...points.filter(p => p.x > .49 && p.y < 2.27).map(p => p.x));
+    const lintel = Math.min(...points.filter(p => Math.abs(p.x) < .501 && p.y > 2.27).map(p => p.y));
     measuredOpening = [rightEdge-leftEdge, lintel];
     near(measuredOpening[0],1,'measured clear width');
-    near(measuredOpening[1],2.72,'measured clear height');
+    near(measuredOpening[1],spec.open_clearance_m[1],'measured clear height');
   }
   const collisionScene = gltf.scenes[root.userData.collision_scene];
   collisionScene.updateMatrixWorld(true);
