@@ -1,0 +1,14 @@
+{
+  "initial_geometry_gate": "FAIL: 24 zero-area triangles in the thin blank header bevel",
+  "cause": "Requested bevel width equalled half the header thickness; coincident vertices survived triangulation.",
+  "repair": "Limit box bevel width to at most 0.24 times its smallest dimension.",
+  "final_geometry_gate": "PASS: all exported triangles have nonzero area; strict test unchanged.",
+  "initial_evidence": "Generation and source-inspection logs retained in ~/Documents/MallQueue/reports/condiment-bottle-jar-set-*.log; initial gate failure and triangle coordinates observed in this session.",
+  "browser_visual_followup": {
+    "observation": "Thin overlapping label shells showed speckles in the first Chromium screenshot.",
+    "repair": "Replace separate shells with flush blank-band material faces on closed bottle bodies; remove buried price-strip inserts.",
+    "geometry_gate": "PASS: final exported triangles are nondegenerate, under 18000, and use 3 shared material primitives.",
+    "final_browser_visual": "PASS: normal and enlarged final screenshots show clean bands.",
+    "before_screenshot": "~/Documents/MallQueue/reports/condiment-bottle-jar-set-page-before-flush-bands.png"
+  }
+}

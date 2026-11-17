@@ -1,0 +1,74 @@
+{
+  "result": "PASS",
+  "id": "condiment-bottle-jar-set",
+  "status": "draft; local acceptance complete; human art review pending",
+  "tested_glb_sha256": "5e1eac9c16e1c38057ba0363d5f38d95bf78a79113743df126316f64df56008c",
+  "commands": [
+    {
+      "command": "Blender 5.2.3 --background --python-exit-code 1 --python generate.py",
+      "result": "PASS",
+      "exit_code": 0
+    },
+    {
+      "command": "node validate.mjs (Khronos and geometry quality gate)",
+      "result": "PASS",
+      "exit_code": 0,
+      "validator_errors": 0,
+      "validator_warnings": 0
+    },
+    {
+      "command": "Blender inspect_sources.py + node verify_source_edit.mjs",
+      "result": "PASS",
+      "exit_code": 0
+    },
+    {
+      "command": "Blender verify_rebuild.py",
+      "result": "PASS",
+      "exit_code": 0,
+      "byte_identical_glb": true
+    },
+    {
+      "command": "npm run validate:assets",
+      "result": "PASS",
+      "exit_code": 0,
+      "log": "condiment-bottle-jar-set-validate-assets-final.log"
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "exit_code": 0,
+      "passed": 737,
+      "failed": 0,
+      "skipped": 0,
+      "log": "condiment-bottle-jar-set-npm-test-final.log"
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "exit_code": 0,
+      "note": "Vite reports a bundle chunk-size warning.",
+      "log": "condiment-bottle-jar-set-build-final.log"
+    },
+    {
+      "command": "node check-browser.mjs",
+      "result": "PASS",
+      "exit_code": 0,
+      "log": "condiment-bottle-jar-set-browser-final.log"
+    }
+  ],
+  "external_log_directory": "~/Documents/MallQueue/reports/",
+  "visual_review": "Four final Blender PNGs plus normal/enlarged Chromium screenshots inspected.",
+  "catalog": "Own collection appended at end in existing Mall Fixtures category; all earlier entries unchanged; excluded from singapore-fish.",
+  "scope": "Only the new model folder and catalog changed. Test-generated demo-beverage-can structure-motion.json restored with git checkout.",
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Full 17-shop mall integration and performance",
+    "Collision and product interaction",
+    "Publication or deployment"
+  ],
+  "corrected_initial_findings": [
+    "Thin-header bevel generated 24 zero-area triangles; bevel reduced and strict gate rerun.",
+    "Overlapping label shells speckled in Chromium; replaced with flush material bands and all affected checks rerun."
+  ]
+}
