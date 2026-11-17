@@ -1,0 +1,132 @@
+{
+  "result": "PASS",
+  "asset_sha256": "23595162cac96cde7da7a25d73b05d9c279e9e7b465e1f3454467d4a9a739ede",
+  "checks": [
+    {
+      "command": "Blender 5.2.3 generate.py",
+      "exit_code": 0,
+      "result": "PASS: source, GLB and four EEVEE previews"
+    },
+    {
+      "command": "node models/restaurant-table-chair-set/validate.mjs",
+      "exit_code": 0,
+      "result": "PASS: scale, floor centre, independent chair movement/rotation, material and geometry budgets, no degenerate triangles"
+    },
+    {
+      "command": "Khronos gltf-validator validateBytes",
+      "exit_code": 0,
+      "result": "PASS: zero errors and warnings; full report in khronos.json"
+    },
+    {
+      "command": "Blender inspect_sources.py and validate.mjs on saved edit",
+      "exit_code": 0,
+      "result": "PASS: reopen, manifold parts, saved mesh/material edits, original source unchanged"
+    },
+    {
+      "command": "npm run validate:assets",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests": 737,
+      "passed": 737,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node models/restaurant-table-chair-set/verify_browser.mjs",
+      "exit_code": 0,
+      "result": "PASS: Chromium 1440x900, 15 draw calls, 11268 triangles, exact loaded GLB hash, keyboard orbit/zoom/reset, refresh/reopen, no console errors"
+    }
+  ],
+  "previews": [
+    {
+      "file": "previews/hero.png",
+      "pixels": [
+        768,
+        768
+      ],
+      "sha256": "caa33d107bdc5c43797cba48ca4e4dacb302f38a7b561b010a67d9850f48a6e7",
+      "visual_review": "PASS: clean neutral finish, rounded edges, floor contact, clear blank stand and condiment tray"
+    },
+    {
+      "file": "previews/front.png",
+      "pixels": [
+        768,
+        768
+      ],
+      "sha256": "63c75a64b54661d633b8ec4ade81932f678f731181cf277c679dae8442fe7dd1",
+      "visual_review": "PASS: clean neutral finish, rounded edges, floor contact, clear blank stand and condiment tray"
+    },
+    {
+      "file": "previews/side.png",
+      "pixels": [
+        768,
+        768
+      ],
+      "sha256": "e74bfb006195a80ccc8ad62375cb0b9ee0e24144b04d038fea73d379bbe4ff37",
+      "visual_review": "PASS: clean neutral finish, rounded edges, floor contact, clear blank stand and condiment tray"
+    },
+    {
+      "file": "previews/3q.png",
+      "pixels": [
+        768,
+        768
+      ],
+      "sha256": "bc7867492061b74988a366c0efc451df295b92b01683609c6f2b9cd9cb811cc3",
+      "visual_review": "PASS: clean neutral finish, rounded edges, floor contact, clear blank stand and condiment tray"
+    }
+  ],
+  "resolved_findings": [
+    {
+      "initial_result": "FAIL: blank card bevel created a degenerate triangle",
+      "resolution": "Reduced bevel from 3 mm to 1.5 mm; repeated full geometry checks passed without changing the degeneracy threshold."
+    },
+    {
+      "initial_result": "FAIL: browser hash capture assumed the source GLB URL",
+      "resolution": "Vite hashes production asset filenames. Capture actual GLB responses; preserve exact delivery SHA comparison. Final flow passed."
+    }
+  ],
+  "test_artifacts": "Restored models/demo-beverage-can/reports/structure-motion.json with git checkout after npm test.",
+  "catalog_change": "Appended a separate collection at end; existing entries unchanged; existing Mall Fixtures category.",
+  "not_found": [
+    "Exact same four-seat square set with independent chairs, blank table stand and condiment tray"
+  ],
+  "skipped_items": [],
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Full 17-shop mall integration",
+    "Restaurant mini-game logic or collisions",
+    "Sustained performance"
+  ],
+  "publication": "Local branch commit only; no push, rebase, release or gallery UI change.",
+  "verification_logs": {
+    "validate_assets": {
+      "path": "/tmp/restaurant-table-chair-set-validate-assets.log",
+      "sha256": "ea3252b5e799d3793c1455093a47e28408c54ac6b143142081e7fccda3d1a2d2"
+    },
+    "npm_test": {
+      "path": "/tmp/restaurant-table-chair-set-npm-test.log",
+      "sha256": "491a45693c98912506ddab99e793573c6c2dee2deab88e7955d34fa1edc696cc"
+    },
+    "build": {
+      "path": "/tmp/restaurant-table-chair-set-build-final.log",
+      "sha256": "5c20a33942ec433ba1f3919fbb2f0a5194fd36a34b370d235910ba9eee173923"
+    },
+    "source": {
+      "path": "/tmp/restaurant-table-chair-set-source-final.log",
+      "sha256": "4ccaff963e11280d001000755843f370a0d6f9bca5e991cd8f0fd8f39455132c"
+    }
+  },
+  "build_verification": "Final metadata with local PASS rebuilt successfully; delivered GLB hash unchanged.",
+  "determinism": "Two original procedural rebuilds produced byte-identical GLBs."
+}

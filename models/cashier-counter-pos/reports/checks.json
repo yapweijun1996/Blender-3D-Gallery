@@ -1,0 +1,86 @@
+{
+  "result": "PASS",
+  "id": "cashier-counter-pos",
+  "commands": [
+    {
+      "command": "Blender 5.2.3 headless generate.py",
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "generate.log"
+    },
+    {
+      "command": "node models/cashier-counter-pos/validate.mjs",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "assets.json; khronos.json"
+    },
+    {
+      "command": "Blender 5.2.3 inspect_sources.py",
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "source-check.log"
+    },
+    {
+      "command": "Temporary clean procedural rebuild",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "reproducibility.json"
+    },
+    {
+      "command": "npm run validate:assets",
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "validate-assets.log"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "result": "PASS",
+      "passed": 737,
+      "failed": 0,
+      "log": "npm-test.log"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "build.log",
+      "note": "Vite emitted its bundle size warning; no UI or bundling configuration changed."
+    },
+    {
+      "command": "node models/cashier-counter-pos/verify_browser.mjs",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "browser.json"
+    }
+  ],
+  "visual_review": {
+    "result": "PASS",
+    "inspected": [
+      "previews/hero.png",
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png",
+      "previews/reimport.png",
+      "/Users/admin/Documents/MallQueue/reports/cashier-counter-pos-page.png"
+    ],
+    "scope": "Observed proportions, blank dark screen, unmarked reader keys, blank sign and receipt, bag hooks, drawer and shelving."
+  },
+  "catalog": "Exactly one own collection appended; existing collections unchanged; existing Retail category. Not in singapore-fish.",
+  "test_artifact_restored": "models/demo-beverage-can/reports/structure-motion.json",
+  "preexisting_changes_preserved": [
+    "models/glass-storefront-module/reports/assets.json",
+    "models/glass-storefront-module/reports/khronos.json"
+  ],
+  "not_verified": [
+    "Physical devices",
+    "WebKit",
+    "Full 70 x 60 m mall placement or total draw-call/performance budget",
+    "Real payment or printer functionality; static prop",
+    "Deployment or publication; local commit only"
+  ],
+  "build": {
+    "build": "dc6e2daf804f1153"
+  },
+  "glb_sha256": "1731d2bc406a554104c84c93edb1d66979dd6309bf37978c812c9af92ce079e2"
+}

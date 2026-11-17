@@ -1,0 +1,118 @@
+{
+  "id": "atrium-fountain",
+  "name": "Atrium Fountain",
+  "summary": "Circular stone atrium fountain with two centre bowls and eight static water arcs.",
+  "description": "Original brand-neutral 5 m circular stone basin with an eased coping, recessed plinth, two tiered centre bowls, bronze nozzle fittings, eight arcing translucent water jets and a separate shallow water disc. Water meshes are static and named for consumer animation.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "atrium",
+    "fountain",
+    "water-feature",
+    "stone-basin",
+    "tiered-bowls",
+    "eight-water-jets",
+    "static-water",
+    "brand-neutral",
+    "original",
+    "procedural",
+    "metres",
+    "P3"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / Codex-assisted procedural modeling",
+  "blender_version": "5.2.3",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures, fonts or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/atrium-fountain.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.9,
+      1.4
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "dimensions_metres": {
+    "width": 5,
+    "height": 2.1500000953674316,
+    "depth": 5
+  },
+  "basin_height_metres": 0.800000011920929,
+  "origin": "Floor centre; root at [0, 0, 0].",
+  "measured": {
+    "glb_bytes": 464900,
+    "triangles": 15776,
+    "vertices": 11458,
+    "meshes": 5,
+    "primitives": 5,
+    "materials": 3,
+    "textures": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -2.5,
+        0,
+        -2.5
+      ],
+      "max": [
+        2.5,
+        2.1500000953674316,
+        2.5
+      ]
+    },
+    "sha256": "b8996b265c4b91ee7954e33e099af18d97e0165e4e6f171be9601c236a3aedca",
+    "jet_components": 8,
+    "water_surface_thickness_metres": 0.0059999823570251465,
+    "chromium_max_draw_calls_observed_per_frame": 8,
+    "hero_thumbnail_bytes": 13616
+  },
+  "runtime_contract": {
+    "coordinate_space": "glTF metres, +Y up, front +Z",
+    "WATER_Jets": "Single mesh containing eight disconnected, capped parabolic tubes. Static geometry at rest; consumer owns any vertex/material animation. Node origin is the floor centre.",
+    "WATER_Surface": "Independent 6 mm shallow water disc within the basin. Static material/geometry; consumer owns animation. Node origin is the floor centre.",
+    "WATER_BowlPools": "Static shallow water discs in the two central bowls.",
+    "animation_clips": []
+  },
+  "material_notes": "Three shared texture-free materials: vertex-colour honed stone, satin bronze, and alpha BLEND aqua water. No transmission/refraction or exported lights. Five mesh primitives; transparent surfaces can require additional runtime passes.",
+  "accuracy_notes": "Original illustrative water feature, not an engineering, installation or safety specification. The basin rim is 0.8 m high; the centre finial raises the complete envelope to 2.15 m. Static water shapes are not a fluid simulation. Alpha sorting is renderer dependent. Full-mall animation/performance, physical Android/iOS and WebKit are not verified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, vertex colours and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "asset": "PASS",
+    "local": "PASS",
+    "repository": "PASS",
+    "chromium": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 18000,
+      "bytes": 1572864,
+      "mesh_primitives": 5,
+      "materials": 3
+    },
+    "evidence": "../reports/checks.json",
+    "source_edit": "PASS",
+    "reproducibility": "PASS",
+    "previews": "PASS"
+  }
+}

@@ -1,0 +1,334 @@
+{
+  "result": "PASS",
+  "id": "restaurant-table-chair-set",
+  "glb_bytes": 597308,
+  "triangles": 11268,
+  "vertices": 21872,
+  "placement_meshes": 7,
+  "mesh_primitives": 15,
+  "materials": 3,
+  "images": 0,
+  "animations": 0,
+  "dimensions": [
+    1.8989822200854487,
+    0.8984999805688858,
+    1.8989821751431615
+  ],
+  "axis_order": "glTF X,Y,Z (width,height,depth)",
+  "bounds": {
+    "min": [
+      -0.9494911100427244,
+      0,
+      -0.9494910836219788
+    ],
+    "max": [
+      0.9494911100427244,
+      0.8984999805688858,
+      0.9494910915211827
+    ]
+  },
+  "sha256": "23595162cac96cde7da7a25d73b05d9c279e9e7b465e1f3454467d4a9a739ede",
+  "budget": {
+    "triangles": 14999,
+    "bytes": 1572863,
+    "mesh_primitives": 16,
+    "materials": 3
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "parts": {
+    "Table": {
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "dimensions": [
+        0.800000011920929,
+        0.75,
+        0.800000011920929
+      ],
+      "min": [
+        -0.4000000059604645,
+        0,
+        -0.4000000059604645
+      ],
+      "max": [
+        0.4000000059604645,
+        0.75,
+        0.4000000059604645
+      ],
+      "source_parts": [
+        "TableApronX",
+        "TableApronX.001",
+        "TableApronY",
+        "TableApronY.001",
+        "TableLeg",
+        "TableLeg.001",
+        "TableLeg.002",
+        "TableLeg.003",
+        "TableTop_800mm"
+      ]
+    },
+    "Chair_North": {
+      "pivot": [
+        0,
+        0,
+        0.7200000286102295
+      ],
+      "dimensions": [
+        0.42000003822555154,
+        0.800000011920929,
+        0.4494910866331687
+      ],
+      "min": [
+        -0.21000001986775407,
+        0,
+        0.500000004888014
+      ],
+      "max": [
+        0.21000001835779747,
+        0.800000011920929,
+        0.9494910915211827
+      ],
+      "source_parts": [
+        "Chair_North_Back",
+        "Chair_North_BackPost",
+        "Chair_North_BackPost.001",
+        "Chair_North_Foot",
+        "Chair_North_Foot.001",
+        "Chair_North_Foot.002",
+        "Chair_North_Foot.003",
+        "Chair_North_Leg",
+        "Chair_North_Leg.001",
+        "Chair_North_Leg.002",
+        "Chair_North_Leg.003",
+        "Chair_North_Seat",
+        "Chair_North_SeatRailX",
+        "Chair_North_SeatRailX.001",
+        "Chair_North_SeatRailY",
+        "Chair_North_SeatRailY.001"
+      ]
+    },
+    "Chair_East": {
+      "pivot": [
+        0.7200000286102295,
+        0,
+        0
+      ],
+      "dimensions": [
+        0.4494911061747504,
+        0.800000011920929,
+        0.4200000414684036
+      ],
+      "min": [
+        0.5000000038679739,
+        0,
+        -0.21000001972012314
+      ],
+      "max": [
+        0.9494911100427244,
+        0.800000011920929,
+        0.21000002174828045
+      ],
+      "source_parts": [
+        "Chair_East_Back",
+        "Chair_East_BackPost",
+        "Chair_East_BackPost.001",
+        "Chair_East_Foot",
+        "Chair_East_Foot.001",
+        "Chair_East_Foot.002",
+        "Chair_East_Foot.003",
+        "Chair_East_Leg",
+        "Chair_East_Leg.001",
+        "Chair_East_Leg.002",
+        "Chair_East_Leg.003",
+        "Chair_East_Seat",
+        "Chair_East_SeatRailX",
+        "Chair_East_SeatRailX.001",
+        "Chair_East_SeatRailY",
+        "Chair_East_SeatRailY.001"
+      ]
+    },
+    "Chair_South": {
+      "pivot": [
+        0,
+        0,
+        -0.7200000286102295
+      ],
+      "dimensions": [
+        0.41999998688697815,
+        0.800000011920929,
+        0.44949105381965637
+      ],
+      "min": [
+        -0.20999999344348907,
+        0,
+        -0.9494910836219788
+      ],
+      "max": [
+        0.20999999344348907,
+        0.800000011920929,
+        -0.5000000298023224
+      ],
+      "source_parts": [
+        "Chair_South_Back",
+        "Chair_South_BackPost",
+        "Chair_South_BackPost.001",
+        "Chair_South_Foot",
+        "Chair_South_Foot.001",
+        "Chair_South_Foot.002",
+        "Chair_South_Foot.003",
+        "Chair_South_Leg",
+        "Chair_South_Leg.001",
+        "Chair_South_Leg.002",
+        "Chair_South_Leg.003",
+        "Chair_South_Seat",
+        "Chair_South_SeatRailX",
+        "Chair_South_SeatRailX.001",
+        "Chair_South_SeatRailY",
+        "Chair_South_SeatRailY.001"
+      ]
+    },
+    "Chair_West": {
+      "pivot": [
+        -0.7200000286102295,
+        0,
+        0
+      ],
+      "dimensions": [
+        0.4494911061747504,
+        0.800000011920929,
+        0.4200000414684036
+      ],
+      "min": [
+        -0.9494911100427244,
+        0,
+        -0.21000001972012314
+      ],
+      "max": [
+        -0.5000000038679739,
+        0.800000011920929,
+        0.21000002174828045
+      ],
+      "source_parts": [
+        "Chair_West_Back",
+        "Chair_West_BackPost",
+        "Chair_West_BackPost.001",
+        "Chair_West_Foot",
+        "Chair_West_Foot.001",
+        "Chair_West_Foot.002",
+        "Chair_West_Foot.003",
+        "Chair_West_Leg",
+        "Chair_West_Leg.001",
+        "Chair_West_Leg.002",
+        "Chair_West_Leg.003",
+        "Chair_West_Seat",
+        "Chair_West_SeatRailX",
+        "Chair_West_SeatRailX.001",
+        "Chair_West_SeatRailY",
+        "Chair_West_SeatRailY.001"
+      ]
+    },
+    "TableNumberStand": {
+      "pivot": [
+        -0.1550000011920929,
+        0.75,
+        0.009999999776482582
+      ],
+      "dimensions": [
+        0.10499999672174454,
+        0.1484999805688858,
+        0.06800000369548798
+      ],
+      "min": [
+        -0.20749999955296516,
+        0.75,
+        -0.024000002071261406
+      ],
+      "max": [
+        -0.10250000283122063,
+        0.8984999805688858,
+        0.04400000162422657
+      ],
+      "source_parts": [
+        "StandBase",
+        "StandBlankCard",
+        "StandStem"
+      ],
+      "blank_card_width": 0.10300000011920929
+    },
+    "CondimentTray": {
+      "pivot": [
+        0.10499999672174454,
+        0.75,
+        -0.054999999701976776
+      ],
+      "dimensions": [
+        0.23000000417232513,
+        0.13699999451637268,
+        0.14499999582767487
+      ],
+      "min": [
+        -0.01000000536441803,
+        0.75,
+        -0.1274999976158142
+      ],
+      "max": [
+        0.2199999988079071,
+        0.8869999945163727,
+        0.017499998211860657
+      ],
+      "source_parts": [
+        "CapHoleRecess",
+        "CapHoleRecess.001",
+        "CapHoleRecess.002",
+        "CapHoleRecess.003",
+        "CapHoleRecess.004",
+        "CapHoleRecess.005",
+        "CeramicShaker",
+        "CeramicShaker.001",
+        "GenericCondimentBottle",
+        "PlainNozzleCap",
+        "ShakerCap",
+        "ShakerCap.001",
+        "TrayDeck",
+        "TrayLongRim",
+        "TrayLongRim.001",
+        "TrayShortRim",
+        "TrayShortRim.001"
+      ]
+    }
+  },
+  "placement": [
+    {
+      "name": "Chair_North",
+      "independent_move_rotate": "PASS",
+      "floor_contact": 0
+    },
+    {
+      "name": "Chair_East",
+      "independent_move_rotate": "PASS",
+      "floor_contact": 0
+    },
+    {
+      "name": "Chair_South",
+      "independent_move_rotate": "PASS",
+      "floor_contact": 0
+    },
+    {
+      "name": "Chair_West",
+      "independent_move_rotate": "PASS",
+      "floor_contact": 0
+    }
+  ],
+  "checks": [
+    "Measured 0.8 x 0.8 x 0.75 metre table",
+    "Four named floor-pivot chairs move and rotate independently",
+    "Chairs clear the table; tabletop accessories contained and separated",
+    "Finite positions/normals; no degenerate triangles",
+    "Three shared opaque materials; no textures or external resources"
+  ]
+}

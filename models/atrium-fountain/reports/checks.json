@@ -1,0 +1,36 @@
+{
+  "id": "atrium-fountain",
+  "result": "PASS",
+  "status": "draft / NEEDS REVIEW",
+  "checks": {
+    "blender_generation": "PASS (Blender 5.2.3)",
+    "exported_asset_gate": "PASS",
+    "khronos": "PASS (0 errors, 0 warnings)",
+    "saved_source_edit": "PASS",
+    "fresh_rebuild_identical_glb": "PASS",
+    "previews_visual_review": "PASS",
+    "npm_run_validate_assets": "PASS",
+    "npm_test": "PASS (737 tests, 0 failures)",
+    "npm_run_build": "PASS",
+    "chromium_1440x900": "PASS"
+  },
+  "scope": "Model folder and own appended catalog collection only; no application UI changes.",
+  "known_initial_failure": "First jet curve reached the lower bowl wall; moved endpoints into bowl pool and reran the gate. Initial failed gate log retained.",
+  "test_artifacts": "Restored models/demo-beverage-can/reports/structure-motion.json with git checkout.",
+  "not_verified": [
+    "physical Android/iOS",
+    "WebKit",
+    "consumer water animation",
+    "combined 17-shop performance and 200 draw-call scene budget",
+    "installation/safety engineering"
+  ],
+  "publication": "Local commit only; no push or deployment.",
+  "verified_glb_sha256": "b8996b265c4b91ee7954e33e099af18d97e0165e4e6f171be9601c236a3aedca",
+  "final_export_log": "export-final.log",
+  "validation_evidence": {
+    "standalone_validate_assets": "validate-assets.log (initial registration)",
+    "final_exact_delivery_validation": "build.log (npm run build invokes validate:assets)",
+    "khronos_and_geometry": "assets.json and khronos.json"
+  },
+  "runtime_name_check": "PASS: both glTF mesh names and mesh-node names exactly match WATER_Jets / WATER_Surface."
+}

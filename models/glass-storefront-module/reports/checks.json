@@ -1,0 +1,63 @@
+{
+  "result": "PASS",
+  "commands": [
+    {
+      "command": "node models/glass-storefront-module/validate.mjs --source-edit",
+      "exit_code": 0,
+      "scope": "Khronos, geometry, scale, materials, opening, colliders, repeat seams and source-edit export"
+    },
+    {
+      "command": "npm run validate:assets",
+      "exit_code": 0
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "tests": 737,
+      "passed": 737,
+      "failed": 0
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "notes": "Final production build passed after final export and metadata update; existing bundle-size advisory only."
+    },
+    {
+      "command": "node models/glass-storefront-module/verify_browser.mjs",
+      "exit_code": 0,
+      "scope": "1440/390 production viewer and both variant contact sheets"
+    }
+  ],
+  "visual_review": {
+    "result": "PASS",
+    "inspected": [
+      "hero.png",
+      "front.png",
+      "side.png",
+      "3q.png",
+      "open-hero.png",
+      "open-side.png",
+      "open-3q.png",
+      "contact-1440.png",
+      "contact-390.png",
+      "external 1440 and 390 gallery screenshots",
+      "open-front.png"
+    ]
+  },
+  "not_found": [
+    "docs/references/gjh-mall-concept-board.png",
+    "exact existing storefront match"
+  ],
+  "not_verified": [
+    "physical Android/iOS",
+    "WebKit",
+    "assembled 17-shop mall scene",
+    "sustained GPU performance"
+  ],
+  "existing_models_modified": false,
+  "gallery_ui_modified": false,
+  "published": false,
+  "delivery_sha256": "c7716d0f821166ad09b7729189f02873a7052e018937c9efd05cbd8ee6a1fd18",
+  "source_sha256": "5dd5ad30559468fb46f7b92fd59acdeb2fc77af766045b34f29e2b3b9133ec77",
+  "reproducibility": "Final generator rebuild and saved-source export completed. No byte-for-byte reproducibility across Blender versions is claimed."
+}

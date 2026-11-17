@@ -1,0 +1,137 @@
+{
+  "id": "glass-storefront-module",
+  "name": "Glass Storefront Module",
+  "summary": "Frameless tileable glazing with Closed and Open variants.",
+  "description": "Original 3.0 m wide x 3.6 m high frameless shopfront. Two fixed panes, paired glass doors with small stainless fittings, slim floor channels and a blank header. Open scene provides a 1.0 m clear passage.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "storefront",
+    "frameless",
+    "glazing",
+    "double-door",
+    "open-variant",
+    "tileable",
+    "blank-sign",
+    "brand-neutral",
+    "original",
+    "procedural",
+    "metres",
+    "P1"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / Codex-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python; no external models, textures, images, scripts or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/glass-storefront-module.blend",
+    "preview": "previews/hero.jpg",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/3q.png",
+      "previews/side.png",
+      "previews/open-front.png",
+      "previews/open-3q.png",
+      "previews/contact-1440.png",
+      "previews/contact-390.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.3,
+      0.16,
+      1
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.7,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "dimensions_metres_gltf": [
+    3,
+    3.5999999046325684,
+    0.11999999731779099
+  ],
+  "origin": "Floor centre; x=0, y=0, z=0 in glTF.",
+  "repeat_pitch_m": 3.0,
+  "variants": {
+    "Closed": {
+      "scene": 0,
+      "root": "ASSET_GlassStorefrontModule",
+      "collision_scene": 2
+    },
+    "Open": {
+      "scene": 1,
+      "root": "ASSET_GlassStorefrontModule_Open",
+      "collision_scene": 3,
+      "clear_opening_metres": [
+        1,
+        2.7199997901916504
+      ]
+    }
+  },
+  "accuracy_notes": "P1 override uses 3.0 x 3.6 m. Default scene is Closed; Open is an alternate GLB scene, selected by the consuming app. Collision scenes are opt-in. No runtime door interaction or refraction. Physical-device and assembled-mall behavior are unverified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized.",
+  "measured": {
+    "glb_bytes": 284456,
+    "triangles_all_scenes": 5688,
+    "materials": 2,
+    "textures": 0,
+    "variants": [
+      {
+        "name": "Closed",
+        "dimensions_metres_gltf": [
+          3,
+          3.5999999046325684,
+          0.11999999731779099
+        ],
+        "visible_triangles": 4512,
+        "collider_triangles": 12,
+        "visible_primitives": 2
+      },
+      {
+        "name": "Open",
+        "dimensions_metres_gltf": [
+          3,
+          3.5999999046325684,
+          0.11999999731779099
+        ],
+        "visible_triangles": 1128,
+        "collider_triangles": 36,
+        "visible_primitives": 2
+      }
+    ],
+    "sha256": "c7716d0f821166ad09b7729189f02873a7052e018937c9efd05cbd8ee6a1fd18",
+    "draw_calls_per_instance": 2
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 8000,
+      "bytes": 1572864,
+      "materials": 2,
+      "draw_calls_per_instance": 6,
+      "textures_max_px": 1024
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/sources.json",
+      "reports/browser.json",
+      "reports/checks.json"
+    ]
+  }
+}

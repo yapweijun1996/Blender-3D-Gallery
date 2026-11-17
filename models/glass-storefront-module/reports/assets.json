@@ -1,0 +1,120 @@
+{
+  "result": "PASS",
+  "id": "glass-storefront-module",
+  "glb_bytes": 284456,
+  "triangles": 5688,
+  "materials": 2,
+  "textures": 0,
+  "animations": 0,
+  "min_triangle_area_m2": 5.780177778375915e-8,
+  "sha256": "c7716d0f821166ad09b7729189f02873a7052e018937c9efd05cbd8ee6a1fd18",
+  "validation": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "variants": [
+    {
+      "name": "Closed",
+      "dimensions_metres_gltf": [
+        3,
+        3.5999999046325684,
+        0.11999999731779099
+      ],
+      "bounds": {
+        "min": [
+          -1.5,
+          0,
+          -0.05999999865889549
+        ],
+        "max": [
+          1.5,
+          3.5999999046325684,
+          0.05999999865889549
+        ]
+      },
+      "visible_triangles": 4512,
+      "collider_triangles": 12,
+      "visible_primitives": 2,
+      "aperture_rays": 30,
+      "clear_opening_metres": null,
+      "source_parts": {
+        "GLASS_FramelessPanes_Closed": [
+          "DOOR_FramelessLeaf_Left",
+          "DOOR_FramelessLeaf_Right",
+          "GLASS_FixedPane_Left_Closed",
+          "GLASS_FixedPane_Right_Closed",
+          "GLASS_OverdoorTransom_Closed"
+        ],
+        "METAL_HeaderChannelFittings_Closed": [
+          "CHANNEL_Floor_Left_Closed",
+          "CHANNEL_Floor_Right_Closed",
+          "HANDLE_Left_Front",
+          "HANDLE_Left_Rear",
+          "HANDLE_Mount_Left_Front",
+          "HANDLE_Mount_Left_Front.001",
+          "HANDLE_Mount_Left_Rear",
+          "HANDLE_Mount_Left_Rear.001",
+          "HANDLE_Mount_Right_Front",
+          "HANDLE_Mount_Right_Front.001",
+          "HANDLE_Mount_Right_Rear",
+          "HANDLE_Mount_Right_Rear.001",
+          "HANDLE_Right_Front",
+          "HANDLE_Right_Rear",
+          "HEADER_BlankSignBand_Closed",
+          "PATCH_Left_Bottom",
+          "PATCH_Left_Top",
+          "PATCH_Right_Bottom",
+          "PATCH_Right_Top"
+        ]
+      }
+    },
+    {
+      "name": "Open",
+      "dimensions_metres_gltf": [
+        3,
+        3.5999999046325684,
+        0.11999999731779099
+      ],
+      "bounds": {
+        "min": [
+          -1.5,
+          0,
+          -0.05999999865889549
+        ],
+        "max": [
+          1.5,
+          3.5999999046325684,
+          0.05999999865889549
+        ]
+      },
+      "visible_triangles": 1128,
+      "collider_triangles": 36,
+      "visible_primitives": 2,
+      "aperture_rays": 30,
+      "clear_opening_metres": [
+        1,
+        2.7199997901916504
+      ],
+      "source_parts": {
+        "GLASS_FramelessPanes_Open": [
+          "GLASS_FixedPane_Left_Open",
+          "GLASS_FixedPane_Right_Open",
+          "GLASS_OverdoorTransom_Open"
+        ],
+        "METAL_HeaderChannelFittings_Open": [
+          "CHANNEL_Floor_Left_Open",
+          "CHANNEL_Floor_Right_Open",
+          "HEADER_BlankSignBand_Open"
+        ]
+      }
+    }
+  ],
+  "source_edit": "PASS: reopened source; Closed header raised 20 mm in temporary export; Open unchanged",
+  "budget": {
+    "triangles": 8000,
+    "bytes": 1572864,
+    "materials": 2,
+    "draw_calls_per_instance": 6,
+    "textures_max_px": 1024
+  }
+}
