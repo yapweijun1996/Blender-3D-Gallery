@@ -1,6 +1,7 @@
 # Tripo FBX character: 1c818c0d
 
-Status: inspected source and draft GLB, not a published Gallery catalog entry.
+The Gallery entry previews the original Run and Sit clips on demand. Each clip
+plays once and holds its final pose. Reset restores the initial view and pose.
 The user supplied the source ZIP; creator, generation inputs, and redistribution
 license were not provided, so no license is inferred.
 

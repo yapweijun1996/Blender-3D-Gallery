@@ -936,6 +936,14 @@ body.game-page .demo-breadcrumb {
   min-height: 44px;
   font-size: 12px;
 }
+.viewer-animation-actions {
+  justify-content: start;
+  padding: 12px 24px;
+}
+.viewer-animation-actions button[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--background);
+}
 .viewer-actions button:disabled {
   opacity: 0.55;
   cursor: wait;

@@ -4,7 +4,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 import createFishMotion from "./fish-motion.js";
 import { acquireModelViewerRenderer } from "./model-viewer-renderer.js";
-import { fitViewerObject, syncViewerSize } from "./viewer-framing.js";
+import { fitViewerBounds, fitViewerObject, syncViewerSize } from "./viewer-framing.js";
 
 export default async function createViewer(
   container,
@@ -22,6 +22,7 @@ export default async function createViewer(
   let fishMotion;
   let cartDemo;
   let visitorDemo;
+  let animationPreview;
   let chibiRig;
   let lastDraw = 0;
   let studio;
@@ -155,6 +156,7 @@ export default async function createViewer(
     fishMotion?.dispose();
     cartDemo?.dispose();
     visitorDemo?.dispose();
+    animationPreview?.dispose();
     chibiRig?.dispose();
     disposeModel(model);
     disposeModel(studio);
@@ -243,9 +245,11 @@ export default async function createViewer(
           ? new THREE.Vector3(1, 0.3, 0.25)
           : new THREE.Vector3(1, 0.9, 1)
     ).normalize();
-    const frameObject = (visibleObject, viewDirection) => {
+    const frameObject = (visibleObject, viewDirection, animationBounds) => {
       syncViewerSize(container, renderer, camera, Math.min(window.devicePixelRatio, 2));
-      const frame = fitViewerObject(visibleObject, camera, viewDirection);
+      const frame = animationBounds
+        ? fitViewerBounds(animationBounds, camera, viewDirection)
+        : fitViewerObject(visibleObject, camera, viewDirection);
       camera.near = Math.max(frame.radius * 0.001, Number.EPSILON);
       camera.far = Math.max(frame.radius * 50, frame.distance * 12 + frame.radius);
       camera.updateProjectionMatrix();
@@ -264,12 +268,26 @@ export default async function createViewer(
       }
       invalidate();
     };
+    if (asset.id === "tripo-convert-1c818c0d") {
+      const { default: createAnimationPreview } = await import("./tripo-animation-preview.js");
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+      animationPreview = createAnimationPreview({
+        model,
+        clips: gltf.animations,
+        container,
+        onPlay(bounds) {
+          lastDraw = 0;
+          const viewDirection = camera.position.clone().sub(controls.target).normalize();
+          frameObject(model, viewDirection, bounds);
+        },
+      });
+    }
     frameForResize = () => {
       if (!model) return;
       const viewDirection = camera.position.clone().sub(controls.target);
       if (viewDirection.lengthSq() === 0) viewDirection.copy(direction);
       else viewDirection.normalize();
-      frameObject(cartDemo?.group ?? model, viewDirection);
+      frameObject(cartDemo?.group ?? model, viewDirection, animationPreview?.bounds);
     };
     const frameVehicle = (viewDirection, target = model) => {
       // Include open doors in the bounds so a preset never cuts them off.
@@ -279,6 +297,7 @@ export default async function createViewer(
       clearPreset();
       cartDemo?.reset();
       visitorDemo?.reset();
+      animationPreview?.reset();
       chibiRig?.reset();
       if (doorRig) for (const [code, door] of Object.entries(doorRig)) {
         door.node.rotation.y = door.closed;
@@ -379,12 +398,14 @@ export default async function createViewer(
       if (disposed || document.hidden) return;
       const now = performance.now();
       const active = cartDemo?.update(lastDraw ? (now - lastDraw) / 1000 : 0);
-      const visitorActive = visitorDemo?.update(lastDraw ? (now - lastDraw) / 1000 : 0);
+      const elapsed = lastDraw ? (now - lastDraw) / 1000 : 0;
+      const visitorActive = visitorDemo?.update(elapsed);
+      const animationActive = animationPreview?.update(elapsed);
       lastDraw = now;
       const fishActive = fishMotion?.update();
       const changed = controls.update();
       renderer.render(scene, camera);
-      if (changed || active || visitorActive || fishActive) invalidate();
+      if (changed || active || visitorActive || animationActive || fishActive) invalidate();
     };
     invalidate();
     return { reset, dispose, setView };
