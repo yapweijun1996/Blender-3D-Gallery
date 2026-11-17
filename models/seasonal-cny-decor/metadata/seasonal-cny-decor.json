@@ -1,0 +1,142 @@
+{
+  "id": "seasonal-cny-decor",
+  "name": "Seasonal CNY Decor",
+  "summary": "Two half-metre red lanterns, a one-metre tangerine plant, two blank red banners and a small red-envelope stand.",
+  "description": "Original static CNY mall decoration group: two suspended ribbed lanterns with tassels, a potted tangerine plant with 16 oranges and 81 leaves, two blank red banners and a two-tier stand with six plain red envelopes. Three shared solid colours; no text, characters, brands, external assets or theme-switching runtime.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "seasonal",
+    "cny",
+    "chinese new year",
+    "theme-switching",
+    "lanterns",
+    "tangerine",
+    "oranges",
+    "blank banners",
+    "red envelopes",
+    "static",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres",
+    "P2"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / Codex-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry and solid-colour materials; no random inputs or external assets.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/seasonal-cny-decor.blend",
+    "preview": "previews/hero.jpg",
+    "additional_previews": [
+      "previews/hero.png",
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "floor centre of complete set bounds",
+    "previewCameraDirection": [
+      0.35,
+      0.22,
+      1
+    ]
+  },
+  "accuracy_notes": "Static seasonal decoration. The consuming scene supplies suspension mounts and theme-switching logic. Source groups record hanging anchors. No animation or collision. Physical phones, WebKit and a full 17-shop mall under its 200-draw-call budget are not verified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials created with Codex assistance. No third-party assets, images, fonts, logos or brands."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 379988,
+    "triangles": 12852,
+    "vertices": 12934,
+    "mesh_objects": 8,
+    "mesh_primitives": 13,
+    "materials": 3,
+    "animations": 0,
+    "textures": 0,
+    "dimensions_metres": [
+      1.96310555934906,
+      2.0199999809265137,
+      0.6637040376663208
+    ],
+    "plant_height_metres": 0.9999999403953552,
+    "sha256": "ca5fb8608e641fb835d030166a9fb11d3456e7bb586550b9dd724a371ad334e0"
+  },
+  "measured_features": {
+    "hanging_lanterns": 2,
+    "potted_tangerine_plants": 1,
+    "blank_banners": 2,
+    "red_envelope_stands": 1,
+    "oranges": 16,
+    "leaves": 81,
+    "red_envelopes": 6,
+    "editable_mesh_parts": 348
+  },
+  "measured_components": {
+    "LANTERN_01": [
+      0.5031055808067322,
+      0.7269999980926514,
+      0.5031293630599976
+    ],
+    "LANTERN_02": [
+      0.5031055808067322,
+      0.7470000982284546,
+      0.5031293630599976
+    ],
+    "BANNER_01": [
+      0.21199999749660492,
+      0.8228896856307983,
+      0.022000014781951904
+    ],
+    "BANNER_02": [
+      0.21199999749660492,
+      0.8228896856307983,
+      0.022000014781951904
+    ],
+    "ENVELOPE_STAND": [
+      0.3799999952316284,
+      0.390999972820282,
+      0.28999999165534973
+    ]
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "budget": {
+      "triangles": 19999,
+      "bytes": 1572863,
+      "mesh_primitives": 13,
+      "materials": 3
+    },
+    "evidence": "../reports/acceptance.json",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "local_scope": "Native source, GLB, isolated rebuild and repository checks; browser evidence is recorded separately in acceptance.json."
+  },
+  "reuse_assessment": {
+    "decision": "new original asset under owner override",
+    "similar_models": [
+      "chinese-lantern",
+      "chinese-new-year-kumquat-tree",
+      "chinese-new-year-lantern-arch",
+      "chinese-new-year-mandarin-orange-basket",
+      "chinese-new-year-red-packet-display"
+    ],
+    "exact_match": "NOT FOUND",
+    "reason": "Existing assets cover individual related subjects, not the complete two-lantern / one-metre plant / two-blank-banner / envelope-stand decoration group."
+  }
+}
