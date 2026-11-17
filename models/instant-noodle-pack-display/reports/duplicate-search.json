@@ -1,0 +1,138 @@
+{
+  "result": "NOT FOUND",
+  "query_fields": [
+    "id",
+    "name",
+    "tags"
+  ],
+  "terms": "noodle|hanging|peg|hook|pillow|snack|grocery|bag|instant",
+  "catalog_assets_scanned": 600,
+  "metadata_files_scanned": 551,
+  "catalog_candidates": [
+    {
+      "id": "noodle-boiler",
+      "name": "Noodle Boiler",
+      "tags": [
+        "sgmy",
+        "modular",
+        "editable",
+        "metres"
+      ]
+    },
+    {
+      "id": "mall-shoe-bag-rack",
+      "name": "Mall Shoe and Bag Rack",
+      "tags": [
+        "retail",
+        "shoe",
+        "handbag",
+        "rack",
+        "original",
+        "editable",
+        "animated"
+      ]
+    },
+    {
+      "id": "mall-fitting-room",
+      "name": "Mall Fitting Room",
+      "tags": [
+        "retail",
+        "fitting-room",
+        "changing-room",
+        "original",
+        "modular",
+        "editable",
+        "animated"
+      ]
+    },
+    {
+      "id": "battery-display-rack",
+      "name": "Battery Display Rack",
+      "tags": [
+        "battery",
+        "AA",
+        "AAA",
+        "button-cells",
+        "blister-packs",
+        "pegboard",
+        "hook-rack",
+        "retail-display",
+        "unbranded",
+        "original",
+        "procedural",
+        "metres",
+        "S16",
+        "P1"
+      ]
+    }
+  ],
+  "metadata_candidates": [
+    {
+      "path": "models/battery-display-rack/metadata/battery-display-rack.json",
+      "id": "battery-display-rack",
+      "name": "Battery Display Rack",
+      "tags": [
+        "battery",
+        "AA",
+        "AAA",
+        "button-cells",
+        "blister-packs",
+        "pegboard",
+        "hook-rack",
+        "retail-display",
+        "unbranded",
+        "original",
+        "procedural",
+        "metres",
+        "S16",
+        "P1"
+      ]
+    },
+    {
+      "path": "models/mall-fitting-room/metadata/mall-fitting-room.json",
+      "id": "mall-fitting-room",
+      "name": "Mall Fitting Room",
+      "tags": [
+        "retail",
+        "fitting-room",
+        "changing-room",
+        "original",
+        "modular",
+        "editable",
+        "animated"
+      ]
+    },
+    {
+      "path": "models/noodle-boiler/metadata/noodle-boiler.json",
+      "id": "noodle-boiler",
+      "name": "Noodle Boiler",
+      "tags": [
+        "sgmy",
+        "modular",
+        "editable",
+        "metres"
+      ]
+    },
+    {
+      "path": "models/mall-shoe-bag-rack/metadata/mall-shoe-bag-rack.json",
+      "id": "mall-shoe-bag-rack",
+      "name": "Mall Shoe and Bag Rack",
+      "tags": [
+        "retail",
+        "shoe",
+        "handbag",
+        "rack",
+        "original",
+        "editable",
+        "animated"
+      ]
+    }
+  ],
+  "assessment": {
+    "battery-display-rack": "Different S16 battery blister-card fixture, 1 x 0.5 x 2 m, lower bins and actual cells; no noodle pillow bags. Not a close match to the requested S06 fixture.",
+    "noodle-boiler": "Cooking equipment rather than packaged noodle merchandise.",
+    "mall-shoe-bag-rack": "Apparel and handbag furniture rather than grocery pillow-bag hooks.",
+    "mall-fitting-room": "Fitting room; regex substring only."
+  },
+  "decision": "NEW: no matching hanging instant-noodle pillow-bag display exists."
+}

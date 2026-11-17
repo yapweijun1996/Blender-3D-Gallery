@@ -1,0 +1,90 @@
+{
+  "result": "PASS",
+  "status": "draft / local checks passed; manager review pending",
+  "id": "instant-noodle-pack-display",
+  "category": "Mall Fixtures",
+  "store": "S06",
+  "priority": "P2",
+  "blender_version": "5.2.3 LTS",
+  "checks": [
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/instant-noodle-pack-display/generate.py",
+      "result": "PASS",
+      "details": "Native source, GLB and hero/front/side/3q previews generated"
+    },
+    {
+      "command": "node models/instant-noodle-pack-display/validate.mjs --update-metadata",
+      "result": "PASS",
+      "evidence": "assets.json; khronos.json",
+      "details": "15668 triangles; 690424 bytes; 3 material primitives; zero errors or warnings"
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python models/instant-noodle-pack-display/inspect_sources.py",
+      "result": "PASS",
+      "evidence": "sources.json"
+    },
+    {
+      "command": "node models/instant-noodle-pack-display/verify_source_edit.mjs",
+      "result": "PASS",
+      "details": "562 exported vertices move exactly +0.005 m in X, 15914 remain unchanged"
+    },
+    {
+      "command": "Isolated generate.py-only rebuild with --skip-render",
+      "result": "PASS",
+      "evidence": "reproducibility.json",
+      "details": "GLB byte-identical"
+    },
+    {
+      "command": "npm run validate:assets",
+      "result": "PASS",
+      "log": "validate-assets.log"
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "tests": 737,
+      "failed": 0,
+      "skipped": 0,
+      "log": "npm-test.log"
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "log": "build.log",
+      "note": "Existing large JavaScript chunk warning remains"
+    },
+    {
+      "command": "node models/instant-noodle-pack-display/check_browser.mjs",
+      "result": "PASS",
+      "evidence": "browser.json",
+      "log": "browser.log"
+    },
+    {
+      "command": "Visual inspection of all four Blender previews and actual model page screenshot",
+      "result": "PASS",
+      "evidence": "visual-review.json"
+    }
+  ],
+  "prior_attempts": [
+    {
+      "result": "FAIL",
+      "scope": "Browser harness GLB response matcher",
+      "log": "browser-initial.log",
+      "cause": "Vite fingerprints GLB URLs; the original predicate expected the source models/... path",
+      "correction": "Match the actual .glb response, then require its SHA-256 to equal the local export; no application change"
+    }
+  ],
+  "duplicate_search": "NOT FOUND: 600 existing catalog assets and 551 metadata files examined before building; other fixtures are distinct",
+  "catalog_registration": "Own collection appended at the end; existing Mall Fixtures category; no singapore-fish membership",
+  "not_verified": [
+    "physical Android/iOS",
+    "WebKit",
+    "assembled 17-shop mall performance or 200 total draw-call budget",
+    "purchase interaction or flexible-film physics",
+    "deployment"
+  ],
+  "publication": "Local commit only; no push, rebase, deployment or workflow changes",
+  "restored_test_artifacts": [
+    "models/demo-beverage-can/reports/structure-motion.json"
+  ]
+}
