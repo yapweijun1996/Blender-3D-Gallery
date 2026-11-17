@@ -16,3 +16,7 @@ python3 models/tripo-chibi-rig/rig.py build-chibi/front-character.glb
 ```
 
 The output is `build-chibi/rigged-character.glb`.
+
+## Download encoding
+
+The gallery GLB uses losslessly recompressed PNG maps at the original resolution. See the [encoding receipt and rebuild procedure](../../docs/verification/model-downloads/README.md). Run that encoding step after a fresh source export to reproduce the smaller delivery.
