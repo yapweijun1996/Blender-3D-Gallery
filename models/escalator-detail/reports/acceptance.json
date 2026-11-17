@@ -1,0 +1,95 @@
+{
+  "result": "PASS",
+  "release_status": "Draft; local verification complete; owner review pending",
+  "branch": "mall-models",
+  "glb_sha256": "e54f0dda0fdfdc97d32aa1f4aa34422ba8a5a0049b467c6a4537680b398e8f08",
+  "checks": [
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python generate.py",
+      "result": "PASS",
+      "toolchain": "Blender 5.2.3 LTS",
+      "evidence": "generate-final.log"
+    },
+    {
+      "command": "node models/escalator-detail/validate.mjs",
+      "result": "PASS",
+      "evidence": [
+        "assets.json",
+        "khronos.json"
+      ],
+      "khronos_errors": 0,
+      "khronos_warnings": 0
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python inspect_sources.py",
+      "result": "PASS",
+      "evidence": "sources.json"
+    },
+    {
+      "command": "node models/escalator-detail/validate.mjs models/escalator-detail/reports/source-edit.glb",
+      "result": "PASS",
+      "evidence": "source-edit-validation.log"
+    },
+    {
+      "command": "node models/escalator-detail/verify_source_edit.mjs",
+      "result": "PASS",
+      "evidence": "source-edit.json"
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python verify_rebuild.py",
+      "result": "PASS",
+      "evidence": "reproducibility.json"
+    },
+    {
+      "command": "npm run validate:assets",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "validate-assets.log"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "result": "PASS",
+      "tests": 737,
+      "failures": 0,
+      "evidence": "npm-test.log"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "build.log",
+      "note": "Vite emitted its application chunk-size advisory; build completed."
+    },
+    {
+      "command": "node models/escalator-detail/browser-check.mjs",
+      "exit_code": 0,
+      "result": "PASS",
+      "evidence": "browser.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ],
+  "visual_review": "All four final Blender previews and 1440x900 Chromium screenshot inspected.",
+  "measured_model_draw_calls_per_recorded_frame": [
+    25
+  ],
+  "initial_failures_resolved": [
+    "Terminal glass duplicate endpoint and sign inset bevel degeneracy corrected; actual final minimum triangle area is recorded in assets.json.",
+    "Browser wait initially used source filename; adjusted to Vite hashed delivery URLs while keeping byte-hash equality."
+  ],
+  "catalog": "Own collection appended last in existing Mall Fixtures category. All previous catalog entries unchanged.",
+  "restored_test_artifact": "git checkout -- models/demo-beverage-can/reports/structure-motion.json",
+  "not_verified": [
+    "Full 17-shop 70x60m mall assembly and aggregate 200 draw-call budget",
+    "Physical Android/iOS",
+    "WebKit",
+    "Future motion, circulation, passenger transport and collision",
+    "Owner art approval",
+    "Deployment or publication"
+  ],
+  "push_performed": false
+}
