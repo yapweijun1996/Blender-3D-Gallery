@@ -206,6 +206,9 @@ def jump_pose(frame):
 def sit_pose(frame):
     factor = {1: 0, 13: .5, 25: 1, 49: 1, 61: .5, 73: 0}[frame]
     set_hip_height(-.13 * factor)
+    hip = rig.pose.bones['mixamorig:Hips']
+    hip.location += hip.bone.matrix_local.to_quaternion().inverted() @ Vector((0, .015 * factor, 0))
+    set_angle('Spine2', (1, 0, 0), 15 * factor)
     set_angle('LeftArm', (0, 1, 0), 65)
     set_angle('RightArm', (0, 1, 0), -65)
     for side in ('Left', 'Right'):

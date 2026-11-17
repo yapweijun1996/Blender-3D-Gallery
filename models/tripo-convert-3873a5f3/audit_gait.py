@@ -17,7 +17,7 @@ bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete(use_global=False)
 bpy.ops.import_scene.gltf(filepath=path)
 rig = next(o for o in bpy.context.scene.objects if o.type == 'ARMATURE')
-mesh = next(o for o in bpy.context.scene.objects if o.type == 'MESH')
+mesh = next(o for o in bpy.context.scene.objects if o.type == 'MESH' and any(m.type == 'ARMATURE' and m.object == rig for m in o.modifiers))
 scene = bpy.context.scene
 
 # Anchor samples are actual sole vertices dominated by each foot or toe group.
