@@ -14,6 +14,16 @@ The source retains individual editable components. The export batches evaluated
 copies by material without modifying the source. Static visual prop; no actual
 payment, printer, drawer animation or shop software is provided.
 
+Advisor round 1: the card-reader support now terminates 4 mm inside the tilted
+housing's back. The receipt's rear edge is anchored inside the paper slot, with
+its free end feeding downward through the front opening. The source audit checks
+the evaluated attachment surfaces and matches all joint vertices to the imported
+GLB within 1 micrometre. The generator also refreshes the gallery's hero JPEG.
+
+Measured export: 9,964 triangles, 399,428 bytes (0.381 MiB), three meshes,
+primitives and materials; bounds 1.400 x 1.421 x 0.700 m (glTF X/Y/Z).
+Khronos validation: zero errors and warnings. See `reports/` for measured evidence.
+
 ## Rebuild and checks
 
 Run from the repository root:

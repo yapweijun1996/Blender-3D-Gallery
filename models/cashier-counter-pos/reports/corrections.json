@@ -16,5 +16,18 @@
     "assets.json",
     "sources.json",
     "khronos.json"
+  ],
+  "advisor_round_1": [
+    {
+      "issue": "Card reader housing floats above its support",
+      "reproduced": "Evaluated housing surface test rejects the original support tip as outside the housing",
+      "resolution": "Aim the support at a point 4 mm inside the tilted housing rear surface",
+      "verification": "inspect_sources.py checks evaluated housing penetration and imported GLB joint vertices"
+    },
+    {
+      "issue": "Receipt does not emerge continuously from paper slot",
+      "resolution": "Anchor the rear paper edge at Blender (0.085, 0.244, 1.065) m inside the slot, retaining a downward feed angle of 27 degrees",
+      "verification": "Evaluated slot penetration and a centreline ray must exit through the slot front; joint vertices must survive GLB export"
+    }
   ]
 }

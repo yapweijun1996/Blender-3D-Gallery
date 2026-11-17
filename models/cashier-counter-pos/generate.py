@@ -97,14 +97,18 @@ def build(root):
     box('PRINTER_Body', (.085, .14, 1.021), (.185, .205, .142), petrol, root, .014)
     box('PRINTER_Lid', (.085, .14, 1.093), (.178, .195, .018), dark, root, .009)
     box('PRINTER_PaperSlot', (.085, .246, 1.065), (.143, .006, .012), dark, root, .002)
-    paper = box('PRINTER_BlankReceipt', (.085, .267, 1.074), (.078, .067, .002), ivory, root, .0005)
+    paper = box('PRINTER_BlankReceipt', (0, 0, 0), (.078, .067, .002), ivory, root, .0005)
     paper.rotation_euler.x = math.radians(-27)
+    # Anchor the paper's rear edge inside the slot; the free end feeds downward.
+    paper.location = Vector((.085, .244, 1.065)) + paper.rotation_euler.to_matrix() @ Vector((0, .0335, 0))
     box('PRINTER_FeedButton', (.151, .22, 1.106), (.018, .022, .005), ivory, root, .003)
     # Card reader is angled upward toward the customer, within the countertop.
     box('CARD_Base', (-.23, -.227, .958), (.135, .13, .016), dark, root, .006)
-    rod('CARD_Support', (-.23, -.22, .966), (-.23, -.22, 1.005), .018, petrol, root)
     reader = empty('CARD_CustomerTilt', root, (-.23, -.225, 1.053))
     reader.rotation_euler.x = math.radians(-55)
+    # Embed the support tip 4 mm into the tilted housing's rear surface.
+    attachment = reader.location + reader.rotation_euler.to_matrix() @ Vector((0, .0135, -.018))
+    rod('CARD_Support', (-.23, -.22, .966), attachment, .018, petrol, root)
     box('CARD_Housing', (0, 0, 0), (.115, .035, .175), petrol, reader, .009)
     box('CARD_BlankScreen', (0, -.020, .034), (.087, .006, .063), dark, reader, .004)
     for x in [-.025, 0, .025]:
@@ -211,6 +215,11 @@ def render_views():
         aim(s.camera, TARGET)
         s.render.filepath = str(HERE / 'previews' / (name + '.png'))
         bpy.ops.render.render(write_still=True)
+        if name == 'hero':
+            s.render.image_settings.file_format = 'JPEG'
+            s.render.image_settings.quality = 90
+            bpy.data.images['Render Result'].save_render(str(HERE / 'previews/hero.jpg'))
+            s.render.image_settings.file_format = 'PNG'
 
 
 def main():
