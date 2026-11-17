@@ -1,0 +1,19 @@
+{
+  "observations": [
+    {
+      "check": "standalone contact readiness",
+      "result": "TIMEOUT",
+      "timeouts_ms": [
+        30000,
+        15000
+      ],
+      "notes": "Initial trials overlapped full repository tests and Blender renders. The exact timeout cause was not established. A subsequent unchanged contact page rendered successfully."
+    },
+    {
+      "check": "production screenshot",
+      "result": "FAIL",
+      "notes": "Full-page Page.captureScreenshot returned Unable to capture screenshot. Switched to the explicitly requested viewport capture; final 1440 x 900 and 390 x 900 captures passed. No model or gallery code changed."
+    }
+  ],
+  "final_report": "browser.json"
+}
