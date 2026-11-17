@@ -4,6 +4,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 import createFishMotion from "./fish-motion.js";
 import { acquireModelViewerRenderer } from "./model-viewer-renderer.js";
+import { fitViewerObject } from "./viewer-framing.js";
 
 export default async function createViewer(
   container,
@@ -216,13 +217,7 @@ export default async function createViewer(
     }
     const bounds = new THREE.Box3().setFromObject(cartDemo?.group ?? model);
     if (bounds.isEmpty()) throw new Error("Model has no visible bounds");
-    const center = bounds.getCenter(new THREE.Vector3());
-    const size = bounds.getSize(new THREE.Vector3());
-    const radius = Math.max(size.length() / 2, 0.001);
-    camera.near = radius / 50;
-    camera.far = radius * 50;
-    controls.minDistance = radius * 1.05;
-    controls.maxDistance = radius * 20;
+    const radius = Math.max(bounds.getSize(new THREE.Vector3()).length() / 2, 0.001);
     const direction = (
       display?.previewCameraDirection ? new THREE.Vector3().fromArray(display.previewCameraDirection) :
       isVehicle ? new THREE.Vector3(1, 0.35, -0.75) :
@@ -232,25 +227,30 @@ export default async function createViewer(
           ? new THREE.Vector3(1, 0.3, 0.25)
           : new THREE.Vector3(1, 0.9, 1)
     ).normalize();
-    const frameVehicle = (viewDirection, target = model) => {
+    const frameObject = (visibleObject, viewDirection) => {
       resize();
-      // Include open doors in the bounds so a preset never cuts them off.
-      const visibleBounds = new THREE.Box3().setFromObject(target);
-      const visibleCenter = visibleBounds.getCenter(new THREE.Vector3());
-      const vertical = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-      const horizontal = vertical * camera.aspect;
-      const right = new THREE.Vector3().crossVectors(camera.up, viewDirection).normalize();
-      const up = new THREE.Vector3().crossVectors(viewDirection, right).normalize();
-      let distance = 0;
-      for (const x of [visibleBounds.min.x, visibleBounds.max.x]) for (const y of [visibleBounds.min.y, visibleBounds.max.y]) for (const z of [visibleBounds.min.z, visibleBounds.max.z]) {
-        const offset = new THREE.Vector3(x, y, z).sub(visibleCenter);
-        const depth = offset.dot(viewDirection);
-        distance = Math.max(distance, depth + Math.abs(offset.dot(right)) / horizontal, depth + Math.abs(offset.dot(up)) / vertical);
+      const frame = fitViewerObject(visibleObject, camera, viewDirection);
+      camera.near = Math.max(frame.radius * 0.001, Number.EPSILON);
+      camera.far = Math.max(frame.radius * 50, frame.distance * 12 + frame.radius);
+      camera.updateProjectionMatrix();
+      controls.minDistance = frame.minDistance;
+      controls.maxDistance = frame.maxDistance;
+      const damping = controls.enableDamping;
+      controls.enableDamping = false;
+      try {
+        // Clear any orbit inertia before applying this exact reset or preset.
+        controls.update();
+        controls.target.copy(frame.target);
+        camera.position.copy(frame.target).addScaledVector(frame.direction, frame.distance);
+        controls.update();
+      } finally {
+        controls.enableDamping = damping;
       }
-      controls.target.copy(visibleCenter);
-      camera.position.copy(visibleCenter).addScaledVector(viewDirection, Math.max(distance * 1.08, controls.minDistance));
-      controls.update();
       invalidate();
+    };
+    const frameVehicle = (viewDirection, target = model) => {
+      // Include open doors in the bounds so a preset never cuts them off.
+      frameObject(target, viewDirection);
     };
     const reset = () => {
       clearPreset();
@@ -261,15 +261,7 @@ export default async function createViewer(
         doorButtons.get(code)?.setAttribute("aria-pressed", "false");
       }
       if (isVehicle || cartDemo) { frameVehicle(direction, cartDemo?.group ?? model); return; }
-      resize();
-      const vertical = THREE.MathUtils.degToRad(camera.fov / 2);
-      const horizontal = Math.atan(Math.tan(vertical) * camera.aspect);
-      const distance =
-        (radius / Math.sin(Math.min(vertical, horizontal))) * 1.08;
-      camera.position.copy(center).addScaledVector(direction, distance);
-      controls.target.copy(center);
-      controls.update();
-      invalidate();
+      frameObject(model, direction);
     };
     const setView = (name) => {
       const directions = { front: [-1, 0, 0], rear: [1, 0, 0], left: [0, 0, 1], right: [0, 0, -1] };
