@@ -1,9 +1,41 @@
 {
   "result": "PASS",
-  "source_revision_before_commit": "c5a37bf17ffe72d5cbd9bbd311ba2282702dd9e3",
+  "advisor_round": 1,
+  "source_revision_before_commit": "d793ade0cbc0082fe119299e5e43d0b174bf8eef",
   "blender": "5.2.3 LTS e13b728c6880",
-  "source_edit_and_independent_import": "PASS, 50 manifold positive-volume editable parts",
-  "asset_validation": "PASS, 0 errors/warnings/infos and 0 degenerate triangles",
+  "source_edit_and_independent_import": "PASS, 50 manifold positive-volume editable visual parts, saved-edit re-export, hidden unmaterialed collision box in a separate GLB scene",
+  "asset_validation": {
+    "result": "PASS",
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "degenerate_visible_triangles": 0,
+    "evidence": [
+      "assets.json",
+      "khronos.json",
+      "edited-assets.json",
+      "khronos-edited.json"
+    ]
+  },
+  "deterministic_rebuild": {
+    "result": "PASS",
+    "sha256": "223710ad9ad7d6bc5989399c39b5db0a568d0f509c6c80e1c5982b8d4c31736f",
+    "evidence": "export-replay.json"
+  },
+  "budget": {
+    "result": "PASS",
+    "triangles_including_collision": 7784,
+    "materials": 2,
+    "visible_draw_calls": 6,
+    "glb_bytes": 307348,
+    "limits": {
+      "triangles": 8000,
+      "bytes": 1048576,
+      "mesh_primitives": 6,
+      "materials": 2
+    },
+    "provenance": "advisor-round-1.json"
+  },
   "project_tests": {
     "command": "npm test",
     "passed": 737,
@@ -14,36 +46,65 @@
   "production_build": {
     "command": "npm run build",
     "result": "PASS",
-    "full_log": "/tmp/ice-cream-chest-freezer-build.log",
-    "note": "Existing large JS chunk warning; no app code modified."
+    "evidence": "build.log",
+    "note": "Existing large JavaScript chunk warning; no application code modified."
   },
-  "final_metadata_build": {
+  "final_preview_build": {
     "command": "npx vite build",
     "result": "PASS",
-    "build": "9fb95b6bba9522f7",
-    "full_log": "/tmp/ice-cream-chest-freezer-build-final.log"
+    "build": "99c980745f4eb959",
+    "evidence": "build-final.log"
   },
-  "browser": "PASS, final build, 3 viewports, exact consumed GLB hash and render counts, orbit/zoom/reset/refresh/reopen, 0 errors",
+  "browser": {
+    "result": "PASS",
+    "viewports": 3,
+    "exact_consumed_glb_sha256": "223710ad9ad7d6bc5989399c39b5db0a568d0f509c6c80e1c5982b8d4c31736f",
+    "visible_triangles": 7772,
+    "draw_calls": 6,
+    "errors": 0,
+    "actions": [
+      "keyboard orbit",
+      "keyboard zoom",
+      "reset",
+      "refresh",
+      "close/reopen"
+    ],
+    "displayed_stats": "7,784 triangles, 7,090 stored vertices, 2 materials, 300.1 KiB",
+    "evidence": "browser.json"
+  },
+  "browser_initial_retry": {
+    "result": "FAIL then PASS",
+    "observed": "30-second mobile page.reload navigation timeout while concurrent preview rendering and tests were active; no captured page/WebGL errors.",
+    "change": "Use the same 60-second navigation budget as viewer readiness; rerun complete suite after rendering finished.",
+    "initial_evidence": [
+      "browser-under-load.json",
+      "browser-under-load.log"
+    ],
+    "final_evidence": "browser.json"
+  },
   "visual_review": [
     "previews/hero.jpg",
+    "previews/hero.png",
     "previews/front.png",
     "previews/side.png",
     "previews/top.png",
     "previews/reimport.png",
-    "desktop and mobile actual gallery screenshots"
+    "/Users/admin/Documents/MallQueue/reports/ice-cream-chest-freezer-page.png",
+    "/Users/admin/Documents/MallQueue/reports/ice-cream-chest-freezer-390-page.png"
   ],
-  "initial_geometry_failure": {
-    "observed_degenerate_triangles": 64,
-    "cause": "Thin recess boxes: bevel clamp collapsed end geometry",
-    "repair": "Limit bevel radius to 22 percent of minimum component dimension",
-    "final_degenerate_triangles": 0
+  "requested_screenshot": {
+    "path": "/Users/admin/Documents/MallQueue/reports/ice-cream-chest-freezer-page.png",
+    "bytes": 136307,
+    "sha256": "d796b04212e8f311e8aed7ebc14306c51411fc57067213c8cc85ad5f40a74894",
+    "viewed": true
   },
+  "catalog": "Existing registration preserved. Actual built gallery stats are derived from the GLB and verified by browser assertions.",
   "not_verified": [
     "Physical iOS/Android",
     "WebKit",
     "Sustained device performance",
     "Full mall integration",
-    "Lid interaction in gallery (not implemented)",
+    "Runtime lid and collision integration (consumer responsibility)",
     "Deployment (not requested)"
   ]
 }

@@ -1,7 +1,11 @@
 {
   "result": "PASS",
-  "scope": "Fresh original final generation compared with export of saved source; not a cross-version byte determinism promise.",
-  "sha256": "9521daef9b9a21b3327cbba7d98c0ee34ecbf158a872aa056380d4e2452ddfc0",
-  "fresh_generation_log": "generate-final.log",
-  "source_export_log": "render-final.log"
+  "scope": "Fresh independent generation and saved-source export reproduce delivery bytes on the same Blender version; no cross-version byte guarantee.",
+  "sha256": "223710ad9ad7d6bc5989399c39b5db0a568d0f509c6c80e1c5982b8d4c31736f",
+  "fresh_generation_sha256": "223710ad9ad7d6bc5989399c39b5db0a568d0f509c6c80e1c5982b8d4c31736f",
+  "source_export_sha256": "223710ad9ad7d6bc5989399c39b5db0a568d0f509c6c80e1c5982b8d4c31736f",
+  "canonical_files_unchanged": true,
+  "blender_version": "5.2.3 LTS",
+  "random_inputs": "None; analytic geometry, fixed palette and fixed flavor phases",
+  "evidence": "rebuild.log"
 }

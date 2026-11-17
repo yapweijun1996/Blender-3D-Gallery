@@ -18,6 +18,7 @@ const results = [];
 try {
   for (const [width,height] of [[1440,900],[768,1024],[390,844]]) {
     const context = await browser.newContext({viewport:{width,height}, serviceWorkers:'block', reducedMotion:'reduce'});
+    context.setDefaultNavigationTimeout(60000);
     await context.addInitScript(() => {
       window.qa = {draws:0, consumed:[]};
       const original = Response.prototype.arrayBuffer;
@@ -73,15 +74,22 @@ try {
     assert.ok(metrics.label?.length);
     assert.ok(metrics.consumed.includes(expected.sha256));
     assert.equal(metrics.frame.calls,expected.mesh_primitives);
-    assert.equal(metrics.frame.triangles,expected.triangles);
+    assert.equal(metrics.frame.triangles,expected.visible_triangles);
+    const displayed = await page.locator('#viewer-metadata').evaluate(el => Object.fromEntries(
+      [...el.children].map(row => [row.querySelector('dt').textContent,row.querySelector('dd').textContent])));
+    assert.equal(Number(displayed.Triangles.replaceAll(',','')),expected.triangles);
+    assert.equal(Number(displayed.Materials),expected.materials);
     const screenshot=path.join(out,`ice-cream-chest-freezer-${width}-page.png`);
     await page.screenshot({path:screenshot});
+    if (width === 1440) {
+      await page.screenshot({path:path.join(out,'ice-cream-chest-freezer-page.png')});
+    }
     await page.reload({waitUntil:'domcontentloaded'});await ready();
     await page.locator('#close-viewer').click();
     await page.waitForFunction(()=>!document.querySelector('#viewer').open);
     await page.locator('[data-asset-id="ice-cream-chest-freezer"]').first().click();await ready();
     assert.deepEqual(errors,[]);
-    Object.assign(result,{status:'PASS',screenshot,metrics,keyboard_orbit:'PASS',keyboard_zoom:'PASS',reset:'PASS',refresh_reopen:'PASS'});
+    Object.assign(result,{status:'PASS',screenshot,metrics,displayed,keyboard_orbit:'PASS',keyboard_zoom:'PASS',reset:'PASS',refresh_reopen:'PASS'});
     await context.close();
   }
 } finally {

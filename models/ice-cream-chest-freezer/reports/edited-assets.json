@@ -1,10 +1,13 @@
 {
   "result": "PASS",
-  "glb_bytes": 450008,
-  "triangles": 10764,
-  "mesh_primitives": 17,
+  "glb_bytes": 307348,
+  "triangles": 7784,
+  "mesh_primitives": 6,
+  "visible_triangles": 7772,
+  "collision_triangles": 12,
   "placement_meshes": 4,
-  "materials": 11,
+  "stored_meshes": 5,
+  "materials": 2,
   "dimensions_gltf_xyz_m": [
     1.5,
     0.8999999761581421,
@@ -24,16 +27,17 @@
   },
   "degenerate_triangles": 0,
   "budget": {
-    "triangles": 20000,
+    "triangles": 8000,
     "bytes": 1048576,
-    "mesh_primitives": 20,
-    "materials": 11
+    "mesh_primitives": 6,
+    "materials": 2
   },
   "validation": {
     "errors": 0,
     "warnings": 0,
     "infos": 0
   },
+  "budget_source": "MallQueue/tasks/glass-door-beverage-cooler.md P1 override and explicit ice-cream-chest-freezer fallback; 1 MiB retained as a stricter local size cap",
   "slides": [
     {
       "node": "Lid_Left_Geometry",
@@ -49,9 +53,16 @@
     }
   ],
   "minimum_track_clearance_m": 0.003000020980834961,
+  "minimum_contents_clearance_m": 0.08082616701722145,
+  "collision": {
+    "name": "collider_box",
+    "scene": 1,
+    "material": false,
+    "visible_by_default": false
+  },
   "textures": 0,
   "animation_clips": 0,
-  "sha256": "33818493e7ebfd4dc34bec71bb767dabd30241a5d6724b7253d4cdf139586223",
+  "sha256": "4db29ea805d1cc4cbb15d3a772aebf1573f892785aca8b878bb235e3e90c4530",
   "tool_versions": {
     "three": "0.187.0",
     "validator": "2.0.0-dev.3.10"

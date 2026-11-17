@@ -31,7 +31,7 @@
       4.2
     ]
   },
-  "accuracy_notes": "Static P1 commercial display prop. Two named lid nodes slide along X on separate tracks; gallery supplies no lid controls. Six generic frozen tubs, no readable labels or brands. Partial-open authored pose. Physical devices, WebKit and full mall integration unverified. Not operational refrigeration.",
+  "accuracy_notes": "Static P1 commercial display prop. Two named lid nodes slide along X on separate tracks; gallery supplies no lid controls. Six generic ice-cream tubs with soft surface relief and scoop trails, no readable labels or brands. Partial-open authored pose. Unmaterialed collider_box is in an opt-in collision scene, outside the default visual scene. Physical devices, WebKit and full mall integration unverified. Not operational refrigeration.",
   "attribution": [
     {
       "credit": "Original procedural geometry and materials; no third-party assets."
@@ -42,15 +42,36 @@
     "overall": "NEEDS REVIEW",
     "local": "SOURCE_AND_GLB_PASS",
     "budget": {
-      "triangles": 20000,
+      "triangles": 8000,
       "bytes": 1048576,
-      "mesh_primitives": 20,
-      "materials": 11
+      "mesh_primitives": 6,
+      "materials": 2
     },
     "evidence": [
       "reports/assets.json",
+      "reports/khronos.json",
       "reports/sources.json",
-      "reports/browser.json"
-    ]
+      "reports/export-replay.json",
+      "reports/browser.json",
+      "reports/advisor-round-1.json"
+    ],
+    "budget_source": "MallQueue/tasks/glass-door-beverage-cooler.md: P1 override and explicit ice-cream-chest-freezer fallback. The requested same-id task file is absent; the original fallback supplies the stricter 8,000 triangle / 2 material / 6 draw-call limits. Local 1 MiB size cap is stricter than the original 1.5 MiB common limit."
+  },
+  "measured": {
+    "triangles": 7784,
+    "visible_triangles": 7772,
+    "collision_triangles": 12,
+    "glb_bytes": 307348,
+    "mesh_primitives": 6,
+    "materials": 2,
+    "placement_meshes": 4,
+    "stored_meshes": 5,
+    "dimensions_gltf_xyz_m": [
+      1.5,
+      0.8999999761581421,
+      0.761000007390976
+    ],
+    "textures": 0,
+    "animation_clips": 0
   }
 }

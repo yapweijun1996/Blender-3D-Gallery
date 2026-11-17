@@ -1,0 +1,67 @@
+{
+  "round": 1,
+  "advisor_review": {
+    "path": "/Users/admin/Documents/MallQueue/advisor/ice-cream-chest-freezer-r1.md",
+    "sha256": "148897bb993cee8dfb63579dfca3e7c399e1e412d65519dc43cf2209bb7b7696"
+  },
+  "original_task": {
+    "requested_path": "~/Documents/MallQueue/tasks/ice-cream-chest-freezer.md",
+    "requested_path_exists": false,
+    "recovered_source": "/Users/admin/Documents/MallQueue/tasks/glass-door-beverage-cooler.md",
+    "sha256": "0d0d35d922088830af6842169df9f91a625f178660cb1d63f57df49882c72cb5",
+    "evidence": "Original task explicitly names ice-cream-chest-freezer and its dimensions as the upright cooler fallback; its P1 override supplies the 8,000 triangle, 2 material, 6 draw-call and hidden unmaterialed collider requirements.",
+    "size_cap": "Original common limit <1.5 MiB; retained stricter local cap 1 MiB."
+  },
+  "changes": [
+    "Replace flat cream caps with closed analytic surfaces: soft billows, rounded scoop trails, restrained irregular edges and varied orientations.",
+    "Raise tub rims and filled surfaces by extending the tubs upward from unchanged base positions; open the left slider further for the default gallery view.",
+    "Consolidate cabinet, trim, tubs and flavors into one shared opaque linear vertex-color material; retain separate single-sided translucent glass.",
+    "Simplify thin bevels and glazing edges to meet the original P1 limits while preserving the cabinet silhouette.",
+    "Add the required unmaterialed collider_box in the native source and separate inactive GLB scene."
+  ],
+  "before": {
+    "triangles": 10764,
+    "glb_bytes": 450008,
+    "mesh_primitives": 17,
+    "materials": 11,
+    "placement_meshes": 4
+  },
+  "after": {
+    "triangles": 7784,
+    "visible_triangles": 7772,
+    "collision_triangles": 12,
+    "glb_bytes": 307348,
+    "mesh_primitives": 6,
+    "materials": 2,
+    "placement_meshes": 4,
+    "stored_meshes": 5
+  },
+  "catalog": "Registration paths and identity unchanged; build derives file size, triangles and material count from the current GLB, verified on the actual gallery page. No static catalog edit needed.",
+  "validation_evidence": [
+    "assets.json",
+    "khronos.json",
+    "sources.json",
+    "export-replay.json",
+    "browser.json",
+    "checks.json"
+  ],
+  "scope": "Local improvement only. No push, rebase, deployment or publication.",
+  "local_checks": "PASS",
+  "visual_reviewed": [
+    "previews/hero.jpg",
+    "previews/hero.png",
+    "previews/front.png",
+    "previews/side.png",
+    "previews/top.png",
+    "previews/reimport.png",
+    "/Users/admin/Documents/MallQueue/reports/ice-cream-chest-freezer-page.png",
+    "/Users/admin/Documents/MallQueue/reports/ice-cream-chest-freezer-390-page.png"
+  ],
+  "gallery_build": "99c980745f4eb959",
+  "requested_screenshot": {
+    "path": "/Users/admin/Documents/MallQueue/reports/ice-cream-chest-freezer-page.png",
+    "bytes": 136307,
+    "sha256": "d796b04212e8f311e8aed7ebc14306c51411fc57067213c8cc85ad5f40a74894",
+    "viewed": true
+  }
+}
