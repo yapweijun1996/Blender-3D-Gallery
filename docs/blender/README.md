@@ -14,6 +14,7 @@ The canonical cross-project knowledge domain is kbid `blender`. It owns reusable
 | Meshes, modifiers, module dimensions and clearances | [Architecture and topology](architecture.md) |
 | UVs, texture density, shader export and color | [Materials and UVs](materials-uv.md) |
 | Bones, weights, Actions, slots and motion policy | [Characters and animation](characters-animation.md) |
+| Studying a chibi head and checking an original character against its design | [Chibi head study](chibi-head-study.md) |
 | Coordinate conversion, GLB packaging and rendering cost | [glTF and runtime](gltf-runtime.md) |
 | Independent checks, evidence and release boundaries | [Quality and delivery](quality-delivery.md) |
 | Extension admission and the five reviewed candidates | [Extensions](extensions.md) |
@@ -33,3 +34,5 @@ The [calibration note](calibration.md) retains a failed test assumption and its 
 ## Maintenance
 
 Update the owning chapter first, run relevant probes, then prepare and review its KB payload. Preserve existing KB IDs/categories and private visibility; read current metadata before replacing it. Verify content after writing and run representative retrieval questions. Updating this handbook does not register a Skill, change a scene, install an extension, or authorize a Git release.
+
+[Character study closeout — 2026-11-17](2026-11-17-closeout.md) records the completed portrait, reusable Skill, KB maintenance and verification limits.

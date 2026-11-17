@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Indigo Ninja Head · GLB Review</title>
+<link rel="icon" href="data:,">
+<style>html,body { margin: 0; } canvas { display: block; }</style>
+<script type="importmap">
+{"imports":{"three":"../../../node_modules/three/build/three.module.js","three/addons/":"../../../node_modules/three/examples/jsm/"}}
+</script>
+<body>
+<script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+
+try {
+  const { scene: head } = await new GLTFLoader().loadAsync('../exports/indigo-ninja-head.glb');
+  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+  renderer.setSize(672, 672);
+  renderer.toneMapping = THREE.NeutralToneMapping;
+  document.body.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xc9c9cc);
+  scene.add(head, new THREE.HemisphereLight(0xfff4ee, 0xa0a8c0, 1.55));
+  for (const [x, y, z, color, power] of [[-3, 4, 4, 0xffecd5, 2.05], [4, 2, 2, 0xe3e9ff, 1.1],
+    [1, 3, -4, 0xf0e3ff, 1.7]]) {
+    const light = new THREE.DirectionalLight(color, power);
+    light.position.set(x, y, z);
+    scene.add(light);
+  }
+  head.updateMatrixWorld(true);
+  const box = new THREE.Box3().setFromObject(head, true);
+  const positions = [];
+  let meshInstances = 0, triangles = 0;
+  head.traverse(object => {
+    if (!object.isMesh) return;
+    meshInstances++;
+    const attribute = object.geometry.getAttribute('position');
+    triangles += (object.geometry.index?.count ?? attribute.count) / 3;
+    for (let i = 0; i < attribute.count; i++) {
+      positions.push(new THREE.Vector3().fromBufferAttribute(attribute, i).applyMatrix4(object.matrixWorld));
+    }
+  });
+  window.modelStats = {
+    three: THREE.REVISION, meshInstances, triangles, unit: 'metres',
+    min: box.min.toArray(), max: box.max.toArray(), extentsMeters: box.getSize(new THREE.Vector3()).toArray(),
+  };
+  // Identical framing for each iteration; the exported front faces +Z.
+  const camera = new THREE.OrthographicCamera(-0.80, 0.80, 0.80, -0.80, 0.01, 12);
+  const screen = new THREE.Vector3();
+  const studioBackground = scene.background;
+  const silhouetteMaterial = new THREE.MeshBasicMaterial({ color: 0, side: THREE.DoubleSide });
+  window.captureNinja = (degrees, size = 672, silhouette = false) => {
+    if (renderer.domElement.width !== size) renderer.setSize(size, size);
+    scene.overrideMaterial = silhouette ? silhouetteMaterial : null;
+    scene.background = silhouette ? new THREE.Color(0xffffff) : studioBackground;
+    const radians = THREE.MathUtils.degToRad(degrees);
+    camera.position.set(4 * Math.sin(radians), 0.65, 4 * Math.cos(radians));
+    camera.lookAt(0, 0.62, 0);
+    camera.updateMatrixWorld();
+    renderer.render(scene, camera);
+    let minScreenMargin = 1;
+    for (const position of positions) {
+      screen.copy(position).project(camera);
+      minScreenMargin = Math.min(minScreenMargin, 1 - Math.abs(screen.x), 1 - Math.abs(screen.y));
+    }
+    return { drawCalls: renderer.info.render.calls, minScreenMargin, size };
+  };
+} catch (error) {
+  window.loadError = String(error);
+}
+</script>
+</body>
+</html>
