@@ -2,6 +2,7 @@
 from pathlib import Path
 import json
 import math
+import struct
 import sys
 
 import bpy
@@ -13,13 +14,27 @@ ROOT = "ASSET_GrandPiano"
 TARGET = Vector((0, 0, 0.83))
 FOOTPRINT_SHIFT = 0.2975
 LID_ANGLE = math.radians(-32)
-MATERIAL_NAMES = ("Black lacquer", "Ivory keys", "Warm brass")
+MATERIAL_NAMES = ("Black lacquer", "Warm details")
+DEPTH_SCALE = 2.0 / 2.345
+IVORY = (0.94, 0.93, 0.88)
+BRASS = (0.65, 0.48, 0.23)
+
+
+def linear_color(rgb):
+    return tuple(v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4 for v in rgb) + (1,)
+
+
+def tint(obj, rgb):
+    colors = obj.data.color_attributes.get("Tint") or obj.data.color_attributes.new(
+        name="Tint", type="FLOAT_COLOR", domain="CORNER")
+    for color in colors.data:
+        color.color = linear_color(rgb)
 
 
 def material(name, rgb, metal=0, roughness=0.4):
     mat = bpy.data.materials.new(name)
     mat.use_nodes = True
-    color = tuple(v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4 for v in rgb) + (1,)
+    color = linear_color(rgb)
     shader = mat.node_tree.nodes["Principled BSDF"]
     shader.inputs["Base Color"].default_value = color
     shader.inputs["Metallic"].default_value = metal
@@ -32,6 +47,8 @@ def finish(obj, name, mat, root, bevel=0.001, segments=1):
     obj.name = name
     obj.data.materials.clear()
     obj.data.materials.append(mat)
+    if mat.name == "Warm details":
+        tint(obj, BRASS)
     obj.parent = root
     if bevel:
         modifier = obj.modifiers.new("Soft manufactured edge", "BEVEL")
@@ -54,11 +71,10 @@ def rod(name, a, b, radius, mat, root, vertices=12):
     bpy.ops.mesh.primitive_cylinder_add(vertices=vertices, radius=radius, depth=(end - start).length, location=(start + end) / 2)
     obj = bpy.context.object
     obj.rotation_euler = (end - start).to_track_quat("Z", "Y").to_euler()
-    # Thin strings and pins need no bevel rings; smooth only the cylindrical sides.
-    if radius < 0.005:
-        for face in obj.data.polygons:
-            face.use_smooth = len(face.vertices) == 4
-    return finish(obj, name, mat, root, 0 if radius < 0.005 else 0.001)
+    # Smooth cylindrical sides preserve highlights without costly tiny bevel rings.
+    for face in obj.data.polygons:
+        face.use_smooth = len(face.vertices) == 4
+    return finish(obj, name, mat, root, 0)
 
 
 def polygon(name, outline, bottom, top, mat, root, bevel=0.001):
@@ -74,7 +90,7 @@ def polygon(name, outline, bottom, top, mat, root, bevel=0.001):
     return finish(obj, name, mat, root, bevel, segments=1)
 
 
-def bezier(points, steps=12):
+def bezier(points, steps=10):
     a, b, c, d = [Vector(p) for p in points]
     return [tuple((1-t)**3*a + 3*(1-t)**2*t*b + 3*(1-t)*t*t*c + t**3*d)
             for t in [i / steps for i in range(1, steps + 1)]]
@@ -119,18 +135,46 @@ def tapered_leg(name, top, bottom, width_top, width_bottom, mat, root):
     return finish(obj, name, mat, root, 0.004)
 
 
-def white_key(name, left, right, left_notch, right_notch, mat, root):
-    outline = [(left,-0.853),(right,-0.853),(right,-0.738),
-               (right-right_notch,-0.738),(right-right_notch,-0.60),
-               (left+left_notch,-0.60),(left+left_notch,-0.738),(left,-0.738)]
-    outline = [p for i,p in enumerate(outline) if p != outline[i-1]]
-    return polygon(name, outline, 0.735, 0.755, mat, root, 0.0004)
+def keyboard(dark, accent, root):
+    """One ivory slab and one flat pattern, with no per-key solid objects."""
+    slab = box("KEY_IvorySlab", (0, -0.7265, 0.745), (1.222, 0.253, 0.02), accent, root, 0.001)
+    tint(slab, IVORY)
+    vertices, faces = [], []
+
+    def quad(left, right, front, back, height):
+        start = len(vertices)
+        vertices.extend(((left, front, height), (right, front, height),
+                         (right, back, height), (left, back, height)))
+        faces.append(tuple(range(start, start + 4)))
+
+    naturals = [midi for midi in range(21, 109) if midi % 12 in (0, 2, 4, 5, 7, 9, 11)]
+    black_notes = []
+    for i, midi in enumerate(naturals):
+        if i:
+            x = -0.611 + i * 0.0235
+            quad(x - 0.00045, x + 0.00045, -0.853, -0.60, 0.758)
+        if i < 51 and naturals[i + 1] - midi == 2:
+            x = -0.611 + (i + 1) * 0.0235
+            quad(x - 0.007, x + 0.007, -0.738, -0.60, 0.762)
+            black_notes.append(midi + 1)
+    mesh = bpy.data.meshes.new("Keyboard flat pattern")
+    mesh.from_pydata(vertices, [], faces)
+    mesh.update()
+    obj = bpy.data.objects.new("KEY_FlatPattern", mesh)
+    bpy.context.scene.collection.objects.link(obj)
+    finish(obj, obj.name, dark, root, 0)
+    obj["representation"] = "Flat quads: 51 divisions and 36 accidentals on one ivory slab"
+    obj["white_midi_notes"] = naturals
+    obj["black_midi_notes"] = black_notes
 
 
 def build(root):
     dark = material(MATERIAL_NAMES[0], (0.055, 0.06, 0.068), roughness=0.16)
-    ivory = material(MATERIAL_NAMES[1], (0.94, 0.93, 0.88), roughness=0.25)
-    brass = material(MATERIAL_NAMES[2], (0.65, 0.48, 0.23), metal=0.72, roughness=0.26)
+    brass = material(MATERIAL_NAMES[1], (1, 1, 1), metal=0.35, roughness=0.26)
+    shader = brass.node_tree.nodes["Principled BSDF"]
+    color_node = brass.node_tree.nodes.new("ShaderNodeVertexColor")
+    color_node.layer_name = "Tint"
+    brass.node_tree.links.new(color_node.outputs["Color"], shader.inputs["Base Color"])
     outline = case_outline()
     inner = rim("CASE_CurvedRim", outline, dark, root)
     polygon("CASE_Underbody", outline, 0.756, 0.795, dark, root, 0.004)
@@ -143,20 +187,7 @@ def build(root):
     box("CASE_FoldedFrontLid", (0,-0.48,0.981), (1.49,0.16,0.024), dark, root, 0.004)
     rod("CASE_FallboardHinge", (-0.61,-0.54,0.966), (0.61,-0.54,0.966), 0.003, brass, root)
 
-    # A0-C8 inclusive: 52 notched naturals and 36 raised accidentals.
-    naturals = [midi for midi in range(21,109) if midi % 12 in (0,2,4,5,7,9,11)]
-    pitch = 0.0235
-    for index,midi in enumerate(naturals):
-        has_left = index > 0 and midi - naturals[index-1] == 2
-        has_right = index < len(naturals)-1 and naturals[index+1]-midi == 2
-        left = -0.611 + index*pitch + 0.0004
-        obj = white_key("KEY_White_%02d_MIDI_%d" % (index+1,midi), left,left+pitch-0.0008,
-                        0.0077 if has_left else 0,0.0077 if has_right else 0,ivory,root)
-        obj["midi_note"],obj["key_color"] = midi,"white"
-        if has_right:
-            obj = box("KEY_Black_MIDI_%d" % (midi+1),(-0.611+(index+1)*pitch,-0.669,0.7525),
-                      (0.014,0.138,0.037),dark,root,0.0008)
-            obj["midi_note"],obj["key_color"] = midi+1,"black"
+    keyboard(dark, brass, root)
 
     # Open cast-harp members and simplified string courses, all original geometry.
     box("HARP_PinBlock",(0,-0.365,0.869),(1.34,0.065,0.055),brass,root,0.007)
@@ -205,6 +236,28 @@ def build(root):
     box("MUSIC_Tray",(0,-0.032,0.006),(0.74,0.09,0.012),dark,desk,0.003)
     box("MUSIC_RetainingLip",(0,-0.073,0.015),(0.74,0.01,0.03),dark,desk,0.002)
 
+    # A genuine alternate panel and folded music desk; no open prop in this state.
+    closed = bpy.data.objects.new("LID_ClosedPivot", None)
+    bpy.context.scene.collection.objects.link(closed)
+    closed.parent = root
+    closed.location = lid.location.copy()
+    polygon("LID_CLOSED_Panel", local_outline, 0, 0.026, dark, closed, 0.004)
+    folded = bpy.data.objects.new("LID_CLOSED_DeskPivot", None)
+    bpy.context.scene.collection.objects.link(folded)
+    folded.parent = root
+    folded.location = desk.location.copy()
+    folded.rotation_euler.x = math.radians(90)
+    for part in list(desk.children):
+        copy = part.copy()
+        copy.data = part.data.copy()
+        bpy.context.scene.collection.objects.link(copy)
+        copy.name = "LID_CLOSED_" + part.name
+        copy.parent = folded
+    for part in (closed, folded):
+        for child in part.children:
+            child.hide_render = True
+            child.hide_set(True)
+
     # Three tapered legs terminate in small brass forks and black rolling casters.
     for i,(x,y,z) in enumerate(((-0.63,-0.69,0.69),(0.63,-0.69,0.69),(-0.30,0.66,0.78))):
         tapered_leg("LEG_Tapered_%d" % i,(x,y,z),(x,y,0.105),0.105,0.058,dark,root)
@@ -212,7 +265,7 @@ def build(root):
         box("CASTER_Ferrule_%d" % i,(x,y,0.114),(0.067,0.067,0.048),brass,root,0.003)
         for sign in (-1,1):
             box("CASTER_Fork_%d_%s" % (i,sign),(x+sign*0.025,y,0.064),(0.009,0.033,0.06),brass,root,0.002)
-        rod("CASTER_Wheel_%d" % i,(x-0.02,y,0.04),(x+0.02,y,0.04),0.04,dark,root,24)
+        rod("CASTER_Wheel_%d" % i,(x-0.02,y,0.04),(x+0.02,y,0.04),0.04,dark,root,16)
         rod("CASTER_Axle_%d" % i,(x-0.033,y,0.04),(x+0.033,y,0.04),0.009,brass,root)
 
     # Lyre columns, crossbar, pedal pivots and three discrete foot paddles.
@@ -236,9 +289,31 @@ def build(root):
     # Centre the complete piano-and-bench floor footprint while keeping the root at zero.
     for child in root.children:
         child.location.y += FOOTPRINT_SHIFT
+    layout = bpy.data.objects.new("LAYOUT_CompactDepth", None)
+    bpy.context.scene.collection.objects.link(layout)
+    for child in list(root.children):
+        child.parent = layout
+    layout.parent = root
+    layout.scale.y = DEPTH_SCALE
     root["nominal_closed_case_height_m"] = 1.0
     root["lid_angle_degrees"] = 32
-    root["scope"] = "Static original baby grand and matching bench; no playable keys or audio"
+    root["scope"] = "Original P1 baby grand; swappable lids and separate sittable bench; no playable keys or audio"
+    root["lid_variant_scene"] = "VARIANT_LidClosed"
+    root["collision_scene"] = "COLLISION_ONLY"
+    bpy.context.view_layer.update()
+    for name, location, dimensions, target in (
+        ("collider_box", (0, 0.2975 * DEPTH_SCALE, 0.5155), (1.5, 1.75 * DEPTH_SCALE, 1.031), "piano_body"),
+        ("collider_box_bench", (0, -0.9925 * DEPTH_SCALE, 0.275), (0.66, 0.36 * DEPTH_SCALE, 0.55), "bench"),
+    ):
+        bpy.ops.mesh.primitive_cube_add(size=1, location=location)
+        obj = bpy.context.object
+        obj.name = name
+        obj.dimensions = dimensions
+        bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+        obj["collision_only"] = True
+        obj["target_node"] = target
+        obj.hide_render = True
+        obj.hide_set(True)
 
 
 
@@ -283,6 +358,16 @@ def evaluated_vertices(obj, depsgraph):
     return vertices
 
 
+def export_group(obj):
+    if obj.name.startswith("BENCH_"):
+        return "bench"
+    if obj.name.startswith("LID_CLOSED_"):
+        return "lid_closed"
+    if obj.name.startswith("MUSIC_") or obj.name in ("LID_RaisedPanel", "LID_PropStick"):
+        return "lid_open"
+    return "piano_body"
+
+
 def source_measurements(root):
     bpy.context.view_layer.update()
     depsgraph = bpy.context.evaluated_depsgraph_get()
@@ -292,12 +377,16 @@ def source_measurements(root):
             continue
         vertices = evaluated_vertices(obj, depsgraph)
         positions = [[round(v.x, 7), round(v.z, 7), round(-v.y, 7)] for v in vertices]
-        part = {"name": obj.name, "material": obj.data.materials[0].name, "positions": positions}
-        if "midi_note" in obj:
-            part.update(midi=obj["midi_note"], color=obj["key_color"])
+        part = {"name": obj.name, "material": obj.data.materials[0].name,
+                "group": export_group(obj), "positions": positions}
         parts.append(part)
+    pattern = bpy.data.objects["KEY_FlatPattern"]
     return {"blender_version": bpy.app.version_string, "parts": parts,
-            "keys": [part for part in parts if "midi" in part], "editable_meshes": len(parts)}
+            "keyboard": {"representation": pattern["representation"],
+                         "white_midi_notes": list(pattern["white_midi_notes"]),
+                         "black_midi_notes": list(pattern["black_midi_notes"]),
+                         "pattern_quads": len(pattern.data.polygons)},
+            "editable_meshes": len(parts)}
 
 
 def export(path):
@@ -306,39 +395,91 @@ def export(path):
     bpy.context.view_layer.update()
     depsgraph = bpy.context.evaluated_depsgraph_get()
     originals = [obj for obj in root.children_recursive if obj.type == "MESH"]
+    temporary = []
+    export_root = bpy.data.objects.new("EXPORT_GrandPiano", None)
+    bpy.context.scene.collection.objects.link(export_root)
+    for key in root.keys():
+        export_root[key] = root[key]
+    temporary.append(export_root)
+    body = bpy.data.objects.new("piano_body", None)
+    bpy.context.scene.collection.objects.link(body)
+    body.parent = export_root
+    temporary.append(body)
     try:
-        for material_name in MATERIAL_NAMES:
+        for group_name, material_name in ((group_name, material_name)
+                for group_name in ("piano_body", "bench", "lid_open", "lid_closed")
+                for material_name in MATERIAL_NAMES):
             group = []
             for original in originals:
-                if original.data.materials[0].name != material_name:
+                if export_group(original) != group_name or original.data.materials[0].name != material_name:
                     continue
                 mesh = bpy.data.meshes.new_from_object(original.evaluated_get(depsgraph), depsgraph=depsgraph)
+                # Bake the complete matrix into vertices: compact depth can shear
+                # rotated rods, which an object TRS decomposition cannot preserve.
+                mesh.transform(original.matrix_world)
                 copy = bpy.data.objects.new("EXPORT_Part", mesh)
                 bpy.context.scene.collection.objects.link(copy)
-                copy.matrix_world = original.matrix_world.copy()
                 group.append(copy)
+            if not group:
+                continue
             bpy.ops.object.select_all(action="DESELECT")
             for obj in group:
                 obj.select_set(True)
             bpy.context.view_layer.objects.active = group[0]
             bpy.ops.object.join()
             merged = bpy.context.object
-            merged.name = "MESH_" + material_name.replace(" ", "_").replace("-", "_")
-            merged.parent = root
+            merged.name = ("body_" + material_name.replace(" ", "_")
+                           if group_name == "piano_body" else group_name)
+            # Bake geometry at a useful floor pivot, independent of authoring transforms.
+            bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
+            if group_name == "bench":
+                centre_y = -0.9925 * DEPTH_SCALE
+                for vertex in merged.data.vertices:
+                    vertex.co.y -= centre_y
+                merged.location.y = centre_y
+                merged["interaction"] = "sit"
+                merged["seat_anchor_local_m"] = [0, 0.55, 0]
+                merged["seat_facing_local"] = [0, 0, -1]
+                merged["contract_axes"] = "glTF XYZ; +Y up; seat faces piano (-Z)"
+                merged["collider_node"] = "collider_box_bench"
+            merged.parent = body if group_name == "piano_body" else export_root
+            temporary.append(merged)
         bpy.ops.object.select_all(action="DESELECT")
-        root.select_set(True)
-        for obj in root.children:
-            if obj.name.startswith("MESH_"):
-                obj.select_set(True)
+        colliders = [bpy.data.objects[name] for name in ("collider_box", "collider_box_bench")]
+        for obj in temporary + colliders:
+            obj.hide_set(False)
+            obj.select_set(True)
         bpy.ops.export_scene.gltf(filepath=str(path), export_format="GLB", use_selection=True,
                                   export_yup=True, export_animations=False, export_extras=True,
                                   export_texcoords=False, export_cameras=False, export_lights=False)
+        raw = path.read_bytes()
+        json_size = struct.unpack_from("<I", raw, 12)[0]
+        doc = json.loads(raw[20:20 + json_size])
+        by_name = {node["name"]: i for i, node in enumerate(doc["nodes"])}
+        anchor = doc["nodes"][by_name[export_root.name]]
+        anchor["name"] = ROOT
+        anchor["children"].remove(by_name["lid_closed"])
+        # Core glTF has no visibility flag. Inactive geometry lives in opt-in scenes,
+        # remaining invisible with an unmodified GLTFLoader and gallery viewer.
+        doc["scenes"] = [
+            {"name": "GrandPiano_Open", "nodes": [by_name[export_root.name]]},
+            {"name": "VARIANT_LidClosed", "nodes": [by_name["lid_closed"]]},
+            {"name": "COLLISION_ONLY", "nodes": [by_name[obj.name] for obj in colliders]},
+        ]
+        doc["scene"] = 0
+        encoded = json.dumps(doc, separators=(",", ":")).encode()
+        encoded += b" " * (-len(encoded) % 4)
+        tail = raw[20 + json_size:]
+        path.write_bytes(struct.pack("<4sII", b"glTF", 2, 20 + len(encoded) + len(tail)) +
+                         struct.pack("<I4s", len(encoded), b"JSON") + encoded + tail)
     finally:
-        for obj in list(root.children):
-            if obj.name.startswith("MESH_"):
-                mesh = obj.data
-                bpy.data.objects.remove(obj, do_unlink=True)
+        for obj in reversed(temporary):
+            mesh = obj.data if obj.type == "MESH" else None
+            bpy.data.objects.remove(obj, do_unlink=True)
+            if mesh:
                 bpy.data.meshes.remove(mesh)
+        for name in ("collider_box", "collider_box_bench"):
+            bpy.data.objects[name].hide_set(True)
 
 
 def render_views():
@@ -354,6 +495,18 @@ def render_views():
             scene.render.image_settings.file_format = "WEBP"
             scene.render.image_settings.quality = 86
             bpy.data.images["Render Result"].save_render(str(HERE / "previews" / "hero.webp"), scene=scene)
+    for obj in bpy.data.objects[ROOT].children_recursive:
+        if obj.type == "MESH" and export_group(obj) in ("lid_open", "lid_closed"):
+            obj.hide_render = export_group(obj) == "lid_open"
+    for name, delta in (("closed-front", (0, -4, 0.26)), ("closed-3q", (2.3, -3.5, 2.0))):
+        scene.camera.location = TARGET + Vector(delta)
+        aim(scene.camera, TARGET)
+        scene.render.image_settings.file_format = "PNG"
+        scene.render.filepath = str(HERE / "previews" / (name + ".png"))
+        bpy.ops.render.render(write_still=True)
+    for obj in bpy.data.objects[ROOT].children_recursive:
+        if obj.type == "MESH" and export_group(obj) in ("lid_open", "lid_closed"):
+            obj.hide_render = export_group(obj) == "lid_closed"
 
 
 def main():

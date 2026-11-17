@@ -1,1 +1,3 @@
-Original procedural geometry and shared materials. No external assets, fonts, textures, logos or brands. Owner-project reuse authorized. Public redistribution terms unspecified.
+Original asset; reuse in the owner's projects is authorized.
+
+Original procedural geometry and materials. No external models, fonts, textures, logos or brands. Public redistribution terms have not been specified.

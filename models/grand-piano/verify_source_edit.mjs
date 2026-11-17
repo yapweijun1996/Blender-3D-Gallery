@@ -10,7 +10,7 @@ const original = fs.readFileSync(dir + 'exports/optimized.glb');
 const edited = fs.readFileSync(report.edited_glb);
 const load = bytes => new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
 const a = await load(original), b = await load(edited);
-const name = 'MESH_Warm_brass';
+const name = 'body_Warm_details';
 const first = a.scene.getObjectByName(name), second = b.scene.getObjectByName(name);
 assert.ok(first && second);
 assert.notDeepEqual(first.geometry.attributes.position.array, second.geometry.attributes.position.array);

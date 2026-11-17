@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grand piano P1 GLB contact sheet</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #202326; color: #f4e6ce; font: 14px system-ui; }
+  h1 { margin: 20px 18px 4px; font-size: 20px; }
+  p { margin: 0 18px 16px; color: #c5c0b6; }
+  main { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  figure { margin: 0; min-width: 0; border: 1px solid #3d4144; }
+  figcaption { padding: 10px; }
+  canvas { width: 100%; height: 360px; display: block; }
+  @media(max-width: 600px) { main { grid-template-columns: repeat(2, minmax(0, 1fr)); } canvas { height: 245px; } }
+</style>
+<h1>Grand piano · P1</h1>
+<p>Real optimized.glb · front / three-quarter · open / closed</p>
+<main></main>
+<script type="importmap">{"imports":{"three":"/__piano_qa__/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from '/__piano_qa__/examples/jsm/loaders/GLTFLoader.js';
+import { RoomEnvironment } from '/__piano_qa__/examples/jsm/environments/RoomEnvironment.js';
+
+const bytes = await (await fetch(new URL(location.href).searchParams.get('glb'))).arrayBuffer();
+const hash = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), n => n.toString(16).padStart(2, '0')).join('');
+const gltf = await new GLTFLoader().parseAsync(bytes, '');
+const original = gltf.scene.getObjectByName('ASSET_GrandPiano');
+const alternate = gltf.scenes.find(scene => scene.name === 'VARIANT_LidClosed').getObjectByName('lid_closed');
+const panels = [], records = [];
+for (const [state, view] of [['open', 'front'], ['open', '3q'], ['closed', 'front'], ['closed', '3q']]) {
+  const figure = document.createElement('figure');
+  figure.innerHTML = `<figcaption>${state} · ${view}</figcaption><canvas></canvas>`;
+  document.querySelector('main').append(figure);
+  const canvas = figure.querySelector('canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+  renderer.setPixelRatio(1);
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color('#30383d');
+  const environment = new RoomEnvironment();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const env = pmrem.fromScene(environment, 0.04);
+  scene.environment = env.texture;
+  scene.environmentIntensity = 0.6;
+  environment.dispose(); pmrem.dispose();
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x535b53, 2));
+  const light = new THREE.DirectionalLight(0xffffff, 3);
+  light.position.set(4, 6, 5); scene.add(light);
+  const model = original.clone(true);
+  const open = model.getObjectByName('lid_open');
+  const closed = alternate.clone(true);
+  // Exercise the documented swap on actual loaded nodes; detached nodes are hidden.
+  model.remove(open); model.add(closed);
+  model.remove(closed); model.add(open);
+  if (state === 'closed') { model.remove(open); model.add(closed); }
+  scene.add(model);
+  const bounds = new THREE.Box3().setFromObject(model, true);
+  const target = bounds.getCenter(new THREE.Vector3());
+  const aspect = canvas.clientWidth / canvas.clientHeight;
+  const span = Math.max(2.55, 2.55 / aspect);
+  const camera = new THREE.OrthographicCamera(-span * aspect / 2, span * aspect / 2, span / 2, -span / 2, 0.01, 30);
+  const direction = view === 'front' ? new THREE.Vector3(0, 0.14, 4) : new THREE.Vector3(2.3, 2.0, 3.5);
+  camera.position.copy(target).add(direction); camera.lookAt(target);
+  renderer.render(scene, camera);
+  let visibleMeshes = 0;
+  model.traverseVisible(node => { if (node.isMesh) visibleMeshes++; });
+  const bench = model.getObjectByName('bench');
+  const seat = bench.localToWorld(new THREE.Vector3(...bench.userData.seat_anchor_local_m));
+  records.push({ state, view, triangles: renderer.info.render.triangles, draw_calls: renderer.info.render.calls,
+    visible_meshes: visibleMeshes, active_lid: model.getObjectByName('lid_' + state)?.name,
+    collider_visible: !!model.getObjectByName('collider_box'), seat_world_m: seat.toArray() });
+  panels.push({ model, bench, renderer, scene, camera });
+}
+window.pianoVariantQA = { ready: true, sha256: hash, records,
+  moveBench() {
+    const panel = panels[0];
+    const body = panel.model.getObjectByName('piano_body');
+    panel.model.updateMatrixWorld(true);
+    const before = body.matrixWorld.toArray();
+    panel.bench.position.x += 0.3;
+    panel.renderer.render(panel.scene, panel.camera);
+    return { body_unchanged: JSON.stringify(before) === JSON.stringify(body.matrixWorld.toArray()), bench_x: panel.bench.position.x };
+  }
+};
+</script>
+</html>

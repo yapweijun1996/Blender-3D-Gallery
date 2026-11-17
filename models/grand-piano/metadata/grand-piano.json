@@ -1,21 +1,23 @@
 {
   "id": "grand-piano",
   "name": "Grand Piano with Bench",
-  "summary": "Original 88-key baby grand with a raised lid, three pedals, castered legs and matching bench.",
-  "description": "Brand-neutral black-lacquer baby grand for the S15 showroom podium, with curved bentside, propped open lid, open music desk and a simplified brass harp. Static visual equipment.",
+  "summary": "Original glossy baby grand with open/closed lids, a lightweight 88-note keyboard and separate sittable bench.",
+  "description": "Brand-neutral P1 black-lacquer baby grand for S15: curved bentside, brass-colored harp, three pedals and castered legs. One GLB contains lid_open/lid_closed variants, a separate bench and hidden collision proxies.",
   "category": "Equipment",
   "tags": [
     "grand piano",
     "baby grand",
     "88 keys",
     "bench",
-    "raised lid",
     "music",
     "S15",
     "P1",
     "mall",
     "editable",
-    "metres"
+    "metres",
+    "open/closed lid",
+    "sittable bench",
+    "low poly"
   ],
   "status": "draft",
   "store": "S15",
@@ -23,7 +25,7 @@
   "created": "2026-11-17",
   "author": "Yap Wei Jun project / agent-assisted procedural modeling",
   "blender_version": "5.2.3 LTS",
-  "creation_method": "Original deterministic Blender Python geometry and shared procedural materials; no external assets or text.",
+  "creation_method": "Original deterministic Blender Python geometry; two shared materials with local vertex colors; no textures, external assets or text.",
   "generator": "generate.py",
   "paths": {
     "glb": "exports/optimized.glb",
@@ -32,7 +34,9 @@
     "additional_previews": [
       "previews/front.png",
       "previews/side.png",
-      "previews/3q.png"
+      "previews/3q.png",
+      "previews/closed-front.png",
+      "previews/closed-3q.png"
     ]
   },
   "display": {
@@ -50,50 +54,74 @@
     "origin": "Floor centre of the complete piano-and-bench footprint"
   },
   "measurements": {
-    "glb_bytes": 523560,
-    "triangles": 15180,
-    "vertices": 17881,
-    "meshes": 3,
-    "primitives": 3,
-    "materials": 3,
+    "glb_bytes": 415496,
+    "triangles": 7878,
+    "vertices": 12741,
+    "meshes": 7,
+    "primitives": 7,
+    "materials": 2,
     "textures": 0,
     "animations": 0,
     "dimensions_m": [
       1.5,
-      1.8118597865104675,
-      2.3449999690055847
+      1.8118597269058228,
+      1.999999925494194
+    ],
+    "closed_dimensions_m": [
+      1.5,
+      1.031000018119812,
+      1.999999925494194
     ],
     "bounds_m": {
       "min": [
         -0.75,
         0,
-        -1.1725000143051147
+        -1
       ],
       "max": [
         0.75,
-        1.8118597865104675,
-        1.17249995470047
+        1.8118597269058228,
+        0.999999925494194
       ]
     },
-    "key_count": 88,
-    "white_keys": 52,
-    "black_keys": 36,
-    "white_key_top_m": 0.755,
-    "black_key_top_m": 0.771,
-    "sha256": "99c65386e19fd7202d71cbdc0a8dfa0cca82339b7f08f000b15f66104fe5f323",
-    "piano_dimensions_m": [
-      1.5,
-      1.8118597,
-      1.75
-    ],
-    "case_top_m": 0.993,
+    "variants": {
+      "lid_open": {
+        "triangles": 7190,
+        "draw_calls": 4
+      },
+      "lid_closed": {
+        "triangles": 7146,
+        "draw_calls": 4
+      }
+    },
+    "collision_meshes": 2,
+    "collider_materials": 0,
+    "collision_hidden_from_default_scene": true,
     "bench_dimensions_m": [
-      0.66,
+      0.6600000262260437,
+      0.550000011920929,
+      0.30703628063201904
+    ],
+    "bench_pivot_m": [
+      0,
+      0,
+      0.8464818596839905
+    ],
+    "seat_anchor_local_m": [
+      0,
       0.55,
-      0.36
-    ]
+      0
+    ],
+    "keyboard": {
+      "white_keys": 52,
+      "black_keys": 36,
+      "representation": "one ivory slab and 87 flat quads",
+      "pattern_triangles": 174
+    },
+    "sha256": "8862c72135f389a5e77ea707b1f37a7fa629c186033cf64585b7357da9c9bd5a",
+    "case_top_m": 0.993
   },
-  "accuracy_notes": "Dimensions use glTF XYZ (width, height, depth). Piano footprint is measured separately from the complete set; the 1.812 m raised-lid envelope exceeds the 0.993 m case top. 88 keys A0-C8: 52 white and 36 black. The bench is separate geometry within the same asset. Static display: no audio, key actuation, lid animation or engineering-grade internal mechanism. String courses are simplified. Full S15 assembly, physical devices and hardware performance are unverified.",
+  "accuracy_notes": "glTF XYZ dimensions (width, height, depth): complete set 1.50 x 1.031 x 2.00 m closed; raised lid needs 1.812 m vertical clearance. Flat 88-note pattern A0-C8, not playable key solids. Core glTF has no visibility flag: lid_closed is stored in opt-in VARIANT_LidClosed, collision proxies in opt-in COLLISION_ONLY; neither renders in the default scene. Bench is a separate floor-pivot node with a local seat anchor and facing direction; gameplay seating and collision registration remain the consuming application's responsibility. No audio, playable keys or continuous lid animation. Full S15 assembly, physical devices and hardware performance remain unverified.",
   "attribution": [
     {
       "credit": "Original procedural geometry and materials; no external models, fonts, textures or logos."
@@ -107,12 +135,46 @@
     "physical_ios": "NOT TESTED",
     "webkit": "NOT TESTED",
     "budget": {
-      "triangles": 24999,
+      "triangles": 8000,
       "bytes": 1572863,
-      "mesh_primitives": 3,
-      "materials": 3
+      "draw_calls": 6,
+      "materials": 2,
+      "texture_max_px": 1024
     },
     "evidence": "../reports/assets.json",
     "checks_evidence": "../reports/checks.json"
+  },
+  "interactions": {
+    "bench": {
+      "node": "bench",
+      "action": "sit",
+      "seat_anchor_local_m": [
+        0,
+        0.55,
+        0
+      ],
+      "seat_facing_local": [
+        0,
+        0,
+        -1
+      ],
+      "collision_node": "collider_box_bench",
+      "axes": "glTF XYZ"
+    },
+    "lid": {
+      "default": "lid_open",
+      "alternate": "lid_closed",
+      "alternate_scene": "VARIANT_LidClosed",
+      "mode": "swap nodes under ASSET_GrandPiano; keep exactly one attached"
+    },
+    "collision": {
+      "scene": "COLLISION_ONLY",
+      "nodes": [
+        "collider_box",
+        "collider_box_bench"
+      ],
+      "render": false,
+      "registration": "explicit application opt-in"
+    }
   }
 }
