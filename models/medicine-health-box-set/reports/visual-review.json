@@ -1,0 +1,42 @@
+{
+  "result": "PASS",
+  "method": "Viewed all four rendered PNGs at 768 x 768",
+  "reviewed": [
+    "previews/hero.png",
+    "previews/front.png",
+    "previews/side.png",
+    "previews/3q.png",
+    "previews/hero.webp"
+  ],
+  "observations": [
+    "Clean upright proportions and floor-centred base.",
+    "Five shelves, four cartons per shelf and two bottles on each upper shelf.",
+    "Muted sage, blue and ochre blank bands with a teal and ivory retail fixture.",
+    "Blank header and shelf rails; no text, brands or medical cross.",
+    "Products seated on shelves; cap shoulders, carton fold seams and shelf supports remain legible.",
+    "Encoded 20,808-byte WebP thumbnail visually reviewed against the rendered hero."
+  ],
+  "limitations": [
+    "Visual review is subjective.",
+    "No full mall assembly or physical-device inspection."
+  ],
+  "thumbnail_bytes": 20808,
+  "render_sha256": {
+    "hero.webp": "27db33aa61e565c2ce9e74241861dc8e50331db1dd94c73558ca6792c36e7af5",
+    "hero.png": "2a5432b113a1ac59b7d7261fc241718259c5f5bb4b98af65d4c0b40ac12c2402",
+    "side.png": "73426df3269774839c589869dc203444206a25876c97fc46be91ad1f516d1343",
+    "3q.png": "8a0d63ebda3d39c3079800e0bf87c415a182b0959142b5780e8ee12ed3de4be3",
+    "front.png": "f67e1d90f696bee1d1565a0220968962f9619102c878438fc154c6e798b91833"
+  },
+  "browser_screenshot": {
+    "path": "/Users/admin/Documents/MallQueue/reports/medicine-health-box-set-page.png",
+    "reviewed": true,
+    "sha256": "2f74b3e847c0a73b677c332f1371b61e587cb6dce983905126ff606005c25bf1",
+    "observations": [
+      "Whole fixture visible at 1440 x 900.",
+      "Asset-specific lighting retains off-white carton and bottle detail.",
+      "Five shelves, blank header and bands visible in the actual GLB viewer."
+    ]
+  },
+  "harness_correction": "Initial browser assertion expected a source /models/ URL; Vite fingerprints production URLs under /assets/. Retain the failure log and validate the actual response bytes against the measured GLB SHA-256."
+}

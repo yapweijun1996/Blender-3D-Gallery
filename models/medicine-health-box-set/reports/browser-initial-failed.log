@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(requests.every(request => request.path.endsWith(`/models/${id}/exports/optimized.glb`)))
+
+    at file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/medicine-health-box-set/verify_page.mjs:69:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.22.2
