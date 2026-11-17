@@ -20,25 +20,28 @@ assert len({obj.data.as_pointer() for obj in cans}) == 1
 assert list(root.location) == [0, 0, 0]
 assert bpy.context.scene.unit_settings.system == 'METRIC'
 assert bpy.context.scene.unit_settings.scale_length == 1
-assert len(bpy.data.materials) == 3
+assert len(bpy.data.materials) == 2
 assert not bpy.data.images
 tiers = Counter(obj['tier'] for obj in cans)
 assert [tiers[i] for i in range(1, 7)] == [36, 25, 16, 9, 4, 1]
-for obj in [cans[0], bpy.data.objects['BASE_ChamferedPlinth']]:
+collider = bpy.data.objects['collider_box']
+assert collider.hide_render and collider.hide_get()
+assert not collider.data.materials
+for obj in [cans[0], bpy.data.objects['BASE_ChamferedPlinth'], collider]:
     bm = bmesh.new()
     bm.from_mesh(obj.data)
     assert all(edge.is_manifold for edge in bm.edges)
     assert all(face.calc_area() > 1e-12 for face in bm.faces)
     bm.free()
 for index, obj in enumerate(cans):
-    assert abs(obj.location.z - (.12 + (obj['tier'] - 1) * .28)) < 1e-6
+    assert abs(obj.location.z - (.10 + (obj['tier'] - 1) * (1.3 / 6))) < 1e-6
     for other in cans[index + 1:]:
         if obj['tier'] == other['tier']:
-            assert (obj.location - other.location).length >= .182 - 1e-6
+            assert (obj.location - other.location).length >= .15 - 1e-6
     if obj['tier'] > 1:
         supports = [other for other in cans if other['tier'] == obj['tier'] - 1
                     and Vector((obj.location.x - other.location.x,
-                                obj.location.y - other.location.y)).length < .13]
+                                obj.location.y - other.location.y)).length < .107]
         assert len(supports) == 4, 'each upper can bridges four lower cans'
 bpy.context.view_layer.update()
 can = cans[0]
@@ -51,8 +54,8 @@ report = {
     'radial_segments_measured': len([v for v in can.data.vertices if abs(v.co.z) < 1e-7]),
     'can_dimensions_blender_xyz_m': can_dimensions,
     'tiers_bottom_to_top': [tiers[i] for i in range(1, 7)],
-    'closed_manifold_prototypes': 2, 'same_tier_overlap': False,
-    'upper_can_supports': 4, 'materials': len(bpy.data.materials),
+    'closed_manifold_prototypes': 3, 'same_tier_overlap': False,
+    'collider_hidden_no_material': True, 'upper_can_supports': 4, 'materials': len(bpy.data.materials),
 }
 original_hash = report['source_sha256']
 for vertex in can.data.vertices:

@@ -1,8 +1,8 @@
 {
   "id": "stacked-can-pyramid",
   "name": "Stacked Can Pyramid",
-  "summary": "Original blank tin-can pyramid on a low neutral chamfered base.",
-  "description": "Six neat square tiers of 91 ten-sided cans, with plain muted jade bodies, satin-metal rolled seams and inset lids. No labels, text, logos, textures or external assets. Source cans share one editable mesh; GLB batches them into three material primitives.",
+  "summary": "Warm glossy blank-label can pyramid, 1.0 m wide and 1.4 m high, in coral and jade.",
+  "description": "Six neat square tiers of 91 smooth-shaded eight-sided cans on a chamfered warm metal plinth. Coral variant_a and jade variant_b have blank colour bands, metallic seams and flat lids, with no text, logos, textures or external assets. Each GLB has one merged display mesh, two materials and a separate hidden collider scene.",
   "category": "Mall Fixtures",
   "tags": [
     "mall",
@@ -13,7 +13,6 @@
     "pyramid",
     "stacked",
     "display",
-    "unlabelled",
     "unbranded",
     "original",
     "procedural",
@@ -21,7 +20,12 @@
     "S07",
     "S09",
     "S10",
-    "S11"
+    "S11",
+    "P1",
+    "blank-label",
+    "coral",
+    "jade",
+    "colour-variants"
   ],
   "status": "draft",
   "created": "2026-11-16",
@@ -57,36 +61,38 @@
     "units": "metres",
     "axis_order": "width, height, depth (glTF X,Y,Z)",
     "size": [
-      1.2000000476837158,
-      1.7999999523162842,
-      1.2000000476837158
+      1,
+      1.4,
+      1
     ],
     "bounds": {
       "min": [
-        -0.6000000238418579,
+        -0.5,
         0,
-        -0.6000000238418579
+        -0.5
       ],
       "max": [
-        0.6000000238418579,
-        1.7999999523162842,
-        0.6000000238418579
+        0.5,
+        1.4,
+        0.5
       ]
     }
   },
   "statistics": {
-    "glb_bytes": 418872,
-    "triangles": 17896,
-    "vertices": 12852,
+    "glb_bytes": 292704,
+    "triangles": 6988,
+    "visible_triangles": 6976,
+    "vertices": 10328,
     "meshes": 2,
     "primitives": 3,
-    "materials": 3,
+    "visible_primitives": 2,
+    "materials": 2,
     "images": 0,
     "animations": 0,
-    "sha256": "cf8cf126e0a0783f4ee9ac585b306caa6714c6dafc6a3dfbbaff117d3d494527",
+    "sha256": "daf165aad18cd2ad174e0d22f8e60d42e9ba58bfab88c19c4d71e4d91c0e83ca",
     "can_instances": 91,
     "unique_source_can_meshes": 1,
-    "radial_segments": 10,
+    "radial_segments": 8,
     "tiers_bottom_to_top": [
       36,
       25,
@@ -96,7 +102,7 @@
       1
     ]
   },
-  "accuracy_notes": "Static illustrative supermarket display for S07, S09, S10 and S11; no product labelling, per-can interaction, physics or stability certification. Linked source instances are baked into a low-draw-call export. Full 17-shop scene integration, physical Android/iOS, WebKit and assembled-mall performance have not been tested.",
+  "accuracy_notes": "Static original P1 supermarket display for S07, S09, S10 and S11. Source retains 91 linked cans; each GLB merges cans and plinth into one two-primitive mesh. Collider is an opt-in conservative box covering the full prop, without material. Label variants are separately registered in the existing collection. Physical stacking stability, full mall placement and physical devices are unverified.",
   "attribution": [
     {
       "credit": "Original procedural geometry and shared materials. No external assets."
@@ -104,7 +110,7 @@
   ],
   "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
   "quality_gate": {
-    "overall": "NEEDS REVIEW",
+    "overall": "PASS",
     "geometry": "PASS",
     "source_editability": "PASS",
     "local": "PASS",
@@ -112,20 +118,55 @@
     "physical_ios": "NOT TESTED",
     "webkit": "NOT TESTED",
     "budget": {
-      "triangles": 20000,
+      "triangles": 8000,
       "bytes": 1572864,
-      "materials": 3,
-      "mesh_primitives": 3
+      "materials": 2,
+      "draw_calls_per_instance": 6,
+      "texture_max_px": 1024
     },
     "evidence": [
       "reports/assets.json",
       "reports/khronos.json",
+      "reports/khronos-variant-b.json",
       "reports/sources.json",
       "reports/browser.json",
       "reports/acceptance.json",
       "reports/reproducibility.json",
       "reports/visual-review.json"
     ],
-    "chromium_1440x900": "PASS"
-  }
+    "chromium_1440x900": "PASS",
+    "chromium_390x900": "PASS",
+    "observed_draw_calls_per_instance": 2,
+    "visual_review": "PASS: both variants, front and three-quarter contact sheets at 1440 and 390 px"
+  },
+  "updated": "2026-11-17",
+  "specification": "Owner P1 override, GJH Virtual Mall v11 - P1 Model Task Sheet, 2026-11-17",
+  "variants": [
+    {
+      "id": "stacked-can-pyramid",
+      "name": "variant_a",
+      "label_colour": "warm coral",
+      "glb": "exports/optimized.glb"
+    },
+    {
+      "id": "stacked-can-pyramid-variant-b",
+      "name": "variant_b",
+      "label_colour": "jade",
+      "glb": "exports/optimized-variant-b.glb"
+    }
+  ],
+  "collision": {
+    "name": "collider_box",
+    "scene": 1,
+    "scene_name": "COLLISION_ONLY",
+    "visible_in_default_scene": false,
+    "material": null,
+    "size_metres": [
+      1,
+      1.4,
+      1
+    ],
+    "usage": "Opt-in conservative walk-blocking AABB; do not render the collision scene."
+  },
+  "variant": "variant_a"
 }

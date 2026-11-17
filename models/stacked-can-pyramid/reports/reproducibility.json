@@ -1,8 +1,11 @@
 {
   "result": "PASS",
-  "method": "Generate, then reopen saved source and re-export with --export-source --skip-render; byte hashes match.",
-  "glb_sha256": "cf8cf126e0a0783f4ee9ac585b306caa6714c6dafc6a3dfbbaff117d3d494527",
-  "source_sha256": "167283325ca475dcc8b05d93f1b777c4e801e28f7eea3e09e0d27df806e0a905",
+  "method": "Generate, reopen saved source, re-export both colour GLBs with --export-source --skip-render, compare byte hashes.",
+  "variants": {
+    "optimized.glb": "daf165aad18cd2ad174e0d22f8e60d42e9ba58bfab88c19c4d71e4d91c0e83ca",
+    "optimized-variant-b.glb": "b129207056210d49a6c5a6246d99969d3afeeafafd18fe53aae98b33fd0afe60"
+  },
+  "source_sha256": "a7c2832767f6a7e617fa48fe9e6305a938c48d6fc6b5aa43758182e8073fd5a3",
   "source_unchanged": true,
   "blender_version": "5.2.3 LTS"
 }

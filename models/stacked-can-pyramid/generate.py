@@ -1,11 +1,13 @@
-"""Original deterministic unlabelled can display, metres, Blender 5.2.3.
+"""Original deterministic P1 can display, metres, Blender 5.2.3.
 
-Source cans share one editable ten-sided mesh. Export batches them into one
-two-material mesh plus a neutral plinth, keeping the gallery asset at 3 draws.
+Source cans share one editable eight-sided mesh. Each colour export batches
+the display into one two-material mesh, plus an opt-in hidden collision scene.
 """
 from pathlib import Path
 import math
 import sys
+import json
+import struct
 import bpy
 import bmesh
 from mathutils import Vector
@@ -13,11 +15,12 @@ from mathutils import Vector
 HERE = Path(__file__).resolve().parent
 SLUG = 'stacked-can-pyramid'
 ROOT = 'ASSET_StackedCanPyramid'
-RADIAL_SEGMENTS = 10
-PITCH = .182
-CAN_HEIGHT = .28
-BASE_HEIGHT = .12
-TARGET = (0, 0, .88)
+RADIAL_SEGMENTS = 8
+PITCH = .15
+CAN_HEIGHT = 1.3 / 6
+BASE_HEIGHT = .10
+TARGET = (0, 0, .69)
+PALETTES = {'variant_a': (.84, .37, .25), 'variant_b': (.29, .61, .49)}
 
 
 def material(name, rgb, metallic, roughness):
@@ -51,10 +54,9 @@ def mesh_object(name, vertices, faces, parent, materials):
 
 
 def can_prototype(parent, steel, enamel):
-    # A single closed lathed shell: rolled lower/upper seams and inset lid.
-    profile = [(.079, 0), (.088, .003), (.088, .011), (.084, .015),
-               (.084, .265), (.088, .269), (.088, .277), (.080, .280),
-               (.076, .276), (.050, .275)]
+    # Five rings retain cylindrical bodies and bright seams within the P1 budget.
+    profile = [(.073, 0), (.073, .008), (.0685, .018),
+               (.0685, CAN_HEIGHT - .012), (.073, CAN_HEIGHT)]
     vertices = [(radius * math.cos(2 * math.pi * i / RADIAL_SEGMENTS),
                  radius * math.sin(2 * math.pi * i / RADIAL_SEGMENTS), height)
                 for radius, height in profile for i in range(RADIAL_SEGMENTS)]
@@ -68,8 +70,9 @@ def can_prototype(parent, steel, enamel):
               tuple((len(profile) - 1) * RADIAL_SEGMENTS + i for i in range(RADIAL_SEGMENTS))]
     obj = mesh_object('CAN_Prototype', vertices, faces, parent, [steel, enamel])
     for polygon in obj.data.polygons:
-        polygon.material_index = 1 if polygon.index // RADIAL_SEGMENTS == 3 else 0
-        polygon.use_smooth = polygon.index < (len(profile) - 1) * RADIAL_SEGMENTS
+        polygon.material_index = 1 if polygon.index // RADIAL_SEGMENTS == 2 else 0
+        # Keep caps flat; smooth only the cylindrical label band and lower seam.
+        polygon.use_smooth = polygon.index // RADIAL_SEGMENTS in (0, 2)
     return obj
 
 
@@ -80,14 +83,15 @@ def build():
     root['front_axis'] = 'Blender -Y / glTF +Z'
     root['can_count'] = 91
     root['radial_segments'] = RADIAL_SEGMENTS
-    root['scope'] = 'Static original unlabelled supermarket display; no external assets'
-    steel = material('Satin tinplate', (.68, .72, .72), .82, .32)
-    enamel = material('Blank muted jade band', (.30, .46, .41), .18, .42)
-    neutral = material('Neutral warm grey plinth', (.37, .38, .36), .05, .52)
-    # Chamfered square profiles keep every edge inside the 1.2 m footprint.
+    root['scope'] = 'Original P1 blank-label supermarket display; no external assets'
+    root['variant'] = 'variant_a'
+    root['collision_scene'] = 1
+    steel = material('Warm satin tinplate', (.88, .83, .70), .65, .28)
+    enamel = material('variant_a', PALETTES['variant_a'], .12, .24)
+    # Plinth shares the warm metal material: two materials per delivered prop.
     vertices, faces = [], []
-    for half, corner, z in [(.59, .035, 0), (.60, .04, .012),
-                             (.60, .04, .108), (.588, .032, BASE_HEIGHT)]:
+    for half, corner, z in [(.49, .035, 0), (.50, .04, .012),
+                             (.50, .04, .088), (.488, .032, BASE_HEIGHT)]:
         vertices.extend([(x, y, z) for x, y in [
             (-half + corner, -half), (half - corner, -half),
             (half, -half + corner), (half, half - corner),
@@ -98,7 +102,7 @@ def build():
         faces.extend([(ring * 8 + i, ring * 8 + (i + 1) % 8,
                        (ring + 1) * 8 + (i + 1) % 8, (ring + 1) * 8 + i) for i in range(8)])
     faces.append(tuple(range(24, 32)))
-    mesh_object('BASE_ChamferedPlinth', vertices, faces, root, [neutral])
+    mesh_object('BASE_ChamferedPlinth', vertices, faces, root, [steel])
     prototype = can_prototype(root, steel, enamel)
     first = True
     for tier, width in enumerate(range(6, 0, -1)):
@@ -114,27 +118,54 @@ def build():
                                 (row - (width - 1) / 2) * PITCH,
                                 BASE_HEIGHT + tier * CAN_HEIGHT)
                 obj['tier'] = tier + 1
+    bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 0, .7))
+    collider = bpy.context.object
+    collider.name = 'collider_box'
+    collider.dimensions = (1, 1, 1.4)
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+    collider.data.materials.clear()
+    collider['collision_only'] = True
+    collider['visible'] = False
+    collider.display_type = 'WIRE'
+    collider.hide_render = True
+    collider.hide_set(True)
     return root
 
 
-def export(path):
+def export(path, variant=None):
     root = bpy.data.objects[ROOT]
     cans = sorted((o for o in root.children if o.name.startswith('CAN_')), key=lambda o: o.name)
+    enamel = cans[0].data.materials[1]
+    old_name, old_color = enamel.name, tuple(enamel.diffuse_color)
+    old_variant = root['variant']
+    shader = enamel.node_tree.nodes['Principled BSDF']
+    old_shader_color = tuple(shader.inputs['Base Color'].default_value)
+    if variant:
+        rgb = PALETTES[variant]
+        color = tuple(v / 12.92 if v <= .04045 else ((v + .055) / 1.055) ** 2.4 for v in rgb) + (1,)
+        enamel.name = variant
+        enamel.diffuse_color = color
+        shader.inputs['Base Color'].default_value = color
+        root['variant'] = variant
     bpy.context.view_layer.update()
     vertices, faces, face_materials, smooth = [], [], [], []
-    for obj in cans:
+    for obj in cans + [bpy.data.objects['BASE_ChamferedPlinth']]:
         offset = len(vertices)
         vertices.extend([tuple(obj.matrix_world @ v.co) for v in obj.data.vertices])
         for polygon in obj.data.polygons:
             faces.append(tuple(offset + i for i in polygon.vertices))
-            face_materials.append(polygon.material_index)
+            face_materials.append(1 if obj.data.materials[polygon.material_index] == enamel else 0)
             smooth.append(polygon.use_smooth)
-    batch = mesh_object('CANS_BatchedDisplay', vertices, faces, root, list(cans[0].data.materials))
+    batch = mesh_object('DISPLAY_MergedCansAndPlinth', vertices, faces, root, list(cans[0].data.materials))
+    batch['source_can_instances'] = 91
+    batch['merged_plinth'] = True
     for polygon, mat_index, use_smooth in zip(batch.data.polygons, face_materials, smooth):
         polygon.material_index = mat_index
         polygon.use_smooth = use_smooth
     bpy.ops.object.select_all(action='DESELECT')
-    for obj in [root, batch, bpy.data.objects['BASE_ChamferedPlinth']]:
+    collider = bpy.data.objects['collider_box']
+    collider.hide_set(False)
+    for obj in [root, batch, collider]:
         obj.select_set(True)
     try:
         bpy.ops.export_scene.gltf(
@@ -142,7 +173,28 @@ def export(path):
             export_apply=True, export_yup=True, export_animations=False,
             export_texcoords=False, export_extras=True, export_cameras=False,
             export_lights=False)
+        # Core glTF has no hidden-node flag. Keep the unmaterialed collider in
+        # an opt-in scene, following the existing storefront delivery contract.
+        raw = path.read_bytes()
+        size = struct.unpack_from('<I', raw, 12)[0]
+        doc = json.loads(raw[20:20 + size])
+        by_name = {node['name']: i for i, node in enumerate(doc['nodes'])}
+        doc['scenes'] = [
+            {'name': root['variant'], 'nodes': [by_name[ROOT]]},
+            {'name': 'COLLISION_ONLY', 'nodes': [by_name['collider_box']]},
+        ]
+        doc['scene'] = 0
+        text = json.dumps(doc, separators=(',', ':')).encode()
+        text += b' ' * (-len(text) % 4)
+        tail = raw[20 + size:]
+        path.write_bytes(struct.pack('<4sII', b'glTF', 2, 20 + len(text) + len(tail)) +
+                         struct.pack('<I4s', len(text), b'JSON') + text + tail)
     finally:
+        collider.hide_set(True)
+        enamel.name = old_name
+        enamel.diffuse_color = old_color
+        shader.inputs['Base Color'].default_value = old_shader_color
+        root['variant'] = old_variant
         data = batch.data
         bpy.data.objects.remove(batch, do_unlink=True)
         bpy.data.meshes.remove(data)
@@ -170,7 +222,7 @@ def studio():
     scene.camera = bpy.context.object
     scene.camera.name = 'STUDIO_Camera'
     scene.camera.data.type = 'ORTHO'
-    scene.camera.data.ortho_scale = 2.45
+    scene.camera.data.ortho_scale = 1.95
     scene.render.engine = 'CYCLES'
     scene.cycles.samples = 40
     scene.cycles.seed = 0
@@ -186,12 +238,19 @@ def studio():
 
 def render_views():
     scene = bpy.context.scene
-    for name, position in [('hero', (3, -4.2, 3.0)), ('front', (0, -5, 1.03)),
-                           ('side', (5, 0, 1.03)), ('3q', (-3, -4, 3.6))]:
-        scene.camera.location = position
-        aim(scene.camera, TARGET)
-        scene.render.filepath = str(HERE / 'previews' / (name + '.png'))
-        bpy.ops.render.render(write_still=True)
+    enamel = bpy.data.materials['variant_a']
+    for variant, rgb in PALETTES.items():
+        color = tuple(v / 12.92 if v <= .04045 else ((v + .055) / 1.055) ** 2.4 for v in rgb) + (1,)
+        enamel.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value = color
+        for name, position in [('hero', (3, -4.2, 2.5)), ('front', (0, -5, .69)),
+                               ('side', (5, 0, .69)), ('3q', (-3, -4, 2.7))]:
+            if variant == 'variant_b' and name == 'side':
+                continue
+            scene.camera.location = position
+            aim(scene.camera, TARGET)
+            filename = name if variant == 'variant_a' else 'variant-b-' + name
+            scene.render.filepath = str(HERE / 'previews' / (filename + '.png'))
+            bpy.ops.render.render(write_still=True)
 
 
 def main():
@@ -209,6 +268,7 @@ def main():
         studio()
         bpy.ops.wm.save_as_mainfile(filepath=str(HERE / 'sources' / (SLUG + '.blend')), compress=True)
     export(HERE / 'exports' / 'optimized.glb')
+    export(HERE / 'exports' / 'optimized-variant-b.glb', 'variant_b')
     if '--skip-render' not in sys.argv:
         render_views()
 

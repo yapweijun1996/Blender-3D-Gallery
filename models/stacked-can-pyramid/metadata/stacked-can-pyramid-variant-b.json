@@ -1,0 +1,171 @@
+{
+  "id": "stacked-can-pyramid-variant-b",
+  "name": "Stacked Can Pyramid — Jade",
+  "summary": "Jade blank-label colour variant of the original P1 stacked can pyramid.",
+  "description": "Six neat square tiers of 91 smooth-shaded eight-sided cans on a chamfered warm metal plinth. Coral variant_a and jade variant_b have blank colour bands, metallic seams and flat lids, with no text, logos, textures or external assets. Each GLB has one merged display mesh, two materials and a separate hidden collider scene.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "supermarket",
+    "aisle",
+    "can",
+    "tin",
+    "pyramid",
+    "stacked",
+    "display",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres",
+    "S07",
+    "S09",
+    "S10",
+    "S11",
+    "P1",
+    "blank-label",
+    "coral",
+    "jade",
+    "colour-variants"
+  ],
+  "status": "draft",
+  "created": "2026-11-16",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python; no external models, images, fonts, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized-variant-b.glb",
+    "source": "sources/stacked-can-pyramid.blend",
+    "preview": "previews/variant-b-hero.webp",
+    "additional_previews": [
+      "previews/variant-b-front.png",
+      "previews/variant-b-3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "floor centre",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.6,
+    "previewCameraDirection": [
+      2,
+      1.1,
+      3
+    ]
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "width, height, depth (glTF X,Y,Z)",
+    "size": [
+      1,
+      1.4,
+      1
+    ],
+    "bounds": {
+      "min": [
+        -0.5,
+        0,
+        -0.5
+      ],
+      "max": [
+        0.5,
+        1.4,
+        0.5
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 292704,
+    "triangles": 6988,
+    "visible_triangles": 6976,
+    "vertices": 10328,
+    "meshes": 2,
+    "primitives": 3,
+    "visible_primitives": 2,
+    "materials": 2,
+    "images": 0,
+    "animations": 0,
+    "sha256": "b129207056210d49a6c5a6246d99969d3afeeafafd18fe53aae98b33fd0afe60",
+    "can_instances": 91,
+    "unique_source_can_meshes": 1,
+    "radial_segments": 8,
+    "tiers_bottom_to_top": [
+      36,
+      25,
+      16,
+      9,
+      4,
+      1
+    ]
+  },
+  "accuracy_notes": "Static original P1 supermarket display for S07, S09, S10 and S11. Source retains 91 linked cans; each GLB merges cans and plinth into one two-primitive mesh. Collider is an opt-in conservative box covering the full prop, without material. Label variants are separately registered in the existing collection. Physical stacking stability, full mall placement and physical devices are unverified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and shared materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "PASS",
+    "geometry": "PASS",
+    "source_editability": "PASS",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 8000,
+      "bytes": 1572864,
+      "materials": 2,
+      "draw_calls_per_instance": 6,
+      "texture_max_px": 1024
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/khronos-variant-b.json",
+      "reports/sources.json",
+      "reports/browser.json",
+      "reports/acceptance.json",
+      "reports/reproducibility.json",
+      "reports/visual-review.json"
+    ],
+    "chromium_1440x900": "PASS",
+    "chromium_390x900": "PASS",
+    "observed_draw_calls_per_instance": 2,
+    "visual_review": "PASS: both variants, front and three-quarter contact sheets at 1440 and 390 px"
+  },
+  "updated": "2026-11-17",
+  "specification": "Owner P1 override, GJH Virtual Mall v11 - P1 Model Task Sheet, 2026-11-17",
+  "variants": [
+    {
+      "id": "stacked-can-pyramid",
+      "name": "variant_a",
+      "label_colour": "warm coral",
+      "glb": "exports/optimized.glb"
+    },
+    {
+      "id": "stacked-can-pyramid-variant-b",
+      "name": "variant_b",
+      "label_colour": "jade",
+      "glb": "exports/optimized-variant-b.glb"
+    }
+  ],
+  "collision": {
+    "name": "collider_box",
+    "scene": 1,
+    "scene_name": "COLLISION_ONLY",
+    "visible_in_default_scene": false,
+    "material": null,
+    "size_metres": [
+      1,
+      1.4,
+      1
+    ],
+    "usage": "Opt-in conservative walk-blocking AABB; do not render the collision scene."
+  },
+  "variant": "variant_b"
+}

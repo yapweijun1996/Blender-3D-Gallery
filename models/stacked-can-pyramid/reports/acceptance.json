@@ -1,68 +1,97 @@
 {
   "id": "stacked-can-pyramid",
   "status": "PASS",
-  "duplicate_search": {
-    "result": "NOT FOUND: no existing unlabelled can pyramid or stepped display",
-    "catalog_assets_searched_before_build": 598,
-    "metadata_json_files_searched_before_build": 643,
-    "related_non_matches": [
-      "demo-food-tin: a single animated concept tin, no display stack",
-      "demo-beverage-can: a single concept beverage can",
-      "gjh-abalone-cans: branded single-can packaging variants",
-      "supermarket-aisle: shelving and carton rows, no can display"
+  "specification": "Owner P1 override, GJH Virtual Mall v11 - P1 Model Task Sheet, 2026-11-17",
+  "superseded_delivery": {
+    "triangles": 17896,
+    "materials": 3,
+    "size_metres": [
+      1.2,
+      1.8,
+      1.2
     ]
   },
+  "delivery": {
+    "size_metres_gltf_xyz": [
+      1,
+      1.4,
+      1
+    ],
+    "units": "metres",
+    "origin": "floor centre",
+    "up": "+Y",
+    "front": "+Z",
+    "variants": [
+      "variant_a",
+      "variant_b"
+    ],
+    "triangles_per_glb_including_collider": 6988,
+    "visible_triangles_per_instance": 6976,
+    "materials_per_glb": 2,
+    "visible_draw_calls_per_instance": 2,
+    "texture_images": 0,
+    "can_radial_segments": 8,
+    "can_profile_rings": 5,
+    "can_count": 91,
+    "collider": "collider_box, hidden source object without material; opt-in COLLISION_ONLY glTF scene at index 1"
+  },
   "checks": {
-    "geometry_budget": "PASS",
-    "khronos": "PASS: 0 errors, 0 warnings",
-    "saved_source_and_controlled_edit": "PASS",
-    "saved_source_reexport_hash": "PASS",
-    "rendered_previews_visual_review": "PASS: hero/front/side/3q",
-    "npm_run_validate_assets": {
+    "p1_asset_validator": {
       "result": "PASS",
-      "log": "/tmp/stacked-can-pyramid-validate-assets-final.log",
-      "exit_code": 0
+      "log": "/tmp/stacked-can-pyramid-p1-validate.log"
     },
+    "khronos": "PASS: both GLBs, zero errors and warnings",
+    "source_editability": "PASS: saved source reopened, shared geometry and roughness edits independently verified in a controlled GLB",
+    "reproducibility": "PASS: both byte hashes match saved-source re-exports; original source unchanged",
     "npm_test": {
       "result": "PASS",
       "tests": 737,
       "pass": 737,
       "fail": 0,
       "skipped": 0,
-      "log": "/tmp/stacked-can-pyramid-tests-final.log",
-      "exit_code": 0
+      "exit_code": 0,
+      "log": "/tmp/stacked-can-pyramid-p1-tests.log"
     },
     "npm_run_build": {
       "result": "PASS",
-      "log": "/tmp/stacked-can-pyramid-build-final.log",
-      "note": "Vite chunk-size advisory; build exit 0.",
-      "exit_code": 0
+      "exit_code": 0,
+      "log": "/tmp/stacked-can-pyramid-p1-build.log",
+      "note": "Includes unchanged global asset validators. Vite reports a bundle-size advisory."
     },
-    "chromium_1440x900": "PASS: actual GLB hash, rotation, zoom, reset, 3 observed draws per frame, no errors"
+    "browser": "PASS: both registered variants at 1440x900 and 390x900, exact loaded hashes, rotation, zoom and reset, two draws and no errors",
+    "visual_review": "PASS: real GLB contact sheets at 1440 and 390 px; Blender front and three-quarter renders supplied for both variants",
+    "demo_beverage_can_structure_motion": "Restored after npm test; no diff from HEAD"
   },
-  "initial_attempts": [
+  "initial_p1_attempts": [
     {
+      "check": "P1 validator script syntax",
       "result": "FAIL",
-      "check": "Material gate",
-      "reason": "Blender default double-sided material; fixed by enabling backface culling and regenerated."
+      "reason": "A local bounds variable reused a triangle-vector identifier; renamed before the successful validator run."
     },
     {
+      "check": "Browser reset screenshot comparison",
       "result": "FAIL",
-      "check": "First npm validation and unit run",
-      "reason": "Started before hero.webp existed; added 19166-byte thumbnail. First unit run 733/737 pass, four missing-thumbnail failures; final complete rerun recorded separately."
-    },
-    {
-      "result": "FAIL",
-      "check": "First independent edited-material probe",
-      "reason": "Probe expected underscored material name. Corrected to actual exported name; geometry and material edit subsequently independently verified."
+      "reason": "Pointer and keyboard modalities change the inset focus outline. Diagnostic: 6,164 changed border pixels, zero changed pixels in the 8 px inset WebGL interior. Applied the same interior comparison to both variants at both viewports; exact reset comparisons then passed."
     }
   ],
+  "artifacts": {
+    "requested_screenshot": "~/Documents/MallQueue/reports/stacked-can-pyramid-page.png",
+    "contact_sheets": [
+      "previews/contact-1440.png",
+      "previews/contact-390.png"
+    ],
+    "source": "sources/stacked-can-pyramid.blend",
+    "exports": [
+      "exports/optimized.glb",
+      "exports/optimized-variant-b.glb"
+    ]
+  },
   "not_verified": [
     "Physical mobile devices",
     "WebKit",
-    "17-shop assembled mall placement, collisions and performance",
-    "Physical can stacking stability",
-    "Remote deployment or publication"
+    "Full assembled-mall placement, collision integration and performance",
+    "Physical stacking stability",
+    "Remote deployment"
   ],
-  "scope": "Models only; separate collection appended in existing Mall Fixtures category; no existing model, UI or workflow edits; no push or rebase."
+  "scope": "Existing model reworked; original ID and collection retained, jade variant added using the same registration. Only models/stacked-can-pyramid and models/catalog.json are included in the commit. No push or rebase."
 }
