@@ -1,0 +1,28 @@
+{
+  "scope": "Catalog collection/assets and model path IDs; source generation definitions, native/GLB files and hero previews inspected.",
+  "built": "ice-cream-chest-freezer",
+  "exact_requested_ids_found": false,
+  "candidates": [
+    {
+      "id": "chiller-cabinet",
+      "decision": "CLOSE MATCH: select requested fallback",
+      "reason": "Upright glass-door cabinet. Actual GLB X/Y/Z bounds: 0.900 x 1.900 x 0.750 m; existing source and GLB.",
+      "evidence": {
+        "models/chiller-cabinet/generate.py": "1af2163a73bbdbf1dbf1690c74d3cff7a09ba3a31edffb6277e3290d4303f9ce",
+        "models/chiller-cabinet/exports/optimized.glb": "d0de54b28c9b01033627593f749b14c9835f78d1e056bcd068b1ea2eb888e877",
+        "models/chiller-cabinet/sources/chiller-cabinet.blend": "2b3c40d0d71d601b20f6c926c053093a2bd57460740703be002cf46467457114"
+      }
+    },
+    {
+      "id": "freezer-cabinet",
+      "decision": "NOT EQUIVALENT",
+      "reason": "Actual GLB X/Y/Z bounds: 1.200 x 0.910 x 0.770 m. Hinged solid single lid with empty baskets, no sliding panels or frozen tubs.",
+      "evidence": {
+        "models/freezer-cabinet/generate.py": "01be689e35e9fcff5a7e88f846ad7f00700664e85f7e78de35ec59da5d48f6a0",
+        "models/freezer-cabinet/exports/optimized.glb": "4efc8bea937faf7a9df679d51cdc499b30415ea9c338051d3ff4e358a52b0ad8",
+        "models/freezer-cabinet/sources/freezer-cabinet.blend": "8fad1f874f8000691c4ee6e1f006a836be8c48fb238fba493550cf4becacbc57"
+      }
+    }
+  ],
+  "interpretation": "Task-specific ice-cream sliding-lid fallback takes precedence over upright dimensions. Existing hinged utility chest is not the requested sliding-lid ice-cream display."
+}

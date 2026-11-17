@@ -1,0 +1,49 @@
+{
+  "result": "PASS",
+  "source_revision_before_commit": "c5a37bf17ffe72d5cbd9bbd311ba2282702dd9e3",
+  "blender": "5.2.3 LTS e13b728c6880",
+  "source_edit_and_independent_import": "PASS, 50 manifold positive-volume editable parts",
+  "asset_validation": "PASS, 0 errors/warnings/infos and 0 degenerate triangles",
+  "project_tests": {
+    "command": "npm test",
+    "passed": 737,
+    "failed": 0,
+    "exit_code": 0,
+    "evidence": "project-tests.txt"
+  },
+  "production_build": {
+    "command": "npm run build",
+    "result": "PASS",
+    "full_log": "/tmp/ice-cream-chest-freezer-build.log",
+    "note": "Existing large JS chunk warning; no app code modified."
+  },
+  "final_metadata_build": {
+    "command": "npx vite build",
+    "result": "PASS",
+    "build": "9fb95b6bba9522f7",
+    "full_log": "/tmp/ice-cream-chest-freezer-build-final.log"
+  },
+  "browser": "PASS, final build, 3 viewports, exact consumed GLB hash and render counts, orbit/zoom/reset/refresh/reopen, 0 errors",
+  "visual_review": [
+    "previews/hero.jpg",
+    "previews/front.png",
+    "previews/side.png",
+    "previews/top.png",
+    "previews/reimport.png",
+    "desktop and mobile actual gallery screenshots"
+  ],
+  "initial_geometry_failure": {
+    "observed_degenerate_triangles": 64,
+    "cause": "Thin recess boxes: bevel clamp collapsed end geometry",
+    "repair": "Limit bevel radius to 22 percent of minimum component dimension",
+    "final_degenerate_triangles": 0
+  },
+  "not_verified": [
+    "Physical iOS/Android",
+    "WebKit",
+    "Sustained device performance",
+    "Full mall integration",
+    "Lid interaction in gallery (not implemented)",
+    "Deployment (not requested)"
+  ]
+}

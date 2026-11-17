@@ -1,0 +1,56 @@
+{
+  "id": "ice-cream-chest-freezer",
+  "name": "Ice Cream Chest Freezer",
+  "summary": "Low commercial ice-cream chest with independent sliding glass panels and six plain frozen tubs.",
+  "category": "Retail",
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / Codex-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python. No external models, scripts, textures, logos or fonts.",
+  "generator": "generate.py",
+  "paths": {
+    "source": "sources/ice-cream-chest-freezer.blend",
+    "glb": "exports/optimized.glb",
+    "preview": "previews/hero.jpg",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/top.png",
+      "previews/reimport.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      3,
+      4.4,
+      4.2
+    ]
+  },
+  "accuracy_notes": "Static P1 commercial display prop. Two named lid nodes slide along X on separate tracks; gallery supplies no lid controls. Six generic frozen tubs, no readable labels or brands. Partial-open authored pose. Physical devices, WebKit and full mall integration unverified. Not operational refrigeration.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials; no third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "SOURCE_AND_GLB_PASS",
+    "budget": {
+      "triangles": 20000,
+      "bytes": 1048576,
+      "mesh_primitives": 20,
+      "materials": 11
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/sources.json",
+      "reports/browser.json"
+    ]
+  }
+}
