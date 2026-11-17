@@ -1,0 +1,37 @@
+{
+  "decision": "NEW ORIGINAL ASSET",
+  "exact_match": "NOT FOUND",
+  "catalog_assets_scanned": 619,
+  "metadata_files_scanned": 662,
+  "fields": [
+    "id",
+    "name",
+    "tags"
+  ],
+  "query": "directory|standee|wayfinding|lightbox|sign.?stand|poster.?stand|information.?kiosk",
+  "catalog_before_sha256": "9b2626ffc0d1db1705094953db05515d655080378e2d50743bbbfc0418cc3f86",
+  "catalog_matches": [
+    "mall-directory-kiosk",
+    "mall-advertising-lightbox",
+    "mall-floor-direction-sign",
+    "mall-wayfinding-ceiling-sign"
+  ],
+  "metadata_matches": [
+    "models/mall-wayfinding-ceiling-sign/metadata/mall-wayfinding-ceiling-sign.json",
+    "models/mall-essentials/metadata/mall-advertising-lightbox.json",
+    "models/mall-essentials/metadata/mall-directory-kiosk.json",
+    "models/mall-floor-direction-sign/metadata/mall-floor-direction-sign.json"
+  ],
+  "similar_models": {
+    "mall-directory-kiosk": "Single-sided labelled kiosk with illustrative map, deep pedestal and rear service cover; lacks the requested blank double-sided panels and top light bar.",
+    "mall-advertising-lightbox": "Single-sided advertising artwork and text, rear service panel; lacks two blank directory panels and two locator dots.",
+    "mall-floor-direction-sign": "Labelled directional cartridges rather than backlit blank directory panels.",
+    "mall-wayfinding-ceiling-sign": "Suspended labelled directional sign rather than a free-standing directory."
+  },
+  "evidence": [
+    "models/mall-essentials/generate.py:directory",
+    "models/mall-essentials/generate.py:lightbox",
+    "models/mall-essentials/metadata/mall-directory-kiosk.json",
+    "models/mall-essentials/metadata/mall-advertising-lightbox.json"
+  ]
+}

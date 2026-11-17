@@ -1,0 +1,133 @@
+{
+  "id": "mall-directory-standee",
+  "name": "Mall Directory Standee",
+  "summary": "A slim double-sided atrium directory with blank backlit panels and unlabelled locator dots.",
+  "description": "Original free-standing deep jade directory standee with two warm ivory emissive blank panels, plain locator dots, champagne trim, a slim weighted base and a small top light bar. No text, map artwork, logos or external assets.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "atrium",
+    "directory",
+    "standee",
+    "wayfinding",
+    "double-sided",
+    "blank",
+    "backlit",
+    "marker-dot",
+    "light-bar",
+    "brand-neutral",
+    "original",
+    "procedural",
+    "metres",
+    "P3"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / Codex-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry and three shared Principled BSDF materials; no external assets, fonts, images or textures.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/mall-directory-standee.blend",
+    "preview": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png",
+      "previews/rear.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1.3,
+      0.35,
+      2.8
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "floor centre"
+  },
+  "accuracy_notes": "Measured from the exported GLB; metrics dimensions use X width, Y height, Z depth. Panels are deliberately blank except for plain locator dots. Static emissive appearance only; no real map, touchscreen, navigation, runtime light sources or electrical simulation. Physical stability, physical Android/iOS, WebKit and performance in the full mall have not been verified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials authored for the owner project; no third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 142988,
+    "triangles": 3316,
+    "vertices": 4959,
+    "primitives": 5,
+    "materials": 3,
+    "animations": 0,
+    "degenerate_triangles": 0,
+    "dimensions": [
+      0.8999999761581421,
+      1.9000000730156898,
+      0.3499999940395355
+    ],
+    "dimension_order": "X width, Y height, Z depth",
+    "bounds": {
+      "min": [
+        -0.44999998807907104,
+        0,
+        -0.17499999701976776
+      ],
+      "max": [
+        0.44999998807907104,
+        1.9000000730156898,
+        0.17499999701976776
+      ]
+    },
+    "sha256": "639fd4bb992d9453326c04dc936f727d870368fcee8a0cacc651d9a8cf59b4e6",
+    "panels": {
+      "Front": {
+        "dimensions": [
+          0.7519999742507935,
+          1.4079999923706055,
+          0.00800000037997961
+        ],
+        "outward_flat_area_m2": 1.0458919516401295
+      },
+      "Rear": {
+        "dimensions": [
+          0.7519999742507935,
+          1.4079999923706055,
+          0.00800000037997961
+        ],
+        "outward_flat_area_m2": 1.0458919516401295
+      }
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS: source, geometry and Khronos checks",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "full_mall_performance": "NOT TESTED",
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/source.json",
+      "reports/reproducibility.json",
+      "reports/acceptance.json"
+    ],
+    "budget": {
+      "triangles": 7999,
+      "bytes": 1572864,
+      "mesh_primitives": 5,
+      "materials": 3
+    }
+  },
+  "source_sha256": "6d95f93a526cbd910eed6fab4a30186b216f2315a7af019640bce0a1aa44f87a"
+}

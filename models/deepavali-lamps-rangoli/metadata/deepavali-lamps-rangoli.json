@@ -1,0 +1,184 @@
+{
+  "id": "deepavali-lamps-rangoli",
+  "name": "Deepavali Lamps & Rangoli",
+  "summary": "Twelve clay diyas, a round geometric rangoli and two hanging marigold garlands.",
+  "description": "Original twelve-diya display on a 2.4 m round, three-colour geometric petal rangoli, with two suspended marigold garlands. Hollow clay bowls, wicks and small static flame meshes; no text, brands, religious figures or external assets.",
+  "category": "Festivals & Local Life",
+  "tags": [
+    "mall",
+    "deepavali",
+    "diya",
+    "oil-lamp",
+    "rangoli",
+    "geometric-petals",
+    "marigold",
+    "hanging-garland",
+    "brand-neutral",
+    "original",
+    "procedural",
+    "metres",
+    "P3"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / Codex-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python; three plain shared materials; no external models, images, textures, fonts or scripts.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/deepavali-lamps-rangoli.blend",
+    "preview": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png",
+      "previews/top.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1.1,
+      1.65,
+      2.5
+    ],
+    "previewLighting": {
+      "hemisphereIntensity": 1.1,
+      "directionalIntensity": 1.6,
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ]
+    },
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "floor centre"
+  },
+  "accuracy_notes": "Measured export dimensions are X width, Y height, Z depth. The lamp group fits inside a 2 x 2 m placement envelope; the supplied floor is the larger 2.4 m round mosaic, not a separate square slab. Four overhead fixing loops indicate hanging positions; mounting structure is not included. Flames are static geometry with no emitted lights, animation or fire simulation. Physical rigging, devices, WebKit and full-mall performance are not verified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials created for the owner project. No third-party assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "material_notes": "Editable source components; delivery GLB batches geometry into three opaque material meshes. The rangoli is a single tessellated closed plaque without coplanar overlays.",
+  "metrics": {
+    "glb_bytes": 444776,
+    "triangles": 17968,
+    "vertices": 13824,
+    "primitives": 3,
+    "materials": 3,
+    "animations": 0,
+    "degenerate_triangles": 0,
+    "dimensions": [
+      2.4000000953674316,
+      1.9529999494552612,
+      2.4000000953674316
+    ],
+    "dimension_order": "X width, Y height, Z depth",
+    "bounds": {
+      "min": [
+        -1.2000000476837158,
+        0,
+        -1.2000000476837158
+      ],
+      "max": [
+        1.2000000476837158,
+        1.9529999494552612,
+        1.2000000476837158
+      ]
+    },
+    "sha256": "4f34aea4e87ce0f7feeeda9818ce580de2156fcd089dadff05a2789539ccc475",
+    "features": {
+      "clay_diyas": 12,
+      "flame_meshes": 12,
+      "hanging_garlands": 2,
+      "marigold_heads": 50,
+      "lamp_group_dimensions": [
+        1.8721060752868652,
+        0.13400000426918268,
+        1.8721060752868652
+      ],
+      "lamp_group_bounds": {
+        "min": [
+          -0.9360530376434326,
+          0.00800000037997961,
+          -0.9360530376434326
+        ],
+        "max": [
+          0.9360530376434326,
+          0.1420000046491623,
+          0.9360530376434326
+        ]
+      },
+      "rangoli_diameter": 2.4000000953674316,
+      "rangoli_thickness": 0.00800000037997961,
+      "rangoli_colours": 3,
+      "rotational_symmetry_order": 12,
+      "garlands": [
+        {
+          "min": [
+            -1.091025948524475,
+            1.244518756866455,
+            -0.837501049041748
+          ],
+          "max": [
+            -0.09173045307397842,
+            1.9064337015151978,
+            -0.7097558975219727
+          ],
+          "flowers": 25
+        },
+        {
+          "min": [
+            0.09251576662063599,
+            1.2445145845413208,
+            -0.8360233306884766
+          ],
+          "max": [
+            1.0853173732757568,
+            1.9060264825820923,
+            -0.7076480984687805
+          ],
+          "flowers": 25
+        }
+      ]
+    }
+  },
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "validator": "2.0.0-dev.3.10"
+  },
+  "source_sha256": "d6a7b878326f7b6b95b0e1ea99639a6ebf053660713932754de8c412b7519990",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS: measured geometry, saved-source edit/re-export and Khronos checks",
+    "visual": "PASS: all five Blender previews and final 1440x900 Chromium page screenshot inspected",
+    "browser": "PASS: actual GLB hash, three draw calls, orbit/zoom/reset, close/reopen, zero page/console/HTTP errors",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "full_mall_performance": "NOT TESTED",
+    "deployment": "NOT DEPLOYED",
+    "budget": {
+      "triangles": 19999,
+      "bytes": 1572864,
+      "mesh_primitives": 3,
+      "materials": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/source.json",
+      "reports/deduplication.json",
+      "reports/reproducibility.json",
+      "reports/browser.json",
+      "reports/acceptance.json"
+    ],
+    "repository_checks": "PASS: npm run validate:assets; npm test (737/737); npm run build"
+  }
+}

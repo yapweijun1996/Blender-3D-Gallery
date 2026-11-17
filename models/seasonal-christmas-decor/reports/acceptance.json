@@ -1,0 +1,93 @@
+{
+  "result": "PASS (local candidate; manager review pending)",
+  "id": "seasonal-christmas-decor",
+  "category": "Mall Fixtures",
+  "status": "draft",
+  "glb_sha256": "f35ed7ddd167adfb903920a64cd7672af518d7b000b9c358980a505cffc43b14",
+  "source_sha256": "758c574e5b0d79b8182d0f816b6bebec65be5f70276d92014aafe72a5cffb0c7",
+  "checks": {
+    "blender_generation": {
+      "result": "PASS",
+      "version": "5.2.3 LTS",
+      "log": "generate.log"
+    },
+    "asset_gate_and_khronos": {
+      "result": "PASS",
+      "triangles": 17908,
+      "bytes": 548160,
+      "materials": 3,
+      "draw_calls": 8,
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "log": "validation.log"
+    },
+    "native_source_and_saved_edits": {
+      "result": "PASS",
+      "editable_mesh_parts": 211,
+      "gift_boxes": 4,
+      "hanging_snowflakes": 2,
+      "baubles": 27,
+      "minimum_bauble_to_gift_aabb_clearance_metres": 0.035130976381589046,
+      "evidence": "sources.json"
+    },
+    "previews": {
+      "result": "PASS",
+      "reviewed": [
+        "hero.png",
+        "front.png",
+        "side.png",
+        "3q.png"
+      ],
+      "observations": "Clean three-colour composition, visible faceted star, four presents with clear bows, two suspended six-arm ornaments. Removed four ornaments that intersected gifts during review."
+    },
+    "validate_assets": {
+      "result": "PASS",
+      "exit_code": 0,
+      "log": "/Users/admin/Documents/MallQueue/reports/seasonal-christmas-decor-validate_assets.log"
+    },
+    "npm_test": {
+      "result": "PASS",
+      "exit_code": 0,
+      "passed": 737,
+      "failed": 0,
+      "log": "/Users/admin/Documents/MallQueue/reports/seasonal-christmas-decor-npm_test.log"
+    },
+    "build": {
+      "result": "PASS",
+      "exit_code": 0,
+      "warnings": "Existing Vite chunks larger than 500 kB; no application or dependency changes.",
+      "log": "/Users/admin/Documents/MallQueue/reports/seasonal-christmas-decor-build.log"
+    },
+    "chromium": {
+      "result": "PASS",
+      "evidence": "browser.json",
+      "screenshot": "/Users/admin/Documents/MallQueue/reports/seasonal-christmas-decor-page.png",
+      "console_errors": 0,
+      "tested_glb_sha256": "f35ed7ddd167adfb903920a64cd7672af518d7b000b9c358980a505cffc43b14"
+    },
+    "working_tree_scope": {
+      "result": "PASS",
+      "existing_catalog_entries_preserved": true,
+      "generated_demo_report_restored": true,
+      "collection": "Independent entry appended at the end; existing Mall Fixtures category."
+    }
+  },
+  "initial_findings": [
+    "First export exceeded the 20000 triangle cap; reduced subdivisions without relaxing the gate.",
+    "Multiangle review found four baubles intersecting gifts; removed and checked conservative clearance.",
+    "Initial browser hash probe assumed source paths; adapted to Vite hashed response filenames while retaining exact-byte verification."
+  ],
+  "not_found": [
+    "Exact existing match for complete requested set"
+  ],
+  "skipped_items": [],
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Full 17-shop mall 200 draw-call performance",
+    "Runtime theme switching or ceiling installation",
+    "Deployment/publication"
+  ],
+  "publication": "Local commit only; no push, rebase or deployment."
+}

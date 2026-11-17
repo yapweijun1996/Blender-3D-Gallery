@@ -1,0 +1,110 @@
+{
+  "result": "PASS (local candidate; manager review pending)",
+  "id": "seasonal-cny-decor",
+  "category": "Mall Fixtures",
+  "status": "draft",
+  "glb_sha256": "ca5fb8608e641fb835d030166a9fb11d3456e7bb586550b9dd724a371ad334e0",
+  "source_sha256": "22a22acce0baac1156be9f801eae61cd8ecbbf5533e97deafd815c2c6a28ba4c",
+  "checks": {
+    "blender_generation": {
+      "result": "PASS",
+      "version": "5.2.3 LTS",
+      "log": "generate.log",
+      "final_export_log": "generate-final.log"
+    },
+    "asset_gate_and_khronos": {
+      "result": "PASS",
+      "triangles": 12852,
+      "bytes": 379988,
+      "mesh_objects": 8,
+      "draw_calls": 13,
+      "materials": 3,
+      "errors": 0,
+      "warnings": 0,
+      "evidence": "assets.json"
+    },
+    "native_source_and_saved_edits": {
+      "result": "PASS",
+      "editable_mesh_parts": 348,
+      "closed_manifold_components": 348,
+      "evidence": "sources.json",
+      "edit_validation": "source-edit-check.log"
+    },
+    "isolated_rebuild": {
+      "result": "PASS",
+      "byte_identical": true,
+      "evidence": "reproducibility.json"
+    },
+    "previews": {
+      "result": "PASS",
+      "visually_reviewed": [
+        "hero.png",
+        "front.png",
+        "side.png",
+        "3q.png"
+      ],
+      "observations": "Balanced red lantern pair, blank scroll banners, individually modeled tangerines and leaves, two-tier red envelope stand. No readable text or brand marks."
+    },
+    "validate_assets": {
+      "result": "PASS",
+      "exit_code": 0,
+      "command": "npm run validate:assets",
+      "log": "/Users/admin/Documents/MallQueue/reports/seasonal-cny-decor-validate-assets.log"
+    },
+    "npm_test": {
+      "result": "PASS",
+      "exit_code": 0,
+      "passed": 737,
+      "failed": 0,
+      "log": "/Users/admin/Documents/MallQueue/reports/seasonal-cny-decor-npm-test.log"
+    },
+    "build": {
+      "result": "PASS",
+      "exit_code": 0,
+      "command": "npm run build",
+      "log": "/Users/admin/Documents/MallQueue/reports/seasonal-cny-decor-npm-build.log",
+      "final_metadata_build": "npx vite build",
+      "warning": "Existing Vite chunks exceed 500 kB; no application/dependency changes.",
+      "final_metadata_build_log": "/Users/admin/Documents/MallQueue/reports/seasonal-cny-decor-vite-final.log"
+    },
+    "chromium": {
+      "result": "PASS",
+      "viewport": [
+        1440,
+        900
+      ],
+      "evidence": "browser.json",
+      "screenshot": "/Users/admin/Documents/MallQueue/reports/seasonal-cny-decor-page.png",
+      "console_errors": 0,
+      "requested_glbs": 1,
+      "observed_nonempty_frame_draw_calls": [
+        13
+      ],
+      "visual_review": "Both banners and lanterns readable in the final asset-specific default camera view."
+    },
+    "working_tree_scope": {
+      "result": "PASS",
+      "existing_catalog_entries_preserved": true,
+      "generated_demo_report_restored": true,
+      "collection": "Independent entry appended at end; existing Mall Fixtures category; no singapore-fish entry."
+    }
+  },
+  "initial_findings": [
+    "Initial Blender export changed only triangle index order across processes; confirmed the oriented triangle sets were identical, then canonicalized index triples without changing geometry. Initial failure retained in reproducibility-initial.json.",
+    "Source assembly names conflicted with delivery node names; renamed source groups and applied delivery transforms for stable export names and complete component measurements.",
+    "Corrected banner clearance check to include the lower roller (1.069 m above floor); it retains more than 0.05 m clearance above the one-metre plant.",
+    "Adjusted only asset camera metadata after the first page image partially occluded a banner; rebuilt and reran Chromium."
+  ],
+  "not_found": [
+    "Exact existing model with the full requested decoration group"
+  ],
+  "skipped_items": [],
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Full 17-shop mall under its 200-draw-call budget",
+    "Runtime theme switching, suspension installation or collision",
+    "Deployment/publication"
+  ],
+  "publication": "Local commit only; no push, rebase, workflow or gallery UI changes."
+}

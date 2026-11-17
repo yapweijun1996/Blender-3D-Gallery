@@ -1,0 +1,46 @@
+{
+  "result": "PASS",
+  "id": "deepavali-lamps-rangoli",
+  "tested_glb_sha256": "4f34aea4e87ce0f7feeeda9818ce580de2156fcd089dadff05a2789539ccc475",
+  "checks": {
+    "Blender 5.2.3 headless procedural build": "PASS",
+    "fresh-build byte reproducibility": "PASS",
+    "saved source reopening / 117 manifold positive-volume meshes": "PASS",
+    "saved-copy geometry and material edit / export / independent GLTFLoader + Khronos validation": "PASS",
+    "all five source previews visually inspected": "PASS",
+    "Khronos validator": "PASS: zero errors, warnings, infos and hints",
+    "npm run validate:assets": "PASS: exit 0",
+    "npm test": "PASS: 737 tests, zero failures",
+    "npm run build": "PASS: exit 0; existing large-chunk advisory warning",
+    "headless Chromium 1440x900": "PASS: see browser.json"
+  },
+  "screenshot": {
+    "file": "/Users/admin/Documents/MallQueue/reports/deepavali-lamps-rangoli-page.png",
+    "dimensions": [
+      1440,
+      900
+    ],
+    "sha256": "e83b1c01002d0074cf35b7855963b6de131755ef37af879d4c108d7c99f8b454"
+  },
+  "resolved_check_attempts": [
+    {
+      "check": "Initial source-edit script",
+      "result": "FAIL: stale Blender Object reference after opening edited copy",
+      "resolution": "Capture measured dimensions before reopening; rerun passed; canonical source unchanged",
+      "original_log": "/tmp/deepavali-lamps-rangoli-source.log"
+    },
+    {
+      "check": "Initial browser hash receipt",
+      "result": "FAIL: matcher expected original source path instead of Vite hashed GLB URL",
+      "resolution": "Capture all actual GLB response bodies; require every consumed SHA-256 to match canonical; rerun passed",
+      "original_log": "/tmp/deepavali-lamps-rangoli-browser.log"
+    }
+  ],
+  "not_verified": [
+    "Physical Android / iOS",
+    "WebKit browser engine",
+    "Full 17-shop mall integration and sustained frame rates",
+    "Deployment / release"
+  ],
+  "git_scope": "Only models/deepavali-lamps-rangoli/ and models/catalog.json; local commit on mall-models; no push or rebase"
+}

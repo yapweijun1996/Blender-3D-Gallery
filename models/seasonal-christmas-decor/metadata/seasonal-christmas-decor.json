@@ -1,0 +1,104 @@
+{
+  "id": "seasonal-christmas-decor",
+  "name": "Seasonal Christmas Decor",
+  "summary": "A 2.5 m star-topped Christmas tree, four wrapped gifts and two hanging snowflakes in three shared colours.",
+  "description": "Original low-cost seasonal mall set with seven evergreen branch skirts, 27 plain red and gold baubles, one faceted star, four ribbon-wrapped gift boxes and two suspended six-arm snowflakes. Static decorative geometry; no brands, text, external assets or switching runtime.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "seasonal",
+    "christmas",
+    "theme-switching",
+    "tree",
+    "star",
+    "baubles",
+    "gifts",
+    "snowflakes",
+    "hanging",
+    "static",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres",
+    "P2"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / Codex-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry and solid-colour materials; no random inputs or external assets.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/seasonal-christmas-decor.blend",
+    "preview": "previews/hero.jpg",
+    "additional_previews": [
+      "previews/hero.png",
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "floor centre of complete set bounds"
+  },
+  "accuracy_notes": "Static seasonal decoration. Hanging cords end at source attachment anchors; the consuming scene supplies ceiling mounts and theme-switching logic. No animated switching, collision, physical phone or WebKit verification. Full 17-shop mall performance is not measured.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials created with Codex assistance. No third-party assets, images, fonts or brands."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "metrics": {
+    "glb_bytes": 548160,
+    "triangles": 17908,
+    "vertices": 18087,
+    "mesh_primitives": 8,
+    "materials": 3,
+    "animations": 0,
+    "textures": 0,
+    "dimensions_metres": [
+      2.5370609760285032,
+      2.5,
+      1.7813124656677246
+    ],
+    "tree_height_metres": 2.5,
+    "sha256": "f35ed7ddd167adfb903920a64cd7672af518d7b000b9c358980a505cffc43b14"
+  },
+  "measured_features": {
+    "gift_boxes": 4,
+    "hanging_snowflakes": 2,
+    "baubles": 27,
+    "star_toppers": 1,
+    "foliage_tiers": 7,
+    "editable_mesh_parts": 211
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "budget": {
+      "triangles": 19999,
+      "bytes": 1572863,
+      "mesh_primitives": 8,
+      "materials": 3
+    },
+    "evidence": "../reports/acceptance.json",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "chromium_1440x900": "PASS"
+  },
+  "reuse_assessment": {
+    "decision": "new original asset under owner override",
+    "similar_models": [
+      "christmas-tree",
+      "christmas-gift-boxes"
+    ],
+    "exact_match": "NOT FOUND",
+    "reason": "Neither existing asset provides the complete tree / four-gift / two-snowflake set under the three-material and triangle budgets."
+  }
+}
