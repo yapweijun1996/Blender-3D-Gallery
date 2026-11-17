@@ -14,6 +14,11 @@ const collection = catalog.collections.find(item => item.id === 'gjh-chibi-visit
 const visitorLicense = catalog.collections
   .flatMap(item => item.assets)
   .find(asset => asset.id === 'gjh-mall-visitor').license;
+const expectedThreeClipExports = [
+  { name: 'Wave', duration_seconds: 1.5 },
+  { name: 'Idle', duration_seconds: 2.5 },
+  { name: 'Blink', duration_seconds: 3 },
+];
 
 function readDocument(bytes) {
   assert.equal(bytes.toString('ascii', 0, 4), 'glTF');
@@ -89,12 +94,12 @@ test('gjh-chibi-visitor-blender: source, measured metrics, kit and previews are 
   assert.equal(metadata.metrics.glb_bytes, asset.bytes);
   assert.equal(metadata.metrics.triangles, asset.triangles);
   assert.equal(metadata.metrics.vertices, asset.vertices);
-  assert.equal(metadata.metrics.animations, 3);
+  assert.equal(metadata.metrics.animations, 5);
   assert.deepEqual(metadata.metrics, {
-    glb_bytes: 1046056,
+    glb_bytes: 1078772,
     triangles: 39052,
     vertices: 19960,
-    animations: 3,
+    animations: 5,
   });
   assert.deepEqual(metadata.geometry.bounds_glTF_m, {
     min: [-0.3189530372619629, 1.862645149230957e-9, -0.23066452145576477],
@@ -107,12 +112,14 @@ test('gjh-chibi-visitor-blender: source, measured metrics, kit and previews are 
     { name: 'Wave', duration_seconds: 1.5 },
     { name: 'Idle', duration_seconds: 2.5 },
     { name: 'Blink', duration_seconds: 3 },
+    { name: 'Cheer', duration_seconds: 1.600000023841858 },
+    { name: 'Jump', duration_seconds: 1.2000000476837158 },
   ]);
   assert.match(metadata.accuracy_notes, /collar retains projecting tips/i);
   assert.match(metadata.accuracy_notes, /fins remain thinner.*side view/i);
   assert.match(metadata.accuracy_notes, /hand reaches the lower edge.*ear cup/i);
   assert.match(metadata.accuracy_notes, /blend into and out of Wave/i);
-  assert.equal(asset.animations, 3);
+  assert.equal(asset.animations, 5);
   assert.equal(metadata.validation.errors, 0);
   assert.equal(metadata.validation.warnings, 0);
   assert.equal(metadata.paths.glb, 'exports/' + id + '.glb');
@@ -125,7 +132,7 @@ test('gjh-chibi-visitor-blender: source, measured metrics, kit and previews are 
     vertices: 19442,
     animations: 3,
     joint_count: 14,
-    animation_clips: metadata.animation_clips,
+    animation_clips: expectedThreeClipExports,
     bounds_glTF_m: {
       min: [-0.3931635916233063, 0, -0.23460909724235535],
       max: [0.3931635916233063, 1, 0.23537766933441162],
@@ -139,7 +146,7 @@ test('gjh-chibi-visitor-blender: source, measured metrics, kit and previews are 
     vertices: 103151,
     animations: 3,
     joint_count: 14,
-    animation_clips: metadata.animation_clips,
+    animation_clips: expectedThreeClipExports,
     bounds_glTF_m: {
       min: [-4.901769638061523, 0, -2.3967695236206055],
       max: [4.901769638061523, 1, 0.23537766933441162],
@@ -165,7 +172,7 @@ test('gjh-chibi-visitor-blender: source, measured metrics, kit and previews are 
   assert.equal(waveDocument.skins.length, 1);
   assert.equal(waveDocument.skins[0].joints.length, 14);
   assert.ok(waveDocument.nodes.filter(node => node.mesh !== undefined).every(node => node.skin !== undefined));
-  assert.deepEqual(waveDocument.animations.map(animation => animation.name), ['Wave', 'Idle', 'Blink']);
+  assert.deepEqual(waveDocument.animations.map(animation => animation.name), ['Wave', 'Idle', 'Blink', 'Cheer', 'Jump']);
   const standBytes = fs.readFileSync(assetRoot + '/' + metadata.paths.stand_glb);
   const stand = measure(readDocument(standBytes), standBytes);
   assert.deepEqual(stand, { glb_bytes: 988716, triangles: 38084, vertices: 19442, animations: 3 });
