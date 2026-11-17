@@ -49,6 +49,38 @@ def accessor(arr,comp,kind,target=None):
  b.extend(arr.tobytes());b.extend(b'\0'*(-len(b)%4))
  d['accessors'].append(dict(bufferView=len(d['bufferViews'])-1,componentType=comp,type=kind,count=len(arr)));return len(d['accessors'])-1
 at=d['meshes'][0]['primitives'][0]['attributes'];at['JOINTS_0']=accessor(np.where(V>0,J,0).astype('u1'),5121,'VEC4',34962);at['WEIGHTS_0']=accessor(V.astype('<f4'),5126,'VEC4',34962)
+# Bake a tangent frame for the normal map so gallery clients agree on shading.
+def float_attribute(index, components):
+    item = d["accessors"][index]
+    view = d["bufferViews"][item["bufferView"]]
+    start = view.get("byteOffset", 0) + item.get("byteOffset", 0)
+    return np.frombuffer(b, "<f4", count=item["count"] * components,
+                         offset=start).reshape(-1, components).astype(np.float64)
+
+def mesh_tangents():
+    normals = float_attribute(at["NORMAL"], 3)
+    normals /= np.linalg.norm(normals, axis=1)[:, None]
+    uv = float_attribute(at["TEXCOORD_0"], 2)
+    a, c, e = faces.T
+    ab, ac = P[c] - P[a], P[e] - P[a]
+    st, su = uv[c] - uv[a], uv[e] - uv[a]
+    det = st[:, 0] * su[:, 1] - su[:, 0] * st[:, 1]
+    inv = np.divide(1, det, out=np.zeros_like(det), where=np.abs(det) > 1e-12)
+    tangent = (ab * su[:, 1, None] - ac * st[:, 1, None]) * inv[:, None]
+    bitangent = (ac * st[:, 0, None] - ab * su[:, 0, None]) * inv[:, None]
+    t, bt = np.zeros_like(normals), np.zeros_like(normals)
+    for corner in faces.T:
+        np.add.at(t, corner, tangent)
+        np.add.at(bt, corner, bitangent)
+    t -= normals * np.sum(normals * t, axis=1)[:, None]
+    missing = np.linalg.norm(t, axis=1) < 1e-10
+    axes = np.eye(3)[np.argmin(np.abs(normals[missing]), axis=1)]
+    t[missing] = np.cross(axes, normals[missing])
+    t /= np.linalg.norm(t, axis=1)[:, None]
+    sign = np.where(np.sum(np.cross(normals, t) * bt, axis=1) < 0, -1, 1)
+    return np.column_stack((t, sign)).astype("<f4")
+
+at["TANGENT"] = accessor(mesh_tangents(), 5126, "VEC4", 34962)
 M=np.tile(np.eye(4,dtype='<f4'),(len(C),1,1));M[:,3,:3]=-np.array(C);ibm=accessor(M,5126,'MAT4')
 nodes=d['nodes'];nodes[0].update(name='Chibi Visitor',skin=0);first=len(nodes)
 for i,(name,c,parent) in enumerate(zip(names,C,parents)):

@@ -1,5 +1,7 @@
 # Tripo chibi rig preview
 
+The character is registered in the gallery under **People & Characters**. Open `?page=models&model=tripo-chibi-rig` to rotate it, raise its left arm, toggle the skeleton overlay, or reset the pose. The GLB includes baked tangents for its normal map.
+
 The GLB contains the front-facing figure extracted from a three-figure Tripo export, its original color, normal and roughness/metallic textures, and a locally created 21-joint humanoid rig. The arm test compares the rest pose and a 58-degree left-arm raise. The inner sleeve and backpack strap stretch at this angle.
 
 ![Arm pose comparison](arm-test.png)

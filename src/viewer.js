@@ -22,6 +22,7 @@ export default async function createViewer(
   let fishMotion;
   let cartDemo;
   let visitorDemo;
+  let chibiRig;
   let lastDraw = 0;
   let studio;
   let model;
@@ -154,6 +155,7 @@ export default async function createViewer(
     fishMotion?.dispose();
     cartDemo?.dispose();
     visitorDemo?.dispose();
+    chibiRig?.dispose();
     disposeModel(model);
     disposeModel(studio);
     scene.environment = null;
@@ -224,6 +226,11 @@ export default async function createViewer(
       if (disposed || signal.aborted) throw new DOMException('Viewer closed', 'AbortError');
       visitorDemo = createVisitorDemo({ model, clips: gltf.animations, container, invalidate });
     }
+    if (asset.id === "tripo-chibi-rig") {
+      const { createChibiRigControls } = await import("./chibi-rig-controls.js");
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+      chibiRig = createChibiRigControls({ model, scene, container, invalidate });
+    }
     const bounds = new THREE.Box3().setFromObject(cartDemo?.group ?? model);
     if (bounds.isEmpty()) throw new Error("Model has no visible bounds");
     const radius = Math.max(bounds.getSize(new THREE.Vector3()).length() / 2, 0.001);
@@ -272,6 +279,7 @@ export default async function createViewer(
       clearPreset();
       cartDemo?.reset();
       visitorDemo?.reset();
+      chibiRig?.reset();
       if (doorRig) for (const [code, door] of Object.entries(doorRig)) {
         door.node.rotation.y = door.closed;
         doorButtons.get(code)?.setAttribute("aria-pressed", "false");
