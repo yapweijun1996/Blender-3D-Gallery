@@ -1,0 +1,13 @@
+import { readFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import validator from 'gltf-validator';
+const file = new URL('./chibi-boy-animated.glb', import.meta.url);
+const bytes = await readFile(file);
+const report = await validator.validateBytes(new Uint8Array(bytes));
+assert.equal(report.issues.numErrors, 0, 'GLB must not contain validator errors');
+assert.equal(report.info.animationCount, 7);
+assert.equal(report.info.hasSkins, true);
+const jsonLength = bytes.readUInt32LE(12);
+const doc = JSON.parse(bytes.subarray(20, 20 + jsonLength));
+assert.deepEqual(doc.animations.map(a => a.name).sort(), ['greet_01', 'idle', 'jump', 'run', 'sit', 'walk', 'wave_goodbye_01']);
+console.log(`GLB: 7 clips, skin present, ${report.issues.numWarnings} validator warning(s)`);
