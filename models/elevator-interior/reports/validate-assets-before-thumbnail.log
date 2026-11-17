@@ -1,0 +1,23 @@
+
+> blender-3d-gallery@0.1.0 validate:assets
+> node scripts/validate-assets.mjs && node models/gjh-chibi-visitor/validate.mjs && node models/pomelo-stem/mascot/validate.mjs
+
+node:fs:2872
+      const stats = binding.lstat(base, true, undefined, true /* throwIfNoEntry */);
+                            ^
+
+Error: ENOENT: no such file or directory, lstat '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/elevator-interior/previews/hero.jpg'
+    at Object.realpathSync (node:fs:2872:29)
+    at containedFile (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:125:23)
+    at loadCatalog (file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/catalog.mjs:138:7)
+    at file:///Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/scripts/validate-assets.mjs:5:17
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: '/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/elevator-interior/previews/hero.jpg'
+}
+
+Node.js v24.22.2

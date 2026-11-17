@@ -1,0 +1,19 @@
+/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/peanut-butter-jar-stand/generate.py:24: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m.use_nodes = True
+Traceback (most recent call last):
+  File "/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/peanut-butter-jar-stand/generate.py", line 274, in <module>
+    main()
+    ~~~~^^
+  File "/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/peanut-butter-jar-stand/generate.py", line 268, in main
+    export(HERE / 'exports' / 'optimized.glb')
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/admin/Documents/GitHub/Blender-3D-Gallery-mall/models/peanut-butter-jar-stand/generate.py", line 187, in export
+    group = [o for o in parts if o.data.materials[0] == mat]
+                                 ^^^^^^
+ReferenceError: StructRNA of type Object has been removed
+BlenderMCP addon registered
+BlenderMCP addon unregistered
+Info: Saved as "peanut-butter-jar-stand.blend"
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:31:22)
+
+Blender quit

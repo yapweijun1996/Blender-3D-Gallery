@@ -1,0 +1,141 @@
+{
+  "id": "elevator-interior",
+  "name": "Elevator Interior",
+  "summary": "Compact open-door elevator car with a rear mirror, unlabelled buttons, supported rails and luminous ceiling panel.",
+  "description": "Original GJH Virtual Mall car interior with four stowed telescopic sliding leaves, eight unlabelled floor buttons, rear mirror, rear and side handrails, warm-white ceiling light and neutral wall panelling. No readable text, logos, product packaging or external assets.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "elevator",
+    "lift",
+    "interior",
+    "open-doors",
+    "telescopic-doors",
+    "unlabelled-buttons",
+    "handrail",
+    "mirror",
+    "ceiling-light",
+    "static",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres",
+    "P2"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry with three shared materials and vertex colours. No random inputs, external models, textures, fonts or images.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/elevator-interior.blend",
+    "preview": "previews/hero.jpg",
+    "additional_previews": [
+      "previews/hero.png",
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png",
+      "previews/interior.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      -0.16,
+      0.09,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "floor centre",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.65
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "width, height, depth (glTF X,Y,Z)",
+    "size": [
+      1.600000262260437,
+      2.4000000953674316,
+      1.5000001192092896
+    ],
+    "bounds": {
+      "min": [
+        -0.8000002503395081,
+        0,
+        -0.75
+      ],
+      "max": [
+        0.800000011920929,
+        2.4000000953674316,
+        0.7500001192092896
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 395996,
+    "triangles": 9836,
+    "vertices": 11120,
+    "stored_meshes": 10,
+    "mesh_primitives": 10,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "sha256": "21cfd48bfee7a3db2a247f0055bd5008d9df3327cb90cda3a5f07411298a6095"
+  },
+  "interface": {
+    "open_door_nodes": [
+      "DOOR_LeftInner",
+      "DOOR_LeftOuter",
+      "DOOR_RightInner",
+      "DOOR_RightOuter"
+    ],
+    "mirror_node": "MIRROR_Rear",
+    "control_node": "CONTROL_UnlabelledButtons",
+    "light_node": "LIGHT_Ceiling",
+    "unlabelled_buttons": 8,
+    "clear_wall_width_m": 1.4799998998641968,
+    "door_aperture_width_m": 0.8999999761581421,
+    "door_aperture_height_m": 2.14000004529953,
+    "ceiling_light_clearance_m": 2.26500004529953,
+    "runtime": "Static open pose only. No animation, button logic, passenger transport, colliders or live planar mirror reflection. Emissive ceiling surface exports no light object."
+  },
+  "accuracy_notes": "Dimensions and statistics are measured from the delivered GLB; clearances and button count are measured from the saved source. Outside envelope is approximately 1.6m wide, 1.5m deep and 2.4m high. The mirror is a low-roughness metallic PBR surface reflecting the viewer environment. Neutral wall, floor and control colours share one vertex-coloured material. Not a surveyed installation or engineering/safety certification. Full mall assembly, aggregate 200 draw-call budget, physical mobile devices and WebKit are unverified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry, vertex colours and three shared materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "geometry": "PASS",
+    "khronos": "PASS",
+    "source_editability": "See reports/source-edit-verification.json",
+    "local": "See reports/acceptance.json",
+    "chromium_1440x900": "See reports/browser.json",
+    "visual_review": "See reports/visual-review.json",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles_exclusive": 15000,
+      "bytes_exclusive": 1572864,
+      "materials_max": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/duplicate-search.json",
+      "reports/reproducibility.json",
+      "reports/source-edit-verification.json",
+      "reports/visual-review.json",
+      "reports/browser.json",
+      "reports/acceptance.json"
+    ]
+  }
+}

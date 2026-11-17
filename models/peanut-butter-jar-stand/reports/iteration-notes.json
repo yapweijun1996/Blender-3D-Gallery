@@ -1,0 +1,23 @@
+{
+  "final_result": "PASS",
+  "corrected_draft_findings": [
+    {
+      "finding": "Exporter iterated joined object references; Blender raised ReferenceError.",
+      "resolution": "Build material groups before joining; final export and isolated rebuild passed.",
+      "log": "generate-initial-failed.log"
+    },
+    {
+      "finding": "Draft thin-part bevels created 96 zero-area triangles in the fixture batch.",
+      "resolution": "Clamp bevel width below half the smallest box dimension; final independent check found zero degenerate triangles."
+    },
+    {
+      "finding": "A saved cabinet edit changed exported vertex sharing, invalidating an equal-vertex-count harness assumption.",
+      "resolution": "Verify the actual cabinet side width changes from 0.38 to 0.3496 metres and lid roughness to 0.77 in the independently loaded edited GLB."
+    },
+    {
+      "finding": "Initial browser response matcher expected a source path; Vite uses hashed asset paths.",
+      "resolution": "Wait for the actual GLB response and require exact SHA-256 equality; final Chromium run passed.",
+      "log": "browser-initial-failed.log"
+    }
+  ]
+}

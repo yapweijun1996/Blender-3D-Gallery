@@ -1,0 +1,42 @@
+{
+  "result": "PASS",
+  "reviewer": "Codex visual inspection",
+  "glb_sha256": "e54f0dda0fdfdc97d32aa1f4aa34422ba8a5a0049b467c6a4537680b398e8f08",
+  "views": [
+    {
+      "path": "previews/hero.png",
+      "sha256": "ced316f3fdf3cd61f176209c000749a12314a2253ce56c342930dffde6a3842f"
+    },
+    {
+      "path": "previews/front.png",
+      "sha256": "09c0dc368cb0f83bf0caadc568606f1a2f2a9508da41476cc934dd40742df78c"
+    },
+    {
+      "path": "previews/side.png",
+      "sha256": "fed71d51d0f81ed9b04cff0a8d4a6c8c8908311ad99132b2216ef434cce76b5a"
+    },
+    {
+      "path": "previews/3q.png",
+      "sha256": "055de6862a8ecbf13e9d27b494b3cbc2ab87512e51cd360788e9c6abdf8b684a"
+    }
+  ],
+  "findings": [
+    "Complete model framed in all four views with consistent steel, graphite and blue-green palette.",
+    "Step rib geometry, glass expansion joints, rounded handrail returns, comb plates and blank signpost visible.",
+    "Narrow escalator proportions match a nominal 1m tread over a 6m footprint.",
+    "Short landings and static geometry are deliberate visual simplifications; installation and future motion need scene-specific work."
+  ],
+  "corrected_geometry_issues": [
+    "Duplicate terminal-glass profile endpoint removed.",
+    "Thin sign inset bevel reduced to prevent collapsed triangles."
+  ],
+  "limitations": [
+    "Agent visual review only; owner art approval pending.",
+    "Full mall assembly, safety and target-device performance are not verified."
+  ],
+  "chromium_screenshot_review": {
+    "result": "PASS",
+    "path": "/Users/admin/Documents/MallQueue/reports/escalator-detail-page.png",
+    "findings": "Actual model visible and fully framed; 18 ribbed steps, two rails, transparent side panels and blank signpost are visible. Gallery shows the measured counts and no animation clips."
+  }
+}

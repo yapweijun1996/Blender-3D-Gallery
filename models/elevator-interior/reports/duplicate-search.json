@@ -1,0 +1,116 @@
+{
+  "catalog_assets_searched": 616,
+  "metadata_files_searched": 567,
+  "fields": [
+    "id",
+    "name",
+    "tags",
+    "description"
+  ],
+  "catalog_matches": [
+    {
+      "id": "mall-lift-call-panel",
+      "name": "Mall Lift Call Panel",
+      "tags": [
+        "mall",
+        "lift",
+        "call-panel",
+        "buttons",
+        "wall-mounted",
+        "modular",
+        "editable",
+        "original",
+        "texture-free",
+        "metres"
+      ],
+      "metadata": "models/mall-lift-call-panel/metadata/mall-lift-call-panel.json"
+    },
+    {
+      "id": "mall-lift-floor-indicator",
+      "name": "Mall Lift Floor Indicator",
+      "tags": [
+        "mall",
+        "lift",
+        "floor-indicator",
+        "seven-segment",
+        "wall-mounted",
+        "modular",
+        "editable",
+        "original",
+        "texture-free",
+        "metres"
+      ],
+      "metadata": "models/mall-lift-floor-indicator/metadata/mall-lift-floor-indicator.json"
+    },
+    {
+      "id": "hdb-lift-door",
+      "name": "HDB Lift Door",
+      "tags": [
+        "hdb",
+        "singapore",
+        "residential",
+        "modular",
+        "editable",
+        "original",
+        "metres"
+      ],
+      "metadata": "models/hdb-lift-door/metadata/hdb-lift-door.json"
+    },
+    {
+      "id": "hdb-lift-interior",
+      "name": "HDB Lift Interior",
+      "tags": [
+        "hdb",
+        "singapore",
+        "residential",
+        "modular",
+        "editable",
+        "original",
+        "metres"
+      ],
+      "metadata": "models/hdb-lift-interior/metadata/hdb-lift-interior.json"
+    },
+    {
+      "id": "hdb-lift-lobby",
+      "name": "HDB Lift Lobby",
+      "tags": [
+        "sgmy",
+        "modular",
+        "editable",
+        "metres"
+      ],
+      "metadata": "models/hdb-lift-lobby/metadata/hdb-lift-lobby.json"
+    },
+    {
+      "id": "passenger-lift",
+      "name": "Passenger Lift",
+      "tags": [
+        "sgmy",
+        "modular",
+        "editable",
+        "original"
+      ],
+      "metadata": "models/passenger-lift/metadata/passenger-lift.json"
+    }
+  ],
+  "metadata_matches": [
+    "models/mall-lift-call-panel/metadata/mall-lift-call-panel.json",
+    "models/passenger-lift/metadata/passenger-lift.json",
+    "models/hdb-lift-lobby/metadata/hdb-lift-lobby.json",
+    "models/kopitiam-kettle/metadata/kopitiam-kettle.json",
+    "models/hdb-lift-door/metadata/hdb-lift-door.json",
+    "models/mall-lift-floor-indicator/metadata/mall-lift-floor-indicator.json",
+    "models/hdb-lift-interior/metadata/hdb-lift-interior.json"
+  ],
+  "exact_match": "NOT FOUND",
+  "decision": "Build original elevator-interior as explicitly requested by owner.",
+  "inspected_sources": {
+    "hdb-lift-interior": "Open-front cabin, no mirror or sliding door leaves; 5 materials and different envelope.",
+    "passenger-lift": "Two-stop shaft and moving cab demonstration, no rear mirror; not this compact mall interior.",
+    "hdb-lift-door": "Door-only module; no cabin, controls, handrail, mirror or ceiling.",
+    "hdb-lift-lobby": "Lobby scene, not a standalone compact interior.",
+    "mall-lift-call-panel": "Exterior call control only.",
+    "mall-lift-floor-indicator": "Exterior display only."
+  },
+  "skipped_items": []
+}

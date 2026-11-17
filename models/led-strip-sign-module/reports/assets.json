@@ -1,0 +1,127 @@
+{
+  "result": "PASS",
+  "id": "led-strip-sign-module",
+  "glb_bytes": 96040,
+  "triangles": 2168,
+  "vertices": 3293,
+  "meshes": 4,
+  "primitives": 4,
+  "materials": 3,
+  "images": 0,
+  "animations": 0,
+  "degenerate_triangles": 0,
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "width, height, depth (glTF X,Y,Z)",
+    "size": [
+      2.4000000953674316,
+      0.6000000238418579,
+      0.14500000327825546
+    ],
+    "bounds": {
+      "min": [
+        -1.2000000476837158,
+        0,
+        -0.07250000536441803
+      ],
+      "max": [
+        1.2000000476837158,
+        0.6000000238418579,
+        0.07249999791383743
+      ]
+    }
+  },
+  "enclosure_size_m": [
+    2.4000000953674316,
+    0.6000000238418579,
+    0.11999999731779099
+  ],
+  "led_recess_m": 0.00599999725818634,
+  "sha256": "f614c4ff9e4b411b586c71d44c66247f370e1163ba4d89dcc20f5f9226da3202",
+  "validation": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "verified": [
+    "floor-centre origin",
+    "+Z front normals",
+    "separate HDR emissive strip",
+    "continuous perimeter with blank centre",
+    "four open bracket slots",
+    "bracket rear contact"
+  ],
+  "parts": {
+    "SIGN_BlankFace": {
+      "size": [
+        2.2200000286102295,
+        0.41999997198581696,
+        0.012000001966953278
+      ],
+      "min": [
+        -1.1100000143051147,
+        0.09000001847743988,
+        0.05049999803304672
+      ],
+      "max": [
+        1.1100000143051147,
+        0.5099999904632568,
+        0.0625
+      ],
+      "material": "Warm porcelain face and bracket"
+    },
+    "SIGN_Housing": {
+      "size": [
+        2.4000000953674316,
+        0.6000000238418579,
+        0.11999999731779099
+      ],
+      "min": [
+        -1.2000000476837158,
+        0,
+        -0.04749999940395355
+      ],
+      "max": [
+        1.2000000476837158,
+        0.6000000238418579,
+        0.07249999791383743
+      ],
+      "material": "Satin graphite housing"
+    },
+    "SIGN_LedStrip": {
+      "size": [
+        2.299999952316284,
+        0.5000000111758709,
+        0.008000001311302185
+      ],
+      "min": [
+        -1.149999976158142,
+        0.05000000074505806,
+        0.05849999934434891
+      ],
+      "max": [
+        1.149999976158142,
+        0.550000011920929,
+        0.06650000065565109
+      ],
+      "material": "Warm white LED diffuser"
+    },
+    "SIGN_WallBracket": {
+      "size": [
+        1.899999976158142,
+        0.3700000122189522,
+        0.025000005960464478
+      ],
+      "min": [
+        -0.949999988079071,
+        0.11500000208616257,
+        -0.07250000536441803
+      ],
+      "max": [
+        0.949999988079071,
+        0.48500001430511475,
+        -0.04749999940395355
+      ],
+      "material": "Warm porcelain face and bracket"
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "id": "peanut-butter-jar-stand",
+  "name": "Peanut-Butter Jar Display Stand",
+  "summary": "Twenty-four unlabelled jars on a three-tier S08 floor pedestal with a blank sign card.",
+  "description": "Original warm ivory display with 14 lower, 8 middle and 2 top jars on supported tapering tiers. Plain terracotta lids, blank cream label bands and peanut-coloured opaque bodies. No text, logos, real product packaging or external assets. Static visual prop for S08 (P2).",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "S08",
+    "P2",
+    "peanut-butter",
+    "jar",
+    "display-stand",
+    "floor-pedestal",
+    "pyramid",
+    "three-tier",
+    "24-jars",
+    "blank-label",
+    "blank-sign-card",
+    "unlabelled",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python; no external models, images, fonts, textures or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/peanut-butter-jar-stand.blend",
+    "preview": "previews/hero.jpg",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1.45,
+      1.1,
+      2.6
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "floor centre",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.65
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "width, height, depth (glTF X,Y,Z)",
+    "size": [
+      0.800000011920929,
+      1.0199999809265137,
+      0.5
+    ],
+    "bounds": {
+      "min": [
+        -0.4000000059604645,
+        0,
+        -0.25
+      ],
+      "max": [
+        0.4000000059604645,
+        1.0199999809265137,
+        0.25
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 514704,
+    "triangles": 16404,
+    "vertices": 12813,
+    "meshes": 3,
+    "primitives": 3,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "sha256": "42f5e1bce24dfa525305623472f42654a80fade80f79b8177cb9b6dfb4b36f28",
+    "jar_count": 24,
+    "tiers_bottom_to_top": [
+      14,
+      8,
+      2
+    ],
+    "jar_dimensions_m": [
+      0.10399998724460602,
+      0.10400000214576721,
+      0.12000000476837158
+    ],
+    "editable_source_meshes": 63
+  },
+  "accuracy_notes": "Measured export dimensions and topology are recorded above; jar dimensions and counts are measured from the saved source. Jars use opaque peanut-coloured bodies with integral blank label bands and plain closed lids. Display shelves support the tapered arrangement. Static visual asset only; no opening, product selection, collision setup, stability certification or per-jar runtime interaction. Full 17-shop scene integration, physical Android/iOS, WebKit and assembled-mall performance have not been tested.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and shared materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "geometry": "PASS",
+    "source_editability": "PASS",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles_exclusive": 18000,
+      "bytes_exclusive": 1572864,
+      "materials": 3,
+      "mesh_primitives": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/source-edit-verification.json",
+      "reports/browser.json",
+      "reports/acceptance.json",
+      "reports/reproducibility.json",
+      "reports/visual-review.json",
+      "reports/duplicate-search.json"
+    ],
+    "chromium_1440x900": "PASS",
+    "visual_review": "PASS",
+    "reproducibility": "PASS"
+  }
+}

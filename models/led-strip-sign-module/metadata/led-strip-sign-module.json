@@ -1,0 +1,136 @@
+{
+  "id": "led-strip-sign-module",
+  "name": "LED-Strip Sign Module",
+  "summary": "Blank shop-sign box with a recessed warm-white LED perimeter and matching slotted wall bracket.",
+  "description": "Original graphite sign enclosure with a blank porcelain face, continuous independent SIGN_LedStrip emissive ring and separate two-rail wall-mount bracket with four open slots. No lettering, logos, external assets or product packaging. P2 visual module for the GJH Virtual Mall.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "P2",
+    "shop-sign",
+    "led-strip",
+    "emissive",
+    "bloom-target",
+    "recessed",
+    "blank-face",
+    "wall-mount",
+    "slotted-bracket",
+    "unbranded",
+    "original",
+    "procedural",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python geometry and shared materials; no external models, images, textures, fonts or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/led-strip-sign-module.blend",
+    "preview": "previews/hero.jpg",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png",
+      "previews/rear.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.65,
+      0.45,
+      3
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "origin": "floor centre",
+    "studioEnvironment": true,
+    "environmentIntensity": 0.65
+  },
+  "interface": {
+    "led_node": "SIGN_LedStrip",
+    "blank_face_node": "SIGN_BlankFace",
+    "bracket_node": "SIGN_WallBracket",
+    "runtime": "Select SIGN_LedStrip for scene-owned selective Bloom; its HDR emissive material is shared only by the strip. Bloom post-processing, switching, placement height and wall geometry belong to the consuming mall scene.",
+    "enclosure_size_m": [
+      2.4000000953674316,
+      0.6000000238418579,
+      0.11999999731779099
+    ],
+    "led_recess_m": 0.00599999725818634,
+    "wall_plane_gltf_z": -0.07250000536441803
+  },
+  "accuracy_notes": "Dimensions and statistics are measured from the delivered GLB. The floor datum is the bottom centre of the unplaced module; raise the root to the desired sign height. Bracket depth is included in the full bounds. Blank static visual asset; no signage text, installation certification, collision setup or electrical simulation. Assembled-mall Bloom, 17-shop integration, full-scene draw-call budget, physical Android/iOS and WebKit have not been tested.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and three shared materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "geometry": "PASS",
+    "khronos": "PASS",
+    "visual_review": "PASS",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles_exclusive": 6000,
+      "bytes_exclusive": 1572864,
+      "materials": 3,
+      "mesh_primitives": 4
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/source-edit.json",
+      "reports/reproducibility.json",
+      "reports/visual-review.json",
+      "reports/browser.json",
+      "reports/acceptance.json",
+      "reports/duplicate-search.json"
+    ],
+    "source_editability": "PASS",
+    "reproducibility": "PASS",
+    "chromium_1440x900": "PASS"
+  },
+  "dimensions": {
+    "units": "metres",
+    "axis_order": "width, height, depth (glTF X,Y,Z)",
+    "size": [
+      2.4000000953674316,
+      0.6000000238418579,
+      0.14500000327825546
+    ],
+    "bounds": {
+      "min": [
+        -1.2000000476837158,
+        0,
+        -0.07250000536441803
+      ],
+      "max": [
+        1.2000000476837158,
+        0.6000000238418579,
+        0.07249999791383743
+      ]
+    }
+  },
+  "statistics": {
+    "glb_bytes": 96040,
+    "triangles": 2168,
+    "vertices": 3293,
+    "meshes": 4,
+    "primitives": 4,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "sha256": "f614c4ff9e4b411b586c71d44c66247f370e1163ba4d89dcc20f5f9226da3202"
+  }
+}

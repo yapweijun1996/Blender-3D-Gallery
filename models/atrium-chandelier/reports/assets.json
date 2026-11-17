@@ -1,0 +1,80 @@
+{
+  "result": "PASS",
+  "id": "atrium-chandelier",
+  "glb_bytes": 459540,
+  "triangles": 13452,
+  "vertices": 15648,
+  "stored_meshes": 3,
+  "mesh_primitives": 3,
+  "opaque_draw_calls_per_pass": 3,
+  "materials": 3,
+  "images": 0,
+  "animations": 0,
+  "dimensions": [
+    3,
+    2,
+    3
+  ],
+  "bounds": {
+    "min": [
+      -1.5,
+      0,
+      -1.5
+    ],
+    "max": [
+      1.5,
+      2,
+      1.5
+    ]
+  },
+  "minimum_triangle_area_m2": 0.0000025369457894441894,
+  "concentric_light_tiers": [
+    {
+      "radius": 1.445,
+      "height": 1.23
+    },
+    {
+      "radius": 1.025,
+      "height": 1.02
+    },
+    {
+      "radius": 0.605,
+      "height": 0.8
+    }
+  ],
+  "measured_led_tier_vertex_counts": [
+    1536,
+    1536,
+    1536
+  ],
+  "pendant_components": 24,
+  "sha256": "dd38e05584ce57f01a5323951254ef63c47fbea61b57ece525fc0ef5bfe5fb26",
+  "validation": {
+    "errors": 0,
+    "warnings": 0,
+    "version": "2.0.0-dev.3.10"
+  },
+  "budget": {
+    "triangles_exclusive": 20000,
+    "bytes_exclusive": 1572864,
+    "materials_max": 3,
+    "mesh_primitives": 3
+  },
+  "parts": [
+    {
+      "name": "CRYSTAL_Pendants",
+      "material": "Faceted pearl crystal",
+      "triangles": 1152
+    },
+    {
+      "name": "FRAME_Chandelier",
+      "material": "Satin champagne steel",
+      "triangles": 7692
+    },
+    {
+      "name": "LIGHT_Ring",
+      "material": "Warm white ring diffuser",
+      "triangles": 4608
+    }
+  ]
+}
