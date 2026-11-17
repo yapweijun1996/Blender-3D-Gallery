@@ -1,23 +1,27 @@
 {
   "result": "PASS",
-  "review_method": "Direct visual inspection of each final required PNG and actual Chromium production-page screenshot.",
-  "glb_sha256": "21cfd48bfee7a3db2a247f0055bd5008d9df3327cb90cda3a5f07411298a6095",
+  "revision": "advisor round 1",
+  "review_method": "Direct inspection of all six final PNGs and the final 1440x900 production-gallery screenshot.",
+  "glb_sha256": "0695643149b8de0a2030c39301be464296892de193870b2e6c382d921cf4afbd",
   "previews": {
-    "hero.png": "feeda0a4cac174472f161dc76861bfeb936c55e782146dd2e523caadc870717a",
-    "front.png": "0164c462e2cd7f002a509dc0b385d76ae4dc39ce5a0f98b5a74585df4cf8657b",
-    "side.png": "a2faa6368b7b2b97f45aa9553ed0587a782f93eeeb510f604f9e2c0da83d59d3",
-    "3q.png": "12cffcf8f7c9c4adbdeed2a431d817ae2a3d9b8500b6e23d4bf37fbd5883181d",
-    "interior.png": "cdac8044824a604da3dca0056fc4e6492333660a0d5ff8e590bd8e2592045be0"
+    "hero.png": "55e3aac4af0f7e54477e2f65bfb204bf751ee017db3a1e984960ff80b2e15791",
+    "front.png": "90bc61a48f04b715092a5a05dde1fa218890676588e00ae67dcb8ab75e668a2e",
+    "side.png": "a811528a932f1684549ad61e355266d800e6a8a517a40d0e99f26a606a5ec8e0",
+    "3q.png": "3e4afcf6194c47844f7204884ecd2d930064fd240419e7e9abcf3b4ea9c19d5b",
+    "interior.png": "73a858cc4aa415f35c0a6395486ba9a63c90455fa40054e572a7b92ccb9f3943",
+    "floor-fit.png": "259e9327bbb32af9cf7ad0058a1e54ab61c4e44fcf3c6ba74324afa2e194a4f9"
+  },
+  "page_screenshot": {
+    "path": "/Users/admin/Documents/MallQueue/reports/elevator-interior-page.png",
+    "sha256": "bface1410fc8c3ace1a17ae8c3df333c9dd8345e9c1eb73dbe34f4bdc613357e"
   },
   "observations": [
-    "Clean compact-car proportions; coherent neutral walls, graphite floor and polished trim.",
-    "Four telescopic leaves are stowed at the sides; aperture remains clear.",
-    "Eight unlabelled buttons are visible in the three-quarter view.",
-    "Mirror, rear/side handrail, ceiling panel and threshold tracks are present.",
-    "Removed overlapping coplanar header/post and floor/sill faces seen during initial review.",
-    "Side view intentionally shows a closed, plain exterior wall.",
-    "Chromium default frame contains the entire model and matches the measured GLB hash.",
-    "Additional close interior view confirms mirror frame, ceiling diffuser and rail supports; full control panel remains visible in the three-quarter view."
+    "Neutral wall reveals remain visible under reduced asset-local gallery lighting.",
+    "The mirror has a soft reflective gradient; the metal trim has broader highlights.",
+    "The default near-front view shows the mirror and both columns of unlabelled buttons.",
+    "Independent raycasts confirm all eight button centres and six of nine rear-mirror sample points are unobstructed.",
+    "The floor-fit close-up shows the sill meeting an adjacent studio mall floor at Y=0.",
+    "Hero, front, side, three-quarter and interior views retain clean compact-car proportions and no readable text or logos."
   ],
-  "limitations": "Mirror reflects the PBR studio environment in the browser; no live planar reflection or simulated passenger transport. Runtime framing uses the existing gallery."
+  "limitations": "The gallery auto-fit has no asset-local zoom parameter. Final projected car size is approximately 267x385 pixels in a 1058x495 canvas. Mirror shading is metallic PBR, without live planar reflection. Adjacent-floor evidence is a local fixture check, not full-mall assembly."
 }

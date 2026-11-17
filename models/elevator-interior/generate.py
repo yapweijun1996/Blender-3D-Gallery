@@ -16,6 +16,7 @@ IVORY = (.82, .81, .77)
 GRAPHITE = (.105, .125, .14)
 STONE = (.32, .35, .36)
 BUTTON = (.72, .75, .75)
+FLOOR_DATUM = .060
 
 
 def linear(rgb):
@@ -26,22 +27,22 @@ def materials():
     matte = bpy.data.materials.new('Neutral panels and stone')
     matte.use_nodes = True
     shader = matte.node_tree.nodes['Principled BSDF']
-    shader.inputs['Roughness'].default_value = .48
+    shader.inputs['Roughness'].default_value = .58
     color = matte.node_tree.nodes.new('ShaderNodeVertexColor')
     color.layer_name = 'SurfaceColor'
     matte.node_tree.links.new(color.outputs['Color'], shader.inputs['Base Color'])
     steel = bpy.data.materials.new('Polished stainless and mirror')
     steel.use_nodes = True
     shader = steel.node_tree.nodes['Principled BSDF']
-    shader.inputs['Base Color'].default_value = linear((.83, .86, .87))
+    shader.inputs['Base Color'].default_value = linear((.88, .90, .92))
     shader.inputs['Metallic'].default_value = 1
-    shader.inputs['Roughness'].default_value = .095
+    shader.inputs['Roughness'].default_value = .22
     light = bpy.data.materials.new('Warm white ceiling diffuser')
     light.use_nodes = True
     shader = light.node_tree.nodes['Principled BSDF']
     shader.inputs['Base Color'].default_value = linear((1, .96, .84))
     shader.inputs['Emission Color'].default_value = linear((1, .96, .84))
-    shader.inputs['Emission Strength'].default_value = 2.2
+    shader.inputs['Emission Strength'].default_value = 1.0
     shader.inputs['Roughness'].default_value = .55
     for material in [matte, steel, light]:
         material.use_backface_culling = True
@@ -89,10 +90,12 @@ def build():
     bpy.context.scene.collection.objects.link(root)
     root['units'] = 'metres'
     root['origin'] = 'floor centre'
+    root['finished_floor_y_m'] = 0.0
     root['front_axis'] = 'Blender -Y / glTF +Z'
     root['scope'] = 'Static open car; four telescoping door leaves, no operating logic'
     matte, steel, light = materials()
-    # Outer envelope 1.6 x 1.5 x 2.4 m. Finished floor top is 0.06 m.
+    # Author dimensions from the base, then move all parts to the finished floor.
+    # The 1.6 x 1.5 x 2.4 m envelope extends 0.06 m below the placement datum.
     box('FLOOR_Base', (0, 0, .026), (1.6, 1.5, .052), matte, 'FLOOR_Stone', .003, GRAPHITE)
     box('FLOOR_Finish', (0, .023, .056), (1.472, 1.334, .008), matte, 'FLOOR_Stone', .001, STONE)
     # Dark backing exposes deliberate narrow reveals between neutral wall panels.
@@ -120,11 +123,14 @@ def build():
     for y in [-.40, .42]:
         rod('HANDRAIL_LeftReturn', (-.66, y, 1.04), (-.733, y, 1.04), .014, steel, 'FRAME_TrimAndHandrail')
     # Eight unlabelled concave-looking disks on the inner right wall.
-    box('CONTROL_Backplate', (.725, -.096, 1.205), (.026, .222, .606), steel, 'FRAME_TrimAndHandrail', .009)
-    box('CONTROL_Inset', (.708, -.096, 1.205), (.012, .188, .558), matte, 'CONTROL_UnlabelledButtons', .003, GRAPHITE)
+    # A central right-wall position keeps both columns visible through the open
+    # doorway from a near-front view, without hiding most of the rear mirror.
+    control_y = .024
+    box('CONTROL_Backplate', (.725, control_y, 1.205), (.026, .222, .606), steel, 'FRAME_TrimAndHandrail', .009)
+    box('CONTROL_Inset', (.708, control_y, 1.205), (.012, .188, .558), matte, 'CONTROL_UnlabelledButtons', .003, GRAPHITE)
     for row in range(4):
         for column in range(2):
-            y = -.148+column*.104
+            y = control_y-.052+column*.104
             z = 1.40-row*.13
             rod(f'BUTTON_Bezel_{row}_{column}', (.696, y, z), (.705, y, z), .028, steel, 'FRAME_TrimAndHandrail')
             rod(f'BUTTON_Unlabelled_{row}_{column}', (.690, y, z), (.699, y, z), .020, matte, 'CONTROL_UnlabelledButtons', .001, BUTTON)
@@ -146,7 +152,11 @@ def build():
     # Sill has two visible track channels, with no long dark strip in the path.
     box('SILL_Threshold', (0, -.697, .047), (1.51, .106, .026), steel, 'FRAME_TrimAndHandrail', .002)
     for y in [-.681, -.718]:
-        box('SILL_Track', (0, y, .0605), (1.43, .006, .003), matte, 'FLOOR_Stone', .0005, GRAPHITE)
+        box('SILL_Track', (0, y, .0585), (1.43, .006, .003), matte, 'FLOOR_Stone', .0005, GRAPHITE)
+    # Keep the root at zero; the finish, sill and recessed track tops meet Y=0.
+    for part in root.children_recursive:
+        part.location.z -= FLOOR_DATUM
+    bpy.context.view_layer.update()
 
 
 def export(path):
@@ -228,7 +238,7 @@ def studio():
     s.camera.data.type = 'ORTHO'
     s.camera.data.ortho_scale = 2.95
     s.render.engine = 'CYCLES'
-    s.cycles.samples = 48
+    s.cycles.samples = 32
     s.cycles.seed = 0
     s.cycles.use_denoising = True
     s.render.resolution_x = s.render.resolution_y = 900
@@ -239,14 +249,25 @@ def studio():
 
 def render_views():
     s = bpy.context.scene
-    for name, loc in [('hero',(-.40,-2.65,1.45)), ('front',(0,-2.65,1.35)),
+    for name, loc in [('hero',(-.85,-2.65,1.35)), ('front',(0,-2.65,1.29)),
                       ('side',(5,0,1.3)), ('3q',(-3.5,-5,3.0)), ('interior',(0,-.62,1.40))]:
         s.camera.data.type = 'ORTHO' if name in ['side','3q'] else 'PERSP'
         s.camera.data.lens = 15 if name == 'interior' else 25
         s.camera.location = loc
-        aim(s.camera, (0,.45,1.35) if name == 'interior' else (0,0,1.20))
+        aim(s.camera, (0,.45,1.29) if name == 'interior' else (0,0,1.14))
         s.render.filepath = str(HERE/'previews'/(name+'.png'))
         bpy.ops.render.render(write_still=True)
+    # Studio-only adjacency evidence: an ordinary mall floor touches the sill.
+    ground = box('STUDIO_AdjacentMallFloor', (0,-1.55,-.04), (2.4,1.6,.08),
+                 bpy.data.materials['Neutral panels and stone'], 'STUDIO', 0, (.45,.47,.47))
+    ground.parent = None
+    s.camera.data.type = 'PERSP'
+    s.camera.data.lens = 45
+    s.camera.location = (-.85,-2.15,.52)
+    aim(s.camera, (0,-.72,0))
+    s.render.filepath = str(HERE/'previews/floor-fit.png')
+    bpy.ops.render.render(write_still=True)
+    bpy.data.objects.remove(ground, do_unlink=True)
 
 
 def main():

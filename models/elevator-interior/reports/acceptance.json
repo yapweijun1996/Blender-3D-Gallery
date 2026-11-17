@@ -1,33 +1,84 @@
 {
   "result": "PASS",
+  "revision": "advisor round 1",
   "id": "elevator-interior",
-  "glb_sha256": "21cfd48bfee7a3db2a247f0055bd5008d9df3327cb90cda3a5f07411298a6095",
+  "glb_sha256": "0695643149b8de0a2030c39301be464296892de193870b2e6c382d921cf4afbd",
+  "advisor_fixes": [
+    "Rebalanced roughness, steel brightness, diffuser emission and asset-local lighting for the real gallery.",
+    "Moved the right-wall control panel 0.12 m rearward and selected a near-front camera direction to expose all eight buttons with the mirror.",
+    "Moved the finished floor to Y=0, extended the base below the datum and recessed track tops flush with the sill."
+  ],
+  "measured": {
+    "glb_bytes": 393568,
+    "triangles": 9836,
+    "vertices": 11038,
+    "stored_meshes": 10,
+    "mesh_primitives": 10,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "dimensions": [
+      1.600000262260437,
+      2.400000151246786,
+      1.5000000596046448
+    ],
+    "bounds": {
+      "min": [
+        -0.8000002503395081,
+        -0.05999999865889549,
+        -0.75
+      ],
+      "max": [
+        0.800000011920929,
+        2.3400001525878906,
+        0.7500000596046448
+      ]
+    }
+  },
+  "floor_fit": {
+    "finished_floor_y_m": 1.862645149230957e-09,
+    "sill_top_y_m": -9.313225746154785e-10,
+    "track_top_y_m": [
+      -6.984919309616089e-10,
+      -6.984919309616089e-10
+    ],
+    "adjacent_mall_floor_y_m": 0,
+    "maximum_step_m": 2.7939677238464355e-09
+  },
   "commands": [
     {
-      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/elevator-interior/generate.py -- --skip-render",
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/elevator-interior/generate.py",
       "result": "PASS",
-      "log": "generate-geometry-final.log"
+      "exit_code": 0,
+      "log": "generate-final.log"
     },
     {
       "command": "node models/elevator-interior/validate.mjs",
       "result": "PASS",
-      "log": "validation-final.log"
+      "exit_code": 0,
+      "log": "validation-final.log",
+      "khronos": {
+        "errors": 0,
+        "warnings": 0
+      }
     },
     {
-      "command": "Blender inspect_sources.py; inspect_sources.py -- --edit-copy; node verify_source_edit.mjs",
+      "command": "Blender inspect_sources.py; inspect_sources.py -- --edit-copy; node validate.mjs reports/source-edit.glb; node verify_source_edit.mjs",
       "result": "PASS",
       "evidence": [
         "sources.json",
-        "source-edit-verification.json"
+        "source-edit-verification.json",
+        "source-edit-validation.log"
       ]
     },
     {
       "command": "python3 models/elevator-interior/verify_rebuild.py",
       "result": "PASS",
+      "exit_code": 0,
       "evidence": "reproducibility.json"
     },
     {
-      "command": "npm run validate:assets",
+      "command": "npm run validate:assets (latest full run is the npm run build phase)",
       "result": "PASS",
       "exit_code": 0,
       "log": "validate-assets.log"
@@ -46,7 +97,13 @@
       "result": "PASS",
       "exit_code": 0,
       "log": "build.log.gz",
-      "warning": "Existing global chunk-size warning remains; no build error."
+      "warning": "Existing global chunk-size warning."
+    },
+    {
+      "command": "npx vite build (final thumbnail, metadata and lighting refresh)",
+      "result": "PASS",
+      "exit_code": 0,
+      "log": "vite-final.log.gz"
     },
     {
       "command": "node models/elevator-interior/browser-check.mjs",
@@ -55,52 +112,28 @@
       "evidence": "browser.json"
     },
     {
-      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/elevator-interior/generate.py -- --export-source",
+      "command": "node models/elevator-interior/verify_presentation.mjs",
       "result": "PASS",
       "exit_code": 0,
-      "log": "render-final.log",
-      "previews": [
-        "hero.png",
-        "front.png",
-        "side.png",
-        "3q.png",
-        "interior.png"
-      ]
-    }
-  ],
-  "initial_failures": [
-    {
-      "issue": "Closed geometry exported double-sided by default",
-      "resolution": "Enabled backface culling on all three materials; Khronos already reported 0 errors and 0 warnings."
-    },
-    {
-      "issue": "Local check assumed an explicit glTF metallicFactor instead of default 1",
-      "resolution": "Honour the glTF default; delivered metallic material verified."
-    },
-    {
-      "issue": "Oversized control inset bevel created degenerate triangles",
-      "resolution": "Reduced inset bevel below half the shortest dimension; final geometry has no degenerate triangles."
-    },
-    {
-      "issue": "First asset-validation/unit attempt ran before JPEG thumbnail existed because Pillow is unavailable",
-      "resolution": "Used native sips conversion and reran required checks successfully."
+      "evidence": "presentation.json"
     }
   ],
   "preservation": {
-    "existing_catalog_entries_unchanged": true,
-    "collection_appended_at_end": true,
-    "existing_models_edited": false,
+    "catalog_entry_unchanged": true,
+    "catalog_metrics_measured_at_build": true,
+    "other_model_edits_by_this_revision": false,
+    "preexisting_storefront_report_changes_preserved": true,
     "demo_beverage_can_test_artifact_restored_with_git_checkout": true,
     "ui_changes": false,
     "workflows_changed": false,
-    "pushed": false
+    "pushed": false,
+    "rebased": false
   },
   "not_verified": [
     "Physical Android/iOS",
     "WebKit",
-    "Full mall integration and aggregate 200 draw-call budget",
-    "Door/button/transport runtime logic (static asset only)",
-    "Live planar mirror reflection (environment-reflective PBR only)"
+    "Full mall assembly and aggregate 200 draw-call budget"
   ],
-  "visual_review": "PASS: all five PNGs and actual Chromium page screenshot opened and inspected."
+  "runtime_scope": "Static open car only; no door/button/transport logic or live planar mirror reflection.",
+  "visual_review": "See visual-review.json; independent advisor/owner approval remains pending."
 }

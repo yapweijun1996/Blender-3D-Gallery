@@ -60,6 +60,7 @@ try {
   await page.waitForTimeout(1000);
   await fs.mkdir(path.dirname(screenshot),{recursive:true});
   await page.screenshot({path:screenshot});
+  const canvasSize=await page.locator('#viewport canvas').evaluate(c=>[c.clientWidth,c.clientHeight]);
   const draws=await page.evaluate(()=>({draw_calls:window.qaDrawCalls,draw_calls_by_frame:window.qaDrawsByFrame}));
   assert.ok(draws.draw_calls_by_frame.some(n=>n===10),'10 model primitives rendered in a frame');
   await page.reload({waitUntil:'domcontentloaded'});
@@ -69,7 +70,7 @@ try {
   assert.equal(await page.locator('#viewer').evaluate(o=>o.open),false);
   assert.deepEqual(errors,[]);
   assert.deepEqual(failures,[]);
-  const report={result:'PASS',viewport:[1440,900],browser:browser.version(),loaded,screenshot,
+  const report={result:'PASS',viewport:[1440,900],canvas_size:canvasSize,browser:browser.version(),loaded,screenshot,
     checks:['production page opens','GLB hash matches','WebGL draws','one canvas','keyboard orbit',
       'reset','refresh','close disposes canvas','no horizontal overflow','no console or network errors'],
     draws,errors,failures,scope:'Headless Chromium software WebGL only; no physical mobile, WebKit or full mall assembly.'};

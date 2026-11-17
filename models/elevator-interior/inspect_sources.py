@@ -32,12 +32,20 @@ left = [bounds(o)['max'][0] for o in panels if o.location.x < 0]
 jambs = [bounds(o) for o in meshes if o.name.startswith('FRAME_InnerJamb')]
 aperture = min(j['min'][0] for j in jambs if j['min'][0]>0)-max(j['max'][0] for j in jambs if j['max'][0]<0)
 floor = bounds(bpy.data.objects['FLOOR_Finish'])['max'][2]
+sill = bounds(bpy.data.objects['SILL_Threshold'])['max'][2]
+tracks = [bounds(o)['max'][2] for o in meshes if o.name.startswith('SILL_Track')]
+surfaces = [floor, sill, *tracks, 0.0]
+assert abs(floor) < 1e-7
+assert abs(sill-floor) < 1e-7
+assert all(abs(top-floor) < 1e-7 for top in tracks)
 head = bounds(bpy.data.objects['FRAME_Header'])['min'][2]
 light = bounds(bpy.data.objects['LIGHT_CeilingPanel'])['min'][2]
 report = {'result':'PASS','blender_version':bpy.app.version_string,'editable_mesh_objects':len(meshes),
           'unlabelled_buttons':len(buttons),'open_telescopic_leaves':len(doors),
           'clear_wall_width_m':min(right)-max(left),'door_aperture_width_m':aperture,
           'door_aperture_height_m':head-floor,'ceiling_light_clearance_m':light-floor,
+          'floor_fit':{'finished_floor_y_m':floor,'sill_top_y_m':sill,'track_top_y_m':tracks,
+                       'adjacent_mall_floor_y_m':0,'maximum_step_m':max(surfaces)-min(surfaces)},
           'parts':{o.name:bounds(o) for o in meshes}}
 if '--edit-copy' in sys.argv:
     mirror = bpy.data.objects['MIRROR_RearPanel']

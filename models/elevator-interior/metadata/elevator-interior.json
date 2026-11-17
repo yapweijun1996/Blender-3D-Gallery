@@ -37,14 +37,15 @@
       "previews/front.png",
       "previews/side.png",
       "previews/3q.png",
-      "previews/interior.png"
+      "previews/interior.png",
+      "previews/floor-fit.png"
     ]
   },
   "display": {
     "previewRotationY": 0,
     "previewCameraDirection": [
-      -0.16,
-      0.09,
+      -0.3,
+      0.03,
       1
     ],
     "units": "metres",
@@ -52,39 +53,48 @@
     "front_axis": "Blender -Y / glTF +Z",
     "origin": "floor centre",
     "studioEnvironment": true,
-    "environmentIntensity": 0.65
+    "environmentIntensity": 0.55,
+    "previewLighting": {
+      "hemisphereIntensity": 0.55,
+      "directionalIntensity": 0.01,
+      "directionalPosition": [
+        1.5,
+        0.4,
+        5.6
+      ]
+    }
   },
   "dimensions": {
     "units": "metres",
     "axis_order": "width, height, depth (glTF X,Y,Z)",
     "size": [
       1.600000262260437,
-      2.4000000953674316,
-      1.5000001192092896
+      2.400000151246786,
+      1.5000000596046448
     ],
     "bounds": {
       "min": [
         -0.8000002503395081,
-        0,
+        -0.05999999865889549,
         -0.75
       ],
       "max": [
         0.800000011920929,
-        2.4000000953674316,
-        0.7500001192092896
+        2.3400001525878906,
+        0.7500000596046448
       ]
     }
   },
   "statistics": {
-    "glb_bytes": 395996,
+    "glb_bytes": 393568,
     "triangles": 9836,
-    "vertices": 11120,
+    "vertices": 11038,
     "stored_meshes": 10,
     "mesh_primitives": 10,
     "materials": 3,
     "images": 0,
     "animations": 0,
-    "sha256": "21cfd48bfee7a3db2a247f0055bd5008d9df3327cb90cda3a5f07411298a6095"
+    "sha256": "0695643149b8de0a2030c39301be464296892de193870b2e6c382d921cf4afbd"
   },
   "interface": {
     "open_door_nodes": [
@@ -99,11 +109,21 @@
     "unlabelled_buttons": 8,
     "clear_wall_width_m": 1.4799998998641968,
     "door_aperture_width_m": 0.8999999761581421,
-    "door_aperture_height_m": 2.14000004529953,
-    "ceiling_light_clearance_m": 2.26500004529953,
-    "runtime": "Static open pose only. No animation, button logic, passenger transport, colliders or live planar mirror reflection. Emissive ceiling surface exports no light object."
+    "door_aperture_height_m": 2.1400001030415297,
+    "ceiling_light_clearance_m": 2.2650001030415297,
+    "runtime": "Static open pose only. No animation, button logic, passenger transport, colliders or live planar mirror reflection. Emissive ceiling surface exports no light object.",
+    "floor_fit": {
+      "finished_floor_y_m": 1.862645149230957e-09,
+      "sill_top_y_m": -9.313225746154785e-10,
+      "track_top_y_m": [
+        -6.984919309616089e-10,
+        -6.984919309616089e-10
+      ],
+      "adjacent_mall_floor_y_m": 0,
+      "maximum_step_m": 2.7939677238464355e-09
+    }
   },
-  "accuracy_notes": "Dimensions and statistics are measured from the delivered GLB; clearances and button count are measured from the saved source. Outside envelope is approximately 1.6m wide, 1.5m deep and 2.4m high. The mirror is a low-roughness metallic PBR surface reflecting the viewer environment. Neutral wall, floor and control colours share one vertex-coloured material. Not a surveyed installation or engineering/safety certification. Full mall assembly, aggregate 200 draw-call budget, physical mobile devices and WebKit are unverified.",
+  "accuracy_notes": "Dimensions and statistics are measured from the delivered GLB; clearances, finished floor, sill and recessed-track tops are measured from the saved source. The finished walking surface is the placement datum at glTF Y=0; the base extends to Y=-0.06 m and the roof to Y=2.34 m (total envelope 2.40 m). Place adjacent mall flooring at Y=0 and reserve the 0.06 m below-floor recess. The mirror is a low-roughness metallic PBR surface reflecting the viewer environment. Neutral wall, floor and control colours share one vertex-coloured material. Not a surveyed installation or engineering/safety certification. Full mall assembly, aggregate 200 draw-call budget, physical mobile devices and WebKit are unverified.",
   "attribution": [
     {
       "credit": "Original procedural geometry, vertex colours and three shared materials. No external assets."
@@ -135,7 +155,9 @@
       "reports/source-edit-verification.json",
       "reports/visual-review.json",
       "reports/browser.json",
-      "reports/acceptance.json"
+      "reports/acceptance.json",
+      "reports/presentation.json",
+      "reports/catalog-check.json"
     ]
   }
 }
