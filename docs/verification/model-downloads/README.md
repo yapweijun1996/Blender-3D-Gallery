@@ -13,7 +13,7 @@ The four exports save 7,034,280 bytes, approximately 6.71 MiB. The Moon PNG prod
 
 ## Reproduce
 
-Run the encoder after exporting a source GLB. It chooses a replacement only when its PNG data is smaller, then checks every non-image buffer before writing. The encoder currently accepts single-frame 8-bit RGB/RGBA PNG maps with no colour metadata. Review a different input profile before extending those checks.
+Run the encoder after exporting a source GLB. It chooses a replacement only when its PNG data is smaller, then checks every non-image buffer before writing. The encoder accepts single-frame 8-bit RGB/RGBA PNG maps. It replaces only IDAT chunks, retaining every other PNG chunk byte-for-byte, including colour metadata, EXIF and physical dimensions. The PNG header must match exactly before an encoded candidate can be used.
 
 ```sh
 python3 -m venv /tmp/glb-png-tools
@@ -28,3 +28,7 @@ A source re-export changes a file identity even when the rendered content is ide
 All four updated GLBs passed the pinned Khronos validator with zero errors and zero warnings. Their JSON structures matched the originals outside the repacked buffer offsets and lengths. Every non-image buffer payload matched byte-for-byte. Independently decoded image pixels, dimensions, modes and colour metadata matched. The production build and six focused solar tests passed.
 
 All eight Chromium model/viewport comparisons passed at 1440 px and 390 px. The eighteen pairs of captures were pixel-identical before and after optimization. These included rest and rotated views for each planet, and rest, raised-arm and skeleton views for the rigged character. See [the browser results](browser-results.json). This checks rendering and the existing controls on desktop software WebGL; physical phone performance is outside this check.
+
+## Further batches
+
+[Batch 02](batch-02/README.md) evaluates ten further large assets using the same pixel-preserving method, extended to retain all non-IDAT PNG chunks verbatim.

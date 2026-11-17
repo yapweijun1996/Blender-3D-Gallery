@@ -9,6 +9,43 @@ import struct
 
 from PIL import Image
 
+
+def png_chunks(data):
+    assert data[:8] == b'\x89PNG\r\n\x1a\n'
+    chunks = []
+    offset = 8
+    while offset < len(data):
+        length = struct.unpack_from('>I', data, offset)[0]
+        end = offset + 12 + length
+        assert end <= len(data)
+        chunks.append((data[offset + 4:offset + 8], data[offset:end]))
+        offset = end
+    assert chunks and chunks[-1][0] == b'IEND'
+    return chunks
+
+
+def preserve_png_chunks(original, encoded):
+    original_chunks = png_chunks(original)
+    encoded_chunks = png_chunks(encoded)
+    assert original_chunks[0] == encoded_chunks[0], 'PNG header must remain identical'
+    replacements = b''.join(chunk for kind, chunk in encoded_chunks if kind == b'IDAT')
+    output = [original[:8]]
+    inserted = False
+    for kind, chunk in original_chunks:
+        if kind == b'IDAT':
+            if not inserted:
+                output.append(replacements)
+                inserted = True
+        else:
+            output.append(chunk)
+    assert inserted
+    result = b''.join(output)
+    # Preserve colour interpretation, EXIF, physical dimensions and unknown metadata verbatim.
+    assert [chunk for kind, chunk in png_chunks(result) if kind != b'IDAT'] == [
+        chunk for kind, chunk in original_chunks if kind != b'IDAT']
+    return result
+
+
 parser = argparse.ArgumentParser(__doc__)
 parser.add_argument('files', nargs='+', type=Path)
 parser.add_argument('--report', required=True, type=Path)
@@ -35,18 +72,21 @@ for file in args.files:
             with Image.open(io.BytesIO(raw)) as image:
                 # This path handles the existing single-frame PNG maps without palette changes.
                 assert image.format == 'PNG' and image.mode in ('RGB', 'RGBA') and image.n_frames == 1
-                assert raw[24] == 8 and not image.info, 'Review PNG colour metadata before recompression'
+                assert raw[24] == 8, 'Only 8-bit PNG maps are supported'
                 output = io.BytesIO()
                 image.save(output, format='PNG', optimize=True, compress_level=9)
-                candidate = output.getvalue()
+                candidate = preserve_png_chunks(raw, output.getvalue())
                 with Image.open(io.BytesIO(candidate)) as decoded:
                     assert image.mode == decoded.mode and image.size == decoded.size
                     assert image.tobytes() == decoded.tobytes()
+                    assert image.info == decoded.info
                 if len(candidate) < len(raw):
                     payload = candidate
                     changed.append({'bufferView': index, 'dimensions': list(image.size),
                                     'original_bytes': len(raw), 'bytes': len(payload),
-                                    'pixel_sha256': hashlib.sha256(image.tobytes()).hexdigest()})
+                                    'pixel_sha256': hashlib.sha256(image.tobytes()).hexdigest(),
+                                    'non_idat_sha256': hashlib.sha256(b''.join(
+                                        chunk for kind, chunk in png_chunks(raw) if kind != b'IDAT')).hexdigest()})
         padding = (-length) % 4
         blocks.append(b'\0' * padding)
         length += padding
