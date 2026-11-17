@@ -1057,6 +1057,47 @@ body.game-page .demo-breadcrumb {
     flex-basis: 100%;
   }
 }
+@media (max-height: 420px) {
+  .viewer-header {
+    gap: 8px;
+    padding: 8px 16px;
+  }
+  .viewer-header .eyebrow {
+    display: none;
+  }
+  .viewer-header h2 {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    max-height: 2.4em;
+    font-size: 16px;
+    line-height: 1.2;
+  }
+  .viewer-header .icon-button {
+    width: 36px;
+    height: 36px;
+  }
+  .viewport {
+    height: min(55dvh, calc(100dvh - 84px));
+    min-height: 64px;
+  }
+  .viewer-footer {
+    justify-content: flex-end;
+    padding: 8px 16px;
+  }
+  .viewer-footer > p {
+    display: none;
+  }
+  .viewer-actions {
+    gap: 6px;
+  }
+  .viewer-actions button {
+    min-height: 32px;
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
