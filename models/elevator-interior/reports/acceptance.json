@@ -1,0 +1,106 @@
+{
+  "result": "PASS",
+  "id": "elevator-interior",
+  "glb_sha256": "21cfd48bfee7a3db2a247f0055bd5008d9df3327cb90cda3a5f07411298a6095",
+  "commands": [
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/elevator-interior/generate.py -- --skip-render",
+      "result": "PASS",
+      "log": "generate-geometry-final.log"
+    },
+    {
+      "command": "node models/elevator-interior/validate.mjs",
+      "result": "PASS",
+      "log": "validation-final.log"
+    },
+    {
+      "command": "Blender inspect_sources.py; inspect_sources.py -- --edit-copy; node verify_source_edit.mjs",
+      "result": "PASS",
+      "evidence": [
+        "sources.json",
+        "source-edit-verification.json"
+      ]
+    },
+    {
+      "command": "python3 models/elevator-interior/verify_rebuild.py",
+      "result": "PASS",
+      "evidence": "reproducibility.json"
+    },
+    {
+      "command": "npm run validate:assets",
+      "result": "PASS",
+      "exit_code": 0,
+      "log": "validate-assets.log"
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "exit_code": 0,
+      "tests": 737,
+      "failures": 0,
+      "skipped": 0,
+      "log": "npm-test.log.gz"
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "exit_code": 0,
+      "log": "build.log.gz",
+      "warning": "Existing global chunk-size warning remains; no build error."
+    },
+    {
+      "command": "node models/elevator-interior/browser-check.mjs",
+      "result": "PASS",
+      "exit_code": 0,
+      "evidence": "browser.json"
+    },
+    {
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/elevator-interior/generate.py -- --export-source",
+      "result": "PASS",
+      "exit_code": 0,
+      "log": "render-final.log",
+      "previews": [
+        "hero.png",
+        "front.png",
+        "side.png",
+        "3q.png",
+        "interior.png"
+      ]
+    }
+  ],
+  "initial_failures": [
+    {
+      "issue": "Closed geometry exported double-sided by default",
+      "resolution": "Enabled backface culling on all three materials; Khronos already reported 0 errors and 0 warnings."
+    },
+    {
+      "issue": "Local check assumed an explicit glTF metallicFactor instead of default 1",
+      "resolution": "Honour the glTF default; delivered metallic material verified."
+    },
+    {
+      "issue": "Oversized control inset bevel created degenerate triangles",
+      "resolution": "Reduced inset bevel below half the shortest dimension; final geometry has no degenerate triangles."
+    },
+    {
+      "issue": "First asset-validation/unit attempt ran before JPEG thumbnail existed because Pillow is unavailable",
+      "resolution": "Used native sips conversion and reran required checks successfully."
+    }
+  ],
+  "preservation": {
+    "existing_catalog_entries_unchanged": true,
+    "collection_appended_at_end": true,
+    "existing_models_edited": false,
+    "demo_beverage_can_test_artifact_restored_with_git_checkout": true,
+    "ui_changes": false,
+    "workflows_changed": false,
+    "pushed": false
+  },
+  "not_verified": [
+    "Physical Android/iOS",
+    "WebKit",
+    "Full mall integration and aggregate 200 draw-call budget",
+    "Door/button/transport runtime logic (static asset only)",
+    "Live planar mirror reflection (environment-reflective PBR only)"
+  ],
+  "visual_review": "PASS: all five PNGs and actual Chromium page screenshot opened and inspected."
+}
