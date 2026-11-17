@@ -10,6 +10,7 @@ HERE = Path(__file__).resolve().parent
 source = HERE/'sources/escalator-detail.blend'
 before = hashlib.sha256(source.read_bytes()).hexdigest()
 bpy.ops.wm.open_mainfile(filepath=str(source))
+bpy.context.preferences.filepaths.save_version = 0
 root = bpy.data.objects['ASSET_EscalatorDetail']
 assert tuple(root.location) == (0,0,0)
 assert bpy.context.scene.unit_settings.scale_length == 1

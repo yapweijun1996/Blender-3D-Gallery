@@ -2,7 +2,7 @@
   "id": "escalator-detail",
   "name": "Escalator Detail",
   "summary": "Lightweight static 3.6m-rise escalator with 22 independent steps and a blank signage post.",
-  "description": "Original compact escalator module with 22 ribbed separate steps, flattened terminal transitions, continuous raised skirts, rounded-return handrails, segmented glass balustrades, two toothed comb plates and a blank signpost. Nominal 1m tread width, 6m footprint length and 3.6m deck rise. Static visual geometry for the GJH Virtual Mall.",
+  "description": "Original compact escalator module with 22 ribbed separate steps, flattened terminal transitions, continuous raised skirts, rounded-return handrails, segmented glass balustrades, two toothed comb plates and a freestanding blank signpost on an independent floor base. Nominal 1m tread width, 6m footprint length and 3.6m deck rise. Static visual geometry for the GJH Virtual Mall.",
   "category": "Mall Fixtures",
   "tags": [
     "mall",
@@ -151,34 +151,53 @@
       ],
       "skirt_sample_count": 396,
       "minimum_skirt_top_cover_m": 0.11877765552017383,
-      "minimum_skirt_bottom_cover_m": 0.03288434016284958
-    }
+      "minimum_skirt_bottom_cover_m": 0.03288435724158134
+    },
+    "signage": {
+      "bounds": {
+        "min": [
+          0.6150000095367432,
+          0,
+          2.549999952316284
+        ],
+        "max": [
+          0.8350000381469727,
+          1.5199999809265137,
+          2.8500001430511475
+        ]
+      },
+      "casing_lateral_gap_m": 0.12999996542930603,
+      "handrail_lateral_gap_m": 0.14399996399879456,
+      "glass_lateral_gap_m": 0.17399999499320984
+    },
+    "tread_centre_x_m": -0.17499998211860657,
+    "horizontal_tread_sample_count": 66
   },
   "dimensions": {
     "units": "metres",
     "axis_order": "width, height, depth (glTF X,Y,Z)",
     "size": [
-      1.3200000524520874,
+      1.6700000762939453,
       4.640999794006348,
       6
     ],
     "bounds": {
       "min": [
-        -0.6600000262260437,
+        -0.8350000381469727,
         0,
         -3
       ],
       "max": [
-        0.6600000262260437,
+        0.8350000381469727,
         4.640999794006348,
         3
       ]
     }
   },
   "statistics": {
-    "glb_bytes": 843808,
+    "glb_bytes": 843284,
     "triangles": 18500,
-    "vertices": 32715,
+    "vertices": 32673,
     "stored_meshes": 28,
     "mesh_primitives": 29,
     "materials": 3,
@@ -186,9 +205,9 @@
     "images": 0,
     "animations": 0,
     "independent_step_nodes": 22,
-    "sha256": "f17936fdd8884cecae7f895f6118d59867b01a78f100fb98b669f6d91224192d"
+    "sha256": "7b76a762c229302cb15500032f277ca5919d634901e67e0e08c373777f9d556f"
   },
-  "accuracy_notes": "Dimensions and statistics are measured from the delivered GLB. The 1m clear tread sits inside a 1.32m casing. The 6m footprint includes short landings and two flush treads per terminal; risers open and close gradually. The compact central incline measures approximately 43.7 degrees. Continuous raised skirts enclose step side envelopes; actual surface and casing checks are recorded in reports/assets.json. Blue-green glass uses closed alpha-blended geometry with backface culling and no transmission pass. Source parts may intersect at assembled joints. This static visual study has no hidden circulation mechanism, collider, passenger logic or engineering certification. Full mall integration, aggregate 200 draw-call budget, physical mobile devices and WebKit are not verified.",
+  "accuracy_notes": "Dimensions and statistics are measured from the delivered GLB. The 1m clear tread sits inside a 1.32m casing. Overall width is 1.67m including an independent side sign base; the complete footprint is centred at the floor origin, so the tread centre is offset on X. The 6m length and 3.6m rise remain unchanged pending the owner dimension decision requested by advisor round 2. The central incline remains approximately 43.7 degrees. Proposed alternatives are measured in reports/dimension-options.json. All 22 treads remain horizontal with two flush treads at either terminal. Continuous skirts enclose the step sides. The complete sign has at least 130mm lateral separation from the casing, 144mm from the handrails and 174mm from the glass. Blue-green glass uses closed alpha-blended geometry with backface culling and no transmission pass. Source parts may intersect at assembled joints. Static visual geometry only; full mall integration, aggregate 200 draw-call budget, physical devices and transport engineering are unverified.",
   "attribution": [
     {
       "credit": "Original procedural geometry and three shared materials; no external assets."
@@ -219,7 +238,9 @@
       "reports/reproducibility.json",
       "reports/visual-review.json",
       "reports/browser.json",
-      "reports/acceptance.json"
-    ]
+      "reports/acceptance.json",
+      "reports/dimension-options.json"
+    ],
+    "advisor_round_2": "Signage clearance corrected; incline dimension decision pending. See reports/dimension-options.json."
   }
 }

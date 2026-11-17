@@ -14,18 +14,27 @@ HERE = Path(__file__).resolve().parent
 SLUG = 'escalator-detail'
 ROOT = 'ASSET_EscalatorDetail'
 COUNT = 22
-RUN = 5.1
+LENGTH = 6.0
+RISE = 3.6
+RUN = LENGTH - .90
+HALF_RUN = RUN / 2
+HALF_LENGTH = LENGTH / 2
+NEWEL_Y = HALF_RUN + .10
 PITCH = RUN / COUNT
 DECK = .10
+UPPER_DECK = DECK + RISE
 # Two flush treads at either terminal, three increasing/decreasing risers,
-# and a constant-rise central flight. The complete deck rise remains 3.6 m.
-RISERS = [0, .05, .12, .19] + [2.88 / 13] * 13 + [.19, .12, .05, 0]
+# and a constant-rise central flight. Dimensions change the shared track rather
+# than scaling the finished treads, ribs, handrails or panels.
+transition_scale = RISE / 3.6
+terminal_risers = [0, .05*transition_scale, .12*transition_scale, .19*transition_scale]
+RISERS = terminal_risers + [(RISE-2*sum(terminal_risers))/13]*13 + list(reversed(terminal_risers))
 LEVELS = [DECK]
 for rise in RISERS:
     LEVELS.append(LEVELS[-1] + rise)
-STATIONS = [(-2.55, DECK)]
-STATIONS += [(-2.55 + (i + .5) * PITCH, z) for i, z in enumerate(LEVELS)]
-STATIONS.append((2.55, DECK + 3.6))
+STATIONS = [(-HALF_RUN, DECK)]
+STATIONS += [(-HALF_RUN + (i + .5) * PITCH, z) for i, z in enumerate(LEVELS)]
+STATIONS.append((HALF_RUN, UPPER_DECK))
 # Remove collinear stations to keep the extruded casing faces well conditioned.
 TRACK = []
 for station in STATIONS:
@@ -135,14 +144,14 @@ def merge(objects, name, parent, pivot=(0,0,0)):
 def belt(side, mat):
     # Closed belt centreline: two horizontal terminals, inclined flight and
     # rounded newel returns. Eight-sided belt section avoids round pipe styling.
-    path = [(-2.65,1.02)] + [(y,z+.92) for y,z in TRACK] + [(2.65,4.62)]
+    path = [(-NEWEL_Y,DECK+.92)] + [(y,z+.92) for y,z in TRACK] + [(NEWEL_Y,UPPER_DECK+.92)]
     for i in range(1,17):
         a = math.pi/2-math.pi*i/16
-        path.append((2.65+.28*math.cos(a),4.34+.28*math.sin(a)))
-    path += [(y,z+.36) for y,z in reversed(TRACK)] + [(-2.65,.46)]
+        path.append((NEWEL_Y+.28*math.cos(a),UPPER_DECK+.64+.28*math.sin(a)))
+    path += [(y,z+.36) for y,z in reversed(TRACK)] + [(-NEWEL_Y,DECK+.36)]
     for i in range(1,16):
         a = -math.pi/2-math.pi*i/16
-        path.append((-2.65+.28*math.cos(a),.74+.28*math.sin(a)))
+        path.append((-NEWEL_Y+.28*math.cos(a),DECK+.64+.28*math.sin(a)))
     cross = [(-.027,-.021),(.027,-.021),(.036,-.012),(.036,.012),
              (.027,.021),(-.027,.021),(-.036,.012),(-.036,-.012)]
     verts = []
@@ -173,7 +182,7 @@ def build():
     # Sloped supporting cassette, shallow terminal plinths and skirt trims.
     # A continuous raised skirt covers the complete tread/riser side envelopes.
     # Its glass channel follows the same flattened terminal transitions.
-    casing_track = [(-3,DECK)] + TRACK + [(3,DECK+3.6)]
+    casing_track = [(-HALF_LENGTH,DECK)] + TRACK + [(HALF_LENGTH,UPPER_DECK)]
     profile = [(y,max(0,z-.40)) for y,z in casing_track]
     profile += [(y,z+.24) for y,z in reversed(casing_track)]
     for side in [-1,1]:
@@ -186,39 +195,39 @@ def build():
                 .018,.025,rubber,'HANDRAIL_Belts')
             bar('GLASS_BaseChannel',(side*.61,a,za+.25),(side*.61,b,zb+.25),
                 .052,.035,steel,'FRAME_Chassis')
-        for y,z in [(-2.76,.12),(2.76,3.72)]:
+        for y,z in [(-NEWEL_Y-.11,DECK+.02),(NEWEL_Y+.11,UPPER_DECK+.02)]:
             box('NEWEL_Foot',(side*.61,y,z+.17),(.075,.18,.34),steel,'FRAME_Chassis',.012)
         belt(side,rubber)
         # Six discrete glass panels per side with narrow, visible expansion joints.
         for j in range(6):
-            a = -2.55+j*RUN/6+.009
-            b = -2.55+(j+1)*RUN/6-.009
+            a = -HALF_RUN+j*RUN/6+.009
+            b = -HALF_RUN+(j+1)*RUN/6-.009
             samples = [(a,track_height(a))] + [(y,z) for y,z in TRACK if a<y<b] + [(b,track_height(b))]
             yz = [(y,z+.25) for y,z in samples] + [(y,z+.85) for y,z in reversed(samples)]
             profile_x('GLASS_FlightPanel',yz,
                       side*.61-.006,side*.61+.006,glass,'BALUSTRADE_Glass')
-        for end,base in [(-1,DECK),(1,DECK+3.6)]:
-            c = end*2.65
-            yz = [(end*2.55,base+.25)]
+        for end,base in [(-1,DECK),(1,UPPER_DECK)]:
+            c = end*NEWEL_Y
+            yz = [(end*HALF_RUN,base+.25)]
             for j in range(17):
                 a = -math.pi/2+math.pi*j/16
                 yz.append((c+end*.215*math.cos(a),base+.525+.325*math.sin(a)))
-            yz += [(end*2.55,base+.85)]
+            yz += [(end*HALF_RUN,base+.85)]
             profile_x('GLASS_RoundedTerminal',yz,side*.61-.006,side*.61+.006,glass,'BALUSTRADE_Glass')
     # An underside pan follows the incline; it does not add a pit or floor slab.
     for (a,za),(b,zb) in zip(TRACK,TRACK[1:]):
         bar('PAN_Underside',(0,a,max(.028,za-.372)),(0,b,max(.028,zb-.372)),
             1.0,.05,steel,'FRAME_Chassis')
-    box('BASE_Lower',(0,-2.775,.035),(1.32,.45,.07),steel,'FRAME_Chassis')
-    box('BASE_Upper',(0,2.775,3.45),(1.32,.45,.34),steel,'FRAME_Chassis')
-    for label,y,z in [('Lower',-2.775,DECK),('Upper',2.775,DECK+3.6)]:
+    box('BASE_Lower',(0,-HALF_RUN-.225,.035),(1.32,.45,.07),steel,'FRAME_Chassis')
+    box('BASE_Upper',(0,HALF_RUN+.225,UPPER_DECK-.25),(1.32,.45,.34),steel,'FRAME_Chassis')
+    for label,y,z in [('Lower',-HALF_RUN-.225,DECK),('Upper',HALF_RUN+.225,UPPER_DECK)]:
         box('LANDING_'+label,(0,y,z-.018),(1.0,.45,.036),steel,'LANDING_Plates',.003)
         for j in range(23):
             x = -.462+j*.042
             box('LANDING_Rib',(x,y,z+.0015),(.014,.38,.003),steel,'LANDING_Plates')
         # A contrasting access seam and two unmarked fastener recesses.
         box('LANDING_Seam',(0,y+(-.13 if label=='Lower' else .13),z+.001),(.97,.007,.002),rubber,'HANDRAIL_Belts')
-        cy = -2.56 if label=='Lower' else 2.56
+        cy = -HALF_RUN-.01 if label=='Lower' else HALF_RUN+.01
         box('COMB_'+label+'_Spine',(0,cy,z+.006),(1.0,.045,.012),steel,'COMB_Plates')
         for j in range(25):
             x = -.48+j*.04
@@ -227,7 +236,7 @@ def build():
 
     for i in range(COUNT):
         name = f'STEP_{i+1:03d}'
-        y = -2.55+(i+.5)*PITCH
+        y = -HALF_RUN+(i+.5)*PITCH
         z = LEVELS[i]
         rise = z-LEVELS[max(0,i-1)]
         bottom = z-.035-rise
@@ -245,11 +254,29 @@ def build():
         step['step_index'] = i+1
         step['runtime_role'] = 'Independent rigid step; static rest pose'
 
-    # Blank double-face signage fits within the handrail envelope.
-    box('SIGN_Base',(.595,-2.79,.035),(.12,.22,.07),steel,'SIGNAGE_BlankPost',.008)
-    box('SIGN_Stem',(.595,-2.79,.69),(.032,.032,1.31),steel,'SIGNAGE_BlankPost',.003)
-    box('SIGN_BlankPanel',(.595,-2.79,1.38),(.13,.045,.28),steel,'SIGNAGE_BlankPost',.012)
-    box('SIGN_BlankInset',(.595,-2.815,1.38),(.098,.007,.242),rubber,'SIGNAGE_BlankPost',.0015)
+    # Freestanding blank sign outside the complete casing and moving-belt envelope.
+    # The weighted floor base carries the stem without using the glass as a support.
+    sign_x, sign_y = .90, -NEWEL_Y-.05
+    box('SIGN_Base',(sign_x,sign_y,.04),(.22,.30,.08),steel,'SIGNAGE_BlankPost',.012)
+    box('SIGN_Stem',(sign_x,sign_y,.69),(.032,.032,1.24),steel,'SIGNAGE_BlankPost',.003)
+    box('SIGN_BlankPanel',(sign_x,sign_y,1.38),(.20,.045,.28),steel,'SIGNAGE_BlankPost',.012)
+    box('SIGN_BlankInset',(sign_x,sign_y-.025,1.38),(.162,.007,.242),rubber,'SIGNAGE_BlankPost',.0015)
+    centre_floor_origin(root)
+
+
+def centre_floor_origin(root):
+    # Include the independent side sign in the footprint, preserving the root at 0.
+    bpy.context.view_layer.update()
+    deps = bpy.context.evaluated_depsgraph_get()
+    points = [o.matrix_world @ Vector(corner)
+              for o in root.children_recursive if o.type == 'MESH'
+              for corner in o.evaluated_get(deps).bound_box]
+    offset = Vector(((min(v.x for v in points)+max(v.x for v in points))/2,
+                     (min(v.y for v in points)+max(v.y for v in points))/2,
+                     min(v.z for v in points)))
+    for o in root.children:
+        o.location -= offset
+    bpy.context.view_layer.update()
 
 
 def export(path):
@@ -322,7 +349,7 @@ def studio():
     s.camera = bpy.context.object
     s.camera.name = 'STUDIO_Camera'
     s.camera.data.type = 'ORTHO'
-    s.camera.data.ortho_scale = 7.4
+    s.camera.data.ortho_scale = max(7.4,LENGTH*1.13)
     s.render.engine = 'CYCLES'
     s.cycles.samples = 32
     s.cycles.seed = 0

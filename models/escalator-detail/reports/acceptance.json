@@ -1,29 +1,33 @@
 {
-  "result": "PASS",
-  "release_status": "Draft; advisor round 1 corrections locally verified; owner review pending",
+  "result": "NEEDS OWNER DIMENSION DECISION",
+  "release_status": "Draft; signage corrected and local checks PASS; steep incline remains unresolved",
   "branch": "mall-models",
-  "glb_sha256": "f17936fdd8884cecae7f895f6118d59867b01a78f100fb98b669f6d91224192d",
+  "glb_sha256": "7b76a762c229302cb15500032f277ca5919d634901e67e0e08c373777f9d556f",
   "checks": [
     {
-      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python generate.py",
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/escalator-detail/generate.py",
       "result": "PASS",
       "toolchain": "Blender 5.2.3 LTS",
-      "evidence": "generate-final.log"
+      "evidence": "generate-round2-final.log"
     },
     {
       "command": "node models/escalator-detail/validate.mjs",
       "result": "PASS",
       "evidence": [
         "assets.json",
-        "khronos.json"
+        "khronos.json",
+        "validation-round2-final.log"
       ],
       "khronos_errors": 0,
       "khronos_warnings": 0
     },
     {
-      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python inspect_sources.py",
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/escalator-detail/inspect_sources.py",
       "result": "PASS",
-      "evidence": "sources.json"
+      "evidence": [
+        "sources.json",
+        "source-check.log"
+      ]
     },
     {
       "command": "node models/escalator-detail/validate.mjs models/escalator-detail/reports/source-edit.glb",
@@ -36,9 +40,12 @@
       "evidence": "source-edit.json"
     },
     {
-      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python verify_rebuild.py",
+      "command": "/opt/homebrew/bin/blender --background --python-exit-code 1 --python models/escalator-detail/verify_rebuild.py",
       "result": "PASS",
-      "evidence": "reproducibility.json"
+      "evidence": [
+        "reproducibility.json",
+        "rebuild.log"
+      ]
     },
     {
       "command": "npm run validate:assets",
@@ -59,13 +66,16 @@
       "exit_code": 0,
       "result": "PASS",
       "evidence": "build.log",
-      "note": "Vite emitted its application chunk-size advisory; build completed."
+      "note": "Existing Vite application chunk-size advisory; build completed."
     },
     {
       "command": "node models/escalator-detail/browser-check.mjs",
       "exit_code": 0,
       "result": "PASS",
-      "evidence": "browser.json"
+      "evidence": [
+        "browser.json",
+        "browser-round2.log"
+      ]
     },
     {
       "command": "git diff --check",
@@ -73,15 +83,58 @@
       "result": "PASS"
     }
   ],
-  "visual_review": "All four regenerated Blender previews and the replaced 1440x900 Chromium screenshot inspected.",
+  "visual_review": "Personally viewed four current Blender previews and the replaced 1440x900 Chromium page screenshot. Also viewed the four long-rise proposal previews.",
   "measured_model_draw_calls_per_recorded_frame": [
     29
   ],
-  "initial_failures_resolved": [
-    "First round-1 candidate failed the new casing raycast because lower tread corners extended below the shell. Deepened the casing; all 396 side samples now pass. See validation-round1-initial.log."
-  ],
-  "catalog": "Existing escalator-detail collection and category retained. Only its summary step count changes from 18 to 22; all other catalog entries are unchanged.",
-  "restored_test_artifact": "Post-test models/demo-beverage-can/reports/structure-motion.json matches HEAD; restored if modified.",
+  "advisor_round_2": {
+    "addressed": [
+      "Freestanding sign with independent floor base and measured separation from casing, glass and belts",
+      "Full footprint recentered on the floor origin"
+    ],
+    "unresolved": [
+      "Central incline remains approximately 43.7 degrees until the owner selects a larger footprint or lower rise as the advisor requires."
+    ],
+    "measured": {
+      "glb_bytes": 843284,
+      "triangles": 18500,
+      "vertices": 32673,
+      "dimensions": [
+        1.6700000762939453,
+        4.640999794006348,
+        6
+      ],
+      "materials": 3,
+      "signage": {
+        "bounds": {
+          "min": [
+            0.6150000095367432,
+            0,
+            2.549999952316284
+          ],
+          "max": [
+            0.8350000381469727,
+            1.5199999809265137,
+            2.8500001430511475
+          ]
+        },
+        "casing_lateral_gap_m": 0.12999996542930603,
+        "handrail_lateral_gap_m": 0.14399996399879456,
+        "glass_lateral_gap_m": 0.17399999499320984
+      },
+      "step_pitch_m": 0.23181819915771484,
+      "maximum_step_rise_m": 0.22153854370117188,
+      "maximum_incline_degrees": 43.7010671520842,
+      "horizontal_tread_sample_count": 66,
+      "maximum_tread_level_spread_m": 1.7763568394002505e-15
+    },
+    "proposal_evidence": "dimension-options.json",
+    "recommended_proposal": "Retain 3.6m rise; increase length to 9.4m; measured central incline 29.83 degrees.",
+    "screenshot_sha256": "fad76bc28cbfc781107ac99e9c16a30e63fc4003070e5aeaa1fc51f577b80033"
+  },
+  "harness_correction": "The initial horizontal-tread probe compared the rib to the 0.5mm higher nosing. The corrected gate compares three actual rib samples per tread for equal height, while bounding their offset from the nosing. All 66 samples pass; see validation-round2-tread-initial.log.",
+  "catalog": "Unchanged. Catalog contains only the 22-step count, 6m length and 3.6m rise; these numbers did not change. Updated byte/vertex/envelope measurements are read from model metadata.",
+  "restored_test_artifact": "models/demo-beverage-can/reports/structure-motion.json restored after npm test and matches HEAD.",
   "not_verified": [
     "Full 17-shop 70x60m mall assembly and aggregate 200 draw-call budget",
     "Physical Android/iOS",
@@ -91,7 +144,8 @@
     "Deployment or publication"
   ],
   "push_performed": false,
-  "advisor_round_1": {
+  "rebase_performed": false,
+  "previous_advisor_round_1": {
     "issues_addressed": [
       "Flat terminal transitions",
       "Continuous skirt hides step sides and gaps"

@@ -35,7 +35,7 @@ const dimensions = bounds.getSize(new Vector3()).toArray();
 assert.ok(Math.abs(bounds.min.y)<1e-7,'floor contact');
 assert.ok(Math.abs(bounds.min.x+bounds.max.x)<1e-6,'centred width');
 assert.ok(Math.abs(bounds.min.z+bounds.max.z)<1e-6,'centred length');
-assert.ok(Math.abs(dimensions[0]-1.32)<1e-6,'outside casing width');
+assert.ok(Math.abs(dimensions[0]-1.67)<1e-6,'overall width including independent sign base');
 assert.ok(Math.abs(dimensions[2]-6)<1e-6,'overall run');
 const group = root.getObjectByName('STEPS_FutureMotion');
 assert.ok(group);
@@ -115,17 +115,44 @@ const combOffsets=combLevels.map((v,i)=>Math.max(...v)-surfaceLevels[i===0 ? 0 :
 assert.ok(combOffsets.every(v=>v>=0 && v<.012),'comb to tread height difference below 12mm');
 // Raycast actual casing on both sides across every tread, including its edges.
 const frame=root.getObjectByName('FRAME_Chassis');
+const casingBounds=new Box3().setFromObject(frame,true);
+assert.ok(Math.abs(casingBounds.getSize(new Vector3()).x-1.32)<1e-6,'outside casing width');
+const centreX=steps[0].position.x;
+const signBounds=new Box3().setFromObject(root.getObjectByName('SIGNAGE_BlankPost'),true);
+const signClearance={};
+for(const [label,name] of [['casing','FRAME_Chassis'],['handrail','HANDRAIL_Belts'],['glass','BALUSTRADE_Glass']]) {
+  const other=new Box3().setFromObject(root.getObjectByName(name),true);
+  signClearance[label+'_lateral_gap_m']=signBounds.min.x-other.max.x;
+  assert.ok(signClearance[label+'_lateral_gap_m']>.12,'whole sign separated from '+label);
+}
+assert.ok(Math.abs(signBounds.min.y)<1e-7,'sign base rests on the floor');
 const ray=new Raycaster();
+let treadLevelSamples=0,maximumTreadLevelSpread=0;
+for(let i=0;i<steps.length;i++) {
+  const step=steps[i];
+  const pitch=stepMeasures[i].bounds.max[2]-stepMeasures[i].bounds.min[2];
+  const heights=[];
+  for(const offset of [-.35,0,.35]) {
+    ray.set(new Vector3(step.position.x,10,step.position.z+offset*pitch),new Vector3(0,-1,0));
+    const hit=ray.intersectObject(step,false)[0];
+    assert.ok(hit && Math.abs(hit.point.y-surfaceLevels[i])<.0006,'sample reaches a tread rib below the nosing');
+    heights.push(hit.point.y);
+    treadLevelSamples++;
+  }
+  const spread=Math.max(...heights)-Math.min(...heights);
+  assert.ok(spread<1e-6,'horizontal tread surface '+step.name);
+  maximumTreadLevelSpread=Math.max(maximumTreadLevelSpread,spread);
+}
 let minimumTopCover=Infinity,minimumBottomCover=Infinity,skirtSamples=0;
 for(const step of stepMeasures) {
   for(const side of [-1,1]) for(let j=0;j<=8;j++) {
     const z=step.bounds.min[2]+(step.bounds.max[2]-step.bounds.min[2])*j/8;
-    ray.set(new Vector3(side*.505,10,z),new Vector3(0,-1,0));
+    ray.set(new Vector3(centreX+side*.505,10,z),new Vector3(0,-1,0));
     const top=ray.intersectObject(frame,false)[0];
     assert.ok(top,'casing above tread side');
     const topCover=top.point.y-step.bounds.max[1];
     assert.ok(topCover>.015,'skirt hides nosings and gaps');
-    ray.set(new Vector3(side*.505,-1,z),new Vector3(0,1,0));
+    ray.set(new Vector3(centreX+side*.505,-1,z),new Vector3(0,1,0));
     const bottom=ray.intersectObject(frame,false)[0];
     assert.ok(bottom,'casing below tread side');
     const bottomCover=step.bounds.min[1]-bottom.point.y;
@@ -148,6 +175,8 @@ const report={result:'PASS',id:'escalator-detail',glb_bytes:bytes.length,triangl
   transition:{flat_treads_per_terminal:2,comb_above_tread_m:combOffsets,
     skirt_sample_count:skirtSamples,minimum_skirt_top_cover_m:minimumTopCover,
     minimum_skirt_bottom_cover_m:minimumBottomCover},
+  signage:{bounds:{min:signBounds.min.toArray(),max:signBounds.max.toArray()},...signClearance},
+  tread_centre_x_m:centreX,horizontal_tread_sample_count:treadLevelSamples,maximum_tread_level_spread_m:maximumTreadLevelSpread,
   minimum_triangle_area_m2:minimumArea,steps:stepMeasures,
   sha256:createHash('sha256').update(bytes).digest('hex'),
   validation:{errors:validation.issues.numErrors,warnings:validation.issues.numWarnings,version:validator.version()},

@@ -1,48 +1,48 @@
 {
-  "result": "PASS",
-  "reviewer": "Codex visual inspection; advisor round 1 corrections",
-  "glb_sha256": "f17936fdd8884cecae7f895f6118d59867b01a78f100fb98b669f6d91224192d",
+  "result": "NEEDS OWNER DIMENSION DECISION",
+  "reviewer": "Codex personal visual inspection; advisor round 2",
+  "glb_sha256": "7b76a762c229302cb15500032f277ca5919d634901e67e0e08c373777f9d556f",
   "views": [
     {
       "path": "previews/hero.png",
-      "sha256": "a77f1931586ef3d4fd643dcd2a50e1d4a3702fbd62c4b4e3db5b9beb82b09c40"
+      "sha256": "499a634f373e82c73476be2aca7a764a761e4548c7ba6d06fd7e91a2f7d93e20"
     },
     {
       "path": "previews/front.png",
-      "sha256": "17b0b2b0cde3a36b6a7bd8e060281dea407d693816ee8bde2d602b61f7ba674c"
+      "sha256": "52855db13ea7c02db279913fa60985052bb4de302a66d296b8b8fa349da04e62"
     },
     {
       "path": "previews/side.png",
-      "sha256": "92345ab171564b95921cc497040779f891a9ffe343c1e3a156063109d2df4b88"
+      "sha256": "53ecba95c5c21f1e045aac086edce37da38af90c1fe4a4d9b42f202dd13239fe"
     },
     {
       "path": "previews/3q.png",
-      "sha256": "eebe04ad8d9acfba5cb92292543d5a9e2a1defd3cbb7bdcc6d7097c1595bacb4"
+      "sha256": "ed7f1e4f003e6d8f069f0b8cbbb11d4fa7e36555f62addec0e92486510bf8276"
     }
   ],
   "findings": [
-    "Inspected all four regenerated Blender previews: full object is framed with the original steel, graphite and blue-green palette.",
-    "Two deck-flush independent treads at each terminal lead into gradually opening/closing risers; the former 20cm entry jump is removed.",
-    "Reverse three-quarter and side views show a continuous metal skirt beneath the glass channel without the former repeated exposed tread sides and gaps.",
-    "Handrails and glass follow the flattened terminal profile; ribbed treads, comb plates and blank signage remain visible.",
-    "The fixed 6m footprint and 3.6m rise require a compact central incline of approximately 43.7 degrees; engineering suitability is not verified."
+    "Personally viewed the four regenerated Blender previews. Steel, graphite and blue-green glass remain consistent; the whole model is framed.",
+    "The sign has a visibly separate floor base. Front and front-three-quarter views show it outside the handrail and glass; reverse and side views retain credible attachment to its own base. Actual GLB bounds verify continuous lateral separation independently of projection.",
+    "The original horizontal treads, terminal transitions, combs and continuous side skirts remain intact.",
+    "The original 6m footprint and 3.6m rise retain the unsatisfactory 43.7-degree central incline. This second advisor issue remains unresolved pending the explicit owner dimension choice.",
+    "A separate 9.4m/3.6m candidate has a measured 29.83-degree incline. Personally viewed its four original procedural previews: wider horizontal tread pitch and complete terminal transitions produce a more credible side profile. This proposal has not replaced the canonical asset."
   ],
   "corrected_geometry_issues": [
-    "Replaced the uniform 18-step rise with 22 separate rigid steps, deck-flush ends and graduated risers.",
-    "Raised and reshaped skirts and glass base channels; deepened the casing after the first candidate exposed lower tread corners."
+    "Sign stem no longer intersects the balustrade glass or moving handrail envelope.",
+    "Floor-centre origin is recomputed for the full footprint including the sign."
   ],
   "limitations": [
-    "Agent visual review only; owner art approval pending.",
-    "Full mall assembly, physical devices, safety and transport engineering are not verified."
+    "Owner dimension decision and art review pending.",
+    "No full mall assembly, physical device or transport engineering verification."
   ],
   "chromium_screenshot_review": {
     "result": "PASS",
     "path": "/Users/admin/Documents/MallQueue/reports/escalator-detail-page.png",
-    "sha256": "896a94c782f4091c00745e76865fb9858ec4e452732f3c917b903e36c48775f6",
+    "sha256": "fad76bc28cbfc781107ac99e9c16a30e63fc4003070e5aeaa1fc51f577b80033",
     "viewport": [
       1440,
       900
     ],
-    "findings": "Viewed the replaced screenshot. Complete revised escalator and terminal transitions are visible, the side silhouette is enclosed, and the gallery displays 18,500 triangles, 32,715 vertices, 3 materials and no animations."
+    "findings": "Personally viewed the replaced production-page screenshot: complete model, independent side sign and visible floor base; displayed 18,500 triangles, 32,673 vertices, 3 materials, no animations and 823.5 KiB. The incline remains visibly steep; see the dimension proposal."
   }
 }

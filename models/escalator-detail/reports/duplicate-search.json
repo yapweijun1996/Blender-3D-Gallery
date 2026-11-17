@@ -416,5 +416,69 @@
       }
     ],
     "decision": "Retain and improve the existing escalator-detail id as explicitly requested. Other escalator modules differ in rise, budget or subsystem scope; lift/elevator assets have different functions. No new model or collection is added."
+  },
+  "advisor_round_2_recheck": {
+    "catalog_asset_count": 628,
+    "other_matching_ids": [
+      "mall-escalator-landing",
+      "mall-escalator-handrail",
+      "mall-lift-call-panel",
+      "mall-lift-floor-indicator",
+      "hdb-lift-door",
+      "hdb-lift-interior",
+      "kopitiam-kettle",
+      "hdb-lift-lobby",
+      "escalator",
+      "passenger-lift",
+      "elevator-interior"
+    ],
+    "metadata_matches": [
+      {
+        "path": "models/elevator-interior/metadata/elevator-interior.json",
+        "id": "elevator-interior"
+      },
+      {
+        "path": "models/escalator/metadata/escalator.json",
+        "id": "escalator"
+      },
+      {
+        "path": "models/hdb-lift-door/metadata/hdb-lift-door.json",
+        "id": "hdb-lift-door"
+      },
+      {
+        "path": "models/hdb-lift-interior/metadata/hdb-lift-interior.json",
+        "id": "hdb-lift-interior"
+      },
+      {
+        "path": "models/hdb-lift-lobby/metadata/hdb-lift-lobby.json",
+        "id": "hdb-lift-lobby"
+      },
+      {
+        "path": "models/kopitiam-kettle/metadata/kopitiam-kettle.json",
+        "id": "kopitiam-kettle"
+      },
+      {
+        "path": "models/mall-escalator-handrail/metadata/mall-escalator-handrail.json",
+        "id": "mall-escalator-handrail"
+      },
+      {
+        "path": "models/mall-escalator-landing/metadata/mall-escalator-landing.json",
+        "id": "mall-escalator-landing"
+      },
+      {
+        "path": "models/mall-lift-call-panel/metadata/mall-lift-call-panel.json",
+        "id": "mall-lift-call-panel"
+      },
+      {
+        "path": "models/mall-lift-floor-indicator/metadata/mall-lift-floor-indicator.json",
+        "id": "mall-lift-floor-indicator"
+      },
+      {
+        "path": "models/passenger-lift/metadata/passenger-lift.json",
+        "id": "passenger-lift"
+      }
+    ],
+    "exact_match_found": false,
+    "decision": "Revise existing escalator-detail. Other full escalators and partial landing/handrail systems do not match this lightweight static module with 22 separate steps and blank signage."
   }
 }
