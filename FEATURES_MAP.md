@@ -1,0 +1,80 @@
+# Features map
+
+Snapshot of the repository at `ec02d088` on `main`; counts describe the checked-in catalog, not a deployment or an independent audit of every asset. Status describes code present here: **Implemented** = working path exists; **Partial** = a bounded implementation with material gaps; **Planned** = documented proposal; **Deprecated** = explicitly superseded. Test paths are coverage pointers, not claims that tests passed in this review.
+
+## How to navigate
+
+- [Overview and data](#overview-and-data) — purpose, catalog shape and storage.
+- [Feature map](#feature-map) — behavior, status, entry points, dependencies and evidence.
+- [Workflows](#workflows) — how the modules connect.
+- [Limitations and plans](#limitations-and-plans) — explicit boundaries and incomplete work.
+- [Commands](#commands) — package scripts and targeted checks.
+
+## Overview and data
+
+A public, tool-neutral gallery for Blender-created 3D works, with a local two-player billiards game and browser demonstrations. It uses Vite, native JavaScript/CSS and Three.js, with a static build-time catalog; it is not an online editor or marketplace. See `README.md`, `package.json`, `index.html`, `src/main.js` and `vite.config.js`. Some architecture documents describe a proposed React/TypeScript stack; the current implementation is JavaScript.
+
+`models/catalog.json` has a top-level `collections` array; collections have `id`, `name`, optional description/slug and `assets`. Assets include IDs, names, categories, GLB `file`, `thumbnail`, optional `root`, `metadata`, tags, license and download flag. `scripts/catalog.mjs` validates the shape and paths, optionally reads metadata, and derives bytes, triangle/vertex/material/animation counts from GLBs. Paths are under `models/`; a typical asset directory may contain Blender source, generator, exports, preview, metadata and README, but layout and availability vary. The catalog paths, not a fixed directory convention, are authoritative.
+
+A read-only Node count of the current JSON gives **483 collections and 636 asset entries**. Browse categories include nature, shopping mall, housing, transport, food, solar and billiards; collections can contain multiple entries. Reproduce the count without writing files:
+
+```sh
+node -e 'const c=require("./models/catalog.json"); console.log({collections:c.collections.length, assets:c.collections.reduce((n,x)=>n+x.assets.length,0)})'
+```
+
+`data/demos.json` is the separate four-entry demo registry; `scripts/demo-registry.mjs` validates it against catalog assets and allowed routes. Vite supplies both through `virtual:gallery-catalog` and `virtual:gallery-demos`. Gallery and demo data are static files, not a runtime database or backend. Game saves use browser IndexedDB; the PWA uses Cache Storage and a localStorage cross-tab signal. Other demo and viewer changes are in-memory. See `src/game/storage.js`, `src/pwa/register.js` and `src/pwa/sw-template.js`.
+
+## Feature map
+
+| Area and status | Existing behavior and key APIs | Files, data and evidence |
+| --- | --- | --- |
+| Gallery & catalog — **Implemented** | Thumbnail cards, metrics, catalog-controlled downloads, search across text/tags, category/theme/collection and animated/interactive filters; grouping, counts and empty states. `matches`, `renderModels`, `createCard` and `loadCatalog` implement these. | `src/main.js`, `src/library/browse.js`, `index.html`, `models/catalog.json`, per-asset GLB/thumbnail and optional metadata, `scripts/catalog.mjs`, `vite.config.js`; `tests/catalog.test.mjs`, `scripts/test-library-browser.mjs`. Persistence: URL query; backend/database: none. |
+| Viewer — **Implemented** | Lazy-loads GLB in a dialog; orbit, zoom, keyboard controls, reset and fullscreen when supported; metadata, related collection links, poster/loading/error/retry and cleanup. `openViewer`, `createViewer`, `acquireModelViewerRenderer` own the lifecycle. | `src/main.js`, `src/viewer.js`, `src/model-viewer-renderer.js`, `index.html`; catalog file/thumbnail/metadata and Three.js `GLTFLoader`, `OrbitControls`, Fullscreen and WebGL APIs. Persistence/backend: none. `scripts/test-library-browser.mjs`, `scripts/test-viewer-context-cleanup.mjs`. |
+| Viewer framing — **Implemented** | Resizes renderer and camera, fits model bounds or geometry points to the perspective camera, with optional metadata camera direction and rotation. `syncViewerSize`, `fitViewerBounds`, `fitViewerObject`. | `src/viewer-framing.js`, `src/viewer.js`, `scripts/catalog.mjs`; model geometry and optional metadata `display`. Persistence/backend: none. `tests/viewer-framing.test.mjs`, `tests/preview-config.test.mjs`. |
+| Navigation — **Implemented** | Query routes, shareable `?model=` URLs, history and unknown-route fallback; mobile menu focus management and scroll-to-top. `route`, `syncRoute`, `navigate`, `setupMenu`. Route changes dispose active demos. | `src/main.js`, `src/navigation.js`, `src/scroll-to-top.js`, `index.html`; History, URL and dialog APIs; URL state only, backend: none. `scripts/test-library-browser.mjs`, `scripts/test-reviewed-bugs.mjs`. |
+| Product Studio — **Implemented** | Choose between two fictional packaging studies; open/close, exploded view, six camera views, reset and beverage-label presets. `mountProductStudio`, `createPoseController`, `createLatestLoader`; loading, retry and disposal are handled. | `src/product-studio/`, `src/main.js`, catalog GLBs and authored `OpenClose`/`Exploded` clips; Three.js, canvas textures. Changes are runtime-only; storage/backend: none. `tests/product-studio-*.test.mjs`, `scripts/test-product-studio-browser.mjs`. |
+| Shelf Inspector — **Implemented** | Select one of seven fixtures and one of four manual LODs; highlight shelf rows, toggle emissive strips, change a header, orbit and reset. `mountShelfInspector`, `createShelfParts`, `SHELF_MODELS`. | `src/shelf-inspector/`, `src/product-studio/load.js`, imported fixture GLBs and `support-manifest.json` files under `models/`; canvas textures and Three.js. Header is runtime-only; storage/backend: none. `tests/shelf-inspector.test.mjs`, `scripts/test-shelf-inspector-browser.mjs`. |
+| Shopping cart demo — **Partial** | Specific viewer asset gets a bounded cart/character demonstration: grab, push/stop/release, steering/wheels, item and obstacle behavior. `createCartDemo` is loaded by `createViewer`. | `src/shopping-cart/demo.js`, `src/viewer.js`, cart GLB and shopper GLB under `models/`; Three.js and `GLTFLoader`. In-memory only; backend/database: none. `tests/interactive-shopping-cart.test.mjs`, `scripts/test-shopping-cart-browser.mjs`. Not a general cart or physics system. |
+| Game — **Implemented** | Local, shared-device casual eight-ball: place, aim, pull/release, fixed-step physics, rules/fouls, pause, resume, recovery and graphics options. `mountGame`, `createShot`, `stepPhysics`, `adjudicate`, `openGameStore`. Stable checkpoints and ownership use IndexedDB and Web Locks/lease fallback. | `src/game/`, catalog billiards GLBs, `src/pwa/`; IndexedDB `blender-gallery-game-v1`, browser locks and Three.js. Backend: none. `tests/game.test.mjs`, `tests/interaction.test.mjs`, `tests/physics-*.test.mjs`, `scripts/test-game-browser.mjs`. |
+| Solar — **Partial** | Select bodies, change time speed and scale mode, orbit and inspect credits; animated circular orbits, belt and comet tail are illustrative. `mountSolar`, `solarSceneAssets`, `createFrameGate`. | `src/solar/`, catalog/metadata and optimized GLBs in `models/solar-demo/`; Three.js and WebGL. In-memory only; backend/database: none. `tests/solar-*.test.mjs`, `scripts/test-solar-assets.mjs`, `scripts/test-solar-scene.mjs`. Not an ephemeris. |
+| Visitor v2 / v3 — **Partial** | Model-specific appearance selectors, authored animation previews and reset; v2 and v3 have different choices/clips. `createVisitorDemo`, `createVisitorCustomization`. | `src/visitor-v2/demo.js`, `src/visitor-v3/demo.js`, respective `models/gjh-mall-visitor-v2/` and `models/gjh-visitor-v3/` customization and GLBs; Three.js `AnimationMixer`. In-memory only; backend/database: none. `tests/gjh-visitor-v2.test.mjs`, `tests/gjh-visitor-v3.test.mjs`. Previews do not implement mall interaction state. |
+| PWA — **Partial** | Install help, service-worker shell cache, explicit Game-pack preparation with hash verification, offline status and update UI. `setupPwa`, `prepareGame`, `pwaBuildPlugin`. | `public/manifest.webmanifest`, `public/icons/`, `src/pwa/`, `scripts/pwa-build.mjs`; generated `dist/sw.js`, `build-info.json`, `game-pack.json`; Cache Storage, service workers and localStorage signal. Backend/database: none. `scripts/test-pwa-browser.mjs`, `scripts/test-pwa-standard.mjs`. Only the prepared Game pack is promised offline, not the full catalog/demos. |
+| Fish motion — **Implemented** | For the designated fish collection, plays the authored swim clip with play/pause, reduced-motion handling and disposal. `createFishMotion` is invoked from `createViewer`. | `src/fish-motion.js`, `src/viewer.js`, catalog fish GLBs and clips; Three.js `AnimationMixer` and `matchMedia`. In-memory only; backend/database: none. Viewer dispatch is visible in `src/viewer.js`. |
+| Asset build & validation — **Implemented** | Catalog checks safe paths, unique IDs, metadata, GLB headers/resources/roots and metrics; `validate-assets.mjs` runs Khronos validation. Vite emits URL-resolved files; PWA plugin builds hashed manifests. Blender export, render, QA, repair and solar optimization utilities also exist. | `scripts/catalog.mjs`, `scripts/validate-assets.mjs`, `scripts/demo-registry.mjs`, `scripts/pwa-build.mjs`, `scripts/export-selected-assets.py`, `scripts/model-qa-blender.py`, `scripts/optimize-solar-demo.mjs`; `models/catalog.json` and referenced files. Local filesystem; backend/database: none. `tests/catalog.test.mjs`, `tests/registry.test.mjs`. |
+| Tests — **Implemented** | Node test suites cover catalog, assets, rules, physics, framing and demo helpers; Playwright scripts exercise browser flows and model-specific cases. `npm test` and named scripts select subsets; many additional scripts are invoked directly. | `tests/*.test.mjs`, `scripts/test-*.mjs`, `package.json`; local models and often an existing production build/installed browser. Backend/database: none. Test presence does not establish current pass or physical-device coverage. |
+| Deploy — **Implemented** | GitHub Actions on `main` push or manual dispatch installs Node 24 dependencies, runs `npm run build`, uploads `dist` and deploys to GitHub Pages. `base: "./"` supports project paths. | `.github/workflows/deploy.yml`, `vite.config.js`, `package.json`; GitHub Actions/Pages are external hosting, not an application backend/database. Current workflow does **not** run unit or browser suites. Configuration is not proof of a current deployment. |
+
+## Workflows
+
+1. **Discover and inspect:** browse cards → search/filter (`q`, theme, category, collection, feature) → open `?model=` → lazy-fetch the actual GLB → orbit/zoom, reset or fullscreen → inspect metadata, related links and permitted download. Closing restores focus; failed loads retain poster and retry (`src/main.js`, `src/viewer.js`).
+2. **Explore demos:** open Interactive Demos → filter the registry → launch Game, Solar, Product Studio or Shelf Inspector → route-specific code mounts on demand and disposes when leaving (`data/demos.json`, `src/main.js`). Cart, visitor and fish controls are instead attached to particular gallery viewer assets.
+3. **Play offline:** launch Game online → App options → explicitly prepare the Game pack → play or resume locally. Installation alone does not prepare the pack. Saves are local and the service worker checks pack integrity (`src/game/page.js`, `src/game/storage.js`, `src/pwa/register.js`, `src/pwa/sw-template.js`).
+4. **Add an asset:** maintain source/provenance where available → add catalog paths and optional metadata → run validation/build → inspect the real GLB in the gallery. `scripts/catalog.mjs` derives display metrics; `docs/assets.md` describes the broader proposed admission standard.
+
+## Limitations and plans
+
+- Viewer animation and editing controls are model-specific, not generic animation playback or a 3D editor (`src/viewer.js`, `src/fish-motion.js`, `src/visitor-v2/`, `src/visitor-v3/`; `README.md`). Downloads can be hidden and unspecified redistribution terms are displayed as such (`src/main.js`, `scripts/catalog.mjs`).
+- Game has no AI opponent, score, spin or called pocket; the head-string visual guide is deferred. It is a casual ruleset, and storage failure falls back to in-memory play with warning (`docs/game/gameplay-contract.md`, `src/game/page.js`, `src/game/storage.js`).
+- Solar uses illustrative trajectories and is online-only; Product Studio poses are illustrative, and shelf LEDs are emissive rather than physical lighting. Shelf products are not included (`src/solar/page.js`, `src/product-studio/page.js`, `src/shelf-inspector/page.js`).
+- Viewer visitor clips demonstrate poses; no mall item, seat, cart or elevator state is implemented by those controls (`src/visitor-v2/demo.js`, `src/visitor-v3/demo.js`). The cart demo is explicitly bounded (`src/shopping-cart/demo.js`).
+- `scripts/pwa-build.mjs` hard-codes `dist` in its build hook; an alternate Vite output directory is not supported by that hook. Full catalog models and non-Game demos are not included in the prepared offline pack.
+- **Planned:** the chibi standard and Mall Guide v5 are proposals; `task.md` and `docs/chibi-mall-guide-v5/plan.md` explicitly distinguish prototype/planning from a completed v5 model. The standalone `mall-modules-preview/` is outside the production Gallery build (`task.md`). **Deprecated:** the on-table cue-grab shooting design in the historical v1.0 game specification is superseded by the implemented left power handle (`docs/game/gameplay-contract.md`).
+- No `TODO`, `FIXME` or `XXX` markers were found in `src/` or non-JSON `scripts/` during this review; documented deferred work above is not an exhaustive audit of every model or historical plan. Existing verification records are revision-specific; physical-device and assistive-technology coverage should not be inferred from test files.
+
+## Commands
+
+Use Node 24 (`README.md`, deployment workflow). Browser suites generally require a built `dist` and Playwright browsers; see `README.md` for installation and prerequisites.
+
+| Command | Purpose |
+| --- | --- |
+| `npm ci` | Install locked dependencies. |
+| `npm run dev` / `npm run preview` | Serve development / existing production build on localhost. |
+| `npm run validate:assets` | Validate catalog GLBs plus two model-specific validators. |
+| `npm run build` | Validate assets, then build Vite and PWA output. |
+| `npm test` | Run `tests/*.test.mjs` with Node's test runner. |
+| `npm run test:browser`, `test:pwa`, `test:solar`, `test:library`, `test:standard`, `test:reviewed` | Run named browser, PWA, Solar and regression suites; use `npm run` before each script name. |
+| `npm run test:game-ux`, `test:game-experience`, `test:game-responsive` | Run focused Game browser suites; use `npm run` before each script name. |
+| `npm run test:cans` / `npm run test:cans:codex` | Run the two canned-asset visual test variants. |
+| `node scripts/test-product-studio-browser.mjs`, `node scripts/test-shelf-inspector-browser.mjs`, `node scripts/test-shopping-cart-browser.mjs` | Run focused demo browser checks. |
+
+See `package.json` for exact script composition and `docs/` plus `progress.md` and `task.md` for historical plans and verification; reconcile them with current source and workflow before relying on status.
