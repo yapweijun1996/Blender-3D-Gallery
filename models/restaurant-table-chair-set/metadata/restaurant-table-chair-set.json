@@ -1,0 +1,117 @@
+{
+  "id": "restaurant-table-chair-set",
+  "name": "Restaurant Table and Four Chairs",
+  "summary": "Neutral square dining table with four independently placeable chairs and blank tabletop accessories.",
+  "description": "Original 0.8 metre square restaurant table, four simple sand-finish chairs with graphite frames, a small blank table-number stand and a tray with two generic shakers and one plain condiment bottle. Seven placement meshes, three shared materials; no text, logos, brands, textures or external assets.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "restaurant",
+    "mini-game",
+    "dining",
+    "four-seats",
+    "square-table",
+    "individual-chairs",
+    "blank-table-number",
+    "condiment-tray",
+    "brand-neutral",
+    "original",
+    "procedural",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-17",
+  "author": "Yap Wei Jun project / Codex-assisted procedural modeling",
+  "blender_version": "5.2.3 LTS",
+  "creation_method": "Original deterministic Blender Python; no external models, images, textures, scripts or brands.",
+  "generator": "generate.py",
+  "paths": {
+    "source": "sources/restaurant-table-chair-set.blend",
+    "glb": "exports/optimized.glb",
+    "preview": "previews/hero.png",
+    "additional_previews": [
+      "previews/front.png",
+      "previews/side.png",
+      "previews/3q.png"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      1,
+      0.72,
+      1.25
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.7,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z"
+  },
+  "origin": "Floor centre of the complete set. Each chair has its own local floor-centre pivot; accessories pivot at tabletop contact.",
+  "dimensions_metres_gltf": [
+    1.8989822200854487,
+    0.8984999805688858,
+    1.8989821751431615
+  ],
+  "placement_nodes": {
+    "Table": "Table_Geometry",
+    "Chair_North": "Chair_North_Geometry",
+    "Chair_East": "Chair_East_Geometry",
+    "Chair_South": "Chair_South_Geometry",
+    "Chair_West": "Chair_West_Geometry",
+    "TableNumberStand": "TableNumberStand_Geometry",
+    "CondimentTray": "CondimentTray_Geometry"
+  },
+  "accuracy_notes": "Static visual furniture for a planned restaurant mini-game. Independent chair nodes verified through Three.js transforms; no game logic, colliders or animation are included. Physical devices, WebKit and the assembled mall are unverified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "measured": {
+    "triangles": 11268,
+    "glb_bytes": 597308,
+    "placement_meshes": 7,
+    "mesh_primitives": 15,
+    "materials": 3,
+    "images": 0,
+    "animations": 0,
+    "table_dimensions_metres_gltf": [
+      0.800000011920929,
+      0.75,
+      0.800000011920929
+    ],
+    "sha256": "23595162cac96cde7da7a25d73b05d9c279e9e7b465e1f3454467d4a9a739ede",
+    "chair_seat_heights_metres": {
+      "Chair_North": 0.44999998807907104,
+      "Chair_East": 0.44999998807907104,
+      "Chair_South": 0.44999998807907104,
+      "Chair_West": 0.44999998807907104
+    }
+  },
+  "quality_gate": {
+    "overall": "NEEDS REVIEW",
+    "local": "PASS",
+    "physical_android": "NOT TESTED",
+    "physical_ios": "NOT TESTED",
+    "webkit": "NOT TESTED",
+    "budget": {
+      "triangles": 14999,
+      "bytes": 1572863,
+      "mesh_primitives": 16,
+      "materials": 3
+    },
+    "evidence": [
+      "reports/assets.json",
+      "reports/khronos.json",
+      "reports/sources.json",
+      "reports/source-edit.json",
+      "reports/determinism.json",
+      "reports/browser.json",
+      "reports/checks.json",
+      "reports/existing-model-search.json"
+    ]
+  }
+}
