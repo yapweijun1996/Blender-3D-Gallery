@@ -16,8 +16,8 @@ disables asset downloads.
 | --- | --- |
 | Original Tripo ZIP | `8d0f08b7e4f63d1a88a0f455e586cd9f41165d7f109af1cb999423b5ec0000b7` |
 | Original `character.glb` | `ad6b2ffce0f06a5df8617346564ead7b966e839188e27663a50daa0b2bb5988e` |
-| `motion.blend` | `cd2ad141c47c85ea217e9e6dd2ffce73f62af7f3db5c0e84e0dc1799e72e8100` |
-| `motion.glb` | `0d584e7943b21d7fa631f7bd2b348ded04d16c361c71ed768f05f9c5095ac6f8` |
+| `motion.blend` | `76610bf619a4e5584f10ae9e92b028ebe3553672037f05120e83d64134d905a8` |
+| `motion.glb` | `576c935b4cb17571bd8463b8bbec988bbec6221d39aa7ed5746d97360827a3bb` |
 | `poster.webp` | `5258212304d257ea89f5216e2e6e06576772ee0a57ea27eafd8934ed6b50bec6` |
 
 `export.py` reuses the original importer's exact two-path ZIP allowlist and
@@ -37,14 +37,17 @@ timeline to its key range. Walk is saved under its original Action name,
 | `nod` | 2.33 s | Two nods with a small chest follow-through |
 | `jump` | 2.08 s | Crouch, takeoff, 0.22 m peak clearance and landing |
 | `dance` | 2.67 s | Alternating weight shifts, torso twist and arm accents |
-| `run` | 0.83 s | In-place stride with alternating knee lift and arm swing |
+| `run` | 1.00 s | In-place jog with forward lean, bent opposing arms, high knee drive and two flight phases |
 | `walk` | 2.38 s | Original forward walk and timing |
 
 `poses.py` defines the six new Actions at 24 fps. They use joint rotations and
 vertical Hips movement. Each returns to its first pose with no horizontal
 root drift. Foot heights are aligned at authored contact poses using the
-evaluated skin. The rig has no foot-lock IK, collision solver, or secondary
-hair simulation. Foot sliding or contact variation between keys is possible.
+evaluated skin. Run has a pose key every three frames. Its two steps are
+half a cycle apart, with Hips height adjusted on each exported stance frame
+between contact and push-off. The rig has no foot-lock IK, collision solver,
+or secondary hair simulation. Foot sliding or contact variation between
+exported frames is possible.
 
 ## Reproduce and review
 
@@ -92,9 +95,11 @@ walk channel against the original GLB, and endpoint equality and Hips drift
 in the new cycles. The reopened Blender file retains all 659 original Walk
 F-Curves, including key coordinates, handles and interpolation.
 
-The [review directory](review/) contains four samples per clip from both a
-front-quarter and a side view, rendered by Chrome and Three.js from the
-exported GLB. The 600 × 600 poster uses Wave at 1.08 s. The desktop and
+The [review directory](review/) contains front-quarter and side views
+rendered by Chrome and Three.js from the exported GLB. The
+[Run sheet](review/poses-run.webp) shows eight poses at 0.125 s intervals,
+covering contact, down, passing and flight for both steps. The other sheets
+show four poses per clip. The 600 × 600 poster uses Wave at 1.08 s. The desktop and
 mobile-width screenshots cover the Demos card and the Studio at 1440 × 900
 and 390 × 844 CSS pixels. Chrome switched, paused, scrubbed and looped all
 seven clips at both widths with zero console errors. The original GJH page

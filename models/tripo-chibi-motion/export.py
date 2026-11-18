@@ -22,6 +22,26 @@ def floor_height(mesh):
         evaluated.to_mesh_clear()
 
 
+def align_run_stance(scene, mesh, hips, hips_inverse, bag, keys):
+    # Keep the sole on the floor between pairs of grounded phase keys.
+    samples = []
+    for (start, (_, lift)), (end, (_, next_lift)) in zip(keys, keys[1:]):
+        if lift or next_lift:
+            continue
+        for frame in range(start + 1, end):
+            scene.frame_set(frame)
+            correction = hips_inverse @ Vector((0, 0, floor_height(mesh)))
+            samples.append((frame, hips.location - correction))
+
+    for axis in range(3):
+        curve = bag.fcurves.find(hips.path_from_id("location"), index=axis)
+        for frame, position in samples:
+            key = curve.keyframe_points.insert(frame, position[axis])
+            key.interpolation = "BEZIER"
+            key.handle_left_type = key.handle_right_type = "AUTO_CLAMPED"
+        curve.update()
+
+
 def author_actions(rig, mesh, clips):
     names = sorted({name for keys in clips.values() for _, (rotations, _) in keys
                     for name in rotations})
@@ -71,6 +91,8 @@ def author_actions(rig, mesh, clips):
                 key.interpolation = "BEZIER"
                 key.handle_left_type = key.handle_right_type = "AUTO_CLAMPED"
             curve.update()
+        if name == "run_in_place":
+            align_run_stance(scene, mesh, hips, hips_inverse, bag, keys)
         animation.action = None
         scene.frame_set(0)
         yield name, action, slot
