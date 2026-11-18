@@ -2,16 +2,17 @@
 
 ## Source and scope
 
-This contract applies KB `pwa:product-standard` v1.0.0 to Blender 3D Gallery. Implementation base: `5c8474835656d4c5fdf704185db21f3784f06c75`, isolated in `feature/pwa-standard-v1`. The owner authorized this amendment and retained commit/merge/push authorization. KB remains read-only; the original untracked local plan is excluded.
+This contract applies KB `pwa:product-standard` to Blender 3D Gallery. The November 18 amendment applies the `IMMERSIVE_3D` profile in v1.1.0 and KB `pwa:sw-install-integrity` v0.2.0 for deployment recovery. The owner retained commit, merge and push authorization.
 
-Retain the dark editorial identity, all39 assets and original sources, query routes, Game rules, checkpoint schema and reliability guards. No application framework, runtime loader library, database or asset recompression is required.
+Retain the dark editorial identity, gallery assets and original sources, query routes, Game rules, checkpoint schema and reliability guards.
 
 ## Product decisions
 
 - Dark-only theme remains intentional; light-theme chrome is N/A.
 - Preserve manifest identity `./`, scope `./`, start URL `./?page=game`, relative to the manifest under `/Blender-3D-Gallery/`.
 - Installation help distinguishes installation from explicit offline Game preparation.
-- The header is nonpersistent; smart hide/reveal topbar is N/A. Long static pages receive contextual scroll-to-top instead.
+- Gallery, the Interactive Demos index and About use a sticky topbar. Past 80 px it hides after 8 px of downward travel, and 8 px of upward travel reveals it. Focus inside the bar or an open dialog reveals it. Transform-only movement keeps its layout space reserved. The safe area stays clear, and reduced motion removes the transition. Long index pages also provide contextual scroll-to-top.
+- Game and every interactive demo route, including Tripo Chibi Motion Studio, keep the topbar in normal flow so it cannot cover canvas controls. The gallery model viewer uses a native top-layer dialog and browser fullscreen for its canvas.
 - Actual iOS/Android installation, system chrome, keyboard and GPU results remain UNVERIFIED without physical-device evidence. Headless WebKit and simulated safe areas do not certify those surfaces.
 
 ## Offline contract
@@ -30,9 +31,13 @@ A Game-cached model does not imply full-library offline availability. The runtim
 
 Only explicit Update may activate a waiting worker and reload. Discovery shows availability while preserving current work. Show immediate branded accessible loading feedback; validate/save a stable Game turn, confirm scoped tabs are ready, activate and reload once after controller change. Refuse active shots, busy transactions or failed saves. The user cannot start another shot after the saved update checkpoint while activation is pending.
 
+The topbar and mobile Menu show the semantic version injected from `package.json`. A waiting worker enables the same explicit Update action in both locations and the bottom notice remains available. The target version is shown when a no-store `build-info.json` response matches the waiting worker's build ID. Narrow topbars use the compact visible “Update” label and the full accessible label; the mobile Menu shows the full label.
+
 Prevent duplicate requests and handle native dialog top-layer/focus correctly. Denial, failure or timeout restores interaction and offers retry. Late callbacks cannot cause another reload or reopen dismissed UI. Clean up timers/message ports after settlement.
 
 Preserve build identity, scoped versioned caches, byte/hash validation and candidate publication. Failed candidates preserve known-good resources. Cached navigation deliberately serves one complete HTML build while an update waits; do not independently replace that with network-first navigation.
+
+When a shell entry is missing from CacheStorage, the worker verifies the replacement against its own manifest or returns 503. Gallery GLBs are fetched on demand by their immutable URLs. If a deployment removes an older URL, the owning tab checks for an update after a failed chunk or GLB request. Unknown query routes check too. Checks are throttled and share the same update UI. A verified waiting update adds an inline action on an unknown route or failed experience. With no verified update, the ordinary fallback and retry remain available.
 
 Retain old tabs' dependencies and prior good packs. Complete scoped caches are deliberately retained, including after tabs close: this implementation has no durable proof that a suspended client or the last complete Game pack is unused. Automatic complete-build eviction is an explicit exception. Failed shell candidates and temporary pack candidates are deleted; other projects' caches remain untouched. Storage may grow across versions and browser quota is not guaranteed. Clearing site storage removes offline resources and local saved matches, so it is not an automatic recovery step. A future eviction policy needs durable build/client ownership and pack migration evidence.
 
@@ -61,7 +66,7 @@ Production uses HTTPS and a minimal tested resource policy. Permit actual same-o
 | Update loader | Text/disabled actions | Immediate loading surface, safe interaction, failure recovery, one reload |
 | Responsive | Prior7 sizes pass | Preserve7 index sizes plus short Game/nonzero insets |
 | Accessibility | Existing keyboard/axe/targets | New UI focus, announcements, targets, reduced motion |
-| Smart topbar | N/A | Nonpersistent header remains N/A |
+| Smart topbar | Nonpersistent header | Sticky hide and reveal, focus and modal reveal, reduced motion, safe areas, version and update action. Static on immersive routes |
 | Scroll-to-top | Missing | Contextual, safe-area/modal/route aware, keyboard usable |
 | Theme chrome | Dark only | Light N/A; dark configuration and honest device status |
 | Security/privacy | HTTPS/scoped cache; CSP absent | Production CSP positive/negative checks; preserved privacy boundaries |

@@ -1,5 +1,30 @@
 # PWA Standard verification
 
+## November 18 deployment recovery and topbar
+
+The historical builds were made with `npm run build:deploy` at `dc58be68` and `f63008ae`. Their build IDs were `dc7b7dcc7c2048b3` and `2fe7f6fd998716e6`. The repository's Git metadata is read-only in this Mac session, so the historical worktree was created from a temporary local clone.
+
+The worker-level replay ran the emitted worker against the two built directories under the same simulated origin and `/Blender-3D-Gallery/` scope. The old worker installed successfully and served cached HTML and `index-vzh-hQMn.js` after the origin switched to `f63008ae`. The precache excluded the Tripo GLB. The old JS requested `motion-SP6opUoe.glb` and received 404. The replacement path `motion-CymObcNs.glb` returned 200. The published shell and its chunks were internally consistent. The failure arose when that shell requested an on-demand asset removed by the next deployment. This reproduces the mechanism locally. The owner's exact Chrome profile and live deployment history remain unverified.
+
+The current worker rejects inconsistent shell fallback bytes and notifies the owning tab when a scoped chunk, stylesheet or GLB is unavailable. Demo and viewer errors also check for an update so an older controlling worker can still benefit from page-side recovery. Unknown query routes check for a verified waiting candidate. A verified update becomes actionable through the original consent, Game save, multi-tab check, modal loader and controller-change flow.
+
+Verification started on build `0ca0deae75fedec8`, produced from an isolated copy of `f63008ae` with this change. An independent Tripo model commit, `811c8db7`, landed during the work. The final build, asset checks, unit suite and nine browser cases were repeated on the resulting working tree. Its build ID is `bc42c33a9639245d` and its version is `0.2.0`.
+
+| Command or check | Result |
+| --- | --- |
+| `npm run build:deploy` | PASS, exit 0. Final output: `✓ built in 1.38s`. Existing chunk-size advisory remains. |
+| `npm run validate:assets` | PASS, exit 0. 661 catalog GLBs validated with zero errors or warnings. The additional character and mascot validators also exited 0. |
+| `npm test` | PASS, `tests 744`, `pass 744`, `fail 0`, `skipped 0`. The three new worker regressions cover the missing GLB notification, fail-closed shell fallback and candidate integrity. |
+| `npm run test:pwa`, `npm run test:standard` | UNVERIFIED, both exited 1 before test cases with `Error: listen EPERM: operation not permitted 127.0.0.1`. A separate Playwright Chromium launch also failed at macOS Mach port registration with `Permission denied (1100)`. |
+| Chrome 158 file-based browser pass | PASS, 9 route/viewport combinations for Gallery, Interactive Demos and Tripo Motion at 375×844, 768×1024 and 1440×900. Zero console errors in these success cases. |
+| Chrome 158 recovery simulation | PASS, a simulated missing motion GLB and an unknown query route each made one additional update check and showed an inline `Update to v0.2.1` action plus the bottom notice. The running document did not reload during discovery. |
+
+The Chrome pass used the emitted HTML, CSS and JS chunks and the real GLB through a file-based harness. The isolated build used `motion-CymObcNs.glb` and the final working tree used `motion-BRgAS3uq.glb`. The harness adapted module and GLB transport to file URLs, omitted the production CSP and simulated worker registration and waiting metadata. It did not exercise real Service Worker activation, the A/B HTTP transition, or other demos after that transition. The separate keyboard input tool required approval unavailable in this session. Browser focus reveal was verified by focusing the brand, and the HTTP suite includes a keyboard Tab check.
+
+Gallery and Demos passed downward hide, upward reveal, near-top reveal, focus and modal reveal, no layout shift, and simulated 24/18/28/14 px safe areas. The 768 px cases used reduced motion and measured a zero-duration transition. Tripo Motion kept its header in document flow, rendered its canvas and all seven clip controls, and selected Run at each width. The version chip and accessible versioned update label fit all nine cases. The 375 px native Menu showed the current version and the full update label. [Screenshots](verification/topbar-pwa-2026-11-18/)
+
+The Game pack, actual update activation and one-reload behavior still require an HTTP run of the existing lifecycle suites. Physical devices, installed mode and the original production profile remain unverified. The validation-generated `models/demo-beverage-can/reports/structure-motion.json` was restored from the Git index after the direct checkout returned an index-lock permission error.
+
 ## Baseline
 
 Revision `5c8474835656d4c5fdf704185db21f3784f06c75`, Node24.21.0, pinned Vite8.3.5/Three.js0.187.0/Playwright1.64.1. Clean dependency installation succeeded without lockfile changes. Fresh isolated `npm test` passed35 tests; `npm run build` passed asset validation and production build. Build identity `bf8ee8e9155e74aa`.
@@ -43,7 +68,7 @@ Manager separately simulated top32/right16/bottom34/left16 on the three Game siz
 | Update loader | PASS for safe-save refusal, retry, active-shot blocking, remote input locks, timeouts, late callbacks and one document reload |
 | Responsive layout | PASS for7 index widths and short Game layouts; real browser zoom UNVERIFIED |
 | Accessibility | PASS for executed keyboard/focus/contrast checks and6-state axe scan; full WCAG conformance not claimed |
-| Smart topbar | N/A, header is nonpersistent |
+| Smart topbar | N/A for this historical amendment. See November 18 evidence above. |
 | Scroll-to-top | PASS for contextual visibility, keyboard/reduced motion and no Game RAF contention |
 | Theme chrome | Dark configuration PASS; light theme N/A; actual OS chrome UNVERIFIED |
 | Security/privacy | Production CSP positive/negative checks PASS; dev-only CSS/HMR exception and meta/header limits documented |

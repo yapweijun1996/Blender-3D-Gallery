@@ -6,6 +6,7 @@ const SCOPE = self.registration.scope,
   SHELL_CACHE = PREFIX + "shell-" + BUILD,
   PACK_CACHE = PREFIX + "game-" + BUILD;
 const absolute = (url) => new URL(url, SCOPE).href;
+const shellEntries = new Map(SHELL.map((entry) => [absolute(entry.url), entry]));
 const marker = absolute("__game-pack-ready__");
 const sha = async (buffer) =>
   [...new Uint8Array(await crypto.subtle.digest("SHA-256", buffer))]
@@ -133,6 +134,10 @@ self.addEventListener("message", (event) => {
       /* Requester closed. */
     }
   };
+  if (event.data?.type === "BUILD_INFO") {
+    reply({ ok: true, build: BUILD });
+    return;
+  }
   if (event.data?.type === "PACK_STATUS") {
     event.waitUntil(
       packReady().then((ready) => reply({ ok: true, ready, build: BUILD })),
@@ -227,6 +232,12 @@ self.addEventListener("message", (event) => {
     );
   }
 });
+const unavailable = () =>
+  new Response("Resource is not available offline", {
+    status: 503,
+    headers: { "Content-Type": "text/plain" },
+  });
+
 self.addEventListener("fetch", (event) => {
   const request = event.request,
     url = new URL(request.url);
@@ -236,43 +247,42 @@ self.addEventListener("fetch", (event) => {
     url.origin !== self.location.origin
   )
     return;
-  if (request.mode === "navigate") {
-    event.respondWith(
-      (async () => {
-        const cache = await caches.open(SHELL_CACHE);
-        return (await cache.match(absolute("index.html"))) || fetch(request);
-      })(),
-    );
-    return;
-  }
   event.respondWith(
     (async () => {
-      const key = url.origin + url.pathname;
-      for (const name of [SHELL_CACHE, PACK_CACHE]) {
-        const hit = await (await caches.open(name)).match(key);
-        if (hit) return hit;
-      }
-      // Hashed resources used by an older live tab may still exist in a retained scoped cache.
-      if (/\.[a-z0-9]+$/i.test(url.pathname))
-        for (const name of await caches.keys()) {
-          if (
-            !name.startsWith(PREFIX) ||
-            name.includes("-candidate-") ||
-            name === SHELL_CACHE ||
-            name === PACK_CACHE
-          )
-            continue;
-          const hit = await (await caches.open(name)).match(key);
-          if (hit) return hit;
-        }
+      const key = request.mode === "navigate" ? absolute("index.html") : url.origin + url.pathname;
+      const isAsset = key.startsWith(absolute("assets/"));
+      const isCriticalAsset = isAsset && /\.(glb|js|css)$/.test(url.pathname);
+      let response;
       try {
-        return await fetch(request);
+        const entry = shellEntries.get(key);
+        if (entry) {
+          const cached = await (await caches.open(SHELL_CACHE)).match(key);
+          // An evicted shell entry can only be repaired with bytes for this worker.
+          return cached ?? await verified(entry);
+        }
+        // Older live documents can still request their immutable Vite URLs.
+        if (isAsset) {
+          for (const name of [PACK_CACHE, ...(await caches.keys()).filter((name) =>
+            name !== SHELL_CACHE && name !== PACK_CACHE &&
+            (name.startsWith(PREFIX + "shell-") || name.startsWith(PREFIX + "game-")) &&
+            !name.includes("-candidate-"),
+          )]) {
+            const hit = await (await caches.open(name)).match(key);
+            if (hit) return hit;
+          }
+        }
+        response = await fetch(request);
+        if (isCriticalAsset && response.ok &&
+            response.headers.get("Content-Type")?.startsWith("text/html"))
+          response = unavailable();
       } catch {
-        return new Response("Resource is not available offline", {
-          status: 503,
-          headers: { "Content-Type": "text/plain" },
-        });
+        response = unavailable();
       }
+      if (!response.ok && isCriticalAsset && event.clientId) {
+        const client = await self.clients.get(event.clientId);
+        client?.postMessage({ type: "RESOURCE_LOAD_FAILED" });
+      }
+      return response;
     })(),
   );
 });

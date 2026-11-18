@@ -6,6 +6,9 @@ export function setupPwa(getGame) {
   let registration,
     deferredInstall,
     lastCheck = 0,
+    lastRecoveryCheck = 0,
+    updateCheck = null,
+    offeredWorker,
     flow = null,
     reloaded = false,
     controllerChanged = false,
@@ -17,6 +20,8 @@ export function setupPwa(getGame) {
     connectivity: navigator.onLine ? "online" : "offline",
     offlinePack: "unknown",
     update: "idle",
+    updateReady: false,
+    updateVersion: null,
     supported,
     build: null,
     error: null,
@@ -192,13 +197,19 @@ export function setupPwa(getGame) {
   function observeUpdates(reg) {
     if (observedRegistrations.has(reg)) return;
     observedRegistrations.add(reg);
-    reg.addEventListener("updatefound", () => {
+    const observeInstalling = () => {
       const worker = reg.installing;
-      worker?.addEventListener("statechange", () => {
-        if (worker.state === "installed" && navigator.serviceWorker.controller)
-          showUpdate();
-      });
-    });
+      if (!worker) return;
+      const changed = () => {
+        if (reg.waiting === worker) showUpdate();
+        if (["installed", "redundant", "activated"].includes(worker.state))
+          worker.removeEventListener("statechange", changed);
+      };
+      worker.addEventListener("statechange", changed);
+      changed();
+    };
+    reg.addEventListener("updatefound", observeInstalling);
+    observeInstalling();
   }
   async function ensureActiveWorker() {
     if (!supported) throw new Error("Offline support is unavailable in this browser.");
@@ -235,15 +246,72 @@ export function setupPwa(getGame) {
     try { return await registrationPending; }
     finally { registrationPending = null; }
   }
+  async function readWaitingVersion(worker) {
+    try {
+      const [identity, info] = await Promise.all([
+        request(worker, "BUILD_INFO"),
+        fetch(new URL("build-info.json", registration.scope), {
+          cache: "no-store",
+          signal: AbortSignal.timeout?.(REQUEST_TIMEOUT),
+        }).then(response => response.ok ? response.json() : null),
+      ]);
+      if (info && registration.waiting === worker && identity.build === info.build &&
+          typeof info.version === "string" &&
+          /^\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?$/.test(info.version)) {
+        publish({ updateVersion: info.version });
+      }
+    } catch {
+      // A version label is optional. Consent is still tied to the waiting worker.
+    }
+  }
   const showUpdate = () => {
-    if (flow || reloaded) return;
+    const worker = registration?.waiting;
+    if (!worker || flow || reloaded || remoteLocks.size) return;
+    const changed = worker !== offeredWorker;
+    offeredWorker = worker;
     message.textContent = "A new version is available.";
     action.textContent = "Update now";
     action.disabled = later.disabled = false;
     notice.hidden = false;
-    publish({ update: "available", error: null });
+    publish({
+      update: "available",
+      updateReady: true,
+      updateVersion: changed ? null : state.updateVersion,
+      error: null,
+    });
+    if (changed) void readWaitingVersion(worker);
     positionNotice();
   };
+  async function checkForUpdate(recovery = false) {
+    if (!supported || flow || reloaded) return;
+    if (recovery && updateCheck) await updateCheck;
+    if (flow || reloaded) return;
+    if (recovery && registration?.waiting) {
+      showUpdate();
+      return;
+    }
+    if (!navigator.onLine || updateCheck || registration?.installing) return;
+    const now = Date.now();
+    if (recovery) {
+      if (now - lastRecoveryCheck < 30000) return;
+      lastRecoveryCheck = now;
+    } else {
+      if (now - lastCheck < 600000) return;
+      lastCheck = now;
+    }
+    updateCheck = (async () => {
+      try {
+        await ensureActiveWorker();
+        await registration.update();
+        if (registration.waiting && (registration.waiting !== offeredWorker || state.update === "idle"))
+          showUpdate();
+      } catch {
+        // Keep the running build and its retry UI when discovery fails.
+      }
+    })();
+    try { await updateCheck; }
+    finally { updateCheck = null; }
+  }
   const cancelWorker = (current) => {
     try {
       current.worker?.postMessage({
@@ -353,12 +421,16 @@ export function setupPwa(getGame) {
     remoteLocks.delete(challenge);
     if (!remoteLocks.size && !flow) {
       ui.close();
-      publish({ update: registration?.waiting ? "available" : "idle" });
+      if (registration?.waiting) showUpdate();
+      else publish({ update: "idle", updateReady: false, updateVersion: null });
       positionNotice();
     }
   };
   navigator.serviceWorker?.addEventListener("message", (event) => {
-    if (event.data?.type === "CAN_UPDATE") {
+    if (event.data?.type === "RESOURCE_LOAD_FAILED" &&
+        event.source === navigator.serviceWorker.controller) {
+      void checkForUpdate(true);
+    } else if (event.data?.type === "CAN_UPDATE") {
       const game = getGame(),
         ready = !!flow?.ready || !game?.hasActiveMatch();
       if (ready && !flow) {
@@ -407,7 +479,7 @@ export function setupPwa(getGame) {
       action.textContent = "Reload saved version";
       action.disabled = later.disabled = false;
       notice.hidden = false;
-      publish({ update: "available" });
+      publish({ update: "available", updateReady: true });
       positionNotice();
     }
     void checkOffline();
@@ -465,12 +537,13 @@ export function setupPwa(getGame) {
   for (const type of ["online", "offline", "game-mounted"])
     window.addEventListener(type, () => void checkOffline());
   if (supported) {
+    window.addEventListener("online", () => void checkForUpdate(true));
     const register = async () => {
       try {
         await ensureActiveWorker();
         void checkOffline();
         if (registration.waiting) showUpdate();
-        await registration.update();
+        void checkForUpdate();
       } catch {
         publish({ offlinePack: "error" });
         offlineText(
@@ -480,11 +553,8 @@ export function setupPwa(getGame) {
     };
     void register();
     document.addEventListener("visibilitychange", () => {
-      if (!document.hidden && registration && Date.now() - lastCheck > 600000) {
-        lastCheck = Date.now();
-        void registration.update().catch(() => {});
-      }
+      if (!document.hidden) void checkForUpdate();
     });
   }
-  return { checkOffline, getState: () => state };
+  return { beginUpdate, checkForUpdate, getState: () => state };
 }

@@ -4,7 +4,9 @@ import "./style.css";
 import catalog from "virtual:gallery-catalog";
 import demos from "virtual:gallery-demos";
 import { setupPwa } from "./pwa/register.js";
+import { pwaCopy } from "./pwa/copy.js";
 import { setupMenu } from "./navigation.js";
+import { setupSmartTopbar } from "./smart-topbar.js";
 import { getPageHeading, setupScrollToTop } from "./scroll-to-top.js";
 import {
   element,
@@ -39,6 +41,7 @@ const dialog = $("#viewer"),
   viewport = $("#viewport"),
   status = $("#viewer-status");
 const closeMenu = setupMenu();
+const setSmartTopbar = setupSmartTopbar();
 let viewerController, activeViewer, activeAsset, opener;
 let gamePage = null,
   solarPage = null,
@@ -450,6 +453,7 @@ async function openViewer(asset, trigger, updateUrl = true) {
     status.textContent =
       "3D view unavailable. The preview and model information are still available.";
     $("#retry-view").hidden = false;
+    void pwaRuntime.checkForUpdate(true);
   }
 }
 function closeViewer(updateUrl = true) {
@@ -518,10 +522,49 @@ function syncModelUrl() {
 const pwaRuntime = setupPwa(() => gamePage);
 pwaState = pwaRuntime.getState?.() ?? null;
 refreshDemoOfflineStatus();
+
+const versionText = pwaCopy.version(__APP_VERSION__);
+for (const chip of document.querySelectorAll("[data-app-version]")) {
+  chip.textContent = versionText;
+  chip.title = pwaCopy.appVersion(versionText);
+}
+const compactUpdate = $(".topbar-update-short");
+compactUpdate.textContent = pwaCopy.update;
+
+function refreshUpdateActions() {
+  const { update, updateReady, updateVersion } = pwaState;
+  const label = updateVersion ? pwaCopy.updateTo(updateVersion) : pwaCopy.update;
+  for (const button of document.querySelectorAll("[data-pwa-update]")) {
+    button.hidden = !updateReady;
+    const busy = update !== "available" && update !== "error";
+    if (busy) button.setAttribute("aria-disabled", "true");
+    else button.removeAttribute("aria-disabled");
+    button.setAttribute("aria-label", label);
+    const text = button.querySelector(".topbar-update-full") ?? button;
+    if (text.textContent !== label) text.textContent = label;
+  }
+}
+
+function offerUpdate(container) {
+  const button = element("button", "outline-button pwa-inline-update");
+  button.type = "button";
+  button.dataset.pwaUpdate = "";
+  container.append(button);
+  refreshUpdateActions();
+  void pwaRuntime.checkForUpdate(true);
+}
+
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-pwa-update]");
+  if (button && button.getAttribute("aria-disabled") !== "true")
+    void pwaRuntime.beginUpdate();
+});
+refreshUpdateActions();
 window.addEventListener("pwa-state-change", (event) => {
   pwaState = event.detail;
   refreshDemoOfflineStatus();
   refreshScrollToTop();
+  refreshUpdateActions();
 });
 function route() {
   const url = new URL(location.href);
@@ -541,6 +584,7 @@ async function syncRoute() {
     return;
   }
   lastRouteUrl = location.href;
+  setSmartTopbar(!isDemo);
   notice.hidden = true;
   const raw = new URL(location.href).searchParams.get("page");
   if (
@@ -550,6 +594,7 @@ async function syncRoute() {
     notice.hidden = false;
     notice.textContent =
       "This page could not be found. Explore the 3D model library below.";
+    offerUpdate(notice);
   }
   for (const name of ["gallery", "demos", "about", ...demoPages])
     $(`#${name}-page`).hidden = name !== page;
@@ -638,6 +683,7 @@ async function syncRoute() {
       const retry = element("button", "outline-button", "Retry experience");
       retry.addEventListener("click", () => void syncRoute());
       root.append(retry);
+      offerUpdate(root);
     }
   } else {
     if (dialog.open && page !== "gallery") closeViewer(false);

@@ -23,6 +23,7 @@
   --radius: 4px;
   --line: #343c36;
   --accent: #c7e39c;
+  --header-height: 106px;
 }
 * {
   box-sizing: border-box;
@@ -49,7 +50,7 @@ button {
   outline-offset: 4px;
 }
 .header {
-  min-height: 106px;
+  min-height: var(--header-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -311,11 +312,11 @@ dialog::backdrop {
   max-width: 750px;
 }
 @media (max-width: 650px) {
+  :root {
+    --header-height: 82px;
+  }
   .shell {
     width: calc(100% - 40px);
-  }
-  .header {
-    min-height: 82px;
   }
   nav {
     gap: 16px;
@@ -561,7 +562,98 @@ body {
   background: #111513;
 }
 .header {
-  background: #111513;
+  background: var(--background);
+  gap: 8px;
+}
+.topbar[data-smart] {
+  position: sticky;
+  top: var(--safe-top);
+  z-index: 30;
+  background: var(--background);
+}
+html:has(.topbar[data-smart]) {
+  scroll-padding-top: calc(var(--header-height) + var(--safe-top));
+}
+.topbar[data-smart]::before {
+  position: absolute;
+  inset: 0 calc(-1 * var(--safe-right)) 0 calc(-1 * var(--safe-left));
+  background: inherit;
+  content: "";
+  z-index: -1;
+}
+body:has(.topbar[data-smart])::before {
+  position: fixed;
+  inset: 0 0 auto;
+  height: var(--safe-top);
+  z-index: 30;
+  background: var(--background);
+  pointer-events: none;
+  content: "";
+}
+.topbar[data-smart][data-scroll-hidden]:not(:focus-within) {
+  transform: translateY(calc(-100% - var(--safe-top)));
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .topbar[data-smart]:not(:focus-within) {
+    transition: transform 180ms ease;
+  }
+}
+.header .brand-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 3px;
+}
+.header .brand-meta small {
+  margin-top: 0;
+}
+.version-chip {
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 2px 6px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.version-chip:empty {
+  visibility: hidden;
+}
+.topbar-actions, .menu-version {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.menu-version {
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.header .topbar-update {
+  padding-inline: 10px;
+  white-space: nowrap;
+}
+.topbar-update-short {
+  display: none;
+}
+.pwa-inline-update {
+  margin-inline-start: 8px;
+}
+@media (max-width: 440px) {
+  .header .topbar-update-short {
+    display: inline;
+  }
+  .header .topbar-update-full {
+    display: none;
+  }
+  .header .topbar-actions {
+    gap: 4px;
+  }
+  .header .menu-trigger {
+    padding-inline: 9px;
+  }
 }
 .pwa-notice {
   position: fixed;

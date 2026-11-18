@@ -3,7 +3,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { loadCatalog } from "./catalog.mjs";
 const hash = (b) => crypto.createHash("sha256").update(b).digest("hex");
-export function pwaBuildPlugin() {
+export function pwaBuildPlugin(version) {
   return {
     name: "gallery-pwa-build",
     apply: "build",
@@ -65,7 +65,7 @@ export function pwaBuildPlugin() {
       };
       fs.writeFileSync(
         path.join(root, "build-info.json"),
-        JSON.stringify({ build }),
+        JSON.stringify({ build, version }),
       );
       fs.writeFileSync(path.join(root, "game-pack.json"), JSON.stringify(pack));
       fs.writeFileSync(

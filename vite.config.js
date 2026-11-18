@@ -2,14 +2,17 @@ import { defineConfig } from "vite";
 import { loadCatalog } from "./scripts/catalog.mjs";
 import { loadDemos } from "./scripts/demo-registry.mjs";
 import { pwaBuildPlugin } from "./scripts/pwa-build.mjs";
+import packageInfo from "./package.json" with { type: "json" };
 
+const { version } = packageInfo;
 const virtualId = "virtual:gallery-catalog";
 const demosId = "virtual:gallery-demos";
 export default defineConfig({
   base: "./",
+  define: { __APP_VERSION__: JSON.stringify(version) },
   build: { assetsInlineLimit: 0 },
   plugins: [
-    pwaBuildPlugin(),
+    pwaBuildPlugin(version),
     {
       name: "development-csp-exception",
       apply: "serve",

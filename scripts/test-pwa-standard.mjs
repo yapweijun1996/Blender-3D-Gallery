@@ -6,6 +6,7 @@ import crypto from "node:crypto";
 import { chromium } from "playwright";
 import { serveBuild, launchOptions, gameReady } from "./browser-test-utils.mjs";
 const catalog = JSON.parse(await fs.readFile(new URL("../models/catalog.json", import.meta.url), "utf8"));
+const { version } = JSON.parse(await fs.readFile(new URL("../package.json", import.meta.url), "utf8"));
 const expectedDemoCount = JSON.parse(await fs.readFile(new URL("../data/demos.json", import.meta.url), "utf8")).length;
 const expectedAssetCount = catalog.collections.reduce((total, collection) => total + collection.assets.length, 0);
 const artifacts =
@@ -138,7 +139,7 @@ async function closeDialogAtPositions(page, selector, closeSelector, open) {
       );
   }
 }
-async function buildVariant(label, root) {
+async function buildVariant(label, root, appVersion = version) {
   await fs.cp(buildRoot, root, { recursive: true });
   const html = path.join(root, "index.html");
   await fs.writeFile(
@@ -194,7 +195,7 @@ async function buildVariant(label, root) {
     );
   await fs.writeFile(
     path.join(root, "build-info.json"),
-    JSON.stringify({ build }),
+    JSON.stringify({ build, version: appVersion }),
   );
   await fs.writeFile(path.join(root, "game-pack.json"), JSON.stringify(pack));
   await fs.writeFile(
@@ -369,6 +370,7 @@ try {
         window.scrollTo({ top: innerHeight * 2, behavior: "instant" }),
       );
       await top.waitFor({ state: "visible" });
+      await page.locator("#menu-trigger").focus();
       await menu(page);
       await top.waitFor({ state: "hidden" });
       assert.equal(await top.isVisible(), false);
@@ -383,6 +385,68 @@ try {
         );
         assert.equal(await top.isVisible(), false);
       }
+    },
+    { reducedMotion: "reduce" },
+  );
+  await run(
+    "smart topbar can be recovered with scroll or keyboard, with version and update at three widths",
+    async (page) => {
+      const errors = [];
+      page.on("console", (message) => {
+        if (message.type() === "error") errors.push(message.text());
+      });
+      const bar = page.locator(".topbar");
+      const scrollBy = (pixels) => page.evaluate(top =>
+        window.scrollBy({ top, behavior: "instant" }), pixels);
+      const isHidden = () => document.querySelector(".topbar").getBoundingClientRect().bottom <= 0;
+      const isRevealed = () => document.querySelector(".topbar").getBoundingClientRect().top >= 0;
+      for (const width of [375, 768, 1440]) {
+        await page.setViewportSize({ width, height: 800 });
+        for (const route of ["gallery", "demos", "tripo-motion"]) {
+          await page.goto(server.url + "?page=" + route);
+          await safeInsets(page);
+          assert.equal(await bar.locator("[data-app-version]").innerText(), `v${version}`);
+          const update = bar.getByRole("button", { name: "Update to v0.2.1" });
+          assert.equal(await update.count(), 0);
+          if (route === "tripo-motion") {
+            await page.locator(".motion-stage canvas").waitFor();
+            assert.equal(await bar.evaluate(el => getComputedStyle(el).position), "static");
+          } else {
+            assert.equal(await bar.evaluate(el => getComputedStyle(el).position), "sticky");
+            const main = page.locator("main:not([hidden])");
+            const mainTop = await main.evaluate(el => el.offsetTop);
+            await scrollBy(220);
+            await page.waitForFunction(isHidden);
+            await scrollBy(-16);
+            await page.waitForFunction(isRevealed);
+            await scrollBy(32);
+            await page.waitForFunction(isHidden);
+            await page.locator(".skip-link").focus();
+            await page.keyboard.press("Tab");
+            await page.waitForFunction(isRevealed);
+            assert.equal(await bar.evaluate(el => el.contains(document.activeElement)), true);
+            assert.equal(await main.evaluate(el => el.offsetTop), mainTop);
+            await page.evaluate(() => {
+              document.activeElement.blur();
+              window.scrollTo({ top: 0, behavior: "instant" });
+            });
+          }
+          await page.evaluate(() => window.dispatchEvent(new CustomEvent("pwa-state-change", {
+            detail: { offlinePack: "missing", update: "available", updateReady: true, updateVersion: "0.2.1" },
+          })));
+          await safeRect(update, page.viewportSize(), "versioned topbar update");
+          await noOverflow(page);
+          await page.screenshot({ path: path.join(artifacts, `topbar-${route}-${width}.png`) });
+          if (width < 901 && route === "gallery") {
+            await menu(page);
+            const dialog = page.locator("#mobile-menu");
+            assert.equal(await dialog.locator("[data-app-version]").innerText(), `v${version}`);
+            assert.equal(await dialog.getByRole("button", { name: "Update to v0.2.1" }).isVisible(), true);
+            await page.keyboard.press("Escape");
+          }
+        }
+      }
+      assert.deepEqual(errors, []);
     },
     { reducedMotion: "reduce" },
   );
@@ -624,27 +688,38 @@ try {
     },
   );
   await run(
-    "real waiting worker displays safe modal loader only after explicit Update",
+    "missing demo GLB and unknown route offer the waiting worker, then topbar Update opens the loader",
     async (page) => {
       const temp = await fs.mkdtemp(
           path.join(os.tmpdir(), "b3g-standard-update-"),
         ),
         a = await buildVariant("standard-A", path.join(temp, "A")),
-        b = await buildVariant("standard-B", path.join(temp, "B")),
+        b = await buildVariant("standard-B", path.join(temp, "B"), "0.2.1"),
         updates = await serveBuild(a.root);
       try {
-        await page.goto(updates.url);
+        await page.goto(updates.url + "?page=demos");
         await page.evaluate(() => navigator.serviceWorker.ready);
         await page.reload();
         await page.waitForFunction(() => navigator.serviceWorker.controller);
         await safeInsets(page);
         updates.setRoot(b.root);
-        await page.evaluate(async () => {
-          const r = await navigator.serviceWorker.getRegistration();
-          await r.update();
+        updates.setFault(({ relative }) =>
+          /^assets\/motion-.*\.glb$/.test(relative) ? { status: 404 } : null,
+        );
+        await page.locator('.demo-card a[href="?page=tripo-motion"]').first().click();
+        const recovery = page.locator("#tripo-motion-page");
+        await recovery.getByRole("button", { name: "Retry experience" }).waitFor();
+        await recovery.getByRole("button", { name: "Update to v0.2.1" }).waitFor();
+        updates.setFault(null);
+        await page.evaluate(() => {
+          history.pushState({}, "", "?page=added-in-next-build");
+          window.dispatchEvent(new PopStateEvent("popstate"));
         });
         const notice = page.locator(".pwa-notice");
         await notice.waitFor({ state: "visible" });
+        const topUpdate = page.locator(".topbar").getByRole("button", { name: "Update to v0.2.1" });
+        await topUpdate.waitFor({ state: "visible" });
+        assert.equal(await page.locator("#route-notice").getByRole("button", { name: "Update to v0.2.1" }).isVisible(), true);
         assert.equal(
           await page
             .locator("meta[name=standard-test-build]")
@@ -653,7 +728,7 @@ try {
           "update discovery must not reload",
         );
         await safeRect(notice, page.viewportSize(), "update notice");
-        await notice.getByRole("button", { name: /update now/i }).click();
+        await topUpdate.click();
         const loader = page.locator("#pwa-update-dialog");
         await loader.waitFor({ state: "visible" });
         await safeRect(loader, page.viewportSize(), "update loader");

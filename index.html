@@ -27,34 +27,45 @@
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <header class="header shell">
-      <a class="brand" href="./" aria-label="Blender 3D Gallery home"
-        ><span class="brand-mark">✳</span
-        ><span
-          >BLENDER <i>3D</i> GALLERY<small>OBJECTS &amp; SPACES</small></span
-        ></a
-      >
-      <nav class="desktop-nav" aria-label="Main navigation">
-        <a href="?page=models" data-page="gallery">3D Models</a
-        ><a href="?page=demos" data-page="demos">Interactive Demos</a
-        ><a href="?page=about" data-page="about">About</a
-        ><a
-          class="source-link"
-          href="https://github.com/yapweijun1996/Blender-3D-Gallery"
-          >GitHub <span aria-hidden="true">↗</span></a
-        >
-      </nav>
-      <button
-        id="menu-trigger"
-        class="outline-button menu-trigger"
-        type="button"
-        aria-haspopup="dialog"
-        aria-controls="mobile-menu"
-        aria-expanded="false"
-      >
-        Menu ☰
-      </button>
-    </header>
+    <div class="topbar">
+      <header class="header shell">
+        <a class="brand" href="./" aria-label="Blender 3D Gallery home" aria-describedby="topbar-version">
+          <span class="brand-mark">✳</span>
+          <span>
+            BLENDER <i>3D</i> GALLERY
+            <span class="brand-meta">
+              <small>OBJECTS &amp; SPACES</small>
+              <span id="topbar-version" class="version-chip" data-app-version></span>
+            </span>
+          </span>
+        </a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          <a href="?page=models" data-page="gallery">3D Models</a
+          ><a href="?page=demos" data-page="demos">Interactive Demos</a
+          ><a href="?page=about" data-page="about">About</a
+          ><a
+            class="source-link"
+            href="https://github.com/yapweijun1996/Blender-3D-Gallery"
+            >GitHub <span aria-hidden="true">↗</span></a
+          >
+        </nav>
+        <div class="topbar-actions">
+          <button class="outline-button topbar-update" type="button" data-pwa-update hidden>
+            <span class="topbar-update-short"></span><span class="topbar-update-full"></span>
+          </button>
+          <button
+            id="menu-trigger"
+            class="outline-button menu-trigger"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+          >
+            Menu ☰
+          </button>
+        </div>
+      </header>
+    </div>
     <dialog id="mobile-menu" aria-labelledby="menu-title">
       <div class="menu-heading">
         <h2 id="menu-title">Explore the gallery</h2>
@@ -74,6 +85,10 @@
           >GitHub ↗</a
         >
       </nav>
+      <div class="menu-version">
+        <span class="version-chip" data-app-version></span>
+        <button class="outline-button topbar-update" type="button" data-pwa-update hidden></button>
+      </div>
     </dialog>
     <div id="main-content" tabindex="-1"></div>
     <p id="route-notice" class="shell route-notice" role="status" hidden></p>
