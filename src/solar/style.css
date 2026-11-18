@@ -16,7 +16,7 @@
 .solar-heading > p,
 .solar-note,
 .solar-small {
-  color: var(--muted, #a4b1ab);
+  color: var(--muted);
 }
 .solar-toolbar {
   display: flex;
@@ -32,9 +32,9 @@
 .solar-toolbar select,
 .solar-toolbar button {
   min-height: 44px;
-  background: #202c26;
-  color: #f0f1e6;
-  border: 1px solid #526157;
+  background: var(--solar-control-surface);
+  color: var(--solar-control-text);
+  border: 1px solid var(--solar-control-line);
   padding: 10px 14px;
   border-radius: 6px;
   font: inherit;
@@ -42,7 +42,7 @@
 }
 .solar-toolbar select:focus-visible,
 .solar-toolbar button:focus-visible {
-  outline: 2px solid #d7e6b4;
+  outline: 2px solid var(--solar-focus);
   outline-offset: 3px;
 }
 .solar-note {
@@ -59,7 +59,7 @@
 .solar-canvas {
   height: min(65vh, 680px);
   min-height: 360px;
-  background: #101717;
+  background: var(--solar-stage);
   border-radius: 12px;
   position: relative;
   overflow: hidden;
@@ -78,7 +78,7 @@
   pointer-events: none;
 }
 .solar-info {
-  border-left: 1px solid #3a463d;
+  border-left: 1px solid var(--solar-panel-line);
   padding-left: 24px;
   overflow-wrap: anywhere;
   min-width: 0;
@@ -102,7 +102,7 @@
   display: inline-block;
   margin: 12px 0 24px;
   padding: 12px 18px;
-  border: 1px solid #5a6c5c;
+  border: 1px solid var(--link-control-line);
   border-radius: 6px;
 }
 .solar-attribution {
@@ -117,7 +117,7 @@
   }
   .solar-info {
     border-left: 0;
-    border-top: 1px solid #3a463d;
+    border-top: 1px solid var(--solar-panel-line);
     padding: 16px 0 0;
   }
   .solar-heading {

@@ -6,14 +6,15 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#111513" />
-    <meta name="color-scheme" content="dark" />
-    <!-- Exact hashes permit the built-in browser's annotation overlay and cursor styles. -->
+    <meta name="theme-color" content="" />
+    <meta name="color-scheme" content="" />
+    <!-- Exact style hashes permit the built-in browser's annotation overlay and cursor styles. -->
     <meta
       http-equiv="Content-Security-Policy"
       data-production-csp
       content="default-src 'none'; script-src 'self'; style-src 'self' 'sha256-62lPaUtpvg47KrxPOXYc0Ki8fkE6PNsbY5I9DpyEwZ4=' 'sha256-OUoShR0c3lqWNHEaHdorwfYnp/0EJHI/7QhTEUtan9w='; img-src 'self' blob: data:; connect-src 'self' blob: data:; worker-src 'self'; manifest-src 'self'; font-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; frame-src 'none'"
     />
+    <!-- palette-bootstrap -->
     <meta
       name="description"
       content="An independent gallery of real 3D works made with Blender."
@@ -50,6 +51,7 @@
           >
         </nav>
         <div class="topbar-actions">
+          <button class="outline-button palette-trigger" type="button" data-open-palette hidden aria-haspopup="dialog" aria-controls="palette-picker" aria-expanded="false"></button>
           <button class="outline-button topbar-update" type="button" data-pwa-update hidden>
             <span class="topbar-update-short"></span><span class="topbar-update-full"></span>
           </button>
@@ -84,11 +86,19 @@
         ><a href="https://github.com/yapweijun1996/Blender-3D-Gallery"
           >GitHub ↗</a
         >
+        <button class="outline-button palette-trigger" type="button" data-open-palette hidden aria-haspopup="dialog" aria-controls="palette-picker" aria-expanded="false"></button>
       </nav>
       <div class="menu-version">
         <span class="version-chip" data-app-version></span>
         <button class="outline-button topbar-update" type="button" data-pwa-update hidden></button>
       </div>
+    </dialog>
+    <dialog id="palette-picker" aria-labelledby="palette-title">
+      <div class="palette-heading">
+        <h2 id="palette-title"></h2>
+        <button class="icon-button" type="button">×</button>
+      </div>
+      <div class="palette-options" role="radiogroup" aria-labelledby="palette-title"></div>
     </dialog>
     <div id="main-content" tabindex="-1"></div>
     <p id="route-notice" class="shell route-notice" role="status" hidden></p>

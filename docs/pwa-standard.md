@@ -4,11 +4,11 @@
 
 This contract applies KB `pwa:product-standard` to Blender 3D Gallery. The November 18 amendment applies the `IMMERSIVE_3D` profile in v1.1.0 and KB `pwa:sw-install-integrity` v0.2.0 for deployment recovery. The owner retained commit, merge and push authorization.
 
-Retain the dark editorial identity, gallery assets and original sources, query routes, Game rules, checkpoint schema and reliability guards.
+Retain Editorial Moss as the default, preserve gallery assets and original sources, query routes, Game rules, checkpoint schema and reliability guards.
 
 ## Product decisions
 
-- Dark-only theme remains intentional; light-theme chrome is N/A.
+- The palette picker supports dark and light palettes. The saved choice sets the document color scheme and theme-color meta on startup and updates both on selection.
 - Preserve manifest identity `./`, scope `./`, start URL `./?page=game`, relative to the manifest under `/Blender-3D-Gallery/`.
 - Installation help distinguishes installation from explicit offline Game preparation.
 - Gallery, the Interactive Demos index and About use a sticky topbar. Past 80 px it hides after 8 px of downward travel, and 8 px of upward travel reveals it. Focus inside the bar or an open dialog reveals it. Transform-only movement keeps its layout space reserved. The safe area stays clear, and reduced motion removes the transition. Long index pages also provide contextual scroll-to-top.
@@ -49,9 +49,9 @@ The previously deployed client lacks the new update-lock/deadline protocol. A ne
 
 Shared four-edge safe-area properties have zero fallback. Each edge has an owning container to avoid duplicate padding. Cover shell, menu, viewer, installation/game/update dialogs, notices, fullscreen and floating navigation. Preserve supported short Game viewport bounds and44px primary targets. Mobile text-entry controls are at least16px; page zoom remains available.
 
-Configure intentional opaque dark chrome. Actual startup appearance remains device-specific and pending. Validate current icon dimensions/maskable crop before changing artwork.
+The manifest keeps opaque Editorial Moss theme and launch colors. The document theme-color follows the selected palette when the browser honors it. Apple standalone mode still requests the opaque black status bar. Startup splash and system chrome for light and dark palettes remain UNVERIFIED on physical iOS and Android devices. Validate current icon dimensions/maskable crop before changing artwork.
 
-Production uses HTTPS and a minimal tested resource policy. Permit actual same-origin scripts/workers/models and necessary embedded texture schemes; the Vite development server removes the tagged CSP meta only for injected development CSS/HMR; production builds and preview retain it. The style policy permits two exact SHA-256 hashes for the built-in browser annotation overlay and cursor styles, observed on 2026-11-14. Other inline styles and scripts remain blocked. Browser updates may change those styles; if annotation stops working, reproduce on a production-policy page and update the hashes only after checking the new injected styles. Meta CSP does not provide every HTTP-header capability. Preserve registry/GLB URI checks and keep secrets/private content out of caches.
+Production uses HTTPS and a minimal tested resource policy. Permit actual same-origin scripts/workers/models and necessary embedded texture schemes; the Vite development server removes the tagged CSP meta only for injected development CSS/HMR; production builds and preview retain it. The style policy permits two exact SHA-256 hashes for the built-in browser annotation overlay and cursor styles, observed on 2026-11-14. The build adds one exact SHA-256 script hash for the palette bootstrap. See [the color system](design.md#persistence-and-first-paint) for its initialization and storage contract. All other inline script and style sources remain blocked. Browser updates may change those styles; if annotation stops working, reproduce on a production-policy page and update the hashes only after checking the new injected styles. Meta CSP does not provide every HTTP-header capability. Preserve registry/GLB URI checks and keep secrets/private content out of caches.
 
 ## Standard acceptance matrix
 
@@ -68,7 +68,7 @@ Production uses HTTPS and a minimal tested resource policy. Permit actual same-o
 | Accessibility | Existing keyboard/axe/targets | New UI focus, announcements, targets, reduced motion |
 | Smart topbar | Nonpersistent header | Sticky hide and reveal, focus and modal reveal, reduced motion, safe areas, version and update action. Static on immersive routes |
 | Scroll-to-top | Missing | Contextual, safe-area/modal/route aware, keyboard usable |
-| Theme chrome | Dark only | Light N/A; dark configuration and honest device status |
+| Theme chrome | Selectable light and dark palettes | Document metadata and first-paint restoration in browser; physical system chrome UNVERIFIED |
 | Security/privacy | HTTPS/scoped cache; CSP absent | Production CSP positive/negative checks; preserved privacy boundaries |
 
 ## Completion

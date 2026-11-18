@@ -7,22 +7,16 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  color: #e8eae3;
-  background: #111513;
+  color: var(--text);
+  background: var(--background);
+  color-scheme: var(--palette-scheme);
   font-synthesis: none;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
-  color-scheme: dark;
-  --background: #111513;
-  --surface: #1a201b;
-  --text: #e8eae3;
-  --muted: #a9b0a6;
   --display-font: Georgia, serif;
   --radius: 4px;
-  --line: #343c36;
-  --accent: #c7e39c;
   --header-height: 106px;
 }
 * {
@@ -46,7 +40,7 @@ button {
   font: inherit;
 }
 :is(a, button, input, select, [tabindex]):focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--focus);
   outline-offset: 4px;
 }
 .header {
@@ -85,13 +79,13 @@ nav {
   gap: 38px;
   align-items: center;
   font-size: 13px;
-  color: #b6beb5;
+  color: var(--navigation-text);
 }
 nav a:hover {
-  color: #fff;
+  color: var(--control-highlight);
 }
 .source-link {
-  border: 1px solid #525b52;
+  border: 1px solid var(--navigation-line);
   border-radius: 99px;
   padding: 11px 17px;
 }
@@ -122,7 +116,7 @@ nav a:hover {
   display: grid;
   aspect-ratio: 1.95;
   overflow: hidden;
-  background: #151715;
+  background: var(--image-placeholder);
 }
 .hero-frame img {
   display: block;
@@ -176,7 +170,7 @@ h1 {
   margin-bottom: 0;
 }
 h1 em {
-  color: #b2c5aa;
+  color: var(--heading-emphasis);
   font-weight: 400;
 }
 .intro-copy {
@@ -201,7 +195,7 @@ h1 em {
   font:
     400 clamp(22px, 2.7vw, 36px) / 1.45 Georgia,
     serif;
-  color: #c7d0c4;
+  color: var(--editorial-text);
   margin: 0;
 }
 .footer {
@@ -211,7 +205,7 @@ h1 em {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  color: #829083;
+  color: var(--footer-text);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -222,19 +216,19 @@ h1 em {
   min-height: 44px;
 }
 .footer span:first-child {
-  color: #c1d2b9;
+  color: var(--footer-brand-text);
 }
 dialog {
   width: min(1060px, calc(100% - 40px));
   max-height: calc(100dvh - 40px);
   padding: 0;
-  border: 1px solid #49574a;
-  background: #1a201b;
-  color: #e8eae3;
+  border: 1px solid var(--dialog-line);
+  background: var(--surface);
+  color: var(--text);
   overflow: auto;
 }
 dialog::backdrop {
-  background: #050806d9;
+  background: color-mix(in srgb, var(--scrim) 85.098%, transparent);
 }
 .viewer-header,
 .viewer-footer {
@@ -254,9 +248,9 @@ dialog::backdrop {
   margin: 0;
 }
 .icon-button {
-  border: 1px solid #536052;
+  border: 1px solid var(--icon-button-line);
   background: transparent;
-  color: white;
+  color: var(--control-highlight);
   font-size: 26px;
   width: 44px;
   height: 44px;
@@ -266,7 +260,7 @@ dialog::backdrop {
   position: relative;
   min-height: 300px;
   height: min(55dvh, 600px);
-  background: #657078;
+  background: var(--viewer-stage);
 }
 .viewport canvas {
   width: 100%;
@@ -284,7 +278,7 @@ dialog::backdrop {
   place-items: center;
   margin: 0;
   padding: 20px;
-  color: white;
+  color: var(--media-status-text);
   text-align: center;
   pointer-events: none;
 }
@@ -293,18 +287,18 @@ dialog::backdrop {
 }
 .viewer-footer p {
   margin: 0;
-  color: #aeb8ac;
+  color: var(--viewer-muted);
   font-size: 12px;
 }
 .viewer-footer button {
   padding: 10px 16px;
-  color: #e9efe6;
-  border: 1px solid #566456;
+  color: var(--viewer-control-text);
+  border: 1px solid var(--viewer-control-line);
   background: transparent;
   cursor: pointer;
 }
 .viewer-description {
-  color: #aeb8ac;
+  color: var(--viewer-muted);
   font-size: 13px;
   line-height: 1.6;
   margin: 0;
@@ -400,8 +394,8 @@ dialog::backdrop {
   padding: 0;
   border: 0;
   overflow: hidden;
-  background: #343b39;
-  color: #e6eee2;
+  background: var(--thumbnail-surface);
+  color: var(--media-caption-text);
   cursor: pointer;
 }
 .asset-image img {
@@ -420,7 +414,7 @@ dialog::backdrop {
   bottom: 12px;
   right: 12px;
   padding: 9px 11px;
-  background: #151a17e8;
+  background: color-mix(in srgb, var(--media-caption-scrim) 90.98%, transparent);
   font-size: 9px;
   letter-spacing: 0.08em;
 }
@@ -463,8 +457,8 @@ dialog::backdrop {
   display: inline-flex;
   align-items: center;
   min-height: 38px;
-  color: #e4ecd9;
-  border-bottom: 1px solid #859a75;
+  color: var(--download-text);
+  border-bottom: 1px solid var(--download-line);
   font-size: 12px;
 }
 .asset-download:hover,
@@ -559,7 +553,7 @@ dialog::backdrop {
 
 body {
   padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
-  background: #111513;
+  background: var(--background);
 }
 .header {
   background: var(--background);
@@ -665,11 +659,11 @@ body:has(.topbar[data-smart])::before {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  background: #273b29;
-  border: 1px solid #9ab783;
+  background: var(--notice-surface);
+  border: 1px solid var(--notice-line);
   padding: 16px;
-  color: #eef7e6;
-  box-shadow: 0 6px 30px #0008;
+  color: var(--notice-text);
+  box-shadow: 0 6px 30px color-mix(in srgb, var(--shadow) 53.333%, transparent);
   font-size: 13px;
 }
 .pwa-notice[hidden] {
@@ -692,7 +686,7 @@ body:has(.topbar[data-smart])::before {
   line-height: 1.7;
 }
 .pwa-help button {
-  color: var(--background);
+  color: var(--accent-contrast);
   padding: 12px 20px;
   min-height: 44px;
   background: var(--accent);
@@ -735,7 +729,7 @@ nav a[aria-current="page"] {
   display: inline-block;
   margin: 12px 0 24px;
   padding: 12px 18px;
-  border: 1px solid #5a6c5c;
+  border: 1px solid var(--link-control-line);
   border-radius: 6px;
 }
 [hidden] {
@@ -754,7 +748,7 @@ nav a[aria-current="page"] {
   top: -100px;
   z-index: 200;
   padding: 14px;
-  color: var(--background);
+  color: var(--accent-contrast);
   background: var(--accent);
 }
 .skip-link:focus {
@@ -772,9 +766,9 @@ nav a[aria-current="page"] {
 }
 .outline-button {
   padding: 11px 17px;
-  border: 1px solid #62725f;
+  border: 1px solid var(--outline-button-line);
   border-radius: var(--radius);
-  color: #e8eae3;
+  color: var(--text);
   background: transparent;
   cursor: pointer;
   font: inherit;
@@ -786,7 +780,7 @@ nav a[aria-current="page"] {
 }
 .text-link {
   color: var(--accent);
-  border-bottom: 1px solid #68795e;
+  border-bottom: 1px solid var(--text-link-line);
   font-size: 13px;
 }
 .explore-links {
@@ -802,11 +796,11 @@ nav a[aria-current="page"] {
 .explore-links .outline-button {
   background: var(--accent);
   border-color: var(--accent);
-  color: var(--background);
+  color: var(--accent-contrast);
   font-weight: 600;
 }
 .explore-links .outline-button:hover {
-  background: #d7ebba;
+  background: var(--accent-hover);
 }
 .explore-links .text-link {
   border-bottom: 0;
@@ -827,7 +821,7 @@ nav a[aria-current="page"] {
   gap: 9px;
   min-width: 0;
   font-size: 12px;
-  color: #bec9b9;
+  color: var(--field-label-text);
 }
 .browse-controls .search-field {
   flex: 1;
@@ -838,13 +832,12 @@ nav a[aria-current="page"] {
   min-width: 0;
   height: 46px;
   padding: 10px 12px;
-  border: 1px solid #596752;
+  border: 1px solid var(--field-line);
   border-radius: var(--radius);
   background: var(--surface);
-  color: #e8eae3;
+  color: var(--text);
   font: inherit;
   font-size: 14px;
-  color-scheme: dark;
 }
 .browse-controls input::placeholder {
   color: var(--muted);
@@ -872,7 +865,7 @@ nav a[aria-current="page"] {
 }
 .empty-title {
   font: 400 28px var(--display-font);
-  color: #e8eae3;
+  color: var(--text);
 }
 .index-intro {
   padding: 70px 0 40px;
@@ -944,7 +937,7 @@ nav a[aria-current="page"] {
 .demo-technology,
 .demo-availability {
   font-size: 12px;
-  color: #c2ccb9;
+  color: var(--demo-description-text);
 }
 .demo-availability {
   margin-bottom: 20px;
@@ -1012,7 +1005,7 @@ body.game-page .demo-breadcrumb {
 }
 .viewer-status {
   z-index: 1;
-  background: #111513b8;
+  background: color-mix(in srgb, var(--media-status-scrim) 72.157%, transparent);
 }
 .viewport:fullscreen {
   width: 100vw;
@@ -1034,7 +1027,7 @@ body.game-page .demo-breadcrumb {
 }
 .viewer-animation-actions button[aria-pressed="true"] {
   background: var(--accent);
-  color: var(--background);
+  color: var(--accent-contrast);
 }
 .viewer-actions button:disabled {
   opacity: 0.55;
@@ -1275,7 +1268,7 @@ dialog {
   min-width: 44px;
   min-height: 44px;
   padding: 10px 14px;
-  border: 1px solid #73856b;
+  border: 1px solid var(--control-line);
   border-radius: var(--radius);
   background: var(--surface);
   color: var(--accent);
@@ -1288,11 +1281,11 @@ dialog {
   padding: 28px;
   background: var(--surface);
   color: var(--text);
-  border: 1px solid #73856b;
+  border: 1px solid var(--control-line);
   text-align: center;
 }
 .pwa-update-dialog::backdrop {
-  background: #050806ed;
+  background: color-mix(in srgb, var(--scrim) 92.941%, transparent);
 }
 .pwa-update-mark {
   display: block;
@@ -1326,7 +1319,7 @@ dialog {
 .pwa-update-actions button {
   min-height: 44px;
   padding: 10px 18px;
-  border: 1px solid #73856b;
+  border: 1px solid var(--control-line);
   border-radius: var(--radius);
   background: transparent;
   color: var(--text);
@@ -1381,9 +1374,9 @@ dialog {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  background: #202326;
-  color: #eee9dc;
-  border-top: 1px solid #54504a;
+  background: var(--preset-surface);
+  color: var(--preset-text);
+  border-top: 1px solid var(--preset-divider);
   border-bottom: 1px solid var(--line);
 }
 .vehicle-views-label { font-size: 12px; letter-spacing: 0.08em; }
@@ -1393,13 +1386,13 @@ dialog {
   min-width: 56px;
   padding: 10px 14px;
   font-size: 12px;
-  color: #eee9dc;
-  border: 1px solid #716b60;
+  color: var(--preset-text);
+  border: 1px solid var(--preset-control-line);
   border-radius: 2px;
   background: transparent;
 }
-.vehicle-view-buttons button[aria-pressed="true"] { background: #e1d4b9; color: #202326; border-color: #e1d4b9; }
-.vehicle-view-buttons button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.vehicle-view-buttons button[aria-pressed="true"] { background: var(--preset-selected); color: var(--preset-selected-text); border-color: var(--preset-selected); }
+.vehicle-view-buttons button:focus-visible { outline: 2px solid var(--control-highlight); outline-offset: 3px; }
 @media (max-width: 600px) {
   .vehicle-views { padding: 14px; }
   .vehicle-view-buttons { width: 100%; }
@@ -1415,28 +1408,28 @@ dialog {
   flex-wrap: wrap;
   gap: 12px;
   padding-top: 12px;
-  border-top: 1px solid #54504a;
+  border-top: 1px solid var(--preset-divider);
 }
 .vehicle-door-buttons { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .vehicle-door-buttons button {
   min-height: 44px;
   padding: 10px 14px;
   font-size: 12px;
-  color: #eee9dc;
-  border: 1px solid #716b60;
+  color: var(--preset-text);
+  border: 1px solid var(--preset-control-line);
   border-radius: 2px;
   background: transparent;
 }
-.vehicle-door-buttons button[aria-pressed="true"] { background: #e1d4b9; color: #202326; border-color: #e1d4b9; }
-.vehicle-door-buttons button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-.vehicle-door-unavailable { color: #c9c2b4; font-size: 12px; }
+.vehicle-door-buttons button[aria-pressed="true"] { background: var(--preset-selected); color: var(--preset-selected-text); border-color: var(--preset-selected); }
+.vehicle-door-buttons button:focus-visible { outline: 2px solid var(--control-highlight); outline-offset: 3px; }
+.vehicle-door-unavailable { color: var(--preset-muted); font-size: 12px; }
 .cart-demo { padding: 16px 24px; background: var(--surface); border-block: 1px solid var(--line); }
 .cart-demo strong { font-size: 14px; }
 .cart-demo-status { margin: 8px 0 12px; color: var(--muted); font-size: 13px; }
 .cart-demo-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
-.cart-demo-buttons button { min-height: 44px; padding: 8px 14px; color: inherit; background: transparent; border: 1px solid #716b60; border-radius: 2px; }
+.cart-demo-buttons button { min-height: 44px; padding: 8px 14px; color: inherit; background: transparent; border: 1px solid var(--preset-control-line); border-radius: 2px; }
 .cart-demo-buttons button:disabled { opacity: .45; }
-.cart-demo-buttons button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.cart-demo-buttons button:focus-visible { outline: 2px solid var(--control-highlight); outline-offset: 3px; }
 @media (max-width: 600px) {
   .vehicle-door-buttons { width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .vehicle-door-buttons button { min-width: 0; padding-inline: 8px; }
@@ -1499,7 +1492,7 @@ dialog {
   border-radius: 20px;
   text-align: center;
   background: var(--accent);
-  color: var(--background);
+  color: var(--accent-contrast);
 }
 #advanced-filters {
   display: grid;
@@ -1535,7 +1528,7 @@ dialog {
   border: 1px solid var(--line);
   border-radius: 24px;
 }
-.category-link[aria-current] { color: var(--background); }
+.category-link[aria-current] { color: var(--accent-contrast); }
 .category-link[aria-current]::before { border-color: var(--accent); background: var(--accent); }
 .category-link:not([aria-current]):is(:hover, :focus-visible)::before { border-color: var(--accent); }
 #clear-model-filters {
@@ -1563,5 +1556,5 @@ dialog {
   #filter-toggle { padding-inline: 10px; }
 }
 .asset-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 6px; }
-.asset-tags span { padding: 4px 8px; border: 1px solid var(--line); border-radius: 99px; color: #cbd8c5; font-size: 10px; }
+.asset-tags span { padding: 4px 8px; border: 1px solid var(--line); border-radius: 99px; color: var(--tag-text); font-size: 10px; }
 .viewer-actions .viewer-download { padding: 10px 16px; border: 1px solid var(--accent); color: var(--accent); }

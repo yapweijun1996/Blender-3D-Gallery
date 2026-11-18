@@ -1,5 +1,6 @@
 let motionPage = null;
 let shelfInspectorPage = null;
+import "virtual:gallery-palette-colors.css";
 import "./style.css";
 import catalog from "virtual:gallery-catalog";
 import demos from "virtual:gallery-demos";
@@ -7,6 +8,7 @@ import { setupPwa } from "./pwa/register.js";
 import { pwaCopy } from "./pwa/copy.js";
 import { setupMenu } from "./navigation.js";
 import { setupSmartTopbar } from "./smart-topbar.js";
+import { setupPalettePicker } from "./design/palette-picker.js";
 import { getPageHeading, setupScrollToTop } from "./scroll-to-top.js";
 import {
   element,
@@ -42,6 +44,7 @@ const dialog = $("#viewer"),
   status = $("#viewer-status");
 const closeMenu = setupMenu();
 const setSmartTopbar = setupSmartTopbar();
+setupPalettePicker();
 let viewerController, activeViewer, activeAsset, opener;
 let gamePage = null,
   solarPage = null,

@@ -1,0 +1,139 @@
+.palette-trigger {
+  gap: 8px;
+}
+
+#mobile-menu .palette-trigger {
+  justify-content: flex-start;
+  margin-block: 8px 16px;
+}
+
+.palette-trigger::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  flex: none;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent) 50%, var(--surface) 50%);
+}
+
+#palette-picker {
+  width: min(568px, calc(100vw - var(--safe-left) - var(--safe-right) - 24px));
+  max-height: min(68dvh, calc(100dvh - var(--safe-top) - var(--safe-bottom) - 24px));
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.palette-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.palette-heading h2 {
+  margin: 0;
+  font: 400 25px var(--display-font);
+}
+
+.palette-heading .icon-button {
+  flex: none;
+  border-radius: var(--radius);
+}
+
+.palette-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 14px 20px 20px;
+}
+
+#palette-picker[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.palette-card {
+  position: relative;
+  display: grid;
+  align-content: center;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+  min-height: 64px;
+  padding: 8px 10px;
+  border: 1px solid var(--control-line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.palette-card:hover {
+  background: var(--surface-raised);
+}
+
+.palette-card:has(input:checked) {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.palette-card:has(input:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.palette-card input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  clip-path: inset(50%);
+}
+
+.palette-preview {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 14px;
+  border: 1px solid var(--control-line);
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--background) 44%, var(--surface-raised) 44% 71%, var(--accent) 71%);
+}
+
+.palette-name {
+  font-size: 13px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.palette-check {
+  color: var(--accent);
+  font-size: 13px;
+  visibility: hidden;
+}
+
+.palette-card:has(input:checked) .palette-check {
+  visibility: visible;
+}
+
+@media (max-width: 900px) {
+  .header .palette-trigger {
+    display: none;
+  }
+
+  #palette-picker {
+    margin: auto auto 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .palette-heading,
+  .palette-options {
+    padding-inline: 12px;
+  }
+}

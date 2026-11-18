@@ -3,5 +3,5 @@
 .visitor-v2-controls p { margin: 8px 0 12px; color: var(--muted); font-size: 13px; }
 .visitor-v2-fields { display: flex; flex-wrap: wrap; gap: 10px; }
 .visitor-v2-fields label { display: grid; gap: 4px; color: inherit; font-size: 12px; }
-.visitor-v2-fields select { min-height: 44px; max-width: 100%; padding: 8px; color: inherit; background: #17201a; border: 1px solid #716b60; }
-.visitor-v2-fields select:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.visitor-v2-fields select { min-height: 44px; max-width: 100%; padding: 8px; color: inherit; background: var(--visitor-control-surface); border: 1px solid var(--preset-control-line); }
+.visitor-v2-fields select:focus-visible { outline: 2px solid var(--control-highlight); outline-offset: 3px; }

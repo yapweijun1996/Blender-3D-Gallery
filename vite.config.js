@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import { loadCatalog } from "./scripts/catalog.mjs";
 import { loadDemos } from "./scripts/demo-registry.mjs";
 import { pwaBuildPlugin } from "./scripts/pwa-build.mjs";
+import { paletteBuildPlugin } from "./scripts/palette-build.mjs";
 import packageInfo from "./package.json" with { type: "json" };
 
 const { version } = packageInfo;
@@ -13,6 +14,7 @@ export default defineConfig({
   build: { assetsInlineLimit: 0 },
   plugins: [
     pwaBuildPlugin(version),
+    paletteBuildPlugin(),
     {
       name: "development-csp-exception",
       apply: "serve",
