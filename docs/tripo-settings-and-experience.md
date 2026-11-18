@@ -69,3 +69,16 @@ model (separate fingers, palms down), but this was judged on a screenshot only.
 ## 5. Studio retopo body, measured in Blender (2026-11-18)
 
 `output/modular-chibi-parts/studio-base/studio_base_retopo.glb` (Studio Best Quality 55 credits + quad retopo 5,000 polygons 40 credits; exported GLB): 8,454 triangles, 7,620 vertices, height 0.978, arm span 0.82, feet on z=0, faces the viewer (+Z), left-right mirror error 0.0001. Hands: about 1,785 faces per hand, but the fingers touch with no gaps and the thumb points down with the palm facing forward, exactly like the CLI base body. Conclusion: the Studio route does not fix the hand problem by itself; the retopo smoothed the fingers together. The repaired-hand body in `master/` (Codex Astra repair) stays the working body.
+
+## 6. Studio rig, animate and segment, tried (2026-11-18)
+
+- Rig (Humanoid, Mixamo preset, 20 credits, about 3 to 4 minutes in the queue): the exported GLB (skeleton on, 4k texture, 2.9 MB)
+  has 1 mesh, 65 joints, all named `mixamorig:*` including every finger chain, JOINTS_0 and WEIGHTS_0 attributes and no animation.
+  The names are identical to the CLI rig, so clips (`models/tripo-chibi-motion/motion.glb`), hand gestures and garment modules work with either.
+  File: `output/modular-chibi-parts/studio-base/studio_base_rigged.glb`.
+- Animate presets (for example "walk"): picking one runs "Retargeting" and plays it in the viewer without spending credits (balance unchanged);
+  text or video animation costs 20 credits.
+- Segment: the Custom tab analyses the model first and fills the prompt itself (for example "Separate the head, body, arms, legs, backpack, and shoes into individual parts.");
+  edit it into a wardrobe prompt ("hair, glasses, bare skin body, hoodie jacket, cargo pants, shoes, backpack"). The button shows a free trial price, then 40; it takes more than two minutes on a 2M-triangle model.
+- Image to 3D with a clothed chibi reference (Best Quality, 55 credits) gave 1,995,743 triangles with hair, glasses, hoodie, cargo pants, shoes and backpack all modelled.
+- Studio queues are not instant: generation about 2.5 minutes, rig about 3 minutes, segment longer. Run two tabs in parallel to hide the waiting.
