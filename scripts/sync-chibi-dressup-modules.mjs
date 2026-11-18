@@ -17,7 +17,12 @@ const candidates = [
     label: { en: "Spiky hair", "zh-Hans": "尖发", ms: "Rambut tercacak" },
     paths: ["studio-modules/hair-spiky/hair_spiky_v1.glb"],
   },
-  // Pending modules (not shown until they pass the motion gate and review): top-tshirt, top-hoodie, shoes-sneakers.
+  {
+    id: "shoes-sneakers", slot: "shoes",
+    label: { en: "Sneakers", "zh-Hans": "运动鞋", ms: "Kasut sukan" },
+    paths: ["shoes-sol/round3/shoes_sneaker_v3.glb"],
+  },
+  // Pending modules (not shown until they pass the motion gate and review): top-tshirt, top-hoodie .
 ];
 
 async function findSource(paths) {
