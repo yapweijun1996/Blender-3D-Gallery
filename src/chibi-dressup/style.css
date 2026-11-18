@@ -1,0 +1,151 @@
+.dressup {
+  margin: 1.25rem 0 4rem;
+}
+
+.dressup-heading {
+  margin-bottom: clamp(1rem, 3vw, 1.75rem);
+}
+
+.dressup-heading h1 {
+  margin: 0;
+  font: 500 clamp(2rem, 5vw, 3.75rem) / 1.1 Georgia, serif;
+}
+
+.dressup-heading p {
+  margin: .65rem 0 0;
+  color: var(--muted);
+}
+
+.dressup-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.dressup-preview,
+.dressup-panel {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface);
+}
+
+.dressup-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: clamp(17rem, 46svh, 39rem);
+  overflow: hidden;
+  border-radius: 1rem 1rem 0 0;
+  background: radial-gradient(ellipse at center, var(--surface-raised), var(--background));
+}
+
+.dressup-stage canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.dressup-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dressup-loading {
+  position: absolute;
+  margin: 1rem;
+  padding: .65rem .9rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: .5rem;
+}
+
+.dressup-hint {
+  margin: 0;
+  padding: .75rem 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .875rem;
+}
+
+.dressup-panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.dressup-panel fieldset {
+  display: grid;
+  gap: .65rem;
+  min-width: 0;
+  margin: 0;
+  padding: .8rem;
+  border: 1px solid var(--line);
+  border-radius: .65rem;
+}
+
+.dressup-panel legend {
+  padding: 0 .35rem;
+  font: 500 1.25rem / 1.2 Georgia, serif;
+}
+
+.dressup-slot,
+.dressup-clips,
+.dressup-hands {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .5rem;
+}
+
+.dressup-slot span {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: .875rem;
+}
+
+.dressup-panel button,
+.dressup-panel select {
+  width: 100%;
+  min-height: 44px;
+  padding: .4rem .65rem;
+  border: 1px solid var(--control-line);
+  border-radius: .45rem;
+  background: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+  font-size: .875rem;
+  cursor: pointer;
+}
+
+.dressup-panel button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.dressup-panel :is(button, select):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.dressup-hands label {
+  display: grid;
+  gap: .35rem;
+  min-width: 0;
+  color: var(--muted);
+  font-size: .875rem;
+}
+
+@media (min-width: 760px) {
+  .dressup-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
+    align-items: start;
+  }
+
+  .dressup-stage {
+    height: clamp(26rem, 66svh, 40rem);
+  }
+}
