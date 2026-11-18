@@ -11,7 +11,7 @@ const manifest = JSON.parse(readFileSync(new URL("manifest.json", directory), "u
 test("dress-up manifest describes real module bytes and localized controls", () => {
   assert.equal(validateManifest(manifest), manifest);
   assert.deepEqual(manifest.slots, ["hair", "top", "bottom", "shoes", "hat"]);
-  assert.ok(manifest.modules.length >= 3);
+  assert.ok(manifest.modules.length >= 2);
   for (const { file, bytes, sha256 } of manifest.modules) {
     const data = readFileSync(new URL(file, directory));
     assert.equal(data.toString("ascii", 0, 4), "glTF");
@@ -54,7 +54,7 @@ test("dress-up config round trips with independent hands and hidden slots", () =
   const storage = { getItem: key => data.get(key) ?? null, setItem: (key, value) => data.set(key, value) };
   const config = loadConfig(manifest, storage);
   assert.deepEqual(config.modules, {
-    hair: "hair-bob", top: "top-tshirt", bottom: null, shoes: "shoes-sneakers", hat: null,
+    hair: "hair-bob", top: null, bottom: null, shoes: null, hat: null,
   });
   config.modules.hair = null;
   config.animation = "wave";
@@ -67,11 +67,11 @@ test("dress-up config round trips with independent hands and hidden slots", () =
 
 test("stale config preserves valid choices and blocked storage leaves a usable default", () => {
   const old = {
-    modules: { hair: "removed", top: null, bottom: "hair-bob", shoes: "shoes-sneakers", unknown: "item" },
+    modules: { hair: "removed", top: null, bottom: "hair-bob", shoes: "removed-shoes", unknown: "item" },
     animation: "unknown", hands: { L: "point", R: "unknown" },
   };
   assert.deepEqual(loadConfig(manifest, { getItem: () => JSON.stringify(old) }), {
-    modules: { hair: "hair-bob", top: null, bottom: null, shoes: "shoes-sneakers", hat: null },
+    modules: { hair: "hair-bob", top: null, bottom: null, shoes: null, hat: null },
     animation: "idle", hands: { L: "point", R: null },
   });
   const blocked = () => { throw new Error("Storage blocked"); };

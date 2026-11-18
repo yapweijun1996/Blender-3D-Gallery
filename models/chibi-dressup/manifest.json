@@ -8,9 +8,7 @@
     "hat"
   ],
   "defaults": {
-    "hair": "hair-bob",
-    "top": "top-tshirt",
-    "shoes": "shoes-sneakers"
+    "hair": "hair-bob"
   },
   "modules": [
     {
@@ -18,56 +16,28 @@
       "slot": "hair",
       "label": {
         "en": "Bob haircut",
-        "zh-Hans": "波波头",
+        "zh-Hans": "\u6ce2\u6ce2\u5934",
         "ms": "Rambut bob"
       },
       "file": "modules/hair-bob.glb",
-      "status": "pending",
-      "source": "hair-fit-astra/hair_bob_v1.glb",
-      "bytes": 415916,
-      "sha256": "3c8c3349e7f06924641f5ca20d5bdc7c92efe5d7454d6302646b14e957ffb42e"
+      "status": "verified",
+      "source": "hair-fit-astra/round2/hair_bob_v2.glb",
+      "bytes": 227404,
+      "sha256": "32cadfa94be111706295032933e823529364047484f2cd78b71c7919abfd811d"
     },
     {
-      "id": "top-tshirt",
-      "slot": "top",
+      "id": "hair-spiky",
+      "slot": "hair",
       "label": {
-        "en": "T-shirt",
-        "zh-Hans": "T 恤",
-        "ms": "Baju-T"
+        "en": "Spiky hair",
+        "zh-Hans": "\u5c16\u53d1",
+        "ms": "Rambut tercacak"
       },
-      "file": "modules/top-tshirt.glb",
-      "status": "pending",
-      "source": "sol-tshirt/v3/top_tshirt_v3.glb",
-      "bytes": 132516,
-      "sha256": "803060a461f42c27c1255ed9deeb828d3a1d4e62ef72817dddbdbb37dd744ba3"
-    },
-    {
-      "id": "top-hoodie",
-      "slot": "top",
-      "label": {
-        "en": "Hoodie",
-        "zh-Hans": "连帽衫",
-        "ms": "Baju hud"
-      },
-      "file": "modules/top-hoodie.glb",
-      "status": "pending",
-      "source": "hoodie-fit-sol/round2/top_hoodie_v2.glb",
-      "bytes": 1236560,
-      "sha256": "b7a1de41be3037702509ba540ac200f75647132e70f5f5b3e4ec3920be8640b5"
-    },
-    {
-      "id": "shoes-sneakers",
-      "slot": "shoes",
-      "label": {
-        "en": "Sneakers",
-        "zh-Hans": "运动鞋",
-        "ms": "Kasut sukan"
-      },
-      "file": "modules/shoes-sneakers.glb",
-      "status": "pending",
-      "source": "shoes-sol/shoes_sneaker_v1.glb",
-      "bytes": 131708,
-      "sha256": "feb5e9b43d3780bee40e183c516ed4ed527c2000686653e92c462efab860132b"
+      "file": "modules/hair-spiky.glb",
+      "status": "verified",
+      "source": "studio-modules/hair-spiky/hair_spiky_v1.glb",
+      "bytes": 1957368,
+      "sha256": "f5927f87adf8250513d30a29f39f2f0d7689062ddd8d456478b28f79296ea5be"
     }
   ]
 }

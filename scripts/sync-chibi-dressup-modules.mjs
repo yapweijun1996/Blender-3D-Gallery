@@ -10,24 +10,14 @@ const candidates = [
   {
     id: "hair-bob", slot: "hair",
     label: { en: "Bob haircut", "zh-Hans": "波波头", ms: "Rambut bob" },
-    paths: ["hair-fit-astra/hair_bob_v1.glb"],
+    paths: ["hair-fit-astra/round2/hair_bob_v2.glb", "hair-fit-astra/hair_bob_v1.glb"],
   },
   {
-    id: "top-tshirt", slot: "top",
-    label: { en: "T-shirt", "zh-Hans": "T 恤", ms: "Baju-T" },
-    paths: ["sol-tshirt/v3/top_tshirt_v3.glb", "sol-tshirt/v2/top_tshirt_v2.glb"],
+    id: "hair-spiky", slot: "hair",
+    label: { en: "Spiky hair", "zh-Hans": "尖发", ms: "Rambut tercacak" },
+    paths: ["studio-modules/hair-spiky/hair_spiky_v1.glb"],
   },
-  {
-    id: "top-hoodie", slot: "top",
-    label: { en: "Hoodie", "zh-Hans": "连帽衫", ms: "Baju hud" },
-    paths: ["hoodie-fit-sol/round2/top_hoodie_v2.glb"],
-    optional: true,
-  },
-  {
-    id: "shoes-sneakers", slot: "shoes",
-    label: { en: "Sneakers", "zh-Hans": "运动鞋", ms: "Kasut sukan" },
-    paths: ["shoes-sol/shoes_sneaker_v1.glb"],
-  },
+  // Pending modules (not shown until they pass the motion gate and review): top-tshirt, top-hoodie, shoes-sneakers.
 ];
 
 async function findSource(paths) {

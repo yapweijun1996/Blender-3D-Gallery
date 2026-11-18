@@ -118,7 +118,7 @@ try {
     }, id);
     assert.equal(await module(id).getAttribute("aria-pressed"), "false");
   }
-  const tops = manifest.modules.filter(({ slot }) => slot === "top");
+  const tops = manifest.modules.filter(({ slot }) => slot === "hair");
   for (const { id } of tops) {
     await module(id).click();
     assert.equal(Object.entries((await snapshot()).modules)
@@ -174,20 +174,16 @@ try {
     !(matching.L.test(name) || matching.R.test(name)) || !rotationChanged(rotation, overlaid.joints[index].rotation)));
 
   const selectedTop = tops.at(-1).id;
-  await module("hair-bob").click();
-  await module("shoes-sneakers").click();
   await clip("wave").click();
   await page.reload();
   await ready();
   assert.equal(await clip("wave").getAttribute("aria-pressed"), "true");
   assert.equal(await module(selectedTop).getAttribute("aria-pressed"), "true");
-  assert.equal(await module("hair-bob").getAttribute("aria-pressed"), "true");
-  assert.equal(await module("shoes-sneakers").getAttribute("aria-pressed"), "true");
   assert.equal(await hand("L").inputValue(), "peace");
   assert.equal(await hand("R").inputValue(), "thumbs_up");
   assert.equal((await snapshot()).clip, "wave");
   const saved = await page.evaluate(key => JSON.parse(localStorage.getItem(key)), STORAGE_KEY);
-  assert.equal(saved.modules.top, selectedTop);
+  assert.equal(saved.modules.hair, selectedTop);
 
   await mkdir(out, { recursive: true });
   await page.waitForFunction(() => document.querySelector(".dressup-stage").inspectDressup().time > 0.7);
