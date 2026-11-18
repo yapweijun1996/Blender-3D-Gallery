@@ -47,3 +47,9 @@ design different outfitted characters (many NPC types), interior-design models v
 
 ### Cadence
 Report in the session every 20 minutes; push each verified piece; record every decision in memory and docs.
+
+### v11 decisions (owner, 2026-11-19)
+- NPC types: shoppers and customers, shop staff and service staff (uniforms, counter, entrance), security guards and guides. No family or child bodies.
+- Gender: half male, half female, all in the unified chibi style; roles are told apart by outfit and hair only.
+- Interior style: oak wood, matte dark green, brushed brass (the 12 reference images follow it).
+- Keep all real brand names, products and official links in v11 untouched; change only layout, furniture and NPCs.
