@@ -1,3 +1,4 @@
+import { localize, mountMarkup, number, t } from "../i18n/index.js";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -19,21 +20,21 @@ export function solarSceneAssets(assets) {
 
 /** Independent GLBs remain authoritative. This scene only owns display transforms. */
 export async function mountSolar(root, assets, signal) {
-  root.innerHTML = `<section class="solar-heading"><div><p class="eyebrow">AN ATLAS IN MOTION</p><h1>Solar System<span class="period">.</span></h1></div><p>NASA models and original asteroids · One connected view</p></section>
-  <div class="solar-toolbar"><label>Time speed <select id="solar-speed"><option value="0">Paused</option><option value="1">1 day / second</option><option value="10" selected>10 days / second</option><option value="100">100 days / second</option></select></label><label>Scale <select id="solar-scale"><option value="presentation">Presentation</option><option value="realistic">Realistic ratios</option></select></label><label>Explore <select id="solar-select"><option value="">Choose a body</option></select></label><button id="solar-overview" type="button">Overview ↺</button></div>
-  <p class="solar-note" id="solar-scale-note">Presentation mode enlarges bodies and compresses distances. Planetary orbits illustrate relative periods; small-body paths and all positions are illustrative.</p>
-  <div class="solar-layout"><div class="solar-canvas" id="solar-canvas"><p role="status" id="solar-status">Loading 17 independent models…</p></div><aside class="solar-info" aria-live="polite"><p class="eyebrow">FIELD NOTES</p><h2 id="solar-name">Our planetary neighborhood</h2><p id="solar-facts">Drag to orbit · Scroll or pinch to zoom. Select a body to inspect it.</p><p id="solar-accuracy">Planet dimensions, periods and tilts use NASA reference fact sheets. Models include NASA resources and original procedural asteroids; select a body for credits and limitations.</p><a id="solar-model-link" hidden>Open individual model ↗</a><p class="solar-small">Sun illumination and star positions are illustrative. The asteroid belt and comet trajectory are illustrative, not actual positions. This demo is available online; it is not part of the prepared offline Game pack.</p></aside></div>`;
+  mountMarkup(root, `<section class="solar-heading"><div><p class="eyebrow" data-i18n="solar.eyebrow"></p><h1><span data-i18n="demo.solar-system.title"></span><span class="period" data-i18n="common.period"></span></h1></div><p data-i18n="solar.subtitle"></p></section>
+  <div class="solar-toolbar"><label><span data-i18n="solar.speed"></span> <select id="solar-speed"><option value="0" data-i18n="solar.paused"></option><option value="1" data-i18n="solar.oneDay"></option><option value="10" selected data-i18n="solar.tenDays"></option><option value="100" data-i18n="solar.hundredDays"></option></select></label><label><span data-i18n="solar.scale"></span> <select id="solar-scale"><option value="presentation" data-i18n="solar.presentation"></option><option value="realistic" data-i18n="solar.realistic"></option></select></label><label><span data-i18n="solar.explore"></span> <select id="solar-select"><option value="" data-i18n="solar.chooseBody"></option></select></label><button id="solar-overview" type="button" data-i18n="solar.overview"></button></div>
+  <p class="solar-note" id="solar-scale-note" data-i18n="solar.presentationNote"></p>
+  <div class="solar-layout"><div class="solar-canvas" id="solar-canvas"><p role="status" id="solar-status"></p></div><aside class="solar-info" aria-live="polite"><p class="eyebrow" data-i18n="solar.notes"></p><h2 id="solar-name" data-i18n="solar.neighborhood"></h2><p id="solar-facts" data-i18n="solar.orbitHint"></p><p id="solar-accuracy" data-i18n="solar.references"></p><a id="solar-model-link" hidden data-i18n="solar.openModel"></a><p class="solar-small" data-i18n="solar.illustrative"></p></aside></div>`);
   const $ = (s) => root.querySelector(s),
     container = $("#solar-canvas"),
     status = $("#solar-status");
+  localize(status, "solar.loading", { total: assets.length });
   const overviewInfo = ["#solar-name", "#solar-facts", "#solar-accuracy"]
-    .map((selector) => $(selector).textContent);
+    .map((selector) => $(selector).dataset.i18n);
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true });
   } catch {
-    status.textContent =
-      "WebGL is unavailable. Open Gallery to view the model previews.";
+    localize(status, "solar.noWebGL");
     return {
       dispose() {
         root.replaceChildren();
@@ -47,10 +48,7 @@ export async function mountSolar(root, assets, signal) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1;
   renderer.domElement.setAttribute("role", "img");
-  renderer.domElement.setAttribute(
-    "aria-label",
-    "Solar system. Use the Explore selector to choose and focus each body.",
-  );
+  localize(renderer.domElement, "solar.canvas", undefined, "aria-label");
   container.append(renderer.domElement);
   const scene = new THREE.Scene(),
     camera = new THREE.PerspectiveCamera(45, 1, 0.001, 20000),
@@ -126,15 +124,14 @@ export async function mountSolar(root, assets, signal) {
     e.preventDefault();
     frameGate.dispose();
     $("#solar-speed").value = "0";
-    status.textContent =
-      "The 3D view was interrupted. Return to Gallery, then reopen Solar System.";
+    localize(status, "solar.interrupted");
   });
   function overview() {
     needsRender = true;
     selected = "";
     $("#solar-select").value = "";
     ["#solar-name", "#solar-facts", "#solar-accuracy"].forEach((selector, index) => {
-      $(selector).textContent = overviewInfo[index];
+      localize($(selector), overviewInfo[index]);
     });
     $("#solar-model-link").hidden = true;
     controls.target.set(0, 0, 0);
@@ -148,10 +145,14 @@ export async function mountSolar(root, assets, signal) {
   function updateInfo(id) {
     const a = assets.find((a) => a.solarId === id),
       f = a.details.scientific_properties;
-    $("#solar-name").textContent = a.name;
-    $("#solar-facts").textContent = f
-      ? `Diameter ${f.diameter_km.toLocaleString()} km · ${f.orbital_period_days === null ? "No heliocentric orbital period" : `Orbit ${f.orbital_period_days.toLocaleString()} days${id === "moon" ? " around Earth" : ""}`} · Axial tilt ${f.axial_tilt_degrees}°`
-      : "Illustrative orbit and scale; physical properties are not modeled.";
+    localize($("#solar-name"), `solar.body.${id}`);
+    localize($("#solar-facts"), f ? "solar.facts" : "solar.noFacts", f && (() => ({
+      diameter: number(f.diameter_km),
+      orbit: f.orbital_period_days === null ? t("solar.noOrbit")
+        : t(id === "moon" ? "solar.orbitEarth" : "solar.orbit", { days: number(f.orbital_period_days) }),
+      tilt: f.axial_tilt_degrees,
+    })));
+    localize($("#solar-accuracy"));
     $("#solar-accuracy").textContent = [a.details.accuracy_notes, ...(a.details.attribution ?? []).map((item) => item.credit)].filter(Boolean).join(" ");
     const link = $("#solar-model-link");
     link.hidden = false;
@@ -240,9 +241,9 @@ export async function mountSolar(root, assets, signal) {
       });
       const option = document.createElement("option");
       option.value = a.solarId;
-      option.textContent = a.name;
+      localize(option, `solar.body.${a.solarId}`);
       $("#solar-select").append(option);
-      status.textContent = `Loading models ${bodies.size} / ${assets.length}…`;
+      localize(status, "solar.progress", { count: bodies.size, total: assets.length });
     }
     if (disposed) return { dispose };
     const stars = new Float32Array(1600 * 3);
@@ -435,10 +436,7 @@ export async function mountSolar(root, assets, signal) {
     }
     $("#solar-scale").onchange = () => {
       mode = $("#solar-scale").value;
-      $("#solar-scale-note").textContent =
-        mode === "realistic"
-          ? "Realistic ratios: planets use one shared distance and radius scale. Planets are very small; use Explore to focus. Small bodies, circular orbits and phases are illustrative."
-          : "Presentation mode enlarges bodies and compresses distances. Planetary orbits illustrate relative periods; small-body paths and all positions are illustrative.";
+      localize($("#solar-scale-note"), mode === "realistic" ? "solar.realisticNote" : "solar.presentationNote");
       scales();
     };
     $("#solar-select").onchange = () => {
@@ -478,7 +476,7 @@ export async function mountSolar(root, assets, signal) {
     scales();
     resize();
     ready = true;
-    status.textContent = "";
+    localize(status);
     const render = (now) => {
       if (disposed) return;
       const dt = last ? Math.min((now - last) / 1000, 0.05) : 0;
@@ -513,8 +511,7 @@ export async function mountSolar(root, assets, signal) {
     frame = requestAnimationFrame(render);
   } catch (error) {
     if (!disposed) {
-      status.textContent =
-        "The solar scene could not load. Return to Gallery and reopen it to retry.";
+      localize(status, "solar.failed");
       console.error(error);
     }
   }

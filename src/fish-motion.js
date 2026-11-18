@@ -1,3 +1,4 @@
+import { localize } from "./i18n/index.js";
 import { AnimationMixer, LoopRepeat } from 'three';
 
 // Fish playback owns its clock and controls; other gallery models stay on demand.
@@ -13,7 +14,7 @@ export default function createFishMotion({ model, clips, container, invalidate }
   const controls = document.createElement('div');
   controls.className = 'fish-motion-controls';
   controls.setAttribute('role', 'group');
-  controls.setAttribute('aria-label', 'Fish swimming animation');
+  localize(controls, "viewer.fish", undefined, "aria-label");
   // Inline layout keeps these isolated controls usable without gallery CSS changes.
   Object.assign(controls.style, { display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', padding: '12px 24px' });
   const button = document.createElement('button');
@@ -22,7 +23,7 @@ export default function createFishMotion({ model, clips, container, invalidate }
   button.dataset.fishPlayback = '';
   button.style.minHeight = '44px';
   const sync = () => {
-    button.textContent = playing ? 'Pause swimming' : 'Play swimming';
+    localize(button, playing ? 'viewer.pauseFish' : 'viewer.playFish');
     button.setAttribute('aria-pressed', String(playing));
     lastTime = 0;
     invalidate();

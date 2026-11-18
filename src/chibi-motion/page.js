@@ -1,23 +1,24 @@
+import { localize, mountMarkup, t } from "../i18n/index.js";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import "./style.css";
 
 export async function mountMotion(root, asset, signal, {
-  title = "Chibi Motion Studio",
-  subtitle = "GJH Virtual Mall Visitor",
+  titleKey = "demo.chibi-motion.title",
+  subtitleKey = "motion.subtitle",
   clips = ["Idle", "Wave", "Nod", "Walk"],
   cameraPosition = [2.1, .76, .69],
   cameraTarget = [0, .52, 0],
 } = {}) {
-  root.innerHTML = `<section class="motion-studio"><header><h1></h1><p></p></header>
-    <div class="motion-layout"><div class="motion-stage" aria-label="3D character preview"></div>
-    <fieldset disabled><legend>Animation</legend><div class="motion-clips"></div>
-    <label>Timeline <input type="range" min="0" max="1000" value="0"></label>
-    <output aria-label="Clip time"></output><button type="button" class="outline-button motion-play">Pause</button>
-    <p>Drag to orbit. Scroll or pinch to zoom.</p></fieldset></div></section>`;
-  root.querySelector("h1").textContent = title;
-  root.querySelector("header p").textContent = subtitle;
+  mountMarkup(root, `<section class="motion-studio"><header><h1></h1><p></p></header>
+    <div class="motion-layout"><div class="motion-stage" data-i18n-aria-label="motion.stage"></div>
+    <fieldset disabled><legend data-i18n="common.animation"></legend><div class="motion-clips"></div>
+    <label><span data-i18n="motion.timeline"></span> <input type="range" min="0" max="1000" value="0"></label>
+    <output data-i18n-aria-label="motion.clipTime"></output><button type="button" class="outline-button motion-play" data-i18n="common.pause"></button>
+    <p data-i18n="common.orbitHint"></p></fieldset></div></section>`);
+  localize(root.querySelector("h1"), titleKey);
+  localize(root.querySelector("header p"), subtitleKey);
   const stage = root.querySelector(".motion-stage");
   const panel = root.querySelector("fieldset");
   const slider = panel.querySelector("input");
@@ -80,14 +81,14 @@ export async function mountMotion(root, asset, signal, {
     let action, previous, playing = !matchMedia("(prefers-reduced-motion: reduce)").matches;
     function syncTime() {
       slider.value = 1000 * action.time / action.getClip().duration;
-      time.value = action.time.toFixed(2) + " / " + action.getClip().duration.toFixed(2) + " s";
+      time.value = t("motion.seconds", { time: action.time.toFixed(2), duration: action.getClip().duration.toFixed(2) });
     }
     for (const name of clips) {
       const clip = THREE.AnimationClip.findByName(gltf.animations, name);
       if (!clip) throw new Error("Missing animation " + name);
       const button = document.createElement("button");
       button.type = "button";
-      button.textContent = name[0].toUpperCase() + name.slice(1);
+      localize(button, `clip.${name.toLowerCase()}`);
       button.setAttribute("aria-pressed", "false");
       panel.querySelector(".motion-clips").append(button);
       function select() {
@@ -103,7 +104,7 @@ export async function mountMotion(root, asset, signal, {
     }
     function setPlayback(value) {
       playing = value;
-      play.textContent = playing ? "Pause" : "Play";
+      localize(play, playing ? "common.pause" : "common.play");
     }
     setPlayback(playing);
     play.onclick = () => setPlayback(!playing);

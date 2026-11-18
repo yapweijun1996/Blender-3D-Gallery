@@ -1,3 +1,4 @@
+import { englishGameMessage } from "./copy.js";
 import { TABLE, POCKETS, RAILS } from "./table.js";
 const R = TABLE.radius;
 const DIAMETER = 2 * R;
@@ -167,9 +168,9 @@ export function createShot(balls, direction, power) {
     power <= 0 ||
     power > 1
   )
-    throw new Error("Invalid shot");
+    throw new Error(englishGameMessage("game.state.invalidShot"));
   const cue = balls.find((b) => b.id === 0);
-  if (!cue || cue.pocketed) throw new Error("Cue ball is unavailable");
+  if (!cue || cue.pocketed) throw new Error(englishGameMessage("game.state.missingCue"));
   const speed = 0.18 + power * TABLE.maxSpeed;
   cue.vx = (direction.x / length) * speed;
   cue.vz = (direction.z / length) * speed;
@@ -220,7 +221,7 @@ export function stepPhysics(balls, shot, dt = TABLE.step) {
   const maxSpeed = Math.max(...balls.map((b) => Math.hypot(b.vx, b.vz)));
   let substeps = Math.max(2, Math.ceil((maxSpeed * dt) / (R / 2)));
   if (substeps > 16) {
-    shot.invalid = "Simulation speed exceeded safe bounds";
+    shot.invalid = englishGameMessage("game.state.speed");
     return;
   }
   if (hasCrowdedApproach(ordered, dt)) substeps = 16;
@@ -487,7 +488,7 @@ export function stepPhysics(balls, shot, dt = TABLE.step) {
           Math.abs(b.x) > 1.21 ||
           Math.abs(b.z) > 0.66
         )
-          shot.invalid = "A ball left the calibrated table";
+          shot.invalid = englishGameMessage("game.state.leftTable");
       }
       if (iteration === 0) {
         // When a rail preceded a pocket candidate, use the corrected endpoint.
@@ -528,5 +529,5 @@ export function stepPhysics(balls, shot, dt = TABLE.step) {
     for (const b of balls) b.vx = b.vz = 0;
     shot.done = true;
   }
-  if (shot.elapsed > 25) shot.invalid = "Shot did not settle safely";
+  if (shot.elapsed > 25) shot.invalid = englishGameMessage("game.state.noSettle");
 }

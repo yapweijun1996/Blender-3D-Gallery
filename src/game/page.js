@@ -1,3 +1,5 @@
+import { localize, mountMarkup, onLanguageChange, t } from "../i18n/index.js";
+import { englishGameMessage, gameMessageKey, translateGameMessage } from "./copy.js";
 import "./style.css";
 import { makeRack, legalPlacement, TABLE, groupOf } from "./table.js";
 import { createShot, stepPhysics } from "./physics.js";
@@ -8,30 +10,31 @@ import { aimContact, shotFeedback } from "./presentation.js";
 import { PULL, pullRatio as ratioFromPointer, meetsPullThreshold, shotStrength, aimAngle, dragAngle, hitsCue, strikeOffset } from "./interaction.js";
 
 export async function mountGame(root, assets, signal, onLeave) {
-  root.innerHTML = `<section class="game-shell" aria-labelledby="game-title">
-    <div class="game-heading"><div><p class="eyebrow">PLAY THE COLLECTION</p><h1 id="game-title">Eight-ball<span>.</span></h1></div><div class="game-heading-actions"><span class="game-mode">LOCAL TWO-PLAYER</span></div></div>
-    <div class="players"><div id="player-0" class="player-card"><span class="player-index">01</span><div><strong>Player 1</strong><span class="player-group">Open table</span></div><div class="remaining"><span class="remaining-full" aria-hidden="true"></span><span class="remaining-compact" aria-hidden="true"></span><span class="game-sr-only remaining-accessible"></span></div></div><div id="player-1" class="player-card"><span class="player-index">02</span><div><strong>Player 2</strong><span class="player-group">Open table</span></div><div class="remaining"><span class="remaining-full" aria-hidden="true"></span><span class="remaining-compact" aria-hidden="true"></span><span class="game-sr-only remaining-accessible"></span></div></div></div>
-    <div class="game-layout"><div class="game-board"><div class="game-table-row"><div id="power-controller"><label id="power-label">Pull to shoot <output id="power-output">0%</output></label><div id="power-track"><div id="power-fill"></div><button type="button" id="power-handle" role="slider" aria-labelledby="power-label" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" disabled><span aria-hidden="true">↓</span></button></div></div><div id="game-viewport" tabindex="0" aria-label="Pool table. Arrow keys adjust aim or cue placement."><div id="game-loading" role="status">Preparing your table…</div></div></div><div class="game-table-caption"><span>CASUAL EIGHT-BALL</span><button type="button" data-action="inspect" disabled>Inspect table</button><button type="button" data-action="options">App options</button><button type="button" data-action="rules">Rules & controls</button></div></div>
-    <aside class="game-controls" aria-label="Game controls"><div id="game-turn" class="game-turn">Your table is waiting.</div><p id="game-status" role="status" aria-live="polite">Load the table, then start a local match.</p>
-      <div id="game-start" class="game-start"><button class="primary" data-action="new" disabled>New two-player match</button><button data-action="resume" disabled>Resume saved match</button><p>Pass the device between turns. No account needed.</p></div>
-      <div id="game-load-error" role="alert" hidden><p>Check your connection and browser 3D support, then try again.</p><button data-action="retry-load" class="primary">Retry loading</button><button data-action="back-to-gallery">Back to Gallery</button></div>
-      <div id="game-shot-controls" hidden><div class="aim-control"><label for="aim-angle">Aim <output id="angle-output">0°</output></label><input id="aim-angle" type="range" min="-180" max="180" step="0.25" value="0"><div class="aim-fine"><button data-action="aim-left" aria-label="Aim left one degree">−1°</button><button data-action="aim-right" aria-label="Aim right one degree">+1°</button></div></div>
-        <p class="control-note">Aim; pull the left handle and release.</p><p id="aim-contact"></p></div>
-      <div id="game-placement" hidden><strong>Ball in hand</strong><p id="placement-hint">Tap or drag on the table to place the cue ball.</p><label for="place-x">Along the table</label><input id="place-x" type="range" min="-1.076" max="1.076" step="0.005" value="-0.7"><label for="place-z">Across the table</label><input id="place-z" type="range" min="-0.492" max="0.492" step="0.005" value="0"><div class="placement-actions"><button type="button" data-action="reset-placement" aria-label="Reset cue position">Reset</button><button data-action="place" class="primary" aria-label="Confirm cue position">Place</button></div></div>
-      <div id="game-finish" hidden><button data-action="new" class="primary">Play again</button></div><div id="game-recovery" hidden><button data-action="restore" class="primary">Restore last turn</button></div>
-      <button data-action="pause" id="game-pause" hidden>Pause / menu</button><p id="save-status" class="save-status" role="status">Checking local save…</p>
+  mountMarkup(root, `<section class="game-shell" aria-labelledby="game-title">
+    <div class="game-heading"><div><p class="eyebrow" data-i18n="game.eyebrow"></p><h1 id="game-title"><span data-i18n="game.title"></span><span class="period" data-i18n="common.period"></span></h1></div><div class="game-heading-actions"><span class="game-mode" data-i18n="game.mode"></span></div></div>
+    <div class="players"><div id="player-0" class="player-card"><span class="player-index">01</span><div><strong data-i18n="game.initialPlayerOne"></strong><span class="player-group" data-i18n="game.open"></span></div><div class="remaining"><span class="remaining-full" aria-hidden="true"></span><span class="remaining-compact" aria-hidden="true"></span><span class="game-sr-only remaining-accessible"></span></div></div><div id="player-1" class="player-card"><span class="player-index">02</span><div><strong data-i18n="game.initialPlayerTwo"></strong><span class="player-group" data-i18n="game.open"></span></div><div class="remaining"><span class="remaining-full" aria-hidden="true"></span><span class="remaining-compact" aria-hidden="true"></span><span class="game-sr-only remaining-accessible"></span></div></div></div>
+    <div class="game-layout"><div class="game-board"><div class="game-table-row"><div id="power-controller"><label id="power-label"><span data-i18n="game.pull"></span> <output id="power-output">0%</output></label><div id="power-track"><div id="power-fill"></div><button type="button" id="power-handle" role="slider" aria-labelledby="power-label" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" disabled><span aria-hidden="true">↓</span></button></div></div><div id="game-viewport" tabindex="0" data-i18n-aria-label="game.tableLabel"><div id="game-loading" role="status" data-i18n="game.preparing"></div></div></div><div class="game-table-caption"><span data-i18n="game.caption"></span><button type="button" data-action="inspect" disabled data-i18n="game.inspect"></button><button type="button" data-action="options" data-i18n="game.options"></button><button type="button" data-action="rules" data-i18n="game.rules"></button></div></div>
+    <aside class="game-controls" data-i18n-aria-label="game.controls"><div id="game-turn" class="game-turn" data-i18n="game.waiting"></div><p id="game-status" role="status" aria-live="polite" data-i18n="game.setup"></p>
+      <div id="game-start" class="game-start"><button class="primary" data-action="new" disabled data-i18n="game.new"></button><button data-action="resume" disabled data-i18n="game.resume"></button><p data-i18n="game.passDevice"></p></div>
+      <div id="game-load-error" role="alert" hidden><p data-i18n="game.loadHelp"></p><button data-action="retry-load" class="primary" data-i18n="game.retryLoad"></button><button data-action="back-to-gallery" data-i18n="game.backGallery"></button></div>
+      <div id="game-shot-controls" hidden><div class="aim-control"><label for="aim-angle"><span data-i18n="game.aim"></span> <output id="angle-output">0°</output></label><input id="aim-angle" type="range" min="-180" max="180" step="0.25" value="0"><div class="aim-fine"><button data-action="aim-left" data-i18n-aria-label="game.aimLeft">−1°</button><button data-action="aim-right" data-i18n-aria-label="game.aimRight">+1°</button></div></div>
+        <p class="control-note" data-i18n="game.pullHelp"></p><p id="aim-contact"></p></div>
+      <div id="game-placement" hidden><strong data-i18n="game.ballInHand"></strong><p id="placement-hint" data-i18n="game.placeHint"></p><label for="place-x" data-i18n="game.along"></label><input id="place-x" type="range" min="-1.076" max="1.076" step="0.005" value="-0.7"><label for="place-z" data-i18n="game.across"></label><input id="place-z" type="range" min="-0.492" max="0.492" step="0.005" value="0"><div class="placement-actions"><button type="button" data-action="reset-placement" data-i18n-aria-label="game.resetPlacement" data-i18n="game.reset"></button><button data-action="place" class="primary" data-i18n-aria-label="game.confirmPlacement" data-i18n="game.place"></button></div></div>
+      <div id="game-finish" hidden><button data-action="new" class="primary" data-i18n="game.playAgain"></button></div><div id="game-recovery" hidden><button data-action="restore" class="primary" data-i18n="game.restore"></button></div>
+      <button data-action="pause" id="game-pause" hidden data-i18n="game.pauseMenu"></button><p id="save-status" class="save-status" role="status" data-i18n="game.checkingSave"></p>
     </aside></div>
-    <dialog id="game-options" aria-labelledby="game-options-title"><h2 id="game-options-title">Your app.</h2><label for="graphics-quality">Graphics quality</label><select id="graphics-quality" aria-describedby="graphics-quality-note" disabled><option value="standard">Standard</option><option value="performance">Performance</option></select><p id="graphics-quality-note">Performance lowers rendering resolution until you leave Game.</p><div class="offline-box"><span id="game-offline-status">Online play available</span><button data-action="offline">Make available offline</button><button data-action="install">Install app / help</button></div><button data-action="fullscreen">Fullscreen</button><button data-action="close-options" class="primary">Back to the table</button></dialog>
-    <dialog id="game-menu" aria-labelledby="game-menu-title"><h2 id="game-menu-title">Take a break.</h2><p id="menu-save-message" role="status">Your last complete turn is saved when local storage is available.</p><button data-action="continue" class="primary">Continue game</button><button data-action="restart">Restart match</button><button data-action="leave">Save & return to Gallery</button><button data-action="discard" hidden>Leave without saving</button></dialog>
-    <dialog id="game-rules" aria-labelledby="game-rules-title"><h2 id="game-rules-title">Casual Eight-Ball</h2><p>Two people, one device. Player 1 breaks. Aim on the table, pull the left handle down and release to strike. Arrow keys adjust aim (Shift for fine aim); Enter confirms cue placement. Focus the power handle, use arrows to charge, then Space or Enter to release. Escape cancels charging.</p><ul><li>Groups stay open on the break. The first legal post-break pot assigns solids or stripes. Pots are ordered by when they enter a pocket; simultaneous pots use ball number to break the tie.</li><li>First contact must be your group. When your group is cleared, hit the eight first. If every group ball has gone while the table is still open, either player may play the eight.</li><li>A scratch, wrong first contact or no contact gives your opponent ball in hand.</li><li>Clear your group before the shot that pockets the eight. An early eight, or an eight with a foul, loses.</li><li>Eight on the break is re-spotted. Eight + scratch on the break is a foul, not an instant loss.</li><li>No called pockets, four-rail break requirement, spin or jump shots. This is a casual ruleset, not competition rules.</li></ul><p>In inspection mode, drag or use the table-focused arrow keys to orbit, and use + or − to zoom. Use the return button to leave inspection. The guide estimates initial contact, not a guaranteed pot. Backgrounding pauses play. After a killed or interrupted shot, Resume restores its pre-shot checkpoint.</p><button data-action="close-rules" class="primary">Back to the table</button></dialog>
-    <dialog id="game-confirm" aria-labelledby="game-confirm-title"><h2 id="game-confirm-title">Start a new match?</h2><p>This replaces the current match. Your gallery assets are unaffected.</p><div><button data-action="cancel-new">Keep current match</button><button data-action="confirm-new" class="primary">Start new match</button></div></dialog>
-  </section>`;
+    <dialog id="game-options" aria-labelledby="game-options-title"><h2 id="game-options-title" data-i18n="game.yourApp"></h2><label for="graphics-quality" data-i18n="game.quality"></label><select id="graphics-quality" aria-describedby="graphics-quality-note" disabled><option value="standard" data-i18n="game.standard"></option><option value="performance" data-i18n="game.performance"></option></select><p id="graphics-quality-note" data-i18n="game.performanceNote"></p><div class="offline-box"><span id="game-offline-status" data-i18n="game.online"></span><button data-action="offline" data-i18n="game.prepareOffline"></button><button data-action="install" data-i18n="game.install"></button></div><button data-action="fullscreen" data-i18n="common.fullscreen"></button><button data-action="close-options" class="primary" data-i18n="game.backTable"></button></dialog>
+    <dialog id="game-menu" aria-labelledby="game-menu-title"><h2 id="game-menu-title" data-i18n="game.breakTitle"></h2><p id="menu-save-message" role="status" data-i18n="game.saveHint"></p><button data-action="continue" class="primary" data-i18n="game.continue"></button><button data-action="restart" data-i18n="game.restart"></button><button data-action="leave" data-i18n="game.saveLeave"></button><button data-action="discard" hidden data-i18n="game.leaveUnsaved"></button></dialog>
+    <dialog id="game-rules" aria-labelledby="game-rules-title"><h2 id="game-rules-title" data-i18n="game.rulesTitle"></h2><p data-i18n="game.rulesIntro"></p><ul><li data-i18n="game.ruleGroups"></li><li data-i18n="game.ruleContact"></li><li data-i18n="game.ruleFoul"></li><li data-i18n="game.ruleEight"></li><li data-i18n="game.ruleBreak"></li><li data-i18n="game.ruleCasual"></li></ul><p data-i18n="game.ruleInspection"></p><button data-action="close-rules" class="primary" data-i18n="game.backTable"></button></dialog>
+    <dialog id="game-confirm" aria-labelledby="game-confirm-title"><h2 id="game-confirm-title" data-i18n="game.newTitle"></h2><p data-i18n="game.replaceMatch"></p><div><button data-action="cancel-new" data-i18n="game.keepMatch"></button><button data-action="confirm-new" class="primary" data-i18n="game.startMatch"></button></div></dialog>
+  </section>`);
   const $ = (s) => root.querySelector(s),
     all = (s) => [...root.querySelectorAll(s)];
   const loading = $("#game-loading"),
     status = $("#game-status"),
     saveStatus = $("#save-status"),
     viewport = $("#game-viewport");
+  status.removeAttribute("data-i18n");
   let state = null,
     stable = null,
     saved = null,
@@ -57,7 +60,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     ready = false,
     disposed = false,
     delivery = null,
-    lastResult = "";
+    lastResult = null;
   let frame = 0,
     lastTime = performance.now(),
     accumulator = 0,
@@ -67,32 +70,32 @@ export async function mountGame(root, assets, signal, onLeave) {
     contextLost = false;
   const uuid = () => crypto.randomUUID();
   const stableCopy = (s) => structuredClone(s);
-  const conflictMessage = "Your local turn conflicts with the saved match. Leave without saving or reload to restore the saved match.";
+  const conflictMessage = "game.conflict";
   function setSaveStatus(message, warning = false) {
     if (disposed) return;
-    saveStatus.textContent = message;
+    localize(saveStatus, message);
     saveStatus.classList.toggle("is-warning", warning);
   }
   async function persist(s, pending = null) {
     if (!ownership) {
-      setSaveStatus("This tab does not own the match. Your current turn was not saved.", true);
+      setSaveStatus("game.saveNotOwner", true);
       saveFailed = true;
       return false;
     }
     if (!store) {
-      setSaveStatus("Autosave unavailable. Keep this tab open.", true);
+      setSaveStatus("game.saveUnavailable", true);
       saveFailed = true;
       return false;
     }
     try {
       await store.save(s, pending);
       setSaveStatus(
-        pending ? "Previous turn saved. Shot in progress." : "Turn saved on this device.",
+        pending ? "game.savedPending" : "game.savedTurn",
       );
       saveFailed = false;
       return true;
     } catch (e) {
-      setSaveStatus(e.message, true);
+      setSaveStatus(gameMessageKey(e.message) ?? "game.saveError.failed", true);
       saveFailed = true;
       if (e.message.includes("another tab")) ownership = false;
       return false;
@@ -101,11 +104,13 @@ export async function mountGame(root, assets, signal, onLeave) {
   function ui() {
     if (disposed) return;
     const phase = state?.phase;
-    const returnAction = phase === "placing" || (phase === "paused" && pausedPhase === "placing")
-      ? "Return to placement"
+    const returnKey = phase === "placing" || (phase === "paused" && pausedPhase === "placing")
+      ? "game.returnPlacement"
       : phase === "finished"
-        ? "Return to table"
-        : "Return to aim";
+        ? "game.returnTable"
+        : "game.returnAim";
+    const returnAction = t(returnKey);
+    const group = value => t(value ? `game.${value}` : "game.open");
     root.querySelector(".game-shell").classList.toggle("is-playing", !!state);
     root.querySelector(".game-shell").dataset.phase = phase || "setup";
     $("#game-start").hidden = !!state || loadFailed;
@@ -116,40 +121,32 @@ export async function mountGame(root, assets, signal, onLeave) {
     $("#game-finish").hidden = phase !== "finished" || contextLost;
     $("#game-recovery").hidden = phase !== "recovery" && !contextLost;
     $("#game-pause").hidden = !state || phase === "finished";
-    $("#game-turn").textContent = !state
-      ? "Your table is waiting."
-      : phase === "finished"
-        ? `Player ${state.winner + 1} wins!`
-        : phase === "moving"
-          ? "Watch your shot."
-          : phase === "paused"
-            ? "Game paused."
-            : `Player ${state.player + 1} · ${state.groups[state.player] || "Open table"}`;
+    const turnKey = !state ? "game.waiting" : phase === "finished" ? "game.win"
+      : phase === "moving" ? "game.watching" : phase === "paused" ? "game.paused" : "game.current";
+    localize($("#game-turn"), turnKey, {
+      player: phase === "finished" ? state.winner + 1 : (state?.player ?? 0) + 1,
+      group: group(state?.groups[state?.player]),
+    });
     $("#aim-contact").textContent = phase === "aiming" && !inspection
-      ? aimContact(state.balls, angle).label + " · initial path only" : "";
-    status.textContent = delivery ? "Cue delivery…" : contextLost
-      ? "3D view interrupted. Reload the table to continue."
-      : loadFailed
-        ? "The 3D table could not load."
-        : inspection && ["placing", "aiming"].includes(phase)
-          ? `Inspect mode. Select ${returnAction} to continue.`
-        : lastResult && ["aiming", "placing", "finished"].includes(phase) ? lastResult : state?.message ||
-          "Clear your group, then pocket the eight. Two players share this device.";
-    viewport.setAttribute("aria-label", inspection
-      ? `Inspection view. Use arrow keys to orbit and plus or minus to zoom. Select ${returnAction} to continue.`
-      : "Pool table. Arrow keys adjust aim or cue placement.");
-    $(".control-note").textContent = inspection
-      ? "Inspect mode. Return to aim before shooting."
-      : "Aim; pull the left handle and release.";
+      ? t("game.initialPath", { contact: aimContact(state.balls, angle).label }) : "";
+    const statusKey = delivery ? "game.delivery" : contextLost ? "game.contextLost"
+      : loadFailed ? "game.loadFailed" : inspection && ["placing", "aiming"].includes(phase) ? "game.inspectStatus" : null;
+    const statusText = statusKey ? t(statusKey, { action: returnAction })
+      : lastResult && ["aiming", "placing", "finished"].includes(phase) ? lastResult()
+      : state?.message ? translateGameMessage(state.message) : t("game.howToWin");
+    if (status.textContent !== statusText) status.textContent = statusText;
+    localize(viewport, inspection ? "game.inspectLabel" : "game.tableLabel", { action: returnAction }, "aria-label");
+    localize($(".control-note"), inspection ? "game.inspectAimHint" : "game.pullHelp");
     for (let i = 0; i < 2; i++) {
       const c = $(`#player-${i}`);
       c.classList.toggle(
         "active",
         !!state && state.player === i && phase !== "finished",
       );
-      c.querySelector("strong").textContent = `Player ${i + 1}${state && state.player === i && phase !== "finished" ? " · Turn" : ""}`;
-      c.querySelector(".player-group").textContent =
-        state?.groups[i] || "Open table";
+      const activeTurn = state && state.player === i && phase !== "finished";
+      const playerGroup = group(state?.groups[i]);
+      c.querySelector("strong").textContent = t(activeTurn ? "game.playerTurn" : "game.player", { player: i + 1 });
+      c.querySelector(".player-group").textContent = playerGroup;
       const remain = state?.groups[i]
         ? state.balls.filter(
             (b) => !b.pocketed && groupOf(b.id) === state.groups[i],
@@ -158,22 +155,22 @@ export async function mountGame(root, assets, signal, onLeave) {
       c.querySelector(".remaining-full").textContent = remain.length
         ? remain.map((b) => String(b.id).padStart(2, "0")).join(" · ")
         : state?.groups[i]
-          ? "8 BALL"
+          ? t("game.eight")
           : "";
       c.querySelector(".remaining-compact").textContent = !state?.groups[i]
         ? ""
         : remain.length
-          ? `${remain.length} left`
+          ? t("game.remaining", { count: remain.length })
           : state.balls[8].pocketed
-            ? "Cleared"
-            : "8 ball next";
+            ? t("game.cleared")
+            : t("game.eightNext");
       c.querySelector(".remaining-accessible").textContent = !state?.groups[i]
         ? ""
         : remain.length
-          ? `${state.groups[i]} remaining: balls ${remain.map((b) => b.id).join(", ")}.`
+          ? t("game.remainingAccessible", { group: playerGroup, balls: remain.map(b => b.id).join(", ") })
           : state.balls[8].pocketed
-            ? `${state.groups[i]} cleared.`
-            : `${state.groups[i]} cleared; 8 ball next.`;
+            ? t("game.clearedAccessible", { group: playerGroup })
+            : t("game.eightNextAccessible", { group: playerGroup });
     }
     const disabled =
       busy || !!charge || !ownership || inspection || contextLost || phase !== "aiming";
@@ -186,9 +183,7 @@ export async function mountGame(root, assets, signal, onLeave) {
       busy ||
       contextLost ||
       ["moving", "adjudicating", "recovery"].includes(phase);
-    $('[data-action="inspect"]').textContent = inspection
-      ? returnAction
-      : "Inspect table";
+    localize($('[data-action="inspect"]'), inspection ? returnKey : "game.inspect");
     $('[data-action="place"]').disabled =
       busy ||
       !ownership ||
@@ -202,13 +197,13 @@ export async function mountGame(root, assets, signal, onLeave) {
     });
     if (phase === "placing") {
       const valid = legalPlacement(state.balls, candidate.x, candidate.z, state.break);
-      $("#placement-hint").textContent = inspection
-        ? "Inspect mode. Return to placement to position the cue ball."
+      localize($("#placement-hint"), inspection
+        ? "game.inspectPlace"
         : !valid
-          ? "Position is outside the legal area or overlaps a ball."
+          ? "game.invalidPlace"
           : state.break
-            ? "Place behind the head string, then confirm."
-            : "Valid position. Confirm when ready.";
+            ? "game.headString"
+            : "game.validPlace");
     }
     $("#angle-output").value = `${Math.round((angle * 180) / Math.PI)}°`;
     $("#aim-angle").value = (angle * 180) / Math.PI;
@@ -216,15 +211,13 @@ export async function mountGame(root, assets, signal, onLeave) {
     const handle = $("#power-handle");
     handle.disabled = busy || !ownership || inspection || contextLost || phase !== "aiming";
     handle.setAttribute("aria-valuenow", String(Math.round(pull * 100)));
-    handle.setAttribute("aria-valuetext", `${Math.round(pull * 100)} percent. Arrow keys charge; Space or Enter releases.`);
+    handle.setAttribute("aria-valuetext", t("game.powerLabel", { power: Math.round(pull * 100) }));
     $("#power-track").style.setProperty("--pull", String(pull));
     $("#place-x").value = candidate.x;
     $("#place-z").value = candidate.z;
-    $('[data-action="restore"]').textContent = contextLost
-      ? stable
-        ? "Save & reload 3D table"
-        : "Reload 3D table"
-      : "Restore last turn";
+    localize($('[data-action="restore"]'), contextLost
+      ? stable ? "game.saveReload" : "game.reloadTable"
+      : "game.restore");
     all('[data-action="new"]').forEach(
       (b) => (b.disabled = !ready || !ownership || contextLost),
     );
@@ -235,6 +228,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     $('[data-action="confirm-new"]').disabled = !ownership || busy;
     $("#graphics-quality").disabled = !ready || contextLost || loadFailed;
   }
+  onLanguageChange(ui, signal);
   const previewState = { phase: "preview", balls: makeRack(42) };
   function draw() {
     if (!contextLost) view?.update(state || previewState, angle, power, candidate, delivery ? strikeOffset(delivery.ratio, delivery.elapsed) : pull * PULL.distance);
@@ -242,7 +236,7 @@ export async function mountGame(root, assets, signal, onLeave) {
   async function startNew() {
     if (!ready || !ownership) return;
     busy = true;
-    lastResult = "";
+    lastResult = null;
     state = {
       schema: 1,
       rulesVersion: RULES_VERSION,
@@ -256,7 +250,7 @@ export async function mountGame(root, assets, signal, onLeave) {
       ballInHand: true,
       winner: null,
       balls: makeRack(crypto.getRandomValues(new Uint32Array(1))[0]),
-      message: "Player 1 breaks. Place the cue ball behind the head string.",
+      message: englishGameMessage("game.state.firstBreak"),
     };
     state.balls[0].pocketed = true;
     candidate = { x: -0.7, z: 0 };
@@ -297,7 +291,7 @@ export async function mountGame(root, assets, signal, onLeave) {
           ownership = false;
           cancelDelivery();
           state.message =
-            "Another tab owns this match. Pause and return when it is closed.";
+            englishGameMessage("game.state.otherTab");
           finishBusy();
           ui();
           return;
@@ -328,7 +322,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     if (!canContinueShot(frozen)) return;
     const id = frozen.id;
     pull = 0;
-    lastResult = "";
+    lastResult = null;
     draw();
     lastContactTipDistance = view?.cueTipDistance(state.balls[0]);
     try {
@@ -343,7 +337,7 @@ export async function mountGame(root, assets, signal, onLeave) {
       pull = 0;
       power = frozen.strength;
       state.phase = "moving";
-      state.message = "Balls are moving…";
+      state.message = englishGameMessage("game.state.moving");
     } catch (e) {
       intent = null;
       state.phase = "recovery";
@@ -385,7 +379,8 @@ export async function mountGame(root, assets, signal, onLeave) {
     state.phase = "adjudicating";
     ui();
     const next = adjudicate(before, state.balls, shot);
-    lastResult = shotFeedback(before, next, shot);
+    const prior = before, completedShot = shot;
+    lastResult = () => shotFeedback(prior, next, completedShot);
     shot = null;
     if (next.phase === "recovery") {
       state = next;
@@ -401,7 +396,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     if (contextLost) {
       state.phase = "recovery";
       state.message =
-        "3D view interrupted. Save and reload to restore the last complete turn.";
+        englishGameMessage("game.state.interrupted");
     }
     candidate = { x: -0.7, z: 0 };
     finishBusy();
@@ -426,7 +421,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     clearPointers();
     pausedPhase = state.phase;
     state.phase = "paused";
-    state.message = "Take your time. Continue when ready.";
+    state.message = englishGameMessage("game.state.paused");
     ui();
     if (document.querySelector('#pwa-update-dialog')?.open) {
       deferredUpdateMenu = true;
@@ -453,7 +448,7 @@ export async function mountGame(root, assets, signal, onLeave) {
     state.phase = pausedPhase || "aiming";
     pausedPhase = null;
     state.message =
-      state.phase === "moving" ? "Resuming the shot…" : "Ready when you are.";
+      state.phase === "moving" ? englishGameMessage("game.state.resuming") : englishGameMessage("game.state.ready");
     accumulator = 0;
     lastTime = performance.now();
     $("#game-menu").close();
@@ -606,8 +601,8 @@ export async function mountGame(root, assets, signal, onLeave) {
             state = stableCopy(saved.checkpoint);
             stable = stableCopy(state);
             state.message = saved.pending
-              ? "Interrupted shot was not recorded. Your previous turn is restored."
-              : "Saved match restored.";
+              ? englishGameMessage("game.state.rolledBack")
+              : englishGameMessage("game.state.restored");
             candidate = { x: -0.7, z: 0 };
             await persist(stable);
             ui();
@@ -639,7 +634,7 @@ export async function mountGame(root, assets, signal, onLeave) {
             state.phase = "aiming";
             state.ballInHand = false;
             state.revision++;
-            state.message = "Aim, pull the left handle down, then release.";
+            state.message = englishGameMessage("game.state.aim");
             busy = true;
             stable = stableCopy(state);
             ui();
@@ -669,29 +664,28 @@ export async function mountGame(root, assets, signal, onLeave) {
           break;
         case "leave":
           if (!store && !ownership) {
-            $("#menu-save-message").textContent = conflictMessage;
+            localize($("#menu-save-message"), conflictMessage);
             $('[data-action="discard"]').hidden = false;
             break;
           }
           if (
             shot &&
             !confirm(
-              "The unfinished shot will be discarded. Return to Gallery?",
+              t("game.confirmDiscardShot"),
             )
           )
             break;
           if (await persist(stable)) {
             onLeave();
           } else {
-            $("#menu-save-message").textContent =
-              "Saving failed. Keep this tab open to continue, retry Save, or explicitly leave without saving.";
+            localize($("#menu-save-message"), "game.saveFailure");
             $('[data-action="discard"]').hidden = false;
           }
           break;
         case "discard":
           if (
             confirm(
-              "Leave without saving? This device may only have an older turn, or no saved match.",
+              t("game.confirmLeaveUnsaved"),
             )
           )
             onLeave();
@@ -702,7 +696,7 @@ export async function mountGame(root, assets, signal, onLeave) {
               !stable ||
               (await persist(stable)) ||
               confirm(
-                "Saving is unavailable. Reload and lose the unsaved match?",
+                t("game.confirmReload"),
               )
             )
               location.reload();
@@ -712,7 +706,7 @@ export async function mountGame(root, assets, signal, onLeave) {
             state = stableCopy(stable);
             shot = null;
             busy = false;
-            state.message = "Last stable turn restored.";
+            state.message = englishGameMessage("game.state.stable");
             ui();
             draw();
           }
@@ -778,7 +772,7 @@ export async function mountGame(root, assets, signal, onLeave) {
       if (state) {
         state.phase = "recovery";
         state.message =
-          "3D view interrupted. Save and reload to restore the last complete turn.";
+          englishGameMessage("game.state.interrupted");
       }
       ui();
       $('[data-action="restore"]').focus({ preventScroll: true });
@@ -884,7 +878,7 @@ export async function mountGame(root, assets, signal, onLeave) {
           const conflictedStore = store;
           store = null;
           setSaveStatus(conflictMessage, true);
-          $("#menu-save-message").textContent = conflictMessage;
+          localize($("#menu-save-message"), conflictMessage);
           $('[data-action="discard"]').hidden = false;
           ui();
           await conflictedStore.release();
@@ -897,27 +891,27 @@ export async function mountGame(root, assets, signal, onLeave) {
           pausedPhase = paused ? state.phase : null;
           if (paused) state.phase = "paused";
           state.message = saved.pending
-            ? "Interrupted shot was not recorded. Your previous turn is restored."
-            : "Latest saved match restored from this device.";
+            ? englishGameMessage("game.state.rolledBack")
+            : englishGameMessage("game.state.latest");
           shot = null;
           before = null;
           candidate = { x: -0.7, z: 0 };
           saveFailed = false;
         }
         ownership = true;
-        setSaveStatus("Local save ready. This tab now owns the match.");
+        setSaveStatus("game.saveOwned");
         ui();
         draw();
       } else if (!(ownership = acquired) && state) {
         pause();
         setSaveStatus(
-          "Another tab owns this match. Waiting for it to close…",
+          "game.saveOther",
           true,
         );
         ui();
       }
     } catch {
-      setSaveStatus("Local save is unavailable.", true);
+      setSaveStatus("game.saveStorageUnavailable", true);
     } finally {
       heartbeatRunning = false;
     }
@@ -980,7 +974,7 @@ export async function mountGame(root, assets, signal, onLeave) {
       inspection,
       delivery: !!delivery,
       guide: state?.phase === "aiming" ? aimContact(state.balls, angle) : null,
-      lastResult,
+      lastResult: lastResult?.() ?? "",
     });
   window.advanceTime = (ms) => {
     manualUntil = performance.now() + 1000;
@@ -1016,17 +1010,17 @@ export async function mountGame(root, assets, signal, onLeave) {
       if (signal.aborted) return { dispose };
       setSaveStatus(
         !ownership
-          ? "Another session may be active. Waiting for ownership…"
+          ? "game.saveSession"
           : saved?.corrupt
-            ? "Saved data is incompatible. A new match will replace it."
-            : "Local save ready.",
+            ? "game.incompatible"
+            : "game.saveReady",
         !ownership || !!saved?.corrupt,
       );
       if (saved?.corrupt) saved = null;
     } catch {
       if (signal.aborted) return { dispose };
       setSaveStatus(
-        "Autosave unavailable. This game will stay in this tab only.",
+        "game.saveTabOnly",
         true,
       );
     }
@@ -1036,7 +1030,7 @@ export async function mountGame(root, assets, signal, onLeave) {
       assets,
       signal,
       (n, total) =>
-        (loading.textContent = `Preparing your table… ${n}/${total}`),
+        localize(loading, "game.prepareProgress", { count: n, total }),
     );
     if (signal.aborted) {
       view.dispose();
@@ -1051,7 +1045,7 @@ export async function mountGame(root, assets, signal, onLeave) {
   } catch {
     if (!signal.aborted) {
       loadFailed = true;
-      loading.textContent = "The 3D table could not load.";
+      localize(loading, "game.loadFailed");
       ui();
     }
   }
@@ -1079,14 +1073,14 @@ export async function mountGame(root, assets, signal, onLeave) {
       cancelCharge(); clearPointers();
       if (
         shot &&
-        !confirm("Discard this unfinished shot and return to Gallery?")
+        !confirm(t("game.confirmLeaveShot"))
       )
         return false;
       if (
         state &&
         saveFailed &&
         !confirm(
-          "The current match is not saved. Leave and lose unsaved progress?",
+          t("game.confirmLeaveMatch"),
         )
       )
         return false;

@@ -1,3 +1,4 @@
+import { localize } from "../i18n/index.js";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -9,10 +10,7 @@ export async function createGameScene(container, assets, signal, progress) {
   renderer.setClearColor(0x172421);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.domElement.setAttribute("role", "img");
-  renderer.domElement.setAttribute(
-    "aria-label",
-    "3D billiards table. Aim on the table, then pull the left handle down and release.",
-  );
+  localize(renderer.domElement, "game.canvas", undefined, "aria-label");
   container.append(renderer.domElement);
   const scene = new THREE.Scene(),
     camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.01, 20);

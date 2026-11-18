@@ -1,3 +1,5 @@
+import { localize, mountMarkup, t } from "../i18n/index.js";
+import { copyError, workerErrorKey } from "./copy.js";
 import { createUpdateUi } from "./update-ui.js";
 
 const REQUEST_TIMEOUT = 12000,
@@ -42,8 +44,8 @@ export function setupPwa(getGame) {
     action = document.createElement("button"),
     later = document.createElement("button");
   action.type = later.type = "button";
-  action.textContent = "Update now";
-  later.textContent = "Later";
+  localize(action, "pwa.updateNow");
+  localize(later, "pwa.later");
   notice.append(message, action, later);
   document.body.append(notice);
   // Keep explicit consent reachable inside an existing native modal.
@@ -64,8 +66,7 @@ export function setupPwa(getGame) {
   const installHelp = document.createElement("dialog");
   installHelp.className = "pwa-help";
   installHelp.setAttribute("aria-labelledby", "pwa-install-title");
-  installHelp.innerHTML =
-    '<h2 id="pwa-install-title">Take the table with you.</h2><p>On iPhone, use Share → Add to Home Screen. On supported desktop or Android browsers, use the browser menu to install Blender 3D Gallery.</p><p>Use “Make available offline” in Game before you disconnect. Installation alone does not download the game pack.</p><button type="button">Got it</button>';
+  mountMarkup(installHelp, '<h2 id="pwa-install-title" data-i18n="pwa.installTitle"></h2><p data-i18n="pwa.installHelp"></p><p data-i18n="pwa.installOffline"></p><button type="button" data-i18n="pwa.gotIt"></button>');
   document.body.append(installHelp);
   let installOpener;
   installHelp.querySelector("button").onclick = () => installHelp.close();
@@ -91,7 +92,7 @@ export function setupPwa(getGame) {
   ) {
     return new Promise((resolve, reject) => {
       if (!worker) {
-        reject(new Error("Offline support is starting. Retry shortly."));
+        reject(copyError("pwa.starting"));
         return;
       }
       const channel = new MessageChannel();
@@ -109,7 +110,7 @@ export function setupPwa(getGame) {
       const abort = () =>
         finish(new DOMException("Operation cancelled", "AbortError"));
       const timer = setTimeout(
-        () => finish(new Error("Operation timed out. Reconnect and retry.")),
+        () => finish(copyError("pwa.timeout")),
         timeout,
       );
       channel.port1.onmessage = (event) => {
@@ -120,7 +121,7 @@ export function setupPwa(getGame) {
         }
         event.data?.ok
           ? finish(null, event.data)
-          : finish(new Error(event.data?.error || "Operation failed. Retry."));
+          : finish(copyError(workerErrorKey(event.data?.error, "pwa.failed")));
       };
       signal?.addEventListener("abort", abort, { once: true });
       if (signal?.aborted) {
@@ -130,13 +131,13 @@ export function setupPwa(getGame) {
       try {
         worker.postMessage({ type, ...data }, [channel.port2]);
       } catch {
-        finish(new Error("The update worker is unavailable. Retry shortly."));
+        finish(copyError("pwa.workerUnavailable"));
       }
     });
   }
-  const offlineText = (text) => {
+  const offlineText = (key, params) => {
     const el = document.querySelector("#game-offline-status");
-    if (el) el.textContent = text;
+    if (el) localize(el, key, params);
   };
   async function checkOffline() {
     const run = ++offlineCheck;
@@ -145,8 +146,8 @@ export function setupPwa(getGame) {
     if (!registration?.active) {
       offlineText(
         state.offlinePack === "error"
-          ? "Offline support unavailable. Reconnect and retry."
-          : "Offline support is starting. Online game remains available.",
+          ? "pwa.offlineError"
+          : "pwa.offlineStarting",
       );
       return;
     }
@@ -160,15 +161,15 @@ export function setupPwa(getGame) {
       });
       offlineText(
         result.ready
-          ? "Offline ready · local matches available"
+          ? "pwa.offlineReady"
           : navigator.onLine
-            ? "Game pack not yet saved offline"
-            : "Offline · prepare the game pack when connected",
+            ? "pwa.packMissing"
+            : "pwa.offlinePackMissing",
       );
     } catch {
       if (run !== offlineCheck || preparingPack) return;
       publish({ offlinePack: "error" });
-      offlineText("Offline support unavailable. Reconnect and retry.");
+      offlineText("pwa.offlineError");
     }
   }
   // Broadcast only an invalidation; each tab verifies its own active build's cache.
@@ -212,7 +213,7 @@ export function setupPwa(getGame) {
     observeInstalling();
   }
   async function ensureActiveWorker() {
-    if (!supported) throw new Error("Offline support is unavailable in this browser.");
+    if (!supported) throw copyError("pwa.browserUnsupported");
     if (registration?.active) return registration.active;
     if (registrationPending) return registrationPending;
     registrationPending = (async () => {
@@ -224,7 +225,7 @@ export function setupPwa(getGame) {
       observeUpdates(reg);
       if (reg.active) return reg.active;
       const worker = reg.installing || reg.waiting;
-      if (!worker) throw new Error("Offline support failed to start. Reconnect and retry.");
+      if (!worker) throw copyError("pwa.offlineStartFailed");
       await new Promise((resolve, reject) => {
         let timer;
         const finish = (error) => {
@@ -235,9 +236,9 @@ export function setupPwa(getGame) {
         const changed = () => {
           if (reg.active) finish();
           else if (worker.state === "redundant")
-            finish(new Error("Offline support failed to start. Reconnect and retry."));
+            finish(copyError("pwa.offlineStartFailed"));
         };
-        timer = setTimeout(() => finish(new Error("Offline support timed out. Reconnect and retry.")), REQUEST_TIMEOUT);
+        timer = setTimeout(() => finish(copyError("pwa.offlineTimeout")), REQUEST_TIMEOUT);
         worker.addEventListener("statechange", changed);
         changed();
       });
@@ -269,8 +270,8 @@ export function setupPwa(getGame) {
     if (!worker || flow || reloaded || remoteLocks.size) return;
     const changed = worker !== offeredWorker;
     offeredWorker = worker;
-    message.textContent = "A new version is available.";
-    action.textContent = "Update now";
+    localize(message, "pwa.updateAvailable");
+    localize(action, "pwa.updateNow");
     action.disabled = later.disabled = false;
     notice.hidden = false;
     publish({
@@ -328,14 +329,13 @@ export function setupPwa(getGame) {
     cancelWorker(current);
     current.abort.abort();
     flow = null;
-    const text =
-      error?.message || "The update could not finish. Reconnect and retry.";
-    publish({ update: "error", error: text });
-    message.textContent = text;
-    action.textContent = "Retry update";
+    const key = error?.copyKey ?? "pwa.updateFailed";
+    publish({ update: "error", error: t(key, {}, "en") });
+    localize(message, key);
+    localize(action, "pwa.retry");
     action.disabled = later.disabled = false;
     notice.hidden = false;
-    ui.show("error", text);
+    ui.show("error", key);
     positionNotice();
   };
   async function beginUpdate() {
@@ -351,14 +351,12 @@ export function setupPwa(getGame) {
     flow = current;
     action.disabled = later.disabled = true;
     publish({ update: "preparing", error: null });
-    ui.show("preparing", "Saving your turn and preparing the update…");
+    ui.show("preparing", "pwa.preparingUpdate");
     current.timer = setTimeout(
       () =>
         failUpdate(
           current,
-          new Error(
-            "Update did not finish. Check your saved turn, then retry the update.",
-          ),
+          copyError("pwa.updateTimeout"),
         ),
       ACTIVATION_TIMEOUT,
     );
@@ -367,14 +365,10 @@ export function setupPwa(getGame) {
     try {
       if (flow !== current) return;
       if (!current.worker && !controllerChanged)
-        throw new Error(
-          "The new version is no longer waiting. Check your connection and retry.",
-        );
+        throw copyError("pwa.noWaitingUpdate");
       const game = getGame();
       if (game && !(await game.prepareUpdate()))
-        throw new Error(
-          "Finish or restore the current shot, and save your turn before updating.",
-        );
+        throw copyError("pwa.finishShot");
       if (flow !== current) return;
       // Another tab may already have activated the worker. Refresh this document
       // only after this tab's own explicit consent and safe Game save.
@@ -383,14 +377,14 @@ export function setupPwa(getGame) {
         flow = null;
         reloaded = true;
         publish({ update: "reloading" });
-        ui.show("reloading", "Latest version is ready. Reloading the gallery…");
+        ui.show("reloading", "pwa.reloading");
         location.reload();
         return;
       }
       current.ready = true;
       current.requested = true;
       publish({ update: "checking-tabs" });
-      ui.show("checking-tabs", "Checking that every open tab is ready…");
+      ui.show("checking-tabs", "pwa.checkTabs");
       await request(current.worker, "ACTIVATE_UPDATE", {
         signal: current.abort.signal,
         data: {
@@ -400,7 +394,7 @@ export function setupPwa(getGame) {
       });
       if (flow !== current || reloaded) return;
       publish({ update: "activating" });
-      ui.show("activating", "Installing latest version…");
+      ui.show("activating", "pwa.installing");
     } catch (error) {
       failUpdate(current, error);
     }
@@ -445,7 +439,7 @@ export function setupPwa(getGame) {
         publish({ update: "checking-tabs" });
         ui.show(
           "checking-tabs",
-          "Another tab is installing an update. Please wait…",
+          "pwa.remoteWait",
           true,
         );
       }
@@ -468,15 +462,14 @@ export function setupPwa(getGame) {
       current.abort.abort();
       notice.hidden = true;
       publish({ update: "reloading" });
-      ui.show("reloading", "Latest version is ready. Reloading the gallery…");
+      ui.show("reloading", "pwa.reloading");
       location.reload();
       return;
     }
     for (const challenge of [...remoteLocks.keys()]) releaseRemote(challenge);
     if (!reloaded) {
-      message.textContent =
-        "The latest version is ready. Reload this tab when your turn is saved.";
-      action.textContent = "Reload saved version";
+      localize(message, "pwa.reloadOffer");
+      localize(action, "pwa.reloadSaved");
       action.disabled = later.disabled = false;
       notice.hidden = false;
       publish({ update: "available", updateReady: true });
@@ -506,14 +499,14 @@ export function setupPwa(getGame) {
     ++offlineCheck;
     if (button) button.disabled = true;
     publish({ offlinePack: "preparing" });
-    offlineText("Preparing offline game…");
+    offlineText("pwa.preparingPack");
     try {
       const worker = await ensureActiveWorker();
       const result = await request(worker, "CACHE_GAME", {
         timeout: 90000,
         onProgress: (progress) =>
           offlineText(
-            `Saving game assets… ${progress.progress}/${progress.total}`,
+            "pwa.savingPack", { progress: progress.progress, total: progress.total },
           ),
       });
       publish({
@@ -523,12 +516,12 @@ export function setupPwa(getGame) {
       if (result.ready) notifyPackChange();
       offlineText(
         result.ready
-          ? "Offline ready · local matches available"
-          : "Offline preparation incomplete. Retry.",
+          ? "pwa.offlineReady"
+          : "pwa.packIncomplete",
       );
     } catch (error) {
       publish({ offlinePack: "error" });
-      offlineText(error.message);
+      offlineText(error.copyKey ?? "pwa.packUnavailable");
     } finally {
       preparingPack = false;
       if (button?.isConnected) button.disabled = false;
@@ -547,7 +540,7 @@ export function setupPwa(getGame) {
       } catch {
         publish({ offlinePack: "error" });
         offlineText(
-          "Offline preparation unavailable. Online game still works.",
+          "pwa.packUnavailable",
         );
       }
     };

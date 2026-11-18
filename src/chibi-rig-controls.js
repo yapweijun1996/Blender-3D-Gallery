@@ -1,3 +1,4 @@
+import { localize } from "./i18n/index.js";
 import { Quaternion, SkeletonHelper, Vector3 } from "three";
 
 export function createChibiRigControls({ model, scene, container, invalidate }) {
@@ -15,13 +16,13 @@ export function createChibiRigControls({ model, scene, container, invalidate }) 
   const toolbar = document.createElement("div");
   toolbar.className = "vehicle-controls";
   toolbar.setAttribute("role", "group");
-  toolbar.setAttribute("aria-label", "Chibi rig controls");
+  localize(toolbar, "viewer.rigControls", undefined, "aria-label");
   container.insertAdjacentElement("afterend", toolbar);
   function toggle(label, apply) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "outline-button";
-    button.textContent = label;
+    localize(button, label);
     toolbar.append(button);
     function set(enabled) {
       button.setAttribute("aria-pressed", String(enabled));
@@ -32,11 +33,11 @@ export function createChibiRigControls({ model, scene, container, invalidate }) 
     set(false);
     return set;
   }
-  const pose = toggle("Raise left arm", enabled => {
+  const pose = toggle("viewer.raiseArm", enabled => {
     arm.quaternion.copy(rest);
     if (enabled) arm.quaternion.premultiply(raise);
   });
-  const overlay = toggle("Show skeleton", enabled => { bones.visible = enabled; });
+  const overlay = toggle("viewer.skeleton", enabled => { bones.visible = enabled; });
   return {
     reset() { pose(false); overlay(false); },
     dispose() {

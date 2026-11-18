@@ -18,7 +18,7 @@
   font-size: 48px;
   line-height: 1;
 }
-.game-heading h1 span {
+.game-heading h1 .period {
   color: var(--accent);
 }
 .game-heading-actions {
@@ -714,6 +714,7 @@
 
 /* Entry needs the same first-screen budget as an active match. */
 body.game-page .header{min-height:64px}
+body.game-page .topbar-actions button:focus-visible { outline-offset: -4px; }
 .game-shell{padding:16px 0 20px}
 .game-heading{margin-bottom:14px;align-items:center}
 .game-heading h1{font-size:32px}

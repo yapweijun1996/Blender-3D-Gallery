@@ -6,11 +6,14 @@ import catalog from "virtual:gallery-catalog";
 import demos from "virtual:gallery-demos";
 import { setupPwa } from "./pwa/register.js";
 import { pwaCopy } from "./pwa/copy.js";
+import { getLanguage, localize, localizeTree, number, onLanguageChange, plural, syncLanguageAcrossTabs, t } from "./i18n/index.js";
+import { setupLanguagePicker } from "./i18n/picker.js";
 import { setupMenu } from "./navigation.js";
 import { setupSmartTopbar } from "./smart-topbar.js";
 import { setupPalettePicker } from "./design/palette-picker.js";
 import { getPageHeading, setupScrollToTop } from "./scroll-to-top.js";
 import {
+  categoryKey,
   element,
   poster,
   options,
@@ -33,7 +36,7 @@ const motionDemos = {
   "chibi-motion": { assetId: "gjh-chibi-motion" },
   "tripo-motion": {
     assetId: "tripo-chibi-motion",
-    subtitle: "Tripo rigged character",
+    subtitleKey: "motion.tripoSubtitle",
     clips: ["idle", "wave", "nod", "jump", "dance", "run", "walk"],
     cameraPosition: [.82, .77, 3.32],
     cameraTarget: [0, .54, .47],
@@ -42,6 +45,9 @@ const motionDemos = {
 const dialog = $("#viewer"),
   viewport = $("#viewport"),
   status = $("#viewer-status");
+localizeTree();
+syncLanguageAcrossTabs();
+setupLanguagePicker();
 const closeMenu = setupMenu();
 const setSmartTopbar = setupSmartTopbar();
 setupPalettePicker();
@@ -55,19 +61,20 @@ let gamePage = null,
 let lastRouteUrl = location.href;
 let modelReturnUrl = null;
 const notice = $("#route-notice");
+const noticeText = $("#route-notice-text");
 let pwaState = null;
 const refreshScrollToTop = setupScrollToTop(route);
 
 function refreshDemoOfflineStatus() {
   for (const badge of document.querySelectorAll(".demo-offline-status")) {
     const isGame = badge.dataset.demoId === "game";
-    badge.textContent = !isGame
-      ? "Requires an online connection · not included in the offline Game pack"
+    localize(badge, !isGame
+      ? "demos.onlineOnly"
       : pwaState?.offlinePack === "ready"
-        ? "Offline ready · verified Game pack saved on this device"
+        ? "demos.offlineReady"
         : pwaState?.offlinePack === "preparing"
-          ? "Preparing the offline Game pack…"
-          : "Offline Game pack not ready · prepare it in Game while connected";
+          ? "demos.preparing"
+          : "demos.notReady");
   }
 }
 
@@ -78,15 +85,19 @@ const isSearchMode = () => {
   return params.get("page") === "models" || (!params.has("page") && ["q", "theme", "category", "collection", "feature"].some((key) => params.has(key)));
 };
 
+const categoryLabel = value => t(categoryKey(value));
+const demoCategoryKey = value => `demos.category.${value.toLowerCase()}`;
+const demoTitleKey = demo => `demo.${demo.id}.title`;
+
 function createCard(asset, searchMode) {
   const card = element("article", "asset-card");
   const link = element("a", "asset-image");
   link.href = modelUrl(asset);
   link.dataset.assetId = asset.id;
-  link.setAttribute("aria-label", `Preview ${asset.name} in 3D`);
+  link.setAttribute("aria-label", t("library.preview", { name: asset.name }));
   link.append(
     poster(asset.thumbnail, asset.name),
-    element("span", "asset-image-label", "VIEW IN 3D ↗"),
+    element("span", "asset-image-label", t("library.view")),
   );
   const body = element("div", "asset-body");
   const heading = element(searchMode ? "h3" : "h4", "asset-title");
@@ -94,22 +105,22 @@ function createCard(asset, searchMode) {
   name.href = modelUrl(asset);
   name.dataset.assetId = asset.id;
   heading.append(name);
-  const download = element("a", "asset-download", "Download GLB ↓");
+  const download = element("a", "asset-download", t("library.download"));
   download.href = asset.file;
   download.download = `${asset.id}.glb`;
-  download.setAttribute("aria-label", `Download ${asset.name} GLB`);
+  download.setAttribute("aria-label", t("library.downloadAsset", { name: asset.name }));
   body.append(
-    element("p", "asset-category", asset.category),
+    element("p", "asset-category", categoryLabel(asset.category)),
     heading,
     element(
       "p",
       "asset-metrics",
-      `${asset.triangles.toLocaleString()} triangles · ${formatBytes(asset.bytes)}`,
+      t("library.metrics", { triangles: number(asset.triangles), size: formatBytes(asset.bytes) }),
     ),
   );
   const tags = element("div", "asset-tags");
-  if (asset.animations > 0) tags.append(element("span", "", "Animated GLB"));
-  if (hasInteractiveControls(asset)) tags.append(element("span", "", "Interactive"));
+  if (asset.animations > 0) tags.append(element("span", "", t("library.animatedGlb")));
+  if (hasInteractiveControls(asset)) tags.append(element("span", "", t("library.interactive")));
   if (tags.childElementCount) body.append(tags);
   if (asset.downloadable !== false) body.append(download);
   card.append(link, body);
@@ -127,7 +138,8 @@ function renderModels() {
   const feature = $("#model-feature").value;
   const filtered = assets.filter((a) =>
     matches(a, $("#model-search").value, $("#model-category").value,
-      $("#model-collection").value, $("#model-theme").value) &&
+      $("#model-collection").value, $("#model-theme").value,
+      [categoryLabel(a.category), categoryLabel(a.browseCategory)]) &&
     (!feature || (feature === "animated" ? a.animations > 0 : feature === "interactive" && hasInteractiveControls(a))),
   );
   const query = $("#model-search").value.trim();
@@ -138,11 +150,11 @@ function renderModels() {
   $("#library-page-title").hidden = !searchMode;
   $("#collection").setAttribute("aria-labelledby", searchMode ? "library-page-title" : "collection-title");
   $("#filter-count").hidden = !activeFilters.length;
-  $("#filter-count").textContent = String(activeFilters.length);
+  $("#filter-count").textContent = number(activeFilters.length);
   $("#clear-model-filters").hidden = !filtering;
   $("#model-count").textContent = filtering
-    ? `${filtered.length} of ${assets.length} models`
-    : `${assets.length} models`;
+    ? plural("library.filteredCount", assets.length, { count: number(filtered.length), total: number(assets.length) })
+    : plural("library.modelCount", assets.length);
 
   const categoryFilters = activeFilters.filter(select => ["theme", "category"].includes(select.name));
   const currentUrl = new URL(location.href);
@@ -170,11 +182,11 @@ function renderModels() {
   }
   for (const [category, items] of [...groups].sort(([a], [b]) => a.localeCompare(b))) {
     const section = element("section", "asset-collection");
-    section.setAttribute("aria-label", category);
+    section.setAttribute("aria-label", categoryLabel(category));
     const heading = element("div", "collection-title");
     heading.append(
-      element(searchMode ? "h2" : "h3", "group-title", category),
-      element("p", "", `${items.length} ${items.length === 1 ? "model" : "models"}`),
+      element(searchMode ? "h2" : "h3", "group-title", categoryLabel(category)),
+      element("p", "", plural("library.modelCount", items.length)),
     );
     const grid = element("div", "asset-grid");
     for (const asset of items) grid.append(createCard(asset, searchMode));
@@ -182,17 +194,17 @@ function renderModels() {
     fragment.append(section);
   }
   if (!filtered.length)
-    fragment.append(emptyState("No models found.", "Try another keyword or clear your filters."));
+    fragment.append(emptyState("library.empty", "common.clearHint"));
   $("#catalog").replaceChildren(fragment);
 }
 const categoryLinks = [
-  ["All categories", "", ""], ["Products", "theme", "Product Packaging"],
-  ["Vehicles", "category", "Vehicles"], ["Buildings", "theme", "Buildings & Architecture"],
-  ["Characters", "theme", "People & Characters"], ["Retail & Mall", "theme", "Shopping Mall"],
-  ["Nature", "theme", "Nature"],
+  ["library.allCategories", "", ""], ["library.products", "theme", "Product Packaging"],
+  ["category.vehicles", "category", "Vehicles"], ["library.buildings", "theme", "Buildings & Architecture"],
+  ["category.characters", "theme", "People & Characters"], ["library.retailMall", "theme", "Shopping Mall"],
+  ["category.nature", "theme", "Nature"],
 ];
 for (const [label, key, value] of categoryLinks) {
-  const link = element("a", "category-link", label);
+  const link = localize(element("a", "category-link"), label);
   link.dataset.key = key;
   link.dataset.value = value;
   $("#category-navigation").append(link);
@@ -202,19 +214,23 @@ if (heroAsset) {
   const feature = $("#featured-model");
   feature.href = `?model=${encodeURIComponent(heroAsset.slug ?? heroAsset.id)}`;
   feature.dataset.assetId = heroAsset.id;
-  feature.setAttribute("aria-label", `View featured model ${heroAsset.name} in 3D`);
-  feature.querySelector(".hero-frame").append(poster(heroAsset.thumbnail, heroAsset.name));
+  localize(feature, "gallery.featuredView", { name: heroAsset.name }, "aria-label");
+  feature.querySelector(".hero-frame").append(poster(heroAsset.thumbnail, heroAsset.name, true));
   feature.querySelector("strong").textContent = heroAsset.name;
   feature.hidden = false;
 }
 function renderDemos() {
-  const filtered = demos.filter((d) =>
-    matches(d, $("#demo-search").value, $("#demo-category").value),
+  const filtered = demos.filter(demo =>
+    matches(demo, $("#demo-search").value, $("#demo-category").value, "", "", [
+      t(demoTitleKey(demo)), t(`demo.${demo.id}.description`), t(demoCategoryKey(demo.category)),
+      ...demo.tags.map(tag => t(`demos.tag.${tag.toLowerCase()}`)),
+    ]),
   );
   $("#demo-count").textContent = filtered.length === demos.length
-    ? `${demos.length} ${demos.length === 1 ? "demo" : "demos"}`
-    : `${filtered.length} of ${demos.length} ${demos.length === 1 ? "demo" : "demos"}`;
+    ? plural("demos.count", demos.length)
+    : plural("demos.filteredCount", demos.length, { count: number(filtered.length), total: number(demos.length) });
   const cards = filtered.map((demo) => {
+    const title = t(demoTitleKey(demo));
     const card = element("article", "demo-card");
     card.dataset.demoId = demo.id;
     const image = element("a", "asset-image demo-image");
@@ -222,18 +238,18 @@ function renderDemos() {
     image.dataset.page = new URL(demo.route, location.href).searchParams.get(
       "page",
     );
-    image.setAttribute("aria-label", `Launch ${demo.title}`);
-    image.append(poster(demo.thumbnail, demo.title));
+    image.setAttribute("aria-label", t("demos.launch", { title }));
+    image.append(poster(demo.thumbnail, title));
     const body = element("div", "demo-body");
     const heading = element("h2");
-    const link = element("a", "", demo.title);
+    const link = element("a", "", title);
     link.href = demo.route;
     link.dataset.page = image.dataset.page;
     heading.append(link);
     body.append(
-      element("p", "asset-category", demo.category),
+      element("p", "asset-category", t(demoCategoryKey(demo.category))),
       heading,
-      element("p", "demo-description", demo.description),
+      element("p", "demo-description", t(`demo.${demo.id}.description`)),
       element(
         "p",
         "demo-technology",
@@ -243,15 +259,15 @@ function renderDemos() {
         "p",
         "demo-availability",
         demo.status === "available"
-          ? "Available in your browser"
-          : "Currently unavailable",
+          ? t("demos.available")
+          : t("demos.unavailable"),
       ),
     );
     const offlineStatus = element("p", "demo-offline-status");
     offlineStatus.dataset.demoId = demo.id;
     body.append(offlineStatus);
     if (demo.status === "available") {
-      const launch = element("a", "outline-button", `Launch ${demo.title} ↗`);
+      const launch = element("a", "outline-button", t("demos.launchLink", { title }));
       launch.href = demo.route;
       launch.dataset.page = image.dataset.page;
       body.append(launch);
@@ -270,8 +286,8 @@ function renderDemos() {
       ? cards
       : [
           emptyState(
-            "No demos found.",
-            "Try another keyword or clear your filters.",
+            "demos.empty",
+            "common.clearHint",
           ),
         ]),
   );
@@ -279,15 +295,16 @@ function renderDemos() {
 }
 options(
   $("#model-theme"),
-  assets.map((a) => a.browseCategory),
+  assets.map((a) => a.browseCategory), categoryKey,
 );
 options(
   $("#model-category"),
-  assets.map((a) => a.category),
+  assets.map((a) => a.category), categoryKey,
 );
 // Keep previously shared category URLs usable without offering outdated labels for new searches.
 for (const value of [...new Set(assets.map((a) => a.previousCategory).filter(Boolean))]) {
-  const option = element("option", "", `${value} (previous category)`);
+  const option = element("option");
+  option.dataset.previousCategory = value;
   option.value = value;
   option.hidden = true;
   $("#model-category").append(option);
@@ -299,7 +316,7 @@ for (const collection of catalog.collections) {
 }
 options(
   $("#demo-category"),
-  demos.map((d) => d.category),
+  demos.map((d) => d.category), demoCategoryKey,
 );
 $("#filter-toggle").addEventListener("click", () => {
   const panel = $("#advanced-filters");
@@ -344,25 +361,25 @@ function metadata(asset) {
   const dl = $("#viewer-metadata");
   dl.replaceChildren();
   const rows = [
-    ["Collection", asset.collectionName],
-    ["Category", asset.category],
-    ["Format", asset.format ?? "GLB"],
-    ["File size", formatBytes(asset.bytes)],
-    ["Triangles", asset.triangles?.toLocaleString()],
-    ["Vertices", asset.vertices?.toLocaleString()],
-    ["Materials", asset.materials],
-    ["Animations", asset.animations === 0 ? "None in GLB" : asset.animations],
+    ["library.collection", asset.collectionName],
+    ["library.category", categoryLabel(asset.category)],
+    ["viewer.format", asset.format ?? "GLB"],
+    ["viewer.size", formatBytes(asset.bytes)],
+    ["viewer.triangles", asset.triangles == null ? null : number(asset.triangles)],
+    ["viewer.vertices", asset.vertices == null ? null : number(asset.vertices)],
+    ["viewer.materials", asset.materials],
+    ["viewer.animations", asset.animations === 0 ? t("viewer.noAnimation") : asset.animations],
     [
-      "License",
+      "viewer.license",
       asset.license ??
         asset.details?.rights ??
-        "Redistribution terms pending owner decision.",
+        t("viewer.rightsPending"),
     ],
   ];
   for (const [label, value] of rows)
     if (value !== undefined && value !== null && value !== "") {
       const group = element("div");
-      group.append(element("dt", "", label), element("dd", "", String(value)));
+      group.append(element("dt", "", t(label)), element("dd", "", String(value)));
       dl.append(group);
     }
 }
@@ -377,9 +394,9 @@ async function openViewer(asset, trigger, updateUrl = true) {
     trigger ||
     document.querySelector(`#catalog [data-asset-id="${asset.id}"]`) ||
     $(".brand");
-  $("#viewer-title").textContent = asset.name;
-  $("#viewer-category").textContent =
-    `${asset.category.toUpperCase()} / INTERACTIVE 3D`;
+  const title = localize($("#viewer-title"));
+  title.textContent = asset.name;
+  refreshViewerMetadata(asset);
   const notes = [
     asset.description,
     asset.details?.accuracy_notes,
@@ -387,23 +404,22 @@ async function openViewer(asset, trigger, updateUrl = true) {
   ].filter(Boolean);
   $("#viewer-description").textContent = [...new Set(notes)].join(" ");
   for (const attribution of asset.details?.attribution ?? []) {
-    for (const [label, value] of [["Source", attribution.url], ["License", attribution.license_url]]) {
+    for (const [label, value] of [["viewer.source", attribution.url], ["viewer.license", attribution.license_url]]) {
       if (typeof value !== "string" || !value.startsWith("https://")) continue;
-      const link = element("a", "", label);
+      const link = localize(element("a"), label);
       link.href = value;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
       $("#viewer-description").append(" ", link);
     }
   }
-  metadata(asset);
   $("#viewer-download").href = asset.file;
   $("#viewer-download").download = `${asset.id}.glb`;
   $("#viewer-download").hidden = asset.downloadable === false;
   const preview = $("#viewer-poster");
   preview.hidden = false;
   preview.src = asset.thumbnail;
-  preview.alt = `${asset.name} reference preview`;
+  localize(preview, "viewer.poster", { name: asset.name }, "alt");
   preview.onerror = () => {
     preview.hidden = true;
   };
@@ -411,7 +427,7 @@ async function openViewer(asset, trigger, updateUrl = true) {
   $("#retry-view").hidden = true;
   $("#fullscreen-view").hidden = !viewport.requestFullscreen;
   const related = $("#viewer-related");
-  related.replaceChildren(element("h3", "", "From the same collection"));
+  related.replaceChildren(localize(element("h3"), "viewer.related"));
   const links = element("div", "related-links");
   for (const other of assets
     .filter((a) => a.collectionId === asset.collectionId && a.id !== asset.id)
@@ -432,7 +448,7 @@ async function openViewer(asset, trigger, updateUrl = true) {
       modelReturnUrl = location.href;
     history.pushState({}, "", modelUrl(asset));
   }
-  status.textContent = "Loading the 3D model…";
+  localize(status, "viewer.loading");
   try {
     const { default: createViewer } = await import("./viewer.js");
     if (signal.aborted) return;
@@ -453,8 +469,7 @@ async function openViewer(asset, trigger, updateUrl = true) {
     $("#reset-view").onclick = viewer.reset;
   } catch (error) {
     if (signal.aborted) return;
-    status.textContent =
-      "3D view unavailable. The preview and model information are still available.";
+    localize(status, "viewer.unavailable");
     $("#retry-view").hidden = false;
     void pwaRuntime.checkForUpdate(true);
   }
@@ -504,7 +519,7 @@ $("#fullscreen-view").addEventListener("click", async () => {
     if (document.fullscreenElement) await document.exitFullscreen();
     else await viewport.requestFullscreen();
   } catch {
-    status.textContent = "Fullscreen is unavailable in this browser.";
+    localize(status, "viewer.noFullscreen");
   }
 });
 function syncModelUrl() {
@@ -516,8 +531,7 @@ function syncModelUrl() {
     if (dialog.open) closeViewer(false);
     if (id) {
       notice.hidden = false;
-      notice.textContent =
-        "This model could not be found. Browse the library below or try another search.";
+      localize(noticeText, "viewer.missingModel");
     }
   }
 }
@@ -526,13 +540,14 @@ const pwaRuntime = setupPwa(() => gamePage);
 pwaState = pwaRuntime.getState?.() ?? null;
 refreshDemoOfflineStatus();
 
-const versionText = pwaCopy.version(__APP_VERSION__);
-for (const chip of document.querySelectorAll("[data-app-version]")) {
-  chip.textContent = versionText;
-  chip.title = pwaCopy.appVersion(versionText);
+function refreshVersion() {
+  const versionText = pwaCopy.version(__APP_VERSION__);
+  for (const chip of document.querySelectorAll("[data-app-version]")) {
+    chip.textContent = versionText;
+    chip.title = pwaCopy.appVersion(versionText);
+  }
+  $(".topbar-update-short").textContent = pwaCopy.update;
 }
-const compactUpdate = $(".topbar-update-short");
-compactUpdate.textContent = pwaCopy.update;
 
 function refreshUpdateActions() {
   const { update, updateReady, updateVersion } = pwaState;
@@ -589,14 +604,14 @@ async function syncRoute() {
   lastRouteUrl = location.href;
   setSmartTopbar(!isDemo);
   notice.hidden = true;
+  notice.querySelector(".pwa-inline-update")?.remove();
   const raw = new URL(location.href).searchParams.get("page");
   if (
     raw &&
     ![...demoPages, "demos", "about", "gallery", "models"].includes(raw)
   ) {
     notice.hidden = false;
-    notice.textContent =
-      "This page could not be found. Explore the 3D model library below.";
+    localize(noticeText, "shell.missingRoute");
     offerUpdate(notice);
   }
   for (const name of ["gallery", "demos", "about", ...demoPages])
@@ -611,10 +626,7 @@ async function syncRoute() {
   }
   if (page === "gallery") syncModelFilters();
   if (page === "demos") syncDemoFilters();
-  const title = isDemo
-    ? demos.find(demo => demo.route === `?page=${page}`).title
-    : page === "gallery" ? "3D Models" : page === "demos" ? "Interactive Demos" : "About";
-  document.title = `${title} · Blender 3D Gallery`;
+  refreshTitle(page);
   if (page === mountedRoute && (gamePage || solarPage || productStudioPage || shelfInspectorPage || motionPage || pageController))
     return;
   const run = ++routeRun;
@@ -637,7 +649,7 @@ async function syncRoute() {
     pageController = controller;
     const root = $(`#${page}-page`);
     root.replaceChildren(
-      element("p", "route-loading", "Loading the experience…"),
+      localize(element("p", "route-loading"), "shell.loadingExperience"),
     );
     try {
       let module;
@@ -653,7 +665,7 @@ async function syncRoute() {
               navigate("gallery", true),
             )
           : motion
-            ? await module.mountMotion(root, assetById.get(motion.assetId), controller.signal, { ...motion, title })
+            ? await module.mountMotion(root, assetById.get(motion.assetId), controller.signal, { ...motion, titleKey: demoTitleKey(demos.find(demo => demo.route === `?page=${page}`)) })
           : page === "shelf-inspector"
             ? await module.mountShelfInspector(root, controller.signal)
           : page === "product-studio"
@@ -679,11 +691,11 @@ async function syncRoute() {
       pageController = null;
       root.replaceChildren(
         emptyState(
-          "This experience could not start.",
-          "Reconnect and try again, or return to Interactive Demos.",
+          "shell.experienceFailed",
+          "shell.experienceRecovery",
         ),
       );
-      const retry = element("button", "outline-button", "Retry experience");
+      const retry = localize(element("button", "outline-button"), "common.retryExperience");
       retry.addEventListener("click", () => void syncRoute());
       root.append(retry);
       offerUpdate(root);
@@ -757,4 +769,34 @@ document.addEventListener("click", (event) => {
 });
 window.addEventListener("popstate", () => void syncRoute());
 window.addEventListener("hashchange", () => void syncRoute());
+function refreshTitle(page) {
+  const demo = demos.find(item => item.route === `?page=${page}`);
+  const key = demo ? demoTitleKey(demo) : page === "gallery" ? "nav.models" : `nav.${page}`;
+  document.title = t("shell.pageTitle", { title: t(key) });
+}
+
+function refreshViewerMetadata(asset) {
+  localize($("#viewer-category"), "viewer.category", () => ({
+    category: categoryLabel(asset.category).toLocaleUpperCase(getLanguage()),
+  }));
+  metadata(asset);
+}
+
+function refreshLanguage() {
+  for (const option of document.querySelectorAll("[data-previous-category]")) {
+    option.textContent = t("library.previous", { category: categoryLabel(option.dataset.previousCategory) });
+  }
+  const page = route();
+  if (mountedRoute === "gallery") renderModels();
+  if (mountedRoute === "demos") renderDemos();
+  if (activeAsset) refreshViewerMetadata(activeAsset);
+  refreshTitle(page);
+  refreshVersion();
+  refreshUpdateActions();
+  refreshScrollToTop();
+}
+
+onLanguageChange(refreshLanguage);
+refreshLanguage();
 void syncRoute();
+document.documentElement.removeAttribute("data-i18n-pending");

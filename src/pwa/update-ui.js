@@ -1,3 +1,5 @@
+import { localize, mountMarkup } from "../i18n/index.js";
+
 /** A native modal stays above viewers and Game menus without dismissing them. */
 export function createUpdateUi() {
   const dialog = document.createElement("dialog");
@@ -5,8 +7,7 @@ export function createUpdateUi() {
   dialog.className = "pwa-update-dialog";
   dialog.setAttribute("aria-labelledby", "pwa-update-title");
   dialog.setAttribute("aria-describedby", "pwa-update-status");
-  dialog.innerHTML =
-    '<div class="pwa-update-mark" aria-hidden="true">✳</div><p class="eyebrow">BLENDER 3D GALLERY</p><h2 id="pwa-update-title" class="pwa-update-title" tabindex="-1">Updating your gallery.</h2><p id="pwa-update-status" class="pwa-update-status" role="status" aria-live="polite"></p><progress class="pwa-update-progress" aria-hidden="true"></progress><div class="pwa-update-actions" hidden><button type="button" data-update-action="retry">Retry update</button><button type="button" data-update-action="close">Back to current page</button></div>';
+  mountMarkup(dialog, '<div class="pwa-update-mark" aria-hidden="true">✳</div><p class="eyebrow">BLENDER 3D GALLERY</p><h2 id="pwa-update-title" class="pwa-update-title" tabindex="-1" data-i18n="pwa.updatingTitle"></h2><p id="pwa-update-status" class="pwa-update-status" role="status" aria-live="polite"></p><progress class="pwa-update-progress" aria-hidden="true"></progress><div class="pwa-update-actions" hidden><button type="button" data-update-action="retry" data-i18n="pwa.retry"></button><button type="button" data-update-action="close" data-i18n="pwa.back"></button></div>');
   document.body.append(dialog);
   const title = dialog.querySelector("h2"),
     status = dialog.querySelector('[role="status"]'),
@@ -30,16 +31,12 @@ export function createUpdateUi() {
     document.body.classList.remove("pwa-updating");
     if (previousFocus?.isConnected) previousFocus.focus();
   });
-  const show = (phase, message, remote = false) => {
+  const show = (phase, key, remote = false) => {
     busy = phase !== "error";
     dialog.dataset.phase = phase;
     dialog.setAttribute("aria-busy", String(busy));
-    title.textContent = remote
-      ? "Another tab is updating."
-      : phase === "error"
-        ? "Update needs another try."
-        : "Updating your gallery.";
-    status.textContent = message;
+    localize(title, remote ? "pwa.remoteTitle" : phase === "error" ? "pwa.errorTitle" : "pwa.updatingTitle");
+    localize(status, key);
     actions.hidden = busy;
     document.body.classList.toggle("pwa-updating", busy);
     if (!dialog.open) {

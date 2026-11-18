@@ -1,9 +1,11 @@
+import { localize, t } from "../i18n/index.js";
+
 export const normalized = (value) =>
   String(value ?? "")
     .trim()
     .replace(/\s+/g, " ")
     .toLocaleLowerCase();
-export function matches(item, query, category = "", collection = "", theme = "") {
+export function matches(item, query, category = "", collection = "", theme = "", translated = []) {
   const text = normalized(
     [
       item.title,
@@ -13,6 +15,7 @@ export function matches(item, query, category = "", collection = "", theme = "")
       item.browseCategory,
       item.collectionName,
       ...(item.tags ?? []),
+      ...translated,
     ].join(" "),
   );
   return (
@@ -31,10 +34,14 @@ export function element(tag, className, text) {
   if (text !== undefined) node.textContent = text;
   return node;
 }
-export function poster(url, title) {
+export function poster(url, title, live = false) {
   const image = element("img");
   image.src = url;
-  image.alt = `${title} preview`;
+  const set = (node, key, attr) => {
+    if (live) localize(node, key, { name: title }, attr);
+    else node.setAttribute(attr, t(key, { name: title }));
+  };
+  set(image, "library.poster", "alt");
   image.width = 400;
   image.height = 400;
   image.loading = "lazy";
@@ -42,26 +49,29 @@ export function poster(url, title) {
     "error",
     () => {
       image.hidden = true;
-      image.parentElement.classList.add("poster-unavailable");
-      image.parentElement.setAttribute(
-        "aria-label",
-        `${title} — preview unavailable`,
-      );
+      const frame = image.parentElement;
+      frame.classList.add("poster-unavailable");
+      set(frame, "library.posterUnavailable", "aria-label");
+      const fallback = localize(element("span", "poster-fallback"), "library.previewUnavailable");
+      fallback.setAttribute("aria-hidden", "true");
+      frame.append(fallback);
     },
     { once: true },
   );
   return image;
 }
-export function options(select, values) {
+export const categoryKey = value => `category.${value.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+
+export function options(select, values, key) {
   for (const value of [...new Set(values)].sort((a, b) => a.localeCompare(b))) {
-    const option = element("option", "", value);
+    const option = localize(element("option"), key(value));
     option.value = value;
     select.append(option);
   }
 }
 export function emptyState(title, description) {
   const box = element("div", "empty-state");
-  box.append(element("p", "empty-title", title), element("p", "", description));
+  box.append(localize(element("p", "empty-title"), title), localize(element("p"), description));
   return box;
 }
 export function setupFilters(form, fields, onChange) {

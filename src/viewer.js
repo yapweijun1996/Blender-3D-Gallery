@@ -1,3 +1,4 @@
+import { localize, t } from "./i18n/index.js";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -48,10 +49,7 @@ export default async function createViewer(
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1;
   }
-  renderer.domElement.setAttribute(
-    "aria-label",
-    `Interactive 3D ${asset.name}. Drag or use arrow keys to rotate. Use plus and minus keys to zoom.`,
-  );
+  localize(renderer.domElement, "viewer.canvas", { name: asset.name }, "aria-label");
   renderer.domElement.setAttribute("role", "group");
   renderer.domElement.tabIndex = 0;
   container.appendChild(renderer.domElement);
@@ -139,7 +137,7 @@ export default async function createViewer(
   const onContextLost = (event) => {
     event.preventDefault();
     if (!disposed)
-      status.textContent = "The 3D view was interrupted. Close and reopen it to retry.";
+      localize(status, "viewer.interrupted");
   };
   renderer.domElement.addEventListener("webglcontextlost", onContextLost);
   const dispose = () => {
@@ -269,9 +267,9 @@ export default async function createViewer(
       invalidate();
     };
     const animationPreviews = asset.id === "tripo-convert-1c818c0d"
-      ? [["run", "Run"], ["sit", "Sit"]]
+      ? [["run", "clip.run"], ["sit", "clip.sit"]]
       : asset.id === "tripo-convert-405dc0a0"
-        ? [["walk", "Walk"]]
+        ? [["walk", "clip.walk"]]
         : undefined;
     if (animationPreviews) {
       const { default: createAnimationPreview } = await import("./tripo-animation-preview.js");
@@ -344,10 +342,10 @@ export default async function createViewer(
       vehicleToolbar = document.createElement("div");
       vehicleToolbar.className = "vehicle-views";
       vehicleToolbar.setAttribute("role", "group");
-      vehicleToolbar.setAttribute("aria-label", "Vehicle showcase controls");
+      localize(vehicleToolbar, "vehicle.controls", undefined, "aria-label");
       const title = document.createElement("span");
       title.className = "vehicle-views-label";
-      title.textContent = "360° Vehicle Showcase";
+      localize(title, "vehicle.showcase");
       vehicleToolbar.append(title);
       const buttons = document.createElement("div");
       buttons.className = "vehicle-view-buttons";
@@ -355,7 +353,7 @@ export default async function createViewer(
         const button = document.createElement("button");
         button.type = "button";
         button.dataset.vehicleView = name;
-        button.textContent = name[0].toUpperCase() + name.slice(1);
+        localize(button, `direction.${name}`);
         button.setAttribute("aria-pressed", "false");
         button.addEventListener("click", () => setView(name));
         buttons.append(button);
@@ -366,17 +364,17 @@ export default async function createViewer(
       if (doorRig) {
         const label = document.createElement("span");
         label.className = "vehicle-views-label";
-        label.textContent = "Open or close doors";
+        localize(label, "vehicle.doors");
         const group = document.createElement("div");
         group.className = "vehicle-door-buttons";
         group.setAttribute("role", "group");
-        group.setAttribute("aria-label", "Open or close doors");
-        for (const [code, labelText] of [["FL", "Front left"], ["FR", "Front right"], ["RL", "Rear left"], ["RR", "Rear right"]]) {
+        localize(group, "vehicle.doors", undefined, "aria-label");
+        for (const code of doorCodes) {
           const button = document.createElement("button");
           button.type = "button";
           button.dataset.vehicleDoor = code;
-          button.textContent = labelText;
-          button.setAttribute("aria-label", `${labelText} door`);
+          localize(button, `vehicle.door.${code}`);
+          localize(button, "vehicle.doorLabel", () => ({ position: t(`vehicle.door.${code}`) }), "aria-label");
           button.setAttribute("aria-pressed", "false");
           button.addEventListener("click", () => {
             const opening = button.getAttribute("aria-pressed") !== "true";
@@ -392,13 +390,13 @@ export default async function createViewer(
         doorControls.append(label, group);
       } else {
         doorControls.classList.add("vehicle-door-unavailable");
-        doorControls.textContent = "Door controls are unavailable for this model.";
+        localize(doorControls, "vehicle.noDoors");
       }
       vehicleToolbar.append(doorControls);
       container.insertAdjacentElement("afterend", vehicleToolbar);
     }
     reset();
-    status.textContent = "";
+    localize(status);
     draw = () => {
       frame = 0;
       if (disposed || document.hidden) return;

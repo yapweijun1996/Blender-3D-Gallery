@@ -1,3 +1,5 @@
+import { localize } from "./i18n/index.js";
+
 export function getPageHeading(main) {
   return [...main.querySelectorAll("h1")].find(heading => !heading.closest("[hidden]"));
 }
@@ -7,7 +9,7 @@ export function setupScrollToTop(getPage) {
   button.id = "scroll-to-top";
   button.className = "scroll-to-top";
   button.type = "button";
-  button.textContent = "↑ Back to top";
+  localize(button, "shell.backTop");
   button.hidden = true;
   document.querySelector(".footer").before(button);
   let queued = false;

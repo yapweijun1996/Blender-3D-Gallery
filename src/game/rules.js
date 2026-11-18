@@ -1,3 +1,4 @@
+import { englishGameMessage } from "./copy.js";
 import { groupOf, legalPlacement, TABLE } from "./table.js";
 export const RULES_VERSION = "casual-8ball-v1";
 export function adjudicate(before, balls, shot) {
@@ -35,8 +36,8 @@ export function adjudicate(before, balls, shot) {
     next.phase = "finished";
     next.message =
       next.winner === shooter
-        ? "Eight ball pocketed legally."
-        : "Early eight or foul on the eight.";
+        ? englishGameMessage("game.state.legalEight")
+        : englishGameMessage("game.state.illegalEight");
     return next;
   }
   if (eight && before.break) {
@@ -56,7 +57,7 @@ export function adjudicate(before, balls, shot) {
       return {
         ...before,
         phase: "recovery",
-        message: "No safe spot for the eight. Restore or restart.",
+        message: englishGameMessage("game.state.noSpot"),
       };
     Object.assign(b, spot, { pocketed: false, vx: 0, vz: 0 });
   }
@@ -87,12 +88,12 @@ export function adjudicate(before, balls, shot) {
   }
   next.message = foul
     ? scratch
-      ? "Cue ball scratched. Ball in hand."
-      : "Wrong first contact or no contact. Ball in hand."
+      ? englishGameMessage("game.state.scratch")
+      : englishGameMessage("game.state.wrongContact")
     : before.break && eight
-      ? "Eight re-spotted after the break."
+      ? englishGameMessage("game.state.respotted")
       : earnsTurn
-        ? "Legal pot — shoot again."
-        : "Turn passes to the other player.";
+        ? englishGameMessage("game.state.legalPot")
+        : englishGameMessage("game.state.turnPass");
   return next;
 }

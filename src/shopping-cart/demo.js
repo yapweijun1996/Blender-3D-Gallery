@@ -1,3 +1,4 @@
+import { localize, t } from '../i18n/index.js';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import shopperUrl from '../../models/mall-shopper/exports/mall-shopper.glb?url';
@@ -54,28 +55,34 @@ export default async function createCartDemo({ model, scene, container, signal, 
   const toolbar = document.createElement('div');
   toolbar.className = 'cart-demo';
   toolbar.setAttribute('role', 'group');
-  toolbar.setAttribute('aria-label', 'Shopping cart demonstration');
-  const title = document.createElement('strong'); title.textContent = 'Shopping cart controls';
+  localize(toolbar, 'cart.demo', undefined, 'aria-label');
+  const title = document.createElement('strong'); localize(title, 'cart.controls');
   const status = document.createElement('p'); status.className = 'cart-demo-status'; status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
   const buttons = document.createElement('div'); buttons.className = 'cart-demo-buttons';
   const button = (id, label, callback) => {
-    const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.dataset.cartAction = id;
+    const b = document.createElement('button'); b.type = 'button'; localize(b, label); b.dataset.cartAction = id;
     b.addEventListener('click', () => { callback(); renderStatus(); invalidate(); }); buttons.append(b); return b;
   };
   const say = value => { state = value; };
-  const grab = button('grab', 'Grab', () => { grabbed = true; say('Grab'); });
-  const push = button('push', 'Push', () => { targetSpeed = .42; action?.play(); say(angle ? 'Turn' : 'Push'); });
-  button('left', 'Turn left', () => { angle = -.55; say('Turn'); });
-  button('straight', 'Straight', () => { angle = 0; say(targetSpeed ? 'Push' : 'Idle'); });
-  button('right', 'Turn right', () => { angle = .55; say('Turn'); });
-  const stop = button('stop', 'Stop', () => { targetSpeed = 0; say('Stop'); });
-  const release = button('release', 'Release', () => { targetSpeed = 0; grabbed = false; say('Release'); });
-  const add = button('add', 'Add item', () => { itemState = 'adding'; itemProgress = 0; item.visible = true; say('Add Item'); });
-  const remove = button('remove', 'Remove item', () => { itemState = 'removing'; itemProgress = 0; say('Remove Item'); });
-  const resetButton = button('reset', 'Reset demo', () => reset());
+  const grab = button('grab', 'cart.grab', () => { grabbed = true; say('Grab'); });
+  const push = button('push', 'cart.push', () => { targetSpeed = .42; action?.play(); say(angle ? 'Turn' : 'Push'); });
+  button('left', 'clip.turnLeft', () => { angle = -.55; say('Turn'); });
+  button('straight', 'cart.straight', () => { angle = 0; say(targetSpeed ? 'Push' : 'Idle'); });
+  button('right', 'clip.turnRight', () => { angle = .55; say('Turn'); });
+  const stop = button('stop', 'cart.stop', () => { targetSpeed = 0; say('Stop'); });
+  const release = button('release', 'cart.release', () => { targetSpeed = 0; grabbed = false; say('Release'); });
+  const add = button('add', 'cart.add', () => { itemState = 'adding'; itemProgress = 0; item.visible = true; say('Add Item'); });
+  const remove = button('remove', 'cart.remove', () => { itemState = 'removing'; itemProgress = 0; say('Remove Item'); });
+  const resetButton = button('reset', 'cart.reset', () => reset());
   toolbar.append(title, status, buttons); container.insertAdjacentElement('afterend', toolbar);
+  const stateKeys = {
+    Idle: 'clip.idle', Grab: 'cart.grab', Push: 'cart.push', Turn: 'cart.turn', Stop: 'cart.stop',
+    Release: 'cart.release', 'Add Item': 'cart.addState', 'Remove Item': 'cart.removeState',
+  };
   function renderStatus() {
-    status.textContent = state === 'Collision' ? 'Collision: cart stopped at the obstacle.' : `State: ${state}`;
+    const stateKey = stateKeys[state];
+    localize(status, state === 'Collision' ? 'cart.collision' : 'cart.state',
+      stateKey && (() => ({ state: t(stateKey) })));
     toolbar.dataset.state = state; toolbar.dataset.item = itemState;
     grab.disabled = grabbed; push.disabled = !grabbed || state === 'Collision';
     stop.disabled = !speed && !targetSpeed; release.disabled = !grabbed;

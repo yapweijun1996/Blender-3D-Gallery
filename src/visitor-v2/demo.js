@@ -1,3 +1,4 @@
+import { localize } from '../i18n/index.js';
 import * as THREE from 'three';
 import { createVisitorCustomization } from '../../models/gjh-mall-visitor-v2/customization.js';
 import './style.css';
@@ -10,11 +11,11 @@ export default function createVisitorDemo({model, clips, container, invalidate})
   const available = new Map(clips.map(clip => [clip.name, clip]));
   const toolbar = document.createElement('section');
   toolbar.className = 'visitor-v2-controls';
-  toolbar.setAttribute('aria-label', 'Visitor appearance and animation');
+  localize(toolbar, 'visitor.controls', undefined, 'aria-label');
   const heading = document.createElement('strong');
-  heading.textContent = 'Visitor appearance and animation';
+  localize(heading, 'visitor.controls');
   const note = document.createElement('p');
-  note.textContent = 'Animation previews show poses only; mall interactions are handled by the mall.';
+  localize(note, 'visitor.note');
   toolbar.append(heading, note);
   const fields = document.createElement('div');
   fields.className = 'visitor-v2-fields';
@@ -22,24 +23,24 @@ export default function createVisitorDemo({model, clips, container, invalidate})
   const selects = {};
   function select(key, label, options, onChange) {
     const wrapper = document.createElement('label');
-    wrapper.textContent = label;
+    const name = localize(document.createElement('span'), label);
     const input = document.createElement('select');
     input.dataset.visitorControl = key;
     for (const [value, text] of options) {
       const option = document.createElement('option');
-      option.value = value; option.textContent = text; input.append(option);
+      option.value = value; localize(option, text); input.append(option);
     }
     input.addEventListener('change', () => { onChange(input.value); invalidate(); });
-    wrapper.append(input); fields.append(wrapper); selects[key] = input;
+    wrapper.append(name, input); fields.append(wrapper); selects[key] = input;
   }
-  select('hair', 'Hair', [['swept', 'Swept'], ['short', 'Short']], value => custom.apply({hair:value}));
-  select('hairColor', 'Hair colour', [['brown', 'Brown'], ['black', 'Black']], value => custom.apply({hairColor:value}));
-  select('outfit', 'Top', [['polo', 'Polo'], ['hoodie', 'Hoodie']], value => custom.apply({outfit:value}));
-  select('skin', 'Skin tone', [['light', 'Light'], ['medium', 'Medium'], ['dark', 'Dark']], value => custom.apply({skin:value}));
+  select('hair', 'visitor.hair', [['swept', 'visitor.swept'], ['short', 'visitor.short']], value => custom.apply({hair:value}));
+  select('hairColor', 'visitor.hairColor', [['brown', 'visitor.brown'], ['black', 'visitor.black']], value => custom.apply({hairColor:value}));
+  select('outfit', 'visitor.outfit', [['polo', 'visitor.polo'], ['hoodie', 'visitor.hoodie']], value => custom.apply({outfit:value}));
+  select('skin', 'visitor.skin', [['light', 'visitor.light'], ['medium', 'visitor.medium'], ['dark', 'visitor.dark']], value => custom.apply({skin:value}));
   for (const key of ['glasses', 'backpack', 'watch'])
-    select(key, key[0].toUpperCase() + key.slice(1), [['on', 'On'], ['off', 'Off']], value => custom.apply({[key]:value === 'on'}));
-  const names = [['idle','Idle'], ['walk','Walk'], ['sprint','Run'], ['sit','Sit'], ['stand','Stand'],
-    ['pickup','Pick up'], ['place','Put down'], ['push','Push'], ['elevator','Reach']];
+    select(key, `visitor.${key}`, [['on', 'common.on'], ['off', 'common.off']], value => custom.apply({[key]:value === 'on'}));
+  const names = [['idle','clip.idle'], ['walk','clip.walk'], ['sprint','clip.run'], ['sit','clip.sit'], ['stand','clip.stand'],
+    ['pickup','clip.pickUp'], ['place','clip.putDown'], ['push','clip.push'], ['elevator','clip.reach']];
   let action = null, playing = false;
   function play(name) {
     const clip = available.get(name);
@@ -54,7 +55,7 @@ export default function createVisitorDemo({model, clips, container, invalidate})
     playing = !matchMedia('(prefers-reduced-motion: reduce)').matches;
     mixer.update(0);
   }
-  select('animation', 'Animation', names, play);
+  select('animation', 'common.animation', names, play);
   container.insertAdjacentElement('afterend', toolbar);
   function reset() {
     custom.apply({hair:'swept',hairColor:'brown',outfit:'polo',skin:'light',glasses:true,backpack:true,watch:true});

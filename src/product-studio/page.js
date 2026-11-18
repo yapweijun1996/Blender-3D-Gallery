@@ -1,3 +1,4 @@
+import { localize, mountMarkup, t } from '../i18n/index.js';
 import { fitProductDistance, setProductView } from './camera.js';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -8,14 +9,16 @@ import { createLatestLoader, disposeProduct } from './load.js';
 import { createLabelController, LABEL_PRESETS } from './labels.js';
 import './style.css';
 
-const button = (label, attrs = {}) => {
-  const el = document.createElement('button'); el.type = 'button'; el.textContent = label;
+const button = (label, attrs = {}, message = true) => {
+  const el = document.createElement('button'); el.type = 'button';
+  if (message) localize(el, label);
+  else el.textContent = label;
   for (const [key, value] of Object.entries(attrs)) el.setAttribute(key, value);
   return el;
 };
 const labels = item => item.root === 'ASSET_DemoBeverageCan'
-  ? { open:'Lift tab', close:'Reset tab', closed:'Assembled · tab closed', opened:'Tab lifted · illustrative flap opening', note:'Tab lift, score-flap movement and exploded separation are illustrative, not a physical opening or pressure simulation.' }
-  : { open:'Open lid', close:'Close lid', closed:'Assembled · lid closed', opened:'Lid open · illustrative lift', note:'Lid lift and exploded separation are illustrative, not a can-opening simulation.' };
+  ? { open:'product.liftTab', close:'product.resetTab', closed:'product.tabClosed', opened:'product.tabOpened', note:'product.tabNote' }
+  : { open:'product.openLid', close:'product.closeLid', closed:'product.lidClosed', opened:'product.lidOpened', note:'product.lidNote' };
 
 export async function mountProductStudio(root, asset, signal, alternatives = []) {
   if (!asset) throw new Error('Demo packaging asset is unavailable');
@@ -23,14 +26,14 @@ export async function mountProductStudio(root, asset, signal, alternatives = [])
   const products = [...new Map([asset,...alternatives].filter(Boolean).map(item => [item.id,item])).values()];
   root.replaceChildren();
   const section = document.createElement('section'); section.className='product-studio';
-  section.innerHTML = `<header class="ps-heading"><div><p class="ps-kicker">PRODUCT PACKAGING / ORIGINAL STUDIES</p><h1>Product Studio<span>.</span></h1></div><p>Inspect fictional packaging studies, explore their parts and reset the view.</p></header><div class="ps-layout"><div class="ps-stage" aria-busy="true"><div class="ps-loading" role="status"></div></div><aside class="ps-panel"><span class="ps-demo">FICTIONAL DEMO</span><h2></h2><p class="ps-description"></p><div class="ps-choice" role="group" aria-label="Choose packaging study"></div><fieldset class="ps-labels" disabled><legend>Original label concept</legend><div class="ps-label-grid"></div><p class="ps-label-help">Runtime artwork only; the baked GLB and source are unchanged.</p></fieldset><div class="ps-actions"></div><fieldset class="ps-views" disabled><legend>Inspect a side</legend><div class="ps-view-grid"></div></fieldset><p class="ps-status" aria-live="polite">Preparing controls.</p><p class="ps-note"></p></aside></div><p class="ps-hint">Drag or swipe to orbit · Scroll or pinch to zoom · Focus the 3D view and use arrow keys to orbit, + / − to zoom, Home to reset.</p>`;
+  mountMarkup(section, `<header class="ps-heading"><div><p class="ps-kicker" data-i18n="product.kicker"></p><h1><span data-i18n="demo.product-studio.title"></span><span data-i18n="common.period"></span></h1></div><p data-i18n="product.intro"></p></header><div class="ps-layout"><div class="ps-stage" aria-busy="true"><div class="ps-loading" role="status"></div></div><aside class="ps-panel"><span class="ps-demo" data-i18n="product.badge"></span><h2></h2><p class="ps-description"></p><div class="ps-choice" role="group" data-i18n-aria-label="product.choose"></div><fieldset class="ps-labels" disabled><legend data-i18n="product.originalLabel"></legend><div class="ps-label-grid"></div><p class="ps-label-help" data-i18n="product.labelHelp"></p></fieldset><div class="ps-actions"></div><fieldset class="ps-views" disabled><legend data-i18n="product.inspect"></legend><div class="ps-view-grid"></div></fieldset><p class="ps-status" aria-live="polite" data-i18n="common.preparing"></p><p class="ps-note"></p></aside></div><p class="ps-hint" data-i18n="product.hint"></p>`);
   root.append(section);
   const $=s=>section.querySelector(s), stage=$('.ps-stage'), loading=$('.ps-loading'), status=$('.ps-status'), choice=$('.ps-choice'), views=$('.ps-views'), labelChoices=$('.ps-labels');
-  const openButton=button('Open lid',{'data-action':'open','aria-pressed':'false'}), explodeButton=button('Exploded view',{'data-action':'explode','aria-pressed':'false'}), resetButton=button('Reset product & camera',{'data-action':'reset'});
+  const openButton=button('product.openLid',{'data-action':'open','aria-pressed':'false'}), explodeButton=button('product.exploded',{'data-action':'explode','aria-pressed':'false'}), resetButton=button('product.reset',{'data-action':'reset'});
   $('.ps-actions').append(openButton,explodeButton,resetButton);
-  for (const preset of LABEL_PRESETS) labelChoices.querySelector('.ps-label-grid').append(button(preset.name, {'data-label': preset.id, 'aria-pressed': 'false'}));
-  for(const name of ['front','back','left','right','top','bottom']) $('.ps-view-grid').append(button(name[0].toUpperCase()+name.slice(1),{'data-view':name}));
-  for(const item of products) choice.append(button(item.name,{'data-product':item.id,'aria-pressed':String(item.id===asset.id)}));
+  for (const preset of LABEL_PRESETS) labelChoices.querySelector('.ps-label-grid').append(button(`product.label.${preset.id}`, {'data-label': preset.id, 'aria-pressed': 'false'}));
+  for(const name of ['front','back','left','right','top','bottom']) $('.ps-view-grid').append(button(`direction.${name}`,{'data-view':name}));
+  for(const item of products) choice.append(button(item.name,{'data-product':item.id,'aria-pressed':String(item.id===asset.id)}, false));
   const local=new AbortController(), motion=matchMedia('(prefers-reduced-motion: reduce)');
   let disposed=false, renderer, controls, observer, environment, model, poses, labelsController, loader;
   let frame=0, dirty=true, ready=false, animation=null, mode='closed', amount=0, targetMode='closed', targetAmount=0, lastTime=0, current=asset, modelRadius=0;
@@ -40,9 +43,9 @@ export async function mountProductStudio(root, asset, signal, alternatives = [])
   const report=()=>{
     if(disposed)return;
     const text=labels(current),opening=targetMode==='open'&&targetAmount===1,exploding=targetMode==='exploded'&&targetAmount===1;
-    openButton.setAttribute('aria-pressed',String(opening));openButton.textContent=opening?text.close:text.open;
-    explodeButton.setAttribute('aria-pressed',String(exploding));explodeButton.textContent=exploding?'Assemble product':'Exploded view';
-    status.textContent=animation?'Moving parts…':amount===0||mode==='closed'?text.closed:mode==='open'?text.opened:'Exploded · parts separated';
+    openButton.setAttribute('aria-pressed',String(opening));localize(openButton, opening?text.close:text.open);
+    explodeButton.setAttribute('aria-pressed',String(exploding));localize(explodeButton, exploding?'product.assemble':'product.exploded');
+    localize(status, animation?'product.moving':amount===0||mode==='closed'?text.closed:mode==='open'?text.opened:'product.separated');
     stage.dataset.pose=animation?'moving':amount===0?'closed':mode;
   };
   const fitDistance=()=>fitProductDistance(modelRadius,camera.aspect,camera.fov);
@@ -64,9 +67,9 @@ export async function mountProductStudio(root, asset, signal, alternatives = [])
   function disposeModel(){labelsController?.dispose();labelsController=null;syncLabelState();labelChoices.querySelectorAll('[data-label]').forEach(b=>b.setAttribute('aria-pressed','false'));poses?.dispose();poses=null;if(model){scene.remove(model);disposeProduct(model);model=null;}ready=false;animation=null;lastTime=0;setBusy(true);}
   function showError(item){
     if(disposed)return;stage.dataset.pose='error';setBusy(true);stage.setAttribute('aria-busy','false');
-    loading.hidden=false;loading.replaceChildren(document.createTextNode(`Unable to load ${item.name}. `));
-    const retry=button('Retry experience',{'class':'outline-button','data-retry':'true'});loading.append(retry);
-    retry.addEventListener('click',()=>void loader.select(current),{signal:local.signal});status.textContent='Choose another study or retry the download.';
+    loading.hidden=false;localize(loading);loading.replaceChildren(localize(document.createElement('span'), 'product.loadError', { name: item.name }), ' ');
+    const retry=button('common.retryExperience',{'class':'outline-button','data-retry':'true'});loading.append(retry);
+    retry.addEventListener('click',()=>void loader.select(current),{signal:local.signal});localize(status, 'product.retryStudy');
   }
   function dispose(){
     if(disposed)return;disposed=true;loader?.dispose();local.abort();signal.removeEventListener('abort',dispose);
@@ -77,9 +80,9 @@ export async function mountProductStudio(root, asset, signal, alternatives = [])
     start(item){
       current=item;disposeModel();mode=targetMode='closed';amount=targetAmount=0;
       stage.dataset.pose='loading';delete stage.dataset.modelId;delete stage.dataset.modelRoot;
-      loading.hidden=false;loading.textContent=`Loading the ${item.name.toLowerCase()}…`;status.textContent='Loading selected study…';
-      const text=labels(item);openButton.textContent=text.open;openButton.setAttribute('aria-pressed','false');explodeButton.textContent='Exploded view';explodeButton.setAttribute('aria-pressed','false');
-      $('h2').textContent=item.name;$('.ps-description').textContent=item.description;$('.ps-note').textContent=`Original Blender geometry and fictional DEMO artwork. ${text.note} Online only; not in the offline Game pack.`;
+      loading.hidden=false;localize(loading, 'product.loading', { name: item.name.toLowerCase() });localize(status, 'product.selectedLoading');
+      const text=labels(item);localize(openButton, text.open);openButton.setAttribute('aria-pressed','false');localize(explodeButton, 'product.exploded');explodeButton.setAttribute('aria-pressed','false');
+      $('h2').textContent=item.name;$('.ps-description').textContent=item.description;localize($('.ps-note'), 'product.note', () => ({ note: t(text.note) }));
       choice.querySelectorAll('[data-product]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.product===item.id)));invalidate();
     },
     async prepare(item,requestSignal){
@@ -99,7 +102,7 @@ export async function mountProductStudio(root, asset, signal, alternatives = [])
         camera.aspect=Math.max(stage.clientWidth,1)/Math.max(stage.clientHeight,1);camera.near=radius/80;camera.far=radius*80;camera.updateProjectionMatrix();
         controls.minDistance=radius*1.2;controls.maxDistance=Math.max(radius*12,fitDistance()*3);
         ready=true;stage.dataset.modelId=item.id;stage.dataset.modelRoot=model.getObjectByName(item.root).name;
-        loading.hidden=true;loading.replaceChildren();setBusy(false);reset();
+        loading.hidden=true;localize(loading);setBusy(false);reset();
       }catch(error){nextPoses?.dispose();throw error;}
     },
     release(gltf){disposeProduct(gltf?.scene);},
@@ -107,15 +110,15 @@ export async function mountProductStudio(root, asset, signal, alternatives = [])
   });
   try{
     renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setClearColor(0xe6e8df);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1;
-    const canvas=renderer.domElement;canvas.tabIndex=0;canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Fictional demo packaging. Arrow keys orbit, plus and minus zoom, Home resets. Product controls follow.');stage.append(canvas);
+    const canvas=renderer.domElement;canvas.tabIndex=0;canvas.setAttribute('role','img');localize(canvas, 'product.canvas', undefined, 'aria-label');stage.append(canvas);
     controls=new OrbitControls(camera,canvas);controls.enableDamping=false;controls.enablePan=false;controls.enabled=false;controls.addEventListener('change',invalidate);
     scene.add(new THREE.HemisphereLight(0xffffff,0x566356,2.2));const light=new THREE.DirectionalLight(0xffffff,2.4);light.position.set(.3,.5,.4);scene.add(light);
     const room=new RoomEnvironment(),pmrem=new THREE.PMREMGenerator(renderer);try{environment=pmrem.fromScene(room,.04);scene.environment=environment.texture;scene.environmentIntensity=.75;}finally{room.dispose();pmrem.dispose();}
     observer=new ResizeObserver(()=>{const w=stage.clientWidth,h=stage.clientHeight;if(w&&h){renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();invalidate();}});observer.observe(stage);
     canvas.addEventListener('webglcontextlost',event=>{
       event.preventDefault();dispose();stage.dataset.pose='error';delete stage.dataset.modelId;delete stage.dataset.modelRoot;stage.setAttribute('aria-busy','false');
-      loading.hidden=false;loading.replaceChildren(document.createTextNode('3D view interrupted. '));
-      const retry=button('Retry experience',{'class':'outline-button','data-retry':'true'});loading.append(retry);retry.addEventListener('click',()=>location.reload());status.textContent='Reload the experience, or return to Interactive Demos.';
+      loading.hidden=false;localize(loading);loading.append(localize(document.createElement('span'), 'product.interrupted'), ' ');
+      const retry=button('common.retryExperience',{'class':'outline-button','data-retry':'true'});loading.append(retry);retry.addEventListener('click',()=>location.reload());localize(status, 'product.recovery');
     },{signal:local.signal});
     document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0;lastTime=0;}else invalidate();},{signal:local.signal});
     motion.addEventListener('change',()=>{if(motion.matches&&animation)setPose(targetMode,targetAmount,true);},{signal:local.signal});

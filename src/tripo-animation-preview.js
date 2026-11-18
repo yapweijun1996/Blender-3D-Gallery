@@ -1,3 +1,4 @@
+import { localize } from "./i18n/index.js";
 import { AnimationMixer, Box3, LoopOnce } from "three";
 
 export default function createAnimationPreview({ model, clips, previews, container, onPlay }) {
@@ -5,7 +6,7 @@ export default function createAnimationPreview({ model, clips, previews, contain
   const toolbar = document.createElement("div");
   toolbar.className = "viewer-actions viewer-animation-actions";
   toolbar.setAttribute("role", "group");
-  toolbar.setAttribute("aria-label", "Animation previews");
+  localize(toolbar, "viewer.animationPreviews", undefined, "aria-label");
   const buttons = new Map();
   const clipBounds = new Map();
   let action;
@@ -43,7 +44,7 @@ export default function createAnimationPreview({ model, clips, previews, contain
     const button = document.createElement("button");
     button.type = "button";
     button.className = "outline-button";
-    button.textContent = label;
+    localize(button, label);
     button.setAttribute("aria-pressed", "false");
     button.addEventListener("click", () => play(clip));
     buttons.set(name, button);

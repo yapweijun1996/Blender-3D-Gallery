@@ -2,23 +2,7 @@ import { DEFAULT_PALETTE, PALETTE_STORAGE_KEY, paletteThemes } from "./tokens.js
 import { applyPalette, readSavedPalette } from "./palette.js";
 import "./palette-picker.css";
 
-const paletteCopy = {
-  trigger: "Palette",
-  title: "Choose a palette",
-  close: "Close palette picker",
-  names: {
-    "editorial-moss": "Editorial Moss",
-    "midnight-ink": "Midnight Ink",
-    "obsidian-gold": "Obsidian Gold",
-    "nordic-frost": "Nordic Frost",
-    "porcelain-sage": "Porcelain Sage",
-    "ember-copper": "Ember Copper",
-    "deep-ocean": "Deep Ocean",
-    "plum-velvet": "Plum Velvet",
-    "graphite-mono": "Graphite Mono",
-    "sand-dune": "Sand Dune",
-  },
-};
+import { localize } from "../i18n/index.js";
 
 export function setupPalettePicker() {
   const dialog = document.querySelector("#palette-picker");
@@ -31,8 +15,8 @@ export function setupPalettePicker() {
   const radios = new Map();
   let opener;
 
-  title.textContent = paletteCopy.title;
-  close.setAttribute("aria-label", paletteCopy.close);
+  localize(title, "palette.title");
+  localize(close, "palette.close", undefined, "aria-label");
   for (const id of Object.keys(paletteThemes)) {
     const card = document.createElement("label");
     card.className = "palette-card";
@@ -40,7 +24,7 @@ export function setupPalettePicker() {
     const radio = card.querySelector("input");
     radio.value = id;
     card.querySelector(".palette-preview").dataset.palette = id;
-    card.querySelector(".palette-name").textContent = paletteCopy.names[id];
+    localize(card.querySelector(".palette-name"), `palette.${id}`);
     radios.set(id, radio);
     group.append(card);
   }
@@ -71,7 +55,7 @@ export function setupPalettePicker() {
   });
 
   for (const trigger of document.querySelectorAll("[data-open-palette]")) {
-    trigger.textContent = paletteCopy.trigger;
+    localize(trigger, "palette.trigger");
     trigger.hidden = false;
     trigger.addEventListener("click", () => {
       opener = trigger;

@@ -1,3 +1,4 @@
+import { englishGameMessage } from "./copy.js";
 import { RULES_VERSION } from "./rules.js";
 import { TABLE } from "./table.js";
 export function validateMatch(m) {
@@ -120,15 +121,15 @@ export async function openGameStore() {
   const action = (fn, allowReleased = false) =>
     new Promise((resolve, reject) => {
       if (released && !allowReleased) {
-        reject(new Error("Game storage is closed"));
+        reject(new Error(englishGameMessage("game.saveError.closed")));
         return;
       }
       let result;
       const tx = db.transaction("records", "readwrite");
       const s = tx.objectStore("records");
       tx.oncomplete = () => resolve(result);
-      tx.onerror = () => reject(tx.error || new Error("Save failed"));
-      tx.onabort = () => reject(tx.error || new Error("Save canceled"));
+      tx.onerror = () => reject(tx.error || new Error(englishGameMessage("game.saveError.failed")));
+      tx.onabort = () => reject(tx.error || new Error(englishGameMessage("game.saveError.cancelled")));
       fn(s, (v) => (result = v), tx);
     });
   const access = (s, done, write, acquire = false) => {
@@ -173,7 +174,7 @@ export async function openGameStore() {
       }),
     save: (checkpoint, pending = null) => {
       if (!validateMatch(checkpoint))
-        return Promise.reject(new Error("Invalid checkpoint"));
+        return Promise.reject(new Error(englishGameMessage("game.saveError.checkpoint")));
       return action((s, done) =>
         access(s, done, (s) => {
           const r = s.get("match");
@@ -190,7 +191,7 @@ export async function openGameStore() {
           };
         }),
       ).then((ok) => {
-        if (!ok) throw new Error("This match is owned by another tab");
+        if (!ok) throw new Error(englishGameMessage("game.saveError.owned"));
       });
     },
     release: () => {

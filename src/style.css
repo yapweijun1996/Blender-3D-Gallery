@@ -369,6 +369,9 @@ dialog::backdrop {
     max-width: 170px;
     line-height: 1.5;
   }
+  .viewer-footer p:lang(ms) {
+    max-width: none;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -499,6 +502,7 @@ dialog::backdrop {
   margin: 0;
 }
 .viewer-download {
+  min-height: 44px;
   flex-shrink: 0;
 }
 @media (max-width: 900px) {
@@ -644,6 +648,12 @@ body:has(.topbar[data-smart])::before {
   }
   .header .topbar-actions {
     gap: 4px;
+  }
+  .header:has(.topbar-update:not([hidden])) .brand {
+    min-width: 0;
+  }
+  .header:has(.topbar-update:not([hidden])) .topbar-actions {
+    flex-shrink: 0;
   }
   .header .menu-trigger {
     padding-inline: 9px;
@@ -925,6 +935,9 @@ nav a[aria-current="page"] {
   font: 400 clamp(26px, 2.3vw, 32px) var(--display-font);
   margin-bottom: 10px;
 }
+.demo-body h2:lang(ms) {
+  text-wrap: balance;
+}
 .demo-body > .outline-button {
   margin-top: auto;
 }
@@ -963,8 +976,7 @@ body.game-page .demo-breadcrumb {
   place-items: center;
   background: var(--surface);
 }
-.poster-unavailable::before {
-  content: "Preview unavailable";
+.poster-fallback {
   padding: 40px 20px;
   color: var(--muted);
   font-size: 14px;

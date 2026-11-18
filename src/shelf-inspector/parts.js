@@ -1,11 +1,15 @@
+import { t } from "../i18n/index.js";
 import * as THREE from 'three';
 export const cleanHeader = value => String(value).replace(/[\u0000-\u001f\u007f]/g, '').trim().slice(0,32);
 
-export function shelfRowLabels(manifest = {}) {
+export function shelfRowIds(manifest = {}) {
   const names = manifest.runtime_nodes?.shelves ?? ['shelf_1','shelf_2','shelf_3'];
   if (![2,3].includes(names.length) || new Set(names).size !== names.length) throw new Error('Invalid shelf controls manifest');
-  return names.length === 2 ? ['All shelves','Lower','Upper'] : ['All shelves','Lower','Middle','Upper'];
+  return names.length === 2 ? ['all', 'lower', 'upper'] : ['all', 'lower', 'middle', 'upper'];
 }
+
+export const shelfRowLabels = manifest =>
+  shelfRowIds(manifest).map(id => t(`shelf.row.${id}`, {}, 'en'));
 
 /** Materials and title overlays are owned by this mounted instance, never by the export. */
 export function createShelfParts(model, makeCanvas = () => document.createElement('canvas'), manifest = {}) {
@@ -17,7 +21,7 @@ export function createShelfParts(model, makeCanvas = () => document.createElemen
   };
   const shelfNames = manifest.runtime_nodes?.shelves ?? ['shelf_1', 'shelf_2', 'shelf_3'];
   const ledNames = manifest.runtime_nodes?.leds ?? ['LED_1', 'LED_2', 'LED_3', 'LED_header', 'LED_base'];
-  shelfRowLabels(manifest);
+  shelfRowIds(manifest);
   if (!ledNames.length) throw new Error('Invalid shelf controls manifest');
   const shelves = shelfNames.map(meshes), leds = ledNames.flatMap(meshes);
   const surfaces = (manifest.runtime_header_surfaces ?? []).map(surface => {
