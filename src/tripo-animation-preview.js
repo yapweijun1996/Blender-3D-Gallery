@@ -1,6 +1,6 @@
 import { AnimationMixer, Box3, LoopOnce } from "three";
 
-export default function createAnimationPreview({ model, clips, container, onPlay }) {
+export default function createAnimationPreview({ model, clips, previews, container, onPlay }) {
   const mixer = new AnimationMixer(model);
   const toolbar = document.createElement("div");
   toolbar.className = "viewer-actions viewer-animation-actions";
@@ -37,7 +37,7 @@ export default function createAnimationPreview({ model, clips, container, onPlay
     onPlay(bounds);
   }
 
-  for (const [name, label] of [["run", "Run"], ["sit", "Sit"]]) {
+  for (const [name, label] of previews) {
     const clip = clips.find((candidate) => candidate.name === name);
     if (!clip) throw new Error(`Missing animation clip: ${name}`);
     const button = document.createElement("button");

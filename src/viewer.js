@@ -268,12 +268,18 @@ export default async function createViewer(
       }
       invalidate();
     };
-    if (asset.id === "tripo-convert-1c818c0d") {
+    const animationPreviews = asset.id === "tripo-convert-1c818c0d"
+      ? [["run", "Run"], ["sit", "Sit"]]
+      : asset.id === "tripo-convert-405dc0a0"
+        ? [["walk", "Walk"]]
+        : undefined;
+    if (animationPreviews) {
       const { default: createAnimationPreview } = await import("./tripo-animation-preview.js");
       if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
       animationPreview = createAnimationPreview({
         model,
         clips: gltf.animations,
+        previews: animationPreviews,
         container,
         onPlay(bounds) {
           lastDraw = 0;
