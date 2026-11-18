@@ -210,15 +210,15 @@ Credits: base body 110 (task f2ac8276), Mixamo rig 25 (eee65d27), hoodie 110
 
 | Item | Result |
 | --- | --- |
-| Base Body | `output/modular-chibi-parts/master/base_body.glb`: 1 mesh, 1 skin, 65 joints, 5,206 triangles, height 1.0, no animation |
+| Base Body | `output/modular-chibi-parts/master/base_body.glb`: 1 mesh, 1 skin, 65 joints, 8,006 triangles after the hand repair (5,206 before; the earlier files are in `master/prehandfix/`), height 1.0, no animation |
 | Orientation | Tripo output faces glTF +X with origin at the body centre; rotated to +Z, feet at z=0. Left bones at +X, nose at -Y in Blender, T-pose arm angle -2 degrees |
 | Symmetry | left-right mirror mean error 0.0001 |
 | Arm length | about 0.31 H, shorter than the 0.38 H in the spec; accepted by the owner |
 | Rig | 65 `mixamorig:*` bones with fingers, max 4 influences, 0 unweighted vertices; names identical to `models/tripo-chibi-motion/motion.glb`, whose clips retarget (wave, jump, run, walk checked on 2 frames each) |
 | Blender 5 | an imported action needs `armature.animation_data.action_slot = action.slots[0]` or the pose stays T |
 | Hoodie (Tripo) | 5,096 triangles, a real hollow garment; Tripo-normalised size and facing +X, not yet fitted |
-| Hands | 482 triangles per hand; separate fingers (7 to 8 slice loops); palms face forward with the thumb down; 70 vertices blend two fingers (more than 0.2 weight) |
+| Hands (before repair) | 482 triangles per hand; separate fingers; palms face forward with the thumb down; 70 vertices blend two fingers (more than 0.2 weight) |
+| Hands (after repair, Codex gpt-6.2-astra, re-measured) | 1,882 triangles per hand; palms down, fingers spread; 0 vertices blend two fingers; every vertex weighted, max 4 influences; body outside the hands moved by at most 0.00015. Fist with the four fingers works; the thumb curl axis is not tuned (the thumb still hangs down in a fist test) |
 
-Hand repair (palms down, finger spacing, weight cleanup) was delegated to Codex
-`gpt-6.2-astra` and is not verified. Garment fitting, hair, shoes, glTF
+Garment fitting, hair, shoes, glTF
 validation and runtime tests are not done.
