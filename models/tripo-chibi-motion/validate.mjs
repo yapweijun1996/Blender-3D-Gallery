@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import validator from "gltf-validator";
 
@@ -29,6 +30,26 @@ async function readGlb(path) {
   return { bytes, doc, channels };
 }
 
+function channelHash(channels) {
+  const hash = createHash("sha256");
+  for (const name of Object.keys(channels).sort()) {
+    const { times, values, interpolation } = channels[name];
+    hash.update(JSON.stringify([name, interpolation, times.length, values.length]));
+    hash.update(times);
+    hash.update(values);
+  }
+  return hash.digest("hex");
+}
+
+// Channel hashes from motion.glb before the preset Run replacement.
+const unchanged = {
+  idle: "f5d2ebe68207df9f651adee68bf6b56e953f8a2eb53da65a5590dac30f600ce6",
+  wave: "43240b02854bc0dbaed19990bd02042017218cb4ad1534f9d3fcbd72c556fa2e",
+  nod: "17edee6ec5add4af1f227f7a755acd4ee8eb8492979d435d7c161e1dd4d357ca",
+  jump: "2d39fdf31f3f261f441ffc2857fed8c4ba61e6c356432fb1a75f0dbddfb5b408",
+  dance: "126d3ac17830ec19d6ec75347ea2f64479b018a37194bc31c26d6c6f0e929f5a",
+};
+
 const motion = await readGlb("./motion.glb");
 const report = await validator.validateBytes(new Uint8Array(motion.bytes));
 assert.equal(report.issues.numErrors, 0, JSON.stringify(report.issues));
@@ -51,6 +72,9 @@ assert.deepEqual(motion.channels(walk), original.channels(original.doc.animation
 
 for (const clip of motion.doc.animations.filter(clip => clip !== walk)) {
   const channels = motion.channels(clip);
+  if (clip.name in unchanged) {
+    assert.equal(channelHash(channels), unchanged[clip.name], `${clip.name}: exported channel bytes changed`);
+  }
   const hips = channels["mixamorig:Hips.translation"];
   assert.ok(hips, `${clip.name} needs Hips translation`);
   assert.ok(Object.keys(channels).some(name => name.endsWith(".rotation")), clip.name);
@@ -70,5 +94,18 @@ for (const clip of motion.doc.animations.filter(clip => clip !== walk)) {
   }
 }
 
+const run = motion.doc.animations.find(clip => clip.name === "run");
+const runHips = motion.channels(run)["mixamorig:Hips.translation"];
+const runFrames = Math.round((38 - 1) / 30 * 24);
+assert.equal(runHips.times.length, (runFrames + 1) * 4);
+const heights = [];
+for (let frame = 0; frame <= runFrames; frame++) {
+  assert.ok(Math.abs(runHips.times.readFloatLE(frame * 4) - frame / 24) < 1e-6,
+    "Run must use the 24 fps scene timeline with the preset duration");
+  heights.push(runHips.values.readFloatLE(frame * 12 + 4));
+}
+assert.ok(Math.max(...heights) - Math.min(...heights) > 0.02, "Run must retain vertical Hips bounce");
+
 console.log(`PASS: Khronos 0 errors, 0 warnings; 65 joints, 39,214 triangles; clips: ${expected.join(", ")}`);
-console.log("PASS: six closed pose cycles without ground-plane root drift; original walk samples identical");
+console.log(`PASS: six closed pose cycles without ground-plane root drift; preset Run ${(runFrames / 24).toFixed(2)} s at 24 fps with vertical bounce`);
+console.log("PASS: Idle, Wave, Nod, Jump, Dance and original Walk channels byte-identical");

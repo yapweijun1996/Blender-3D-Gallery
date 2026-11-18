@@ -5,11 +5,6 @@ rotation as usual. A pose's height is the distance from its lowest vertex to
 the floor at that key, in metres.
 """
 
-from math import degrees, radians
-
-from mathutils import Euler
-
-
 def pose(lift=0, **rotations):
     return rotations, lift
 
@@ -46,27 +41,6 @@ def dance(side, dip=0):
                 LeftUpLeg=(-7 - dip, -8, 0), RightUpLeg=(-7 - dip, 8, 0),
                 LeftLeg=(13 + 2 * dip, 0, 0), RightLeg=(13 + 2 * dip, 0, 0),
                 LeftFoot=(-6 - dip, 8, 0), RightFoot=(-6 - dip, -8, 0))
-
-
-def run_arm(side, swing):
-    # Lower the T-pose arm before pitching it forward or back.
-    rotation = Euler((radians(swing), radians(75 * side), 0), "YXZ")
-    return tuple(map(degrees, rotation.to_quaternion().to_euler("XYZ")))
-
-
-def run_stride(side, stance_leg, swing_leg, arm_swing, twist, lift):
-    hips = 7
-    rotations = dict(Hips=(hips, 0, -twist * side), Spine=(14, 0, 0),
-                     Spine2=(0, 0, 2 * twist * side), Neck=(-7, 0, 0),
-                     Head=(-6, 0, 0))
-    legs = (stance_leg, swing_leg) if side == 1 else (swing_leg, stance_leg)
-    for name, direction, (thigh, knee, foot) in zip(("Left", "Right"), (1, -1), legs):
-        rotations[name + "UpLeg"] = (thigh - hips, -3 * direction, 0)
-        rotations[name + "Leg"] = (knee, 0, 0)
-        rotations[name + "Foot"] = (foot, 0, 0)
-        rotations[name + "Arm"] = run_arm(direction, side * direction * arm_swing)
-        rotations[name + "ForeArm"] = (62 * direction, 0, -81 * direction)
-    return pose(lift, **rotations)
 
 
 def cycle(duration, keys):
@@ -109,19 +83,4 @@ def motion_keys():
         (0, dance(0, 5)), (8, dance(1)), (16, dance(1, 4)), (24, dance(.6)),
         (32, dance(0, 5)), (40, dance(-1)), (48, dance(-1, 4)), (56, dance(-.6)),
     ])
-    stride = [
-        # Contact, down, passing/push-off, and flight before opposite contact.
-        ((-35, 19, 16), (21, 68, -38), 26, 6, 0),
-        ((-23, 46, -23), (7, 91, -31), 14, 3, 0),
-        ((12, 24, -5), (-32, 65, -21), -11, -2, 0),
-        ((28, 54, -40), (-53, 39, 14), -27, -6, .065),
-    ]
-    phase_frames = 3
-    half_stride = phase_frames * len(stride)
-    run_in_place = cycle(2 * half_stride, [
-        (index * phase_frames + offset, run_stride(side, *phase))
-        for side, offset in ((1, 0), (-1, half_stride))
-        for index, phase in enumerate(stride)
-    ])
-    return dict(idle=idle, wave=greeting, nod=nod, jump=hop, dance=groove,
-                run_in_place=run_in_place)
+    return dict(idle=idle, wave=greeting, nod=nod, jump=hop, dance=groove)
