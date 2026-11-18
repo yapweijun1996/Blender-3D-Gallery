@@ -24,6 +24,17 @@ const assetById = new Map(
     [a.slug ?? a.id, a],
   ]),
 );
+const demoPages = ["game", "solar", "product-studio", "shelf-inspector", "chibi-motion", "tripo-motion"];
+const motionDemos = {
+  "chibi-motion": { assetId: "gjh-chibi-motion" },
+  "tripo-motion": {
+    assetId: "tripo-chibi-motion",
+    subtitle: "Tripo rigged character",
+    clips: ["idle", "wave", "nod", "jump", "dance", "run", "walk"],
+    cameraPosition: [.82, .77, 3.32],
+    cameraTarget: [0, .54, .47],
+  },
+};
 const dialog = $("#viewer"),
   viewport = $("#viewport"),
   status = $("#viewer-status");
@@ -516,11 +527,13 @@ function route() {
   const url = new URL(location.href);
   const page = url.searchParams.get("page");
   if (!page && url.hash === "#about") return "about";
-  return ["game", "solar", "product-studio", "shelf-inspector", "chibi-motion", "demos", "about"].includes(page) ? page : "gallery";
+  return [...demoPages, "demos", "about"].includes(page) ? page : "gallery";
 }
 async function syncRoute() {
   const page = route(),
     previous = mountedRoute;
+  const isDemo = demoPages.includes(page);
+  const motion = motionDemos[page];
   const previousSearchMode = $("#gallery-page").classList.contains("search-mode");
   refreshScrollToTop();
   if (page !== "game" && gamePage && !gamePage.beforeLeave()) {
@@ -532,25 +545,28 @@ async function syncRoute() {
   const raw = new URL(location.href).searchParams.get("page");
   if (
     raw &&
-    !["game", "solar", "product-studio", "shelf-inspector", "chibi-motion", "demos", "about", "gallery", "models"].includes(raw)
+    ![...demoPages, "demos", "about", "gallery", "models"].includes(raw)
   ) {
     notice.hidden = false;
     notice.textContent =
       "This page could not be found. Explore the 3D model library below.";
   }
-  for (const name of ["gallery", "demos", "about", "game", "solar", "product-studio", "shelf-inspector", "chibi-motion"])
+  for (const name of ["gallery", "demos", "about", ...demoPages])
     $(`#${name}-page`).hidden = name !== page;
-  $("#demo-breadcrumb").hidden = !["game", "solar", "product-studio", "shelf-inspector", "chibi-motion"].includes(page);
+  $("#demo-breadcrumb").hidden = !isDemo;
   $(".footer").hidden = page === "game";
   document.body.classList.toggle("game-page", page === "game");
-  const active = ["game", "solar", "product-studio", "shelf-inspector", "chibi-motion"].includes(page) ? "demos" : page;
+  const active = isDemo ? "demos" : page;
   for (const link of document.querySelectorAll("nav [data-page]")) {
     if (link.dataset.page === active) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
   }
   if (page === "gallery") syncModelFilters();
   if (page === "demos") syncDemoFilters();
-  document.title = `${page === "gallery" ? "3D Models" : page === "demos" ? "Interactive Demos" : page === "game" ? "Game" : page === "solar" ? "Solar System" : page === "product-studio" ? "Product Studio" : page === "shelf-inspector" ? "Shelf Inspector" : page === "chibi-motion" ? "Chibi Motion Studio" : "About"} · Blender 3D Gallery`;
+  const title = isDemo
+    ? demos.find(demo => demo.route === `?page=${page}`).title
+    : page === "gallery" ? "3D Models" : page === "demos" ? "Interactive Demos" : "About";
+  document.title = `${title} · Blender 3D Gallery`;
   if (page === mountedRoute && (gamePage || solarPage || productStudioPage || shelfInspectorPage || motionPage || pageController))
     return;
   const run = ++routeRun;
@@ -564,7 +580,7 @@ async function syncRoute() {
   shelfInspectorPage?.dispose();
   gamePage = solarPage = productStudioPage = shelfInspectorPage = null;
   mountedRoute = page;
-  if (page === "game" || page === "solar" || page === "product-studio" || page === "shelf-inspector" || page === "chibi-motion") {
+  if (isDemo) {
     if (dialog.open) closeViewer(false);
     const cleanUrl = new URL(location.href);
     cleanUrl.searchParams.delete("model");
@@ -579,7 +595,7 @@ async function syncRoute() {
       let module;
       if (page === "game") module = await import("./game/page.js");
       else if (page === "solar") module = await import("./solar/page.js");
-      else if (page === "chibi-motion") module = await import("./chibi-motion/page.js");
+      else if (motion) module = await import("./chibi-motion/page.js");
       else if (page === "shelf-inspector") module = await import("./shelf-inspector/page.js");
       else module = await import("./product-studio/page.js");
       if (run !== routeRun || controller.signal.aborted) return;
@@ -588,8 +604,8 @@ async function syncRoute() {
           ? await module.mountGame(root, assets, controller.signal, () =>
               navigate("gallery", true),
             )
-          : page === "chibi-motion"
-            ? await module.mountMotion(root, assetById.get("gjh-chibi-motion"), controller.signal)
+          : motion
+            ? await module.mountMotion(root, assetById.get(motion.assetId), controller.signal, { ...motion, title })
           : page === "shelf-inspector"
             ? await module.mountShelfInspector(root, controller.signal)
           : page === "product-studio"
@@ -605,12 +621,10 @@ async function syncRoute() {
       }
       if (page === "game") gamePage = result;
       else if (page === "solar") solarPage = result;
-      else if (page === "chibi-motion") motionPage = result;
+      else if (motion) motionPage = result;
       else if (page === "shelf-inspector") shelfInspectorPage = result;
       else productStudioPage = result;
-      window.dispatchEvent(
-        new CustomEvent(page === "game" ? "game-mounted" : page === "solar" ? "solar-mounted" : page === "shelf-inspector" ? "shelf-inspector-mounted" : page === "chibi-motion" ? "chibi-motion-mounted" : "product-studio-mounted"),
-      );
+      window.dispatchEvent(new CustomEvent(`${page}-mounted`));
     } catch (error) {
       if (controller.signal.aborted) return;
       controller.abort();

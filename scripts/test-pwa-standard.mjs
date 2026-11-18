@@ -246,7 +246,7 @@ try {
             count,
           );
           if (route) {
-            const expected = [["game", "?page=game"], ["solar-system", "?page=solar"], ["product-studio", "?page=product-studio"], ["shelf-inspector", "?page=shelf-inspector"], ["chibi-motion", "?page=chibi-motion"]];
+            const expected = [["game", "?page=game"], ["solar-system", "?page=solar"], ["product-studio", "?page=product-studio"], ["shelf-inspector", "?page=shelf-inspector"], ["chibi-motion", "?page=chibi-motion"], ["tripo-chibi-motion", "?page=tripo-motion"]];
             assert.deepEqual((await page.locator(".demo-card").evaluateAll(cards => cards.map(c => c.dataset.demoId))).sort(), expected.map(([id]) => id).sort());
             for (const [id, target] of expected) {
               const card = page.locator(`.demo-card[data-demo-id="${id}"]`);
