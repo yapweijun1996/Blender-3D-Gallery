@@ -1,0 +1,242 @@
+{
+  "id": "noodle-loom",
+  "name": "Noodle Loom",
+  "summary": "Slatted noodle-drying loom",
+  "description": "Slatted noodle-drying loom. Air-drying workshop.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S06",
+    "noodle-loom",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Loft staggered solid ribbon banks across three drying combs and brace two beech trestles. Vary ribbon count, curvature and edge detail by tier.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/noodle-loom.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_noodle_loom",
+  "palette": [
+    {
+      "material": "pale beech",
+      "hex": "#D7BB87"
+    },
+    {
+      "material": "wheat",
+      "hex": "#C6A66C"
+    },
+    {
+      "material": "slate-blue casein",
+      "hex": "#536777"
+    },
+    {
+      "material": "rice paper",
+      "hex": "#F0E9D9"
+    }
+  ],
+  "node_groups": [
+    "Beech trestles",
+    "Drying combs",
+    "Front ribbon bank",
+    "Middle ribbon bank",
+    "Rear ribbon bank"
+  ],
+  "measured": {
+    "glb_bytes": 182128,
+    "triangles": 2580
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 540,
+      "bytes": 52960,
+      "vertices": 964,
+      "materials": [
+        "Air-drying workshop | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Beech trestles",
+        "Drying combs",
+        "Front ribbon bank",
+        "Middle ribbon bank",
+        "Rear ribbon bank"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.225,
+          0.0,
+          -0.525
+        ],
+        "max": [
+          1.225,
+          2.96,
+          0.525
+        ]
+      },
+      "textures": [
+        {
+          "name": "noodle-loom-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "noodle-loom-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "00b26ace36f7ef995f34ce3c94a9892f0d50b9f1d690c134ba1af5d3d42923fe",
+      "triangle_cap": 820,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/balanced.glb",
+      "triangles": 1376,
+      "bytes": 111984,
+      "vertices": 2716,
+      "materials": [
+        "Air-drying workshop | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Beech trestles",
+        "Drying combs",
+        "Front ribbon bank",
+        "Middle ribbon bank",
+        "Rear ribbon bank"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.225,
+          0.0,
+          -0.525
+        ],
+        "max": [
+          1.225,
+          2.96,
+          0.525
+        ]
+      },
+      "textures": [
+        {
+          "name": "noodle-loom-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "noodle-loom-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "676b0d6efd18135eef6b9011f316eb68d423cd493f0b65f03327686c068e9ac4",
+      "triangle_cap": 2200,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Detailed": {
+      "file": "exports/optimized.glb",
+      "triangles": 2580,
+      "bytes": 182128,
+      "vertices": 4812,
+      "materials": [
+        "Air-drying workshop | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Beech trestles",
+        "Drying combs",
+        "Front ribbon bank",
+        "Middle ribbon bank",
+        "Rear ribbon bank"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.225,
+          0.0,
+          -0.525
+        ],
+        "max": [
+          1.225,
+          2.96,
+          0.525
+        ]
+      },
+      "textures": [
+        {
+          "name": "noodle-loom-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "noodle-loom-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "60e179d9fbc11ab8062247a30b2ea0bace84c90ef7ba0b20bb312ccba602e1d9",
+      "triangle_cap": 5200,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+    }
+  ],
+  "provenance": {
+    "kind": "NEW",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "credit": [
+      {
+        "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+      }
+    ],
+    "method": "Loft staggered solid ribbon banks across three drying combs and brace two beech trestles. Vary ribbon count, curvature and edge detail by tier.",
+    "generator": "models/noodle-loom/generate.py",
+    "licence_reference": "models/packing-station/LICENSE.md",
+    "editable_source": "models/noodle-loom/sources/noodle-loom.blend",
+    "licence_text": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.\nOriginal procedural geometry/materials, no external assets.\n"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

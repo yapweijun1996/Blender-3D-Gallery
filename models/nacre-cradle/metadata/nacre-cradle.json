@@ -1,0 +1,238 @@
+{
+  "id": "nacre-cradle",
+  "name": "Nacre Cradle",
+  "summary": "Standing oyster-shell gift cradle",
+  "description": "Standing oyster-shell gift cradle. Coastal gift market.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S10",
+    "nacre-cradle",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Loft two closed, fluted shell valves about a hinged shelf on a turned teak foot. Bake radial shading across continuous projected face UVs.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/nacre-cradle.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_nacre_cradle",
+  "palette": [
+    {
+      "material": "shell limestone",
+      "hex": "#F0EAE0"
+    },
+    {
+      "material": "sea-glass teal",
+      "hex": "#2C7776"
+    },
+    {
+      "material": "coral ceramic",
+      "hex": "#C65B46"
+    },
+    {
+      "material": "oiled teak",
+      "hex": "#956847"
+    }
+  ],
+  "node_groups": [
+    "Hinge and level gift shelf",
+    "Lower valve",
+    "Teak foot and mineral pedestal",
+    "Upper valve"
+  ],
+  "measured": {
+    "glb_bytes": 160204,
+    "triangles": 5104
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 696,
+      "bytes": 49888,
+      "vertices": 560,
+      "materials": [
+        "Coastal gift market | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Hinge and level gift shelf",
+        "Lower valve",
+        "Teak foot and mineral pedestal",
+        "Upper valve"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.3,
+          0.0,
+          -0.62
+        ],
+        "max": [
+          1.3,
+          2.62,
+          0.62
+        ]
+      },
+      "textures": [
+        {
+          "name": "nacre-cradle-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "nacre-cradle-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "79bbc2b1edcdb4780ec82a13465ad4afac6c83bce99ebae6043051def19c69f8",
+      "triangle_cap": 880,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/balanced.glb",
+      "triangles": 2216,
+      "bytes": 91528,
+      "vertices": 1576,
+      "materials": [
+        "Coastal gift market | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Hinge and level gift shelf",
+        "Lower valve",
+        "Teak foot and mineral pedestal",
+        "Upper valve"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.3,
+          0.0,
+          -0.62
+        ],
+        "max": [
+          1.3,
+          2.62,
+          0.62
+        ]
+      },
+      "textures": [
+        {
+          "name": "nacre-cradle-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "nacre-cradle-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "babc3aee872df35fbf18bfc131bcb42589acbc46dd503efa973d07001222fa01",
+      "triangle_cap": 2500,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Detailed": {
+      "file": "exports/optimized.glb",
+      "triangles": 5104,
+      "bytes": 160204,
+      "vertices": 3180,
+      "materials": [
+        "Coastal gift market | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Hinge and level gift shelf",
+        "Lower valve",
+        "Teak foot and mineral pedestal",
+        "Upper valve"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.3,
+          0.0,
+          -0.62
+        ],
+        "max": [
+          1.3,
+          2.62,
+          0.62
+        ]
+      },
+      "textures": [
+        {
+          "name": "nacre-cradle-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "nacre-cradle-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "61efecea82ab315fe7f20aa922f823445b5bd515dd34d2873b9e3efad7ed974e",
+      "triangle_cap": 6000,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+    }
+  ],
+  "provenance": {
+    "kind": "NEW",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "credit": [
+      {
+        "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+      }
+    ],
+    "method": "Loft two closed, fluted shell valves about a hinged shelf on a turned teak foot. Bake radial shading across continuous projected face UVs.",
+    "generator": "models/nacre-cradle/generate.py",
+    "licence_reference": "models/packing-station/LICENSE.md",
+    "editable_source": "models/nacre-cradle/sources/nacre-cradle.blend",
+    "licence_text": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.\nOriginal procedural geometry/materials, no external assets.\n"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

@@ -1,0 +1,196 @@
+{
+  "id": "gjh-peanut-butter-jar-stand",
+  "name": "Peanut Butter Jar Stand · Breakfast stand",
+  "summary": "Jar stand in a striped breakfast booth",
+  "description": "Jar stand in a striped breakfast booth. Breakfast stand.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S08",
+    "peanut-butter-jar-stand",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Recover all 24 body/lid pairs from the source display and rebuild their turned profiles. Preserve the original risers, pedestal and sign positions. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/gjh-peanut-butter-jar-stand.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_gjh_peanut_butter_jar_stand",
+  "palette": [
+    {
+      "material": "sky-blue enamel",
+      "hex": "#70A9D4"
+    },
+    {
+      "material": "navy canvas",
+      "hex": "#1D3A64"
+    },
+    {
+      "material": "peanut maple",
+      "hex": "#E8D1A3"
+    },
+    {
+      "material": "butter yellow",
+      "hex": "#F4CB69"
+    }
+  ],
+  "node_groups": [
+    "Blank header",
+    "Three rows of capped jars",
+    "Tiered breakfast stand"
+  ],
+  "measured": {
+    "glb_bytes": 111012,
+    "triangles": 2388
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 768,
+      "bytes": 60780,
+      "vertices": 1392,
+      "materials": [
+        "Breakfast stand | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Blank header",
+        "Three rows of capped jars",
+        "Tiered breakfast stand"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.825,
+          0.0,
+          -0.515625
+        ],
+        "max": [
+          0.825,
+          2.10375,
+          0.515625
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-peanut-butter-jar-stand-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-peanut-butter-jar-stand-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "f7f4b34d72db5ea7fcee66bac15d96e0524cd12838074481f8c2e2bacc069d0c",
+      "triangle_cap": 780,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/optimized.glb",
+      "triangles": 2388,
+      "bytes": 111012,
+      "vertices": 2658,
+      "materials": [
+        "Breakfast stand | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Blank header",
+        "Three rows of capped jars",
+        "Tiered breakfast stand"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.825,
+          0.0,
+          -0.515625
+        ],
+        "max": [
+          0.825,
+          2.10375,
+          0.515625
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-peanut-butter-jar-stand-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-peanut-butter-jar-stand-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "970f0fb2ea10070855f5e67b258fcf8ed8ffb3a27d15274f5e44924113660adc",
+      "triangle_cap": 2800,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and shared materials. No external assets."
+    }
+  ],
+  "provenance": {
+    "kind": "derivative",
+    "source_slug": "peanut-butter-jar-stand",
+    "source_glb": "models/peanut-butter-jar-stand/exports/optimized.glb",
+    "source_glb_sha256": "42f5e1bce24dfa525305623472f42654a80fade80f79b8177cb9b6dfb4b36f28",
+    "source_blend": "models/peanut-butter-jar-stand/sources/peanut-butter-jar-stand.blend",
+    "source_blend_sha256": "6fbd6cabb9a1baf194681eef2160082174a0f7bbacfdbcba656f6faf6a9a0ada",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+    "licence_reference": "models/peanut-butter-jar-stand/LICENSE.md",
+    "licence_text": "Original procedural geometry and materials; no external assets. Reuse in the owner's projects is authorized. Public redistribution terms have not been specified. No logos, brand names, fonts or readable labels.\n",
+    "credit": [
+      {
+        "credit": "Original procedural geometry and shared materials. No external assets."
+      }
+    ],
+    "source_metadata": "models/peanut-butter-jar-stand/metadata/peanut-butter-jar-stand.json",
+    "source_creation_method": "Original deterministic Blender Python; no external models, images, fonts, textures or brands.",
+    "method": "Recover all 24 body/lid pairs from the source display and rebuild their turned profiles. Preserve the original risers, pedestal and sign positions. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+    "generator": "models/gjh-peanut-butter-jar-stand/generate.py",
+    "editable_source": "models/gjh-peanut-butter-jar-stand/sources/gjh-peanut-butter-jar-stand.blend"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

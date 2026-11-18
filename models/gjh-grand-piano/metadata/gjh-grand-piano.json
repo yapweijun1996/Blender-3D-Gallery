@@ -1,0 +1,199 @@
+{
+  "id": "gjh-grand-piano",
+  "name": "Grand Piano · Chamber recital room",
+  "summary": "Open baby grand and bench on recital oval",
+  "description": "Open baby grand and bench on recital oval. Chamber recital room.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S15",
+    "grand-piano",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Resample the open lid, curved rim and soundboard in the original hinge pose. Bake key patterns on Low and retain all 88 key positions on Balanced. Preserve the bench and pedal assembly. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/gjh-grand-piano.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      -0.63,
+      0.36,
+      1
+    ]
+  },
+  "root": "ASSET_gjh_grand_piano",
+  "palette": [
+    {
+      "material": "piano lacquer",
+      "hex": "#202123"
+    },
+    {
+      "material": "oiled walnut",
+      "hex": "#76543D"
+    },
+    {
+      "material": "key ivory",
+      "hex": "#F1EDE2"
+    },
+    {
+      "material": "oxblood wool",
+      "hex": "#723F46"
+    }
+  ],
+  "node_groups": [
+    "Bench",
+    "Case and action",
+    "Keyboard and music rest",
+    "Raised lid"
+  ],
+  "measured": {
+    "glb_bytes": 186224,
+    "triangles": 2704
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 912,
+      "bytes": 68504,
+      "vertices": 1636,
+      "materials": [
+        "Chamber recital room | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Bench",
+        "Case and action",
+        "Keyboard and music rest",
+        "Raised lid"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.879531,
+          0.0,
+          -1.375
+        ],
+        "max": [
+          0.879531,
+          2.127268,
+          1.375
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-grand-piano-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-grand-piano-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "21798cd16c5777a953bfdcaa24691b5d8423e8f6047809ae15e2e59312ab2846",
+      "triangle_cap": 920,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/optimized.glb",
+      "triangles": 2704,
+      "bytes": 186224,
+      "vertices": 4978,
+      "materials": [
+        "Chamber recital room | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Bench",
+        "Case and action",
+        "Keyboard and music rest",
+        "Raised lid"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.879531,
+          0.0,
+          -1.375
+        ],
+        "max": [
+          0.879531,
+          2.127268,
+          1.375
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-grand-piano-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-grand-piano-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "c8bd34442fb9f936654f3cedcc326b1c09d7649449459a45d7817e24563a9e45",
+      "triangle_cap": 2800,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials; no external models, fonts, textures or logos."
+    }
+  ],
+  "provenance": {
+    "kind": "derivative",
+    "source_slug": "grand-piano",
+    "source_glb": "models/grand-piano/exports/optimized.glb",
+    "source_glb_sha256": "99c65386e19fd7202d71cbdc0a8dfa0cca82339b7f08f000b15f66104fe5f323",
+    "source_blend": "models/grand-piano/sources/grand-piano.blend",
+    "source_blend_sha256": "3dc90f2aa0648d50dbb4e8f814a612fffe551e598153fe94255a340c41335b40",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+    "licence_reference": "models/grand-piano/LICENSE.md",
+    "licence_text": "Original procedural geometry and shared materials. No external assets, fonts, textures, logos or brands. Owner-project reuse authorized. Public redistribution terms unspecified.\n",
+    "credit": [
+      {
+        "credit": "Original procedural geometry and materials; no external models, fonts, textures or logos."
+      }
+    ],
+    "source_metadata": "models/grand-piano/metadata/grand-piano.json",
+    "source_creation_method": "Original deterministic Blender Python geometry and shared procedural materials; no external assets or text.",
+    "method": "Resample the open lid, curved rim and soundboard in the original hinge pose. Bake key patterns on Low and retain all 88 key positions on Balanced. Preserve the bench and pedal assembly. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+    "generator": "models/gjh-grand-piano/generate.py",
+    "editable_source": "models/gjh-grand-piano/sources/gjh-grand-piano.blend"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

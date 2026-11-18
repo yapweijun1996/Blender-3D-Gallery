@@ -1,0 +1,199 @@
+{
+  "id": "gjh-conveyor-belt",
+  "name": "Conveyor Belt · Canning-line grocer",
+  "summary": "Diagonal tinning conveyor",
+  "description": "Diagonal tinning conveyor. Canning-line grocer.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S09",
+    "conveyor-belt",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Freeze the carrier at the original start frame. Dissolve redundant roller faces, retain the trestles and rails, and restore small edge bevels on Balanced. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/gjh-conveyor-belt.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_gjh_conveyor_belt",
+  "palette": [
+    {
+      "material": "blue-black steel",
+      "hex": "#173B68"
+    },
+    {
+      "material": "tinplate",
+      "hex": "#B5C0C1"
+    },
+    {
+      "material": "ochre enamel",
+      "hex": "#E4B63F"
+    },
+    {
+      "material": "rubber",
+      "hex": "#303639"
+    }
+  ],
+  "node_groups": [
+    "Belt and carriers",
+    "Frame and motor",
+    "Return rollers",
+    "Trestles"
+  ],
+  "measured": {
+    "glb_bytes": 50592,
+    "triangles": 560
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 176,
+      "bytes": 22728,
+      "vertices": 336,
+      "materials": [
+        "Canning-line grocer | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Belt and carriers",
+        "Frame and motor",
+        "Return rollers",
+        "Trestles"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.325,
+          0.0,
+          -0.51
+        ],
+        "max": [
+          1.325,
+          1.6,
+          0.51
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-conveyor-belt-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-conveyor-belt-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "ff23df0b9f975a8191d22b6bdc8358a3074bef05f07b6f96e7d0e05704e6317d",
+      "triangle_cap": 920,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/optimized.glb",
+      "triangles": 560,
+      "bytes": 50592,
+      "vertices": 1152,
+      "materials": [
+        "Canning-line grocer | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Belt and carriers",
+        "Frame and motor",
+        "Return rollers",
+        "Trestles"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.325,
+          0.0,
+          -0.51
+        ],
+        "max": [
+          1.325,
+          1.6,
+          0.51
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-conveyor-belt-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-conveyor-belt-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "5d215f8e94c48083d34358a7b0c3b45ce8d8b8d98befd14d11b05a34aa9d1956",
+      "triangle_cap": 1456,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "provenance": {
+    "kind": "derivative",
+    "source_slug": "conveyor-belt",
+    "source_glb": "models/conveyor-belt/exports/optimized.glb",
+    "source_glb_sha256": "12071397b296b282f34671dc0f090207aabfc85bb652fcac83fe8588066c9161",
+    "source_blend": "models/conveyor-belt/sources/conveyor-belt.blend",
+    "source_blend_sha256": "cad0d861bdbafd0ab8675c09b3122abdb6d2560da8c9a36365b4e0138d0a5b5b",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+    "licence_reference": "models/conveyor-belt/LICENSE.md",
+    "licence_text": "Original procedural geometry/materials. Owner-project reuse authorized. Public redistribution terms unspecified. Blender Bfont used only for generic editable label where present. No logos or external media.\n",
+    "credit": [
+      {
+        "credit": "Original procedural geometry and materials. No external assets."
+      }
+    ],
+    "source_metadata": "models/conveyor-belt/metadata/conveyor-belt.json",
+    "source_creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+    "method": "Freeze the carrier at the original start frame. Dissolve redundant roller faces, retain the trestles and rails, and restore small edge bevels on Balanced. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+    "generator": "models/gjh-conveyor-belt/generate.py",
+    "editable_source": "models/gjh-conveyor-belt/sources/gjh-conveyor-belt.blend"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

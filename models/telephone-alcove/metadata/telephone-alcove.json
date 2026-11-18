@@ -1,0 +1,238 @@
+{
+  "id": "telephone-alcove",
+  "name": "Telephone Alcove",
+  "summary": "Gabled private-call alcove with open front",
+  "description": "Gabled private-call alcove with open front. Domestic telephone bureau.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S17",
+    "telephone-alcove",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Build a shallow cork and felt lining under an asymmetric two-piece gable. Provide a floating ledge and bake seam shading on the Low faces.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/telephone-alcove.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_telephone_alcove",
+  "palette": [
+    {
+      "material": "graphite felt",
+      "hex": "#4A4D50"
+    },
+    {
+      "material": "satin nickel",
+      "hex": "#B8BBBD"
+    },
+    {
+      "material": "chalk",
+      "hex": "#F5F4EF"
+    },
+    {
+      "material": "apricot cork",
+      "hex": "#D99E74"
+    }
+  ],
+  "node_groups": [
+    "Asymmetric nickel gable",
+    "Cork base and side cheeks",
+    "Floating handset shelf",
+    "Graphite felt lining"
+  ],
+  "measured": {
+    "glb_bytes": 80676,
+    "triangles": 1100
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 200,
+      "bytes": 28284,
+      "vertices": 402,
+      "materials": [
+        "Domestic telephone bureau | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Asymmetric nickel gable",
+        "Cork base and side cheeks",
+        "Floating handset shelf",
+        "Graphite felt lining"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.075,
+          0.0,
+          -0.625
+        ],
+        "max": [
+          1.075,
+          2.86,
+          0.625
+        ]
+      },
+      "textures": [
+        {
+          "name": "telephone-alcove-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "telephone-alcove-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "cf41a7f1784cc7957bc166e90ebdd87c02ec95607e4630c7b7b7842153fd1bdb",
+      "triangle_cap": 750,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/balanced.glb",
+      "triangles": 692,
+      "bytes": 66384,
+      "vertices": 1500,
+      "materials": [
+        "Domestic telephone bureau | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Asymmetric nickel gable",
+        "Cork base and side cheeks",
+        "Floating handset shelf",
+        "Graphite felt lining"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.075,
+          0.0,
+          -0.625
+        ],
+        "max": [
+          1.075,
+          2.86,
+          0.625
+        ]
+      },
+      "textures": [
+        {
+          "name": "telephone-alcove-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "telephone-alcove-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "c21ba43b46ac37e79081730110d305236c46192ac27ade3b6d250d980a55b973",
+      "triangle_cap": 2100,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Detailed": {
+      "file": "exports/optimized.glb",
+      "triangles": 1100,
+      "bytes": 80676,
+      "vertices": 1870,
+      "materials": [
+        "Domestic telephone bureau | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Asymmetric nickel gable",
+        "Cork base and side cheeks",
+        "Floating handset shelf",
+        "Graphite felt lining"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.075,
+          0.0,
+          -0.625
+        ],
+        "max": [
+          1.075,
+          2.86,
+          0.625
+        ]
+      },
+      "textures": [
+        {
+          "name": "telephone-alcove-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "telephone-alcove-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "3d1fa337cd696557a0da8b0fbc6ad1f58e04453894b704f46e390135a580fcfc",
+      "triangle_cap": 5000,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+    }
+  ],
+  "provenance": {
+    "kind": "NEW",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "credit": [
+      {
+        "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+      }
+    ],
+    "method": "Build a shallow cork and felt lining under an asymmetric two-piece gable. Provide a floating ledge and bake seam shading on the Low faces.",
+    "generator": "models/telephone-alcove/generate.py",
+    "licence_reference": "models/packing-station/LICENSE.md",
+    "editable_source": "models/telephone-alcove/sources/telephone-alcove.blend",
+    "licence_text": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.\nOriginal procedural geometry/materials, no external assets.\n"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

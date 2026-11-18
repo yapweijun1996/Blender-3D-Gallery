@@ -1,0 +1,242 @@
+{
+  "id": "patch-folio",
+  "name": "Patch Folio",
+  "summary": "Fan-fold patch folio counter",
+  "description": "Fan-fold patch folio counter. Patch library.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S04",
+    "patch-folio",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Extrude three folded leaf profiles with returned corners, perforation shading and a level front sample ledge on a stepped ash counter.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/patch-folio.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_patch_folio",
+  "palette": [
+    {
+      "material": "porcelain",
+      "hex": "#F8F7F1"
+    },
+    {
+      "material": "powder sage",
+      "hex": "#63745D"
+    },
+    {
+      "material": "plum felt",
+      "hex": "#6B4A55"
+    },
+    {
+      "material": "pale ash",
+      "hex": "#CFBEA7"
+    }
+  ],
+  "node_groups": [
+    "Ash counter",
+    "Plum outer leaf",
+    "Porcelain centre leaf",
+    "Sage outer leaf",
+    "Sample ledge"
+  ],
+  "measured": {
+    "glb_bytes": 103268,
+    "triangles": 1524
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 204,
+      "bytes": 26892,
+      "vertices": 408,
+      "materials": [
+        "Patch library | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Ash counter",
+        "Plum outer leaf",
+        "Porcelain centre leaf",
+        "Sage outer leaf",
+        "Sample ledge"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.19,
+          0.0,
+          -0.56
+        ],
+        "max": [
+          1.19,
+          2.35,
+          0.56
+        ]
+      },
+      "textures": [
+        {
+          "name": "patch-folio-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "patch-folio-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "2fdb69a463e3d44d9e199065c78c50e23b14a6f853630efc2841c2f521276f78",
+      "triangle_cap": 660,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/balanced.glb",
+      "triangles": 844,
+      "bytes": 75300,
+      "vertices": 1830,
+      "materials": [
+        "Patch library | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Ash counter",
+        "Plum outer leaf",
+        "Porcelain centre leaf",
+        "Sage outer leaf",
+        "Sample ledge"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.19,
+          0.0,
+          -0.56
+        ],
+        "max": [
+          1.19,
+          2.35,
+          0.56
+        ]
+      },
+      "textures": [
+        {
+          "name": "patch-folio-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "patch-folio-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "4ecc18d73587b7fa7638e33914ee945132f6efd3b6826fa866b9a402a2365cc6",
+      "triangle_cap": 1850,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Detailed": {
+      "file": "exports/optimized.glb",
+      "triangles": 1524,
+      "bytes": 103268,
+      "vertices": 2614,
+      "materials": [
+        "Patch library | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Ash counter",
+        "Plum outer leaf",
+        "Porcelain centre leaf",
+        "Sage outer leaf",
+        "Sample ledge"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.19,
+          0.0,
+          -0.56
+        ],
+        "max": [
+          1.19,
+          2.35,
+          0.56
+        ]
+      },
+      "textures": [
+        {
+          "name": "patch-folio-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "patch-folio-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "7e0143edad3b28c75083092727c8938f72a204c3c4390cc4808b58e1f0c1dc82",
+      "triangle_cap": 4800,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+    }
+  ],
+  "provenance": {
+    "kind": "NEW",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "credit": [
+      {
+        "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+      }
+    ],
+    "method": "Extrude three folded leaf profiles with returned corners, perforation shading and a level front sample ledge on a stepped ash counter.",
+    "generator": "models/patch-folio/generate.py",
+    "licence_reference": "models/packing-station/LICENSE.md",
+    "editable_source": "models/patch-folio/sources/patch-folio.blend",
+    "licence_text": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.\nOriginal procedural geometry/materials, no external assets.\n"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

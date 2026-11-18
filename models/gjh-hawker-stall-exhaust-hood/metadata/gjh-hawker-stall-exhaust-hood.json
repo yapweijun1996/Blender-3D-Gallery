@@ -1,0 +1,196 @@
+{
+  "id": "gjh-hawker-stall-exhaust-hood",
+  "name": "Hawker Stall Exhaust Hood · Open noodle kitchen",
+  "summary": "Hammered-metal hood over the lacquer pass",
+  "description": "Hammered-metal hood over the lacquer pass. Open noodle kitchen.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S02",
+    "hawker-stall-exhaust-hood",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Retain the duct, sloped housing and filter banks from the original named meshes. Remove bevel loops on Low and add edge relief on Balanced. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/gjh-hawker-stall-exhaust-hood.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      -0.38,
+      1
+    ]
+  },
+  "root": "ASSET_gjh_hawker_stall_exhaust_hood",
+  "palette": [
+    {
+      "material": "red-brown lacquer",
+      "hex": "#833D2D"
+    },
+    {
+      "material": "moss tile",
+      "hex": "#49634B"
+    },
+    {
+      "material": "bone ceramic",
+      "hex": "#F1E9D7"
+    },
+    {
+      "material": "brushed copper",
+      "hex": "#AA7151"
+    }
+  ],
+  "node_groups": [
+    "Copper canopy",
+    "Exhaust collar",
+    "Removable filter banks"
+  ],
+  "measured": {
+    "glb_bytes": 56428,
+    "triangles": 692
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 468,
+      "bytes": 38936,
+      "vertices": 936,
+      "materials": [
+        "Open noodle kitchen | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Copper canopy",
+        "Exhaust collar",
+        "Removable filter banks"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.325,
+          0.0,
+          -0.7
+        ],
+        "max": [
+          1.325,
+          1.35,
+          0.7
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-hawker-stall-exhaust-hood-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-hawker-stall-exhaust-hood-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "f4f2d421ce4a8140611f2a024c5415c07c3b634fdbc02e9a45f3c717a2c5eda7",
+      "triangle_cap": 780,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/optimized.glb",
+      "triangles": 692,
+      "bytes": 56428,
+      "vertices": 1440,
+      "materials": [
+        "Open noodle kitchen | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Copper canopy",
+        "Exhaust collar",
+        "Removable filter banks"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.325,
+          0.0,
+          -0.7
+        ],
+        "max": [
+          1.325,
+          1.35,
+          0.698561
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-hawker-stall-exhaust-hood-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-hawker-stall-exhaust-hood-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "90c0986c00c88d8165f6603152b932e784af38c4bd6235057fedc74563f8b28a",
+      "triangle_cap": 2800,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials for Blender-3D-Gallery; no external assets."
+    }
+  ],
+  "provenance": {
+    "kind": "derivative",
+    "source_slug": "hawker-stall-exhaust-hood",
+    "source_glb": "models/hawker-stall-exhaust-hood/exports/optimized.glb",
+    "source_glb_sha256": "f834f892c234bab47bfd034b8947e7ca6d53126901334405b08eeb41377239d0",
+    "source_blend": "models/hawker-stall-exhaust-hood/sources/hawker-stall-exhaust-hood.blend",
+    "source_blend_sha256": "0c79102f440c5c08c2fcaefb3d549d34a6aecae4837b444c4937d20bef7c92af",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+    "licence_reference": "models/hawker-stall-exhaust-hood/LICENSE.md",
+    "licence_text": "# Rights and attribution\n\nOriginal asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.\n\nOriginal agent-assisted procedural geometry and materials created for this repository. No third-party models, textures, logos or photography. No new public license is granted.\n",
+    "credit": [
+      {
+        "credit": "Original procedural geometry and materials for Blender-3D-Gallery; no external assets."
+      }
+    ],
+    "source_metadata": "models/hawker-stall-exhaust-hood/metadata/hawker-stall-exhaust-hood.json",
+    "source_creation_method": "Original deterministic Blender Python mesh geometry. No external models, images, textures or brands.",
+    "method": "Retain the duct, sloped housing and filter banks from the original named meshes. Remove bevel loops on Low and add edge relief on Balanced. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+    "generator": "models/gjh-hawker-stall-exhaust-hood/generate.py",
+    "editable_source": "models/gjh-hawker-stall-exhaust-hood/sources/gjh-hawker-stall-exhaust-hood.blend"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

@@ -1,0 +1,196 @@
+{
+  "id": "gjh-headphone-display-stand",
+  "name": "Headphone Display Stand · Listening studio",
+  "summary": "Headphone listening rack against a ribbed acoustic baffle",
+  "description": "Headphone listening rack against a ribbed acoustic baffle. Listening studio.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S13",
+    "headphone-display-stand",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Resample six source headbands and six J hooks along their original sections. Rebuild oval cups, frame and header from the editable parts. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/gjh-headphone-display-stand.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_gjh_headphone_display_stand",
+  "palette": [
+    {
+      "material": "charcoal felt",
+      "hex": "#292B2D"
+    },
+    {
+      "material": "black glass",
+      "hex": "#14171C"
+    },
+    {
+      "material": "bead-blasted silver",
+      "hex": "#BFC3C5"
+    },
+    {
+      "material": "ice blue",
+      "hex": "#A6D7EB"
+    }
+  ],
+  "node_groups": [
+    "Acoustic rack",
+    "Six over-ear headsets",
+    "Suspended hooks"
+  ],
+  "measured": {
+    "glb_bytes": 163820,
+    "triangles": 2508
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 780,
+      "bytes": 55696,
+      "vertices": 1266,
+      "materials": [
+        "Listening studio | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Acoustic rack",
+        "Six over-ear headsets",
+        "Suspended hooks"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.557143,
+          0.0,
+          -0.371429
+        ],
+        "max": [
+          0.557143,
+          2.6,
+          0.371429
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-headphone-display-stand-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-headphone-display-stand-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "db06e6356e493284592d98444decee4b59a736bbda0f71742bff6b2f0580b543",
+      "triangle_cap": 780,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/optimized.glb",
+      "triangles": 2508,
+      "bytes": 163820,
+      "vertices": 4320,
+      "materials": [
+        "Listening studio | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Acoustic rack",
+        "Six over-ear headsets",
+        "Suspended hooks"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.557143,
+          0.0,
+          -0.371429
+        ],
+        "max": [
+          0.557143,
+          2.6,
+          0.371429
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-headphone-display-stand-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-headphone-display-stand-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "72400572785a178a67ffc3e2b9f3f12a32c4236ab1e254a334edbe5b3e80e121",
+      "triangle_cap": 2800,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "provenance": {
+    "kind": "derivative",
+    "source_slug": "headphone-display-stand",
+    "source_glb": "models/headphone-display-stand/exports/optimized.glb",
+    "source_glb_sha256": "ab0e91d44e12b0f41e76383ee914fe5cd7e29cb8839ea458df2a77f672e9ba54",
+    "source_blend": "models/headphone-display-stand/sources/headphone-display-stand.blend",
+    "source_blend_sha256": "96d113bf21da97d4515e978cca11b6283a6eb7bc24056f15050a571d7f31cc4f",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+    "licence_reference": "models/headphone-display-stand/LICENSE.md",
+    "licence_text": "Original procedural geometry and materials; no third-party assets.\nReuse in the owner's projects is authorized. Public redistribution terms have not\nbeen specified.\n",
+    "credit": [
+      {
+        "credit": "Original procedural geometry and materials. No external assets."
+      }
+    ],
+    "source_metadata": "models/headphone-display-stand/metadata/headphone-display-stand.json",
+    "source_creation_method": "Original deterministic Blender Python geometry and three shared PBR materials; no external assets, textures, fonts, packaging or logos.",
+    "method": "Resample six source headbands and six J hooks along their original sections. Rebuild oval cups, frame and header from the editable parts. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+    "generator": "models/gjh-headphone-display-stand/generate.py",
+    "editable_source": "models/gjh-headphone-display-stand/sources/gjh-headphone-display-stand.blend"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

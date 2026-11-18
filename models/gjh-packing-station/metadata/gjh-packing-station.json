@@ -1,0 +1,196 @@
+{
+  "id": "gjh-packing-station",
+  "name": "Packing Station · Provision packing room",
+  "summary": "Wrapping station with a high kraft-roll rail",
+  "description": "Wrapping station with a high kraft-roll rail. Provision packing room.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S11",
+    "packing-station",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Rebuild the paper roll around the original spindle. Retain the open carton, cutter, rails and bench panels, and simplify their edge profiles. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/gjh-packing-station.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_gjh_packing_station",
+  "palette": [
+    {
+      "material": "kraft board",
+      "hex": "#BE9062"
+    },
+    {
+      "material": "burgundy steel",
+      "hex": "#843E43"
+    },
+    {
+      "material": "zinc",
+      "hex": "#767976"
+    },
+    {
+      "material": "cream paper",
+      "hex": "#EEE7D9"
+    }
+  ],
+  "node_groups": [
+    "Open carton",
+    "Roll and cutter",
+    "Wrapping bench"
+  ],
+  "measured": {
+    "glb_bytes": 63544,
+    "triangles": 748
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 276,
+      "bytes": 29088,
+      "vertices": 504,
+      "materials": [
+        "Provision packing room | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Open carton",
+        "Roll and cutter",
+        "Wrapping bench"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.31,
+          0.0,
+          -0.56
+        ],
+        "max": [
+          1.31,
+          2.143283,
+          0.56
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-packing-station-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-packing-station-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "44533eec0de5583577be887da285c9d5d0ff5b8897dee6b691127bf1687a2b74",
+      "triangle_cap": 920,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/optimized.glb",
+      "triangles": 748,
+      "bytes": 63544,
+      "vertices": 1492,
+      "materials": [
+        "Provision packing room | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Open carton",
+        "Roll and cutter",
+        "Wrapping bench"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.31,
+          0.0,
+          -0.56
+        ],
+        "max": [
+          1.31,
+          2.15,
+          0.56
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-packing-station-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-packing-station-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "983dc2851a757b9f41a049fd2a9bfb85de21b9ba470710e4688fb7ca9466ff47",
+      "triangle_cap": 2188,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials. No external assets."
+    }
+  ],
+  "provenance": {
+    "kind": "derivative",
+    "source_slug": "packing-station",
+    "source_glb": "models/packing-station/exports/optimized.glb",
+    "source_glb_sha256": "d364c6278d515f21aa5d3b25c04687895b729d9c3d0021d57898d6c50ed9bb72",
+    "source_blend": "models/packing-station/sources/packing-station.blend",
+    "source_blend_sha256": "911295c314ea5523c67b165c331f251552b5128640c1fc51aa09e0cfa062f390",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+    "licence_reference": "models/packing-station/LICENSE.md",
+    "licence_text": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.\nOriginal procedural geometry/materials, no external assets.\n",
+    "credit": [
+      {
+        "credit": "Original procedural geometry and materials. No external assets."
+      }
+    ],
+    "source_metadata": "models/packing-station/metadata/packing-station.json",
+    "source_creation_method": "Original deterministic Blender Python; no external models, images, textures or brands.",
+    "method": "Rebuild the paper roll around the original spindle. Retain the open carton, cutter, rails and bench panels, and simplify their edge profiles. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+    "generator": "models/gjh-packing-station/generate.py",
+    "editable_source": "models/gjh-packing-station/sources/gjh-packing-station.blend"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

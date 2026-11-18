@@ -1,0 +1,1 @@
+Original procedural geometry/materials. Owner-project reuse authorized. Public redistribution terms unspecified. Blender Bfont used only for generic editable label where present. No logos or external media.

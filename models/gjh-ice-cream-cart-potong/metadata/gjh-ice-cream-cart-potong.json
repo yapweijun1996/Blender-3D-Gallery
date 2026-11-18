@@ -1,0 +1,196 @@
+{
+  "id": "gjh-ice-cream-cart-potong",
+  "name": "Ice Cream Cart Potong · Potong garden bar",
+  "summary": "Potong parasol cart on a citrus sunburst",
+  "description": "Potong parasol cart on a citrus sunburst. Potong garden bar.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S03",
+    "ice-cream-cart-potong",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Retain the three-wheel chassis and chest. Retrace the source canopy rings and replace hubs with radial profiles. Drop the inactive collider, wafer scoring and small fittings on Low. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/gjh-ice-cream-cart-potong.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_gjh_ice_cream_cart_potong",
+  "palette": [
+    {
+      "material": "citrus enamel",
+      "hex": "#E7863B"
+    },
+    {
+      "material": "lagoon tile",
+      "hex": "#2E7C7A"
+    },
+    {
+      "material": "coconut terrazzo",
+      "hex": "#F5F0E5"
+    },
+    {
+      "material": "leaf green",
+      "hex": "#4F7047"
+    }
+  ],
+  "node_groups": [
+    "Citrus parasol",
+    "Enamel chest and counter",
+    "Running gear and handle"
+  ],
+  "measured": {
+    "glb_bytes": 150476,
+    "triangles": 2326
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 748,
+      "bytes": 57460,
+      "vertices": 1292,
+      "materials": [
+        "Potong garden bar | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Citrus parasol",
+        "Enamel chest and counter",
+        "Running gear and handle"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.0,
+          0.0,
+          -0.571429
+        ],
+        "max": [
+          1.0,
+          2.571429,
+          0.571429
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-ice-cream-cart-potong-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-ice-cream-cart-potong-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "960a5c465acae790f0275372d0b01d778504f6e7b513f17f3980c669a77e7bc1",
+      "triangle_cap": 920,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/optimized.glb",
+      "triangles": 2326,
+      "bytes": 150476,
+      "vertices": 3902,
+      "materials": [
+        "Potong garden bar | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Citrus parasol",
+        "Enamel chest and counter",
+        "Running gear and handle"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.0,
+          0.0,
+          -0.571429
+        ],
+        "max": [
+          1.0,
+          2.571429,
+          0.571429
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-ice-cream-cart-potong-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-ice-cream-cart-potong-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "b06076d106cd6adf4468d786f965cd10aa8624578fe8f04160cb48682896a5bb",
+      "triangle_cap": 2800,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized.",
+  "licence": "Original asset; reuse in the owner's projects is authorized.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and vertex-colour palette. Generator/export structure follows the repository self-checkout-machine template. No third-party assets."
+    }
+  ],
+  "provenance": {
+    "kind": "derivative",
+    "source_slug": "ice-cream-cart-potong",
+    "source_glb": "models/ice-cream-cart-potong/exports/optimized.glb",
+    "source_glb_sha256": "d561e491bf213eece432b56eaf69b4197527af59736beaada7a7cdc17be5a413",
+    "source_blend": "models/ice-cream-cart-potong/sources/ice-cream-cart-potong.blend",
+    "source_blend_sha256": "8c3177d41b77663352b1726f865369844b31493f589479cef3762f25626ea74f",
+    "author": "Yap Wei Jun project / Codex-assisted procedural modeling",
+    "licence": "Original asset; reuse in the owner's projects is authorized.",
+    "licence_reference": "models/ice-cream-cart-potong/LICENSE.md",
+    "licence_text": "Original asset; reuse in the owner's projects is authorized.\n\nOriginal procedural geometry and materials; no external assets.\nPublic redistribution terms have not been specified.\n",
+    "credit": [
+      {
+        "credit": "Original procedural geometry and vertex-colour palette. Generator/export structure follows the repository self-checkout-machine template. No third-party assets."
+      }
+    ],
+    "source_metadata": "models/ice-cream-cart-potong/metadata/ice-cream-cart-potong.json",
+    "source_creation_method": "Original deterministic Blender Python geometry, two shared vertex-colour materials, no external assets.",
+    "method": "Retain the three-wheel chassis and chest. Retrace the source canopy rings and replace hubs with radial profiles. Drop the inactive collider, wafer scoring and small fittings on Low. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+    "generator": "models/gjh-ice-cream-cart-potong/generate.py",
+    "editable_source": "models/gjh-ice-cream-cart-potong/sources/gjh-ice-cream-cart-potong.blend"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

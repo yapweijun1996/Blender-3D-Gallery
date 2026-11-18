@@ -1,0 +1,196 @@
+{
+  "id": "gjh-tv-wall-mounted",
+  "name": "Tv Wall Mounted · Living picture gallery",
+  "summary": "Two-scale screen wall with a gallery reveal",
+  "description": "Two-scale screen wall with a gallery reveal. Living picture gallery.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S14",
+    "tv-wall-mounted",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Retopologise the three source assemblies from their measured extents into a layered housing, recessed wall bracket and opaque, softly shaded standby panel. Preserve screen aspect. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/gjh-tv-wall-mounted.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_gjh_tv_wall_mounted",
+  "palette": [
+    {
+      "material": "gallery white",
+      "hex": "#F5F3EF"
+    },
+    {
+      "material": "satin aluminium",
+      "hex": "#BEC1C2"
+    },
+    {
+      "material": "aubergine velvet",
+      "hex": "#5B3F7A"
+    },
+    {
+      "material": "blush limestone",
+      "hex": "#DBBEB1"
+    }
+  ],
+  "node_groups": [
+    "Aluminium gallery reveal",
+    "Floating picture plane",
+    "Wall bracket"
+  ],
+  "measured": {
+    "glb_bytes": 53492,
+    "triangles": 360
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 108,
+      "bytes": 34300,
+      "vertices": 216,
+      "materials": [
+        "Living picture gallery | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Aluminium gallery reveal",
+        "Floating picture plane",
+        "Wall bracket"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.776667,
+          0.0,
+          -0.15
+        ],
+        "max": [
+          1.776667,
+          2.08,
+          0.15
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-tv-wall-mounted-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-tv-wall-mounted-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "b94f5c6e59cc4b3249c7c0eadbdc954d511da55d09b358c9778ac8bc096bbf30",
+      "triangle_cap": 780,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/optimized.glb",
+      "triangles": 360,
+      "bytes": 53492,
+      "vertices": 768,
+      "materials": [
+        "Living picture gallery | shared finish atlas"
+      ],
+      "primitives": 3,
+      "groups": [
+        "Aluminium gallery reveal",
+        "Floating picture plane",
+        "Wall bracket"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.776667,
+          0.0,
+          -0.15
+        ],
+        "max": [
+          1.776667,
+          2.08,
+          0.15
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-tv-wall-mounted-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-tv-wall-mounted-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "ac196f8d342dbac690347fbab5c5a2dfa1b1a4c259600687abaeba1cb3b32f39",
+      "triangle_cap": 2800,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and shared materials. No external assets."
+    }
+  ],
+  "provenance": {
+    "kind": "derivative",
+    "source_slug": "tv-wall-mounted",
+    "source_glb": "models/tv-wall-mounted/exports/optimized.glb",
+    "source_glb_sha256": "1124f947f7cfebd5546282cb27195100bbbde969fb7b3606cee33d2d1839755b",
+    "source_blend": "models/tv-wall-mounted/sources/tv-wall-mounted.blend",
+    "source_blend_sha256": "d4fb5b0d139f5835224b55269aba5d4e54a60eab8ac9cb2b34f63feca004e054",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+    "licence_reference": "models/tv-wall-mounted/LICENSE.md",
+    "licence_text": "# Asset rights\n\nOriginal procedural geometry and materials; no third-party models, fonts,\ntextures or images. Reuse in the owner's projects is authorized. Public\nredistribution terms have not been specified.\n",
+    "credit": [
+      {
+        "credit": "Original procedural geometry and shared materials. No external assets."
+      }
+    ],
+    "source_metadata": "models/tv-wall-mounted/metadata/tv-wall-mounted.json",
+    "source_creation_method": "Original deterministic Blender Python; no external models, images, fonts, textures or brands.",
+    "method": "Retopologise the three source assemblies from their measured extents into a layered housing, recessed wall bracket and opaque, softly shaded standby panel. Preserve screen aspect. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+    "generator": "models/gjh-tv-wall-mounted/generate.py",
+    "editable_source": "models/gjh-tv-wall-mounted/sources/gjh-tv-wall-mounted.blend"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

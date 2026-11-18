@@ -1,0 +1,261 @@
+{
+  "id": "opal-index",
+  "name": "Opal Index",
+  "summary": "Layered opal index-fin island",
+  "description": "Layered opal index-fin island. Quiet dispensary.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S12",
+    "opal-index",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Extrude four staggered index profiles over a recessed base. Give the front fin a level sample shelf and bake the opaque edge emission mask.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/opal-index.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_opal_index",
+  "palette": [
+    {
+      "material": "opal resin",
+      "hex": "#F1F3F1"
+    },
+    {
+      "material": "seafoam",
+      "hex": "#B6D2C8"
+    },
+    {
+      "material": "indigo slate",
+      "hex": "#3C4A66"
+    },
+    {
+      "material": "anodised teal",
+      "hex": "#6F9690"
+    }
+  ],
+  "node_groups": [
+    "Front index and shelf",
+    "Level sample shelf",
+    "Recessed island base",
+    "Second index",
+    "Tall rear index",
+    "Third index"
+  ],
+  "measured": {
+    "glb_bytes": 91240,
+    "triangles": 1240
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 232,
+      "bytes": 30636,
+      "vertices": 432,
+      "materials": [
+        "Quiet dispensary | shared finish atlas"
+      ],
+      "primitives": 6,
+      "groups": [
+        "Front index and shelf",
+        "Level sample shelf",
+        "Recessed island base",
+        "Second index",
+        "Tall rear index",
+        "Third index"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.275,
+          0.0,
+          -0.525
+        ],
+        "max": [
+          1.275,
+          2.46,
+          0.525
+        ]
+      },
+      "textures": [
+        {
+          "name": "Index-edge-glow",
+          "width": 4,
+          "height": 4
+        },
+        {
+          "name": "opal-index-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "opal-index-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "8ac539c73734beeb553d99490e4c8563012b16f865605cf624fc005e5c73efee",
+      "triangle_cap": 620,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/balanced.glb",
+      "triangles": 824,
+      "bytes": 75168,
+      "vertices": 1752,
+      "materials": [
+        "Quiet dispensary | shared finish atlas"
+      ],
+      "primitives": 6,
+      "groups": [
+        "Front index and shelf",
+        "Level sample shelf",
+        "Recessed island base",
+        "Second index",
+        "Tall rear index",
+        "Third index"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.275,
+          0.0,
+          -0.525
+        ],
+        "max": [
+          1.275,
+          2.46,
+          0.525
+        ]
+      },
+      "textures": [
+        {
+          "name": "Index-edge-glow",
+          "width": 4,
+          "height": 4
+        },
+        {
+          "name": "opal-index-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "opal-index-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "b57536b4af067bd9ca27d0069d53e17726f95317b561ce7bd5e7e6cc8ce3c825",
+      "triangle_cap": 1700,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Detailed": {
+      "file": "exports/optimized.glb",
+      "triangles": 1240,
+      "bytes": 91240,
+      "vertices": 2160,
+      "materials": [
+        "Quiet dispensary | shared finish atlas"
+      ],
+      "primitives": 6,
+      "groups": [
+        "Front index and shelf",
+        "Level sample shelf",
+        "Recessed island base",
+        "Second index",
+        "Tall rear index",
+        "Third index"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.275,
+          0.0,
+          -0.525
+        ],
+        "max": [
+          1.275,
+          2.46,
+          0.525
+        ]
+      },
+      "textures": [
+        {
+          "name": "Index-edge-glow",
+          "width": 4,
+          "height": 4
+        },
+        {
+          "name": "opal-index-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "opal-index-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "b51e263697e7dce06251605ecb730540db3a2ab7ba3165817c8ed401da9c7300",
+      "triangle_cap": 4200,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+    }
+  ],
+  "provenance": {
+    "kind": "NEW",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "credit": [
+      {
+        "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+      }
+    ],
+    "method": "Extrude four staggered index profiles over a recessed base. Give the front fin a level sample shelf and bake the opaque edge emission mask.",
+    "generator": "models/opal-index/generate.py",
+    "licence_reference": "models/packing-station/LICENSE.md",
+    "editable_source": "models/opal-index/sources/opal-index.blend",
+    "licence_text": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.\nOriginal procedural geometry/materials, no external assets.\n"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

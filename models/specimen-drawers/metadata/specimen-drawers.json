@@ -1,0 +1,242 @@
+{
+  "id": "specimen-drawers",
+  "name": "Specimen Drawers",
+  "summary": "Stepped drawer bank with open porcelain niche",
+  "description": "Stepped drawer bank with open porcelain niche. Herbal counting house.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S05",
+    "specimen-drawers",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Build six stepped cabinet sections and a turned porcelain bowl above an open niche. Keep three projecting drawers on every tier and bake the Low grid and pulls.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/specimen-drawers.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_specimen_drawers",
+  "palette": [
+    {
+      "material": "ink-stained elm",
+      "hex": "#352C28"
+    },
+    {
+      "material": "warm parchment",
+      "hex": "#E9DDBF"
+    },
+    {
+      "material": "cinnabar",
+      "hex": "#9E3F35"
+    },
+    {
+      "material": "aged copper",
+      "hex": "#A87249"
+    }
+  ],
+  "node_groups": [
+    "Left stepped bank",
+    "Plinth and open niche",
+    "Porcelain counting bowl",
+    "Right stepped bank",
+    "Three open drawers"
+  ],
+  "measured": {
+    "glb_bytes": 145484,
+    "triangles": 2228
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 500,
+      "bytes": 45516,
+      "vertices": 862,
+      "materials": [
+        "Herbal counting house | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Left stepped bank",
+        "Plinth and open niche",
+        "Porcelain counting bowl",
+        "Right stepped bank",
+        "Three open drawers"
+      ],
+      "bounds_m": {
+        "min": [
+          -2.1,
+          0.0,
+          -0.525
+        ],
+        "max": [
+          2.1,
+          2.98,
+          0.525
+        ]
+      },
+      "textures": [
+        {
+          "name": "specimen-drawers-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "specimen-drawers-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "cff15e8d0ded367f04d6a2f70338bcd3ed856fe3299d13f2be76eaa0ebd23607",
+      "triangle_cap": 800,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/balanced.glb",
+      "triangles": 1764,
+      "bytes": 133736,
+      "vertices": 3442,
+      "materials": [
+        "Herbal counting house | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Left stepped bank",
+        "Plinth and open niche",
+        "Porcelain counting bowl",
+        "Right stepped bank",
+        "Three open drawers"
+      ],
+      "bounds_m": {
+        "min": [
+          -2.1,
+          0.0,
+          -0.525
+        ],
+        "max": [
+          2.1,
+          2.98,
+          0.525
+        ]
+      },
+      "textures": [
+        {
+          "name": "specimen-drawers-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "specimen-drawers-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "5719c59da5fd80df3971f8feeebac508dcda9943cb38c00038d9a772dc03743b",
+      "triangle_cap": 2200,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Detailed": {
+      "file": "exports/optimized.glb",
+      "triangles": 2228,
+      "bytes": 145484,
+      "vertices": 3612,
+      "materials": [
+        "Herbal counting house | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Left stepped bank",
+        "Plinth and open niche",
+        "Porcelain counting bowl",
+        "Right stepped bank",
+        "Three open drawers"
+      ],
+      "bounds_m": {
+        "min": [
+          -2.1,
+          0.0,
+          -0.525
+        ],
+        "max": [
+          2.1,
+          2.98,
+          0.525
+        ]
+      },
+      "textures": [
+        {
+          "name": "specimen-drawers-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "specimen-drawers-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "70b3525c04bcfd7e550362463fc6250855d8bb72eea8921607e926b6ab5a93de",
+      "triangle_cap": 5600,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+    }
+  ],
+  "provenance": {
+    "kind": "NEW",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "credit": [
+      {
+        "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+      }
+    ],
+    "method": "Build six stepped cabinet sections and a turned porcelain bowl above an open niche. Keep three projecting drawers on every tier and bake the Low grid and pulls.",
+    "generator": "models/specimen-drawers/generate.py",
+    "licence_reference": "models/packing-station/LICENSE.md",
+    "editable_source": "models/specimen-drawers/sources/specimen-drawers.blend",
+    "licence_text": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.\nOriginal procedural geometry/materials, no external assets.\n"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

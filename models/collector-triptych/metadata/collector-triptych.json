@@ -1,0 +1,238 @@
+{
+  "id": "collector-triptych",
+  "name": "Collector Triptych",
+  "summary": "Hinged walnut collector cabinet with brass photo recess",
+  "description": "Hinged walnut collector cabinet with brass photo recess. Collector’s pantry.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S01",
+    "collector-triptych",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Loft the walnut case and recess above a brass-edged rim. Hinge two independently removable leaves forward and bake their carving into the oxblood swatch.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/collector-triptych.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_collector_triptych",
+  "palette": [
+    {
+      "material": "smoked walnut",
+      "hex": "#513527"
+    },
+    {
+      "material": "brushed brass",
+      "hex": "#B59A68"
+    },
+    {
+      "material": "pearl linen",
+      "hex": "#F2EFE8"
+    },
+    {
+      "material": "oxblood lacquer",
+      "hex": "#833E36"
+    }
+  ],
+  "node_groups": [
+    "Case and cornice",
+    "Left hinged leaf",
+    "Picture recess",
+    "Right hinged leaf"
+  ],
+  "measured": {
+    "glb_bytes": 133608,
+    "triangles": 2044
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 412,
+      "bytes": 41552,
+      "vertices": 708,
+      "materials": [
+        "Collector’s pantry | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Case and cornice",
+        "Left hinged leaf",
+        "Picture recess",
+        "Right hinged leaf"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.975,
+          0.0,
+          -0.35
+        ],
+        "max": [
+          1.975,
+          2.3,
+          0.35
+        ]
+      },
+      "textures": [
+        {
+          "name": "collector-triptych-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "collector-triptych-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "8253d15082bd4413d0011c68d33976a39f3c65f1f905b9a54502aa07ea74abf2",
+      "triangle_cap": 860,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/balanced.glb",
+      "triangles": 1236,
+      "bytes": 97576,
+      "vertices": 2304,
+      "materials": [
+        "Collector’s pantry | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Case and cornice",
+        "Left hinged leaf",
+        "Picture recess",
+        "Right hinged leaf"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.975,
+          0.0,
+          -0.35
+        ],
+        "max": [
+          1.975,
+          2.3,
+          0.35
+        ]
+      },
+      "textures": [
+        {
+          "name": "collector-triptych-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "collector-triptych-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "84f8aac8041268204ecc1e9ece4d1f6013dde7940f09454b4eb5b0cb139d2ab2",
+      "triangle_cap": 2400,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Detailed": {
+      "file": "exports/optimized.glb",
+      "triangles": 2044,
+      "bytes": 133608,
+      "vertices": 3278,
+      "materials": [
+        "Collector’s pantry | shared finish atlas"
+      ],
+      "primitives": 4,
+      "groups": [
+        "Case and cornice",
+        "Left hinged leaf",
+        "Picture recess",
+        "Right hinged leaf"
+      ],
+      "bounds_m": {
+        "min": [
+          -1.975,
+          0.0,
+          -0.35
+        ],
+        "max": [
+          1.975,
+          2.3,
+          0.35
+        ]
+      },
+      "textures": [
+        {
+          "name": "collector-triptych-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "collector-triptych-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "86bf6dc3065ddc72aff18a4d4f4684bcfaf713b32876080719b9dd08df3a33c3",
+      "triangle_cap": 6000,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+    }
+  ],
+  "provenance": {
+    "kind": "NEW",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "credit": [
+      {
+        "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+      }
+    ],
+    "method": "Loft the walnut case and recess above a brass-edged rim. Hinge two independently removable leaves forward and bake their carving into the oxblood swatch.",
+    "generator": "models/collector-triptych/generate.py",
+    "licence_reference": "models/packing-station/LICENSE.md",
+    "editable_source": "models/collector-triptych/sources/collector-triptych.blend",
+    "licence_text": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.\nOriginal procedural geometry/materials, no external assets.\n"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

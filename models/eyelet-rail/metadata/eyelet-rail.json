@@ -1,0 +1,242 @@
+{
+  "id": "eyelet-rail",
+  "name": "Eyelet Rail",
+  "summary": "Perforated eyelet demonstration rail",
+  "description": "Perforated eyelet demonstration rail. Locator workshop.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S16",
+    "eyelet-rail",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Loft three annular eyelets over the bench. Bake the peg perforations and tint the looped lanyard at its vertices beside the blank sample.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/eyelet-rail.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_eyelet_rail",
+  "palette": [
+    {
+      "material": "powder white",
+      "hex": "#F4F5F2"
+    },
+    {
+      "material": "anodised teal",
+      "hex": "#3D8C8A"
+    },
+    {
+      "material": "lime polymer",
+      "hex": "#B7C94A"
+    },
+    {
+      "material": "graphite rubber",
+      "hex": "#363C3D"
+    }
+  ],
+  "node_groups": [
+    "Lime lanyard",
+    "Perforated back and uprights",
+    "Pocket sample and lime lanyard",
+    "Three open architectural eyelets",
+    "Workshop bench"
+  ],
+  "measured": {
+    "glb_bytes": 123736,
+    "triangles": 1600
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 544,
+      "bytes": 59820,
+      "vertices": 808,
+      "materials": [
+        "Locator workshop | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Lime lanyard",
+        "Perforated back and uprights",
+        "Pocket sample and lime lanyard",
+        "Three open architectural eyelets",
+        "Workshop bench"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.825,
+          0.0,
+          -0.45
+        ],
+        "max": [
+          0.825,
+          2.55,
+          0.45
+        ]
+      },
+      "textures": [
+        {
+          "name": "eyelet-rail-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "eyelet-rail-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "7457564cd2d1b86072a892e111c9be1b7ed64601ef6503176d4802287f844dd3",
+      "triangle_cap": 640,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/balanced.glb",
+      "triangles": 1152,
+      "bytes": 107836,
+      "vertices": 1816,
+      "materials": [
+        "Locator workshop | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Lime lanyard",
+        "Perforated back and uprights",
+        "Pocket sample and lime lanyard",
+        "Three open architectural eyelets",
+        "Workshop bench"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.825,
+          0.0,
+          -0.45
+        ],
+        "max": [
+          0.825,
+          2.55,
+          0.45
+        ]
+      },
+      "textures": [
+        {
+          "name": "eyelet-rail-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "eyelet-rail-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "6f2ea6e596a232e34eb286eaea58e02e4c2011d444dd4a97e11ab03841cb8690",
+      "triangle_cap": 1900,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Detailed": {
+      "file": "exports/optimized.glb",
+      "triangles": 1600,
+      "bytes": 123736,
+      "vertices": 2116,
+      "materials": [
+        "Locator workshop | shared finish atlas"
+      ],
+      "primitives": 5,
+      "groups": [
+        "Lime lanyard",
+        "Perforated back and uprights",
+        "Pocket sample and lime lanyard",
+        "Three open architectural eyelets",
+        "Workshop bench"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.825,
+          0.0,
+          -0.45
+        ],
+        "max": [
+          0.825,
+          2.55,
+          0.45
+        ]
+      },
+      "textures": [
+        {
+          "name": "eyelet-rail-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "eyelet-rail-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "4dc752a316e85db074c1e4b85413f1e536609c9ba74b9fcf703c9ab1d4749b84",
+      "triangle_cap": 4600,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+    }
+  ],
+  "provenance": {
+    "kind": "NEW",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "credit": [
+      {
+        "credit": "Original procedural fixture geometry, colour atlas and material finishes created for this project."
+      }
+    ],
+    "method": "Loft three annular eyelets over the bench. Bake the peg perforations and tint the looped lanyard at its vertices beside the blank sample.",
+    "generator": "models/eyelet-rail/generate.py",
+    "licence_reference": "models/packing-station/LICENSE.md",
+    "editable_source": "models/eyelet-rail/sources/eyelet-rail.blend",
+    "licence_text": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.\nOriginal procedural geometry/materials, no external assets.\n"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

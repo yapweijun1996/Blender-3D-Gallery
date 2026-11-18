@@ -1,0 +1,193 @@
+{
+  "id": "gjh-stacked-can-pyramid",
+  "name": "Stacked Can Pyramid · Banquet provision hall",
+  "summary": "Jade drum and stepped banquet pyramid",
+  "description": "Jade drum and stepped banquet pyramid. Banquet provision hall.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "interior",
+    "GJH",
+    "S07",
+    "stacked-can-pyramid",
+    "unbranded",
+    "metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Trace each of the six source tin courses as a closed scalloped outline on Low. Rebuild all 91 cans from their source centres and dimensions on Balanced. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "source": "sources/gjh-stacked-can-pyramid.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "origin": "Bottom centre of the installed envelope, +Y up and +Z display front in glTF.",
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      0.42,
+      0.28,
+      1
+    ]
+  },
+  "root": "ASSET_gjh_stacked_can_pyramid",
+  "palette": [
+    {
+      "material": "oxblood lacquer",
+      "hex": "#742E29"
+    },
+    {
+      "material": "jade glaze",
+      "hex": "#4F6E5A"
+    },
+    {
+      "material": "rice silk",
+      "hex": "#EFE4D0"
+    },
+    {
+      "material": "patinated bronze",
+      "hex": "#9A794D"
+    }
+  ],
+  "node_groups": [
+    "Banquet plinth",
+    "Six stepped tin courses"
+  ],
+  "measured": {
+    "glb_bytes": 162152,
+    "triangles": 2426
+  },
+  "lods": {
+    "Low": {
+      "file": "exports/lod1.glb",
+      "triangles": 708,
+      "bytes": 42456,
+      "vertices": 880,
+      "materials": [
+        "Banquet provision hall | shared finish atlas"
+      ],
+      "primitives": 2,
+      "groups": [
+        "Banquet plinth",
+        "Six stepped tin courses"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.816667,
+          0.0,
+          -0.816667
+        ],
+        "max": [
+          0.816667,
+          2.45,
+          0.816667
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-stacked-can-pyramid-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-stacked-can-pyramid-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "165cbd958a7a722b958e52c8ee8048adeb2fee4ecd72b1037e2979840b21339d",
+      "triangle_cap": 920,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "Balanced": {
+      "file": "exports/optimized.glb",
+      "triangles": 2426,
+      "bytes": 162152,
+      "vertices": 4298,
+      "materials": [
+        "Banquet provision hall | shared finish atlas"
+      ],
+      "primitives": 2,
+      "groups": [
+        "Banquet plinth",
+        "Six stepped tin courses"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.816667,
+          0.0,
+          -0.816667
+        ],
+        "max": [
+          0.816667,
+          2.45,
+          0.816667
+        ]
+      },
+      "textures": [
+        {
+          "name": "gjh-stacked-can-pyramid-colour",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "gjh-stacked-can-pyramid-finish",
+          "width": 4,
+          "height": 4
+        }
+      ],
+      "sha256": "1ea97d0e7a47ec64d282999d15d5d2f230a4b8e1537cf2baace56767461b97f5",
+      "triangle_cap": 2800,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  },
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and shared materials. No external assets."
+    }
+  ],
+  "provenance": {
+    "kind": "derivative",
+    "source_slug": "stacked-can-pyramid",
+    "source_glb": "models/stacked-can-pyramid/exports/optimized.glb",
+    "source_glb_sha256": "cf8cf126e0a0783f4ee9ac585b306caa6714c6dafc6a3dfbbaff117d3d494527",
+    "source_blend": "models/stacked-can-pyramid/sources/stacked-can-pyramid.blend",
+    "source_blend_sha256": "167283325ca475dcc8b05d93f1b777c4e801e28f7eea3e09e0d27df806e0a905",
+    "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+    "licence": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms have not been specified.",
+    "licence_reference": "models/stacked-can-pyramid/LICENSE.md",
+    "licence_text": "Original procedural geometry and materials; no external assets, fonts or artwork.\nReuse in the owner's projects is authorized. Public redistribution terms have not\nbeen specified.\n",
+    "credit": [
+      {
+        "credit": "Original procedural geometry and shared materials. No external assets."
+      }
+    ],
+    "source_metadata": "models/stacked-can-pyramid/metadata/stacked-can-pyramid.json",
+    "source_creation_method": "Original deterministic Blender Python; no external models, images, fonts, textures or brands.",
+    "method": "Trace each of the six source tin courses as a closed scalloped outline on Low. Rebuild all 91 cans from their source centres and dimensions on Balanced. Rebuild shared opaque PBR finishes in the assigned store palette and fit the bottom-centred anchor within its installation envelope.",
+    "generator": "models/gjh-stacked-can-pyramid/generate.py",
+    "editable_source": "models/gjh-stacked-can-pyramid/sources/gjh-stacked-can-pyramid.blend"
+  },
+  "accuracy_notes": "Unbranded architectural entrance anchor. Catalog review and in-engine placement, lighting and physical-device performance remain pending."
+}

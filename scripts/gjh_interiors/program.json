@@ -1,0 +1,1058 @@
+{
+  "plan_sha256": "c9eb0c16f3dc7f7933d4d79eda41dfc19b6aee17caf1edc8047744b8867e469c",
+  "coordinates": "Metres [x,y,z], bottom-centre at finished installation; datum is slot-centre at Y=0. Normalise source pivots/front axes at import. yaw_deg is right-handed about +Y. Facing +Z is toward concourse. Envelope [width,height,depth] before yaw. A fitted assembly includes supports and adapters required to attain the indicated top socket; preserve physical product proportions.",
+  "owner_caps": {
+    "Low_global_added_triangles": 50000,
+    "Low_store_triangles": 3000,
+    "added_calls_per_store_view": 10
+  },
+  "stores": [
+    {
+      "slot": "S01",
+      "brand": "New Moon",
+      "slug": "collector-triptych",
+      "style": "Collector’s pantry",
+      "anchor": {
+        "name": "Hinged walnut collector cabinet with brass photo recess",
+        "asset_id": "collector-triptych",
+        "source": "NEW",
+        "position_m": [
+          0,
+          2.47,
+          -3.46
+        ],
+        "yaw_deg": 0,
+        "envelope_whd_m": [
+          3.95,
+          2.3,
+          0.7
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 860,
+          "Balanced": 2400,
+          "Detailed": 6000
+        },
+        "tier_treatment": {
+          "Low": "author geometry",
+          "Balanced": "author geometry",
+          "Detailed": "author geometry"
+        },
+        "assembly_note": "Fasten the upper triptych to the structural back wall on concealed spacers. The four original M056 centres span x ±3.63 m and reach x ±4.83 m at the outer trim; those existing extremities intersect the wall lining. Preserve the four functional bounds and trim the new visual returns to the wall face."
+      },
+      "palette": [
+        {
+          "material": "smoked walnut",
+          "hex": "#513527"
+        },
+        {
+          "material": "brushed brass",
+          "hex": "#B59A68"
+        },
+        {
+          "material": "pearl linen",
+          "hex": "#F2EFE8"
+        },
+        {
+          "material": "oxblood lacquer",
+          "hex": "#833E36"
+        }
+      ],
+      "world_origin_m": [
+        -10.0,
+        0,
+        -6.0
+      ],
+      "yaw_world_deg": 0,
+      "shop_low_cap": 2928,
+      "order": 1,
+      "brief": "Hinge two side leaves toward the viewer; give the inner leaf a recessed unbranded picture pocket. Bottom clears the working shelves. Bake carving into the Low colour atlas."
+    },
+    {
+      "slot": "S02",
+      "brand": "MILI",
+      "slug": "gjh-hawker-stall-exhaust-hood",
+      "style": "Open noodle kitchen",
+      "anchor": {
+        "name": "Hammered-metal hood over the lacquer pass",
+        "asset_id": "hawker-stall-exhaust-hood",
+        "source": "models/hawker-stall-exhaust-hood/exports/optimized.glb",
+        "position_m": [
+          0,
+          2.38,
+          0.5
+        ],
+        "yaw_deg": 0,
+        "envelope_whd_m": [
+          2.65,
+          1.35,
+          1.4
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 780,
+          "Balanced": 2800,
+          "Detailed": 4212
+        },
+        "tier_treatment": {
+          "Low": "retopo / bake",
+          "Balanced": "retopo / bake",
+          "Detailed": "reuse mesh as is"
+        },
+        "assembly_note": "Carry the hood to the retained ceiling on a narrow copper duct at local (0,4.65,0.5), yaw 0°, in a 0.48 × 1.92 × 0.50 m envelope. Charge the duct to retained fixtures."
+      },
+      "palette": [
+        {
+          "material": "red-brown lacquer",
+          "hex": "#833D2D"
+        },
+        {
+          "material": "moss tile",
+          "hex": "#49634B"
+        },
+        {
+          "material": "bone ceramic",
+          "hex": "#F1E9D7"
+        },
+        {
+          "material": "brushed copper",
+          "hex": "#AA7151"
+        }
+      ],
+      "world_origin_m": [
+        0.0,
+        0,
+        -6.0
+      ],
+      "yaw_world_deg": 0,
+      "shop_low_cap": 2166,
+      "source_sha256": "f834f892c234bab47bfd034b8947e7ca6d53126901334405b08eeb41377239d0",
+      "source_blend": "models/hawker-stall-exhaust-hood/sources/hawker-stall-exhaust-hood.blend",
+      "blend_sha256": "0c79102f440c5c08c2fcaefb3d549d34a6aecae4837b444c4937d20bef7c92af",
+      "rights_sha256": "786e327b68132d829b61b55f50bc107a64161ad7b3b58023e98c96ec5e2148b4"
+    },
+    {
+      "slot": "S03",
+      "brand": "GOGO",
+      "slug": "gjh-ice-cream-cart-potong",
+      "style": "Potong garden bar",
+      "anchor": {
+        "name": "Potong parasol cart on a citrus sunburst",
+        "asset_id": "ice-cream-cart-potong",
+        "source": "models/ice-cream-cart-potong/exports/optimized.glb",
+        "position_m": [
+          -2.35,
+          0.025,
+          2.05
+        ],
+        "yaw_deg": 12,
+        "envelope_whd_m": [
+          2.0,
+          2.6,
+          1.25
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 920,
+          "Balanced": 2800,
+          "Detailed": 6240
+        },
+        "tier_treatment": {
+          "Low": "retopo / bake",
+          "Balanced": "retopo / bake",
+          "Detailed": "reuse mesh as is"
+        }
+      },
+      "palette": [
+        {
+          "material": "citrus enamel",
+          "hex": "#E7863B"
+        },
+        {
+          "material": "lagoon tile",
+          "hex": "#2E7C7A"
+        },
+        {
+          "material": "coconut terrazzo",
+          "hex": "#F5F0E5"
+        },
+        {
+          "material": "leaf green",
+          "hex": "#4F7047"
+        }
+      ],
+      "world_origin_m": [
+        10.0,
+        0,
+        -6.0
+      ],
+      "yaw_world_deg": 0,
+      "shop_low_cap": 2618,
+      "source_sha256": "d561e491bf213eece432b56eaf69b4197527af59736beaada7a7cdc17be5a413",
+      "source_blend": "models/ice-cream-cart-potong/sources/ice-cream-cart-potong.blend",
+      "blend_sha256": "8c3177d41b77663352b1726f865369844b31493f589479cef3762f25626ea74f",
+      "rights_sha256": "951d3374550d5e6e754ab78070c925d0424aaeb7230730b76cb76e4cdc38cf8e"
+    },
+    {
+      "slot": "S04",
+      "brand": "Borsch Med",
+      "slug": "patch-folio",
+      "style": "Patch library",
+      "anchor": {
+        "name": "Fan-fold patch folio counter",
+        "asset_id": "patch-folio",
+        "source": "NEW",
+        "position_m": [
+          -0.48,
+          0.081,
+          -0.63
+        ],
+        "yaw_deg": 7,
+        "envelope_whd_m": [
+          2.38,
+          2.35,
+          1.12
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 660,
+          "Balanced": 1850,
+          "Detailed": 4800
+        },
+        "tier_treatment": {
+          "Low": "author geometry",
+          "Balanced": "author geometry",
+          "Detailed": "author geometry"
+        },
+        "assembly_note": "Shape the inner folio leaf around a level 1.15 m sample socket. Keep the pale cards and vase silhouetted against the sage wing."
+      },
+      "palette": [
+        {
+          "material": "porcelain",
+          "hex": "#F8F7F1"
+        },
+        {
+          "material": "powder sage",
+          "hex": "#63745D"
+        },
+        {
+          "material": "plum felt",
+          "hex": "#6B4A55"
+        },
+        {
+          "material": "pale ash",
+          "hex": "#CFBEA7"
+        }
+      ],
+      "world_origin_m": [
+        20.0,
+        0,
+        -6.0
+      ],
+      "yaw_world_deg": 0,
+      "shop_low_cap": 1946,
+      "order": 2,
+      "brief": "Model three stiff page-shaped wings with visible turns and an integrated sample ledge; bake perforations. Blank surfaces, no dosage graphics."
+    },
+    {
+      "slot": "S05",
+      "brand": "Pien Tze Huang",
+      "slug": "specimen-drawers",
+      "style": "Herbal counting house",
+      "anchor": {
+        "name": "Stepped drawer bank with open porcelain niche",
+        "asset_id": "specimen-drawers",
+        "source": "NEW",
+        "position_m": [
+          0,
+          0.081,
+          -4.38
+        ],
+        "yaw_deg": 0,
+        "envelope_whd_m": [
+          4.2,
+          2.98,
+          1.05
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 800,
+          "Balanced": 2200,
+          "Detailed": 5600
+        },
+        "tier_treatment": {
+          "Low": "author geometry",
+          "Balanced": "author geometry",
+          "Detailed": "author geometry"
+        }
+      },
+      "palette": [
+        {
+          "material": "ink-stained elm",
+          "hex": "#352C28"
+        },
+        {
+          "material": "warm parchment",
+          "hex": "#E9DDBF"
+        },
+        {
+          "material": "cinnabar",
+          "hex": "#9E3F35"
+        },
+        {
+          "material": "aged copper",
+          "hex": "#A87249"
+        }
+      ],
+      "world_origin_m": [
+        30.0,
+        0,
+        -6.0
+      ],
+      "yaw_world_deg": 0,
+      "shop_low_cap": 1974,
+      "order": 4,
+      "brief": "Step the cabinet halves down to a bowl niche. Keep three protruding drawers, bake the remaining grid and handles on Low. No herb names or prescription labels."
+    },
+    {
+      "slot": "S06",
+      "brand": "Flying Wheel",
+      "slug": "noodle-loom",
+      "style": "Air-drying workshop",
+      "anchor": {
+        "name": "Slatted noodle-drying loom",
+        "asset_id": "noodle-loom",
+        "source": "NEW",
+        "position_m": [
+          -0.65,
+          0.081,
+          -0.83
+        ],
+        "yaw_deg": 3,
+        "envelope_whd_m": [
+          2.45,
+          2.96,
+          1.05
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 820,
+          "Balanced": 2200,
+          "Detailed": 5200
+        },
+        "tier_treatment": {
+          "Low": "author geometry",
+          "Balanced": "author geometry",
+          "Detailed": "author geometry"
+        }
+      },
+      "palette": [
+        {
+          "material": "pale beech",
+          "hex": "#D7BB87"
+        },
+        {
+          "material": "wheat",
+          "hex": "#C6A66C"
+        },
+        {
+          "material": "slate-blue casein",
+          "hex": "#536777"
+        },
+        {
+          "material": "rice paper",
+          "hex": "#F0E9D9"
+        }
+      ],
+      "world_origin_m": [
+        -20.0,
+        0,
+        4.0
+      ],
+      "yaw_world_deg": 90,
+      "shop_low_cap": 1968,
+      "order": 3,
+      "brief": "Join the feet, comb and staggered solid ribbon fans as an open silhouette; use wide flat ribbon clusters instead of individual noodles on Low."
+    },
+    {
+      "slot": "S07",
+      "brand": "Gu Long",
+      "slug": "gjh-stacked-can-pyramid",
+      "style": "Banquet provision hall",
+      "anchor": {
+        "name": "Jade drum and stepped banquet pyramid",
+        "asset_id": "stacked-can-pyramid",
+        "source": "models/stacked-can-pyramid/exports/optimized.glb",
+        "position_m": [
+          -0.55,
+          0.48,
+          -0.85
+        ],
+        "yaw_deg": -8,
+        "envelope_whd_m": [
+          1.65,
+          2.45,
+          1.65
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 920,
+          "Balanced": 2800,
+          "Detailed": 17896
+        },
+        "tier_treatment": {
+          "Low": "retopo / bake",
+          "Balanced": "retopo / bake",
+          "Detailed": "reuse mesh as is"
+        }
+      },
+      "palette": [
+        {
+          "material": "oxblood lacquer",
+          "hex": "#742E29"
+        },
+        {
+          "material": "jade glaze",
+          "hex": "#4F6E5A"
+        },
+        {
+          "material": "rice silk",
+          "hex": "#EFE4D0"
+        },
+        {
+          "material": "patinated bronze",
+          "hex": "#9A794D"
+        }
+      ],
+      "world_origin_m": [
+        -20.0,
+        0,
+        12.0
+      ],
+      "yaw_world_deg": 90,
+      "shop_low_cap": 2072,
+      "source_sha256": "cf8cf126e0a0783f4ee9ac585b306caa6714c6dafc6a3dfbbaff117d3d494527",
+      "source_blend": "models/stacked-can-pyramid/sources/stacked-can-pyramid.blend",
+      "blend_sha256": "167283325ca475dcc8b05d93f1b777c4e801e28f7eea3e09e0d27df806e0a905",
+      "rights_sha256": "41976a8b0d7389bdda6e1530ed4ddcf3374b821f0db241fc93caf9ed45520de2"
+    },
+    {
+      "slot": "S08",
+      "brand": "Skippy",
+      "slug": "gjh-peanut-butter-jar-stand",
+      "style": "Breakfast stand",
+      "anchor": {
+        "name": "Jar stand in a striped breakfast booth",
+        "asset_id": "peanut-butter-jar-stand",
+        "source": "models/peanut-butter-jar-stand/exports/optimized.glb",
+        "position_m": [
+          -0.58,
+          0.58,
+          -0.76
+        ],
+        "yaw_deg": 0,
+        "envelope_whd_m": [
+          1.65,
+          2.15,
+          1.05
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 780,
+          "Balanced": 2800,
+          "Detailed": 16404
+        },
+        "tier_treatment": {
+          "Low": "retopo / bake",
+          "Balanced": "retopo / bake",
+          "Detailed": "reuse mesh as is"
+        },
+        "assembly_note": "Frame the jar stand with a shallow striped booth valance at local (−0.58,2.80,−0.76), yaw 0°, within 2.45 × 0.34 × 0.98 m. Include its two rear supports in the retained-fixture allowance. Bake the fabric stripes."
+      },
+      "palette": [
+        {
+          "material": "sky-blue enamel",
+          "hex": "#70A9D4"
+        },
+        {
+          "material": "navy canvas",
+          "hex": "#1D3A64"
+        },
+        {
+          "material": "peanut maple",
+          "hex": "#E8D1A3"
+        },
+        {
+          "material": "butter yellow",
+          "hex": "#F4CB69"
+        }
+      ],
+      "world_origin_m": [
+        -20.0,
+        0,
+        20.0
+      ],
+      "yaw_world_deg": 90,
+      "shop_low_cap": 1928,
+      "source_sha256": "42f5e1bce24dfa525305623472f42654a80fade80f79b8177cb9b6dfb4b36f28",
+      "source_blend": "models/peanut-butter-jar-stand/sources/peanut-butter-jar-stand.blend",
+      "blend_sha256": "6fbd6cabb9a1baf194681eef2160082174a0f7bbacfdbcba656f6faf6a9a0ada",
+      "rights_sha256": "044d08503860678aca888784828731324fa75a3c23bd8806014ec6fbffa56d2d"
+    },
+    {
+      "slot": "S09",
+      "brand": "SPAM",
+      "slug": "gjh-conveyor-belt",
+      "style": "Canning-line grocer",
+      "anchor": {
+        "name": "Diagonal tinning conveyor",
+        "asset_id": "conveyor-belt",
+        "source": "models/conveyor-belt/exports/optimized.glb",
+        "position_m": [
+          -0.72,
+          0.081,
+          -1.1
+        ],
+        "yaw_deg": 12,
+        "envelope_whd_m": [
+          2.65,
+          1.6,
+          1.02
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 920,
+          "Balanced": 1456,
+          "Detailed": 1456
+        },
+        "tier_treatment": {
+          "Low": "retopo / bake",
+          "Balanced": "reuse mesh as is",
+          "Detailed": "reuse mesh as is"
+        }
+      },
+      "palette": [
+        {
+          "material": "blue-black steel",
+          "hex": "#173B68"
+        },
+        {
+          "material": "tinplate",
+          "hex": "#B5C0C1"
+        },
+        {
+          "material": "ochre enamel",
+          "hex": "#E4B63F"
+        },
+        {
+          "material": "rubber",
+          "hex": "#303639"
+        }
+      ],
+      "world_origin_m": [
+        -20.0,
+        0,
+        28.0
+      ],
+      "yaw_world_deg": 90,
+      "shop_low_cap": 2068,
+      "source_sha256": "12071397b296b282f34671dc0f090207aabfc85bb652fcac83fe8588066c9161",
+      "source_blend": "models/conveyor-belt/sources/conveyor-belt.blend",
+      "blend_sha256": "cad0d861bdbafd0ab8675c09b3122abdb6d2560da8c9a36365b4e0138d0a5b5b",
+      "rights_sha256": "cd6f751571a26180efe488ba9c112f271a6ea2b6d43e5b31461be5e48dce61dd"
+    },
+    {
+      "slot": "S10",
+      "brand": "California Mexico",
+      "slug": "nacre-cradle",
+      "style": "Coastal gift market",
+      "anchor": {
+        "name": "Standing oyster-shell gift cradle",
+        "asset_id": "nacre-cradle",
+        "source": "NEW",
+        "position_m": [
+          -0.45,
+          0.081,
+          -1.4
+        ],
+        "yaw_deg": -7,
+        "envelope_whd_m": [
+          2.6,
+          2.62,
+          1.24
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 880,
+          "Balanced": 2500,
+          "Detailed": 6000
+        },
+        "tier_treatment": {
+          "Low": "author geometry",
+          "Balanced": "author geometry",
+          "Detailed": "author geometry"
+        },
+        "assembly_note": "Leave a level 1.15 m ledge between the shell valves for the gift boxes. A chalk-painted underside and teal inner reveal make the depth readable in diffuse light."
+      },
+      "palette": [
+        {
+          "material": "shell limestone",
+          "hex": "#F0EAE0"
+        },
+        {
+          "material": "sea-glass teal",
+          "hex": "#2C7776"
+        },
+        {
+          "material": "coral ceramic",
+          "hex": "#C65B46"
+        },
+        {
+          "material": "oiled teak",
+          "hex": "#956847"
+        }
+      ],
+      "world_origin_m": [
+        -20.0,
+        0,
+        36.0
+      ],
+      "yaw_world_deg": 90,
+      "shop_low_cap": 2166,
+      "order": 5,
+      "brief": "Model a deep hinged two-valve cradle with a flat inner gift shelf; use a faceted lip and baked rib shading. Solid rough PBR approximates nacre."
+    },
+    {
+      "slot": "S11",
+      "brand": "Hormel",
+      "slug": "gjh-packing-station",
+      "style": "Provision packing room",
+      "anchor": {
+        "name": "Wrapping station with a high kraft-roll rail",
+        "asset_id": "packing-station",
+        "source": "models/packing-station/exports/optimized.glb",
+        "position_m": [
+          -0.56,
+          0.081,
+          -1.05
+        ],
+        "yaw_deg": 0,
+        "envelope_whd_m": [
+          2.62,
+          2.15,
+          1.12
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 920,
+          "Balanced": 2188,
+          "Detailed": 2188
+        },
+        "tier_treatment": {
+          "Low": "retopo / bake",
+          "Balanced": "reuse mesh as is",
+          "Detailed": "reuse mesh as is"
+        }
+      },
+      "palette": [
+        {
+          "material": "kraft board",
+          "hex": "#BE9062"
+        },
+        {
+          "material": "burgundy steel",
+          "hex": "#843E43"
+        },
+        {
+          "material": "zinc",
+          "hex": "#767976"
+        },
+        {
+          "material": "cream paper",
+          "hex": "#EEE7D9"
+        }
+      ],
+      "world_origin_m": [
+        -20.0,
+        0,
+        44.0
+      ],
+      "yaw_world_deg": 90,
+      "shop_low_cap": 2206,
+      "source_sha256": "d364c6278d515f21aa5d3b25c04687895b729d9c3d0021d57898d6c50ed9bb72",
+      "source_blend": "models/packing-station/sources/packing-station.blend",
+      "blend_sha256": "911295c314ea5523c67b165c331f251552b5128640c1fc51aa09e0cfa062f390",
+      "rights_sha256": "6fdfc31a6ac6dface3d1f2d6f10565aebe95bd29901fdced84669a3a07d8ab92"
+    },
+    {
+      "slot": "S12",
+      "brand": "Zeria",
+      "slug": "opal-index",
+      "style": "Quiet dispensary",
+      "anchor": {
+        "name": "Layered opal index-fin island",
+        "asset_id": "opal-index",
+        "source": "NEW",
+        "position_m": [
+          -0.52,
+          0.081,
+          -1.2
+        ],
+        "yaw_deg": -5,
+        "envelope_whd_m": [
+          2.55,
+          2.46,
+          1.05
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 620,
+          "Balanced": 1700,
+          "Detailed": 4200
+        },
+        "tier_treatment": {
+          "Low": "author geometry",
+          "Balanced": "author geometry",
+          "Detailed": "author geometry"
+        },
+        "assembly_note": "Provide a sample shelf at 1.15 m in the front fin. From the entrance at least two edge/face pairs should be visible."
+      },
+      "palette": [
+        {
+          "material": "opal resin",
+          "hex": "#F1F3F1"
+        },
+        {
+          "material": "seafoam",
+          "hex": "#B6D2C8"
+        },
+        {
+          "material": "indigo slate",
+          "hex": "#3C4A66"
+        },
+        {
+          "material": "anodised teal",
+          "hex": "#6F9690"
+        }
+      ],
+      "world_origin_m": [
+        40.0,
+        0,
+        4.0
+      ],
+      "yaw_world_deg": -90,
+      "shop_low_cap": 1906,
+      "order": 6,
+      "brief": "Build four staggered stepped fins and a shelf in the base. Low uses opaque shaded faces, no overlapping alpha or transmission passes."
+    },
+    {
+      "slot": "S13",
+      "brand": "Sony",
+      "slug": "gjh-headphone-display-stand",
+      "style": "Listening studio",
+      "anchor": {
+        "name": "Headphone listening rack against a ribbed acoustic baffle",
+        "asset_id": "headphone-display-stand",
+        "source": "models/headphone-display-stand/exports/optimized.glb",
+        "position_m": [
+          -0.64,
+          0.43,
+          -1.05
+        ],
+        "yaw_deg": 8,
+        "envelope_whd_m": [
+          1.12,
+          2.6,
+          0.75
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 780,
+          "Balanced": 2800,
+          "Detailed": 18084
+        },
+        "tier_treatment": {
+          "Low": "retopo / bake",
+          "Balanced": "retopo / bake",
+          "Detailed": "reuse mesh as is"
+        }
+      },
+      "palette": [
+        {
+          "material": "charcoal felt",
+          "hex": "#292B2D"
+        },
+        {
+          "material": "black glass",
+          "hex": "#14171C"
+        },
+        {
+          "material": "bead-blasted silver",
+          "hex": "#BFC3C5"
+        },
+        {
+          "material": "ice blue",
+          "hex": "#A6D7EB"
+        }
+      ],
+      "world_origin_m": [
+        40.0,
+        0,
+        12.0
+      ],
+      "yaw_world_deg": -90,
+      "shop_low_cap": 1972,
+      "source_sha256": "ab0e91d44e12b0f41e76383ee914fe5cd7e29cb8839ea458df2a77f672e9ba54",
+      "source_blend": "models/headphone-display-stand/sources/headphone-display-stand.blend",
+      "blend_sha256": "96d113bf21da97d4515e978cca11b6283a6eb7bc24056f15050a571d7f31cc4f",
+      "rights_sha256": "2dd637154f2984ee10ec87bacbcafc2636aaf507f593a5888a86e34090b88967"
+    },
+    {
+      "slot": "S14",
+      "brand": "LG",
+      "slug": "gjh-tv-wall-mounted",
+      "style": "Living picture gallery",
+      "anchor": {
+        "name": "Two-scale screen wall with a gallery reveal",
+        "asset_id": "tv-wall-mounted",
+        "source": "models/tv-wall-mounted/exports/optimized.glb",
+        "position_m": [
+          -0.62,
+          1.03,
+          -3.99
+        ],
+        "yaw_deg": 0,
+        "envelope_whd_m": [
+          3.65,
+          2.08,
+          0.3
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 780,
+          "Balanced": 2800,
+          "Detailed": 11092
+        },
+        "tier_treatment": {
+          "Low": "retopo / bake",
+          "Balanced": "retopo / bake",
+          "Detailed": "reuse mesh as is"
+        },
+        "assembly_note": "Float the main plane on a concealed wall bracket; include the mounting standoff in the trim allowance. The second floor screen is independent and turned toward the sofa. Keep its screen face above the console."
+      },
+      "palette": [
+        {
+          "material": "gallery white",
+          "hex": "#F5F3EF"
+        },
+        {
+          "material": "satin aluminium",
+          "hex": "#BEC1C2"
+        },
+        {
+          "material": "aubergine velvet",
+          "hex": "#5B3F7A"
+        },
+        {
+          "material": "blush limestone",
+          "hex": "#DBBEB1"
+        }
+      ],
+      "world_origin_m": [
+        40.0,
+        0,
+        20.0
+      ],
+      "yaw_world_deg": -90,
+      "shop_low_cap": 2016,
+      "source_sha256": "1124f947f7cfebd5546282cb27195100bbbde969fb7b3606cee33d2d1839755b",
+      "source_blend": "models/tv-wall-mounted/sources/tv-wall-mounted.blend",
+      "blend_sha256": "d4fb5b0d139f5835224b55269aba5d4e54a60eab8ac9cb2b34f63feca004e054",
+      "rights_sha256": "2e4242311b95ff019f56894317d2ace246e4b4f2a7c3778c15a1fada4ffb6b9f"
+    },
+    {
+      "slot": "S15",
+      "brand": "Casio",
+      "slug": "gjh-grand-piano",
+      "style": "Chamber recital room",
+      "anchor": {
+        "name": "Open baby grand and bench on recital oval",
+        "asset_id": "grand-piano",
+        "source": "models/grand-piano/exports/optimized.glb",
+        "position_m": [
+          -1.05,
+          0.081,
+          -1.02
+        ],
+        "yaw_deg": -22,
+        "envelope_whd_m": [
+          1.95,
+          2.38,
+          2.75
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 920,
+          "Balanced": 2800,
+          "Detailed": 15180
+        },
+        "tier_treatment": {
+          "Low": "retopo / bake",
+          "Balanced": "retopo / bake",
+          "Detailed": "reuse mesh as is"
+        }
+      },
+      "palette": [
+        {
+          "material": "piano lacquer",
+          "hex": "#202123"
+        },
+        {
+          "material": "oiled walnut",
+          "hex": "#76543D"
+        },
+        {
+          "material": "key ivory",
+          "hex": "#F1EDE2"
+        },
+        {
+          "material": "oxblood wool",
+          "hex": "#723F46"
+        }
+      ],
+      "world_origin_m": [
+        40.0,
+        0,
+        28.0
+      ],
+      "yaw_world_deg": -90,
+      "shop_low_cap": 2132,
+      "source_sha256": "99c65386e19fd7202d71cbdc0a8dfa0cca82339b7f08f000b15f66104fe5f323",
+      "source_blend": "models/grand-piano/sources/grand-piano.blend",
+      "blend_sha256": "3dc90f2aa0648d50dbb4e8f814a612fffe551e598153fe94255a340c41335b40",
+      "rights_sha256": "ca970c5a6f94628b7ed887ccb1dcb82fe1caeb8acfd5837373afbebf49fdcbbb"
+    },
+    {
+      "slot": "S16",
+      "brand": "GP",
+      "slug": "eyelet-rail",
+      "style": "Locator workshop",
+      "anchor": {
+        "name": "Perforated eyelet demonstration rail",
+        "asset_id": "eyelet-rail",
+        "source": "NEW",
+        "position_m": [
+          -1.56,
+          0.081,
+          -1.28
+        ],
+        "yaw_deg": 5,
+        "envelope_whd_m": [
+          1.65,
+          2.55,
+          0.9
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 640,
+          "Balanced": 1900,
+          "Detailed": 4600
+        },
+        "tier_treatment": {
+          "Low": "author geometry",
+          "Balanced": "author geometry",
+          "Detailed": "author geometry"
+        },
+        "assembly_note": "Set a neutral unmarked pocket-size sample into the bench below the three architectural eyelets. Use vertex colour for a lanyard, with its geometry charged to the eyelet master."
+      },
+      "palette": [
+        {
+          "material": "powder white",
+          "hex": "#F4F5F2"
+        },
+        {
+          "material": "anodised teal",
+          "hex": "#3D8C8A"
+        },
+        {
+          "material": "lime polymer",
+          "hex": "#B7C94A"
+        },
+        {
+          "material": "graphite rubber",
+          "hex": "#363C3D"
+        }
+      ],
+      "world_origin_m": [
+        40.0,
+        0,
+        36.0
+      ],
+      "yaw_world_deg": -90,
+      "shop_low_cap": 1876,
+      "order": 7,
+      "brief": "Model three distinct through-holes above a bench. Bake the fine pegboard perforations. Eyelets are architecture; no imitation tracker branding."
+    },
+    {
+      "slot": "S17",
+      "brand": "Gigaset",
+      "slug": "telephone-alcove",
+      "style": "Domestic telephone bureau",
+      "anchor": {
+        "name": "Gabled private-call alcove with open front",
+        "asset_id": "telephone-alcove",
+        "source": "NEW",
+        "position_m": [
+          -0.55,
+          0.081,
+          -2.95
+        ],
+        "yaw_deg": -5,
+        "envelope_whd_m": [
+          2.15,
+          2.86,
+          1.25
+        ],
+        "count": 1,
+        "triangles_per_instance": {
+          "Low": 750,
+          "Balanced": 2100,
+          "Detailed": 5000
+        },
+        "tier_treatment": {
+          "Low": "author geometry",
+          "Balanced": "author geometry",
+          "Detailed": "author geometry"
+        },
+        "assembly_note": "Set the open handset shelf at 1.09 m; keep its front edge and the face of the generic device visible against dark felt."
+      },
+      "palette": [
+        {
+          "material": "graphite felt",
+          "hex": "#4A4D50"
+        },
+        {
+          "material": "satin nickel",
+          "hex": "#B8BBBD"
+        },
+        {
+          "material": "chalk",
+          "hex": "#F5F4EF"
+        },
+        {
+          "material": "apricot cork",
+          "hex": "#D99E74"
+        }
+      ],
+      "world_origin_m": [
+        40.0,
+        0,
+        44.0
+      ],
+      "yaw_world_deg": -90,
+      "shop_low_cap": 2054,
+      "order": 8,
+      "brief": "Use an asymmetrical gable and a shallow floating handset ledge. Keep front accessible to view; no entering a dead-end booth. Bake felt seams."
+    }
+  ]
+}
