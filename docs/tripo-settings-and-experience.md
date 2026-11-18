@@ -82,3 +82,7 @@ model (separate fingers, palms down), but this was judged on a screenshot only.
   edit it into a wardrobe prompt ("hair, glasses, bare skin body, hoodie jacket, cargo pants, shoes, backpack"). The button shows a free trial price, then 40; it takes more than two minutes on a 2M-triangle model.
 - Image to 3D with a clothed chibi reference (Best Quality, 55 credits) gave 1,995,743 triangles with hair, glasses, hoodie, cargo pants, shoes and backpack all modelled.
 - Studio queues are not instant: generation about 2.5 minutes, rig about 3 minutes, segment longer. Run two tabs in parallel to hide the waiting.
+- Measured result of Studio segment plus AI completion on the clothed chibi (11 parts, 2M triangles in total): every part still has open boundary edges
+  (about 1,300 to 36,000 per part) and the parts are dense (6,630 to 861,462 triangles). Segment parts are generic names `tripo_part_0..10`, not hair or hoodie.
+  They are a good start for splitting clothes from skin but need retopology and hole closing before use as modules. The export dialog has a "Pack UV" option;
+  the GLB was 58 MB.
