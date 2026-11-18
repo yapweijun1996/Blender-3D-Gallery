@@ -1,0 +1,66 @@
+{
+  "result": "PASS",
+  "scope": "Requested asset, source reproduction, and all three root npm commands.",
+  "environment": {
+    "blender": "5.1.2, guarded macOS binary",
+    "preview_engine": "Cycles CPU, 12 samples, AgX Medium High Contrast",
+    "inputs": "Local files only",
+    "root_commands": "Executed unchanged from the root of a disposable copy of tracked working-tree files, local node_modules, the updated catalog and this asset. Its build output and writes to legacy model reports were isolated."
+  },
+  "commands": {
+    "validate-assets": {
+      "command": "npm run validate:assets",
+      "exit_code": 0,
+      "seconds": 7.65,
+      "output": "validate-assets.log.gz",
+      "catalog_glbs": 662,
+      "asset_line": "models/new-moon-sign/exports/optimized.glb: 17018 triangles, 855436 bytes, 0 errors, 0 warnings"
+    },
+    "test": {
+      "command": "npm test",
+      "exit_code": 0,
+      "seconds": 12.01,
+      "output": "test.log.gz",
+      "summary": [
+        "ℹ tests 744",
+        "ℹ pass 744",
+        "ℹ fail 0",
+        "ℹ cancelled 0",
+        "ℹ skipped 0",
+        "ℹ todo 0"
+      ]
+    },
+    "build": {
+      "command": "npm run build",
+      "exit_code": 0,
+      "seconds": 10.37,
+      "output": "build.log.gz",
+      "summary": [
+        "(!) Some chunks are larger than 500 kB after minification. Consider:",
+        "✓ built in 1.39s"
+      ]
+    }
+  },
+  "production_build_exact_files": {
+    "exports/optimized.glb": "optimized-tp_XCXV1.glb",
+    "previews/hero.webp": "hero-BYi4uyA7.webp"
+  },
+  "source": {
+    "file": "sources/new-moon-sign.blend",
+    "sha256": "db2e2cd9d87022fa3bf800c6adf154089f0cbddca5fd3d57d65c6ef4d615206a",
+    "generator_sha256": "355b0933cdc66d64aafe4f80df3cd5778e754a8290cd38f48302f449ebd082de",
+    "font_sha256": "7962b8b7811e6a896c9a91a0bccbb5241047770eb24d4997c5cb5fe21d5c0df2",
+    "clean_rebuild_sha256": {
+      "optimized.glb": "258d9d68ff584935665548653a32a2d6f14c50f0ab62eb55294da8937cfea222",
+      "far-lod.glb": "58db7e1cdb5623006cd00bacee0e2944378bfabf4b91aaeb034ead725fa90122"
+    },
+    "saved_blend_reopen_export_sha256": {
+      "optimized.glb": "258d9d68ff584935665548653a32a2d6f14c50f0ab62eb55294da8937cfea222",
+      "far-lod.glb": "58db7e1cdb5623006cd00bacee0e2944378bfabf4b91aaeb034ead725fa90122"
+    }
+  },
+  "browser": {
+    "status": "NOT VERIFIED",
+    "details": "The offline Chromium smoke check stopped before navigation. macOS denied the headless process a Mach rendezvous port (permission denied 1100). The production GLB and hero WebP were independently compared byte-for-byte with the supplied files."
+  }
+}

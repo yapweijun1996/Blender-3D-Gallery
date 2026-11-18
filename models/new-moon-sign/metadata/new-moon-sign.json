@@ -1,0 +1,116 @@
+{
+  "id": "new-moon-sign",
+  "name": "New Moon Illuminated Shop Sign",
+  "summary": "Wall-mounted dark-green shop sign with a brass cornice, three warm downlights, a luminous filigree crescent and raised gold serif lettering.",
+  "description": "A shallow wall sign with a mitred frame, perforated sloping soffit, black-steel backing and four keyhole mounting straps. Its individually removable mesh letters are set in STIX Two Text.",
+  "category": "Mall Fixtures",
+  "tags": [
+    "mall",
+    "shopfront",
+    "sign",
+    "crescent",
+    "illuminated",
+    "brass",
+    "procedural",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-18",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Deterministic bpy profile meshes, converted type outlines, analytic filigree and embedded procedural images. The far artwork is an orthographic colour bake of the near relief.",
+  "generator": "generate.py",
+  "paths": {
+    "glb": "exports/optimized.glb",
+    "far_lod": "exports/far-lod.glb",
+    "source": "sources/new-moon-sign.blend",
+    "preview": "previews/hero.webp",
+    "additional_previews": [
+      "previews/front.webp",
+      "previews/side.webp",
+      "previews/3q.webp"
+    ]
+  },
+  "display": {
+    "previewRotationY": 0,
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "front_axis": "Blender -Y / glTF +Z",
+    "previewCameraDirection": [
+      -0.23,
+      -0.11,
+      1
+    ],
+    "studioEnvironment": true,
+    "environmentIntensity": 0.8
+  },
+  "dimensions_metres": {
+    "width": 3.2,
+    "height": 0.9,
+    "depth": 0.35
+  },
+  "origin": "Root at [0, 0, 0], horizontally centred on the wall plane at the lower edge. All geometry projects forward.",
+  "root": "ASSET_NewMoonSign",
+  "node_groups": [
+    "Frame",
+    "Panel",
+    "Moon_Logo",
+    "Letters",
+    "Light_Strips",
+    "Mounting"
+  ],
+  "materials": [
+    "Brass | satin brushed",
+    "Brass | burnished edges",
+    "Bronze | shadow reveals",
+    "Letter | pale gold",
+    "Light | warm cream",
+    "Crescent | honey opal",
+    "Crescent | amber return lens",
+    "Steel | machined edges",
+    "Steel | blackened",
+    "Enamel | bottle green"
+  ],
+  "material_notes": "Opaque green matte enamel (roughness 0.80), brushed metallic brass (procedural roughness around 0.35), polished brass, pale-gold metallic cap faces, honey opal, warm cream emission and blackened steel. The far graphics use a masked baked material.",
+  "font": {
+    "family": "STIX Two Text",
+    "style": "Regular",
+    "version": "2.13 b171",
+    "licence": "SIL Open Font License 1.1",
+    "source": "sources/STIXTwoText.ttf",
+    "license_file": "sources/OFL.txt",
+    "runtime": "Converted to seven letter meshes in the near LOD and pixels in the far LOD."
+  },
+  "reference": {
+    "file": "reference/new-moon-reference.png",
+    "note": "Owner-supplied image used as visual guidance only."
+  },
+  "measured": {
+    "glb_bytes": 855436,
+    "triangles": 17018
+  },
+  "lods": {
+    "near": {
+      "file": "exports/optimized.glb",
+      "triangles": 17018,
+      "bytes": 855436,
+      "switch": "Use within about 15 m or for oblique close-ups."
+    },
+    "far": {
+      "file": "exports/far-lod.glb",
+      "triangles": 954,
+      "bytes": 109276,
+      "switch": "Suggested beyond 15 m. One embedded 1024 × 256 RGBA bake spans two independently selectable flat graphic quads. The consuming scene selects this file."
+    }
+  },
+  "accuracy_notes": "The botanical tracery and STIX serifs are interpretations of the reference. The distance threshold is guidance for the consuming scene. Real-time halo and reflected illumination depend on the renderer.",
+  "attribution": [
+    {
+      "credit": "Original procedural sign geometry, textures and filigree. Owner-supplied visual reference."
+    },
+    {
+      "credit": "STIX Two Text. Copyright 2001–2021 The STIX Fonts Project Authors. SIL OFL 1.1."
+    }
+  ],
+  "rights": "Original asset; reuse in the owner's projects is authorized. Public redistribution terms for the asset and reference have not been specified. Typeface licensed separately under SIL OFL 1.1."
+}
