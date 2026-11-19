@@ -112,6 +112,41 @@ const candidates = [
     label: { en: "Jeans", "zh-Hans": "牛仔裤", ms: "Seluar jean" },
     paths: ["bodies/female/round3/female-jeans-v3.glb"],
   },
+  {
+    id: "male-hair-bob", slot: "hair", family: "hair-bob", bodyIds: ["male"],
+    label: { en: "Bob haircut", "zh-Hans": "波波头", ms: "Rambut bob" },
+    paths: ["bodies/male/male-hair-bob.glb"],
+  },
+  {
+    id: "male-hair-spiky", slot: "hair", family: "hair-spiky", bodyIds: ["male"],
+    label: { en: "Spiky hair", "zh-Hans": "尖发", ms: "Rambut tercacak" },
+    paths: ["bodies/male/male-hair-spiky.glb"],
+  },
+  {
+    id: "male-hair-sidepart", slot: "hair", family: "hair-sidepart", bodyIds: ["male"],
+    label: { en: "Side-part hair", "zh-Hans": "偏分发", ms: "Rambut belah tepi" },
+    paths: ["bodies/male/male-hair-sidepart.glb"],
+  },
+  {
+    id: "male-shoes-sneakers", slot: "shoes", family: "shoes-sneakers", bodyIds: ["male"],
+    label: { en: "Sneakers", "zh-Hans": "运动鞋", ms: "Kasut sukan" },
+    paths: ["bodies/male/male-sneakers.glb"],
+  },
+  {
+    id: "male-top-tshirt", slot: "top", family: "top-tshirt", bodyIds: ["male"],
+    label: { en: "T-shirt", "zh-Hans": "T恤", ms: "Baju-T" },
+    paths: ["bodies/male/round2/male-tshirt-v2.glb"],
+  },
+  {
+    id: "male-top-dress", slot: "top", family: "top-dress", bodyIds: ["male"], excludesSlots: ["bottom"],
+    label: { en: "A-line dress", "zh-Hans": "连衣裙", ms: "Gaun A-line" },
+    paths: ["bodies/male/round3/male-dress-v3.glb"],
+  },
+  {
+    id: "male-bottom-jeans", slot: "bottom", family: "bottom-jeans", bodyIds: ["male"],
+    label: { en: "Jeans", "zh-Hans": "牛仔裤", ms: "Seluar jean" },
+    paths: ["bodies/male/round3/male-jeans-v3.glb"],
+  },
   // Not shown yet: cargo pants and bomber jacket (failed review or the motion gate), hoodie.
 ];
 

@@ -213,46 +213,49 @@ try {
   const saved = await page.evaluate(key => JSON.parse(localStorage.getItem(key)), STORAGE_KEY);
   assert.equal(saved.modules.hair, selectedTop);
 
-  // The girl body: its own skeleton, clips, modules and prop sockets.
-  const girlModules = manifest.modules.filter(({ bodyIds }) => bodyIds?.includes("female"));
-  await page.locator('[data-body="female"]').click();
-  await page.waitForFunction(() => document.querySelector(".dressup-stage").inspectDressup().body === "female"
-    && !document.querySelector(".dressup-stage").inspectDressup().switching);
-  assert.equal((await snapshot()).joints.length, 65);
-  assert.equal(await page.locator('[data-body="female"]').getAttribute("aria-pressed"), "true");
-  assert.equal(await module(selectedTop).count(), 0, "neutral modules are not offered on the girl body");
-  const girlResults = {};
-  for (const name of CLIPS) {
-    await clip(name).click();
-    const before = await snapshot();
-    await page.waitForFunction(({ name, mixerTime }) => {
+  // Each extra body: its own skeleton, clips, modules and prop sockets.
+  const bodyResults = {};
+  const switchTo = async id => {
+    await page.locator(`[data-body="${id}"]`).click();
+    await page.waitForFunction(id => {
       const state = document.querySelector(".dressup-stage").inspectDressup();
-      return state.clip === name && state.mixerTime > mixerTime + 0.15;
-    }, { name, mixerTime: before.mixerTime });
-    girlResults[name] = (await snapshot()).triangles;
+      return state.body === id && !state.switching;
+    }, id);
+  };
+  for (const bodyId of manifest.bodies.map(({ id }) => id).filter(id => id !== manifest.defaults.body)) {
+    const ownModules = manifest.modules.filter(({ bodyIds }) => bodyIds?.includes(bodyId));
+    await switchTo(bodyId);
+    assert.equal((await snapshot()).joints.length, 65);
+    assert.equal(await page.locator(`[data-body="${bodyId}"]`).getAttribute("aria-pressed"), "true");
+    assert.equal(await module(selectedTop).count(), 0, "modules of another body are not offered");
+    const results = {};
+    for (const name of CLIPS) {
+      await clip(name).click();
+      const before = await snapshot();
+      await page.waitForFunction(({ name, mixerTime }) => {
+        const state = document.querySelector(".dressup-stage").inspectDressup();
+        return state.clip === name && state.mixerTime > mixerTime + 0.15;
+      }, { name, mixerTime: before.mixerTime });
+      results[name] = (await snapshot()).triangles;
+    }
+    for (const { id } of ownModules) {
+      await module(id).click();
+      await page.waitForFunction(id => document.querySelector(".dressup-stage").inspectDressup().modules[id], id);
+      await module(id).click();
+    }
+    await module(`${bodyId}-top-tshirt`).click();
+    await module(`${bodyId}-bottom-jeans`).click();
+    await mkdir(out, { recursive: true });
+    for (const [name, file] of [["take", "take"], ["box", "box"], ["sit", "sit"]]) {
+      await clip(name).click();
+      await page.waitForTimeout(1300);
+      await page.screenshot({ path: path.join(out, `${bodyId}-${file}.png`), fullPage: true });
+    }
+    await module(`${bodyId}-top-tshirt`).click();
+    await module(`${bodyId}-bottom-jeans`).click();
+    bodyResults[bodyId] = results;
   }
-  for (const { id } of girlModules) {
-    await module(id).click();
-    await page.waitForFunction(id => document.querySelector(".dressup-stage").inspectDressup().modules[id], id);
-    await module(id).click();
-  }
-  await module("female-top-tshirt").click();
-  await module("female-bottom-jeans").click();
-  await clip("take").click();
-  await page.waitForTimeout(1500);
-  await mkdir(out, { recursive: true });
-  await page.screenshot({ path: path.join(out, "girl-take.png"), fullPage: true });
-  await clip("box").click();
-  await page.waitForTimeout(1200);
-  await page.screenshot({ path: path.join(out, "girl-box.png"), fullPage: true });
-  await clip("sit").click();
-  await page.waitForTimeout(1200);
-  await page.screenshot({ path: path.join(out, "girl-sit.png"), fullPage: true });
-  await module("female-top-tshirt").click();
-  await module("female-bottom-jeans").click();
-  await page.locator('[data-body="neutral"]').click();
-  await page.waitForFunction(() => document.querySelector(".dressup-stage").inspectDressup().body === "neutral"
-    && !document.querySelector(".dressup-stage").inspectDressup().switching);
+  await switchTo(manifest.defaults.body);
   await clip("wave").click();
 
   await mkdir(out, { recursive: true });
@@ -295,7 +298,7 @@ try {
 
   console.log(JSON.stringify({
     chromium: browser.version(), glbRequests: { demos: 0, dressup: routeDownloads },
-    moduleTriangles, clipResults, girlResults, gestureResults, restored: saved, widths,
+    moduleTriangles, clipResults, bodyResults, gestureResults, restored: saved, widths,
     consoleErrors: errors.length, reducedMotion: "paused", errorRecovery: "retry recovered",
     screenshots: [path.join(out, "desktop.png"), path.join(out, "mobile.png")],
   }, null, 2));

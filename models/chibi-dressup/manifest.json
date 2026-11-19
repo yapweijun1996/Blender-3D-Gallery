@@ -123,6 +123,107 @@
           ]
         }
       }
+    },
+    {
+      "id": "male",
+      "label": {
+        "en": "Boy",
+        "zh-Hans": "男孩",
+        "ms": "Lelaki"
+      },
+      "body": "bodies/male/body.glb",
+      "motion": [
+        "bodies/male/motion.glb"
+      ],
+      "gestures": "bodies/male/gestures.glb",
+      "sockets": {
+        "hold_item": {
+          "translation": [
+            -0.049594,
+            0.080376,
+            -0.024246
+          ],
+          "rotation": [
+            -0.046587,
+            0.356102,
+            0.068517,
+            0.930767
+          ]
+        },
+        "hold_box": {
+          "translation": [
+            -0.111072,
+            0.150969,
+            -0.134461
+          ],
+          "rotation": [
+            -0.400238,
+            0.159943,
+            0.870748,
+            0.236698
+          ]
+        },
+        "hold_bag": {
+          "translation": [
+            -0.0745,
+            0.061579,
+            -0.004622
+          ],
+          "rotation": [
+            -0.106012,
+            0.44064,
+            0.891355,
+            0.009137
+          ]
+        },
+        "jar": {
+          "translation": [
+            -0.054611,
+            0.119225,
+            -0.018384
+          ],
+          "rotation": [
+            0.041786,
+            -0.982985,
+            -0.015771,
+            0.178175
+          ],
+          "returnStop": [
+            -0.233481,
+            0.505622,
+            0.113917
+          ],
+          "pickupStop": [
+            -0.171706,
+            0.517314,
+            0.206538
+          ]
+        },
+        "shelf": {
+          "translation": [
+            -0.025261,
+            -0.015474,
+            0.047463
+          ],
+          "scale": [
+            1.00548,
+            1.187478,
+            1.082326
+          ]
+        },
+        "chair": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            0.935119,
+            1
+          ]
+        }
+      }
     }
   ],
   "defaults": {
@@ -457,6 +558,135 @@
       "source": "bodies/female/round3/female-jeans-v3.glb",
       "bytes": 721684,
       "sha256": "e1988aecbe6c10e0737ff650f6381ff24f2443e2cd6243e365ed4defe55d0a1b"
+    },
+    {
+      "id": "male-hair-bob",
+      "slot": "hair",
+      "bodyIds": [
+        "male"
+      ],
+      "family": "hair-bob",
+      "label": {
+        "en": "Bob haircut",
+        "zh-Hans": "波波头",
+        "ms": "Rambut bob"
+      },
+      "file": "modules/male-hair-bob.glb",
+      "status": "verified",
+      "source": "bodies/male/male-hair-bob.glb",
+      "bytes": 227028,
+      "sha256": "87b48c94f31e3a4306672b5a5761d262f8f19b1f8fb126300e6a3c255a3f4ef8"
+    },
+    {
+      "id": "male-hair-spiky",
+      "slot": "hair",
+      "bodyIds": [
+        "male"
+      ],
+      "family": "hair-spiky",
+      "label": {
+        "en": "Spiky hair",
+        "zh-Hans": "尖发",
+        "ms": "Rambut tercacak"
+      },
+      "file": "modules/male-hair-spiky.glb",
+      "status": "verified",
+      "source": "bodies/male/male-hair-spiky.glb",
+      "bytes": 1060180,
+      "sha256": "3a7215ef4b66055329026654dab410ef3882bed24c6ff968a19adb784a197c44"
+    },
+    {
+      "id": "male-hair-sidepart",
+      "slot": "hair",
+      "bodyIds": [
+        "male"
+      ],
+      "family": "hair-sidepart",
+      "label": {
+        "en": "Side-part hair",
+        "zh-Hans": "偏分发",
+        "ms": "Rambut belah tepi"
+      },
+      "file": "modules/male-hair-sidepart.glb",
+      "status": "verified",
+      "source": "bodies/male/male-hair-sidepart.glb",
+      "bytes": 123952,
+      "sha256": "a659971572bbc36e4e7786cd3fc28f651030f2f944778dd5efb90b3f72eaf83c"
+    },
+    {
+      "id": "male-shoes-sneakers",
+      "slot": "shoes",
+      "bodyIds": [
+        "male"
+      ],
+      "family": "shoes-sneakers",
+      "label": {
+        "en": "Sneakers",
+        "zh-Hans": "运动鞋",
+        "ms": "Kasut sukan"
+      },
+      "file": "modules/male-shoes-sneakers.glb",
+      "status": "verified",
+      "source": "bodies/male/male-sneakers.glb",
+      "bytes": 196800,
+      "sha256": "aae73ece7a72dbe30fd564efc6b22ea2c73f3184923cfe728c0007f1546a9244"
+    },
+    {
+      "id": "male-top-tshirt",
+      "slot": "top",
+      "bodyIds": [
+        "male"
+      ],
+      "family": "top-tshirt",
+      "label": {
+        "en": "T-shirt",
+        "zh-Hans": "T恤",
+        "ms": "Baju-T"
+      },
+      "file": "modules/male-top-tshirt.glb",
+      "status": "verified",
+      "source": "bodies/male/round2/male-tshirt-v2.glb",
+      "bytes": 1256804,
+      "sha256": "f391118a8cfa9f7c1c0d1ed463330c3be6e1e1c3d45a83fab3036dc99b125645"
+    },
+    {
+      "id": "male-top-dress",
+      "slot": "top",
+      "excludesSlots": [
+        "bottom"
+      ],
+      "bodyIds": [
+        "male"
+      ],
+      "family": "top-dress",
+      "label": {
+        "en": "A-line dress",
+        "zh-Hans": "连衣裙",
+        "ms": "Gaun A-line"
+      },
+      "file": "modules/male-top-dress.glb",
+      "status": "verified",
+      "source": "bodies/male/round3/male-dress-v3.glb",
+      "bytes": 977888,
+      "sha256": "40c91df243b6ffc1deba8a9e9c742f4d5bed40d731af0405f13db45ed6aadfaa"
+    },
+    {
+      "id": "male-bottom-jeans",
+      "slot": "bottom",
+      "bodyIds": [
+        "male"
+      ],
+      "family": "bottom-jeans",
+      "label": {
+        "en": "Jeans",
+        "zh-Hans": "牛仔裤",
+        "ms": "Seluar jean"
+      },
+      "file": "modules/male-bottom-jeans.glb",
+      "status": "verified",
+      "source": "bodies/male/round3/male-jeans-v3.glb",
+      "bytes": 1182856,
+      "sha256": "bf9321664c0d28b7ed5d02861d42d4ecfc2aa7afd00c13d4bf98df4337e6e958"
     }
   ]
 }
