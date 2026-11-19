@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";
-import { CLIPS, GESTURES, HANDS, STORAGE_KEY } from "../src/chibi-dressup/config.js";
+import { CLIPS, EXPRESSIONS, GESTURES, HANDS, STORAGE_KEY } from "../src/chibi-dressup/config.js";
 import { LANGUAGE_STORAGE_KEY } from "../src/i18n/preferences.js";
 import { launchOptions, serveBuild } from "./browser-test-utils.mjs";
 
@@ -186,6 +186,17 @@ try {
   assert.ok(movingWithGestures.joints.every(({ name, rotation }, index) =>
     !(matching.L.test(name) || matching.R.test(name)) || !rotationChanged(rotation, overlaid.joints[index].rotation)));
 
+  // Expression maps load on first use; each choice shows on the face and survives a reload.
+  const expressionMaps = () => requests.filter(url => /\/(?:happy|surprised|sad)(?:-[\w-]+)?\.png(?:\?|$)/.test(url)).length;
+  assert.equal(expressionMaps(), 0, "expression maps must not download before they are chosen");
+  for (const name of EXPRESSIONS) {
+    await page.locator(`[data-expression="${name}"]`).click();
+    await page.waitForFunction(name => document.querySelector(".dressup-stage").inspectDressup().expression === name, name);
+    assert.equal(await page.locator(`[data-expression="${name}"]`).getAttribute("aria-pressed"), "true");
+  }
+  assert.equal(expressionMaps(), 3, "three expression maps are fetched once each");
+  assert.equal(await page.locator('[data-expression="sad"]').getAttribute("aria-pressed"), "true");
+
   const selectedTop = tops.at(-1).id;
   await clip("wave").click();
   await page.reload();
@@ -195,6 +206,7 @@ try {
   assert.equal(await hand("L").inputValue(), "peace");
   assert.equal(await hand("R").inputValue(), "thumbs_up");
   assert.equal((await snapshot()).clip, "wave");
+  await page.waitForFunction(() => document.querySelector(".dressup-stage").inspectDressup().expression === "sad");
   const saved = await page.evaluate(key => JSON.parse(localStorage.getItem(key)), STORAGE_KEY);
   assert.equal(saved.modules.hair, selectedTop);
 

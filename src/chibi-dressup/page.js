@@ -3,11 +3,15 @@ import bodyUrl from "../../models/chibi-dressup/base_body.glb?url";
 import motionUrl from "../../models/chibi-dressup/motion-clips.glb?url";
 import poseUrl from "../../models/chibi-dressup/hand_gestures.glb?url";
 import manifestData from "../../models/chibi-dressup/manifest.json";
-import { CLIPS, GESTURES, HANDS, loadConfig, saveConfig, validateManifest } from "./config.js";
+import { CLIPS, EXPRESSIONS, GESTURES, HANDS, loadConfig, saveConfig, validateManifest } from "./config.js";
+import { createExpressionController } from "./expression.js";
 import { bindModule, createRig } from "./rig.js";
 import { createView, disposeModels, getBounds, loadModels } from "./view.js";
 import "./style.css";
 
+const expressionUrls = Object.fromEntries(["happy", "surprised", "sad"].map(name => [
+  name, new URL(`../../models/chibi-dressup/expressions/${name}.png`, import.meta.url).href,
+]));
 const moduleUrls = import.meta.glob("../../models/chibi-dressup/modules/*.glb", {
   eager: true, query: "?url", import: "default",
 });
@@ -37,6 +41,10 @@ export async function mountDressup(root, thumbnail, signal) {
           <div class="dressup-clips"></div>
           <button type="button" class="dressup-play" data-i18n="common.play"></button>
         </fieldset>
+        <fieldset class="dressup-expressions" disabled>
+          <legend data-i18n="dressup.expression"></legend>
+          <div class="dressup-clips dressup-expression-list"></div>
+        </fieldset>
         <fieldset class="dressup-hands" disabled>
           <legend data-i18n="dressup.hands"></legend>
         </fieldset>
@@ -51,13 +59,15 @@ export async function mountDressup(root, thumbnail, signal) {
   const clipList = form.querySelector(".dressup-clips");
   const playButton = form.querySelector(".dressup-play");
   const hands = form.querySelector(".dressup-hands");
+  const expressionList = form.querySelector(".dressup-expression-list");
   const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
   const scenes = new Set();
-  let view, rig;
+  let view, rig, face;
   const dispose = () => {
     delete stage.inspectDressup;
     view?.dispose();
     rig?.dispose();
+    face?.dispose();
     disposeModels(scenes);
     scenes.clear();
   };
@@ -85,11 +95,13 @@ export async function mountDressup(root, thumbnail, signal) {
     const modules = new Map(manifest.modules.map((module, index) => [
       module.id, bindModule(body.scene, models[index].scene, skeleton),
     ]));
+    face = createExpressionController(body.scene, expressionUrls);
     rig = createRig(body.scene, skeleton, motion, gestures.animations);
     rig.select(config.animation);
 
     const moduleButtons = new Map();
     const clipButtons = new Map();
+    const expressionButtons = new Map();
     let playing = !motionPreference.matches;
 
     function renderConfig() {
@@ -104,6 +116,8 @@ export async function mountDressup(root, thumbnail, signal) {
         button.disabled = covered.has(slot);
         for (const mesh of modules.get(id)) mesh.visible = selected && !covered.has(slot);
       }
+      for (const [name, button] of expressionButtons)
+        button.setAttribute("aria-pressed", String(config.expression === name));
       for (const [clip, button] of clipButtons)
         button.setAttribute("aria-pressed", String(config.animation === clip));
       localize(playButton, playing ? "common.pause" : "common.play");
@@ -174,6 +188,18 @@ export async function mountDressup(root, thumbnail, signal) {
       }
     }, { signal });
 
+    for (const name of EXPRESSIONS) {
+      const button = activate(localize(document.createElement("button"), `dressup.expression.${name}`), () => {
+        config.expression = name;
+        applyConfig();
+        face.set(name).catch(() => {});
+      });
+      button.dataset.expression = name;
+      expressionButtons.set(name, button);
+      expressionList.append(button);
+    }
+    face.set(config.expression).catch(() => {});
+
     for (const side of HANDS) {
       const label = document.createElement("label");
       const select = document.createElement("select");
@@ -199,6 +225,7 @@ export async function mountDressup(root, thumbnail, signal) {
     stage.inspectDressup = () => ({
       ...rig.inspect(),
       triangles: view.triangles,
+      expression: face.current,
       modules: Object.fromEntries([...modules].map(([id, meshes]) => [id, meshes.every(mesh => mesh.visible)])),
     });
     const loading = stage.querySelector(".dressup-loading");

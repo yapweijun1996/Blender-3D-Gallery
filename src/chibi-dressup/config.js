@@ -3,6 +3,7 @@ import { languages } from "../i18n/preferences.js";
 export const STORAGE_KEY = "b3g:chibi-dressup:v1";
 export const CLIPS = ["idle", "walk", "run", "wave", "jump", "nod", "dance"];
 export const HANDS = ["L", "R"];
+export const EXPRESSIONS = ["neutral", "happy", "surprised", "sad"];
 export const GESTURES = ["fist", "open_relaxed", "point", "thumbs_up", "peace", "ok", "grip_small", "pinch", "open_wide"];
 
 const supportedSlots = ["hair", "top", "bottom", "shoes", "hat"];
@@ -51,7 +52,10 @@ export function normalizeConfig(value, manifest) {
     const gesture = value?.hands?.[side];
     return [side, GESTURES.includes(gesture) ? gesture : null];
   }));
-  return { modules, animation: CLIPS.includes(value?.animation) ? value.animation : "idle", hands };
+  return {
+    modules, animation: CLIPS.includes(value?.animation) ? value.animation : "idle", hands,
+    expression: EXPRESSIONS.includes(value?.expression) ? value.expression : "neutral",
+  };
 }
 
 export function loadConfig(manifest, storage) {

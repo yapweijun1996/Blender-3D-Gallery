@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { messages } from "../src/i18n/index.js";
-import { CLIPS, GESTURES, HANDS, STORAGE_KEY, loadConfig, saveConfig, validateManifest } from "../src/chibi-dressup/config.js";
+import { CLIPS, EXPRESSIONS, GESTURES, HANDS, STORAGE_KEY, loadConfig, saveConfig, validateManifest } from "../src/chibi-dressup/config.js";
 
 const directory = new URL("../models/chibi-dressup/", import.meta.url);
 const manifest = JSON.parse(readFileSync(new URL("manifest.json", directory), "utf8"));
@@ -19,6 +19,7 @@ test("dress-up manifest describes real module bytes and localized controls", () 
     assert.equal(createHash("sha256").update(data).digest("hex"), sha256, file);
   }
   const keys = [
+    "dressup.expression", ...EXPRESSIONS.map(name => `dressup.expression.${name}`),
     "demo.chibi-dressup.title", "demo.chibi-dressup.description", "dressup.loading",
     "dressup.wardrobe", "dressup.hands", "dressup.gesture.none", "motion.stage",
     ...manifest.slots.map(name => `dressup.slot.${name}`),
@@ -58,9 +59,11 @@ test("dress-up config round trips with independent hands and hidden slots", () =
   assert.deepEqual(config.modules, {
     hair: "hair-bob", top: null, bottom: null, shoes: null, hat: null,
   });
+  assert.equal(config.expression, "neutral");
   config.modules.hair = null;
   config.animation = "wave";
   config.hands = { L: "peace", R: "fist" };
+  config.expression = "sad";
   saveConfig(config, manifest, storage);
   assert.deepEqual(JSON.parse(data.get(STORAGE_KEY)), config);
   assert.deepEqual(loadConfig(manifest, storage), config);
@@ -74,7 +77,7 @@ test("stale config preserves valid choices and blocked storage leaves a usable d
   };
   assert.deepEqual(loadConfig(manifest, { getItem: () => JSON.stringify(old) }), {
     modules: { hair: "hair-bob", top: null, bottom: null, shoes: null, hat: null },
-    animation: "idle", hands: { L: "point", R: null },
+    animation: "idle", hands: { L: "point", R: null }, expression: "neutral",
   });
   const blocked = () => { throw new Error("Storage blocked"); };
   assert.equal(loadConfig(manifest, { getItem: blocked }).animation, "idle");
