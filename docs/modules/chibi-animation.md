@@ -237,7 +237,7 @@ turns off when the action pauses. `reset()` restores defaults and plays idle. `d
 `custom.dispose()`, removes the toolbar. Customization (`apply`) validates enums and throws `TypeError` for invalid values; it clones hair/brow/skin
 materials per instance and toggles mesh visibility by `V3_` name prefix. The file header comment states these controls demonstrate authored clips and
 cosmetics only, not mall item/cart/seat/elevator logic. Storage: none.
-Known gap: the two demo files are ~95% duplicated; any fix must be applied twice. `demo.js` itself is untested.
+Known gap: the two demo files share the same scaffold (mount, toolbar, mixer, loop and dispose logic) but differ in option lists, clip names and loop sets (about 35 diff lines of ~77); a scaffold fix must be applied twice. `demo.js` itself is untested.
 
 ### 4.4 `src/fish-motion.js` - `createFishMotion({ model, clips, container, invalidate })`
 Plays `Swim_Loop` (or first clip; throws if none) as `LoopRepeat`. Owns a pause/play button (inline-styled, `data-fish-playback`) and a

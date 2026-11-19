@@ -273,3 +273,19 @@ Framework proposal (no code yet): [docs/chibi-framework-design.md](docs/chibi-fr
 - [x] Rechecked this mall slice on GitHub main baseline `17a0ed6f`: asset validation, 6 catalog tests, standard `npm run build`, four shell GLB/assembly validators and Chromium desktop/emulated-mobile preview and Gallery flows passed. On this baseline, an alternative custom-output build failed because the PWA build hook still reads `dist`; the standard build passed. The standalone preview is not in the production build.
 - [ ] Check full mesh fit, other corner configurations and provisional 2 m planning dimensions before accepting the broader floor-corner/edge and wall-corner families.
 - [ ] Compare the solid wall with `MALL-STR-010`'s provisional 2 m specification and validate a representative complete assembly, corner/transition interfaces and target-device performance before accepting the checklist item. Unreconciled P0 shell work still includes other corner configurations and edge transitions.
+
+## 12. Documentation refresh and verified gap backlog — 2026-11-19
+
+Documentation added: [FEATURES_MAP.md](FEATURES_MAP.md) (refreshed to `fb9d5070`) and per-module logic docs [shell and viewer](docs/modules/shell-viewer.md), [demos, game and PWA](docs/modules/demos-game-pwa.md), [chibi and animation](docs/modules/chibi-animation.md). They were produced by reading source; no tests or builds were run for them. The gaps below were each re-read against the code on this date and are open unless ticked.
+
+- [ ] `scripts/sync-chibi-dressup-modules.mjs` (line ~105) rebuilds each module from a fixed field list, so `bodyIds` and `family` (accepted by `src/chibi-dressup/config.js`) would be dropped on sync. No current module uses them; fix before adding a second body's modules.
+- [ ] `models/chibi-dressup/README.md` says the script refreshes "four listed modules"; the script and manifest list 14.
+- [ ] `status` (`verified`/`pending`) is schema-checked in `config.js` but never changes runtime behavior, so a `pending` module is shown to visitors.
+- [ ] `.github/workflows/deploy.yml` push path runs only `npm run build:deploy`: no `npm test`, no `validate:assets` (manual dispatch with the input can run it).
+- [ ] `scripts/test-chibi-dressup-browser.mjs` is not wired into `package.json`.
+- [ ] `scripts/pwa-build.mjs:63` hard-codes the Game version string and `src/pwa/sw-template.js:57` hard-codes 18 pack files.
+- [ ] Demo route and interactive-asset lists are duplicated by hand across `src/main.js`, `scripts/demo-registry.mjs`, `src/viewer.js` and `data/demos.json`.
+- [ ] `src/visitor-v2/demo.js` and `src/visitor-v3/demo.js` share a scaffold; untested. `src/fish-motion.js` is the only viewer add-on imported statically.
+- [ ] Not re-verified: manifest has one body and no `hat` module; default prop sockets come from untracked `output/modular-chibi-parts/*/attachment.json`.
+- Corrected during review: `game-mounted` is dispatched by `src/main.js` (`${page}-mounted`); the earlier doc claim that nothing dispatches it was wrong and was fixed.
+
