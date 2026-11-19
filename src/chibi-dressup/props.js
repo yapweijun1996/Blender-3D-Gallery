@@ -17,7 +17,7 @@ const JAR = {
 const smoothstep = x => x * x * (3 - 2 * x);
 
 /**
- * `fitted` may override the neutral-body grips per body: { hold_item|hold_box|hold_bag|jar: { translation, rotation } }.
+ * `fitted` may override the neutral-body grips per body: { hold_item|hold_box|hold_bag|jar: { translation, rotation }, chair: { translation, scale } }.
  * Hand bones differ between bodies, so each body brings its own measured sockets.
  */
 export function createProps({ root, hand, chair, cup, box, bag, shelf, fitted = {} }) {
@@ -33,6 +33,10 @@ export function createProps({ root, hand, chair, cup, box, bag, shelf, fitted = 
     sockets.set(clip, scene);
   }
   chair.visible = false;
+  if (fitted.chair) {
+    chair.position.fromArray(fitted.chair.translation);
+    chair.scale.fromArray(fitted.chair.scale);
+  }
   root.add(chair);
   shelf.visible = false;
   root.add(shelf);

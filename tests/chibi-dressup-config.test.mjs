@@ -101,6 +101,11 @@ test("bodies decide which modules fit and families carry choices across bodies",
   assert.ok(fitsBody(source, "neutral", two) && !fitsBody(source, "spare", two));
   assert.deepEqual(modulesForBody({ hair: "hair-bob", top: "top-tshirt", bottom: null, shoes: null, hat: null }, "spare", two),
     { hair: "spare-hair-bob", top: null, bottom: null, shoes: null, hat: null });
+  const withSockets = structuredClone(two);
+  withSockets.bodies[1].sockets = { hold_box: { translation: [0, 0, 0], rotation: [0, 0, 0, 1] }, chair: { translation: [0, 0, -0.028], scale: [1, 0.96, 1] } };
+  assert.equal(validateManifest(withSockets), withSockets);
+  withSockets.bodies[1].sockets.chair.scale = [1, 1];
+  assert.throws(() => validateManifest(withSockets), /Invalid dress-up body/);
   const stored = { body: "spare", modules: { hair: "hair-bob" }, animation: "walk" };
   const loaded = loadConfig(two, { getItem: () => JSON.stringify(stored) });
   assert.equal(loaded.body, "spare");

@@ -17,8 +17,10 @@ const isModelPath = value => typeof value === "string" &&
 const finite = (value, length) => Array.isArray(value) && value.length === length &&
   value.every(Number.isFinite);
 const validSockets = value => value === undefined || (isRecord(value) && Object.entries(value).every(([name, item]) =>
-  ["hold_item", "hold_box", "hold_bag", "jar"].includes(name) && isRecord(item) &&
-  finite(item.translation, 3) && finite(item.rotation, 4)));
+  (["hold_item", "hold_box", "hold_bag", "jar"].includes(name) && isRecord(item) &&
+    finite(item.translation, 3) && finite(item.rotation, 4)) ||
+  // The chair is placed per body: translation and scale in glTF metres.
+  (name === "chair" && isRecord(item) && finite(item.translation, 3) && finite(item.scale, 3))));
 const isText = value => typeof value === "string" && value.trim().length > 0;
 
 export function validateManifest(manifest) {
