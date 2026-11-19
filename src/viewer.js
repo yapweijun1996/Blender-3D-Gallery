@@ -24,6 +24,7 @@ export default async function createViewer(
   let cartDemo;
   let visitorDemo;
   let animationPreview;
+  let buildingLoop;
   let chibiRig;
   let lastDraw = 0;
   let studio;
@@ -37,6 +38,11 @@ export default async function createViewer(
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x657078);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  if (asset.id === "marina-bay-sands-loop") {
+    renderer.setClearColor(0xd5d0c9);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.90;
+  }
   if (isVehicle) {
     renderer.setClearColor(0x202326);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -155,6 +161,7 @@ export default async function createViewer(
     cartDemo?.dispose();
     visitorDemo?.dispose();
     animationPreview?.dispose();
+    buildingLoop?.dispose();
     chibiRig?.dispose();
     disposeModel(model);
     disposeModel(studio);
@@ -291,7 +298,7 @@ export default async function createViewer(
       const viewDirection = camera.position.clone().sub(controls.target);
       if (viewDirection.lengthSq() === 0) viewDirection.copy(direction);
       else viewDirection.normalize();
-      frameObject(cartDemo?.group ?? model, viewDirection, animationPreview?.bounds);
+      frameObject(cartDemo?.group ?? model, viewDirection, animationPreview?.bounds ?? (buildingLoop && bounds));
     };
     const frameVehicle = (viewDirection, target = model) => {
       // Include open doors in the bounds so a preset never cuts them off.
@@ -308,7 +315,7 @@ export default async function createViewer(
         doorButtons.get(code)?.setAttribute("aria-pressed", "false");
       }
       if (isVehicle || cartDemo) { frameVehicle(direction, cartDemo?.group ?? model); return; }
-      frameObject(model, direction);
+      frameObject(model, direction, buildingLoop && bounds);
     };
     const setView = (name) => {
       const directions = { front: [-1, 0, 0], rear: [1, 0, 0], left: [0, 0, 1], right: [0, 0, -1] };
@@ -395,6 +402,11 @@ export default async function createViewer(
       vehicleToolbar.append(doorControls);
       container.insertAdjacentElement("afterend", vehicleToolbar);
     }
+    if (asset.id === "marina-bay-sands-loop") {
+      const { default: createBuildingLoop } = await import("./building-loop.js");
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+      buildingLoop = createBuildingLoop({ model, clip: gltf.animations[0], container, invalidate });
+    }
     reset();
     localize(status);
     draw = () => {
@@ -405,11 +417,12 @@ export default async function createViewer(
       const elapsed = lastDraw ? (now - lastDraw) / 1000 : 0;
       const visitorActive = visitorDemo?.update(elapsed);
       const animationActive = animationPreview?.update(elapsed);
+      const buildingActive = buildingLoop?.update(elapsed);
       lastDraw = now;
       const fishActive = fishMotion?.update();
       const changed = controls.update();
       renderer.render(scene, camera);
-      if (changed || active || visitorActive || animationActive || fishActive) invalidate();
+      if (changed || active || visitorActive || animationActive || buildingActive || fishActive) invalidate();
     };
     invalidate();
     return { reset, dispose, setView };
