@@ -53,3 +53,13 @@ Report in the session every 20 minutes; push each verified piece; record every d
 - Gender: half male, half female, all in the unified chibi style; roles are told apart by outfit and hair only.
 - Interior style: oak wood, matte dark green, brushed brass (the 12 reference images follow it).
 - Keep all real brand names, products and official links in v11 untouched; change only layout, furniture and NPCs.
+
+## 2026-11-19 update: clothing and corrected clips shipped in the demo
+
+- Body self-intersection fix (arms into hips, shins into thighs): `output/modular-chibi-parts/body-fix/motion_fixed.glb`; the demo clips file is its skeleton-and-animation extract (`scripts/strip-motion-glb.py`). Hair, sneakers rechecked: 0 vertices and 0 triangle pairs in all clips.
+- Round 3 results against the corrected clips (own checkers + independent render review):
+  - jeans: 0/0, min 0.7 mm, PASS WITH NOTES, in the demo.
+  - T-shirt: 0 in rest, wave, jump, idle, nod; penetration up to 0.8 mm in walk and run and 0.3 mm in dance (small, accepted by the owner's "small flaws are fine"), PASS WITH NOTES, in the demo.
+  - dress: 0/0 but minimum clearance 0.1 mm (limit 0.5 mm), PASS WITH NOTES; not in the demo yet because the demo has no slot-exclusion rule (dress would clip the jeans).
+  - cargo pants: FAIL (run 2 vertices, 38 pairs; reviewer saw black slits). Bomber jacket: FAIL (walk 7 vertices, up to 12.7 mm). Both stay out; three rounds are used up.
+- Budget note: the full set (body 9,512 + hair 2,972 + top 4,699 + bottom 4,704 + sneakers 3,492 = 25.4k triangles) exceeds the 20k whole-character target; fine for the single-character demo, too heavy for a crowd without LODs or decimation.

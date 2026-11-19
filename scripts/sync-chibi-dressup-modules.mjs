@@ -22,7 +22,17 @@ const candidates = [
     label: { en: "Sneakers", "zh-Hans": "运动鞋", ms: "Kasut sukan" },
     paths: ["shoes-sol/round3/shoes_sneaker_v3.glb"],
   },
-  // Pending modules (not shown until they pass the motion gate and review): top-tshirt, top-hoodie .
+  {
+    id: "top-tshirt", slot: "top",
+    label: { en: "T-shirt", "zh-Hans": "T恤", ms: "Baju-T" },
+    paths: ["studio-modules/tshirt/round3/tshirt_v3.glb"],
+  },
+  {
+    id: "bottom-jeans", slot: "bottom",
+    label: { en: "Jeans", "zh-Hans": "牛仔裤", ms: "Seluar jean" },
+    paths: ["studio-modules/jeans/round3/jeans_v3.glb"],
+  },
+  // Not shown yet: dress (needs a slot-exclusion rule), cargo pants and bomber jacket (failed review or the motion gate), hoodie.
 ];
 
 async function findSource(paths) {
