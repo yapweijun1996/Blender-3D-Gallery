@@ -1,0 +1,868 @@
+{
+  "format": "crucible.scene",
+  "schemaVersion": 1,
+  "geometries": [
+    {
+      "id": "base-profile",
+      "type": "lathe",
+      "profile": [
+        [
+          0,
+          0.004
+        ],
+        [
+          0.083,
+          0.004
+        ],
+        [
+          0.09,
+          0.01
+        ],
+        [
+          0.09,
+          0.023
+        ],
+        [
+          0.083,
+          0.03
+        ],
+        [
+          0,
+          0.03
+        ]
+      ],
+      "segments": 16
+    },
+    {
+      "id": "foot-profile",
+      "type": "lathe",
+      "profile": [
+        [
+          0,
+          0
+        ],
+        [
+          0.077,
+          0
+        ],
+        [
+          0.081,
+          0.004
+        ],
+        [
+          0.081,
+          0.009
+        ],
+        [
+          0,
+          0.009
+        ]
+      ],
+      "segments": 16
+    },
+    {
+      "id": "shade-profile",
+      "type": "lathe",
+      "profile": [
+        [
+          0.062,
+          -0.042
+        ],
+        [
+          0.066,
+          -0.04
+        ],
+        [
+          0.066,
+          -0.035
+        ],
+        [
+          0.042,
+          0.018
+        ],
+        [
+          0.034,
+          0.027
+        ],
+        [
+          0.018,
+          0.03
+        ],
+        [
+          0,
+          0.03
+        ]
+      ],
+      "segments": 12
+    },
+    {
+      "id": "reflector-profile",
+      "type": "lathe",
+      "profile": [
+        [
+          0,
+          0.023
+        ],
+        [
+          0.031,
+          0.021
+        ],
+        [
+          0.037,
+          0.014
+        ],
+        [
+          0.062,
+          -0.037
+        ],
+        [
+          0.062,
+          -0.042
+        ]
+      ],
+      "segments": 12
+    },
+    {
+      "id": "round-hardware",
+      "type": "cylinder",
+      "segments": 12,
+      "bevel": 0.018,
+      "bevelSegments": 1
+    },
+    {
+      "id": "arm-blank",
+      "type": "box",
+      "bevel": 0.06,
+      "subdivisions": 1
+    },
+    {
+      "id": "bulb-blank",
+      "type": "sphere",
+      "segments": 12,
+      "rings": 6
+    },
+    {
+      "id": "lower-arm-profile",
+      "type": "extrude",
+      "contour": [
+        [
+          0.011275252629202712,
+          -0.08120879680273349
+        ],
+        [
+          0.028724747370797298,
+          -0.07679120319726651
+        ],
+        [
+          -0.011275252629202712,
+          0.08120879680273349
+        ],
+        [
+          -0.028724747370797298,
+          0.07679120319726651
+        ]
+      ],
+      "depth": 0.012
+    },
+    {
+      "id": "upper-arm-profile",
+      "type": "extrude",
+      "contour": [
+        [
+          -0.07580885693485324,
+          -0.044232535652288296
+        ],
+        [
+          -0.06519114306514677,
+          -0.05876746434771171
+        ],
+        [
+          0.07580885693485324,
+          0.044232535652288296
+        ],
+        [
+          0.06519114306514677,
+          0.05876746434771171
+        ]
+      ],
+      "depth": 0.012
+    },
+    {
+      "id": "base-hinge-pin-profile",
+      "type": "lathe",
+      "profile": [
+        [
+          0,
+          -0.024
+        ],
+        [
+          0.01296,
+          -0.024
+        ],
+        [
+          0.01512,
+          -0.021840000000000002
+        ],
+        [
+          0.01512,
+          0.021840000000000002
+        ],
+        [
+          0.01296,
+          0.024
+        ],
+        [
+          0,
+          0.024
+        ]
+      ],
+      "segments": 12
+    },
+    {
+      "id": "elbow-hinge-pin-profile",
+      "type": "lathe",
+      "profile": [
+        [
+          0,
+          -0.024
+        ],
+        [
+          0.01728,
+          -0.024
+        ],
+        [
+          0.02016,
+          -0.02112
+        ],
+        [
+          0.02016,
+          0.02112
+        ],
+        [
+          0.01728,
+          0.024
+        ],
+        [
+          0,
+          0.024
+        ]
+      ],
+      "segments": 12
+    },
+    {
+      "id": "head-hinge-pin-profile",
+      "type": "lathe",
+      "profile": [
+        [
+          0,
+          -0.0155
+        ],
+        [
+          0.014194285714285713,
+          -0.0155
+        ],
+        [
+          0.01656,
+          -0.013134285714285715
+        ],
+        [
+          0.01656,
+          0.013134285714285715
+        ],
+        [
+          0.014194285714285713,
+          0.0155
+        ],
+        [
+          0,
+          0.0155
+        ]
+      ],
+      "segments": 12
+    },
+    {
+      "id": "shade-cap-profile",
+      "type": "lathe",
+      "profile": [
+        [
+          0,
+          -0.007
+        ],
+        [
+          0.0225,
+          -0.007
+        ],
+        [
+          0.026,
+          -0.0035
+        ],
+        [
+          0.026,
+          0.0035
+        ],
+        [
+          0.0225,
+          0.007
+        ],
+        [
+          0,
+          0.007
+        ]
+      ],
+      "segments": 12
+    }
+  ],
+  "materials": [
+    {
+      "id": "paprika-enamel",
+      "tag": "surface",
+      "color": [
+        0.62,
+        0.095,
+        0.033
+      ],
+      "metallic": 0.13,
+      "roughness": 0.52,
+      "emission": 0,
+      "opacity": 1,
+      "alphaMode": "opaque",
+      "doubleSided": false
+    },
+    {
+      "id": "charcoal",
+      "tag": "surface",
+      "color": [
+        0.052,
+        0.064,
+        0.074
+      ],
+      "metallic": 0.19,
+      "roughness": 0.62,
+      "emission": 0,
+      "opacity": 1,
+      "alphaMode": "opaque",
+      "doubleSided": false
+    },
+    {
+      "id": "satin-brass",
+      "tag": "surface",
+      "color": [
+        0.49,
+        0.28,
+        0.09
+      ],
+      "metallic": 0.5,
+      "roughness": 0.45,
+      "emission": 0,
+      "opacity": 1,
+      "alphaMode": "opaque",
+      "doubleSided": false
+    },
+    {
+      "id": "warm-ivory",
+      "tag": "surface",
+      "color": [
+        0.82,
+        0.72,
+        0.49
+      ],
+      "metallic": 0,
+      "roughness": 0.66,
+      "emission": 0,
+      "opacity": 1,
+      "alphaMode": "opaque",
+      "doubleSided": true
+    },
+    {
+      "id": "opal-glass",
+      "tag": "surface",
+      "color": [
+        0.94,
+        0.91,
+        0.78
+      ],
+      "metallic": 0,
+      "roughness": 0.38,
+      "emission": 0.3,
+      "opacity": 1,
+      "alphaMode": "opaque",
+      "doubleSided": false
+    }
+  ],
+  "nodes": [
+    {
+      "id": "rubber-foot",
+      "geometry": "foot-profile",
+      "material": "charcoal",
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "parent": null,
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "weighted-base",
+      "geometry": "base-profile",
+      "material": "paprika-enamel",
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "parent": null,
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "switch-bezel",
+      "geometry": "round-hardware",
+      "material": "satin-brass",
+      "translation": [
+        0.048,
+        0.031,
+        0.023
+      ],
+      "scale": [
+        0.02,
+        0.004,
+        0.02
+      ],
+      "parent": null,
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "push-switch",
+      "geometry": "round-hardware",
+      "material": "charcoal",
+      "translation": [
+        0.048,
+        0.034,
+        0.023
+      ],
+      "scale": [
+        0.013,
+        0.006,
+        0.013
+      ],
+      "parent": null,
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "base-pedestal",
+      "geometry": "arm-blank",
+      "material": "paprika-enamel",
+      "translation": [
+        -0.026,
+        0.043,
+        0
+      ],
+      "scale": [
+        0.026,
+        0.034,
+        0.031
+      ],
+      "parent": null,
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "lower-arm-front",
+      "geometry": "lower-arm-profile",
+      "material": "charcoal",
+      "translation": [
+        -0.046,
+        0.131,
+        0.014
+      ],
+      "parent": null,
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "lower-arm-back",
+      "geometry": "lower-arm-profile",
+      "material": "charcoal",
+      "translation": [
+        -0.046,
+        0.131,
+        -0.014
+      ],
+      "parent": null,
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "upper-arm",
+      "geometry": "upper-arm-profile",
+      "material": "charcoal",
+      "translation": [
+        0.004499999999999997,
+        0.2615,
+        0
+      ],
+      "parent": null,
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "base-hinge-pin",
+      "geometry": "base-hinge-pin-profile",
+      "material": "satin-brass",
+      "translation": [
+        -0.026,
+        0.052,
+        0
+      ],
+      "rotation": [
+        0.7071067811865475,
+        0,
+        0,
+        0.7071067811865476
+      ],
+      "parent": null,
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "elbow-hinge-pin",
+      "geometry": "elbow-hinge-pin-profile",
+      "material": "satin-brass",
+      "translation": [
+        -0.066,
+        0.21,
+        0
+      ],
+      "rotation": [
+        0.7071067811865475,
+        0,
+        0,
+        0.7071067811865476
+      ],
+      "parent": null,
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "head-hinge-pin",
+      "geometry": "head-hinge-pin-profile",
+      "material": "satin-brass",
+      "translation": [
+        0.075,
+        0.313,
+        0
+      ],
+      "rotation": [
+        0.7071067811865475,
+        0,
+        0,
+        0.7071067811865476
+      ],
+      "parent": null,
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "lamp-head",
+      "translation": [
+        0.088,
+        0.289,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0.2279775235351884,
+        0.9736663950053749
+      ],
+      "parent": null,
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "shade-cap",
+      "geometry": "shade-cap-profile",
+      "material": "satin-brass",
+      "parent": "lamp-head",
+      "translation": [
+        0,
+        0.029,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "enamel-shade",
+      "geometry": "shade-profile",
+      "material": "paprika-enamel",
+      "parent": "lamp-head",
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "inner-reflector",
+      "geometry": "reflector-profile",
+      "material": "warm-ivory",
+      "parent": "lamp-head",
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "opal-bulb",
+      "geometry": "bulb-blank",
+      "material": "opal-glass",
+      "parent": "lamp-head",
+      "translation": [
+        0,
+        -0.016,
+        0
+      ],
+      "scale": [
+        0.022,
+        0.022,
+        0.022
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "camera": {
+    "eye": [
+      0.56,
+      0.32,
+      0.72
+    ],
+    "target": [
+      0.025,
+      0.158,
+      0
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "fov": 31,
+    "near": 0.1,
+    "far": 1000
+  },
+  "environment": {
+    "world": false,
+    "setup": "daylight",
+    "environmentIntensity": 1,
+    "environmentRotation": 0,
+    "lightDirection": [
+      -3,
+      6,
+      4
+    ],
+    "keyColor": [
+      3,
+      2.8,
+      2.5
+    ],
+    "keyIntensity": 1,
+    "fillIntensity": 0,
+    "ambientIntensity": 1,
+    "daylight": 1,
+    "pointLights": [],
+    "skyTop": [
+      0.2,
+      0.38,
+      0.52
+    ],
+    "skyBottom": [
+      0.62,
+      0.7,
+      0.67
+    ],
+    "fogColor": [
+      0.35,
+      0.43,
+      0.43
+    ],
+    "fogDensity": null,
+    "volumeFog": {
+      "density": 0,
+      "minimum": [
+        -100,
+        0,
+        -100
+      ],
+      "maximum": [
+        100,
+        20,
+        100
+      ],
+      "color": [
+        0.8,
+        0.85,
+        0.9
+      ],
+      "ambient": [
+        0.03,
+        0.035,
+        0.04
+      ],
+      "drift": [
+        0.03,
+        0,
+        0
+      ],
+      "steps": 16,
+      "anisotropy": 0.3,
+      "noiseAmount": 0.5,
+      "noiseScale": 0.3,
+      "maxDistance": 100,
+      "heightFalloff": 0
+    }
+  },
+  "effects": {
+    "depthOfField": {
+      "blur": 0,
+      "focusDistance": 5
+    },
+    "motionBlur": {
+      "shutter": 0
+    },
+    "saturation": 1,
+    "contrast": 1,
+    "temperature": 0,
+    "vignette": 0,
+    "grain": 0,
+    "ambientOcclusion": 0,
+    "ambientOcclusionRadius": 0.5,
+    "bloom": {
+      "strength": 0.12,
+      "threshold": 1,
+      "radius": 1
+    },
+    "exposure": 1
+  },
+  "shadow": {
+    "target": [
+      0,
+      1,
+      0
+    ],
+    "extent": 3.5,
+    "distance": 8,
+    "near": 0.1,
+    "far": 15
+  }
+}
