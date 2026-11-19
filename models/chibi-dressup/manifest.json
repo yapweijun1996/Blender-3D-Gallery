@@ -22,6 +22,107 @@
         "hold_actions.glb"
       ],
       "gestures": "hand_gestures.glb"
+    },
+    {
+      "id": "female",
+      "label": {
+        "en": "Girl",
+        "zh-Hans": "女孩",
+        "ms": "Perempuan"
+      },
+      "body": "bodies/female/body.glb",
+      "motion": [
+        "bodies/female/motion.glb"
+      ],
+      "gestures": "bodies/female/gestures.glb",
+      "sockets": {
+        "hold_item": {
+          "translation": [
+            -0.048044,
+            0.101959,
+            -0.030294
+          ],
+          "rotation": [
+            -0.684035,
+            0.514837,
+            0.514096,
+            0.052388
+          ]
+        },
+        "hold_box": {
+          "translation": [
+            -0.191672,
+            0.111914,
+            -0.217385
+          ],
+          "rotation": [
+            0.439379,
+            0.095622,
+            -0.678023,
+            0.581453
+          ]
+        },
+        "hold_bag": {
+          "translation": [
+            -0.051726,
+            0.090197,
+            0.025426
+          ],
+          "rotation": [
+            0.648147,
+            -0.022161,
+            -0.18577,
+            0.738176
+          ]
+        },
+        "jar": {
+          "translation": [
+            -0.050038,
+            0.132921,
+            -0.016983
+          ],
+          "rotation": [
+            0.052486,
+            -0.901187,
+            -0.122335,
+            0.412481
+          ],
+          "returnStop": [
+            -0.187314,
+            0.505213,
+            0.140828
+          ],
+          "pickupStop": [
+            -0.173775,
+            0.505213,
+            0.218795
+          ]
+        },
+        "shelf": {
+          "translation": [
+            -0.139992,
+            0,
+            -0.009349
+          ],
+          "scale": [
+            1,
+            1.182145,
+            1
+          ]
+        },
+        "chair": {
+          "translation": [
+            0,
+            0,
+            -0.028
+          ],
+          "scale": [
+            1,
+            0.960073,
+            1
+          ]
+        }
+      }
     }
   ],
   "defaults": {
@@ -227,6 +328,135 @@
       "source": "studio-modules/dress/round5/dress_v5.glb",
       "bytes": 2508672,
       "sha256": "0efaca0036372ec5a5acd8d4b26704cdb2973c4cec4bd13304535c5cd2ce6b7b"
+    },
+    {
+      "id": "female-hair-bob",
+      "slot": "hair",
+      "bodyIds": [
+        "female"
+      ],
+      "family": "hair-bob",
+      "label": {
+        "en": "Bob haircut",
+        "zh-Hans": "波波头",
+        "ms": "Rambut bob"
+      },
+      "file": "modules/female-hair-bob.glb",
+      "status": "verified",
+      "source": "bodies/female/female-hair-bob.glb",
+      "bytes": 184204,
+      "sha256": "c1a5d1dbb1f95e870c4246373d8a5670b7bee627e6f901bd23ce159c8ae106dc"
+    },
+    {
+      "id": "female-hair-spiky",
+      "slot": "hair",
+      "bodyIds": [
+        "female"
+      ],
+      "family": "hair-spiky",
+      "label": {
+        "en": "Spiky hair",
+        "zh-Hans": "尖发",
+        "ms": "Rambut tercacak"
+      },
+      "file": "modules/female-hair-spiky.glb",
+      "status": "verified",
+      "source": "bodies/female/female-hair-spiky.glb",
+      "bytes": 786604,
+      "sha256": "3ce3eec36f64340be262c1f196591d87f66ca1b167365ab95198fa70e58a9345"
+    },
+    {
+      "id": "female-hair-sidepart",
+      "slot": "hair",
+      "bodyIds": [
+        "female"
+      ],
+      "family": "hair-sidepart",
+      "label": {
+        "en": "Side-part hair",
+        "zh-Hans": "偏分发",
+        "ms": "Rambut belah tepi"
+      },
+      "file": "modules/female-hair-sidepart.glb",
+      "status": "verified",
+      "source": "bodies/female/female-hair-sidepart.glb",
+      "bytes": 123804,
+      "sha256": "3a2dca5e1dbc104900c7a2d1e993aec40212bdc9a5b1fcdaa39fd2ec08e352a2"
+    },
+    {
+      "id": "female-shoes-sneakers",
+      "slot": "shoes",
+      "bodyIds": [
+        "female"
+      ],
+      "family": "shoes-sneakers",
+      "label": {
+        "en": "Sneakers",
+        "zh-Hans": "运动鞋",
+        "ms": "Kasut sukan"
+      },
+      "file": "modules/female-shoes-sneakers.glb",
+      "status": "verified",
+      "source": "bodies/female/female-sneakers.glb",
+      "bytes": 182264,
+      "sha256": "9bb2ed393b4b6b94874bb7a012e7d6748b14cd6ef278c804933f8398aec056a1"
+    },
+    {
+      "id": "female-top-tshirt",
+      "slot": "top",
+      "bodyIds": [
+        "female"
+      ],
+      "family": "top-tshirt",
+      "label": {
+        "en": "T-shirt",
+        "zh-Hans": "T恤",
+        "ms": "Baju-T"
+      },
+      "file": "modules/female-top-tshirt.glb",
+      "status": "verified",
+      "source": "bodies/female/round2/female-tshirt-v2.glb",
+      "bytes": 809916,
+      "sha256": "4ef70a987bf59e128616e0577207e2e4ba0d845a6a646711d928be02f72e641d"
+    },
+    {
+      "id": "female-top-dress",
+      "slot": "top",
+      "excludesSlots": [
+        "bottom"
+      ],
+      "bodyIds": [
+        "female"
+      ],
+      "family": "top-dress",
+      "label": {
+        "en": "A-line dress",
+        "zh-Hans": "连衣裙",
+        "ms": "Gaun A-line"
+      },
+      "file": "modules/female-top-dress.glb",
+      "status": "verified",
+      "source": "bodies/female/round2/female-dress-v2.glb",
+      "bytes": 583080,
+      "sha256": "df3dfee402b00b18c0add83a30d31ed20b81714dc2c60e3dcab91a025a9b0296"
+    },
+    {
+      "id": "female-bottom-jeans",
+      "slot": "bottom",
+      "bodyIds": [
+        "female"
+      ],
+      "family": "bottom-jeans",
+      "label": {
+        "en": "Jeans",
+        "zh-Hans": "牛仔裤",
+        "ms": "Seluar jean"
+      },
+      "file": "modules/female-bottom-jeans.glb",
+      "status": "verified",
+      "source": "bodies/female/round3/female-jeans-v3.glb",
+      "bytes": 721684,
+      "sha256": "e1988aecbe6c10e0737ff650f6381ff24f2443e2cd6243e365ed4defe55d0a1b"
     }
   ]
 }

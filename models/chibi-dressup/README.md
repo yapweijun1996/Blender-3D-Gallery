@@ -8,3 +8,7 @@ The gallery route is `?page=chibi-dressup`. It fetches the body, wardrobe, and c
 - To add items, place their self-contained skinned GLBs in `modules/` and update the manifest. Their skin must contain the same unique joint names as the body. The runtime remaps vertex joint indices by name and uses the body skeleton for deformation.
 
 Run the browser smoke test after building with `node scripts/test-chibi-dressup-browser.mjs`. Set `CHIBI_DRESSUP_OFFLINE=1` in an environment that blocks loopback listeners or Chromium child processes. Playwright then serves the build files from disk through request interception and uses software WebGL.
+
+## Bodies
+
+`manifest.json` lists the bodies. The girl body (`bodies/female/`) has its own mesh, motion bank (14 clips, stripped by `scripts/strip-motion-glb.py`), gesture bank and prop sockets (`sockets`: grips, jar stops, shelf and chair placement). Its garments carry `bodyIds: ["female"]` and a `family` shared with the neutral module, so a choice such as the T-shirt follows the visitor to the other body. Known limits: the parcel grip uses the right-hand socket only; the measured finger-closing layer for a tighter two-hand grip is not applied yet, and the girl has no ponytail, boots, skirt, shorts, hightop, sandals or slip-ons yet.

@@ -18,9 +18,10 @@ const finite = (value, length) => Array.isArray(value) && value.length === lengt
   value.every(Number.isFinite);
 const validSockets = value => value === undefined || (isRecord(value) && Object.entries(value).every(([name, item]) =>
   (["hold_item", "hold_box", "hold_bag", "jar"].includes(name) && isRecord(item) &&
-    finite(item.translation, 3) && finite(item.rotation, 4)) ||
-  // The chair is placed per body: translation and scale in glTF metres.
-  (name === "chair" && isRecord(item) && finite(item.translation, 3) && finite(item.scale, 3))));
+    finite(item.translation, 3) && finite(item.rotation, 4) &&
+    ["returnStop", "pickupStop"].every(key => item[key] === undefined || finite(item[key], 3))) ||
+  // The chair and the shelf are placed per body: translation and scale in glTF metres.
+  (["chair", "shelf"].includes(name) && isRecord(item) && finite(item.translation, 3) && finite(item.scale, 3))));
 const isText = value => typeof value === "string" && value.trim().length > 0;
 
 export function validateManifest(manifest) {

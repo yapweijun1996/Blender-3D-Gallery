@@ -72,6 +72,7 @@ try {
   const hand = side => page.locator(`[data-hand="${side}"]`);
   const clip = name => page.locator(`[data-clip="${name}"]`);
   const module = id => page.locator(`[data-module="${id}"]`);
+  const neutralModules = manifest.modules.filter(({ bodyIds }) => !bodyIds);
   const snapshot = () => stage.evaluate(element => element.inspectDressup());
   const ready = () => page.waitForFunction(() =>
     document.querySelector(".dressup-stage[data-state=ready]")?.inspectDressup().triangles > 0);
@@ -99,9 +100,9 @@ try {
   assert.equal(await play.textContent(), "Play");
   assert.equal(await stage.getAttribute("aria-label"), "3D character preview");
   const moduleTriangles = {};
-  for (const { id } of manifest.modules) if (await module(id).getAttribute("aria-pressed") === "true") await module(id).click();
+  for (const { id } of neutralModules) if (await module(id).getAttribute("aria-pressed") === "true") await module(id).click();
   await page.waitForFunction(() => document.querySelector(".dressup-stage").inspectDressup().triangles === 9512);
-  for (const [index, { id }] of manifest.modules.entries()) {
+  for (const [index, { id }] of neutralModules.entries()) {
     if (index === 0) {
       await module(id).focus();
       await page.keyboard.press("Space");
@@ -119,8 +120,8 @@ try {
     }, id);
     assert.equal(await module(id).getAttribute("aria-pressed"), "false");
   }
-  assert.equal(requests.filter(url => /\.glb(?:\?|$)/.test(url)).length, manifest.modules.length + 10, "each module downloads once");
-  const tops = manifest.modules.filter(({ slot }) => slot === "hair");
+  assert.equal(requests.filter(url => /\.glb(?:\?|$)/.test(url)).length, neutralModules.length + 10, "each module downloads once");
+  const tops = neutralModules.filter(({ slot }) => slot === "hair");
   for (const { id } of tops) {
     await module(id).click();
     assert.equal(Object.entries((await snapshot()).modules)
@@ -212,6 +213,48 @@ try {
   const saved = await page.evaluate(key => JSON.parse(localStorage.getItem(key)), STORAGE_KEY);
   assert.equal(saved.modules.hair, selectedTop);
 
+  // The girl body: its own skeleton, clips, modules and prop sockets.
+  const girlModules = manifest.modules.filter(({ bodyIds }) => bodyIds?.includes("female"));
+  await page.locator('[data-body="female"]').click();
+  await page.waitForFunction(() => document.querySelector(".dressup-stage").inspectDressup().body === "female"
+    && !document.querySelector(".dressup-stage").inspectDressup().switching);
+  assert.equal((await snapshot()).joints.length, 65);
+  assert.equal(await page.locator('[data-body="female"]').getAttribute("aria-pressed"), "true");
+  assert.equal(await module(selectedTop).count(), 0, "neutral modules are not offered on the girl body");
+  const girlResults = {};
+  for (const name of CLIPS) {
+    await clip(name).click();
+    const before = await snapshot();
+    await page.waitForFunction(({ name, mixerTime }) => {
+      const state = document.querySelector(".dressup-stage").inspectDressup();
+      return state.clip === name && state.mixerTime > mixerTime + 0.15;
+    }, { name, mixerTime: before.mixerTime });
+    girlResults[name] = (await snapshot()).triangles;
+  }
+  for (const { id } of girlModules) {
+    await module(id).click();
+    await page.waitForFunction(id => document.querySelector(".dressup-stage").inspectDressup().modules[id], id);
+    await module(id).click();
+  }
+  await module("female-top-tshirt").click();
+  await module("female-bottom-jeans").click();
+  await clip("take").click();
+  await page.waitForTimeout(1500);
+  await mkdir(out, { recursive: true });
+  await page.screenshot({ path: path.join(out, "girl-take.png"), fullPage: true });
+  await clip("box").click();
+  await page.waitForTimeout(1200);
+  await page.screenshot({ path: path.join(out, "girl-box.png"), fullPage: true });
+  await clip("sit").click();
+  await page.waitForTimeout(1200);
+  await page.screenshot({ path: path.join(out, "girl-sit.png"), fullPage: true });
+  await module("female-top-tshirt").click();
+  await module("female-bottom-jeans").click();
+  await page.locator('[data-body="neutral"]').click();
+  await page.waitForFunction(() => document.querySelector(".dressup-stage").inspectDressup().body === "neutral"
+    && !document.querySelector(".dressup-stage").inspectDressup().switching);
+  await clip("wave").click();
+
   await mkdir(out, { recursive: true });
   await page.waitForFunction(() => document.querySelector(".dressup-stage").inspectDressup().time > 0.7);
   await play.click();
@@ -252,7 +295,7 @@ try {
 
   console.log(JSON.stringify({
     chromium: browser.version(), glbRequests: { demos: 0, dressup: routeDownloads },
-    moduleTriangles, clipResults, gestureResults, restored: saved, widths,
+    moduleTriangles, clipResults, girlResults, gestureResults, restored: saved, widths,
     consoleErrors: errors.length, reducedMotion: "paused", errorRecovery: "retry recovered",
     screenshots: [path.join(out, "desktop.png"), path.join(out, "mobile.png")],
   }, null, 2));

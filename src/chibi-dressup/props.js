@@ -17,12 +17,12 @@ const JAR = {
 const smoothstep = x => x * x * (3 - 2 * x);
 
 /**
- * `fitted` may override the neutral-body grips per body: { hold_item|hold_box|hold_bag|jar: { translation, rotation }, chair: { translation, scale } }.
+ * `fitted` may override the neutral-body grips per body: { hold_item|hold_box|hold_bag|jar: { translation, rotation }, chair|shelf: { translation, scale }, jar may add returnStop and pickupStop }.
  * Hand bones differ between bodies, so each body brings its own measured sockets.
  */
 export function createProps({ root, hand, chair, cup, box, bag, shelf, fitted = {} }) {
   const sockets = new Map();
-  const grip = { ...JAR, ...fitted.jar };
+  const grip = { ...JAR, ...fitted.jar }; // may also carry returnStop and pickupStop
   for (const [clip, base] of Object.entries(HAND_SOCKETS)) {
     const { prop, translation, rotation } = { ...base, ...fitted[clip] };
     const scene = { cup, box, bag }[prop];
@@ -39,6 +39,10 @@ export function createProps({ root, hand, chair, cup, box, bag, shelf, fitted = 
   }
   root.add(chair);
   shelf.visible = false;
+  if (fitted.shelf) {
+    shelf.position.fromArray(fitted.shelf.translation);
+    shelf.scale.fromArray(fitted.shelf.scale);
+  }
   root.add(shelf);
   const jar = shelf.getObjectByName("Jam_jar") ?? shelf.getObjectByName("Jam jar");
   if (!jar) throw new Error("Shelf prop has no jar");
@@ -54,7 +58,7 @@ export function createProps({ root, hand, chair, cup, box, bag, shelf, fitted = 
     jar.quaternion.set(0, 0, 0, 1);
     const [start, end] = JAR.returnFrames;
     const amount = smoothstep(MathUtils.clamp((frame - start) / (end - start), 0, 1));
-    jar.position.fromArray(JAR.returnStop).lerp({ x: JAR.pickupStop[0], y: JAR.pickupStop[1], z: JAR.pickupStop[2] }, amount);
+    jar.position.fromArray(grip.returnStop).lerp({ x: grip.pickupStop[0], y: grip.pickupStop[1], z: grip.pickupStop[2] }, amount);
   }
 
   return {
@@ -70,6 +74,7 @@ export function createProps({ root, hand, chair, cup, box, bag, shelf, fitted = 
       for (const [name, scene] of sockets) scene.visible = clip === name;
       shelf.visible = clip === "take_item";
       if (shelf.visible) placeJar(Math.floor((time ?? 0) * FPS) % JAR.cycleFrames);
+      else if (jar.parent !== shelf) shelf.add(jar); // A jar taken in the hand does not follow other clips.
     },
   };
 }

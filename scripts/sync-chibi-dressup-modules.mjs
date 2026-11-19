@@ -77,6 +77,41 @@ const candidates = [
     label: { en: "A-line dress", "zh-Hans": "连衣裙", ms: "Gaun A-line" },
     paths: ["studio-modules/dress/round5/dress_v5.glb"],
   },
+  {
+    id: "female-hair-bob", slot: "hair", family: "hair-bob", bodyIds: ["female"],
+    label: { en: "Bob haircut", "zh-Hans": "波波头", ms: "Rambut bob" },
+    paths: ["bodies/female/female-hair-bob.glb"],
+  },
+  {
+    id: "female-hair-spiky", slot: "hair", family: "hair-spiky", bodyIds: ["female"],
+    label: { en: "Spiky hair", "zh-Hans": "尖发", ms: "Rambut tercacak" },
+    paths: ["bodies/female/female-hair-spiky.glb"],
+  },
+  {
+    id: "female-hair-sidepart", slot: "hair", family: "hair-sidepart", bodyIds: ["female"],
+    label: { en: "Side-part hair", "zh-Hans": "偏分发", ms: "Rambut belah tepi" },
+    paths: ["bodies/female/female-hair-sidepart.glb"],
+  },
+  {
+    id: "female-shoes-sneakers", slot: "shoes", family: "shoes-sneakers", bodyIds: ["female"],
+    label: { en: "Sneakers", "zh-Hans": "运动鞋", ms: "Kasut sukan" },
+    paths: ["bodies/female/female-sneakers.glb"],
+  },
+  {
+    id: "female-top-tshirt", slot: "top", family: "top-tshirt", bodyIds: ["female"],
+    label: { en: "T-shirt", "zh-Hans": "T恤", ms: "Baju-T" },
+    paths: ["bodies/female/round2/female-tshirt-v2.glb"],
+  },
+  {
+    id: "female-top-dress", slot: "top", family: "top-dress", bodyIds: ["female"], excludesSlots: ["bottom"],
+    label: { en: "A-line dress", "zh-Hans": "连衣裙", ms: "Gaun A-line" },
+    paths: ["bodies/female/round2/female-dress-v2.glb"],
+  },
+  {
+    id: "female-bottom-jeans", slot: "bottom", family: "bottom-jeans", bodyIds: ["female"],
+    label: { en: "Jeans", "zh-Hans": "牛仔裤", ms: "Seluar jean" },
+    paths: ["bodies/female/round3/female-jeans-v3.glb"],
+  },
   // Not shown yet: cargo pants and bomber jacket (failed review or the motion gate), hoodie.
 ];
 
@@ -93,7 +128,7 @@ async function findSource(paths) {
 
 // Resolve all required inputs before replacing any of the checked-in copies.
 const copies = [];
-for (const { id, slot, label, paths, optional, excludesSlots } of candidates) {
+for (const { id, slot, label, paths, optional, excludesSlots, family, bodyIds } of candidates) {
   const previous = manifest.modules.find(module => module.id === id);
   const input = await findSource(paths);
   if (!input) {
@@ -105,7 +140,7 @@ for (const { id, slot, label, paths, optional, excludesSlots } of candidates) {
   const status = previous?.sha256 === sha256 ? previous.status : "pending";
   copies.push({
     // bodyIds and family are hand-authored manifest fields; keep them across syncs.
-    module: { id, slot, ...(excludesSlots ? { excludesSlots } : {}), ...(previous?.bodyIds ? { bodyIds: previous.bodyIds } : {}), ...(previous?.family ? { family: previous.family } : {}), label, file, status, source: input.source, bytes: input.bytes.length, sha256 },
+    module: { id, slot, ...(excludesSlots ? { excludesSlots } : {}), ...((bodyIds ?? previous?.bodyIds) ? { bodyIds: bodyIds ?? previous.bodyIds } : {}), ...((family ?? previous?.family) ? { family: family ?? previous.family } : {}), label, file, status, source: input.source, bytes: input.bytes.length, sha256 },
     bytes: input.bytes,
   });
 }
