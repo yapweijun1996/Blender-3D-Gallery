@@ -18,6 +18,16 @@ const candidates = [
     paths: ["studio-modules/hair-spiky/hair_spiky_v1.glb"],
   },
   {
+    id: "shoes-sandals", slot: "shoes",
+    label: { en: "Sandals", "zh-Hans": "凉鞋", ms: "Sandal" },
+    paths: ["studio-modules/shoes-sandals/round2/shoes_sandals_v2.glb"],
+  },
+  {
+    id: "shoes-slipons", slot: "shoes",
+    label: { en: "Slip-ons", "zh-Hans": "懒人鞋", ms: "Kasut tanpa tali" },
+    paths: ["studio-modules/shoes-slipons/round2/shoes_slipons_v2.glb"],
+  },
+  {
     id: "hair-sidepart", slot: "hair",
     label: { en: "Side-part hair", "zh-Hans": "偏分发", ms: "Rambut belah tepi" },
     paths: ["studio-modules/hair-sidepart/round3/hair_sidepart_v3.glb"],
