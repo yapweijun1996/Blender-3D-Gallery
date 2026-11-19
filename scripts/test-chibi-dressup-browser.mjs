@@ -125,6 +125,19 @@ try {
       .filter(([id, visible]) => visible && tops.some(top => top.id === id)).length, 1);
   }
 
+  // A dress covers the bottoms: the jeans are hidden and disabled while it is worn, then return.
+  await module("bottom-jeans").click();
+  await module("top-dress").click();
+  await page.waitForFunction(() => {
+    const state = document.querySelector(".dressup-stage").inspectDressup();
+    return state.modules["top-dress"] && !state.modules["bottom-jeans"];
+  });
+  assert.equal(await module("bottom-jeans").isDisabled(), true);
+  await module("top-dress").click();
+  await page.waitForFunction(() => document.querySelector(".dressup-stage").inspectDressup().modules["bottom-jeans"]);
+  assert.equal(await module("bottom-jeans").isDisabled(), false);
+  await module("bottom-jeans").click();
+
   await play.click();
   const clipResults = {};
   for (const name of CLIPS) {

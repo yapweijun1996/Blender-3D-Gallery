@@ -23,6 +23,8 @@ export function validateManifest(manifest) {
         !manifest.slots.includes(module.slot) || typeof module.file !== "string" ||
         !/^modules\/[a-z0-9]+(?:[-_][a-z0-9]+)*\.glb$/.test(module.file) || files.has(module.file) ||
         !isRecord(module.label) || !Object.keys(languages).every(locale => isText(module.label[locale])) ||
+        (module.excludesSlots !== undefined && (!Array.isArray(module.excludesSlots) ||
+          module.excludesSlots.some(slot => !manifest.slots.includes(slot) || slot === module.slot))) ||
         !["verified", "pending"].includes(module.status) ||
         !Number.isSafeInteger(module.bytes) || module.bytes <= 0 ||
         typeof module.sha256 !== "string" || !/^[a-f0-9]{64}$/.test(module.sha256))

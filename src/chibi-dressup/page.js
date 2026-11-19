@@ -93,10 +93,16 @@ export async function mountDressup(root, thumbnail, signal) {
     let playing = !motionPreference.matches;
 
     function renderConfig() {
+      // A selected module can hide whole slots, for example a dress covers the bottoms.
+      const covered = new Set(manifest.modules
+        .filter(({ id, slot }) => config.modules[slot] === id)
+        .flatMap(({ excludesSlots = [] }) => excludesSlots));
       for (const { id, slot } of manifest.modules) {
         const selected = config.modules[slot] === id;
-        moduleButtons.get(id).setAttribute("aria-pressed", String(selected));
-        for (const mesh of modules.get(id)) mesh.visible = selected;
+        const button = moduleButtons.get(id);
+        button.setAttribute("aria-pressed", String(selected));
+        button.disabled = covered.has(slot);
+        for (const mesh of modules.get(id)) mesh.visible = selected && !covered.has(slot);
       }
       for (const [clip, button] of clipButtons)
         button.setAttribute("aria-pressed", String(config.animation === clip));

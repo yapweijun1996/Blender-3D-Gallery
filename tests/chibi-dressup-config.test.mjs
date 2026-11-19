@@ -42,6 +42,8 @@ test("dress-up manifest rejects missing labels, unsafe files and foreign default
     value => { value.modules[0].bytes = "1"; },
     value => { value.modules[0].sha256 = "abc"; },
     value => { value.defaults.top = value.defaults.hair; },
+    value => { value.modules.find(module => module.id === "top-dress").excludesSlots = ["top"]; },
+    value => { value.modules.find(module => module.id === "top-dress").excludesSlots = ["unknown"]; },
   ]) {
     const invalid = structuredClone(manifest);
     change(invalid);

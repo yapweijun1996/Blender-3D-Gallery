@@ -37,7 +37,12 @@ const candidates = [
     label: { en: "Jeans", "zh-Hans": "牛仔裤", ms: "Seluar jean" },
     paths: ["studio-modules/jeans/round3/jeans_v3.glb"],
   },
-  // Not shown yet: dress (needs a slot-exclusion rule), cargo pants and bomber jacket (failed review or the motion gate), hoodie.
+  {
+    id: "top-dress", slot: "top", excludesSlots: ["bottom"],
+    label: { en: "A-line dress", "zh-Hans": "连衣裙", ms: "Gaun A-line" },
+    paths: ["studio-modules/dress/round3/dress_v3.glb"],
+  },
+  // Not shown yet: cargo pants and bomber jacket (failed review or the motion gate), hoodie.
 ];
 
 async function findSource(paths) {
@@ -53,7 +58,7 @@ async function findSource(paths) {
 
 // Resolve all required inputs before replacing any of the checked-in copies.
 const copies = [];
-for (const { id, slot, label, paths, optional } of candidates) {
+for (const { id, slot, label, paths, optional, excludesSlots } of candidates) {
   const previous = manifest.modules.find(module => module.id === id);
   const input = await findSource(paths);
   if (!input) {
@@ -64,7 +69,7 @@ for (const { id, slot, label, paths, optional } of candidates) {
   const sha256 = createHash("sha256").update(input.bytes).digest("hex");
   const status = previous?.sha256 === sha256 ? previous.status : "pending";
   copies.push({
-    module: { id, slot, label, file, status, source: input.source, bytes: input.bytes.length, sha256 },
+    module: { id, slot, ...(excludesSlots ? { excludesSlots } : {}), label, file, status, source: input.source, bytes: input.bytes.length, sha256 },
     bytes: input.bytes,
   });
 }
