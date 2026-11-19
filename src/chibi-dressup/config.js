@@ -3,7 +3,7 @@ import { languages } from "../i18n/preferences.js";
 export const STORAGE_KEY = "b3g:chibi-dressup:v1";
 export const MOTION_CLIPS = ["idle", "walk", "run", "wave", "jump", "nod", "dance"];
 // Sitting plays sit_down, then loops sit_idle; leaving it plays stand_up first. Hold carries the cup.
-export const ACTION_CLIPS = ["sit", "hold"];
+export const ACTION_CLIPS = ["sit", "hold", "box", "bag", "take"];
 export const CLIPS = [...MOTION_CLIPS, ...ACTION_CLIPS];
 export const HANDS = ["L", "R"];
 export const EXPRESSIONS = ["neutral", "happy", "surprised", "sad"];

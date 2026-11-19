@@ -2,6 +2,7 @@ import { AnimationClip, AnimationMixer, LoopOnce, LoopRepeat, PropertyBinding, Q
 import { GESTURES, HANDS, MOTION_CLIPS } from "./config.js";
 
 const ACTION_SOURCE_CLIPS = ["sit_down", "sit_idle", "stand_up", "hold_item"];
+const CARRY_SOURCE_CLIPS = ["hold_box", "hold_bag", "take_item"];
 const BLEND_SECONDS = 0.3;
 const ONE_SHOT = new Set(["sit_down", "stand_up"]);
 
@@ -137,13 +138,14 @@ export function bindModule(model, scene, bodySkeleton) {
   return meshes;
 }
 
-export function createRig(model, skeleton, motion, handClips, actions) {
+export function createRig(model, skeleton, motion, handClips, actions, carryActions) {
   model.updateMatrixWorld(true);
   const bones = skeleton.bones;
   const rest = bones.map(bone => bone.quaternion.toArray());
   const animations = new Map([
     ...retargetMotion(motion, bones, MOTION_CLIPS, true),
     ...retargetMotion(actions, bones, ACTION_SOURCE_CLIPS, false),
+    ...retargetMotion(carryActions, bones, CARRY_SOURCE_CLIPS, false),
   ]);
   const gestures = readGestures(handClips, bones);
   const mixer = new AnimationMixer(model);
@@ -163,6 +165,9 @@ export function createRig(model, skeleton, motion, handClips, actions) {
   function plan(name, from) {
     if (name === "sit") return ["sit_down", "sit_idle"];
     if (name === "hold") return ["hold_item"];
+    if (name === "box") return ["hold_box"];
+    if (name === "bag") return ["hold_bag"];
+    if (name === "take") return ["take_item"];
     return from === "sit" ? ["stand_up", name] : [name];
   }
   mixer.addEventListener("finished", event => {
@@ -183,6 +188,7 @@ export function createRig(model, skeleton, motion, handClips, actions) {
     },
     /** The clip that is actually playing, for example sit_idle while the "sit" choice is active. */
     get current() { return action?.getClip().name; },
+    get time() { return action?.time; },
     update(delta, hands) {
       // Restore the last mixer sample first, even when playback is paused.
       // The mixer can skip writes whose interpolated value has not changed.

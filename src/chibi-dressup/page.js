@@ -5,9 +5,14 @@ import poseUrl from "../../models/chibi-dressup/hand_gestures.glb?url";
 import actionsUrl from "../../models/chibi-dressup/actions.glb?url";
 import chairUrl from "../../models/chibi-dressup/props/chair.glb?url";
 import cupUrl from "../../models/chibi-dressup/props/cup.glb?url";
+import carryUrl from "../../models/chibi-dressup/hold_actions.glb?url";
+import boxUrl from "../../models/chibi-dressup/props/box.glb?url";
+import bagUrl from "../../models/chibi-dressup/props/bag.glb?url";
+import shelfUrl from "../../models/chibi-dressup/props/shelf_item.glb?url";
 import manifestData from "../../models/chibi-dressup/manifest.json";
 import { CLIPS, EXPRESSIONS, GESTURES, HANDS, loadConfig, saveConfig, validateManifest } from "./config.js";
 import { createExpressionController } from "./expression.js";
+import { createProps } from "./props.js";
 import { bindModule, createRig } from "./rig.js";
 import { createView, disposeModels, getBounds, loadModels } from "./view.js";
 import "./style.css";
@@ -76,8 +81,8 @@ export async function mountDressup(root, thumbnail, signal) {
   };
 
   try {
-    const [body, motion, gestures, actions, chair, cup, ...models] = await loadModels([
-      bodyUrl, motionUrl, poseUrl, actionsUrl, chairUrl, cupUrl,
+    const [body, motion, gestures, actions, chair, cup, carry, box, bag, shelf, ...models] = await loadModels([
+      bodyUrl, motionUrl, poseUrl, actionsUrl, chairUrl, cupUrl, carryUrl, boxUrl, bagUrl, shelfUrl,
       ...manifest.modules.map(({ file }) => {
         const url = moduleUrls[`../../models/chibi-dressup/${file}`];
         if (!url) throw new Error(`Unknown dress-up module file: ${file}`);
@@ -99,20 +104,14 @@ export async function mountDressup(root, thumbnail, signal) {
       module.id, bindModule(body.scene, models[index].scene, skeleton),
     ]));
     face = createExpressionController(body.scene, expressionUrls);
-    rig = createRig(body.scene, skeleton, motion, gestures.animations, actions);
-    // Props: the chair stays on the floor at the origin, the cup rides in the right hand.
-    chair.scene.visible = false;
-    body.scene.add(chair.scene);
+    rig = createRig(body.scene, skeleton, motion, gestures.animations, actions, carry);
+    // Props: the chair stays on the floor at the origin; hand props ride in the right hand.
     const hand = skeleton.bones.find(bone => bone.name === "mixamorigRightHand");
     if (!hand) throw new Error("Body has no right hand");
-    cup.scene.visible = false;
-    cup.scene.position.set(0.02593084, 0.02887651, 0.03611905);
-    cup.scene.quaternion.set(0.27544212, 0.76551259, -0.46392176, 0.35056925);
-    hand.add(cup.scene);
-    const syncProps = () => {
-      chair.scene.visible = ["sit_down", "sit_idle", "stand_up"].includes(rig.current);
-      cup.scene.visible = rig.current === "hold_item";
-    };
+    const props = createProps({
+      root: body.scene, hand, chair: chair.scene, cup: cup.scene, box: box.scene, bag: bag.scene, shelf: shelf.scene,
+    });
+    const syncProps = () => props.sync(rig.current, rig.time);
     rig.select(config.animation);
 
     const moduleButtons = new Map();
