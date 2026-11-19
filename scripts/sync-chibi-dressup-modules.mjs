@@ -18,6 +18,21 @@ const candidates = [
     paths: ["studio-modules/hair-spiky/hair_spiky_v1.glb"],
   },
   {
+    id: "hair-ponytail", slot: "hair",
+    label: { en: "High ponytail", "zh-Hans": "高马尾", ms: "Ekor kuda tinggi" },
+    paths: ["studio-modules/hair-ponytail/round1/hair_ponytail_v1.glb"],
+  },
+  {
+    id: "shoes-boots", slot: "shoes",
+    label: { en: "Boots", "zh-Hans": "靴子", ms: "But" },
+    paths: ["studio-modules/shoes-boots/round3/shoes_boots_v3.glb"],
+  },
+  {
+    id: "bottom-shorts", slot: "bottom",
+    label: { en: "Shorts", "zh-Hans": "短裤", ms: "Seluar pendek" },
+    paths: ["studio-modules/shorts/round1/shorts_v1.glb"],
+  },
+  {
     id: "shoes-hightop", slot: "shoes",
     label: { en: "High-tops", "zh-Hans": "高帮鞋", ms: "Kasut tinggi" },
     paths: ["studio-modules/shoes-hightop/round2/shoes_hightop_v2.glb"],
