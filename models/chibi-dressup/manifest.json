@@ -7,8 +7,26 @@
     "shoes",
     "hat"
   ],
+  "bodies": [
+    {
+      "id": "neutral",
+      "label": {
+        "en": "Chibi",
+        "zh-Hans": "Q版",
+        "ms": "Chibi"
+      },
+      "body": "base_body.glb",
+      "motion": [
+        "motion-clips.glb",
+        "actions.glb",
+        "hold_actions.glb"
+      ],
+      "gestures": "hand_gestures.glb"
+    }
+  ],
   "defaults": {
-    "hair": "hair-bob"
+    "hair": "hair-bob",
+    "body": "neutral"
   },
   "modules": [
     {

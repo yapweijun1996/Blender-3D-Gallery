@@ -16,9 +16,15 @@ const JAR = {
 };
 const smoothstep = x => x * x * (3 - 2 * x);
 
-export function createProps({ root, hand, chair, cup, box, bag, shelf }) {
+/**
+ * `fitted` may override the neutral-body grips per body: { hold_item|hold_box|hold_bag|jar: { translation, rotation } }.
+ * Hand bones differ between bodies, so each body brings its own measured sockets.
+ */
+export function createProps({ root, hand, chair, cup, box, bag, shelf, fitted = {} }) {
   const sockets = new Map();
-  for (const [clip, { prop, translation, rotation }] of Object.entries(HAND_SOCKETS)) {
+  const grip = { ...JAR, ...fitted.jar };
+  for (const [clip, base] of Object.entries(HAND_SOCKETS)) {
+    const { prop, translation, rotation } = { ...base, ...fitted[clip] };
     const scene = { cup, box, bag }[prop];
     scene.visible = false;
     scene.position.fromArray(translation);
@@ -36,8 +42,8 @@ export function createProps({ root, hand, chair, cup, box, bag, shelf }) {
   function placeJar(frame) {
     if (frame >= JAR.attachFrame) {
       if (jar.parent !== hand) hand.add(jar);
-      jar.position.fromArray(JAR.translation);
-      jar.quaternion.fromArray(JAR.rotation);
+      jar.position.fromArray(grip.translation);
+      jar.quaternion.fromArray(grip.rotation);
       return;
     }
     if (jar.parent !== shelf) shelf.add(jar);
@@ -48,6 +54,12 @@ export function createProps({ root, hand, chair, cup, box, bag, shelf }) {
   }
 
   return {
+    /** Remove the props from this body so another body can carry them; the shared models stay loaded. */
+    detach() {
+      for (const scene of [...sockets.values(), chair, shelf, jar]) scene.parent?.remove(scene);
+      shelf.add(jar); // The jar goes back to its shelf so the next body finds it there.
+      for (const scene of [...sockets.values(), chair, shelf]) scene.visible = false;
+    },
     /** Show the props that belong to the clip that is playing and move the shelf jar. */
     sync(clip, time) {
       chair.visible = SEAT_CLIPS.has(clip);

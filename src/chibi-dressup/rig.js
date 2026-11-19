@@ -1,8 +1,7 @@
 import { AnimationClip, AnimationMixer, LoopOnce, LoopRepeat, PropertyBinding, Quaternion } from "three";
 import { GESTURES, HANDS, MOTION_CLIPS } from "./config.js";
 
-const ACTION_SOURCE_CLIPS = ["sit_down", "sit_idle", "stand_up", "hold_item"];
-const CARRY_SOURCE_CLIPS = ["hold_box", "hold_bag", "take_item"];
+const ACTION_SOURCE_CLIPS = ["sit_down", "sit_idle", "stand_up", "hold_item", "hold_box", "hold_bag", "take_item"];
 const BLEND_SECONDS = 0.3;
 const ONE_SHOT = new Set(["sit_down", "stand_up"]);
 
@@ -138,15 +137,22 @@ export function bindModule(model, scene, bodySkeleton) {
   return meshes;
 }
 
-export function createRig(model, skeleton, motion, handClips, actions, carryActions) {
+/**
+ * `sources` are the loaded motion GLBs of the chosen body (one file with all fourteen clips or several).
+ * Shared locomotion clips stay in place; authored actions keep their own hip, leg and scale tracks.
+ */
+export function createRig(model, skeleton, sources, handClips) {
   model.updateMatrixWorld(true);
   const bones = skeleton.bones;
   const rest = bones.map(bone => bone.quaternion.toArray());
-  const animations = new Map([
-    ...retargetMotion(motion, bones, MOTION_CLIPS, true),
-    ...retargetMotion(actions, bones, ACTION_SOURCE_CLIPS, false),
-    ...retargetMotion(carryActions, bones, CARRY_SOURCE_CLIPS, false),
-  ]);
+  const animations = new Map();
+  for (const source of sources) {
+    const has = names => names.filter(name => AnimationClip.findByName(source.animations, name));
+    for (const [name, clip] of retargetMotion(source, bones, has(MOTION_CLIPS), true)) animations.set(name, clip);
+    for (const [name, clip] of retargetMotion(source, bones, has(ACTION_SOURCE_CLIPS), false)) animations.set(name, clip);
+  }
+  for (const name of [...MOTION_CLIPS, ...ACTION_SOURCE_CLIPS])
+    if (!animations.has(name)) throw new Error(`Missing motion clip ${name}`);
   const gestures = readGestures(handClips, bones);
   const mixer = new AnimationMixer(model);
   let action;
