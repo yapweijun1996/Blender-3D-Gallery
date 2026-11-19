@@ -147,6 +147,16 @@ const candidates = [
     label: { en: "Jeans", "zh-Hans": "牛仔裤", ms: "Seluar jean" },
     paths: ["bodies/male/round3/male-jeans-v3.glb"],
   },
+  {
+    id: "female-hair-ponytail", slot: "hair", family: "hair-ponytail", bodyIds: ["female"],
+    label: { en: "High ponytail", "zh-Hans": "高马尾", ms: "Ekor kuda tinggi" },
+    paths: ["bodies/female/wardrobe2/hair-ponytail.glb"],
+  },
+  {
+    id: "male-shoes-sandals", slot: "shoes", family: "shoes-sandals", bodyIds: ["male"],
+    label: { en: "Sandals", "zh-Hans": "凉鞋", ms: "Sandal" },
+    paths: ["bodies/male/wardrobe2/shoes-sandals.glb"],
+  },
   // Not shown yet: cargo pants and bomber jacket (failed review or the motion gate), hoodie.
 ];
 
