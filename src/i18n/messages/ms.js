@@ -64,6 +64,7 @@ export default {
   "category.vehicles": "Kenderaan",
   "clip.carry": "Bawa",
   "clip.dance": "Tari",
+  "clip.hold": "Pegang cawan",
   "clip.idle": "Rehat",
   "clip.jump": "Lompat",
   "clip.nod": "Angguk",

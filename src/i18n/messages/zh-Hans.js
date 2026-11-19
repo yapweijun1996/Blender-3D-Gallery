@@ -64,6 +64,7 @@ export default {
   "category.vehicles": "车辆",
   "clip.carry": "搬运",
   "clip.dance": "跳舞",
+  "clip.hold": "拿杯子",
   "clip.idle": "待机",
   "clip.jump": "跳跃",
   "clip.nod": "点头",

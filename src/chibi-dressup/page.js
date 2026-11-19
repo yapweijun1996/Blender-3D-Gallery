@@ -2,6 +2,9 @@ import { getLanguage, localize, mountMarkup, onLanguageChange } from "../i18n/in
 import bodyUrl from "../../models/chibi-dressup/base_body.glb?url";
 import motionUrl from "../../models/chibi-dressup/motion-clips.glb?url";
 import poseUrl from "../../models/chibi-dressup/hand_gestures.glb?url";
+import actionsUrl from "../../models/chibi-dressup/actions.glb?url";
+import chairUrl from "../../models/chibi-dressup/props/chair.glb?url";
+import cupUrl from "../../models/chibi-dressup/props/cup.glb?url";
 import manifestData from "../../models/chibi-dressup/manifest.json";
 import { CLIPS, EXPRESSIONS, GESTURES, HANDS, loadConfig, saveConfig, validateManifest } from "./config.js";
 import { createExpressionController } from "./expression.js";
@@ -73,8 +76,8 @@ export async function mountDressup(root, thumbnail, signal) {
   };
 
   try {
-    const [body, motion, gestures, ...models] = await loadModels([
-      bodyUrl, motionUrl, poseUrl,
+    const [body, motion, gestures, actions, chair, cup, ...models] = await loadModels([
+      bodyUrl, motionUrl, poseUrl, actionsUrl, chairUrl, cupUrl,
       ...manifest.modules.map(({ file }) => {
         const url = moduleUrls[`../../models/chibi-dressup/${file}`];
         if (!url) throw new Error(`Unknown dress-up module file: ${file}`);
@@ -96,7 +99,20 @@ export async function mountDressup(root, thumbnail, signal) {
       module.id, bindModule(body.scene, models[index].scene, skeleton),
     ]));
     face = createExpressionController(body.scene, expressionUrls);
-    rig = createRig(body.scene, skeleton, motion, gestures.animations);
+    rig = createRig(body.scene, skeleton, motion, gestures.animations, actions);
+    // Props: the chair stays on the floor at the origin, the cup rides in the right hand.
+    chair.scene.visible = false;
+    body.scene.add(chair.scene);
+    const hand = skeleton.bones.find(bone => bone.name === "mixamorigRightHand");
+    if (!hand) throw new Error("Body has no right hand");
+    cup.scene.visible = false;
+    cup.scene.position.set(0.02593084, 0.02887651, 0.03611905);
+    cup.scene.quaternion.set(0.27544212, 0.76551259, -0.46392176, 0.35056925);
+    hand.add(cup.scene);
+    const syncProps = () => {
+      chair.scene.visible = ["sit_down", "sit_idle", "stand_up"].includes(rig.current);
+      cup.scene.visible = rig.current === "hold_item";
+    };
     rig.select(config.animation);
 
     const moduleButtons = new Map();
@@ -122,6 +138,7 @@ export async function mountDressup(root, thumbnail, signal) {
         button.setAttribute("aria-pressed", String(config.animation === clip));
       localize(playButton, playing ? "common.pause" : "common.play");
       rig.update(0, config.hands);
+      syncProps();
       view.setPlaying(playing);
       view.invalidate();
     }
@@ -219,7 +236,10 @@ export async function mountDressup(root, thumbnail, signal) {
       hands.append(label);
     }
 
-    view = createView(stage, body.scene, bounds, delta => rig.update(delta, config.hands));
+    view = createView(stage, body.scene, bounds, delta => {
+      rig.update(delta, config.hands);
+      syncProps();
+    });
     renderConfig();
     // The browser smoke test samples the rendered rig without changing playback.
     stage.inspectDressup = () => ({

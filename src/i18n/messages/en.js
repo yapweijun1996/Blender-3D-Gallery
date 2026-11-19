@@ -74,6 +74,7 @@ export default {
   "category.vehicles": "Vehicles",
   "clip.carry": "Carry",
   "clip.dance": "Dance",
+  "clip.hold": "Hold a cup",
   "clip.idle": "Idle",
   "clip.jump": "Jump",
   "clip.nod": "Nod",

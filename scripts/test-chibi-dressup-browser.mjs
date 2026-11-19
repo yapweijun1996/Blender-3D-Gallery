@@ -90,7 +90,7 @@ try {
   bodyDelay = null;
   await ready();
   const routeDownloads = requests.filter(url => /\.glb(?:\?|$)/.test(url)).length;
-  assert.equal(routeDownloads, manifest.modules.length + 3);
+  assert.equal(routeDownloads, manifest.modules.length + 6);
   assert.equal((await snapshot()).joints.length, 65);
 
   await play.focus();

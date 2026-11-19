@@ -1,5 +1,9 @@
-import { AnimationClip, AnimationMixer, PropertyBinding, Quaternion } from "three";
-import { CLIPS, GESTURES, HANDS } from "./config.js";
+import { AnimationClip, AnimationMixer, LoopOnce, LoopRepeat, PropertyBinding, Quaternion } from "three";
+import { GESTURES, HANDS, MOTION_CLIPS } from "./config.js";
+
+const ACTION_SOURCE_CLIPS = ["sit_down", "sit_idle", "stand_up", "hold_item"];
+const BLEND_SECONDS = 0.3;
+const ONE_SHOT = new Set(["sit_down", "stand_up"]);
 
 const hips = "mixamorigHips";
 const digits = {
@@ -8,7 +12,7 @@ const digits = {
 };
 const targetTrack = (bone, property) => `${bone.uuid}.${property}`;
 
-function retargetMotion(source, bones) {
+function retargetMotion(source, bones, names, inPlace) {
   const rest = new Map();
   source.scene.updateMatrixWorld(true);
   for (const bone of bones) {
@@ -21,10 +25,11 @@ function retargetMotion(source, bones) {
       sourceToTargetInverse: sourceToTarget.clone().invert(),
       toTargetLocal: bone.quaternion.clone().multiply(sourceToTarget).multiply(original.quaternion.clone().invert()),
       sourceHeight: original.position.y,
+      sourcePosition: original.position.clone(),
     });
   }
   const quaternion = new Quaternion();
-  return new Map(CLIPS.map(name => {
+  return new Map(names.map(name => {
     const clip = AnimationClip.findByName(source.animations, name);
     if (!clip || !(clip.duration > 0)) throw new Error(`Missing motion clip ${name}`);
     const tracks = [];
@@ -41,7 +46,21 @@ function retargetMotion(source, bones) {
             .multiply(joint.sourceToTargetInverse).normalize().toArray(rotation.values, index);
         }
         tracks.push(rotation);
-      } else if (nodeName === hips && propertyName === "position") {
+      } else if (!inPlace && propertyName === "position") {
+        // Authored actions move bones for real (hips back and down onto a chair, shins when seated).
+        const position = track.clone();
+        position.name = targetTrack(joint.bone, "position");
+        for (let index = 0; index < position.values.length; index += 3) {
+          position.values[index] += joint.bone.position.x - joint.sourcePosition.x;
+          position.values[index + 1] += joint.bone.position.y - joint.sourcePosition.y;
+          position.values[index + 2] += joint.bone.position.z - joint.sourcePosition.z;
+        }
+        tracks.push(position);
+      } else if (!inPlace && propertyName === "scale") {
+        const scale = track.clone();
+        scale.name = targetTrack(joint.bone, "scale");
+        tracks.push(scale);
+      } else if (inPlace && nodeName === hips && propertyName === "position") {
         const position = track.clone();
         position.name = targetTrack(joint.bone, "position");
         const { x, y, z } = joint.bone.position;
@@ -118,15 +137,37 @@ export function bindModule(model, scene, bodySkeleton) {
   return meshes;
 }
 
-export function createRig(model, skeleton, motion, handClips) {
+export function createRig(model, skeleton, motion, handClips, actions) {
   model.updateMatrixWorld(true);
   const bones = skeleton.bones;
   const rest = bones.map(bone => bone.quaternion.toArray());
-  const animations = retargetMotion(motion, bones);
+  const animations = new Map([
+    ...retargetMotion(motion, bones, MOTION_CLIPS, true),
+    ...retargetMotion(actions, bones, ACTION_SOURCE_CLIPS, false),
+  ]);
   const gestures = readGestures(handClips, bones);
   const mixer = new AnimationMixer(model);
   let action;
+  let logical;
+  let queue = [];
   let overridden = [];
+
+  function start(clipName) {
+    const next = mixer.clipAction(animations.get(clipName)).reset();
+    next.setLoop(ONE_SHOT.has(clipName) ? LoopOnce : LoopRepeat, Infinity);
+    next.clampWhenFinished = ONE_SHOT.has(clipName);
+    next.play();
+    if (action && action !== next) next.crossFadeFrom(action, BLEND_SECONDS, false);
+    action = next;
+  }
+  function plan(name, from) {
+    if (name === "sit") return ["sit_down", "sit_idle"];
+    if (name === "hold") return ["hold_item"];
+    return from === "sit" ? ["stand_up", name] : [name];
+  }
+  mixer.addEventListener("finished", event => {
+    if (event.action === action && queue.length) start(queue.shift());
+  });
 
   function restoreFingers() {
     for (const { bone, baseline } of overridden) bone.quaternion.copy(baseline);
@@ -136,9 +177,12 @@ export function createRig(model, skeleton, motion, handClips) {
   return {
     select(name) {
       restoreFingers();
-      mixer.stopAllAction();
-      action = mixer.clipAction(animations.get(name)).reset().play();
+      queue = plan(name, logical);
+      logical = name;
+      start(queue.shift());
     },
+    /** The clip that is actually playing, for example sit_idle while the "sit" choice is active. */
+    get current() { return action?.getClip().name; },
     update(delta, hands) {
       // Restore the last mixer sample first, even when playback is paused.
       // The mixer can skip writes whose interpolated value has not changed.
@@ -156,7 +200,7 @@ export function createRig(model, skeleton, motion, handClips) {
     },
     inspect() {
       return {
-        clip: action?.getClip().name, time: action?.time, mixerTime: mixer.time,
+        clip: logical, playing: action?.getClip().name, time: action?.time, mixerTime: mixer.time,
         joints: bones.map((bone, index) => ({ name: bone.name, rest: rest[index], rotation: bone.quaternion.toArray() })),
       };
     },
