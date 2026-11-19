@@ -90,7 +90,8 @@ try {
   bodyDelay = null;
   await ready();
   const routeDownloads = requests.filter(url => /\.glb(?:\?|$)/.test(url)).length;
-  assert.equal(routeDownloads, manifest.modules.length + 10);
+  // Only the worn modules download with the character; the rest wait until they are chosen.
+  assert.equal(routeDownloads, 10 + 1);
   assert.equal((await snapshot()).joints.length, 65);
 
   await play.focus();
@@ -118,6 +119,7 @@ try {
     }, id);
     assert.equal(await module(id).getAttribute("aria-pressed"), "false");
   }
+  assert.equal(requests.filter(url => /\.glb(?:\?|$)/.test(url)).length, manifest.modules.length + 10, "each module downloads once");
   const tops = manifest.modules.filter(({ slot }) => slot === "hair");
   for (const { id } of tops) {
     await module(id).click();

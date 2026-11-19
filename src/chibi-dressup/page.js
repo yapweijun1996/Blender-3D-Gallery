@@ -119,7 +119,8 @@ export async function mountDressup(root, thumbnail, signal) {
       const button = moduleButtons.get(id);
       button.setAttribute("aria-pressed", String(selected));
       button.disabled = covered.has(slot);
-      for (const mesh of character.modules.get(id)) mesh.visible = selected && !covered.has(slot);
+      // A module that has not been downloaded yet has nothing to show.
+      for (const mesh of character.modules.get(id) ?? []) mesh.visible = selected && !covered.has(slot);
     }
     for (const [name, button] of bodyButtons) button.setAttribute("aria-pressed", String(config.body === name));
     for (const [name, button] of expressionButtons)
@@ -162,10 +163,7 @@ export async function mountDressup(root, thumbnail, signal) {
       label.setAttribute("aria-hidden", "true");
       group.append(label);
       for (const module of choices) {
-        const button = activate(document.createElement("button"), () => {
-          config.modules[slot] = config.modules[slot] === module.id ? null : module.id;
-          applyConfig();
-        });
+        const button = activate(document.createElement("button"), () => void chooseModule(slot, module));
         button.dataset.module = module.id;
         moduleButtons.set(module.id, button);
         group.append(button);
@@ -175,15 +173,56 @@ export async function mountDressup(root, thumbnail, signal) {
     translateModules();
   }
 
+  // Modules download the first time they are worn; the body and the worn modules load with the character.
+  async function ensureModule(module) {
+    const current = character;
+    if (current.modules.has(module.id)) return;
+    let pending = current.pending.get(module.id);
+    if (!pending) {
+      pending = (async () => {
+        const [gltf] = await loadModels([assetUrl(module.file)], signal, current.scenes);
+        signal.throwIfAborted();
+        if (character === current) current.modules.set(module.id, bindModule(current.body.scene, gltf.scene, current.skeleton));
+      })().finally(() => current.pending.delete(module.id));
+      current.pending.set(module.id, pending);
+    }
+    await pending;
+  }
+
+  async function chooseModule(slot, module) {
+    const previous = config.modules[slot];
+    config.modules[slot] = previous === module.id ? null : module.id;
+    if (config.modules[slot] === module.id && !character.modules.has(module.id)) {
+      const button = moduleButtons.get(module.id);
+      button.setAttribute("aria-busy", "true");
+      const current = character;
+      try {
+        await ensureModule(module);
+      } catch (error) {
+        if (signal.aborted) return;
+        console.error("Dress-up module failed to load", error);
+        if (character === current && config.modules[slot] === module.id) config.modules[slot] = previous;
+        if (character === current) renderConfig();
+        return;
+      } finally {
+        button.removeAttribute("aria-busy");
+      }
+      // The visitor changed body or slot while the file downloaded.
+      if (character !== current || config.modules[slot] !== module.id) return;
+    }
+    applyConfig();
+  }
+
   async function buildCharacter(bodyId) {
     const spec = manifest.bodies.find(item => item.id === bodyId);
     const fitting = manifest.modules.filter(module => fitsBody(module, bodyId, manifest));
     const incoming = new Set();
+    const worn = fitting.filter(({ id, slot }) => config.modules[slot] === id);
     let loaded;
     try {
       loaded = await loadModels([
         assetUrl(spec.body), assetUrl(spec.gestures), ...spec.motion.map(assetUrl),
-        ...fitting.map(({ file }) => assetUrl(file)),
+        ...worn.map(({ file }) => assetUrl(file)),
       ], signal, incoming);
       signal.throwIfAborted();
     } catch (error) {
@@ -204,7 +243,7 @@ export async function mountDressup(root, thumbnail, signal) {
     });
     if (!skeleton) throw new Error("Body has no skeleton");
     const bounds = getBounds(body.scene);
-    const modules = new Map(fitting.map((module, index) => [
+    const modules = new Map(worn.map((module, index) => [
       module.id, bindModule(body.scene, models[index].scene, skeleton),
     ]));
     try { face = createExpressionController(body.scene, expressionUrls); } catch { face = null; }
@@ -218,7 +257,7 @@ export async function mountDressup(root, thumbnail, signal) {
       bag: shared.bag.scene, shelf: shared.shelf.scene, fitted: spec.sockets,
     });
     rig.select(config.animation);
-    character = { body, modules, fitting };
+    character = { body, skeleton, modules, fitting, scenes: incoming, pending: new Map() };
     buildWardrobe();
     face?.set(config.expression).catch(() => {});
     view = createView(stage, body.scene, bounds, delta => {
