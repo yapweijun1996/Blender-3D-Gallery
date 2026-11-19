@@ -18,6 +18,11 @@ const candidates = [
     paths: ["studio-modules/hair-spiky/hair_spiky_v1.glb"],
   },
   {
+    id: "shoes-hightop", slot: "shoes",
+    label: { en: "High-tops", "zh-Hans": "高帮鞋", ms: "Kasut tinggi" },
+    paths: ["studio-modules/shoes-hightop/round2/shoes_hightop_v2.glb"],
+  },
+  {
     id: "shoes-sandals", slot: "shoes",
     label: { en: "Sandals", "zh-Hans": "凉鞋", ms: "Sandal" },
     paths: ["studio-modules/shoes-sandals/round2/shoes_sandals_v2.glb"],
