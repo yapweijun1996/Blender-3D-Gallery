@@ -28,6 +28,11 @@ const candidates = [
     paths: ["studio-modules/shoes-boots/round3/shoes_boots_v3.glb"],
   },
   {
+    id: "bottom-skirt", slot: "bottom",
+    label: { en: "Pleated skirt", "zh-Hans": "百褶裙", ms: "Skirt berlipat" },
+    paths: ["studio-modules/skirt/round1/skirt_v1.glb"],
+  },
+  {
     id: "bottom-shorts", slot: "bottom",
     label: { en: "Shorts", "zh-Hans": "短裤", ms: "Seluar pendek" },
     paths: ["studio-modules/shorts/round1/shorts_v1.glb"],
