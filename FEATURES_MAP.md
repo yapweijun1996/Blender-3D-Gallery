@@ -89,4 +89,6 @@ See `package.json` for exact script composition and `docs/` plus `progress.md` a
 
 ## Where to read next
 
+Per-module logic (API, data flow, state, lifecycle, tests, gaps): [shell and viewer](docs/modules/shell-viewer.md), [demos, game and PWA](docs/modules/demos-game-pwa.md), [chibi and animation](docs/modules/chibi-animation.md).
+
 `docs/architecture.md`, `docs/gallery-information-architecture.md`, `docs/game-implementation-plan.md`, `docs/chibi-dressup-spec.md`, `docs/chibi-dressup-progress.md`, `docs/i18n.md`, `docs/deployment.md`, `docs/assets.md`.
