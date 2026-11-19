@@ -1,6 +1,7 @@
 import { localize, mountMarkup, t } from "../i18n/index.js";
 import { copyError, workerErrorKey } from "./copy.js";
 import { createUpdateUi } from "./update-ui.js";
+import { classifyUpdate } from "./update-state.js";
 
 const REQUEST_TIMEOUT = 12000,
   ACTIVATION_TIMEOUT = 15000;
@@ -338,6 +339,48 @@ export function setupPwa(getGame) {
     ui.show("error", key);
     positionNotice();
   };
+  // The waiting worker an update prompt offered can vanish: another tab activated it, the browser
+  // discarded it or it became redundant. Re-read the registration and the published build instead
+  // of leaving a prompt that can never succeed.
+  async function reconcileUpdate() {
+    try { if (navigator.onLine) await registration?.update(); } catch { /* Offline or blocked: use what is known. */ }
+    let latestVersion = null;
+    try {
+      const response = await fetch(new URL("build-info.json", registration?.scope ?? location.href), {
+        cache: "no-store", signal: AbortSignal.timeout?.(REQUEST_TIMEOUT),
+      });
+      if (response.ok && !response.redirected) latestVersion = (await response.json())?.version ?? null;
+    } catch { /* The version label is optional; "unknown" keeps the retry prompt. */ }
+    return classifyUpdate({ waiting: registration?.waiting, pageVersion: __APP_VERSION__, latestVersion });
+  }
+  function settleUpToDate() {
+    clearTimeout(flow?.timer);
+    flow = null;
+    offeredWorker = undefined;
+    action.disabled = later.disabled = false;
+    notice.hidden = true;
+    ui.close();
+    publish({ update: "idle", updateReady: false, updateVersion: null, error: null });
+    positionNotice();
+  }
+  function offerReload() {
+    controllerChanged = true;
+    localize(message, "pwa.reloadOffer");
+    localize(action, "pwa.reloadSaved");
+    action.disabled = later.disabled = false;
+    notice.hidden = false;
+    publish({ update: "available", updateReady: true, error: null });
+    positionNotice();
+  }
+  // Heal a visible prompt whose worker is gone when the tab returns, comes back online or is shown again.
+  async function healNotice() {
+    if (!supported || notice.hidden || flow || reloaded || remoteLocks.size || controllerChanged || registration?.waiting) return;
+    const outcome = await reconcileUpdate();
+    if (flow || reloaded || notice.hidden) return;
+    if (outcome === "current") settleUpToDate();
+    else if (outcome === "stale") offerReload();
+    else if (outcome === "waiting") showUpdate();
+  }
   async function beginUpdate() {
     if (flow || reloaded || remoteLocks.size) return;
     const current = {
@@ -364,8 +407,14 @@ export function setupPwa(getGame) {
     await new Promise((resolve) => requestAnimationFrame(resolve));
     try {
       if (flow !== current) return;
-      if (!current.worker && !controllerChanged)
-        throw copyError("pwa.noWaitingUpdate");
+      if (!current.worker && !controllerChanged) {
+        const outcome = await reconcileUpdate();
+        if (flow !== current) return;
+        if (outcome === "waiting") current.worker = registration.waiting;
+        else if (outcome === "current") { settleUpToDate(); return; }
+        else if (outcome === "stale") controllerChanged = true;
+        else throw copyError("pwa.noWaitingUpdate");
+      }
       const game = getGame();
       if (game && !(await game.prepareUpdate()))
         throw copyError("pwa.finishShot");
@@ -546,8 +595,10 @@ export function setupPwa(getGame) {
     };
     void register();
     document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) void checkForUpdate();
+      if (!document.hidden) { void checkForUpdate(); void healNotice(); }
     });
+    window.addEventListener("pageshow", () => void healNotice());
+    window.addEventListener("online", () => void healNotice());
   }
   return { beginUpdate, checkForUpdate, getState: () => state };
 }

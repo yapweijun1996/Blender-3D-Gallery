@@ -56,7 +56,7 @@ export async function mountMotion(root, asset, signal, {
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     renderer.setClearColor(0xeeeaf1);
     stage.append(renderer.domElement);
-    const camera = new THREE.PerspectiveCamera(32, 1, .01, 20);
+    const camera = new THREE.PerspectiveCamera(32, 1, .1, 20);
     camera.position.set(...cameraPosition);
     controls = new OrbitControls(camera, renderer.domElement);
     controls.target.set(...cameraTarget);
@@ -69,6 +69,9 @@ export async function mountMotion(root, asset, signal, {
     scene.add(new THREE.HemisphereLight(0xffffff, 0xffebdc, 2), light);
     const grid = new THREE.GridHelper(4, 40, 0xb9aec0, 0xd7cddd);
     grid.position.y = -.001;
+    // Draw the floor first and never write depth: a 1 mm gap to the soles cannot fight on mobile depth buffers.
+    grid.renderOrder = -1;
+    for (const material of [].concat(grid.material)) material.depthWrite = false;
     scene.add(grid);
     observer = new ResizeObserver(() => {
       const { width, height } = stage.getBoundingClientRect();
