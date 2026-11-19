@@ -30,17 +30,17 @@ const candidates = [
   {
     id: "top-tshirt", slot: "top",
     label: { en: "T-shirt", "zh-Hans": "T恤", ms: "Baju-T" },
-    paths: ["studio-modules/tshirt/round3/tshirt_v3.glb"],
+    paths: ["studio-modules/tshirt/round5/tshirt_v5.glb"],
   },
   {
     id: "bottom-jeans", slot: "bottom",
     label: { en: "Jeans", "zh-Hans": "牛仔裤", ms: "Seluar jean" },
-    paths: ["studio-modules/jeans/round3/jeans_v3.glb"],
+    paths: ["studio-modules/jeans/round5/jeans_v5.glb"],
   },
   {
     id: "top-dress", slot: "top", excludesSlots: ["bottom"],
     label: { en: "A-line dress", "zh-Hans": "连衣裙", ms: "Gaun A-line" },
-    paths: ["studio-modules/dress/round3/dress_v3.glb"],
+    paths: ["studio-modules/dress/round5/dress_v5.glb"],
   },
   // Not shown yet: cargo pants and bomber jacket (failed review or the motion gate), hoodie.
 ];
