@@ -18,6 +18,11 @@ const candidates = [
     paths: ["studio-modules/hair-spiky/hair_spiky_v1.glb"],
   },
   {
+    id: "hair-sidepart", slot: "hair",
+    label: { en: "Side-part hair", "zh-Hans": "偏分发", ms: "Rambut belah tepi" },
+    paths: ["studio-modules/hair-sidepart/round3/hair_sidepart_v3.glb"],
+  },
+  {
     id: "shoes-sneakers", slot: "shoes",
     label: { en: "Sneakers", "zh-Hans": "运动鞋", ms: "Kasut sukan" },
     paths: ["shoes-sol/round3/shoes_sneaker_v3.glb"],
