@@ -245,6 +245,8 @@ try {
     }
     await module(`${bodyId}-top-tshirt`).click();
     await module(`${bodyId}-bottom-jeans`).click();
+    // Clear the gestures so the screenshots show the measured finger grips.
+    for (const side of HANDS) await hand(side).selectOption("");
     await mkdir(out, { recursive: true });
     for (const [name, file] of [["take", "take"], ["box", "box"], ["sit", "sit"]]) {
       await clip(name).click();

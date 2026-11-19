@@ -24,11 +24,12 @@ export function createProps({ root, hand, chair, cup, box, bag, shelf, fitted = 
   const sockets = new Map();
   const grip = { ...JAR, ...fitted.jar }; // may also carry returnStop and pickupStop
   for (const [clip, base] of Object.entries(HAND_SOCKETS)) {
-    const { prop, translation, rotation } = { ...base, ...fitted[clip] };
+    const { prop, translation, rotation, scale } = { ...base, ...fitted[clip] };
     const scene = { cup, box, bag }[prop];
     scene.visible = false;
     scene.position.fromArray(translation);
     scene.quaternion.fromArray(rotation);
+    if (scale) scene.scale.fromArray(scale); // measured together with the finger layer of the same body
     hand.add(scene);
     sockets.set(clip, scene);
   }

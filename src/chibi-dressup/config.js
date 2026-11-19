@@ -19,9 +19,16 @@ const finite = (value, length) => Array.isArray(value) && value.length === lengt
 const validSockets = value => value === undefined || (isRecord(value) && Object.entries(value).every(([name, item]) =>
   (["hold_item", "hold_box", "hold_bag", "jar"].includes(name) && isRecord(item) &&
     finite(item.translation, 3) && finite(item.rotation, 4) &&
+    (item.scale === undefined || finite(item.scale, 3)) &&
     ["returnStop", "pickupStop"].every(key => item[key] === undefined || finite(item[key], 3))) ||
   // The chair and the shelf are placed per body: translation and scale in glTF metres.
   (["chair", "shelf"].includes(name) && isRecord(item) && finite(item.translation, 3) && finite(item.scale, 3))));
+// Per-clip finger corrections: { clip: { constant: { bone: quaternion }, tracks: { rateHz, bones: { bone: [quaternion ...] } } } }.
+const validLayers = value => value === undefined || (isRecord(value) && Object.entries(value).every(([clip, layer]) =>
+  ["hold_box"].includes(clip) && isRecord(layer) &&
+  (layer.constant === undefined || (isRecord(layer.constant) && Object.values(layer.constant).every(q => finite(q, 4)))) &&
+  (layer.tracks === undefined || (isRecord(layer.tracks) && layer.tracks.rateHz > 0 && isRecord(layer.tracks.bones) &&
+    Object.values(layer.tracks.bones).every(list => Array.isArray(list) && list.length > 1 && list.every(q => finite(q, 4)))))));
 const isText = value => typeof value === "string" && value.trim().length > 0;
 
 export function validateManifest(manifest) {
@@ -35,7 +42,7 @@ export function validateManifest(manifest) {
   for (const body of manifest.bodies) {
     if (!isRecord(body) || !isSlug(body.id) || bodyIds.has(body.id) ||
         !isRecord(body.label) || !Object.keys(languages).every(locale => isText(body.label[locale])) ||
-        !isModelPath(body.body) || !isModelPath(body.gestures) || !validSockets(body.sockets) ||
+        !isModelPath(body.body) || !isModelPath(body.gestures) || !validSockets(body.sockets) || !validLayers(body.layers) ||
         !Array.isArray(body.motion) || !body.motion.length || !body.motion.every(isModelPath))
       throw new Error("Invalid dress-up body");
     bodyIds.add(body.id);

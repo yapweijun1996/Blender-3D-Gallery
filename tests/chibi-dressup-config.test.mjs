@@ -106,6 +106,17 @@ test("bodies decide which modules fit and families carry choices across bodies",
   assert.equal(validateManifest(withSockets), withSockets);
   withSockets.bodies[1].sockets.chair.scale = [1, 1];
   assert.throws(() => validateManifest(withSockets), /Invalid dress-up body/);
+  withSockets.bodies[1].sockets.chair.scale = [1, 0.96, 1];
+  withSockets.bodies[1].layers = { hold_box: {
+    constant: { "mixamorig:RightHandThumb1": [0, 0, 0, 1] },
+    tracks: { rateHz: 48, bones: { "mixamorig:LeftHandIndex1": [[0, 0, 0, 1], [0, 0, 0, 1]] } },
+  } };
+  assert.equal(validateManifest(withSockets), withSockets);
+  for (const bad of [{ walk: {} }, { hold_box: { constant: { a: [0, 0, 1] } } },
+    { hold_box: { tracks: { rateHz: 0, bones: {} } } }, { hold_box: { tracks: { rateHz: 48, bones: { a: [[0, 0, 0, 1]] } } } }]) {
+    withSockets.bodies[1].layers = bad;
+    assert.throws(() => validateManifest(withSockets), /Invalid dress-up body/);
+  }
   const stored = { body: "spare", modules: { hair: "hair-bob" }, animation: "walk" };
   const loaded = loadConfig(two, { getItem: () => JSON.stringify(stored) });
   assert.equal(loaded.body, "spare");

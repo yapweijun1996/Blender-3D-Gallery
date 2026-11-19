@@ -140,8 +140,10 @@ export function bindModule(model, scene, bodySkeleton) {
 /**
  * `sources` are the loaded motion GLBs of the chosen body (one file with all fourteen clips or several).
  * Shared locomotion clips stay in place; authored actions keep their own hip, leg and scale tracks.
+ * `layers` holds measured finger corrections for one clip of this body (see validLayers in config.js):
+ * each is multiplied onto the animated joint rotation, either fixed or slerped along a looping track.
  */
-export function createRig(model, skeleton, sources, handClips) {
+export function createRig(model, skeleton, sources, handClips, layers = {}) {
   model.updateMatrixWorld(true);
   const bones = skeleton.bones;
   const rest = bones.map(bone => bone.quaternion.toArray());
@@ -154,6 +156,14 @@ export function createRig(model, skeleton, sources, handClips) {
   for (const name of [...MOTION_CLIPS, ...ACTION_SOURCE_CLIPS])
     if (!animations.has(name)) throw new Error(`Missing motion clip ${name}`);
   const gestures = readGestures(handClips, bones);
+  const byName = new Map(bones.map(bone => [bone.name, bone]));
+  const clipLayers = new Map(Object.entries(layers).map(([clip, layer]) => [clip, [
+    ...Object.entries(layer.constant ?? {}).map(([name, q]) => ({ bone: byName.get(name.replace(":", "")), fixed: new Quaternion().fromArray(q) })),
+    ...Object.entries(layer.tracks?.bones ?? {}).map(([name, list]) => ({
+      bone: byName.get(name.replace(":", "")), rate: layer.tracks.rateHz, samples: list.map(q => new Quaternion().fromArray(q)),
+    })),
+  ].filter(entry => entry.bone)]));
+  const correction = new Quaternion();
   const mixer = new AnimationMixer(model);
   let action;
   let logical;
@@ -181,7 +191,8 @@ export function createRig(model, skeleton, sources, handClips) {
   });
 
   function restoreFingers() {
-    for (const { bone, baseline } of overridden) bone.quaternion.copy(baseline);
+    // Last applied first, so a bone touched by a layer and a gesture ends on its mixer value.
+    for (const { bone, baseline } of overridden.reverse()) bone.quaternion.copy(baseline);
     overridden = [];
   }
 
@@ -200,6 +211,18 @@ export function createRig(model, skeleton, sources, handClips) {
       // The mixer can skip writes whose interpolated value has not changed.
       restoreFingers();
       mixer.update(delta);
+      for (const entry of clipLayers.get(action?.getClip().name) ?? []) {
+        if (entry.fixed) correction.copy(entry.fixed);
+        else {
+          const position = ((action.time * entry.rate) % (entry.samples.length - 1) + entry.samples.length - 1) % (entry.samples.length - 1);
+          const index = Math.floor(position);
+          correction.copy(entry.samples[index]).slerp(entry.samples[index + 1], position - index);
+        }
+        entry.baseline ??= new Quaternion();
+        entry.baseline.copy(entry.bone.quaternion);
+        entry.bone.quaternion.multiply(correction);
+        overridden.push(entry);
+      }
       for (const side of HANDS) {
         const pose = gestures.get(`hand_${hands[side]}_${side}`);
         if (!pose) continue;

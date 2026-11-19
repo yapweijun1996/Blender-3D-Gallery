@@ -248,7 +248,7 @@ export async function mountDressup(root, thumbnail, signal) {
     ]));
     try { face = createExpressionController(body.scene, expressionUrls); } catch { face = null; }
     expressions.hidden = !face;
-    rig = createRig(body.scene, skeleton, motion, gestures.animations);
+    rig = createRig(body.scene, skeleton, motion, gestures.animations, spec.layers);
     // Props: the chair stays on the floor at the origin; hand props ride in the right hand.
     const hand = skeleton.bones.find(bone => bone.name === "mixamorigRightHand");
     if (!hand) throw new Error("Body has no right hand");
