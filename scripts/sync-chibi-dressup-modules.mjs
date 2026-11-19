@@ -104,7 +104,8 @@ for (const { id, slot, label, paths, optional, excludesSlots } of candidates) {
   const sha256 = createHash("sha256").update(input.bytes).digest("hex");
   const status = previous?.sha256 === sha256 ? previous.status : "pending";
   copies.push({
-    module: { id, slot, ...(excludesSlots ? { excludesSlots } : {}), label, file, status, source: input.source, bytes: input.bytes.length, sha256 },
+    // bodyIds and family are hand-authored manifest fields; keep them across syncs.
+    module: { id, slot, ...(excludesSlots ? { excludesSlots } : {}), ...(previous?.bodyIds ? { bodyIds: previous.bodyIds } : {}), ...(previous?.family ? { family: previous.family } : {}), label, file, status, source: input.source, bytes: input.bytes.length, sha256 },
     bytes: input.bytes,
   });
 }

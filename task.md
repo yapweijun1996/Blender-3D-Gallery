@@ -278,11 +278,11 @@ Framework proposal (no code yet): [docs/chibi-framework-design.md](docs/chibi-fr
 
 Documentation added: [FEATURES_MAP.md](FEATURES_MAP.md) (refreshed to `fb9d5070`) and per-module logic docs [shell and viewer](docs/modules/shell-viewer.md), [demos, game and PWA](docs/modules/demos-game-pwa.md), [chibi and animation](docs/modules/chibi-animation.md). They were produced by reading source; no tests or builds were run for them. The gaps below were each re-read against the code on this date and are open unless ticked.
 
-- [ ] `scripts/sync-chibi-dressup-modules.mjs` (line ~105) rebuilds each module from a fixed field list, so `bodyIds` and `family` (accepted by `src/chibi-dressup/config.js`) would be dropped on sync. No current module uses them; fix before adding a second body's modules.
-- [ ] `models/chibi-dressup/README.md` says the script refreshes "four listed modules"; the script and manifest list 14.
+- [x] `scripts/sync-chibi-dressup-modules.mjs` now preserves hand-authored `bodyIds` and `family` across syncs (verified by injecting `family` and re-running the sync; manifest then restored; `tests/chibi-dressup-config.test.mjs` 5/5 pass).
+- [x] `models/chibi-dressup/README.md` no longer says "four" modules.
 - [ ] `status` (`verified`/`pending`) is schema-checked in `config.js` but never changes runtime behavior, so a `pending` module is shown to visitors.
-- [ ] `.github/workflows/deploy.yml` push path runs only `npm run build:deploy`: no `npm test`, no `validate:assets` (manual dispatch with the input can run it).
-- [ ] `scripts/test-chibi-dressup-browser.mjs` is not wired into `package.json`.
+- [ ] (deferred: the workflow's sparse checkout excludes `tests/` and `models/`, so adding `npm test` needs a CI design change) `.github/workflows/deploy.yml` push path runs only `npm run build:deploy`: no `npm test`, no `validate:assets` (manual dispatch with the input can run it).
+- [x] Added `npm run test:dressup` for `scripts/test-chibi-dressup-browser.mjs` (script entry only; the browser test itself was not run here and it needs a production build).
 - [ ] `scripts/pwa-build.mjs:63` hard-codes the Game version string and `src/pwa/sw-template.js:57` hard-codes 18 pack files.
 - [ ] Demo route and interactive-asset lists are duplicated by hand across `src/main.js`, `scripts/demo-registry.mjs`, `src/viewer.js` and `data/demos.json`.
 - [ ] `src/visitor-v2/demo.js` and `src/visitor-v3/demo.js` share a scaffold; untested. `src/fish-motion.js` is the only viewer add-on imported statically.
