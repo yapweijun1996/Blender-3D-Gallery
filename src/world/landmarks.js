@@ -8,6 +8,11 @@ export const LANDMARKS = [
   { id: "merlion", models: ["sg-merlion", "sg-merlion-park"], pose: { x: -694.5, z: -381.5, yaw: 1.066 } },
   // ArtScience Museum (1.28625 N, 103.86045 E).
   { id: "artscience", models: ["sg-artscience-museum"], pose: { x: -27.8, z: -315.1, yaw: 0 } },
+  // Gardens by the Bay conservatories, fitted onto their mapped outlines.
+  { id: "flower-dome", models: ["sg-flower-dome"], pose: { x: 454.8, z: -124.9, yaw: 0.105 }, hide: /^Flower Dome$/i },
+  { id: "cloud-forest", models: ["sg-cloud-forest"], pose: { x: 591.7, z: -52, yaw: 2.618 }, hide: /^Cloud Forest$/i },
+  // The Float @ Marina Bay is not mapped: placed (approximately) beside its bus stop on the waterfront, out over the bay.
+  { id: "float", models: ["sg-the-float"], pose: { x: -170, z: -610, yaw: 0 } },
   // Helix Bridge: centre and direction from the mapped footway.
   { id: "helix", models: ["sg-helix-bridge"], pose: { x: -22.5, z: -453.8, yaw: -1.563 } },
 ];
