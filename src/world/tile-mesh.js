@@ -92,7 +92,7 @@ export function buildingMesh(ring, height) {
  * Builds the meshes of one tile. Returns geometries in world coordinates (the tile origin is already added) plus
  * the point features and the buildings, which the page uses for colliders and instanced props.
  */
-export function buildTile(tile) {
+export function buildTile(tile, { hide = () => false } = {}) {
   const [ox, oz] = origin(tile);
   const shift = points => points.map(([x, z]) => [x + ox, z + oz]);
   const ground = createBatch(), buildings = createBatch();
@@ -115,7 +115,7 @@ export function buildTile(tile) {
     if (ring.length < 4) continue;
     const height = Math.max(3, building.height ?? 9);
     const seed = hash(building.id);
-    extrude(buildings, ring, height, WALLS[seed % WALLS.length], ROOFS[(seed >> 3) % ROOFS.length]);
+    if (!hide(building.name)) extrude(buildings, ring, height, WALLS[seed % WALLS.length], ROOFS[(seed >> 3) % ROOFS.length]);
     solids.push({ id: building.id, name: building.name, ring, height });
   }
   return {

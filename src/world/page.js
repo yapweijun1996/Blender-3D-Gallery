@@ -7,6 +7,7 @@ import { createDriveAudio } from "../drive/audio.js";
 import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
+import { LANDMARKS, hiddenOutline } from "./landmarks.js";
 import { TILE_SIZE, buildTile, buildingMesh } from "./tile-mesh.js";
 import "../drive/style.css";
 
@@ -17,6 +18,7 @@ const kitUrls = import.meta.glob([
   "../../models/drive/kit/car_saga.glb", "../../models/sg-rain-tree/*.glb", "../../models/sg-angsana/*.glb", "../../models/sg-coconut-palm/*.glb",
   "../../models/sg-road-light/*.glb",
 ], { eager: true, query: "?url", import: "default" });
+const landmarkUrls = import.meta.glob("../../models/sg-{marina-bay-sands-towers,marina-bay-sands-podium,esplanade-domes,esplanade-base,merlion,merlion-park,artscience-museum,helix-bridge}/*.glb", { eager: true, query: "?url", import: "default" });
 const KIT = { car_saga: "drive/kit/car_saga", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light" };
 const TREES = ["rain_tree", "angsana", "coconut_palm"];
 const LOAD_RADIUS = 2, SOLID_RADIUS = 1; // in tiles around the car
@@ -75,6 +77,8 @@ export async function mountWorld(root, thumbnail, signal) {
   const kitScenes = new Set();
   const kit = await loadKitFrom(Object.entries(KIT).map(([name, file]) => [name, kitUrls[`../../models/${file}.glb`]]), signal, kitScenes)
     .catch(error => { if (signal.aborted) throw error; console.error("World: model kit failed to load", error); return new Map(); });
+  const landmarkKit = await loadKitFrom(LANDMARKS.flatMap(landmark => landmark.models).map(name => [name, landmarkUrls[`../../models/${name}/${name}.glb`]]), signal, kitScenes)
+    .catch(error => { if (signal.aborted) throw error; console.error("World: landmarks failed to load", error); return new Map(); });
   const physics = await createPhysicsWorld();
   physics.addGround({ halfWidth: 3000, halfDepth: 3000 });
   signal.throwIfAborted();
@@ -99,6 +103,17 @@ export async function mountWorld(root, thumbnail, signal) {
   flatGround.position.y = -0.3;
   scene.add(flatGround);
 
+  for (const landmark of LANDMARKS) {
+    for (const name of landmark.models) {
+      const model = landmarkKit.get(name);
+      if (!model) continue;
+      const copy = cloneModel(model);
+      copy.position.set(landmark.pose.x, 0, landmark.pose.z);
+      copy.rotation.y = landmark.pose.yaw;
+      scene.add(copy);
+    }
+  }
+
   // Streaming: tiles near the car are fetched and built one per frame; colliders only exist for the nearest ring.
   const tiles = new Map(); // key -> { x, z, group, solids, colliders, instances }
   const pending = new Set();
@@ -119,7 +134,7 @@ export async function mountWorld(root, thumbnail, signal) {
     }
   }
   function buildEntry(x, z, data) {
-    const built = buildTile(data);
+    const built = buildTile(data, { hide: hiddenOutline });
     const group = new Group();
     const entry = { x, z, group, solids: built.solids, colliders: null, instances: [], geometries: [] };
     if (built.ground) { const mesh = new Mesh(built.ground, groundMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.ground); }
@@ -294,6 +309,7 @@ export async function mountWorld(root, thumbnail, signal) {
     initial: Math.min(devicePixelRatio, touchDevice ? 1.5 : 2),
     onChange: ratio => { renderer.setPixelRatio(ratio); resize(); },
   });
+  let fixedView = null;
   let frame = 0, last = performance.now(), running = true, carTile = [startTile[0], startTile[1]], distanceDriven = 0, previousPosition = null;
   function step(now) {
     if (!running) return;
@@ -306,7 +322,7 @@ export async function mountWorld(root, thumbnail, signal) {
       physics.step(dt);
     }
     const state = placeCar();
-    placeCamera(state, dt);
+    if (fixedView) { camera.position.set(...fixedView.position); camera.lookAt(...fixedView.target); } else placeCamera(state, dt);
     const tx = Math.floor(state.position.x / TILE_SIZE), tz = Math.floor(state.position.z / TILE_SIZE);
     carTile = [tx, tz];
     updateTiles(tx, tz);
@@ -336,7 +352,8 @@ export async function mountWorld(root, thumbnail, signal) {
     return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); physics.step(1 / 60); } return stage.inspectWorld(); };
-  stage.teleport = (x, z, heading = 0) => { vehicle.resetUpright({ position: { x, y: restHeight + 0.2, z }, heading, repair: true }); };
+  stage.setView = view => { fixedView = view; };
+  stage.teleport = (x, z, heading = 0) => { previousPosition = null; vehicle.resetUpright({ position: { x, y: restHeight + 0.2, z }, heading, repair: true }); };
 
   return {
     dispose() {
