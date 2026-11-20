@@ -136,3 +136,10 @@ Tests: `tests/drive-route.test.mjs` (route maths) and `npm run test:drive` (end 
 frame rate, because no phone capture has been received. Known gaps: the road is one carriageway (no lane changes), traffic does not react to
 the player beyond slowing behind a car, no sound, the Johor side is generic low-rise.
 
+
+## Update 2026-11-21: open world and MRT
+
+The drive demo was rebuilt as an open-world study, `?page=sg-world`: the real OpenStreetMap road network and buildings around Marina Bay in streamed tiles, a car on Rapier
+vehicle physics (crash, flip, right again), traffic with junction signals, hand-modelled landmarks at their real places, street furniture, zebra crossings and walking chibis.
+`?page=sg-mrt` shows a train arriving at a platform. Status per milestone, tests and gaps: [sg-open-world-plan.md](sg-open-world-plan.md#status-2026-11-21).
+The older pages `?page=drive-jb` (Marina Bay to Johor Bahru) and `?page=sg-heartland` (walkable HDB district) are unchanged and still pass their browser tests.

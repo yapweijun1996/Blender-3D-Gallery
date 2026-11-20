@@ -52,3 +52,24 @@ Merlion, Esplanade (the durian), Helix Bridge, Supertree Grove, Bayfront and Pro
 Codex jobs that must not touch each other's folders: models go to `output/world-models/<name>` (mbs, merlion, esplanade, artscience, streetkit,
 vegetation), vehicles to `output/drive-models/gameC`, MRT to `output/mrt-models/kit`, code to `src/world/network` + `scripts/world` and
 `src/world/physics`. The manager verifies each result with its own checks, copies it into `models/world/...`, wires it in, tests and pushes.
+
+## Status (2026-11-21)
+
+Verified in Chrome (software GL), an iPhone 15 WebKit emulation and Node; nothing here was measured on a real phone. Commands: `npm test` (783 tests),
+`npm run test:world` (road-network tiles, needs the untracked `output/osm/marina_bay.json`), `npm run test:openworld`, `npm run test:mrt`.
+
+| Milestone | State | Evidence |
+| --- | --- | --- |
+| M1 data and network | Done for the Marina Bay extract (4.5 km by 4 km, 184 tiles of 250 m, 4 MB in `models/world/tiles/`). Not yet the corridor to Johor Bahru. | `scripts/world/build-tiles.mjs`, `src/world/network/*`, 8 tests |
+| M2 physics vehicle | Done: Rapier vehicle (`src/world/physics/*`) with crash damage, flip detection, righting and reverse; building colliders from the mapped outlines; traffic and nearby vehicles are kinematic boxes. | `tests/world-physics.test.mjs` (7) |
+| M3 traffic and signals | Done at arcade level: `src/world/traffic.js` (graph stitched from tile fragments, left-lane driving, car following with look-ahead, random turns, two-phase signals, 8 vehicle types), `src/world/signals.js` draws the lights. Missing: yielding at unsignalised junctions, cars do not react to pedestrians. | `tests/world-traffic.test.mjs` (4), `tests/world-signals.test.mjs` (2) |
+| M4 buildings and landmarks | Partly: buildings are extruded outlines with a flat colour. Marina Bay Sands and the Esplanade are fitted onto their mapped outlines (`scripts/world/fit-landmark.mjs`), ArtScience Museum, Merlion Park and Helix Bridge are placed by coordinates (`src/world/landmarks.js`). Missing: facade detail on ordinary buildings, Supertrees (no mapped coordinates), The Float, Johor Bahru, bridges and tunnels (the world is flat). | `tests/world-landmarks.test.mjs`, screenshots |
+| M5 vehicles and MRT | Vehicles done (6 new game-ready types). MRT: a generic station page `?page=sg-mrt` (three-carriage train, platform screen doors, three views). Missing: passengers, entrance from the world, the real Bayfront and Promenade layouts. | `tests/mrt-schedule.test.mjs` (3), `scripts/test-mrt-browser.mjs` |
+
+Pages: `?page=sg-world` (Singapore Open World) and `?page=sg-mrt` (Singapore MRT Station). Street furniture (lamps, bus shelters and flags) comes from
+`src/world/furniture.js`, zebra bars from the mapped crossings (`src/world/tile-mesh.js`), pedestrians (the dress-up chibis) from `src/world/pedestrians.js`.
+All 64 models made for it are in the gallery collection "Singapore Open World" (`models/sg-*`, registered with `scripts/register-gallery-model.mjs`,
+Khronos validator 0 errors and 0 warnings). Phones load a 3 by 3 ring of tiles with shorter fog.
+
+Known gaps: the player car tops out near 180 km/h; no real-device frame rate; WebKit logs style-src refusals on every demo page (not specific to this work);
+`wasm-unsafe-eval` was added to the page's script policy for Rapier.

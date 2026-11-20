@@ -290,3 +290,26 @@ Documentation added: [FEATURES_MAP.md](FEATURES_MAP.md) (refreshed to `fb9d5070`
 - [ ] `npm run test:dressup` result on 2026-11-19 (not a pass): at commit `be28ea15` the committed test loops over every manifest module, including `female-*` ones that the default neutral body does not render, so it fails at `[data-module="female-hair-bob"]` (after a 20 s timeout on the first click under software rendering, which passes with a 90 s timeout). With another session's uncommitted edits to the test, `src/chibi-dressup/props.js` and `config.js` it advances and times out at `[data-clip="take_item"]`. Re-run once those edits are committed.
 - Corrected during review: `game-mounted` is dispatched by `src/main.js` (`${page}-mounted`); the earlier doc claim that nothing dispatches it was wrong and was fixed.
 
+
+## 13. Singapore open world and MRT — status 2026-11-21
+
+Scope: the owner's rebuild of the Marina Bay to Johor Bahru drive into a realistic open world, then the MRT. Plan and per-milestone evidence: [docs/sg-open-world-plan.md](docs/sg-open-world-plan.md#status-2026-11-21). Progress log: [docs/chibi-dressup-progress.md](docs/chibi-dressup-progress.md).
+
+Verified (Chrome software GL, iPhone 15 WebKit emulation, Node; `npm test` 783 pass, `npm run validate:assets` pass):
+- [x] 64 game-ready models registered in the gallery collection "Singapore Open World" (landmarks, 6 vehicles, 20 street items, 15 plants, 11 MRT parts), Khronos validator 0 errors and 0 warnings; Codex made them, each was re-validated and looked at before registering.
+- [x] `?page=sg-world`: 184 OSM tiles (4 MB, ODbL credit shown), extruded buildings, roads, kerbs, footways, water, parks, zebra bars, trees, street lamps, bus shelters, traffic lights.
+- [x] Rapier vehicle physics: settle, accelerate, steer left, brake, crash damage, flip detection and righting, reverse, six vehicle types (`tests/world-physics.test.mjs`).
+- [x] Traffic: eight vehicle types on the road graph, left-lane driving, gaps kept, signal phases respected (`tests/world-traffic.test.mjs`); nearby vehicles are solid for the player's car.
+- [x] Landmarks fitted onto their mapped outlines or placed by coordinates (Marina Bay Sands, Esplanade, ArtScience Museum, Merlion, Helix Bridge).
+- [x] Pedestrians (dress-up chibis) walk the mapped footways; the drive and heartland pages still pass their browser tests after the shared `createPeople` extraction.
+- [x] `?page=sg-mrt`: train arrives, stops exactly at the mark, carriage and screen doors open together, departs; platform, inside and overview views (`tests/mrt-schedule.test.mjs`, `npm run test:mrt`).
+- [x] Phone profile: 3 by 3 tile ring, shorter fog, speed readout at the top; touch pedals drive the car in WebKit emulation.
+
+Open:
+- [ ] No real-device frame rate measurement; the city centre draws about 400k triangles on desktop, about 270k on the phone profile.
+- [ ] Cars do not yield to pedestrians or at unsignalised junctions; pedestrians have no colliders.
+- [ ] Bridges and tunnels are drawn flat; Supertrees and The Float are missing; ordinary buildings have flat colours without facades.
+- [ ] Corridor to Johor Bahru in the new engine (only Marina Bay is mapped); the older `?page=drive-jb` still covers that route.
+- [ ] MRT: no passengers, no entrance from the world page, generic platform instead of the real Bayfront or Promenade layouts.
+- [ ] The player car has no speed limit (about 180 km/h at most).
+- Note: `npm run test:world` needs the untracked `output/osm/marina_bay.json`, so it is not part of `npm test`.
