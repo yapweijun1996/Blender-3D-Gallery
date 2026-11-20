@@ -125,3 +125,14 @@ Phases for this demo (each with measured gates):
 Open questions for the owner: auto mode or manual driving first; whether the checkpoint mini-game should be
 included; the exact start point and the end point; and whether Marina Bay Sands may be shown by name (it is a
 real landmark; drawn in an original style it should be fine).
+
+### Status of the drive demo (2026-11-20, evening)
+
+Built and pushed: `?page=drive-jb`. Route data from OpenStreetMap (31.2 km, 718 points), real Blender-built model kit (22 models in
+`models/drive/kit`, validated by `models/drive/validate.mjs`), streamed scenery, road kit (curbs, pavements, lane lines, zebra crossings,
+guardrails, lamps, signs), two-way traffic of four vehicle types, dressed chibi pedestrians, chibi boy driver, Woodlands checkpoint with a
+passport-stamp mini-game and lifting barriers, minimap, day to night clock, three languages, auto and manual driving, arrival panel.
+Tests: `tests/drive-route.test.mjs` (route maths) and `npm run test:drive` (end to end in a normal browser). Not measured yet: iPhone
+frame rate, because no phone capture has been received. Known gaps: the road is one carriageway (no lane changes), traffic does not react to
+the player beyond slowing behind a car, no sound, the Johor side is generic low-rise.
+
