@@ -7,6 +7,7 @@ import { createDriveAudio } from "../drive/audio.js";
 import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
+import { grovePlacements, groveRings } from "./groves.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
 import { busStopPlacements, lampPlacements, nearestRoad } from "./furniture.js";
 import { addWorldPedestrians, pedestrianPaths } from "./pedestrians.js";
@@ -22,10 +23,10 @@ import "./style.css";
 const tileUrls = import.meta.glob("../../models/world/tiles/*.json", { eager: true, query: "?url", import: "default" });
 const kitUrls = import.meta.glob([
   "../../models/drive/kit/car_saga.glb", "../../models/drive/kit/car_hatchback_hd.glb", "../../models/sg-{taxi,bus-double,lorry,police,ambulance,school-bus}-hd/*.glb", "../../models/sg-rain-tree/*.glb", "../../models/sg-angsana/*.glb", "../../models/sg-coconut-palm/*.glb",
-  "../../models/sg-road-light/*.glb", "../../models/sg-bus-shelter-sbs/*.glb", "../../models/sg-bus-stop-flag/*.glb", "../../models/sg-station-sign/*.glb",
+  "../../models/sg-road-light/*.glb", "../../models/sg-bus-shelter-sbs/*.glb", "../../models/sg-bus-stop-flag/*.glb", "../../models/sg-station-sign/*.glb", "../../models/sg-supertree-{tall,mid,short}/*.glb",
 ], { eager: true, query: "?url", import: "default" });
 const landmarkUrls = import.meta.glob("../../models/sg-{marina-bay-sands-towers,marina-bay-sands-podium,esplanade-domes,esplanade-base,merlion,merlion-park,artscience-museum,helix-bridge}/*.glb", { eager: true, query: "?url", import: "default" });
-const KIT = { car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light", bus_shelter: "sg-bus-shelter-sbs/sg-bus-shelter-sbs", bus_flag: "sg-bus-stop-flag/sg-bus-stop-flag", station_sign: "sg-station-sign/sg-station-sign" };
+const KIT = { car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light", bus_shelter: "sg-bus-shelter-sbs/sg-bus-shelter-sbs", bus_flag: "sg-bus-stop-flag/sg-bus-stop-flag", station_sign: "sg-station-sign/sg-station-sign", "sg-supertree-tall": "sg-supertree-tall/sg-supertree-tall", "sg-supertree-mid": "sg-supertree-mid/sg-supertree-mid", "sg-supertree-short": "sg-supertree-short/sg-supertree-short" };
 const TREES = ["rain_tree", "angsana", "coconut_palm"];
 const PLAYER_TOP_SPEED = 28; // m/s, 100 km/h: the fastest limit on the mapped roads is 90 km/h
 const SOLID_RADIUS = 1; // in tiles around the car; phones load a smaller ring of tiles
@@ -235,6 +236,13 @@ export async function mountWorld(root, thumbnail, signal) {
     buildEntry(x, z, data);
   }
   signal.throwIfAborted();
+
+  // Supertree Grove: the trees stand inside the mapped garden outline (approximate positions, see groves.js).
+  const grove = grovePlacements(groveRings([...startData.values()]));
+  for (const name of new Set(grove.map(tree => tree.model))) {
+    if (!kit.has(name)) continue;
+    for (const mesh of instanceModel(kit.get(name), grove.filter(tree => tree.model === name).map(tree => ({ x: tree.x, z: tree.z, yaw: tree.yaw, scale: 1 }))).meshes) scene.add(mesh);
+  }
 
   // The player starts on Bayfront Avenue, in the left lane (Singapore drives on the left), facing along the road.
   let start = { x: 0, z: 0, heading: 0 };
@@ -497,7 +505,7 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.setView = view => { fixedView = view; };

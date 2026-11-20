@@ -24,6 +24,7 @@ try {
   const first = await inspect();
   assert.ok(first.tiles >= 9, `${first.tiles} tiles loaded`);
   assert.ok(Math.hypot(first.start.x, first.start.z) < 400, "starts near Marina Bay Sands");
+  assert.equal(first.supertrees, 11);
 
   // Traffic fills the roads around the start, with several kinds of vehicle.
   await page.waitForFunction(() => document.querySelector('.drive-stage').inspectWorld().traffic >= 8, undefined, { polling: 500 });
