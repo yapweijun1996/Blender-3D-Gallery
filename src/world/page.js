@@ -8,6 +8,7 @@ import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
+import { busStopPlacements, lampPlacements } from "./furniture.js";
 import { createSignalLights, signalApproaches } from "./signals.js";
 import { VEHICLE_TYPES, buildTrafficGraph, createRandom, createTraffic } from "./traffic.js";
 import { TILE_SIZE, buildTile, buildingMesh } from "./tile-mesh.js";
@@ -18,10 +19,10 @@ import "../drive/style.css";
 const tileUrls = import.meta.glob("../../models/world/tiles/*.json", { eager: true, query: "?url", import: "default" });
 const kitUrls = import.meta.glob([
   "../../models/drive/kit/car_saga.glb", "../../models/drive/kit/car_hatchback_hd.glb", "../../models/sg-{taxi,bus-double,lorry,police,ambulance,school-bus}-hd/*.glb", "../../models/sg-rain-tree/*.glb", "../../models/sg-angsana/*.glb", "../../models/sg-coconut-palm/*.glb",
-  "../../models/sg-road-light/*.glb",
+  "../../models/sg-road-light/*.glb", "../../models/sg-bus-shelter-sbs/*.glb", "../../models/sg-bus-stop-flag/*.glb",
 ], { eager: true, query: "?url", import: "default" });
 const landmarkUrls = import.meta.glob("../../models/sg-{marina-bay-sands-towers,marina-bay-sands-podium,esplanade-domes,esplanade-base,merlion,merlion-park,artscience-museum,helix-bridge}/*.glb", { eager: true, query: "?url", import: "default" });
-const KIT = { car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light" };
+const KIT = { car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light", bus_shelter: "sg-bus-shelter-sbs/sg-bus-shelter-sbs", bus_flag: "sg-bus-stop-flag/sg-bus-stop-flag" };
 const TREES = ["rain_tree", "angsana", "coconut_palm"];
 const LOAD_RADIUS = 2, SOLID_RADIUS = 1; // in tiles around the car
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -129,7 +130,6 @@ export async function mountWorld(root, thumbnail, signal) {
       if (!kit.has(name)) return;
       (lists.get(name) ?? lists.set(name, []).get(name)).push({ x, z, yaw: ((x * 12.9898 + z * 78.233) % 6.283), scale: 1.2 });
     });
-    if (kit.has("road_light")) lists.set("road_light", built.lamps.map(([x, z]) => ({ x, z, yaw: 0, scale: 1 })));
     for (const [name, placements] of lists) {
       if (!placements.length) continue;
       const set = instanceModel(kit.get(name), placements);
@@ -139,7 +139,7 @@ export async function mountWorld(root, thumbnail, signal) {
   function buildEntry(x, z, data) {
     const built = buildTile(data, { hide: hiddenOutline });
     const group = new Group();
-    const entry = { x, z, data, group, solids: built.solids, colliders: null, instances: [], geometries: [] };
+    const entry = { x, z, data, busStops: built.busStops, group, solids: built.solids, colliders: null, instances: [], geometries: [] };
     if (built.ground) { const mesh = new Mesh(built.ground, groundMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.ground); }
     if (built.buildings) { const mesh = new Mesh(built.buildings, buildingMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.buildings); }
     addInstances(entry, built);
@@ -240,6 +240,18 @@ export async function mountWorld(root, thumbnail, signal) {
     for (const mesh of set.meshes) scene.add(mesh);
     trafficSets.set(type.model, set);
   }
+  // Street furniture follows the road graph: lamps along the main roads and shelters at the mapped bus stops.
+  let furnitureMeshes = [];
+  function placeFurniture(graph) {
+    for (const mesh of furnitureMeshes) { scene.remove(mesh); mesh.dispose?.(); }
+    furnitureMeshes = [];
+    const stops = [...tiles.values()].flatMap(entry => entry.busStops);
+    const { shelters, flags } = busStopPlacements(graph, stops);
+    for (const [name, placements] of [["road_light", lampPlacements(graph)], ["bus_shelter", shelters], ["bus_flag", flags]]) {
+      if (!kit.has(name) || !placements.length) continue;
+      for (const mesh of instanceModel(kit.get(name), placements.map(item => ({ ...item, scale: 1 }))).meshes) { scene.add(mesh); furnitureMeshes.push(mesh); }
+    }
+  }
   const signalLights = createSignalLights(scene);
   let signalGraph = null, signalList = [];
   const solidVehicles = new Map();
@@ -248,6 +260,7 @@ export async function mountWorld(root, thumbnail, signal) {
       signalGraph = buildTrafficGraph([...tiles.values()].map(entry => entry.data));
       traffic.setGraph(signalGraph);
       signalList = signalApproaches(signalGraph);
+      placeFurniture(signalGraph);
       signalLights.setApproaches(signalList, state.position);
       graphDirty = false;
     }
@@ -414,6 +427,7 @@ export async function mountWorld(root, thumbnail, signal) {
       observer.disconnect();
       audio.dispose();
       signalLights.dispose();
+      for (const mesh of furnitureMeshes) mesh.dispose?.();
       for (const solid of solidVehicles.values()) solid.remove();
       for (const key of [...tiles.keys()]) unload(key);
       physics.dispose();
