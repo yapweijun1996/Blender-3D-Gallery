@@ -86,3 +86,20 @@ test("reverse pushes the car backwards from a standstill", async () => {
   assert.ok(state.forwardSpeed > -8);
   physics.dispose();
 });
+
+test("crash damage grows with speed: a bump is small, a fast hit is serious but not total", async () => {
+  const damageAt = async target => {
+    const physics = await createPhysicsWorld();
+    physics.addGround({});
+    physics.addStaticBox({ halfExtents: { x: 10, y: 2, z: 0.5 }, position: { x: 0, y: 2, z: 80 } });
+    const car = physics.addVehicle({ type: "sedan", topSpeed: 28, position: { x: 0, y: 1, z: 0 } });
+    for (let i = 0; i < 60 * 12; i++) { car.setControls({ throttle: car.getState().speed < target ? 1 : 0 }); physics.step(1 / 60); }
+    const damage = car.getState().damage;
+    physics.dispose();
+    return damage;
+  };
+  const slow = await damageAt(8), medium = await damageAt(14), fast = await damageAt(22);
+  assert.ok(slow > 0 && slow < 0.2, `29 km/h: ${slow}`);
+  assert.ok(medium > slow && fast > medium, "more speed, more damage");
+  assert.ok(fast > 0.3 && fast < 0.7, `79 km/h: ${fast}`);
+});

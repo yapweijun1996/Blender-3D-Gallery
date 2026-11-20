@@ -1,6 +1,6 @@
 export const CRASH_TUNING = Object.freeze({
-  impactThreshold: 2.5, // Impulse per unit vehicle mass, in m/s.
-  fullDamageImpact: 28, // Excess impulse per unit mass for one full damage point.
+  impactThreshold: 4, // Impulse per unit vehicle mass, in m/s.
+  fullDamageImpact: 40, // Excess impulse per unit mass for one full damage point.
   flippedUpDot: 0.2,
   flippedSeconds: 1.5,
 });
