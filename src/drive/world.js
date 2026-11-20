@@ -300,7 +300,7 @@ export function buildWorld(canvasHost, route, kit = new Map()) {
     scene.fog.color.copy(state.sky);
     ground.material.color.copy(state.ground);
     sun.intensity = state.sun;
-    hemi.intensity = 0.5 + state.sun * 0.35;
+    hemi.intensity = 0.85 + state.sun * 0.3; // keep the night readable on a phone screen
     surroundings.lampMaterial.color.setRGB(1, 0.89 * (0.55 + state.lamp * 0.45), 0.63 * (0.4 + state.lamp * 0.6));
     surroundings.heads.visible = state.lamp > 0.05;
     for (const material of lightMaterials) { material.emissive?.copy(material.color); material.emissiveIntensity = state.lamp * 1.6; }

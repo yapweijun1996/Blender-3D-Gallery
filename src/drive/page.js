@@ -338,6 +338,7 @@ export async function mountDrive(root, thumbnail, signal) {
     triangles: world.renderer.info.render.triangles, calls: world.renderer.info.render.calls,
   });
   stage.driveTo = distance => { state.s = clamp(distance, 0, route.length); };
+  stage.skipCheckpoint = () => { state.pass = true; gateBarriers().forEach(barrier => { barrier.rotation.z = 1.4; }); }; // for tests and screenshots
   stage.dataset.state = "ready";
   stage.setAttribute("aria-busy", "false");
   stage.querySelector(".drive-loading").remove();
