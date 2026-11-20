@@ -11,6 +11,7 @@ import { createPhysicsWorld } from "./physics/world.js";
 import { grovePlacements, groveRings } from "./groves.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
 import { ROAD_DISTANCES } from "./mission-distances.js";
+import { paintMinimap } from "./minimap.js";
 import { MISSIONS, arrived, cleanRecord, distanceTo, missionScore, nextMission, recordScore, relativeBearing, roadDistance } from "./missions.js";
 import { busStopPlacements, lampPlacements, nearestRoad } from "./furniture.js";
 import { addWorldPedestrians, pedestrianPaths } from "./pedestrians.js";
@@ -128,6 +129,7 @@ export async function mountWorld(root, thumbnail, signal) {
         <p class="drive-trip"></p>
         <p class="drive-event" role="status" aria-live="polite"></p>
         <div class="world-mission" aria-live="off"><span class="world-arrow" aria-hidden="true">➤</span><span class="world-mission-text"></span></div>
+        <canvas class="drive-minimap" width="160" height="200" aria-hidden="true"></canvas>
         <button type="button" class="world-enter" hidden></button>
         <div class="drive-pad">
           <div class="drive-steer"><button type="button" data-key="left">◀</button><button type="button" data-key="right">▶</button></div>
@@ -553,6 +555,20 @@ export async function mountWorld(root, thumbnail, signal) {
   }
   setMission(0);
   root.querySelector(".world-next").addEventListener("click", () => { const state = vehicle.getState(); setMission(nextMission(missionIndex, state.position), state); });
+  // Minimap: the road graph around the car, traffic as dots and the mission target.
+  const minimap = stage.querySelector(".drive-minimap"), minimapContext = minimap.getContext("2d");
+  const MINIMAP_COLORS = { background: "rgba(10,18,36,0.72)", road: "rgba(205,215,230,0.85)", traffic: "#ffd36a", target: "#ff5a4f", car: "#ffffff" };
+  let minimapFrame = 0;
+  function drawMinimap(state) {
+    if (minimapFrame++ % 4) return;
+    const edges = signalGraph ? [...signalGraph.edges.values()] : [];
+    const target = MISSIONS[missionIndex];
+    paintMinimap(minimapContext, {
+      size: { width: minimap.width, height: minimap.height }, car: { x: state.position.x, z: state.position.z }, heading: state.heading, edges,
+      vehicles: traffic.vehicles.map(vehicle => traffic.pose(vehicle)).filter(Boolean), target: { x: target.x, z: target.z }, colors: MINIMAP_COLORS,
+    });
+  }
+
   function updateMission(state) {
     const mission = MISSIONS[missionIndex], distance = distanceTo(state.position, mission);
     if (arrived(state.position, mission)) {
@@ -629,6 +645,7 @@ export async function mountWorld(root, thumbnail, signal) {
     updateEntrance(state.position);
     if (!paused) missionClock += dt;
     updateMission(state);
+    drawMinimap(state);
     if (fixedView) { camera.position.set(...fixedView.position); camera.lookAt(...fixedView.target); } else placeCamera(state, dt);
     const tx = Math.floor(state.position.x / TILE_SIZE), tz = Math.floor(state.position.z / TILE_SIZE);
     carTile = [tx, tz];

@@ -34,6 +34,9 @@ try {
   // People walk the footways around the car.
   await page.waitForFunction(() => document.querySelector('.drive-stage').inspectWorld().people >= 2, undefined, { polling: 1000, timeout: 150_000 });
 
+  // The minimap draws the roads around the car.
+  assert.equal(await page.locator(".drive-minimap").evaluate(canvas => { const data = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height).data; let lit = 0; for (let i = 0; i < data.length; i += 4) if (data[i] > 150) lit++; return lit > 200; }), true, "minimap has roads");
+
   // The time button steps through morning, noon, evening and night.
   await page.locator(".world-time").click();
   assert.ok([8, 13, 18.5, 22].includes(Math.round((await inspect()).hour * 2) / 2), "time jumped to a preset");
