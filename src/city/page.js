@@ -201,18 +201,32 @@ export async function mountCity(root, thumbnail, signal) {
     const model = vehicleKit.get(name);
     if (!model) continue;
     const list = [];
-    for (let i = 0; i < count; i++) list.push({ s: random() * ring.length, speed: speed + random() * 2, color: /bus|van/.test(name) ? 0xf4f4f0 : paints[Math.floor(random() * paints.length)], x: 0, z: 0, yaw: 0 });
+    for (let i = 0; i < count; i++) list.push({ s: random() * ring.length, speed: speed + random() * 2, base: speed + random() * 2, size: /bus/.test(name) ? 5.5 : 2.4, color: /bus|van/.test(name) ? 0xf4f4f0 : paints[Math.floor(random() * paints.length)], x: 0, z: 0, yaw: 0 });
     const instanced = instanceModel(model, list.map(v => ({ x: 0, z: 0 })), { dynamic: true });
     for (const mesh of instanced.meshes) scene.add(mesh);
     fleets.push({ list, instanced });
     cars.push(...list);
   }
   function updateTraffic(dt) {
+    // Traffic yields: a vehicle slows to a stop for anything (the player on foot or in the Saga) just ahead of it, and the Saga is pushed out of vehicles.
+    const subjects = [{ x: player.x, z: player.z }];
     for (const { list, instanced } of fleets) {
       for (const v of list) {
+        const fx = Math.sin(v.yaw), fz = Math.cos(v.yaw);
+        let target = v.base;
+        for (const other of subjects) {
+          const dx = other.x - v.x, dz = other.z - v.z;
+          const ahead = dx * fx + dz * fz, side = Math.abs(dx * fz - dz * fx);
+          if (ahead > 0 && ahead < 8 + v.speed * 1.4 && side < 2.6) target = 0;
+        }
+        v.speed += clamp(target - v.speed, -12 * dt, 4 * dt);
         v.s = (v.s + v.speed * dt) % ring.length;
         const pose = sample(ring, v.s, -2.6);
         v.x = pose.x; v.z = pose.z; v.yaw = pose.heading;
+        if (mode === "drive") {
+          const dx = drive.x - v.x, dz = drive.z - v.z, d = Math.hypot(dx, dz), min = v.size / 2 + 1.1;
+          if (d < min && d > 0.01) { drive.x += (dx / d) * (min - d); drive.z += (dz / d) * (min - d); drive.speed *= 0.5; if (Math.abs(drive.speed) > 2) audio.bump(); }
+        }
       }
       instanced.write(list.map(v => ({ x: v.x, z: v.z, y: 0.12, yaw: v.yaw, color: v.color })));
     }
@@ -382,7 +396,7 @@ export async function mountCity(root, thumbnail, signal) {
   };
   const observer = new ResizeObserver(resize); observer.observe(stage); resize();
   onLanguageChange(() => { runButton.textContent = t("city.run"); }, signal);
-  stage.inspectCity = () => ({ hour, mode, task: task?.clip ?? null, props: Boolean(props), car: { x: drive.x, z: drive.z, speed: drive.speed }, pedestrians: pedestrians?.count ?? 0, x: player.x, z: player.z, yaw: player.yaw, clip: player.clip, speed: player.speed, triangles: renderer.info.render.triangles, calls: renderer.info.render.calls, place: placeLabel.textContent });
+  stage.inspectCity = () => ({ traffic: cars.map(v => ({ x: v.x, z: v.z, yaw: v.yaw, speed: v.speed, base: v.base })), hour, mode, task: task?.clip ?? null, props: Boolean(props), car: { x: drive.x, z: drive.z, speed: drive.speed }, pedestrians: pedestrians?.count ?? 0, x: player.x, z: player.z, yaw: player.yaw, clip: player.clip, speed: player.speed, triangles: renderer.info.render.triangles, calls: renderer.info.render.calls, place: placeLabel.textContent });
   stage.teleport = (x, z) => { player.x = x; player.z = z; };
   stage.dataset.state = "ready"; stage.setAttribute("aria-busy", "false");
   stage.querySelector(".city-loading").remove(); root.querySelector(".city-poster").remove();
