@@ -14,6 +14,10 @@ test("every map tile builds into finite geometry (crossings, buildings, roads)",
       const position = geometry.attributes.position.array;
       assert.ok(position.length % 9 === 0, `${file}: whole triangles`);
       assert.ok(position.every(Number.isFinite), `${file}: finite positions`);
+      if (geometry === built.buildings) {
+        const uv = geometry.attributes.uv;
+        assert.ok(uv && uv.count === geometry.attributes.position.count && uv.array.every(Number.isFinite), `${file}: one finite UV per building vertex`);
+      }
     }
   }
   assert.ok(crossings > 100);

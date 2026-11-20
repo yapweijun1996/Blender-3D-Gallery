@@ -8,19 +8,22 @@ const WALLS = [0xd9d4c8, 0xc9cfd3, 0xe0d2b8, 0xb9c4c9, 0xcfc5c0, 0xd6dad0].map(h
 const ROOFS = [0x8e8f91, 0x7b8085, 0x9a8f86].map(hex => new Color(hex));
 
 /** Collects triangles with a colour each, then builds one non-indexed geometry. */
-function createBatch() {
-  const positions = [], colors = [];
+function createBatch({ uv = false } = {}) {
+  const positions = [], colors = [], uvs = [];
   return {
     get empty() { return positions.length === 0; },
-    triangle(a, b, c, color) {
+    /** Optional texture coordinates [u, v] per corner (only kept when the batch was made with uv: true). */
+    triangle(a, b, c, color, uva = [0, 0], uvb = [0, 0], uvc = [0, 0]) {
       positions.push(...a, ...b, ...c);
       for (let i = 0; i < 3; i++) colors.push(color.r, color.g, color.b);
+      if (uv) uvs.push(...uva, ...uvb, ...uvc);
     },
-    quad(a, b, c, d, color) { this.triangle(a, b, c, color); this.triangle(a, c, d, color); },
+    quad(a, b, c, d, color, uva, uvb, uvc, uvd) { this.triangle(a, b, c, color, uva, uvb, uvc); this.triangle(a, c, d, color, uva, uvc, uvd); },
     build() {
       const geometry = new BufferGeometry();
       geometry.setAttribute("position", new BufferAttribute(new Float32Array(positions), 3));
       geometry.setAttribute("color", new BufferAttribute(new Float32Array(colors), 3));
+      if (uv) geometry.setAttribute("uv", new BufferAttribute(new Float32Array(uvs), 2));
       geometry.computeVertexNormals();
       geometry.computeBoundingSphere();
       return geometry;
@@ -60,14 +63,23 @@ function fillPolygon(batch, ring, y, color) {
   }
 }
 
+// Facade texture coordinates: one window bay is BAY metres wide and one storey FLOOR metres high; u runs along the wall, v up it.
+// The roof samples a plain corner of the facade texture (see facadeTexture in page.js).
+export const BAY = 3.6, FLOOR = 3.2;
+const PLAIN = [0.03, 0.03];
+
 function extrude(batch, ring, height, wall, roof) {
   const { points, triangles } = triangulate(ring);
+  const floors = Math.max(1, Math.round(height / FLOOR));
+  let along = 0;
   for (let i = 0; i < points.length; i++) {
     const a = points[i], b = points[(i + 1) % points.length];
-    batch.quad([a.x, 0, a.y], [b.x, 0, b.y], [b.x, height, b.y], [a.x, height, a.y], wall);
+    const length = Math.hypot(b.x - a.x, b.y - a.y), u0 = along / BAY, u1 = (along + length) / BAY;
+    batch.quad([a.x, 0, a.y], [b.x, 0, b.y], [b.x, height, b.y], [a.x, height, a.y], wall, [u0, 0], [u1, 0], [u1, floors], [u0, floors]);
+    along += length;
   }
   for (const [a, b, c] of triangles) {
-    batch.triangle([points[a].x, height, points[a].y], [points[c].x, height, points[c].y], [points[b].x, height, points[b].y], roof);
+    batch.triangle([points[a].x, height, points[a].y], [points[c].x, height, points[c].y], [points[b].x, height, points[b].y], roof, PLAIN, PLAIN, PLAIN);
   }
 }
 
@@ -118,7 +130,7 @@ export function buildingMesh(ring, height) {
 export function buildTile(tile, { hide = () => false } = {}) {
   const [ox, oz] = origin(tile);
   const shift = points => points.map(([x, z]) => [x + ox, z + oz]);
-  const ground = createBatch(), buildings = createBatch();
+  const ground = createBatch(), buildings = createBatch({ uv: true });
 
   for (const park of tile.parks ?? []) fillPolygon(ground, shift(park.geometry), PARK_Y, PARK);
   for (const water of tile.water ?? []) fillPolygon(ground, shift(water.geometry), WATER_Y, WATER);

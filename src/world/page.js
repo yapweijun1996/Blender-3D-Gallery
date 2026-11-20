@@ -1,5 +1,5 @@
 import {
-  AmbientLight, BoxGeometry, Color, DirectionalLight, DoubleSide, Fog, Group, HemisphereLight, InstancedMesh, Matrix4, Mesh, MeshLambertMaterial, PerspectiveCamera, PlaneGeometry, Quaternion, Scene, Vector3, WebGLRenderer,
+  AmbientLight, BoxGeometry, CanvasTexture, Color, DirectionalLight, DoubleSide, Fog, Group, HemisphereLight, InstancedMesh, Matrix4, Mesh, MeshLambertMaterial, PerspectiveCamera, PlaneGeometry, Quaternion, RepeatWrapping, Scene, SRGBColorSpace, Vector3, WebGLRenderer,
 } from "three";
 import { localize, mountMarkup, t } from "../i18n/index.js";
 import { disposeModels } from "../chibi-dressup/view.js";
@@ -31,6 +31,32 @@ const PLAYER_TOP_SPEED = 28; // m/s, 100 km/h: the fastest limit on the mapped r
 const SOLID_RADIUS = 1; // in tiles around the car; phones load a smaller ring of tiles
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const tileKey = (x, z) => `${x}_${z}`;
+
+/**
+ * One window bay and storey as a repeating texture: pale wall with a glazed window and a floor band. The bottom-left corner
+ * stays plain wall (roofs sample it). The wall colour of each building multiplies it through the vertex colours.
+ */
+function facadeTexture() {
+  const size = 128, canvas = document.createElement("canvas");
+  canvas.width = canvas.height = size;
+  const context = canvas.getContext("2d");
+  context.fillStyle = "#ffffff";
+  context.fillRect(0, 0, size, size);
+  const glass = context.createLinearGradient(0, 30, 0, 100);
+  glass.addColorStop(0, "#5d7585");
+  glass.addColorStop(1, "#8fa8b6");
+  context.fillStyle = glass;
+  context.fillRect(30, 30, 82, 66);
+  context.fillStyle = "#c9ced1";
+  context.fillRect(30, 62, 82, 3); // transom
+  context.fillStyle = "#dfe2e4";
+  context.fillRect(0, size - 6, size, 6); // floor band
+  const texture = new CanvasTexture(canvas);
+  texture.wrapS = texture.wrapT = RepeatWrapping;
+  texture.colorSpace = SRGBColorSpace;
+  texture.anisotropy = 4;
+  return texture;
+}
 
 async function fetchTile(key, signal) {
   const url = tileUrls[`../../models/world/tiles/${key}.json`];
@@ -108,7 +134,7 @@ export async function mountWorld(root, thumbnail, signal) {
   stage.append(renderer.domElement);
 
   const groundMaterial = new MeshLambertMaterial({ vertexColors: true, side: DoubleSide });
-  const buildingMaterial = new MeshLambertMaterial({ vertexColors: true, side: DoubleSide });
+  const buildingMaterial = new MeshLambertMaterial({ vertexColors: true, side: DoubleSide, map: facadeTexture() });
   const flatGround = new Mesh(new PlaneGeometry(6000, 6000).rotateX(-Math.PI / 2), new MeshLambertMaterial({ color: 0x8aa06f }));
   flatGround.position.y = -0.3;
   scene.add(flatGround);
