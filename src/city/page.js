@@ -24,6 +24,20 @@ const KIT = ["hdb_block", "hdb_void_deck", "hdb_coffee_shop", "provision_shop", 
   "signal_pole", "zebra_crossing", "street_sign", "heritage_lamp", "bench", "block_sign", "playground_slide", "playground_swing", "rain_tree_hd", "angsana_tree",
   "tembusu_tree_hd", "frangipani_tree", "coconut_palm"];
 const WALK = 2.4, RUN = 5.6, SCALE = 1.45, RADIUS = 0.45;
+// A day in the neighbourhood: sky, ground, sun and lamps by the hour (one hour passes in 40 seconds).
+const DAY = [
+  { hour: 0, sky: 0x0b1530, ground: 0x26332a, sun: 0.25, lamp: 1 }, { hour: 5.5, sky: 0x2e3566, ground: 0x34402f, sun: 0.4, lamp: 1 },
+  { hour: 6.5, sky: 0xe8a77a, ground: 0x60734a, sun: 1.6, lamp: 0.3 }, { hour: 9, sky: 0x9fd0f2, ground: 0x6f8a4f, sun: 2.6, lamp: 0 },
+  { hour: 15, sky: 0xa9d6f5, ground: 0x6f8a4f, sun: 2.6, lamp: 0 }, { hour: 17.5, sky: 0xf2b27c, ground: 0x6f7a55, sun: 2.2, lamp: 0 },
+  { hour: 18.8, sky: 0x7a5a87, ground: 0x4b5545, sun: 1.0, lamp: 0.7 }, { hour: 19.8, sky: 0x1c2250, ground: 0x2a3030, sun: 0.4, lamp: 1 },
+  { hour: 24, sky: 0x0b1530, ground: 0x26332a, sun: 0.25, lamp: 1 },
+];
+function dayAt(hour) {
+  let i = 0;
+  while (i < DAY.length - 2 && hour > DAY[i + 1].hour) i++;
+  const a = DAY[i], b = DAY[i + 1], k = clamp((hour - a.hour) / (b.hour - a.hour), 0, 1);
+  return { sky: new Color(a.sky).lerp(new Color(b.sky), k), ground: new Color(a.ground).lerp(new Color(b.ground), k), sun: a.sun + (b.sun - a.sun) * k, lamp: a.lamp + (b.lamp - a.lamp) * k };
+}
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const rng = seed => () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
 
@@ -51,6 +65,8 @@ export async function mountCity(root, thumbnail, signal) {
         <button type="button" class="city-run" aria-pressed="false" data-i18n="city.run"></button>
         <button type="button" class="city-action" hidden></button>
         <p class="city-toast" role="status" hidden></p>
+        <p class="city-clock"></p>
+        <div class="city-emotes"><button type="button" data-emote="wave"></button><button type="button" data-emote="dance"></button></div>
         <button type="button" class="city-sound" aria-pressed="true" data-i18n="drive.sound"></button>
       </div>
     </div>
@@ -74,7 +90,10 @@ export async function mountCity(root, thumbnail, signal) {
   const scene = new Scene();
   scene.background = new Color(0xf2c48f);
   scene.fog = new Fog(0xf2c48f, 140, 520);
-  scene.add(new HemisphereLight(0xffffff, 0x6f7a55, 1.5), new DirectionalLight(0xffe2b8, 2.2).translateX(-120).translateY(180).translateZ(90));
+  const hemi = new HemisphereLight(0xffffff, 0x6f7a55, 1.5), sun = new DirectionalLight(0xffe2b8, 2.2).translateX(-120).translateY(180).translateZ(90);
+  scene.add(hemi, sun);
+  const lampMaterials = new Set();
+  for (const model of [...kit.values(), ...vehicleKit.values()]) for (const part of model.parts) for (const material of [part.material].flat()) if (material.name === "light") lampMaterials.add(material);
   const ground = new Mesh(new PlaneGeometry(900, 900), new MeshLambertMaterial({ color: 0x6f8a4f }));
   ground.rotation.x = -Math.PI / 2;
   scene.add(ground);
@@ -238,6 +257,17 @@ export async function mountCity(root, thumbnail, signal) {
   }, { signal });
   addEventListener("pointerup", event => { if (event.pointerId === orbitId) orbitId = null; }, { signal });
 
+  let hour = 17.5;
+  const clockLabel = stage.querySelector(".city-clock");
+  function setHour(value) {
+    hour = ((value % 24) + 24) % 24;
+    const state = dayAt(hour);
+    scene.background = state.sky; scene.fog.color.copy(state.sky); ground.material.color.copy(state.ground);
+    sun.intensity = state.sun; hemi.intensity = 0.85 + state.sun * 0.28;
+    for (const material of lampMaterials) { material.emissive?.copy(material.color); material.emissiveIntensity = state.lamp * 1.6; }
+    clockLabel.textContent = `${String(Math.floor(hour)).padStart(2, "0")}:${String(Math.floor((hour % 1) * 60)).padStart(2, "0")}`;
+  }
+  setHour(hour);
   const places = [["public_market", "city.place.hawker"], ["hdb_coffee_shop", "city.place.coffee"], ["provision_shop", "city.place.provision"], ["hdb_void_deck", "city.place.voiddeck"], ["mrt_entrance", "city.place.mrt"]];
   const placeList = BUILDINGS.filter(b => places.some(([m]) => m === b.model)).map(b => ({ ...b, key: places.find(([m]) => m === b.model)[1], r: Math.max(kit.get(b.model).size.x * b.sx, kit.get(b.model).size.z * b.sz) * 0.55 }));
   let last = performance.now(), frame = 0, running2 = true;
@@ -251,6 +281,13 @@ export async function mountCity(root, thumbnail, signal) {
   let task = null; // { clip, until }
   const toast = stage.querySelector(".city-toast");
   let toastUntil = 0;
+  function emote(clip) {
+    if (mode !== "walk" || task) return;
+    task = { clip, until: performance.now() + 4200 };
+    player.clip = clip; rig.select(clip);
+  }
+  for (const button of stage.querySelectorAll("[data-emote]")) { localize(button, `clip.${button.dataset.emote}`); button.addEventListener("click", () => emote(button.dataset.emote)); }
+  addEventListener("keydown", event => { if (event.key === "z" || event.key === "Z") emote("wave"); if (event.key === "x" || event.key === "X") emote("dance"); }, { signal });
   function useStation() {
     const station = stationNear();
     if (!station || task) return;
@@ -314,6 +351,7 @@ export async function mountCity(root, thumbnail, signal) {
       body.scene.rotation.y = player.yaw;
     }
     if (car) { car.position.set(drive.x, 0.12, drive.z); car.rotation.y = drive.yaw; }
+    setHour(hour + dt / 40);
     updateTraffic(dt);
     ringS = locate(ring, player.x, player.z, ringS, 120).distance;
     pedestrians?.update(dt, ringS);
@@ -344,7 +382,7 @@ export async function mountCity(root, thumbnail, signal) {
   };
   const observer = new ResizeObserver(resize); observer.observe(stage); resize();
   onLanguageChange(() => { runButton.textContent = t("city.run"); }, signal);
-  stage.inspectCity = () => ({ mode, task: task?.clip ?? null, props: Boolean(props), car: { x: drive.x, z: drive.z, speed: drive.speed }, pedestrians: pedestrians?.count ?? 0, x: player.x, z: player.z, yaw: player.yaw, clip: player.clip, speed: player.speed, triangles: renderer.info.render.triangles, calls: renderer.info.render.calls, place: placeLabel.textContent });
+  stage.inspectCity = () => ({ hour, mode, task: task?.clip ?? null, props: Boolean(props), car: { x: drive.x, z: drive.z, speed: drive.speed }, pedestrians: pedestrians?.count ?? 0, x: player.x, z: player.z, yaw: player.yaw, clip: player.clip, speed: player.speed, triangles: renderer.info.render.triangles, calls: renderer.info.render.calls, place: placeLabel.textContent });
   stage.teleport = (x, z) => { player.x = x; player.z = z; };
   stage.dataset.state = "ready"; stage.setAttribute("aria-busy", "false");
   stage.querySelector(".city-loading").remove(); root.querySelector(".city-poster").remove();

@@ -61,6 +61,13 @@ try {
   const after = await inspect();
   assert.ok(Math.hypot(after.x - before.x, after.z - before.z) > 0.2, "the chibi moved");
 
+  // A day passes and the emotes play.
+  await until(() => document.querySelector(".city-stage").inspectCity().hour !== 17.5);
+  assert.match(await page.locator(".city-clock").textContent(), /^\d\d:\d\d$/);
+  await page.locator('[data-emote="wave"]').click();
+  await until(() => document.querySelector(".city-stage").inspectCity().clip === "wave");
+  await until(() => document.querySelector(".city-stage").inspectCity().task === null, 60);
+
   // The hawker centre label, then ordering food at a stall.
   await teleport(0, -12);
   await until(() => document.querySelector(".city-place").textContent === "Hawker centre");
