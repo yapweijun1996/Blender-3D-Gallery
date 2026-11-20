@@ -27,12 +27,20 @@ import "./style.css";
 // with a car driven by the Rapier vehicle physics (crashes, flips). Built from models/world/tiles (scripts/world/build-tiles.mjs).
 const tileUrls = import.meta.glob("../../models/world/tiles/*.json", { eager: true, query: "?url", import: "default" });
 const kitUrls = import.meta.glob([
-  "../../models/drive/kit/car_saga.glb", "../../models/drive/kit/car_hatchback_hd.glb", "../../models/sg-{taxi,bus-double,lorry,police,ambulance,school-bus}-hd/*.glb", "../../models/sg-rain-tree/*.glb", "../../models/sg-angsana/*.glb", "../../models/sg-coconut-palm/*.glb",
+  "../../models/drive/kit/car_saga.glb", "../../models/drive/kit/car_hatchback_hd.glb", "../../models/drive/kit/motorbike_hd.glb", "../../models/sg-{taxi,bus-double,lorry,police,ambulance,school-bus}-hd/*.glb", "../../models/sg-rain-tree/*.glb", "../../models/sg-angsana/*.glb", "../../models/sg-coconut-palm/*.glb",
   "../../models/sg-road-light/*.glb", "../../models/sg-bus-shelter-sbs/*.glb", "../../models/sg-bus-stop-flag/*.glb", "../../models/sg-station-sign/*.glb", "../../models/sg-supertree-{tall,mid,short}/*.glb",
 ], { eager: true, query: "?url", import: "default" });
 const landmarkUrls = import.meta.glob("../../models/sg-{marina-bay-sands-towers,marina-bay-sands-podium,esplanade-domes,esplanade-base,merlion,merlion-park,artscience-museum,helix-bridge,flower-dome,cloud-forest,the-float}/*.glb", { eager: true, query: "?url", import: "default" });
-const KIT = { car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light", bus_shelter: "sg-bus-shelter-sbs/sg-bus-shelter-sbs", bus_flag: "sg-bus-stop-flag/sg-bus-stop-flag", station_sign: "sg-station-sign/sg-station-sign", "sg-supertree-tall": "sg-supertree-tall/sg-supertree-tall", "sg-supertree-mid": "sg-supertree-mid/sg-supertree-mid", "sg-supertree-short": "sg-supertree-short/sg-supertree-short" };
+const KIT = { motorbike_hd: "drive/kit/motorbike_hd", car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light", bus_shelter: "sg-bus-shelter-sbs/sg-bus-shelter-sbs", bus_flag: "sg-bus-stop-flag/sg-bus-stop-flag", station_sign: "sg-station-sign/sg-station-sign", "sg-supertree-tall": "sg-supertree-tall/sg-supertree-tall", "sg-supertree-mid": "sg-supertree-mid/sg-supertree-mid", "sg-supertree-short": "sg-supertree-short/sg-supertree-short" };
 const TREES = ["rain_tree", "angsana", "coconut_palm"];
+// The cars the player can pick: the model, the physics type and how far the chase camera stays back.
+const PLAYER_VEHICLES = [
+  { id: "saga", model: "car_saga", type: "sedan", back: 8.5 }, { id: "hatchback", model: "car_hatchback_hd", type: "hatchback", back: 8 },
+  { id: "taxi", model: "sg-taxi-hd", type: "sedan", back: 8.5 }, { id: "police", model: "sg-police-hd", type: "sedan", back: 8.5 },
+  { id: "ambulance", model: "sg-ambulance-hd", type: "van", back: 9.5 }, { id: "school-bus", model: "sg-school-bus-hd", type: "bus", back: 13 },
+  { id: "double-bus", model: "sg-bus-double-hd", type: "bus", back: 15 }, { id: "lorry", model: "sg-lorry-hd", type: "lorry", back: 12 },
+  { id: "motorbike", model: "motorbike_hd", type: "motorbike", back: 6 },
+];
 const PLAYER_TOP_SPEED = 28; // m/s, 100 km/h: the fastest limit on the mapped roads is 90 km/h
 const SOLID_RADIUS = 1; // in tiles around the car; phones load a smaller ring of tiles
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -142,6 +150,7 @@ export async function mountWorld(root, thumbnail, signal) {
       <button type="button" class="drive-pause" data-i18n="common.pause"></button>
       <button type="button" class="drive-horn" data-i18n="drive.horn"></button>
       <button type="button" class="drive-reset" data-i18n="world.reset"></button>
+      <button type="button" class="world-vehicle"></button>
       <button type="button" class="world-time"></button>
       <button type="button" class="world-next" data-i18n="world.mission.next"></button>
       <button type="button" class="drive-sound" aria-pressed="true" data-i18n="drive.sound"></button>
@@ -321,13 +330,34 @@ export async function mountWorld(root, thumbnail, signal) {
     }
   }
 
-  const vehicle = physics.addVehicle({ type: "sedan", topSpeed: PLAYER_TOP_SPEED, position: { x: start.x, y: 1.2, z: start.z }, heading: start.heading });
-  for (let i = 0; i < 90; i++) physics.step(1 / 60);
-  const restHeight = vehicle.getState().position.y; // the chassis centre height when standing on the road
-  const car = kit.has("car_saga") ? cloneModel(kit.get("car_saga")) : new Group();
+  // The player's vehicle can be swapped (the Vehicle button): the body is rebuilt where the old one stood, the model replaced.
+  let vehicle = null, restHeight = 0, playerChoice = 0, car = null;
   const carHolder = new Group();
-  carHolder.add(car);
   scene.add(carHolder);
+  function chooseVehicle(index, at = null) {
+    const choice = PLAYER_VEHICLES[((index % PLAYER_VEHICLES.length) + PLAYER_VEHICLES.length) % PLAYER_VEHICLES.length];
+    const place = at ?? { x: start.x, z: start.z, heading: start.heading };
+    if (vehicle) physics.removeVehicle(vehicle);
+    vehicle = physics.addVehicle({ type: choice.type, topSpeed: Math.min(PLAYER_TOP_SPEED, 47), position: { x: place.x, y: 1.4, z: place.z }, heading: place.heading });
+    for (let i = 0; i < 90; i++) physics.step(1 / 60);
+    restHeight = vehicle.getState().position.y; // the chassis centre height when standing on the road
+    if (car) carHolder.remove(car);
+    car = kit.has(choice.model) ? cloneModel(kit.get(choice.model)) : new Group();
+    carHolder.add(car);
+    playerChoice = PLAYER_VEHICLES.indexOf(choice);
+    cameraBack = choice.back;
+    vehicleButton.textContent = t("world.vehicle", { name: t(`world.vehicle.${choice.id}`) });
+    try { localStorage.setItem("sg-world-vehicle", choice.id); } catch { /* Not saved. */ }
+  }
+  let cameraBack = 8.5;
+  const vehicleButton = root.querySelector(".world-vehicle");
+  let savedVehicle = "saga";
+  try { savedVehicle = localStorage.getItem("sg-world-vehicle") ?? "saga"; } catch { /* Use the default. */ }
+  chooseVehicle(Math.max(0, PLAYER_VEHICLES.findIndex(item => item.id === savedVehicle)));
+  vehicleButton.addEventListener("click", () => {
+    const state = vehicle.getState();
+    chooseVehicle(playerChoice + 1, { x: state.position.x, z: state.position.z, heading: state.heading });
+  });
 
   // Traffic: simulated on the road graph of the loaded tiles, drawn with one instanced set per vehicle model and
   // solid (a kinematic box) for the physics when it is near the player's car.
@@ -506,7 +536,7 @@ export async function mountWorld(root, thumbnail, signal) {
     delta = Math.atan2(Math.sin(delta), Math.cos(delta));
     camHeading += delta * (camReady ? Math.min(1, dt * 2.5) : 1);
     camReady = true;
-    const back = 8.5 + clamp(state.speed * 0.12, 0, 4), up = 3.4 + clamp(state.speed * 0.04, 0, 1.4);
+    const back = cameraBack + clamp(state.speed * 0.12, 0, 4), up = 3.4 + clamp(state.speed * 0.04, 0, 1.4);
     camPosition.set(state.position.x - Math.sin(camHeading) * back, state.position.y + up, state.position.z - Math.cos(camHeading) * back);
     camTarget.set(state.position.x + Math.sin(camHeading) * 6, state.position.y + 1.2, state.position.z + Math.cos(camHeading) * 6);
     camera.position.copy(camPosition);
@@ -687,7 +717,7 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, vehicleId: PLAYER_VEHICLES[playerChoice].id, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.hurt = amount => vehicle.crash.addImpact((4 + amount * 40) * 1300); // test hook: damage the car by about `amount`

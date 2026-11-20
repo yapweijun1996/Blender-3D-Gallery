@@ -72,6 +72,19 @@ try {
   assert.ok(driven.speed > 6 && driven.speed <= 28.5, `speed ${driven.speed} (capped at 100 km/h)`);
   assert.equal(driven.flipped, false);
 
+  // Every vehicle the player can pick drives (the button steps through the nine of them and wraps round).
+  const seen = new Set();
+  for (let i = 0; i < 9; i++) {
+    await page.locator(".world-vehicle").click();
+    const chosen = await inspect();
+    seen.add(chosen.vehicleId);
+    await stage.evaluate((element, [x, z, heading]) => element.teleport(x, z, heading), [first_x, first_z, first.start.heading]);
+    const run = await stage.evaluate(element => element.simulate(7, { throttle: 1 }));
+    assert.ok(run.speed > 2, `${chosen.vehicleId} drives: speed ${run.speed}`);
+    assert.equal(run.flipped, false, `${chosen.vehicleId} stays upright`);
+  }
+  assert.equal(seen.size, 9, "nine different vehicles");
+
   // A flipped car is reported and the reset button rights it.
   await page.screenshot({ path: process.env.WORLD_SHOT ?? "/tmp/world-drive.png" });
   assert.ok((await page.locator(".drive-speed").textContent()) !== undefined);
