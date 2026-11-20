@@ -77,3 +77,23 @@ export function clipRing(ring, bounds) {
   }
   return Math.abs(ringArea(points)) > 1e-6 ? [...points, points[0]] : [];
 }
+
+/** Distance along a polyline to the point on it nearest to `point` (used to place a clipped fragment on its full edge). */
+export function alongPolyline(points, point) {
+  let best = { distance: Infinity, along: 0 }, travelled = 0;
+  for (let i = 1; i < points.length; i++) {
+    const a = points[i - 1], b = points[i], sx = b[0] - a[0], sz = b[1] - a[1], span = sx * sx + sz * sz;
+    const length = Math.sqrt(span);
+    const t = span === 0 ? 0 : Math.max(0, Math.min(1, ((point[0] - a[0]) * sx + (point[1] - a[1]) * sz) / span));
+    const distance = Math.hypot(point[0] - (a[0] + sx * t), point[1] - (a[1] + sz * t));
+    if (distance < best.distance) best = { distance, along: travelled + t * length };
+    travelled += length;
+  }
+  return best.along;
+}
+
+export function polylineLength(points) {
+  let total = 0;
+  for (let i = 1; i < points.length; i++) total += Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]);
+  return total;
+}

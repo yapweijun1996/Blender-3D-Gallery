@@ -6,7 +6,7 @@ import { parseArgs } from 'node:util';
 import { buildRoadGraph, junctionArmDepth, offsetPolyline, simplifyPolyline } from '../../src/world/network/graph.js';
 import { distinctPoints, samePoint } from '../../src/world/network/geometry.js';
 import { ORIGIN, projectOsm } from '../../src/world/network/project.js';
-import { clipLine, clipRing, ringArea } from './tile-geometry.mjs';
+import { alongPolyline, clipLine, clipRing, polylineLength, ringArea } from './tile-geometry.mjs';
 
 export const TILE_SIZE = 250;
 export const MAX_TILE_BYTES = 120_000;
@@ -86,7 +86,7 @@ function tileGeometry() {
         for (const piece of pieces) {
           const geometry = distinctPoints(piece.map(point => tilePoint(point, origin)));
           if (polygon ? geometry.length < 4 || !ringArea(geometry) : geometry.length < 2) continue;
-          add(x, z, layer, makeFeature(feature, geometry, origin));
+          add(x, z, layer, makeFeature(feature, geometry, origin, piece));
         }
       }
     }
@@ -116,7 +116,12 @@ export function buildTileFiles(input) {
 
   const patchedNodes = new Set(graph.junctions.filter(junction => junction.polygon.length).map(junction => junction.nodeId));
   for (const { points, laneCenterlines, width, ...edge } of graph.edges) {
-    addShape('roads', { ...edge, width: round(width) }, points, false);
+    if (edge.bridge && edge.layer > 0) {
+      // A bridge is raised at run time (src/world/bridges.js): each fragment records where it starts along the whole edge.
+      const edgeLength = polylineLength(points);
+      addShape('roads', { ...edge, width: round(width), edgeLength: round(edgeLength) }, points, false,
+        (base, geometry, origin, piece) => ({ ...base, geometry, edgeStart: round(alongPolyline(points, piece[0])) }));
+    } else addShape('roads', { ...edge, width: round(width) }, points, false);
     const kerbLine = kerbCenterline(points, width, patchedNodes.has(edge.from), patchedNodes.has(edge.to));
     for (const [side, factor] of [['left', 1], ['right', -1]]) {
       addShape('kerbs', { road: edge.id, side, layer: edge.layer }, offsetPolyline(kerbLine, factor * width / 2), false);

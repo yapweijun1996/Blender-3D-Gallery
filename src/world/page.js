@@ -227,7 +227,7 @@ export async function mountWorld(root, thumbnail, signal) {
   function buildEntry(x, z, data) {
     const built = buildTile(data, { hide: hiddenOutline });
     const group = new Group();
-    const entry = { x, z, data, busStops: built.busStops, entrances: built.entrances, group, solids: built.solids, colliders: null, instances: [], geometries: [] };
+    const entry = { x, z, data, bridgeSolids: built.bridgeSolids, busStops: built.busStops, entrances: built.entrances, group, solids: built.solids, colliders: null, instances: [], geometries: [] };
     if (built.ground) { const mesh = new Mesh(built.ground, groundMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.ground); }
     if (built.towers) { const mesh = new Mesh(built.towers, towerMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.towers); }
     if (built.buildings) { const mesh = new Mesh(built.buildings, buildingMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.buildings); }
@@ -240,10 +240,14 @@ export async function mountWorld(root, thumbnail, signal) {
   }
   function setColliders(entry, wanted) {
     if (wanted && !entry.colliders) {
-      entry.colliders = entry.solids.map(solid => {
-        const { vertices, indices } = buildingMesh(solid.ring, solid.height);
-        return physics.addStaticTrimesh({ vertices, indices });
-      });
+      entry.colliders = [
+        ...entry.solids.map(solid => {
+          const { vertices, indices } = buildingMesh(solid.ring, solid.height);
+          return physics.addStaticTrimesh({ vertices, indices });
+        }),
+        // Raised road decks: the drivable top and the parapets.
+        ...entry.bridgeSolids.map(deck => physics.addStaticTrimesh({ vertices: deck.vertices, indices: deck.indices, friction: 1 })),
+      ];
     } else if (!wanted && entry.colliders) {
       for (const collider of entry.colliders) physics.removeStatic(collider);
       entry.colliders = null;
@@ -402,15 +406,15 @@ export async function mountWorld(root, thumbnail, signal) {
       if (!list) continue;
       const pose = traffic.pose(vehicle);
       if (!pose) continue;
-      list.push({ x: pose.x, y: 0, z: pose.z, yaw: pose.heading });
+      list.push({ x: pose.x, y: pose.y, z: pose.z, yaw: pose.heading });
       alive.add(vehicle.id);
       const near = Math.hypot(pose.x - state.position.x, pose.z - state.position.z) < 55;
       let solid = solidVehicles.get(vehicle.id);
       if (near && !solid) {
-        solid = physics.addKinematicBox({ halfExtents: { x: vehicle.type.width / 2, y: 0.8, z: vehicle.type.length / 2 }, position: { x: pose.x, y: 0.8, z: pose.z }, yaw: pose.heading });
+        solid = physics.addKinematicBox({ halfExtents: { x: vehicle.type.width / 2, y: 0.8, z: vehicle.type.length / 2 }, position: { x: pose.x, y: pose.y + 0.8, z: pose.z }, yaw: pose.heading });
         solidVehicles.set(vehicle.id, solid);
       } else if (!near && solid) { solid.remove(); solidVehicles.delete(vehicle.id); solid = null; }
-      solid?.setPose(pose.x, 0.8, pose.z, pose.heading);
+      solid?.setPose(pose.x, pose.y + 0.8, pose.z, pose.heading);
     }
     for (const [id, solid] of solidVehicles) if (!alive.has(id)) { solid.remove(); solidVehicles.delete(id); }
     for (const [name, set] of trafficSets) set.write(lists.get(name));

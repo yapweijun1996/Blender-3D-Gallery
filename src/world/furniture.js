@@ -9,7 +9,7 @@ const towards = (dx, dz) => Math.atan2(dx, dz);
 export function lampPlacements(graph) {
   const lamps = [];
   for (const edge of graph.edges.values()) {
-    if (!LIGHT_CLASSES.has(edge.class) || edge.length < 60) continue;
+    if (!LIGHT_CLASSES.has(edge.class) || edge.length < 60 || edge.raised) continue; // lamps on bridges would float at ground level
     let flip = false;
     for (let s = 24; s <= edge.length - 24; s += LIGHT_SPACING) {
       const at = sampleEdge(edge, s, 1);

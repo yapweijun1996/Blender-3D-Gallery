@@ -2,6 +2,8 @@
 // choose a road at each junction and stop at red signals. Pure logic (no rendering), driven by update(dt).
 // Roads come from the map tiles (models/world/tiles); an edge is stitched together from its per-tile fragments.
 
+import { bridgeHeight, isBridge } from "./bridges.js";
+
 export const LANE = 3.4;
 const SIGNAL = { green: 24, amber: 3, clear: 2 }; // seconds; two phases take turns
 const STUCK_SECONDS = 45;
@@ -26,22 +28,26 @@ function polylineLength(points) {
   return total;
 }
 
-/** Stitch fragments (already in travel order) end to end into one polyline, or the longest chain when gaps remain. */
+/**
+ * Stitch fragments (already in travel order) end to end into one polyline, or the longest chain when gaps remain.
+ * A fragment is { points, start } where start is how far along the whole edge it begins (bridges only, else 0);
+ * the chain keeps the start of its first fragment.
+ */
 function chain(fragments) {
-  const remaining = fragments.map(fragment => fragment.slice());
+  const remaining = fragments.map(fragment => ({ points: fragment.points.slice(), start: fragment.start }));
   const chains = [];
   while (remaining.length) {
     let current = remaining.shift(), grew = true;
     while (grew) {
       grew = false;
       for (let i = 0; i < remaining.length; i++) {
-        if (close(current.at(-1), remaining[i][0])) { current = current.concat(remaining.splice(i, 1)[0].slice(1)); grew = true; break; }
-        if (close(remaining[i].at(-1), current[0])) { current = remaining.splice(i, 1)[0].concat(current.slice(1)); grew = true; break; }
+        if (close(current.points.at(-1), remaining[i].points[0])) { current = { points: current.points.concat(remaining.splice(i, 1)[0].points.slice(1)), start: current.start }; grew = true; break; }
+        if (close(remaining[i].points.at(-1), current.points[0])) { const before = remaining.splice(i, 1)[0]; current = { points: before.points.concat(current.points.slice(1)), start: before.start }; grew = true; break; }
       }
     }
     chains.push(current);
   }
-  return chains.sort((a, b) => polylineLength(b) - polylineLength(a))[0];
+  return chains.sort((a, b) => polylineLength(b.points) - polylineLength(a.points))[0];
 }
 
 /**
@@ -56,20 +62,22 @@ export function buildTrafficGraph(tiles) {
       if (road.tunnel || road.geometry.length < 2) continue;
       const shifted = road.geometry.map(([x, z]) => [x + tile.x * 250, z + tile.z * 250]);
       const entry = fragments.get(road.id) ?? { road, pieces: [] };
-      entry.pieces.push(shifted);
+      entry.pieces.push({ points: shifted, start: road.edgeStart ?? 0 });
       fragments.set(road.id, entry);
     }
   }
   const edges = new Map(), nodes = new Map();
   const node = id => nodes.get(id) ?? nodes.set(id, { id, forward: [], backward: [], signalised: signalised.has(id) }).get(id);
   for (const [id, { road, pieces }] of fragments) {
-    const points = chain(pieces);
+    const { points, start } = chain(pieces);
     const length = polylineLength(points);
     if (length < 4) continue;
     const edge = {
       id, from: road.from, to: road.to, oneway: road.oneway, lanes: Math.max(1, road.lanes ?? 2), speed: (road.maxspeed ?? 50) / 3.6,
       points, length, width: road.width ?? Math.max(3.4, (road.lanes ?? 2) * LANE), name: road.name, class: road.class,
       complete: pieces.length === 1,
+      // A raised bridge: its deck height follows bridgeHeight() along the whole edge (see bridges.js).
+      raised: isBridge(road), layer: road.layer ?? 0, bridgeStart: start, bridgeLength: road.edgeLength ?? length,
     };
     // Cumulative distance of each point, for sampling.
     edge.cumulative = [0];
@@ -79,6 +87,13 @@ export function buildTrafficGraph(tiles) {
     node(road.to).backward.push(id);
   }
   return { edges, nodes, signalised };
+}
+
+/** Deck height of a vehicle at distance s of its travel along an edge (0 on the ground), for direction +1 or -1. */
+export function heightOnEdge(edge, s, direction = 1) {
+  if (!edge.raised) return 0;
+  const along = direction > 0 ? s : edge.length - s;
+  return bridgeHeight(edge.layer, edge.bridgeStart + Math.max(0, Math.min(edge.length, along)), edge.bridgeLength);
 }
 
 /** Position and unit direction at distance s along an edge (clamped), for travel in the given direction (+1 or -1). */
@@ -141,7 +156,7 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
     const at = sampleEdge(edge, vehicle.s, vehicle.direction);
     const offset = laneOffset(edge, vehicle.direction, vehicle.lane);
     // The left of travel (dx, dz) is (dz, -dx).
-    return { x: at.x + at.dz * offset, z: at.z - at.dx * offset, heading: Math.atan2(at.dx, at.dz), dx: at.dx, dz: at.dz };
+    return { x: at.x + at.dz * offset, y: heightOnEdge(edge, vehicle.s, vehicle.direction), z: at.z - at.dx * offset, heading: Math.atan2(at.dx, at.dz), dx: at.dx, dz: at.dz };
   }
 
   function spawn(near) {
