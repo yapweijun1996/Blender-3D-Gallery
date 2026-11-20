@@ -3,7 +3,8 @@ import { cloneModel, instanceModel } from "./kit.js";
 import { findRoad, sample } from "./route.js";
 
 const ROAD_HALF = 5.5;
-const AHEAD = 480, BEHIND = 160, REFRESH = 30; // metres of route kept in the scene around the car
+let AHEAD = 400, BEHIND = 110; // metres of route kept in the scene around the car (shorter on phones)
+const REFRESH = 30;
 const rng = seed => () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
 const pick = (random, list) => list[Math.floor(random() * list.length)];
 
@@ -64,7 +65,8 @@ function streamed(model, placements) {
   };
 }
 
-export function buildScenery(scene, route, kit) {
+export function buildScenery(scene, route, kit, { low = false } = {}) {
+  AHEAD = low ? 300 : 400; BEHIND = low ? 80 : 110;
   const random = rng(20261120);
   const nearest = proximity(route);
   const lists = new Map();
@@ -88,7 +90,7 @@ export function buildScenery(scene, route, kit) {
   const weighted = list => { const total = list.reduce((s, [, w]) => s + w, 0); let r = random() * total; for (const [name, w] of list) { if ((r -= w) < 0) return name; } return list[0][0]; };
   const tints = [0xf2e9d8, 0xe6d3b3, 0xd9e3e0, 0xf0d9c8, 0xdfe6ee, 0xe9dfc6];
 
-  for (let d = 20; d < route.length - 10; d += 30) {
+  for (let d = 20; d < route.length - 10; d += 36) {
     const zone = zoneAt(route, d);
     // Buildings: one per side every ~30 m, further back on expressways.
     for (const side of [-1, 1]) {
@@ -109,7 +111,7 @@ export function buildScenery(scene, route, kit) {
     }
   }
   // Street trees, rain trees and palms; lamps and guardrails by road type.
-  for (let d = 10; d < route.length - 10; d += 14) {
+  for (let d = 10; d < route.length - 10; d += 17) {
     const zone = zoneAt(route, d);
     if (zone === "water") continue;
     const built = zone === "bay" || zone === "city" || zone === "johor" || zone === "shophouse";
@@ -190,13 +192,11 @@ export function buildLandmarkModels(scene, route, kit, stopDistance) {
   };
   // Marina Bay Sands stands on the bay side of the start, facing the road.
   const focuses = [];
-  const mbs = place("landmark_mbs", 380, -300, -Math.PI / 2, 0.7);
-  if (mbs) focuses.push({ x: mbs.position.x, z: mbs.position.z, y: 40, from: 0, to: 260, rising: false, weight: 0.45 });
+  place("landmark_mbs", 430, -230, -Math.PI / 2, 0.62);
   // Woodlands checkpoint: shift the canopy so one of its lanes is the lane the car drives in.
   const checkpoint = place("landmark_checkpoint", stopDistance + 5, 1.77);
   checkpoint?.traverse(node => { if (/^barrier_/.test(node.name)) barriers.push(node); });
-  const southkey = place("landmark_southkey", route.length - 20, 150, Math.PI / 2, 1.0);
-  if (southkey) focuses.push({ x: southkey.position.x, z: southkey.position.z, y: 60, from: route.length - 700, to: route.length - 60, rising: true, weight: 0.55 });
+  place("landmark_southkey", route.length - 20, 150, Math.PI / 2, 1.0);
   scene.add(group);
   return { group, barriers, hasCheckpoint: Boolean(checkpoint), focuses };
 }

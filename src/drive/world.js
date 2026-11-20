@@ -259,7 +259,7 @@ function buildWater(scene, route) {
   return group;
 }
 
-export function buildWorld(canvasHost, route, kit = new Map()) {
+export function buildWorld(canvasHost, route, kit = new Map(), { low = false } = {}) {
   const useKit = ["building_hdb", "tree_street", "street_lamp", "landmark_checkpoint"].every(name => kit.has(name));
   const scene = new Scene();
   const hemi = new HemisphereLight(0xffffff, 0x445544, 1.1);
@@ -280,7 +280,7 @@ export function buildWorld(canvasHost, route, kit = new Map()) {
   const water = buildWater(scene, route);
   const procedural = useKit ? null : buildSurroundings(scene, route);
   const landmarks = useKit ? { gates: [], stop: (findRoad(route, "Woodlands border checkpoint (cars) - zone 4") ?? findRoad(route, "Woodlands border checkpoint") ?? route.length * 0.75) + 150 } : buildLandmarks(scene, route);
-  const scenery = useKit ? buildScenery(scene, route, kit) : null;
+  const scenery = useKit ? buildScenery(scene, route, kit, { low }) : null;
   const models = useKit ? buildLandmarkModels(scene, route, kit, landmarks.stop) : null;
   if (models) landmarks.gates.push({ stop: landmarks.stop, barriers: models.barriers });
   const focuses = models?.focuses ?? [];

@@ -99,11 +99,22 @@ export async function mountDrive(root, thumbnail, signal) {
   try { mode = localStorage.getItem("drive-jb-mode") === "manual" ? "manual" : "auto"; } catch { /* Use auto. */ }
   const kitScenes = new Set();
   const kit = await loadKit(signal, kitScenes).catch(error => { if (signal.aborted) throw error; console.error("Drive: model kit failed to load", error); return new Map(); });
-  const world = buildWorld(stage, route, kit);
-  const car = kit.has("car_hatchback") ? cloneModel(kit.get("car_hatchback"), 0xd9453a) : buildCar();
+  const lowEnd = matchMedia("(pointer: coarse)").matches; // phones draw a shorter stretch of road and fewer vehicles
+  const world = buildWorld(stage, route, kit, { low: lowEnd });
+  // The player drives the 1985 Proton Saga from the gallery (game-ready copy); the toy car is only a fallback.
+  const playerName = kit.has("car_saga") ? "car_saga" : kit.has("car_hatchback") ? "car_hatchback" : null;
+  const car = playerName === "car_saga" ? cloneModel(kit.get("car_saga")) : playerName ? cloneModel(kit.get(playerName), 0xd9453a) : buildCar();
+  const wheels = { front: [], all: [], radius: 0.3 };
+  car.traverse(node => {
+    if (!/^wheel_/.test(node.name)) return;
+    node.rotation.order = "YXZ";
+    wheels.all.push(node);
+    if (/^wheel_F[LR]?$/.test(node.name)) wheels.front.push(node);
+  });
   world.scene.add(car);
   const { stop: stopDistance, gates } = world.landmarks;
-  const state = { s: 0, speed: 0, offset: -LANE, target: -LANE, passing: null, yaw: 0, stage: "drive", pass: false, stamp: 0, stampDir: 1, done: false, time: 0, bumpAt: -9, redAt: -9, stage0: "drive" };
+  const START = 22; // the road begins at 0, so start a little way along it and the camera has road behind the car
+  const state = { s: START, speed: 0, offset: -LANE, target: -LANE, passing: null, yaw: 0, stage: "drive", pass: false, stamp: 0, stampDir: 1, done: false, time: 0, bumpAt: -9, redAt: -9, stage0: "drive" };
   const audio = createDriveAudio();
   const eventLine = stage.querySelector(".drive-event");
   let eventTimer = 0;
@@ -185,7 +196,7 @@ export async function mountDrive(root, thumbnail, signal) {
     }
   });
   stage.querySelector(".drive-replay").addEventListener("click", () => {
-    Object.assign(state, { s: 0, speed: 0, offset: -LANE, target: -LANE, passing: null, yaw: 0, stage: "drive", pass: false, done: false });
+    Object.assign(state, { s: START, speed: 0, offset: -LANE, target: -LANE, passing: null, yaw: 0, stage: "drive", pass: false, done: false });
     arrival.hidden = true;
     for (const barrier of gateBarriers()) barrier.rotation.z = 0;
   });
@@ -352,13 +363,15 @@ export async function mountDrive(root, thumbnail, signal) {
   // Traffic: a few vehicles live in a window around the car and are respawned ahead when they fall out of it.
   const vehicles = [], fleets = [];
   const paints = [0x3a6ea5, 0xd8d8d8, 0xe0a030, 0x4f8f5a, 0x8a4f9e, 0xc9473b, 0x2f2f33, 0x9fb7c9];
-  for (const [name, count] of [["car_hatchback", 9], ["car_sedan", 6], ["bus", 3], ["motorbike", 4]]) {
+  const pickName = (hd, plain) => kit.has(hd) ? hd : plain;
+  for (const [name, count] of [[pickName("car_saga", "car_sedan"), 5], [pickName("car_hatchback_hd", "car_hatchback"), 3], [pickName("van_hd", "car_sedan"), 1],
+    [pickName("bus_hd", "bus"), 2], [pickName("truck_hd", "bus"), 1], [pickName("motorbike_hd", "motorbike"), 3]]) {
     const model = kit.get(name);
     if (!model) continue;
     const list = [];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < (lowEnd ? Math.max(1, Math.ceil(count / 2)) : count); i++) {
       const vehicle = { name, dir: i % 3 === 0 ? -1 : 1, speed: (name === "bus" ? 10 : name === "motorbike" ? 17 : 12 + (i % 4) * 2.5) + i * 0.1,
-        length: model.size.z, color: paints[(i + vehicles.length) % paints.length], s: 0, x: 0, z: 0, yaw: 0 };
+        length: model.size.z, color: /bus|truck|van/.test(name) ? 0xf4f4f0 : paints[(i + vehicles.length) % paints.length], s: 0, x: 0, z: 0, yaw: 0 };
       respawn(vehicle, i);
       list.push(vehicle); vehicles.push(vehicle);
     }
@@ -398,16 +411,22 @@ export async function mountDrive(root, thumbnail, signal) {
     const pose = sample(route, state.s, state.offset);
     car.position.set(pose.x, 0.12, pose.z);
     car.rotation.y = pose.heading + state.yaw * -1;
+    // Wheels roll with the distance driven and the front pair follows the steering.
+    wheels.spin = (wheels.spin ?? 0) + state.speed * frameDt / wheels.radius;
+    for (const wheel of wheels.all) wheel.rotation.x = -wheels.spin;
+    for (const wheel of wheels.front) wheel.rotation.y = -state.yaw * 1.4;
     // Chase camera: behind the car along its own heading, so it follows steering and lane changes.
     const carYaw = car.rotation.y;
     let turn = carYaw - cameraTarget.yaw;
     while (turn > Math.PI) turn -= 2 * Math.PI;
     while (turn < -Math.PI) turn += 2 * Math.PI;
     const follow = 1 - Math.exp(-frameDt * 4.5);
-    cameraTarget.yaw += turn * follow;
+    const unsnappedWanted = { x: pose.x - Math.sin(cameraTarget.yaw) * 12.5, z: pose.z - Math.cos(cameraTarget.yaw) * 12.5 };
+    const jumped = !cameraTarget.ready || Math.hypot(unsnappedWanted.x - cameraTarget.x, unsnappedWanted.z - cameraTarget.z) > 40; // a jump, not a drive
+    if (jumped) { cameraTarget.ready = true; cameraTarget.yaw = carYaw; } else cameraTarget.yaw += turn * follow;
     const sinYaw = Math.sin(cameraTarget.yaw), cosYaw = Math.cos(cameraTarget.yaw);
     const wanted = { x: pose.x - sinYaw * 12.5, z: pose.z - cosYaw * 12.5 };
-    if (Math.hypot(wanted.x - cameraTarget.x, wanted.z - cameraTarget.z) > 40) { cameraTarget.x = wanted.x; cameraTarget.z = wanted.z; cameraTarget.yaw = carYaw; } // a jump, not a drive
+    if (jumped) { cameraTarget.x = wanted.x; cameraTarget.z = wanted.z; }
     else { const glide = 1 - Math.exp(-frameDt * 7); cameraTarget.x += (wanted.x - cameraTarget.x) * glide; cameraTarget.z += (wanted.z - cameraTarget.z) * glide; }
     const wobble = reduced.matches ? 0 : Math.sin(now / 400) * 0.03;
     world.scenery?.update(state.s);
@@ -469,8 +488,8 @@ export async function mountDrive(root, thumbnail, signal) {
       const rig = createRig(body.scene, skeleton, [motion], gestures.animations);
       rig.select("sit");
       for (let i = 0; i < 4; i++) rig.update(0.5, { L: "grip_small", R: "grip_small" }); // sit down, settle, hold the wheel
-      const seat = kit.has("car_hatchback") ? [-0.4, 0.34, 0.1] : [-0.38, 0.28, -0.3];
-      body.scene.scale.setScalar(kit.has("car_hatchback") ? 0.66 : 0.72);
+      const seat = playerName === "car_saga" ? [-0.42, 0.3, -0.05] : playerName ? [-0.4, 0.34, 0.1] : [-0.38, 0.28, -0.3];
+      body.scene.scale.setScalar(playerName === "car_saga" ? 0.6 : playerName ? 0.66 : 0.72);
       body.scene.position.set(...seat);
       car.getObjectByName("driver-placeholder")?.removeFromParent();
       car.add(body.scene);
@@ -483,7 +502,7 @@ export async function mountDrive(root, thumbnail, signal) {
   let pedestrians = null;
   if (world.kitMode) {
     const touch = matchMedia("(pointer: coarse)").matches;
-    addPedestrians({ scene: world.scene, route, signal, count: touch ? { female: 2, male: 0 } : { female: 2, male: 2 } })
+    addPedestrians({ scene: world.scene, route, signal, count: touch ? { female: 1, male: 0 } : { female: 1, male: 1 } })
       .then(result => { if (signal.aborted) result.dispose(); else pedestrians = result; })
       .catch(error => { if (!signal.aborted) console.error("Drive: pedestrians failed to load", error); });
   }

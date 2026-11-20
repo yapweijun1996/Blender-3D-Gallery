@@ -12,6 +12,7 @@ export const KIT_NAMES = [
   "tree_raintree", "tree_palm", "tree_street", "shrub_hedge",
   "building_hdb", "building_tower_glass", "building_shophouse", "building_condo", "building_lowrise",
   "landmark_mbs", "landmark_checkpoint", "landmark_southkey",
+  "car_saga", "car_hatchback_hd", "motorbike_hd", "bus_hd", "van_hd", "truck_hd",
 ];
 
 /** Load the whole kit; a missing file only drops that model, so the world falls back to simple shapes for it. */
@@ -24,6 +25,15 @@ export async function loadKit(signal, scenes = new Set()) {
     const result = loaded[index];
     if (result.status !== "fulfilled") { console.error(`Drive: kit model ${name} failed to load`, result.reason); return; }
     const scene = result.value.scene;
+    // There is no environment map in the drive scene, so strongly metallic materials would render almost black.
+    scene.traverse(node => {
+      for (const material of [node.material].flat().filter(Boolean)) {
+        // Without reflections metal looks black: keep a little metalness, and lift painted surfaces with a faint self-glow.
+        if (material.metalness > 0.2) material.metalness = 0.2;
+        if (material.roughness < 0.45) material.roughness = 0.45;
+        if (material.name === "paint" && material.emissive) { material.emissive.copy(material.color); material.emissiveIntensity = 0.32; }
+      }
+    });
     scene.updateMatrixWorld(true);
     const box = new Box3().setFromObject(scene);
     const size = box.getSize(new Vector3());

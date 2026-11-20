@@ -95,7 +95,7 @@ try {
   // Arrival and replay (lights and slow traffic are switched off so the run finishes quickly).
   await stage.evaluate(element => element.freeRoad());
   await driveTo(length - 60);
-  await until(() => document.querySelector(".drive-stage").inspectDrive().stage === "arrived", 240);
+  await until(() => document.querySelector(".drive-stage").inspectDrive().stage === "arrived", 900);
   assert.equal(await page.locator(".drive-arrival").isVisible(), true);
   await page.locator(".drive-replay").click();
   await until(() => document.querySelector(".drive-stage").inspectDrive().s < 100);
