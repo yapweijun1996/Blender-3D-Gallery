@@ -726,6 +726,7 @@ export default {
   "world.mission.drive": "Drive to {place}",
   "world.mission.done": "Arrived at {place}! +{points}",
   "world.score": "Score",
+  "world.best": "Best {points}",
   "world.mission.next": "Next mission",
   "world.place.merlion": "the Merlion",
   "world.place.artscience": "ArtScience Museum",

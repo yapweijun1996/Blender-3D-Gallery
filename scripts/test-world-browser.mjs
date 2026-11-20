@@ -46,6 +46,8 @@ try {
   await page.waitForFunction(() => document.querySelector(".drive-stage").inspectWorld().missionsDone >= 1, undefined, { polling: 500 });
   assert.notEqual((await inspect()).mission, "merlion");
   assert.ok((await inspect()).score >= 100, "the finished mission scored points");
+  assert.ok((await inspect()).bestRecord.merlion >= 100, "the best score of the mission is recorded");
+  assert.ok(JSON.parse(await page.evaluate(() => localStorage.getItem("sg-world-best"))).best.merlion >= 100, "and saved in the browser");
   await page.waitForFunction(() => /\d{3,}$/.test(document.querySelector(".drive-trip").textContent), undefined, { polling: 500 });
   await stage.evaluate((element, [x, z]) => element.teleport(x, z, 0), [first_x, first_z]);
 

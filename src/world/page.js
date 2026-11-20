@@ -10,7 +10,7 @@ import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
 import { grovePlacements, groveRings } from "./groves.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
-import { MISSIONS, arrived, distanceTo, missionScore, nextMission, relativeBearing } from "./missions.js";
+import { MISSIONS, arrived, cleanRecord, distanceTo, missionScore, nextMission, recordScore, relativeBearing } from "./missions.js";
 import { busStopPlacements, lampPlacements, nearestRoad } from "./furniture.js";
 import { addWorldPedestrians, pedestrianPaths } from "./pedestrians.js";
 import { createSignalLights, signalApproaches } from "./signals.js";
@@ -535,6 +535,10 @@ export async function mountWorld(root, thumbnail, signal) {
   }
 
   // Missions: drive to a place on the map. A gold beam marks the target, an arrow and the distance guide the way.
+  // Best points per mission are kept in this browser only; storage can be blocked, so every access is guarded.
+  const RECORD_KEY = "sg-world-best";
+  let record = { best: {} };
+  try { record = cleanRecord(JSON.parse(localStorage.getItem(RECORD_KEY))); } catch { /* No saved record. */ }
   let missionIndex = 0, missionsDone = 0, score = 0, missionStart = { time: 0, damage: 0, distance: 0 }, missionClock = 0;
   const missionText = stage.querySelector(".world-mission-text"), missionArrow = stage.querySelector(".world-arrow");
   const beam = new Mesh(new CylinderGeometry(3, 3, 140, 20, 1, true), new MeshBasicMaterial({ color: 0xffd36a, transparent: true, opacity: 0.28, side: DoubleSide, depthWrite: false }));
@@ -552,11 +556,15 @@ export async function mountWorld(root, thumbnail, signal) {
       missionsDone++;
       const points = missionScore({ distance: missionStart.distance, seconds: missionClock - missionStart.time, damage: state.damage - missionStart.damage });
       score += points;
+      const saved = recordScore(record, mission.id, points);
+      record = saved.record;
+      try { localStorage.setItem(RECORD_KEY, JSON.stringify(record)); } catch { /* Not saved. */ }
       notify("world.mission.done", { place: t(mission.name), points });
       setMission(nextMission(missionIndex, state.position), state);
       return;
     }
-    missionText.textContent = `${t("world.mission.drive", { place: t(mission.name) })} · ${distance >= 1000 ? `${(distance / 1000).toFixed(1)} km` : `${Math.round(distance)} m`}`;
+    const best = record.best[mission.id];
+    missionText.textContent = `${t("world.mission.drive", { place: t(mission.name) })} · ${distance >= 1000 ? `${(distance / 1000).toFixed(1)} km` : `${Math.round(distance)} m`}${best ? ` · ${t("world.best", { points: best })}` : ""}`;
     missionArrow.style.transform = `rotate(${(-relativeBearing(state.position, state.heading, mission)).toFixed(3)}rad)`;
   }
 
@@ -647,7 +655,7 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, missionsDone, score, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, missionsDone, score, bestRecord: record.best, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.setHour = value => setHour(value);

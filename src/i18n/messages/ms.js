@@ -750,6 +750,7 @@ export default {
   "world.mission.drive": "Pandu ke {place}",
   "world.mission.done": "Tiba di {place}! +{points}",
   "world.score": "Skor",
+  "world.best": "Terbaik {points}",
   "world.mission.next": "Misi seterusnya",
   "world.place.merlion": "Merlion",
   "world.place.artscience": "Muzium ArtScience",

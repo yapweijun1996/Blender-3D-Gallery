@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { MISSIONS, arrived, distanceTo, missionScore, nextMission, parSeconds, relativeBearing } from "../src/world/missions.js";
+import { MISSIONS, arrived, cleanRecord, recordScore, distanceTo, missionScore, nextMission, parSeconds, relativeBearing } from "../src/world/missions.js";
 
 const origin = { x: 0, z: 0 };
 
@@ -42,4 +42,22 @@ test("faster and cleaner runs score more, within bounds", () => {
   assert.equal(missionScore({ distance, seconds: par, damage: 1 }), 500, "full damage halves it");
   assert.ok(missionScore({ distance, seconds: par, damage: 0.2 }) < onPar);
   assert.equal(missionScore({ distance, seconds: par, damage: -3 }), onPar, "damage below zero is ignored");
+});
+
+test("the best score per mission is kept and only improves", () => {
+  let { record, improved } = recordScore({ best: {} }, "merlion", 900);
+  assert.equal(improved, true);
+  assert.equal(record.best.merlion, 900);
+  ({ record, improved } = recordScore(record, "merlion", 700));
+  assert.equal(improved, false);
+  assert.equal(record.best.merlion, 900);
+  ({ record, improved } = recordScore(record, "merlion", 1100));
+  assert.equal(improved, true);
+  assert.equal(recordScore(undefined, "gardens", 300).record.best.gardens, 300);
+});
+
+test("a damaged or foreign saved record is cleaned", () => {
+  assert.deepEqual(cleanRecord(null), { best: {} });
+  assert.deepEqual(cleanRecord({ best: { merlion: 1200.4, gardens: -5, bayfront: "x", unknown: 9 } }), { best: { merlion: 1200 } });
+  assert.deepEqual(cleanRecord("garbage"), { best: {} });
 });

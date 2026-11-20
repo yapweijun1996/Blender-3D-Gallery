@@ -43,3 +43,21 @@ export function missionScore({ distance, seconds, damage = 0 }) {
   const clean = 1 - 0.5 * Math.max(0, Math.min(1, damage));
   return Math.max(FLOOR, Math.round(BASE * speed * clean));
 }
+
+/** Best points per mission, kept in the browser. `record` is { best: { [missionId]: points } }; returns { record, improved }. */
+export function recordScore(record, id, points) {
+  const best = { ...(record?.best ?? {}) };
+  const improved = !(best[id] >= points);
+  if (improved) best[id] = points;
+  return { record: { best }, improved };
+}
+
+/** A saved record read back from storage, whatever was stored: only finite, non-negative numbers for known missions survive. */
+export function cleanRecord(raw) {
+  const best = {};
+  for (const mission of MISSIONS) {
+    const value = raw?.best?.[mission.id];
+    if (Number.isFinite(value) && value >= 0) best[mission.id] = Math.round(value);
+  }
+  return { best };
+}

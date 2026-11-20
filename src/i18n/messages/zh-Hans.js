@@ -750,6 +750,7 @@ export default {
   "world.mission.drive": "开往{place}",
   "world.mission.done": "已到达{place}!+{points}分",
   "world.score": "得分",
+  "world.best": "最高 {points}",
   "world.mission.next": "下一个任务",
   "world.place.merlion": "鱼尾狮",
   "world.place.artscience": "艺术科学博物馆",
