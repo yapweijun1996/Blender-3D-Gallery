@@ -41,3 +41,14 @@ M3 traffic and signals on the graph. Gate: no vehicle overlap over 5 minutes of 
 M4 buildings with facades and landmarks; Johor Bahru side. Gate: draw-call and triangle budget on a phone profile.
 M5 vehicle variety and MRT.
 Each milestone ends with tests, an independent look at screenshots and a push to main.
+
+## Detail-first approach (owner, 2026-11-20 evening)
+
+Do not build the whole map in detail at once. Start with the area around the start (Marina Bay Sands), first about 100 m, then 500 m, and
+make it as close to the real Singapore as possible (real road layout, lanes, junctions, pavements, trees, street furniture, signs), then grow.
+Real data: `output/osm/marina_bay.json` (OpenStreetMap, ODbL, 9,004 elements: 1,566 buildings, 551 mapped trees, 144 traffic signals, 586
+crossings, 96 bus stops, 88 subway entrances, artworks). Hand-modelled landmarks around Marina Bay: Marina Bay Sands, ArtScience Museum, the
+Merlion, Esplanade (the durian), Helix Bridge, Supertree Grove, Bayfront and Promenade MRT, The Float. Work is split into about ten parallel
+Codex jobs that must not touch each other's folders: models go to `output/world-models/<name>` (mbs, merlion, esplanade, artscience, streetkit,
+vegetation), vehicles to `output/drive-models/gameC`, MRT to `output/mrt-models/kit`, code to `src/world/network` + `scripts/world` and
+`src/world/physics`. The manager verifies each result with its own checks, copies it into `models/world/...`, wires it in, tests and pushes.
