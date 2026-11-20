@@ -27,15 +27,39 @@ function skyAt(hour) {
 
 function roadTexture() {
   const canvas = document.createElement("canvas");
-  canvas.width = 64; canvas.height = 128;
+  canvas.width = 128; canvas.height = 256;
   const g = canvas.getContext("2d");
-  g.fillStyle = "#3b3f45"; g.fillRect(0, 0, 64, 128);
-  g.fillStyle = "#d9d4c0"; g.fillRect(0, 0, 3, 128); g.fillRect(61, 0, 3, 128);
-  g.fillStyle = "#e8d77a"; g.fillRect(30, 8, 4, 48);
+  g.fillStyle = "#3d4046"; g.fillRect(0, 0, 128, 256);
+  // Fine asphalt grain and two faint tyre tracks per lane.
+  for (let i = 0; i < 1400; i++) { g.fillStyle = `rgba(${i % 2 ? 255 : 0},${i % 2 ? 255 : 0},${i % 2 ? 255 : 0},.05)`; g.fillRect(Math.random() * 128, Math.random() * 256, 2, 2); }
+  g.fillStyle = "rgba(0,0,0,.14)";
+  for (const x of [24, 40, 88, 104]) g.fillRect(x, 0, 8, 256);
+  // Solid white edge lines and a yellow dashed centre line.
+  g.fillStyle = "#e9e6da"; g.fillRect(6, 0, 4, 256); g.fillRect(118, 0, 4, 256);
+  g.fillStyle = "#f0cf5a"; g.fillRect(62, 20, 4, 96);
   const texture = new CanvasTexture(canvas);
   texture.wrapT = RepeatWrapping;
-  texture.anisotropy = 4;
+  texture.anisotropy = 8;
   return texture;
+}
+
+/** A strip between two lateral offsets (and heights) along the route, only where include(distance) holds. */
+function stripBetween(route, step, offA, offB, yA, yB, include, material) {
+  const positions = [], indices = [];
+  const count = Math.ceil(route.length / step);
+  for (let i = 0; i < count; i++) {
+    const d0 = i * step, d1 = Math.min(route.length, (i + 1) * step);
+    if (!include((d0 + d1) / 2)) continue;
+    const a0 = sample(route, d0, offA), b0 = sample(route, d0, offB), a1 = sample(route, d1, offA), b1 = sample(route, d1, offB);
+    const k = positions.length / 3;
+    positions.push(a0.x, yA, a0.z, b0.x, yB, b0.z, a1.x, yA, a1.z, b1.x, yB, b1.z);
+    indices.push(k, k + 1, k + 2, k + 1, k + 3, k + 2);
+  }
+  const geometry = new BufferGeometry();
+  geometry.setAttribute("position", new BufferAttribute(new Float32Array(positions), 3));
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
+  return new Mesh(geometry, material);
 }
 
 function ribbon(route, step, half, y, texture, uvScale) {
@@ -191,6 +215,30 @@ function buildLandmarks(scene, route) {
   return { gates, stop };
 }
 
+/** Curbs, sidewalks and zebra crossings; the kerb and sidewalk only appear in built-up stretches. */
+function buildRoadKit(scene, route) {
+  const built = distance => { const z = zoneAt(route, distance); return z === "bay" || z === "city" || z === "johor"; };
+  const curbMaterial = new MeshLambertMaterial({ color: 0xb9b2a2, side: DoubleSide });
+  const walkMaterial = new MeshLambertMaterial({ color: 0xcfc6b2, side: DoubleSide });
+  for (const side of [-1, 1]) {
+    const edge = side * (ROAD_HALF_WIDTH + 0.2);
+    scene.add(stripBetween(route, 10, edge, side * (ROAD_HALF_WIDTH + 3.6), 0.3, 0.3, built, walkMaterial));
+    scene.add(stripBetween(route, 10, edge, edge, 0.12, 0.3, built, curbMaterial));
+    scene.add(stripBetween(route, 10, edge, side * (ROAD_HALF_WIDTH + 0.2), 0.14, 0.14, built, curbMaterial));
+  }
+  // Zebra crossings every 300 m in built-up stretches.
+  const stripes = [];
+  for (let d = 150; d < route.length - 100; d += 300) {
+    if (!built(d)) continue;
+    const pose = sample(route, d);
+    for (let k = -4; k <= 4; k++) {
+      const spot = sample(route, d, k * 1.15);
+      stripes.push({ x: spot.x, z: spot.z, y: 0.16, sx: 0.6, sy: 0.02, sz: 3.2, yaw: pose.heading });
+    }
+  }
+  if (stripes.length) addInstances(scene, new BoxGeometry(1, 1, 1), new MeshLambertMaterial({ color: 0xf2f0e6 }), stripes);
+}
+
 function buildWater(scene, route) {
   const group = new Group();
   const material = new MeshLambertMaterial({ color: 0x2f5f7f });
@@ -223,9 +271,10 @@ export function buildWorld(canvasHost, route) {
   scene.add(ground);
   const road = ribbon(route, 6, ROAD_HALF_WIDTH, 0.12, roadTexture(), 24);
   scene.add(road);
-  const sides = ribbon(route, 12, ROAD_HALF_WIDTH + 1.6, 0.1, (() => { const t = roadTexture(); return t; })(), 1e9);
+  const sides = ribbon(route, 12, ROAD_HALF_WIDTH + 1.6, 0.1, roadTexture(), 1e9);
   sides.material = new MeshLambertMaterial({ color: 0x8e8a7c });
   scene.add(sides);
+  buildRoadKit(scene, route);
   const water = buildWater(scene, route);
   const surroundings = buildSurroundings(scene, route);
   const landmarks = buildLandmarks(scene, route);
