@@ -745,4 +745,7 @@ export default {
   "city.action.buy": "Beli barangan (E)",
   "city.toast.order": "Selamat menjamu selera!",
   "city.toast.buy": "Terima kasih, datang lagi!",
+  "city.action.jb": "Pandu ke Johor Bahru (E)",
+  "city.place.gate": "Tambak ke Johor Bahru",
+  "drive.arrival.home": "Kembali ke kejiranan",
 };

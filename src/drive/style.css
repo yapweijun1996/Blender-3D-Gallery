@@ -37,3 +37,4 @@
 .drive-steer, .drive-pedals { display: flex; gap: .6rem; }
 .drive-pad button { width: 4.2rem; height: 4.2rem; border: 1px solid var(--drive-line); border-radius: 50%; background: var(--drive-panel-soft); color: var(--drive-ink); font-size: 1.5rem; touch-action: none; user-select: none; -webkit-user-select: none; pointer-events: auto; cursor: pointer; }
 .drive-pad button:active { background: var(--drive-gold); color: var(--drive-on-gold); }
+.drive-arrival button + button { margin-left: .5rem; background: var(--drive-panel-soft); color: var(--drive-ink); border: 1px solid var(--drive-line); }

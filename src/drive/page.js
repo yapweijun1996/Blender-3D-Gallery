@@ -6,6 +6,7 @@ import { disposeModels, loadModels } from "../chibi-dressup/view.js";
 import { Color, InstancedMesh, Matrix4, MeshBasicMaterial, SphereGeometry } from "three";
 import { cloneModel, instanceModel, loadKit } from "./kit.js";
 import { createDriveAudio } from "./audio.js";
+import { goToPage } from "./nav.js";
 import { createQualityGovernor } from "./quality.js";
 import { addPedestrians } from "./pedestrians.js";
 import { zoneAt } from "./scenery.js";
@@ -51,6 +52,7 @@ export async function mountDrive(root, thumbnail, signal) {
           <h2 data-i18n="drive.arrival.title"></h2>
           <p data-i18n="drive.arrival.text"></p>
           <button type="button" class="drive-replay" data-i18n="drive.replay"></button>
+          <button type="button" class="drive-home" data-i18n="drive.arrival.home"></button>
         </div>
       </div>
     </div>
@@ -196,6 +198,7 @@ export async function mountDrive(root, thumbnail, signal) {
       passportText.textContent = t("drive.passport.again");
     }
   });
+  stage.querySelector(".drive-home").addEventListener("click", () => goToPage("sg-heartland"));
   stage.querySelector(".drive-replay").addEventListener("click", () => {
     Object.assign(state, { s: START, speed: 0, offset: -LANE, target: -LANE, passing: null, yaw: 0, stage: "drive", pass: false, done: false });
     arrival.hidden = true;

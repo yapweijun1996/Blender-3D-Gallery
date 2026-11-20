@@ -745,4 +745,7 @@ export default {
   "city.action.buy": "买东西(E)",
   "city.toast.order": "请慢用!",
   "city.toast.buy": "谢谢惠顾!",
+  "city.action.jb": "开往新山(E)",
+  "city.place.gate": "通往新山的长堤",
+  "drive.arrival.home": "回到组屋区",
 };

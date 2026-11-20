@@ -68,5 +68,8 @@ export const CROSSINGS = [
   { x: 125, z: 0, across: "x" }, { x: -125, z: 0, across: "x" }, { x: 0, z: -100, across: "z" }, { x: 0, z: 100, across: "z" },
 ];
 
+/** The slip road to the Causeway: drive the Saga through it and press E to head for Johor Bahru. */
+export const GATE = { x: 60, z: -100, r: 8 };
+
 /** Where the Proton Saga waits at the kerb (phase 4: get in and drive). */
 export const CAR_SPOT = { x: -116.5, z: 40, yaw: 0 };

@@ -94,6 +94,23 @@ try {
   await page.keyboard.press("e");
   await until(() => document.querySelector(".city-stage").inspectCity().mode === "walk");
 
+  // The Causeway gate: drive the Saga through it and press E to go to the Johor Bahru drive.
+  await teleport(car.x + 3, car.z);
+  await page.keyboard.press("e");
+  await until(() => document.querySelector(".city-stage").inspectCity().mode === "drive");
+  await teleport(60, -100);
+  await until(() => document.querySelector(".city-stage").inspectCity().atGate === true);
+  await page.keyboard.press("e");
+  await page.waitForSelector(".drive-stage[data-state=ready]");
+  assert.match(page.url(), /page=drive-jb/);
+  await page.locator(".drive-stage").evaluate(element => element.freeRoad());
+  await page.evaluate(() => document.querySelector(".drive-stage").skipCheckpoint());
+  await page.locator(".drive-stage").evaluate((element, distance) => element.driveTo(distance), (await page.locator(".drive-stage").evaluate(element => element.inspectDrive().length)) - 60);
+  await page.waitForSelector(".drive-arrival:not([hidden])", { timeout: 900_000 });
+  await page.locator(".drive-home").click();
+  await page.waitForSelector(".city-stage[data-state=ready]");
+  assert.match(page.url(), /page=sg-heartland/);
+
   // Languages and a phone-width layout.
   for (const locale of ["zh-Hans", "ms"]) {
     await page.evaluate(([key, value]) => localStorage.setItem(key, value), [LANGUAGE_STORAGE_KEY, locale]);

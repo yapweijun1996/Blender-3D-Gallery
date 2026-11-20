@@ -15,11 +15,12 @@ import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { addPedestrians } from "../drive/pedestrians.js";
 import { locate, polylineRoute, sample } from "../drive/route.js";
 import { ROAD_HALF_WIDTH, ribbon, roadTexture, stripBetween } from "../drive/world.js";
-import { BUILDINGS, CAR_SPOT, CROSSINGS, PROPS, RING, ringPoints } from "./layout.js";
+import { goToPage } from "../drive/nav.js";
+import { BUILDINGS, CAR_SPOT, CROSSINGS, GATE, PROPS, RING, ringPoints } from "./layout.js";
 import "./style.css";
 
 const kitUrls = import.meta.glob("../../models/city/kit/*.glb", { eager: true, query: "?url", import: "default" });
-const driveUrls = import.meta.glob("../../models/drive/kit/{car_saga,car_hatchback_hd,bus_hd,van_hd}.glb", { eager: true, query: "?url", import: "default" });
+const driveUrls = import.meta.glob("../../models/drive/kit/{car_saga,car_hatchback_hd,bus_hd,van_hd,sign_gantry}.glb", { eager: true, query: "?url", import: "default" });
 const dressupUrls = import.meta.glob("../../models/chibi-dressup/{*.glb,bodies/**/*.glb,modules/*.glb,props/*.glb}", { eager: true, query: "?url", import: "default" });
 const KIT = ["hdb_block", "hdb_void_deck", "hdb_coffee_shop", "provision_shop", "shoplot", "public_market", "mrt_entrance", "hawker_stall", "chicken_rice_stall", "bus_shelter",
   "signal_pole", "zebra_crossing", "street_sign", "heritage_lamp", "bench", "block_sign", "playground_slide", "playground_swing", "rain_tree_hd", "angsana_tree",
@@ -87,7 +88,7 @@ export async function mountCity(root, thumbnail, signal) {
   // Models: the district kit plus the drive kit's lamps for the ring road.
   const scenes = new Set();
   const kit = await loadKitFrom(KIT.map(name => [name, kitUrls[`../../models/city/kit/${name}.glb`]]), signal, scenes);
-  const vehicleKit = await loadKitFrom(["car_saga", "car_hatchback_hd", "bus_hd", "van_hd"].map(name => [name, driveUrls[`../../models/drive/kit/${name}.glb`]]), signal, scenes);
+  const vehicleKit = await loadKitFrom(["car_saga", "car_hatchback_hd", "bus_hd", "van_hd", "sign_gantry"].map(name => [name, driveUrls[`../../models/drive/kit/${name}.glb`]]), signal, scenes);
   const scene = new Scene();
   scene.background = new Color(0xf2c48f);
   scene.fog = new Fog(0xf2c48f, 140, 520);
@@ -124,6 +125,7 @@ export async function mountCity(root, thumbnail, signal) {
     if (b.solid) colliders.push({ x: b.x, z: b.z, yaw: b.yaw, hx: (model.size.x * b.sx) / 2, hz: (model.size.z * b.sz) / 2 });
   }
   for (const p of PROPS) add(p.model, { x: p.x, z: p.z, yaw: p.yaw, scale: p.s });
+  const gateModel = vehicleKit.get("sign_gantry");
   for (const c of CROSSINGS) {
     add("zebra_crossing", { x: c.x, y: 0.14, z: c.z, yaw: c.across === "x" ? Math.PI / 2 : 0, scale: 1 });
     add("signal_pole", { x: c.x + (c.across === "x" ? -ROAD_HALF_WIDTH - 1.6 : 6.5), z: c.z + (c.across === "x" ? 6.5 : -ROAD_HALF_WIDTH - 1.6), yaw: 0, scale: 1.4 });
@@ -140,6 +142,7 @@ export async function mountCity(root, thumbnail, signal) {
   }
   for (const [x, z] of [[62, 20], [92, 28], [66, 44], [-76, -36], [-76, 36], [-100, 0], [100, 0], [0, -70], [0, 72], [-30, 8], [30, -8]])
     add(treeNames[Math.floor(random() * treeNames.length)], { x, z, yaw: random() * 6.28, scale: 1.4 + random() * 0.4 });
+  if (gateModel) { const set = instanceModel(gateModel, [{ x: GATE.x, z: GATE.z, yaw: -Math.PI / 2, scale: 1 }]); for (const mesh of set.meshes) scene.add(mesh); }
   for (const [name, placements] of lists) {
     const set = instanceModel(kit.get(name), placements);
     for (const mesh of set.meshes) scene.add(mesh);
@@ -321,7 +324,8 @@ export async function mountCity(root, thumbnail, signal) {
       cam.distance = 7.5;
     }
   }
-  const interact = () => { if (mode === "walk" && stationNear() && !carNear()) useStation(); else toggleCar(); };
+  const atGate = () => mode === "drive" && Math.hypot(drive.x - GATE.x, drive.z - GATE.z) < GATE.r;
+  const interact = () => { if (atGate()) goToPage("drive-jb"); else if (mode === "walk" && stationNear() && !carNear()) useStation(); else toggleCar(); };
   addEventListener("keydown", event => { if (event.key === "e" || event.key === "E") interact(); }, { signal });
   actionButton.addEventListener("click", interact);
   const touchDevice = matchMedia("(pointer: coarse)").matches;
@@ -387,10 +391,11 @@ export async function mountCity(root, thumbnail, signal) {
     camera.lookAt(player.x, 1.2, player.z);
     let near = "";
     for (const p of placeList) if (Math.hypot(player.x - p.x, player.z - p.z) < p.r) { near = t(p.key); break; }
+    if (!near && Math.hypot(player.x - GATE.x, player.z - GATE.z) < GATE.r * 2.5) near = t("city.place.gate");
     placeLabel.textContent = near;
     placeLabel.hidden = !near;
     const station = mode === "walk" && !carNear() && !task ? stationNear() : null;
-    const action = mode === "drive" ? (Math.abs(drive.speed) < 3 ? "city.action.out" : "") : carNear() ? "city.action.in" : station ? station.action : "";
+    const action = mode === "drive" ? (atGate() ? "city.action.jb" : Math.abs(drive.speed) < 3 ? "city.action.out" : "") : carNear() ? "city.action.in" : station ? station.action : "";
     if (toastUntil && performance.now() > toastUntil) { toast.hidden = true; toastUntil = 0; }
     actionButton.hidden = !action;
     if (action) actionButton.textContent = t(action);
@@ -403,8 +408,8 @@ export async function mountCity(root, thumbnail, signal) {
   };
   const observer = new ResizeObserver(resize); observer.observe(stage); resize();
   onLanguageChange(() => { runButton.textContent = t("city.run"); }, signal);
-  stage.inspectCity = () => ({ quality: governor.ratio, traffic: cars.map(v => ({ x: v.x, z: v.z, yaw: v.yaw, speed: v.speed, base: v.base })), hour, mode, task: task?.clip ?? null, props: Boolean(props), car: { x: drive.x, z: drive.z, speed: drive.speed }, pedestrians: pedestrians?.count ?? 0, x: player.x, z: player.z, yaw: player.yaw, clip: player.clip, speed: player.speed, triangles: renderer.info.render.triangles, calls: renderer.info.render.calls, place: placeLabel.textContent });
-  stage.teleport = (x, z) => { player.x = x; player.z = z; };
+  stage.inspectCity = () => ({ atGate: atGate(), quality: governor.ratio, traffic: cars.map(v => ({ x: v.x, z: v.z, yaw: v.yaw, speed: v.speed, base: v.base })), hour, mode, task: task?.clip ?? null, props: Boolean(props), car: { x: drive.x, z: drive.z, speed: drive.speed }, pedestrians: pedestrians?.count ?? 0, x: player.x, z: player.z, yaw: player.yaw, clip: player.clip, speed: player.speed, triangles: renderer.info.render.triangles, calls: renderer.info.render.calls, place: placeLabel.textContent });
+  stage.teleport = (x, z) => { player.x = x; player.z = z; if (mode === "drive") { drive.x = x; drive.z = z; } };
   stage.dataset.state = "ready"; stage.setAttribute("aria-busy", "false");
   stage.querySelector(".city-loading").remove(); root.querySelector(".city-poster").remove();
   hud.hidden = false;
