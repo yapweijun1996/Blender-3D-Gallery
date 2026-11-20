@@ -1,0 +1,17 @@
+.city { margin: 1.25rem 0 4rem; }
+.city-heading h1 { margin: 0; font: 500 clamp(2rem, 5vw, 3.75rem) / 1.1 Georgia, serif; }
+.city-heading p { margin: .65rem 0 1rem; color: var(--muted); }
+.city-stage { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 1rem; background: var(--city-sky); aspect-ratio: 16 / 10; min-height: 22rem; touch-action: none; }
+.city-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.city-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5; }
+.city-loading { position: absolute; inset: auto 0 1rem; text-align: center; }
+.city-hud { position: absolute; inset: 0; pointer-events: none; }
+.city-place { position: absolute; left: 50%; top: 1rem; margin: 0; transform: translateX(-50%); padding: .25rem .8rem; border-radius: 1rem; font-weight: 700; background: var(--city-panel); color: var(--city-ink); }
+.city-place[hidden] { display: none; }
+.city-stick { position: absolute; left: 1.2rem; bottom: 1.2rem; width: 6.4rem; height: 6.4rem; border-radius: 50%; border: 1px solid var(--city-line); background: var(--city-panel-soft); pointer-events: auto; touch-action: none; display: none; }
+@media (pointer: coarse) { .city-stick { display: block; } }
+.city-stick i { position: absolute; left: 50%; top: 50%; width: 2.6rem; height: 2.6rem; margin: -1.3rem 0 0 -1.3rem; border-radius: 50%; background: var(--city-ink); opacity: .85; }
+.city-run { position: absolute; right: 1.2rem; bottom: 1.4rem; width: 4.4rem; height: 4.4rem; border-radius: 50%; border: 1px solid var(--city-line); background: var(--city-panel-soft); color: var(--city-ink); font: inherit; pointer-events: auto; cursor: pointer; }
+.city-run[aria-pressed="true"] { background: var(--city-gold); color: var(--city-on-gold); }
+.city-hint, .city-credit { margin: .6rem 0 0; color: var(--muted); font-size: .85rem; }
+@media (max-width: 40rem) { .city-stage { aspect-ratio: 4 / 5; } }

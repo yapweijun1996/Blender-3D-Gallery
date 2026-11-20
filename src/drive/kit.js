@@ -16,8 +16,12 @@ export const KIT_NAMES = [
 ];
 
 /** Load the whole kit; a missing file only drops that model, so the world falls back to simple shapes for it. */
-export async function loadKit(signal, scenes = new Set()) {
-  const entries = KIT_NAMES.map(name => [name, urls[`../../models/drive/kit/${name}.glb`]]).filter(([, url]) => url);
+export const loadKit = (signal, scenes = new Set()) =>
+  loadKitFrom(KIT_NAMES.map(name => [name, urls[`../../models/drive/kit/${name}.glb`]]), signal, scenes);
+
+/** Load [name, url] pairs; reused by the city kit. */
+export async function loadKitFrom(pairs, signal, scenes = new Set()) {
+  const entries = pairs.filter(([, url]) => url);
   const loaded = await Promise.allSettled(entries.map(([, url]) => loadModels([url], signal, scenes).then(([gltf]) => gltf)));
   signal?.throwIfAborted();
   const kit = new Map();

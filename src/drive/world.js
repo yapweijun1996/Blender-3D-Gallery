@@ -26,7 +26,7 @@ function skyAt(hour) {
   };
 }
 
-function roadTexture() {
+export function roadTexture() {
   const canvas = document.createElement("canvas");
   canvas.width = 128; canvas.height = 256;
   const g = canvas.getContext("2d");
@@ -45,7 +45,7 @@ function roadTexture() {
 }
 
 /** A strip between two lateral offsets (and heights) along the route, only where include(distance) holds. */
-function stripBetween(route, step, offA, offB, yA, yB, include, material) {
+export function stripBetween(route, step, offA, offB, yA, yB, include, material) {
   const positions = [], indices = [];
   const count = Math.ceil(route.length / step);
   for (let i = 0; i < count; i++) {
@@ -63,7 +63,7 @@ function stripBetween(route, step, offA, offB, yA, yB, include, material) {
   return new Mesh(geometry, material);
 }
 
-function ribbon(route, step, half, y, texture, uvScale) {
+export function ribbon(route, step, half, y, texture, uvScale) {
   const positions = [], uvs = [], indices = [];
   const count = Math.ceil(route.length / step) + 1;
   for (let i = 0; i < count; i++) {

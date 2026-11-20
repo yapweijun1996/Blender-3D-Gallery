@@ -7,8 +7,8 @@ const M_PER_DEG_LON = 111320 * Math.cos(LAT0 * Math.PI / 180);
 export const project = ([lon, lat]) => [(lon - LON0) * M_PER_DEG_LON, -(lat - LAT0) * M_PER_DEG_LAT];
 
 /** Resample a polyline at an even spacing and add heading and cumulative distance. */
-export function buildRoute(data, spacing = 6) {
-  const raw = data.coordinates.map(project);
+export function buildRoute(data, spacing = 6, metres = null) {
+  const raw = metres ?? data.coordinates.map(project);
   const points = [];
   let carry = 0;
   let [x, z] = raw[0];
@@ -36,6 +36,11 @@ export function buildRoute(data, spacing = 6) {
   const length = points.at(-1).s;
   const roads = data.roads.map(road => ({ ...road, from_m: Math.min(road.from_m, length) }));
   return { points, length, roads, spacing: points.length > 1 ? points[1].s : spacing };
+}
+
+/** Resample a polyline given in local metres (x east, z south) into the same route structure as buildRoute. */
+export function polylineRoute(raw, roads = [{ name: "Road", from_m: 0 }], spacing = 4) {
+  return buildRoute({ coordinates: [], roads }, spacing, raw);
 }
 
 /** Pose at a distance along the route, with an optional sideways offset (positive = to the left of travel). */
