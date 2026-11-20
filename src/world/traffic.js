@@ -217,7 +217,18 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
     return best;
   }
 
-  function update(dt, near) {
+  /** Distance to the nearest obstacle (a pedestrian, say) in the path of a vehicle, else Infinity. */
+  function obstacleGap(vehicle, here, obstacles) {
+    let best = Infinity;
+    for (const obstacle of obstacles) {
+      const ox = obstacle.x - here.x, oz = obstacle.z - here.z;
+      const ahead = ox * here.dx + oz * here.dz, side = Math.abs(ox * here.dz - oz * here.dx);
+      if (ahead > 0 && ahead < 22 && side < 1.9) best = Math.min(best, ahead - vehicle.type.length / 2 - 1.5);
+    }
+    return best;
+  }
+
+  function update(dt, near, obstacles = []) {
     time += dt;
     if (!current) return;
     for (let i = vehicles.length - 1; i >= 0; i--) {
@@ -227,7 +238,7 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
       if (here && Math.hypot(here.x - near.x, here.z - near.z) > despawnRadius) { vehicles.splice(i, 1); continue; }
       // Desired speed: the speed limit (a little under it), slower for long vehicles, cut by the gap to the leader and signals.
       let desired = Math.min(edge.speed * 0.85, vehicle.type.length > 7 ? 11 : 15);
-      const stop = Math.min(signalStop(vehicle, edge), leaderGap(vehicle, edge) - 2);
+      const stop = Math.min(signalStop(vehicle, edge), leaderGap(vehicle, edge) - 2, here && obstacles.length ? obstacleGap(vehicle, here, obstacles) : Infinity);
       if (stop < 60) desired = Math.min(desired, Math.max(0, Math.sqrt(2 * 3.5 * Math.max(0, stop))));
       const rate = desired > vehicle.speed ? 2.2 : 5.5; // m/s^2: gentle acceleration, firmer braking
       vehicle.speed += Math.sign(desired - vehicle.speed) * Math.min(Math.abs(desired - vehicle.speed), rate * dt);

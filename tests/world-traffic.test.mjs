@@ -86,3 +86,20 @@ test("a vehicle stops at a red signal and drives on at green", () => {
   for (let step = 0; step < 60 * 40 && vehicle.edge === edge.id; step++) traffic.update(1 / 60, { x: 0, z: 100 });
   assert.ok(vehicle.edge !== edge.id || traffic.vehicles.indexOf(vehicle) < 0 || vehicle.s > 196, "it drove on after the light turned green");
 });
+
+test("a vehicle stops for a pedestrian standing in its lane and moves on when they leave", () => {
+  const edge = { id: "b:0", from: 1, to: 2, oneway: true, lanes: 1, speed: 13.9, points: [[0, 0], [0, 300]], cumulative: [0, 300], length: 300, width: 3.4, class: "primary" };
+  const graph = { edges: new Map([[edge.id, edge]]), nodes: new Map([[1, { id: 1, forward: [edge.id], backward: [], signalised: false }], [2, { id: 2, forward: [], backward: [edge.id], signalised: false }]]), signalised: new Set() };
+  const traffic = createTraffic({ graph, random: createRandom(3), maxVehicles: 0 });
+  const vehicle = { id: 1, type: { length: 4.4, width: 1.8 }, edge: edge.id, direction: 1, s: 20, lane: 0, speed: 12, wait: 0 };
+  traffic.vehicles.push(vehicle);
+  const near = { x: 0, z: 100 };
+  // The lane offset of a single lane is half a lane to the left of the centre line: x = +1.7 (left of +Z travel is +X).
+  const pedestrian = { x: 1.7, z: 120 };
+  for (let step = 0; step < 60 * 20; step++) traffic.update(1 / 60, near, [pedestrian]);
+  assert.ok(vehicle.speed < 0.05, `speed ${vehicle.speed}`);
+  assert.ok(vehicle.s < 120, `stopped at ${vehicle.s}, before the pedestrian at 120`);
+  assert.ok(vehicle.s > 90, `stopped close to the pedestrian (${vehicle.s})`);
+  for (let step = 0; step < 60 * 10; step++) traffic.update(1 / 60, near, []);
+  assert.ok(vehicle.s > 130 || traffic.vehicles.indexOf(vehicle) < 0, "drove on after the pedestrian left");
+});

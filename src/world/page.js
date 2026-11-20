@@ -27,6 +27,7 @@ const kitUrls = import.meta.glob([
 const landmarkUrls = import.meta.glob("../../models/sg-{marina-bay-sands-towers,marina-bay-sands-podium,esplanade-domes,esplanade-base,merlion,merlion-park,artscience-museum,helix-bridge}/*.glb", { eager: true, query: "?url", import: "default" });
 const KIT = { car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light", bus_shelter: "sg-bus-shelter-sbs/sg-bus-shelter-sbs", bus_flag: "sg-bus-stop-flag/sg-bus-stop-flag", station_sign: "sg-station-sign/sg-station-sign" };
 const TREES = ["rain_tree", "angsana", "coconut_palm"];
+const PLAYER_TOP_SPEED = 28; // m/s, 100 km/h: the fastest limit on the mapped roads is 90 km/h
 const SOLID_RADIUS = 1; // in tiles around the car; phones load a smaller ring of tiles
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const tileKey = (x, z) => `${x}_${z}`;
@@ -226,7 +227,7 @@ export async function mountWorld(root, thumbnail, signal) {
     }
   }
 
-  const vehicle = physics.addVehicle({ type: "sedan", position: { x: start.x, y: 1.2, z: start.z }, heading: start.heading });
+  const vehicle = physics.addVehicle({ type: "sedan", topSpeed: PLAYER_TOP_SPEED, position: { x: start.x, y: 1.2, z: start.z }, heading: start.heading });
   for (let i = 0; i < 90; i++) physics.step(1 / 60);
   const restHeight = vehicle.getState().position.y; // the chassis centre height when standing on the road
   const car = kit.has("car_saga") ? cloneModel(kit.get("car_saga")) : new Group();
@@ -279,7 +280,7 @@ export async function mountWorld(root, thumbnail, signal) {
     .catch(error => { if (!signal.aborted) console.error("World: pedestrians failed to load", error); });
   const signalLights = createSignalLights(scene);
   let signalGraph = null, signalList = [];
-  const solidVehicles = new Map();
+  const solidVehicles = new Map(), solidWalkers = new Map();
   function updateTraffic(dt, state) {
     if (graphDirty) {
       signalGraph = buildTrafficGraph([...tiles.values()].map(entry => entry.data));
@@ -291,8 +292,19 @@ export async function mountWorld(root, thumbnail, signal) {
       graphDirty = false;
     }
     signalLights.update(traffic.signalState);
-    traffic.update(dt, state.position);
     pedestrians?.update(dt, state.position);
+    const walkers = pedestrians ? pedestrians.people.filter(person => person.root.visible).map(person => ({ id: person, x: person.root.position.x, z: person.root.position.z })) : [];
+    traffic.update(dt, state.position, walkers);
+    // Pedestrians near the player's car are solid too (a small box), so the car cannot drive through them.
+    const aliveWalkers = new Set();
+    for (const walker of walkers) {
+      const near = Math.hypot(walker.x - state.position.x, walker.z - state.position.z) < 40;
+      let solid = solidWalkers.get(walker.id);
+      if (near && !solid) { solid = physics.addKinematicBox({ halfExtents: { x: 0.3, y: 0.9, z: 0.3 }, position: { x: walker.x, y: 0.9, z: walker.z } }); solidWalkers.set(walker.id, solid); }
+      else if (!near && solid) { solid.remove(); solidWalkers.delete(walker.id); solid = null; }
+      if (solid) { aliveWalkers.add(walker.id); solid.setPose(walker.x, 0.9, walker.z, 0); }
+    }
+    for (const [id, solid] of solidWalkers) if (!aliveWalkers.has(id)) { solid.remove(); solidWalkers.delete(id); }
     const lists = new Map([...trafficSets.keys()].map(name => [name, []]));
     const alive = new Set();
     for (const vehicle of traffic.vehicles) {
@@ -475,6 +487,7 @@ export async function mountWorld(root, thumbnail, signal) {
       signalLights.dispose();
       for (const mesh of furnitureMeshes) mesh.dispose?.();
       for (const solid of solidVehicles.values()) solid.remove();
+      for (const solid of solidWalkers.values()) solid.remove();
       for (const key of [...tiles.keys()]) unload(key);
       physics.dispose();
       scene.traverse(node => { node.geometry?.dispose(); for (const m of [node.material].flat().filter(Boolean)) { m.map?.dispose(); m.dispose(); } });

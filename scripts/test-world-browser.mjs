@@ -34,7 +34,7 @@ try {
 
   // Drive: the physics gives speed, and the car stays upright on the road.
   const driven = await stage.evaluate(element => element.simulate(8, { throttle: 1 }));
-  assert.ok(driven.speed > 6, `speed ${driven.speed}`);
+  assert.ok(driven.speed > 6 && driven.speed <= 28.5, `speed ${driven.speed} (capped at 100 km/h)`);
   assert.equal(driven.flipped, false);
 
   // A flipped car is reported and the reset button rights it.

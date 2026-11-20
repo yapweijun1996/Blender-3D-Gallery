@@ -307,10 +307,11 @@ Verified (Chrome software GL, iPhone 15 WebKit emulation, Node; `npm test` 783 p
 
 Open:
 - [ ] No real-device frame rate measurement; the city centre draws about 400k triangles on desktop, about 270k on the phone profile.
-- [ ] Cars do not yield to pedestrians or at unsignalised junctions; pedestrians have no colliders.
+- [x] Traffic stops for a pedestrian in its path (test in `tests/world-traffic.test.mjs`); pedestrians near the player's car are solid boxes.
+- [ ] Cars do not yield at unsignalised junctions.
 - [ ] Bridges and tunnels are drawn flat; Supertrees and The Float are missing; ordinary buildings have flat colours without facades.
 - [ ] Corridor to Johor Bahru in the new engine (only Marina Bay is mapped); the older `?page=drive-jb` still covers that route.
 - [x] MRT entrances in the world (red pillar with the station sign at each of the 88 mapped entrances; within 30 m a button or E opens `?page=sg-mrt`; browser test covers it).
 - [ ] MRT: no passengers, generic platform instead of the real Bayfront or Promenade layouts.
-- [ ] The player car has no speed limit (about 180 km/h at most).
+- [x] The player car is capped at 100 km/h (28 m/s); the fastest mapped limit is 90 km/h.
 - Note: `npm run test:world` needs the untracked `output/osm/marina_bay.json`, so it is not part of `npm test`.
