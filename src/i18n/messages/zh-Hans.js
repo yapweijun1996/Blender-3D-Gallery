@@ -745,6 +745,7 @@ export default {
   "world.flipped": "翻车了!",
   "world.flippedHint": "翻车了:按 R 或点“扶正车辆”",
   "world.crash": "撞车!",
+  "world.stalled": "发动机熄火了:按 R 或点“扶正车辆”",
   "world.damage": "损伤",
   "world.time": "时间 {time}",
   "world.mission.drive": "开往{place}",

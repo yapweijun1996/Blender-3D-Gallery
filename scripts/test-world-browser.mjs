@@ -37,6 +37,14 @@ try {
   // The minimap draws the roads around the car.
   assert.equal(await page.locator(".drive-minimap").evaluate(canvas => { const data = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height).data; let lit = 0; for (let i = 0; i < data.length; i += 4) if (data[i] > 150) lit++; return lit > 200; }), true, "minimap has roads");
 
+  // A hurt car smokes; a wrecked one stalls and says so; righting the car repairs it.
+  await stage.evaluate(element => element.hurt(0.6));
+  await page.waitForFunction(() => document.querySelector(".drive-stage").inspectWorld().smoking, undefined, { polling: 300 });
+  await stage.evaluate(element => element.hurt(0.6));
+  await page.waitForFunction(() => document.querySelector(".drive-event").textContent.length > 0 && document.querySelector(".drive-stage").inspectWorld().damage >= 0.95, undefined, { polling: 300 });
+  await page.locator(".drive-reset").click();
+  await page.waitForFunction(() => document.querySelector(".drive-stage").inspectWorld().damage === 0, undefined, { polling: 300 });
+
   // The time button steps through morning, noon, evening and night.
   await page.locator(".world-time").click();
   assert.ok([8, 13, 18.5, 22].includes(Math.round((await inspect()).hour * 2) / 2), "time jumped to a preset");

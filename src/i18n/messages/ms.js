@@ -745,6 +745,7 @@ export default {
   "world.flipped": "Terbalik!",
   "world.flippedHint": "Terbalik: tekan R atau butang Betulkan kereta",
   "world.crash": "Langgar!",
+  "world.stalled": "Enjin mati: tekan R atau Betulkan kereta",
   "world.damage": "Kerosakan",
   "world.time": "Masa {time}",
   "world.mission.drive": "Pandu ke {place}",

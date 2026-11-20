@@ -8,6 +8,7 @@ import { dayAt } from "../drive/daylight.js";
 import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
+import { createSmoke, damageEffects } from "./damage.js";
 import { grovePlacements, groveRings } from "./groves.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
 import { ROAD_DISTANCES } from "./mission-distances.js";
@@ -421,6 +422,8 @@ export async function mountWorld(root, thumbnail, signal) {
     headlightPoses = [{ x: state.position.x, z: state.position.z, heading: state.heading }, ...traffic.vehicles.map(vehicle => traffic.pose(vehicle)).filter(Boolean).map(pose => ({ x: pose.x, z: pose.z, heading: pose.heading }))];
   }
 
+  const smoke = createSmoke(scene);
+  let wasStalled = false;
   const keys = new Set(), pad = { left: false, right: false, brake: false, gas: false };
   const keyMap = { arrowup: "gas", w: "gas", arrowdown: "brake", s: "brake", arrowleft: "left", a: "left", arrowright: "right", d: "right", " ": "hand" };
   const held = name => keys.has(name) || pad[name];
@@ -478,8 +481,9 @@ export async function mountWorld(root, thumbnail, signal) {
     const state = vehicle.getState();
     const forward = state.forwardSpeed;
     const wantsBrake = held("brake");
+    const stalled = damageEffects(state.damage).stalled;
     return {
-      throttle: held("gas") ? 1 : 0,
+      throttle: held("gas") && !stalled ? 1 : 0,
       brake: wantsBrake && forward > 1 ? 1 : 0,
       reverse: wantsBrake && forward <= 1 ? 1 : 0,
       steer: (held("left") ? 1 : 0) - (held("right") ? 1 : 0),
@@ -647,6 +651,10 @@ export async function mountWorld(root, thumbnail, signal) {
     }
     const state = placeCar();
     updateEntrance(state.position);
+    const effects = damageEffects(state.damage);
+    smoke.update(dt, { x: state.position.x + Math.sin(state.heading) * 1.6, y: state.position.y + 0.9, z: state.position.z + Math.cos(state.heading) * 1.6 }, effects.smoke);
+    if (effects.stalled && !wasStalled) notify("world.stalled");
+    wasStalled = effects.stalled;
     if (!paused) missionClock += dt;
     updateMission(state);
     drawMinimap(state);
@@ -679,9 +687,10 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, missionsDone, score, bestRecord: record.best, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
+  stage.hurt = amount => vehicle.crash.addImpact((4 + amount * 40) * 1300); // test hook: damage the car by about `amount`
   stage.setHour = value => setHour(value);
   stage.setMission = index => setMission(index);
   stage.setView = view => { fixedView = view; };
@@ -694,6 +703,7 @@ export async function mountWorld(root, thumbnail, signal) {
       observer.disconnect();
       audio.dispose();
       pedestrians?.dispose();
+      smoke.dispose();
       beam.geometry.dispose();
       beam.material.dispose();
       signalLights.dispose();

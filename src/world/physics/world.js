@@ -106,7 +106,9 @@ export async function createPhysicsWorld({ gravity = { x: 0, y: -9.81, z: 0 } } 
 
     addVehicle(options) {
       assertActive();
-      const { update, crash, dispose, ...vehicle } = createVehicle(world, options);
+      // The crash state stays on the returned vehicle (the game reads it and tests can add an impact).
+      const { update, dispose, ...vehicle } = createVehicle(world, options);
+      const { crash } = vehicle;
       vehicles.set(vehicle, { update, crash, dispose });
       crashes.set(vehicle.collider.handle, crash);
       return vehicle;

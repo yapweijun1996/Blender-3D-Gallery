@@ -721,6 +721,7 @@ export default {
   "world.flipped": "Flipped!",
   "world.flippedHint": "Flipped over: press R or the Right the car button",
   "world.crash": "Crash!",
+  "world.stalled": "Engine stalled: press R or Right the car",
   "world.damage": "Damage",
   "world.time": "Time {time}",
   "world.mission.drive": "Drive to {place}",
