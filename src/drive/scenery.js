@@ -153,11 +153,15 @@ export function buildScenery(scene, route, kit) {
     const pose = sample(route, d, ROAD_HALF + 4.2);
     add("bus_stop", { x: pose.x, z: pose.z, yaw: frontYaw(pose, 1), scale: 1, s: d });
   }
+  const signals = [];
   for (let d = 150; d < route.length - 100; d += 300) {
     const zone = zoneAt(route, d);
     if (zone !== "city" && zone !== "shophouse" && zone !== "johor" && zone !== "bay") continue;
     const pose = sample(route, d + 6, -(ROAD_HALF + 1.6));
     add("traffic_light", { x: pose.x, z: pose.z, yaw: frontYaw(pose, -1), scale: 1, s: d });
+    // The lit lamp sits on the pole, a little over the road, and the stop line is the zebra crossing at d.
+    const lamp = sample(route, d + 5.2, -(ROAD_HALF + 0.9));
+    signals.push({ s: d, x: lamp.x, z: lamp.z });
   }
 
   const sets = [];
@@ -166,7 +170,7 @@ export function buildScenery(scene, route, kit) {
     for (const mesh of set.meshes) scene.add(mesh);
     sets.push(set);
   }
-  return { update: s => sets.forEach(set => set.update(s)), forceUpdate: s => sets.forEach(set => set.update(s, true)) };
+  return { signals, update: s => sets.forEach(set => set.update(s)), forceUpdate: s => sets.forEach(set => set.update(s, true)) };
 }
 
 /** Landmarks stay as normal objects (there is one of each). Returns the barrier pivots of the checkpoint. */

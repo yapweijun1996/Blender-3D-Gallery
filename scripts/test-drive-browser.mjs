@@ -57,14 +57,14 @@ try {
   await until(() => document.querySelector(".drive-stage").inspectDrive().driver);
 
   // Switching to manual by button and by keyboard.
-  await page.locator('[data-mode="manual"]').click();
-  assert.equal(await page.locator('[data-mode="manual"]').getAttribute("aria-pressed"), "true");
-  await page.locator('[data-mode="auto"]').click();
+  await page.locator('.drive-modes [data-mode="manual"]').click();
+  assert.equal(await page.locator('.drive-modes [data-mode="manual"]').getAttribute("aria-pressed"), "true");
+  await page.locator('.drive-modes [data-mode="auto"]').click();
   assert.equal((await inspect()).mode, "auto");
   await page.keyboard.down("ArrowUp");
   assert.equal((await inspect()).mode, "manual");
   await page.keyboard.up("ArrowUp");
-  await page.locator('[data-mode="auto"]').click();
+  await page.locator('.drive-modes [data-mode="auto"]').click();
 
   // Pause and play.
   await page.locator(".drive-pause").click();
@@ -92,7 +92,8 @@ try {
   await until(() => document.querySelector(".drive-stage").inspectDrive().stage === "drive");
   assert.ok((await inspect()).s >= stop - 6);
 
-  // Arrival and replay.
+  // Arrival and replay (lights and slow traffic are switched off so the run finishes quickly).
+  await stage.evaluate(element => element.freeRoad());
   await driveTo(length - 60);
   await until(() => document.querySelector(".drive-stage").inspectDrive().stage === "arrived", 240);
   assert.equal(await page.locator(".drive-arrival").isVisible(), true);

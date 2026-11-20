@@ -6,7 +6,7 @@
 .drive-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5; }
 .drive-loading { position: absolute; inset: auto 0 1rem; text-align: center; color: var(--drive-ink); }
 .drive-hud { position: absolute; inset: 0; pointer-events: none; color: var(--drive-ink); text-shadow: 0 1px 3px var(--drive-shadow); }
-.drive-readout { position: absolute; left: 1rem; bottom: 1rem; display: flex; align-items: baseline; gap: .4rem; }
+.drive-readout { position: absolute; left: 50%; transform: translateX(-50%); bottom: 1rem; display: flex; align-items: baseline; gap: .4rem; }
 .drive-readout strong { font: 600 2.6rem / 1 system-ui, sans-serif; font-variant-numeric: tabular-nums; }
 .drive-road { position: absolute; left: 1rem; top: 1rem; margin: 0; max-width: calc(100% - 9.5rem); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
 .drive-trip { position: absolute; left: 1rem; top: 2.6rem; margin: 0; max-width: calc(100% - 9.5rem); font-size: .85rem; opacity: .9; }
@@ -22,11 +22,18 @@
 .drive-passport button, .drive-arrival button { min-height: 2.75rem; padding: .5rem 1.2rem; border: 0; border-radius: .7rem; background: var(--drive-gold); color: var(--drive-on-gold); font-weight: 700; cursor: pointer; }
 .drive-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-top: .9rem; }
 .drive-modes { display: inline-flex; border: 1px solid var(--line); border-radius: .8rem; overflow: hidden; }
-.drive-modes button, .drive-pause, .drive-pad button { min-height: 2.75rem; padding: 0 1rem; border: 0; background: var(--surface); color: inherit; cursor: pointer; font: inherit; }
-.drive-pause { border: 1px solid var(--line); border-radius: .8rem; }
+.drive-modes button, .drive-pause, .drive-pause { border: 1px solid var(--line); border-radius: .8rem; }
 .drive-modes button[aria-pressed="true"] { background: var(--accent, var(--drive-good)); color: var(--drive-ink); }
-.drive-pad { display: flex; gap: .4rem; margin-left: auto; }
-.drive-pad button { min-width: 3.2rem; border: 1px solid var(--line); border-radius: .8rem; touch-action: none; user-select: none; }
 .drive-hint, .drive-credit { margin: .6rem 0 0; color: var(--muted); font-size: .85rem; }
-@media (max-width: 40rem) { .drive-stage { aspect-ratio: 4 / 5; } .drive-pad { margin-left: 0; width: 100%; justify-content: center; } .drive-pad button { flex: 1; } }
+@media (max-width: 40rem) { .drive-stage { aspect-ratio: 4 / 5; } }
 @media (prefers-reduced-motion: reduce) { .drive-stamp-marker { transition: none; } }
+.drive-event { position: absolute; left: 50%; top: 4.6rem; margin: 0; transform: translateX(-50%); padding: .2rem .7rem; border-radius: 1rem; font-weight: 700; background: var(--drive-panel-soft); }
+.drive-event:empty { display: none; }
+.drive-horn, .drive-sound { min-height: 2.75rem; padding: 0 1rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--surface); color: inherit; cursor: pointer; font: inherit; }
+.drive-sound[aria-pressed="false"] { opacity: .6; }
+.drive-pad { position: absolute; inset: auto 0 1.2rem; display: none; justify-content: space-between; padding: 0 .8rem; pointer-events: none; }
+.drive-stage[data-mode="manual"] .drive-pad { display: flex; }
+@media (pointer: coarse) { .drive-pad { display: flex; } }
+.drive-steer, .drive-pedals { display: flex; gap: .6rem; }
+.drive-pad button { width: 4.2rem; height: 4.2rem; border: 1px solid var(--drive-line); border-radius: 50%; background: var(--drive-panel-soft); color: var(--drive-ink); font-size: 1.5rem; touch-action: none; user-select: none; -webkit-user-select: none; pointer-events: auto; cursor: pointer; }
+.drive-pad button:active { background: var(--drive-gold); color: var(--drive-on-gold); }
