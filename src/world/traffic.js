@@ -4,6 +4,7 @@
 
 export const LANE = 3.4;
 const SIGNAL = { green: 24, amber: 3, clear: 2 }; // seconds; two phases take turns
+const STUCK_SECONDS = 45;
 const SIGNAL_CYCLE = 2 * (SIGNAL.green + SIGNAL.amber + SIGNAL.clear);
 export const VEHICLE_TYPES = [
   { id: "sedan", weight: 5, length: 4.4, width: 1.8, model: "car_saga" },
@@ -194,12 +195,44 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
     return vehicle.next;
   }
 
+  // Unsignalised junctions: a vehicle gives way to one on another road that is already in the junction or reaches it first.
+  // The rule is stateless (no locks, so no deadlock cycles) and a vehicle that has waited too long goes anyway.
+  const ZONE = 26, GIVE_UP = 6; // metres from the junction where giving way is decided; seconds of waiting before going anyway
+  /** How far the vehicle is from a node: positive before reaching it (along its edge), negative after leaving it, else Infinity. */
+  function distanceToNode(vehicle, nodeId) {
+    const edge = current.edges.get(vehicle.edge);
+    if (!edge) return Infinity;
+    const endNode = vehicle.direction > 0 ? edge.to : edge.from, startNode = vehicle.direction > 0 ? edge.from : edge.to;
+    if (endNode === nodeId) return edge.length - vehicle.s;
+    if (startNode === nodeId) return -vehicle.s;
+    return Infinity;
+  }
+  const arms = node => node.forward.length + node.backward.length;
+
+  /** Distance to the stop line when the vehicle must give way at the end of its edge, else Infinity. */
+  function giveWayStop(vehicle, edge) {
+    const nodeId = vehicle.direction > 0 ? edge.to : edge.from;
+    const node = current.nodes.get(nodeId);
+    if (!node || current.signalised.has(nodeId) || arms(node) < 3 || vehicle.wait > GIVE_UP) return Infinity;
+    const remaining = edge.length - vehicle.s;
+    if (remaining > ZONE || remaining < 1) return Infinity; // too far to matter, or already past the line
+    for (const other of vehicles) {
+      if (other === vehicle || other.edge === vehicle.edge) continue;
+      const d = distanceToNode(other, nodeId);
+      if (d > ZONE || d < -(other.type.length + 4)) continue;
+      // Already in the junction, or nearer to it (the lower id wins a tie): the other goes first.
+      if (d <= 0 || d < remaining || (d === remaining && other.id < vehicle.id)) return Math.max(0, remaining - 4);
+    }
+    return Infinity;
+  }
+
   function leaderGap(vehicle, edge) {
     let best = Infinity;
     for (const other of vehicles) {
       if (other === vehicle || other.edge !== vehicle.edge || other.direction !== vehicle.direction || other.lane !== vehicle.lane) continue;
+      if (other.s <= vehicle.s) continue; // behind, or level: not a leader
       const gap = other.s - vehicle.s - (other.type.length + vehicle.type.length) / 2;
-      if (gap > -1 && gap < best) best = gap;
+      if (gap < best) best = gap;
     }
     // Near the end of the edge, a vehicle at the start of the road ahead is the leader too.
     if (best === Infinity && edge.length - vehicle.s < 40) {
@@ -210,7 +243,7 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
         for (const other of vehicles) {
           if (other === vehicle || other.edge !== option.id || other.direction !== option.direction || other.lane !== lane) continue;
           const gap = edge.length - vehicle.s + other.s - (other.type.length + vehicle.type.length) / 2;
-          if (gap > -1 && gap < best) best = gap;
+          if (gap < best) best = gap;
         }
       }
     }
@@ -236,11 +269,14 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
       if (!edge) { vehicles.splice(i, 1); continue; }
       const here = pose(vehicle);
       if (here && Math.hypot(here.x - near.x, here.z - near.z) > despawnRadius) { vehicles.splice(i, 1); continue; }
+      // A vehicle stuck for a long time out of the player's sight is removed (a gridlock breaker); new ones spawn elsewhere.
+      if (here && vehicle.wait > STUCK_SECONDS && Math.hypot(here.x - near.x, here.z - near.z) > 70) { vehicles.splice(i, 1); continue; }
       // Desired speed: the speed limit (a little under it), slower for long vehicles, cut by the gap to the leader and signals.
       let desired = Math.min(edge.speed * 0.85, vehicle.type.length > 7 ? 11 : 15);
-      const stop = Math.min(signalStop(vehicle, edge), leaderGap(vehicle, edge) - 2, here && obstacles.length ? obstacleGap(vehicle, here, obstacles) : Infinity);
+      const stop = Math.min(signalStop(vehicle, edge), giveWayStop(vehicle, edge), leaderGap(vehicle, edge) - 2, here && obstacles.length ? obstacleGap(vehicle, here, obstacles) : Infinity);
       if (stop < 60) desired = Math.min(desired, Math.max(0, Math.sqrt(2 * 3.5 * Math.max(0, stop))));
       const rate = desired > vehicle.speed ? 2.2 : 5.5; // m/s^2: gentle acceleration, firmer braking
+      vehicle.wait = vehicle.speed < 0.3 ? (vehicle.wait ?? 0) + dt : 0;
       vehicle.speed += Math.sign(desired - vehicle.speed) * Math.min(Math.abs(desired - vehicle.speed), rate * dt);
       vehicle.s += vehicle.speed * dt;
       if (vehicle.s >= edge.length) {

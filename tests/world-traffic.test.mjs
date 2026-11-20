@@ -103,3 +103,43 @@ test("a vehicle stops for a pedestrian standing in its lane and moves on when th
   for (let step = 0; step < 60 * 10; step++) traffic.update(1 / 60, near, []);
   assert.ok(vehicle.s > 130 || traffic.vehicles.indexOf(vehicle) < 0, "drove on after the pedestrian left");
 });
+
+test("at an unsignalised junction vehicles from two roads take turns and never share the junction", () => {
+  // Two roads meeting at node 3 and one exit road: a T-junction.
+  const make = (id, from, to, points) => {
+    const cumulative = [0]; for (let i = 1; i < points.length; i++) cumulative.push(cumulative[i - 1] + Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]));
+    return { id, from, to, oneway: true, lanes: 1, speed: 13.9, points, cumulative, length: cumulative.at(-1), width: 3.4, class: "secondary" };
+  };
+  const a = make("a:0", 1, 3, [[-120, 0], [0, 0]]), b = make("b:0", 2, 3, [[0, -120], [0, 0]]), exit = make("x:0", 3, 4, [[0, 0], [160, 0]]);
+  const nodes = new Map([[1, { id: 1, forward: [a.id], backward: [], signalised: false }], [2, { id: 2, forward: [b.id], backward: [], signalised: false }],
+    [3, { id: 3, forward: [exit.id], backward: [a.id, b.id], signalised: false }], [4, { id: 4, forward: [], backward: [exit.id], signalised: false }]]);
+  const graph = { edges: new Map([a, b, exit].map(edge => [edge.id, edge])), nodes, signalised: new Set() };
+  const traffic = createTraffic({ graph, random: createRandom(5), maxVehicles: 0 });
+  const car = (id, edge, s) => ({ id, type: { length: 4.4, width: 1.8 }, edge: edge.id, direction: 1, s, lane: 0, speed: 12, wait: 0 });
+  const first = car(1, a, 60), second = car(2, b, 62);
+  traffic.vehicles.push(first, second);
+  const near = { x: 0, z: 0 };
+  let sharedSteps = 0, passed = 0;
+  for (let step = 0; step < 60 * 40; step++) {
+    traffic.update(1 / 60, near);
+    const inside = traffic.vehicles.filter(vehicle => { const edge = graph.edges.get(vehicle.edge); const d = vehicle.edge === "x:0" ? vehicle.s : edge.length - vehicle.s; return Math.abs(d) < 3; });
+    if (inside.length > 1) sharedSteps++;
+  }
+  for (const vehicle of [first, second]) if (vehicle.edge === "x:0" || traffic.vehicles.indexOf(vehicle) < 0) passed++;
+  assert.equal(passed, 2, "both vehicles got through");
+  assert.equal(sharedSteps, 0, `${sharedSteps} steps with two vehicles in the junction`);
+});
+
+test("with give-way and signals the traffic does not gridlock over five minutes", () => {
+  const graph = buildTrafficGraph(loadTiles());
+  for (const seed of [2, 5]) {
+    const traffic = createTraffic({ graph, random: createRandom(seed), maxVehicles: 34 });
+    let samples = 0, stuck = 0;
+    for (let step = 0; step < 60 * 300; step++) {
+      traffic.update(1 / 60, { x: 0, z: 0 });
+      if (step % 120) continue;
+      for (const vehicle of traffic.vehicles) { samples++; if (vehicle.wait > 30) stuck++; }
+    }
+    assert.ok(stuck / samples < 0.03, `seed ${seed}: ${stuck} of ${samples} samples stuck for over 30 s`);
+  }
+});

@@ -308,7 +308,7 @@ Verified (Chrome software GL, iPhone 15 WebKit emulation, Node; `npm test` 783 p
 Open:
 - [ ] No real-device frame rate measurement; the city centre draws about 400k triangles on desktop, about 270k on the phone profile.
 - [x] Traffic stops for a pedestrian in its path (test in `tests/world-traffic.test.mjs`); pedestrians near the player's car are solid boxes.
-- [ ] Cars do not yield at unsignalised junctions.
+- [x] Cars give way at unsignalised junctions (stateless rule: the vehicle nearer the junction, or already in it, goes first; waiting over 6 s goes anyway; a vehicle stuck over 45 s out of sight is removed). Five-minute runs show under 1% of vehicle samples stuck over 30 s (tests).
 - [ ] Bridges and tunnels are drawn flat; Supertrees and The Float are missing; ordinary buildings have flat colours without facades.
 - [ ] Corridor to Johor Bahru in the new engine (only Marina Bay is mapped); the older `?page=drive-jb` still covers that route.
 - [x] MRT entrances in the world (red pillar with the station sign at each of the 88 mapped entrances; within 30 m a button or E opens `?page=sg-mrt`; browser test covers it).
