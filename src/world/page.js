@@ -1,5 +1,5 @@
 import {
-  AmbientLight, BoxGeometry, CanvasTexture, Color, DirectionalLight, DoubleSide, Fog, Group, HemisphereLight, InstancedMesh, Matrix4, Mesh, MeshLambertMaterial, PerspectiveCamera, PlaneGeometry, Quaternion, RepeatWrapping, Scene, SRGBColorSpace, Vector3, WebGLRenderer,
+  AdditiveBlending, AmbientLight, BoxGeometry, CanvasTexture, Color, DirectionalLight, DoubleSide, Fog, Group, HemisphereLight, InstancedMesh, Matrix4, Mesh, MeshBasicMaterial, MeshLambertMaterial, PerspectiveCamera, PlaneGeometry, Quaternion, RepeatWrapping, Scene, SRGBColorSpace, Vector3, WebGLRenderer,
 } from "three";
 import { localize, mountMarkup, t } from "../i18n/index.js";
 import { disposeModels } from "../chibi-dressup/view.js";
@@ -138,7 +138,8 @@ export async function mountWorld(root, thumbnail, signal) {
   scene.background = new Color(0x9fcdea);
   scene.fog = new Fog(0x9fcdea, LOAD_RADIUS === 1 ? 160 : 260, LOAD_RADIUS === 1 ? 420 : 700);
   const hemisphere = new HemisphereLight(0xdff0ff, 0x7a8a68, 1.5);
-  scene.add(hemisphere, new AmbientLight(0xffffff, 0.35));
+  const ambient = new AmbientLight(0xffffff, 0.35);
+  scene.add(hemisphere, ambient);
   const sun = new DirectionalLight(0xfff1d6, 2.2);
   sun.position.set(-120, 220, 90);
   scene.add(sun);
@@ -331,6 +332,7 @@ export async function mountWorld(root, thumbnail, signal) {
   const signalLights = createSignalLights(scene);
   let signalGraph = null, signalList = [];
   const solidVehicles = new Map(), solidWalkers = new Map();
+  let headlightPoses = [];
   function updateTraffic(dt, state) {
     if (graphDirty) {
       signalGraph = buildTrafficGraph([...tiles.values()].map(entry => entry.data));
@@ -374,6 +376,7 @@ export async function mountWorld(root, thumbnail, signal) {
     }
     for (const [id, solid] of solidVehicles) if (!alive.has(id)) { solid.remove(); solidVehicles.delete(id); }
     for (const [name, set] of trafficSets) set.write(lists.get(name));
+    headlightPoses = [{ x: state.position.x, z: state.position.z, heading: state.heading }, ...traffic.vehicles.map(vehicle => traffic.pose(vehicle)).filter(Boolean).map(pose => ({ x: pose.x, z: pose.z, heading: pose.heading }))];
   }
 
   const keys = new Set(), pad = { left: false, right: false, brake: false, gas: false };
@@ -464,6 +467,38 @@ export async function mountWorld(root, thumbnail, signal) {
     camera.lookAt(camTarget);
   }
 
+  // Headlights at night: a soft pool of light on the road ahead of every vehicle (one instanced additive quad each).
+  const poolCanvas = document.createElement("canvas");
+  poolCanvas.width = 64; poolCanvas.height = 128;
+  const poolContext = poolCanvas.getContext("2d");
+  // An ellipse that fades to nothing inside the quad (stretch a circle by two along the length).
+  poolContext.scale(1, 2);
+  const gradient = poolContext.createRadialGradient(32, 32, 2, 32, 32, 31);
+  gradient.addColorStop(0, "rgba(255,244,200,1)");
+  gradient.addColorStop(1, "rgba(255,244,200,0)");
+  poolContext.fillStyle = gradient;
+  poolContext.fillRect(0, 0, 64, 64);
+  const poolTexture = new CanvasTexture(poolCanvas);
+  poolTexture.colorSpace = SRGBColorSpace;
+  const POOL_CAPACITY = 64;
+  const headlightPools = new InstancedMesh(new PlaneGeometry(4.2, 9).rotateX(-Math.PI / 2), new MeshBasicMaterial({ map: poolTexture, transparent: true, blending: AdditiveBlending, depthWrite: false, opacity: 0 }), POOL_CAPACITY);
+  headlightPools.frustumCulled = false;
+  headlightPools.count = 0;
+  headlightPools.renderOrder = 2;
+  scene.add(headlightPools);
+  const poolMatrix = new Matrix4(), poolQuaternion = new Quaternion(), poolUp = new Vector3(0, 1, 0), poolPosition = new Vector3(), poolScale = new Vector3(1, 1, 1);
+  function setHeadlights(poses) {
+    const list = poses.slice(0, POOL_CAPACITY);
+    list.forEach((pose, index) => {
+      poolQuaternion.setFromAxisAngle(poolUp, pose.heading);
+      poolPosition.set(pose.x + Math.sin(pose.heading) * 6.5, 0.09, pose.z + Math.cos(pose.heading) * 6.5);
+      poolMatrix.compose(poolPosition, poolQuaternion, poolScale);
+      headlightPools.setMatrixAt(index, poolMatrix);
+    });
+    headlightPools.count = list.length;
+    headlightPools.instanceMatrix.needsUpdate = true;
+  }
+
   // Time of day: sky, fog, ground, sun, lit windows and street lamps follow the hour (one hour passes in 30 seconds).
   const lampMaterials = new Set();
   for (const name of ["road_light"]) for (const part of kit.get(name)?.parts ?? []) for (const material of [part.material].flat()) if (material.name === "lamp_emissive") lampMaterials.add(material);
@@ -479,6 +514,9 @@ export async function mountWorld(root, thumbnail, signal) {
     sun.intensity = state.sun;
     hemisphere.intensity = 0.55 + state.sun * 0.38;
     buildingMaterial.emissiveIntensity = state.lamp * 1.1;
+    ambient.intensity = 0.12 + 0.23 * (1 - state.lamp);
+    headlightPools.material.opacity = state.lamp * 0.55;
+    headlightPools.visible = state.lamp > 0.02;
     for (const material of lampMaterials) { material.emissive?.copy(material.color); material.emissiveIntensity = state.lamp * 1.6; }
     timeButton.textContent = t("world.time", { time: hourText() });
   }
@@ -531,6 +569,7 @@ export async function mountWorld(root, thumbnail, signal) {
     lastFlip = state.flipped;
     if (eventTimer > 0) { eventTimer -= dt; if (eventTimer <= 0) eventLine.textContent = ""; }
     if (!paused) setHour(hour + dt / 30);
+    if (headlightPools.visible) setHeadlights(headlightPoses);
     audio.update(state.speed, 0.5);
     renderer.render(scene, camera);
   }
