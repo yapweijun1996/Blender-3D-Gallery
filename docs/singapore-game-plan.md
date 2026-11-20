@@ -108,7 +108,7 @@ Concept:
 Data and licence rules:
 
 - Road geometry and names come from OpenStreetMap (ODbL): show "Contains OpenStreetMap data" credit in the
-  app and keep a copy of the extracted route in the repository (`data/route-mbs-jb.json`) so the demo works
+  app and keep a copy of the extracted route in the repository (`models/drive/route-mbs-jb.json`) so the demo works
   offline and never depends on a public routing server at run time. Fetch once with OSRM or an Overpass
   query, then commit the file.
 - No Google Maps imagery, tiles or routes. No real brand logos. Public landmarks are drawn in an original style.

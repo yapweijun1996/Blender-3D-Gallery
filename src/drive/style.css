@@ -1,0 +1,32 @@
+.drive { margin: 1.25rem 0 4rem; }
+.drive-heading h1 { margin: 0; font: 500 clamp(2rem, 5vw, 3.75rem) / 1.1 Georgia, serif; }
+.drive-heading p { margin: .65rem 0 1rem; color: var(--muted); }
+.drive-stage { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 1rem; background: var(--drive-sky); aspect-ratio: 16 / 10; min-height: 22rem; }
+.drive-stage canvas:not(.drive-minimap) { display: block; width: 100%; height: 100%; touch-action: none; }
+.drive-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5; }
+.drive-loading { position: absolute; inset: auto 0 1rem; text-align: center; color: var(--drive-ink); }
+.drive-hud { position: absolute; inset: 0; pointer-events: none; color: var(--drive-ink); text-shadow: 0 1px 3px var(--drive-shadow); }
+.drive-readout { position: absolute; left: 1rem; bottom: 1rem; display: flex; align-items: baseline; gap: .4rem; }
+.drive-readout strong { font: 600 2.6rem / 1 system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+.drive-road { position: absolute; left: 1rem; top: 1rem; margin: 0; font-weight: 600; }
+.drive-trip { position: absolute; left: 1rem; top: 2.6rem; margin: 0; font-size: .85rem; opacity: .9; }
+.drive-progress { position: absolute; left: 1rem; right: 1rem; bottom: .4rem; height: .3rem; border-radius: 1rem; background: var(--drive-line); }
+.drive-progress i { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--drive-gold); }
+.drive-minimap { position: absolute; right: .8rem; top: .8rem; width: 6.5rem; height: auto; border-radius: .6rem; background: var(--drive-panel-soft); }
+.drive-passport, .drive-arrival { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(22rem, 90%); padding: 1rem 1.1rem; border-radius: 1rem; background: var(--drive-panel); border: 1px solid var(--drive-line); pointer-events: auto; text-align: center; }
+.drive-passport[hidden], .drive-arrival[hidden], .drive-stamp-bar[hidden] { display: none; }
+.drive-passport h2, .drive-arrival h2 { margin: 0 0 .4rem; font-size: 1.15rem; }
+.drive-stamp-bar { position: relative; height: 1.1rem; margin: .8rem 0; border-radius: 1rem; background: var(--drive-line); }
+.drive-stamp-zone { position: absolute; top: 0; bottom: 0; border-radius: 1rem; background: var(--drive-good); }
+.drive-stamp-marker { position: absolute; top: -.2rem; width: .35rem; height: 1.5rem; margin-left: -.17rem; border-radius: .2rem; background: var(--drive-ink); }
+.drive-passport button, .drive-arrival button { min-height: 2.75rem; padding: .5rem 1.2rem; border: 0; border-radius: .7rem; background: var(--drive-gold); color: var(--drive-on-gold); font-weight: 700; cursor: pointer; }
+.drive-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-top: .9rem; }
+.drive-modes { display: inline-flex; border: 1px solid var(--line); border-radius: .8rem; overflow: hidden; }
+.drive-modes button, .drive-pause, .drive-pad button { min-height: 2.75rem; padding: 0 1rem; border: 0; background: var(--surface); color: inherit; cursor: pointer; font: inherit; }
+.drive-pause { border: 1px solid var(--line); border-radius: .8rem; }
+.drive-modes button[aria-pressed="true"] { background: var(--accent, var(--drive-good)); color: var(--drive-ink); }
+.drive-pad { display: flex; gap: .4rem; margin-left: auto; }
+.drive-pad button { min-width: 3.2rem; border: 1px solid var(--line); border-radius: .8rem; touch-action: none; user-select: none; }
+.drive-hint, .drive-credit { margin: .6rem 0 0; color: var(--muted); font-size: .85rem; }
+@media (max-width: 40rem) { .drive-stage { aspect-ratio: 4 / 5; } .drive-pad { margin-left: 0; width: 100%; justify-content: center; } .drive-pad button { flex: 1; } }
+@media (prefers-reduced-motion: reduce) { .drive-stamp-marker { transition: none; } }
