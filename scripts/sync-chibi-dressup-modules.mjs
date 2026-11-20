@@ -167,6 +167,11 @@ const candidates = [
     label: { en: "Boots", "zh-Hans": "靴子", ms: "But" },
     paths: ["bodies/male/wardrobe3/shoes-boots.glb"],
   },
+  {
+    id: "female-bottom-shorts", slot: "bottom", family: "bottom-shorts", bodyIds: ["female"],
+    label: { en: "Shorts", "zh-Hans": "短裤", ms: "Seluar pendek" },
+    paths: ["bodies/female/wardrobe4/shorts.glb"],
+  },
   // Not shown yet: cargo pants and bomber jacket (failed review or the motion gate), hoodie.
 ];
 
