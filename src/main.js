@@ -2,6 +2,7 @@ let motionPage = null;
 let dressupPage = null;
 let drivePage = null;
 let worldPage = null;
+let mrtPage = null;
 let cityPage = null;
 let shelfInspectorPage = null;
 import "virtual:gallery-palette-colors.css";
@@ -35,7 +36,7 @@ const assetById = new Map(
     [a.slug ?? a.id, a],
   ]),
 );
-const demoPages = ["game", "solar", "product-studio", "shelf-inspector", "chibi-motion", "tripo-motion", "chibi-dressup", "drive-jb", "sg-heartland", "sg-world"];
+const demoPages = ["game", "solar", "product-studio", "shelf-inspector", "chibi-motion", "tripo-motion", "chibi-dressup", "drive-jb", "sg-heartland", "sg-world", "sg-mrt"];
 const motionDemos = {
   "chibi-motion": { assetId: "gjh-chibi-motion" },
   "tripo-motion": {
@@ -603,6 +604,7 @@ async function syncRoute() {
   const drive = page === "drive-jb";
   const city = page === "sg-heartland";
   const world = page === "sg-world";
+  const mrt = page === "sg-mrt";
   const previousSearchMode = $("#gallery-page").classList.contains("search-mode");
   refreshScrollToTop();
   if (page !== "game" && gamePage && !gamePage.beforeLeave()) {
@@ -635,7 +637,7 @@ async function syncRoute() {
   if (page === "gallery") syncModelFilters();
   if (page === "demos") syncDemoFilters();
   refreshTitle(page);
-  if (page === mountedRoute && (gamePage || solarPage || productStudioPage || shelfInspectorPage || motionPage || dressupPage || drivePage || cityPage || worldPage || pageController))
+  if (page === mountedRoute && (gamePage || solarPage || productStudioPage || shelfInspectorPage || motionPage || dressupPage || drivePage || cityPage || worldPage || mrtPage || pageController))
     return;
   const run = ++routeRun;
   pageController?.abort();
@@ -648,7 +650,8 @@ async function syncRoute() {
   drivePage?.dispose();
   cityPage?.dispose();
   worldPage?.dispose();
-  motionPage = dressupPage = drivePage = cityPage = worldPage = null;
+  mrtPage?.dispose();
+  motionPage = dressupPage = drivePage = cityPage = worldPage = mrtPage = null;
   shelfInspectorPage?.dispose();
   gamePage = solarPage = productStudioPage = shelfInspectorPage = null;
   mountedRoute = page;
@@ -672,6 +675,7 @@ async function syncRoute() {
       else if (drive) module = await import("./drive/page.js");
       else if (city) module = await import("./city/page.js");
       else if (world) module = await import("./world/page.js");
+      else if (mrt) module = await import("./mrt/page.js");
       else if (page === "shelf-inspector") module = await import("./shelf-inspector/page.js");
       else module = await import("./product-studio/page.js");
       if (run !== routeRun || controller.signal.aborted) return;
@@ -694,6 +698,8 @@ async function syncRoute() {
             ? await module.mountCity(root, demos.find(demo => demo.id === page).thumbnail, controller.signal)
           : world
             ? await module.mountWorld(root, demos.find(demo => demo.id === page).thumbnail, controller.signal)
+          : mrt
+            ? await module.mountMrt(root, demos.find(demo => demo.id === page).thumbnail, controller.signal)
           : await module.mountSolar(
               root,
               module.solarSceneAssets(assets),
@@ -710,6 +716,7 @@ async function syncRoute() {
       else if (drive) drivePage = result;
       else if (city) cityPage = result;
       else if (world) worldPage = result;
+      else if (mrt) mrtPage = result;
       else if (page === "shelf-inspector") shelfInspectorPage = result;
       else productStudioPage = result;
       window.dispatchEvent(new CustomEvent(`${page}-mounted`));

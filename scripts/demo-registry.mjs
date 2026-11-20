@@ -3,7 +3,7 @@ import path from "node:path";
 import { loadCatalog, textField, tagsField } from "./catalog.mjs";
 
 // Each launch route must have a corresponding explicit lazy loader in the application.
-const routes = new Set(["?page=game", "?page=solar", "?page=product-studio", "?page=shelf-inspector", "?page=chibi-motion", "?page=tripo-motion", "?page=chibi-dressup", "?page=drive-jb", "?page=sg-heartland", "?page=sg-world"]);
+const routes = new Set(["?page=game", "?page=solar", "?page=product-studio", "?page=shelf-inspector", "?page=chibi-motion", "?page=tripo-motion", "?page=chibi-dressup", "?page=drive-jb", "?page=sg-heartland", "?page=sg-world", "?page=sg-mrt"]);
 export function validateDemos(input, catalog) {
   if (!Array.isArray(input) || !input.length) throw new Error("Invalid demos registry");
   const ids = new Set(), slugs = new Set(), launchRoutes = new Set();
