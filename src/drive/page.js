@@ -6,6 +6,7 @@ import { disposeModels, loadModels } from "../chibi-dressup/view.js";
 import { Color, InstancedMesh, Matrix4, MeshBasicMaterial, SphereGeometry } from "three";
 import { cloneModel, instanceModel, loadKit } from "./kit.js";
 import { createDriveAudio } from "./audio.js";
+import { createQualityGovernor } from "./quality.js";
 import { addPedestrians } from "./pedestrians.js";
 import { zoneAt } from "./scenery.js";
 import { ROAD_HALF_WIDTH, buildCar, buildWorld } from "./world.js";
@@ -222,9 +223,14 @@ export async function mountDrive(root, thumbnail, signal) {
   }
 
   let last = performance.now(), frame = 0, minimapAt = 0, running = true;
+  const governor = createQualityGovernor({
+    initial: Math.min(devicePixelRatio, lowEnd ? 1.5 : 2),
+    onChange: ratio => { world.renderer.setPixelRatio(ratio); resize(); },
+  });
   function step(now) {
     if (!running) return;
     frame = requestAnimationFrame(step);
+    governor.update(now);
     // requestAnimationFrame stamps can precede the mount time, so never let time run backwards.
     const dt = clamp((now - last) / 1000, 0, 0.05);
     frameDt = Math.max(dt, 0.001);
@@ -461,7 +467,7 @@ export async function mountDrive(root, thumbnail, signal) {
   resize();
   stage.inspectDrive = () => ({
     car: { x: car.position.x, z: car.position.z, yaw: car.rotation.y }, camera: { x: world.camera.position.x, z: world.camera.position.z },
-    pedestrians: pedestrians?.count ?? 0, driver: car.children.includes(driverBody), s: state.s, speed: state.speed, mode, stage: state.stage, paused, offset: state.offset,
+    quality: governor.ratio, pedestrians: pedestrians?.count ?? 0, driver: car.children.includes(driverBody), s: state.s, speed: state.speed, mode, stage: state.stage, paused, offset: state.offset,
     road: roadAt(route, state.s).name, length: route.length, stop: stopDistance, hour: tripHour(route, state.s),
     triangles: world.renderer.info.render.triangles, calls: world.renderer.info.render.calls,
   });

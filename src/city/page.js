@@ -10,6 +10,7 @@ import { createProps } from "../chibi-dressup/props.js";
 import { bindModule, createRig } from "../chibi-dressup/rig.js";
 import { disposeModels, getBounds, loadModels } from "../chibi-dressup/view.js";
 import { createDriveAudio } from "../drive/audio.js";
+import { createQualityGovernor } from "../drive/quality.js";
 import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { addPedestrians } from "../drive/pedestrians.js";
 import { locate, polylineRoute, sample } from "../drive/route.js";
@@ -323,9 +324,15 @@ export async function mountCity(root, thumbnail, signal) {
   const interact = () => { if (mode === "walk" && stationNear() && !carNear()) useStation(); else toggleCar(); };
   addEventListener("keydown", event => { if (event.key === "e" || event.key === "E") interact(); }, { signal });
   actionButton.addEventListener("click", interact);
+  const touchDevice = matchMedia("(pointer: coarse)").matches;
+  const governor = createQualityGovernor({
+    initial: Math.min(devicePixelRatio, touchDevice ? 1.5 : 2),
+    onChange: ratio => { renderer.setPixelRatio(ratio); resize(); },
+  });
   function step(now) {
     if (!running2) return;
     frame = requestAnimationFrame(step);
+    governor.update(now);
     const dt = clamp((now - last) / 1000, 0, 0.05);
     last = now;
     const ix = (keys.has("r") ? 1 : 0) - (keys.has("l") ? 1 : 0) + input.x, iz = (keys.has("b") ? 1 : 0) - (keys.has("u") ? 1 : 0) + input.z;
@@ -396,7 +403,7 @@ export async function mountCity(root, thumbnail, signal) {
   };
   const observer = new ResizeObserver(resize); observer.observe(stage); resize();
   onLanguageChange(() => { runButton.textContent = t("city.run"); }, signal);
-  stage.inspectCity = () => ({ traffic: cars.map(v => ({ x: v.x, z: v.z, yaw: v.yaw, speed: v.speed, base: v.base })), hour, mode, task: task?.clip ?? null, props: Boolean(props), car: { x: drive.x, z: drive.z, speed: drive.speed }, pedestrians: pedestrians?.count ?? 0, x: player.x, z: player.z, yaw: player.yaw, clip: player.clip, speed: player.speed, triangles: renderer.info.render.triangles, calls: renderer.info.render.calls, place: placeLabel.textContent });
+  stage.inspectCity = () => ({ quality: governor.ratio, traffic: cars.map(v => ({ x: v.x, z: v.z, yaw: v.yaw, speed: v.speed, base: v.base })), hour, mode, task: task?.clip ?? null, props: Boolean(props), car: { x: drive.x, z: drive.z, speed: drive.speed }, pedestrians: pedestrians?.count ?? 0, x: player.x, z: player.z, yaw: player.yaw, clip: player.clip, speed: player.speed, triangles: renderer.info.render.triangles, calls: renderer.info.render.calls, place: placeLabel.textContent });
   stage.teleport = (x, z) => { player.x = x; player.z = z; };
   stage.dataset.state = "ready"; stage.setAttribute("aria-busy", "false");
   stage.querySelector(".city-loading").remove(); root.querySelector(".city-poster").remove();
