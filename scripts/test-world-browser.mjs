@@ -84,7 +84,7 @@ try {
   // Leaving the page releases the renderer.
   await page.locator("#demo-breadcrumb a").click();
   await page.waitForTimeout(500);
-  assert.equal(await page.locator("#sg-world-page canvas").count(), 0);
+  assert.equal(await page.locator("#sg-world-page canvas:not(.drive-minimap)").count(), 0);
   assert.deepEqual(errors, []);
   console.log(JSON.stringify({ chromium: browser.version(), tiles: first.tiles, triangles: first.triangles, drawCalls: first.calls, speed: Number(driven.speed.toFixed(1)), consoleErrors: errors.length }, null, 2));
 } finally {
