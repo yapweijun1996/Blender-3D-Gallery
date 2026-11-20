@@ -76,3 +76,13 @@ test("every vehicle type spawns, settles and drives", async () => {
     physics.dispose();
   }
 });
+
+test("reverse pushes the car backwards from a standstill", async () => {
+  const { physics, vehicle } = await scene();
+  run(physics, 1);
+  for (let i = 0; i < 240; i++) { vehicle.setControls({ reverse: 1 }); physics.step(1 / 60); }
+  const state = vehicle.getState();
+  assert.ok(state.forwardSpeed < -2, `speed ${state.forwardSpeed}`);
+  assert.ok(state.forwardSpeed > -8);
+  physics.dispose();
+});

@@ -42,7 +42,7 @@ export function paletteBuildPlugin() {
       return html
         .replace('name="theme-color" content=""', `name="theme-color" content="${background}"`)
         .replace('name="color-scheme" content=""', `name="color-scheme" content="${scheme}"`)
-        .replace("script-src 'self';", `script-src 'self' 'sha256-${hash}';`)
+        .replace(/script-src 'self'([^;]*);/, `script-src 'self'$1 'sha256-${hash}';`)
         .replace("<!-- palette-bootstrap -->", `<script>${script}</script>`);
     },
   };

@@ -67,7 +67,8 @@ export const VEHICLE_TYPES = Object.freeze({
   motorbike: profile(180, 47, 1350, 1300, [0.20, 0.30, 0.88], 0.31, 0, -0.12, 0.68, -0.68),
 });
 
-const neutral = Object.freeze({ throttle: 0, brake: 0, steer: 0, handbrake: 0 });
+const neutral = Object.freeze({ throttle: 0, brake: 0, steer: 0, handbrake: 0, reverse: 0 });
+const REVERSE_TOP_SPEED = 6; // m/s
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const input = (value, min = 0) => Number.isFinite(value) ? clamp(value, min, 1) : 0;
 
@@ -189,12 +190,12 @@ export function createVehicle(world, options = {}) {
     type, body, collider, crash,
 
     /** Each call supplies a complete control sample. Steer is [-1, 1], other inputs [0, 1]. */
-    setControls({ throttle, brake, steer, handbrake } = {}) {
+    setControls({ throttle, brake, steer, handbrake, reverse } = {}) {
       controls = {
         throttle: input(throttle), brake: input(brake), steer: input(steer, -1),
-        handbrake: handbrake === true ? 1 : input(handbrake),
+        handbrake: handbrake === true ? 1 : input(handbrake), reverse: input(reverse),
       };
-      if (controls.throttle || controls.brake || controls.steer || controls.handbrake) body.wakeUp();
+      if (controls.throttle || controls.brake || controls.steer || controls.handbrake || controls.reverse) body.wakeUp();
     },
 
     update(dt) {
@@ -203,7 +204,7 @@ export function createVehicle(world, options = {}) {
       const velocity = body.linvel();
       const speed = Math.hypot(velocity.x, velocity.z);
       const forwardSpeed = dot(direction, velocity);
-      const { throttle, brake, steer, handbrake } = controls;
+      const { throttle, brake, steer, handbrake, reverse } = controls;
       const steering = steer * (tuning.lowSpeedSteer + (tuning.highSpeedSteer - tuning.lowSpeedSteer)
         * Math.min(speed / tuning.highSpeed, 1));
       gear = tuning.gears.findIndex(({ below }) => speed < below) + 1;
@@ -212,7 +213,9 @@ export function createVehicle(world, options = {}) {
       // Grounded wheels govern forward speed through tire forces, leaving crash/airborne momentum to Rapier.
       const overspeedBrake = clamp((forwardSpeed - topSpeed) / tuning.governorBand, 0, 1);
       const serviceBrake = brakeForce * Math.max(brake, overspeedBrake) / wheelCount;
-      const drive = engineForce * tuning.gears[gear - 1].multiplier * throttle * speedScale / axleSize;
+      // Reverse is a gentle push backwards, only when throttle is released and the car is nearly stopped or already reversing.
+      const backing = throttle === 0 && forwardSpeed < 1 ? reverse * clamp((REVERSE_TOP_SPEED + forwardSpeed) / tuning.governorBand, 0, 1) : 0;
+      const drive = (engineForce * tuning.gears[gear - 1].multiplier * throttle * speedScale - engineForce * 0.5 * backing) / axleSize;
 
       for (let index = 0; index < wheelCount; index++) {
         const rear = index >= axleSize;
