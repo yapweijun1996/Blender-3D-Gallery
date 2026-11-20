@@ -9,6 +9,7 @@ import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
 import { busStopPlacements, lampPlacements } from "./furniture.js";
+import { addWorldPedestrians, pedestrianPaths } from "./pedestrians.js";
 import { createSignalLights, signalApproaches } from "./signals.js";
 import { VEHICLE_TYPES, buildTrafficGraph, createRandom, createTraffic } from "./traffic.js";
 import { TILE_SIZE, buildTile, buildingMesh } from "./tile-mesh.js";
@@ -252,6 +253,10 @@ export async function mountWorld(root, thumbnail, signal) {
       for (const mesh of instanceModel(kit.get(name), placements.map(item => ({ ...item, scale: 1 }))).meshes) { scene.add(mesh); furnitureMeshes.push(mesh); }
     }
   }
+  let pedestrians = null;
+  addWorldPedestrians({ scene, signal, count: touchDevice ? { female: 2, male: 1 } : { female: 3, male: 3 } })
+    .then(result => { if (signal.aborted) result.dispose(); else { pedestrians = result; graphDirty = true; } })
+    .catch(error => { if (!signal.aborted) console.error("World: pedestrians failed to load", error); });
   const signalLights = createSignalLights(scene);
   let signalGraph = null, signalList = [];
   const solidVehicles = new Map();
@@ -261,11 +266,13 @@ export async function mountWorld(root, thumbnail, signal) {
       traffic.setGraph(signalGraph);
       signalList = signalApproaches(signalGraph);
       placeFurniture(signalGraph);
+      pedestrians?.setPaths(pedestrianPaths([...tiles.values()].map(entry => entry.data)));
       signalLights.setApproaches(signalList, state.position);
       graphDirty = false;
     }
     signalLights.update(traffic.signalState);
     traffic.update(dt, state.position);
+    pedestrians?.update(dt, state.position);
     const lists = new Map([...trafficSets.keys()].map(name => [name, []]));
     const alive = new Set();
     for (const vehicle of traffic.vehicles) {
@@ -414,7 +421,7 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.setView = view => { fixedView = view; };
@@ -426,6 +433,7 @@ export async function mountWorld(root, thumbnail, signal) {
       cancelAnimationFrame(frame);
       observer.disconnect();
       audio.dispose();
+      pedestrians?.dispose();
       signalLights.dispose();
       for (const mesh of furnitureMeshes) mesh.dispose?.();
       for (const solid of solidVehicles.values()) solid.remove();

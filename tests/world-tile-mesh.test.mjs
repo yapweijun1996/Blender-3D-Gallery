@@ -1,0 +1,20 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import test from "node:test";
+import { buildTile } from "../src/world/tile-mesh.js";
+
+test("every map tile builds into finite geometry (crossings, buildings, roads)", () => {
+  let crossings = 0;
+  for (const file of fs.readdirSync("models/world/tiles").filter(name => name !== "index.json")) {
+    const tile = JSON.parse(fs.readFileSync(`models/world/tiles/${file}`, "utf8"));
+    const built = buildTile(tile);
+    crossings += tile.crossings.length;
+    for (const geometry of [built.ground, built.buildings]) {
+      if (!geometry) continue;
+      const position = geometry.attributes.position.array;
+      assert.ok(position.length % 9 === 0, `${file}: whole triangles`);
+      assert.ok(position.every(Number.isFinite), `${file}: finite positions`);
+    }
+  }
+  assert.ok(crossings > 100);
+});

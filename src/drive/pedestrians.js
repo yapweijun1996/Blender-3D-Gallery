@@ -18,13 +18,16 @@ const OUTFITS = {
 const SCALE = 1.45, SPEED = 1.5, WALK_BEHIND = 140, WALK_AHEAD = 300;
 const rng = seed => () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
 
-export async function addPedestrians({ scene, route, signal, count = { female: 3, male: 3 }, allowed = null }) {
-  const ok = allowed ?? (s => { const zone = zoneAt(route, s); return !(zone === "expressway" || zone === "water" || zone === "checkpoint"); });
+/**
+ * Loads the dress-up chibis as walking people: one shared motion bank, each body with a random light outfit.
+ * Returns { people, scenes, random }; a person is { root, rig, s, dir, side, lateral, speed } and is already in the scene.
+ */
+export async function createPeople({ scene, signal, count = { female: 3, male: 3 }, seed = 77 }) {
+  const random = rng(seed);
   const manifest = validateManifest(manifestData);
   const scenes = new Set();
-  const random = rng(77);
   const bodies = Object.entries(count).filter(([, n]) => n > 0).map(([id]) => id);
-  if (!bodies.length) return { update() {}, dispose() {} };
+  if (!bodies.length) return { people: [], scenes, random };
   // One shared motion bank and gesture bank; each body brings its own mesh.
   const [motion, gestures] = await loadModels([url("bodies/male/motion.glb"), url("bodies/male/gestures.glb")], signal, scenes);
   const templates = new Map();
@@ -71,6 +74,13 @@ export async function addPedestrians({ scene, route, signal, count = { female: 3
       people.push({ root, rig, s: 0, dir: random() < 0.5 ? 1 : -1, side: random() < 0.5 ? 1 : -1, lateral: 0.9 + random() * 2.1, speed: SPEED * (0.85 + random() * 0.3) });
     }
   }
+  return { people, scenes, random };
+}
+
+export async function addPedestrians({ scene, route, signal, count = { female: 3, male: 3 }, allowed = null }) {
+  const ok = allowed ?? (s => { const zone = zoneAt(route, s); return !(zone === "expressway" || zone === "water" || zone === "checkpoint"); });
+  const { people, scenes, random } = await createPeople({ scene, signal, count });
+  if (!people.length) return { update() {}, dispose() {} };
 
   function place(person, around, first = false) {
     for (let tries = 0; tries < 40; tries++) {

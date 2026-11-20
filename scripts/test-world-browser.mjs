@@ -29,6 +29,9 @@ try {
   await page.waitForFunction(() => document.querySelector('.drive-stage').inspectWorld().traffic >= 8, undefined, { polling: 500 });
   assert.ok((await inspect()).trafficTypes.length >= 2);
 
+  // People walk the footways around the car.
+  await page.waitForFunction(() => document.querySelector('.drive-stage').inspectWorld().people >= 2, undefined, { polling: 1000, timeout: 150_000 });
+
   // Drive: the physics gives speed, and the car stays upright on the road.
   const driven = await stage.evaluate(element => element.simulate(8, { throttle: 1 }));
   assert.ok(driven.speed > 6, `speed ${driven.speed}`);

@@ -2,8 +2,8 @@ import { BufferAttribute, BufferGeometry, Color, ShapeUtils, Vector2 } from "thr
 
 // Turns one map tile (models/world/tiles/<x>_<z>.json) into flat-coloured geometry. Coordinates are metres: x east, z south, y up.
 export const TILE_SIZE = 250;
-const ROAD_Y = 0.03, KERB_Y = 0.12, PATH_Y = 0.05, WATER_Y = 0.02, PARK_Y = 0.01;
-const ASPHALT = new Color(0x3b3e43), KERB = new Color(0xb9b9b2), PATH = new Color(0x9c9a90), WATER = new Color(0x2f7391), PARK = new Color(0x5f8f4a);
+const ZEBRA_Y = 0.06, ROAD_Y = 0.03, KERB_Y = 0.12, PATH_Y = 0.05, WATER_Y = 0.02, PARK_Y = 0.01;
+const ZEBRA = new Color(0xe9e9e1), ASPHALT = new Color(0x3b3e43), KERB = new Color(0xb9b9b2), PATH = new Color(0x9c9a90), WATER = new Color(0x2f7391), PARK = new Color(0x5f8f4a);
 const WALLS = [0xd9d4c8, 0xc9cfd3, 0xe0d2b8, 0xb9c4c9, 0xcfc5c0, 0xd6dad0].map(hex => new Color(hex));
 const ROOFS = [0x8e8f91, 0x7b8085, 0x9a8f86].map(hex => new Color(hex));
 
@@ -73,6 +73,29 @@ function extrude(batch, ring, height, wall, roof) {
 
 const hash = value => { let h = Number(value) % 2147483647 || 1; h = (h * 48271) % 2147483647; return h; };
 
+/** White bars across the carriageway at a mapped crossing: the bars run along the road, repeated across it. */
+function zebra(batch, tile, point, ox, oz) {
+  let best = null;
+  for (const road of tile.roads ?? []) {
+    if (road.tunnel || (road.width ?? 0) < 5) continue;
+    for (let i = 1; i < road.geometry.length; i++) {
+      const a = road.geometry[i - 1], b = road.geometry[i];
+      const sx = b[0] - a[0], sz = b[1] - a[1], span = sx * sx + sz * sz || 1;
+      const t = Math.max(0, Math.min(1, ((point[0] - a[0]) * sx + (point[1] - a[1]) * sz) / span));
+      const px = a[0] + sx * t, pz = a[1] + sz * t, distance = Math.hypot(point[0] - px, point[1] - pz);
+      if (distance < 4 && (!best || distance < best.distance)) { const length = Math.sqrt(span); best = { distance, x: px, z: pz, tx: sx / length, tz: sz / length, width: road.width }; }
+    }
+  }
+  if (!best) return;
+  // Along the road: (tx, tz), across it: (nx, nz). Bars 3 m long, 0.5 m wide, every 1 m across the carriageway.
+  const nx = -best.tz, nz = best.tx, half = best.width / 2;
+  for (let across = -half + 0.7; across <= half - 0.7; across += 1) {
+    const cx = best.x + ox + nx * across, cz = best.z + oz + nz * across;
+    const corner = (along, side) => [cx + best.tx * along + nx * side, ZEBRA_Y, cz + best.tz * along + nz * side];
+    batch.quad(corner(-1.5, -0.25), corner(1.5, -0.25), corner(1.5, 0.25), corner(-1.5, 0.25), ZEBRA);
+  }
+}
+
 /** Triangle list of a building for the physics collider: walls and roof, vertices XYZ and indices. */
 export function buildingMesh(ring, height) {
   const { points, triangles } = triangulate(ring);
@@ -108,6 +131,13 @@ export function buildTile(tile, { hide = () => false } = {}) {
     if (junction.geometry?.length > 3) fillPolygon(ground, shift(junction.geometry), ROAD_Y + 0.002, ASPHALT);
   }
   for (const kerb of tile.kerbs ?? []) ribbon(ground, shift(kerb.geometry), 0.3, KERB_Y, KERB);
+
+  for (const crossing of tile.crossings ?? []) {
+    // A crossing is a point marker or a walkable line; a line is marked at its middle.
+    const line = crossing.geometry;
+    const point = crossing.point ?? (line?.length ? line[line.length >> 1] : null);
+    if (point) zebra(ground, tile, point, ox, oz);
+  }
 
   const solids = [];
   for (const building of tile.buildings ?? []) {
