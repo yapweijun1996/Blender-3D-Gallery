@@ -14,6 +14,7 @@ import { createSignalLights, signalApproaches } from "./signals.js";
 import { VEHICLE_TYPES, buildTrafficGraph, createRandom, createTraffic } from "./traffic.js";
 import { TILE_SIZE, buildTile, buildingMesh } from "./tile-mesh.js";
 import "../drive/style.css";
+import "./style.css";
 
 // Open-world study: the real OpenStreetMap road network and buildings around Marina Bay, streamed in 250 m tiles,
 // with a car driven by the Rapier vehicle physics (crashes, flips). Built from models/world/tiles (scripts/world/build-tiles.mjs).
@@ -25,7 +26,7 @@ const kitUrls = import.meta.glob([
 const landmarkUrls = import.meta.glob("../../models/sg-{marina-bay-sands-towers,marina-bay-sands-podium,esplanade-domes,esplanade-base,merlion,merlion-park,artscience-museum,helix-bridge}/*.glb", { eager: true, query: "?url", import: "default" });
 const KIT = { car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light", bus_shelter: "sg-bus-shelter-sbs/sg-bus-shelter-sbs", bus_flag: "sg-bus-stop-flag/sg-bus-stop-flag" };
 const TREES = ["rain_tree", "angsana", "coconut_palm"];
-const LOAD_RADIUS = 2, SOLID_RADIUS = 1; // in tiles around the car
+const SOLID_RADIUS = 1; // in tiles around the car; phones load a smaller ring of tiles
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const tileKey = (x, z) => `${x}_${z}`;
 
@@ -38,12 +39,13 @@ async function fetchTile(key, signal) {
 }
 
 export async function mountWorld(root, thumbnail, signal) {
+  const LOAD_RADIUS = matchMedia("(pointer: coarse)").matches ? 1 : 2;
   mountMarkup(root, `<section class="drive">
     <header class="drive-heading">
       <h1 data-i18n="demo.sg-world.title"></h1>
       <p data-i18n="demo.sg-world.description"></p>
     </header>
-    <div class="drive-stage" data-state="loading" data-mode="manual" aria-busy="true">
+    <div class="drive-stage world-stage" data-state="loading" data-mode="manual" aria-busy="true">
       <img class="drive-poster" alt="">
       <p class="drive-loading" role="status" data-i18n="world.loading"></p>
       <div class="drive-hud" hidden>
@@ -89,7 +91,7 @@ export async function mountWorld(root, thumbnail, signal) {
 
   const scene = new Scene();
   scene.background = new Color(0x9fcdea);
-  scene.fog = new Fog(0x9fcdea, 260, 700);
+  scene.fog = new Fog(0x9fcdea, LOAD_RADIUS === 1 ? 160 : 260, LOAD_RADIUS === 1 ? 420 : 700);
   scene.add(new HemisphereLight(0xdff0ff, 0x7a8a68, 1.5), new AmbientLight(0xffffff, 0.35));
   const sun = new DirectionalLight(0xfff1d6, 2.2);
   sun.position.set(-120, 220, 90);

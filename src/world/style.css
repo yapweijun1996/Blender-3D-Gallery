@@ -1,0 +1,5 @@
+/* The open-world page reuses the drive page's stage and HUD; on a phone the speed readout moves to the top so the pedals do not cover it. */
+@media (max-width: 640px) {
+  .world-stage .drive-readout { left: auto; right: 1rem; top: .8rem; bottom: auto; transform: none; }
+  .world-stage .drive-event { top: 3.4rem; }
+}
