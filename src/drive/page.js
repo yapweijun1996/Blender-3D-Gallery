@@ -4,6 +4,7 @@ import { buildRoute, findRoad, roadAt, sample, tripHour } from "./route.js";
 import { createRig } from "../chibi-dressup/rig.js";
 import { disposeModels, loadModels } from "../chibi-dressup/view.js";
 import { cloneModel, instanceModel, loadKit } from "./kit.js";
+import { addPedestrians } from "./pedestrians.js";
 import { ROAD_HALF_WIDTH, buildCar, buildWorld } from "./world.js";
 import "./style.css";
 
@@ -235,6 +236,7 @@ export async function mountDrive(root, thumbnail, signal) {
       if (!barriers.length || barriers[0].rotation.z >= 1.4) { state.stage = "drive"; state.pass = true; }
     }
     updateTraffic(dt);
+    pedestrians?.update(dt, state.s);
   }
 
   function zoneLimit() {
@@ -324,7 +326,7 @@ export async function mountDrive(root, thumbnail, signal) {
   observer.observe(stage);
   resize();
   stage.inspectDrive = () => ({
-    driver: car.children.includes(driverBody), s: state.s, speed: state.speed, mode, stage: state.stage, paused, offset: state.offset,
+    pedestrians: pedestrians?.count ?? 0, driver: car.children.includes(driverBody), s: state.s, speed: state.speed, mode, stage: state.stage, paused, offset: state.offset,
     road: roadAt(route, state.s).name, length: route.length, stop: stopDistance, hour: tripHour(route, state.s),
     triangles: world.renderer.info.render.triangles, calls: world.renderer.info.render.calls,
   });
@@ -360,9 +362,18 @@ export async function mountDrive(root, thumbnail, signal) {
     }
   })();
 
+  let pedestrians = null;
+  if (world.kitMode) {
+    const touch = matchMedia("(pointer: coarse)").matches;
+    addPedestrians({ scene: world.scene, route, signal, count: touch ? { female: 2, male: 0 } : { female: 2, male: 2 } })
+      .then(result => { if (signal.aborted) result.dispose(); else pedestrians = result; })
+      .catch(error => { if (!signal.aborted) console.error("Drive: pedestrians failed to load", error); });
+  }
+
   return {
     dispose() {
       running = false;
+      pedestrians?.dispose();
       cancelAnimationFrame(frame);
       observer.disconnect();
       delete stage.inspectDrive;
