@@ -8,6 +8,7 @@ import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
+import { createSignalLights, signalApproaches } from "./signals.js";
 import { VEHICLE_TYPES, buildTrafficGraph, createRandom, createTraffic } from "./traffic.js";
 import { TILE_SIZE, buildTile, buildingMesh } from "./tile-mesh.js";
 import "../drive/style.css";
@@ -239,9 +240,18 @@ export async function mountWorld(root, thumbnail, signal) {
     for (const mesh of set.meshes) scene.add(mesh);
     trafficSets.set(type.model, set);
   }
+  const signalLights = createSignalLights(scene);
+  let signalGraph = null, signalList = [];
   const solidVehicles = new Map();
   function updateTraffic(dt, state) {
-    if (graphDirty) { traffic.setGraph(buildTrafficGraph([...tiles.values()].map(entry => entry.data))); graphDirty = false; }
+    if (graphDirty) {
+      signalGraph = buildTrafficGraph([...tiles.values()].map(entry => entry.data));
+      traffic.setGraph(signalGraph);
+      signalList = signalApproaches(signalGraph);
+      signalLights.setApproaches(signalList, state.position);
+      graphDirty = false;
+    }
+    signalLights.update(traffic.signalState);
     traffic.update(dt, state.position);
     const lists = new Map([...trafficSets.keys()].map(name => [name, []]));
     const alive = new Set();
@@ -391,7 +401,7 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.setView = view => { fixedView = view; };
@@ -403,6 +413,7 @@ export async function mountWorld(root, thumbnail, signal) {
       cancelAnimationFrame(frame);
       observer.disconnect();
       audio.dispose();
+      signalLights.dispose();
       for (const solid of solidVehicles.values()) solid.remove();
       for (const key of [...tiles.keys()]) unload(key);
       physics.dispose();
