@@ -15,6 +15,7 @@ import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { addPedestrians } from "../drive/pedestrians.js";
 import { locate, polylineRoute, sample } from "../drive/route.js";
 import { ROAD_HALF_WIDTH, ribbon, roadTexture, stripBetween } from "../drive/world.js";
+import { dayAt } from "../drive/daylight.js";
 import { goToPage } from "../drive/nav.js";
 import { BUILDINGS, CAR_SPOT, CROSSINGS, GATE, PROPS, RING, ringPoints } from "./layout.js";
 import "./style.css";
@@ -26,20 +27,6 @@ const KIT = ["hdb_block", "hdb_void_deck", "hdb_coffee_shop", "provision_shop", 
   "signal_pole", "zebra_crossing", "street_sign", "heritage_lamp", "bench", "block_sign", "playground_slide", "playground_swing", "rain_tree_hd", "angsana_tree",
   "tembusu_tree_hd", "frangipani_tree", "coconut_palm"];
 const WALK = 2.4, RUN = 5.6, SCALE = 1.45, RADIUS = 0.45;
-// A day in the neighbourhood: sky, ground, sun and lamps by the hour (one hour passes in 40 seconds).
-const DAY = [
-  { hour: 0, sky: 0x0b1530, ground: 0x26332a, sun: 0.25, lamp: 1 }, { hour: 5.5, sky: 0x2e3566, ground: 0x34402f, sun: 0.4, lamp: 1 },
-  { hour: 6.5, sky: 0xe8a77a, ground: 0x60734a, sun: 1.6, lamp: 0.3 }, { hour: 9, sky: 0x9fd0f2, ground: 0x6f8a4f, sun: 2.6, lamp: 0 },
-  { hour: 15, sky: 0xa9d6f5, ground: 0x6f8a4f, sun: 2.6, lamp: 0 }, { hour: 17.5, sky: 0xf2b27c, ground: 0x6f7a55, sun: 2.2, lamp: 0 },
-  { hour: 18.8, sky: 0x7a5a87, ground: 0x4b5545, sun: 1.0, lamp: 0.7 }, { hour: 19.8, sky: 0x1c2250, ground: 0x2a3030, sun: 0.4, lamp: 1 },
-  { hour: 24, sky: 0x0b1530, ground: 0x26332a, sun: 0.25, lamp: 1 },
-];
-function dayAt(hour) {
-  let i = 0;
-  while (i < DAY.length - 2 && hour > DAY[i + 1].hour) i++;
-  const a = DAY[i], b = DAY[i + 1], k = clamp((hour - a.hour) / (b.hour - a.hour), 0, 1);
-  return { sky: new Color(a.sky).lerp(new Color(b.sky), k), ground: new Color(a.ground).lerp(new Color(b.ground), k), sun: a.sun + (b.sun - a.sun) * k, lamp: a.lamp + (b.lamp - a.lamp) * k };
-}
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const rng = seed => () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
 

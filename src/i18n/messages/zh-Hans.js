@@ -746,6 +746,7 @@ export default {
   "world.flippedHint": "翻车了:按 R 或点“扶正车辆”",
   "world.crash": "撞车!",
   "world.damage": "损伤",
+  "world.time": "时间 {time}",
   "world.enterMrt": "下到{station}地铁站(E)",
   "demo.sg-mrt.title": "新加坡地铁站",
   "demo.sg-mrt.description": "看一列地铁进站、停在屏蔽门前、开门、再离站。可以站在站台上、坐进车厢里,或从上面看。",

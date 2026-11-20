@@ -33,6 +33,11 @@ try {
   // People walk the footways around the car.
   await page.waitForFunction(() => document.querySelector('.drive-stage').inspectWorld().people >= 2, undefined, { polling: 1000, timeout: 150_000 });
 
+  // The time button steps through morning, noon, evening and night.
+  await page.locator(".world-time").click();
+  assert.ok([8, 13, 18.5, 22].includes(Math.round((await inspect()).hour * 2) / 2), "time jumped to a preset");
+  await stage.evaluate(element => element.setHour(15));
+
   // Drive: the physics gives speed, and the car stays upright on the road.
   const driven = await stage.evaluate(element => element.simulate(8, { throttle: 1 }));
   assert.ok(driven.speed > 6 && driven.speed <= 28.5, `speed ${driven.speed} (capped at 100 km/h)`);

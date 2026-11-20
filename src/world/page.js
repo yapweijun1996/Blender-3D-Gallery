@@ -4,6 +4,7 @@ import {
 import { localize, mountMarkup, t } from "../i18n/index.js";
 import { disposeModels } from "../chibi-dressup/view.js";
 import { createDriveAudio } from "../drive/audio.js";
+import { dayAt } from "../drive/daylight.js";
 import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
@@ -56,7 +57,19 @@ function facadeTexture() {
   texture.wrapS = texture.wrapT = RepeatWrapping;
   texture.colorSpace = SRGBColorSpace;
   texture.anisotropy = 4;
-  return texture;
+  // The same windows on black: lit at night through the material's emissive map.
+  const glowCanvas = document.createElement("canvas");
+  glowCanvas.width = glowCanvas.height = size;
+  const glowContext = glowCanvas.getContext("2d");
+  glowContext.fillStyle = "#000000";
+  glowContext.fillRect(0, 0, size, size);
+  glowContext.fillStyle = "#ffffff";
+  glowContext.fillRect(30, 30, 82, 28);
+  glowContext.fillRect(30, 65, 82, 31);
+  const glow = new CanvasTexture(glowCanvas);
+  glow.wrapS = glow.wrapT = RepeatWrapping;
+  glow.colorSpace = SRGBColorSpace;
+  return { texture, glow };
 }
 
 async function fetchTile(key, signal) {
@@ -93,6 +106,7 @@ export async function mountWorld(root, thumbnail, signal) {
       <button type="button" class="drive-pause" data-i18n="common.pause"></button>
       <button type="button" class="drive-horn" data-i18n="drive.horn"></button>
       <button type="button" class="drive-reset" data-i18n="world.reset"></button>
+      <button type="button" class="world-time"></button>
       <button type="button" class="drive-sound" aria-pressed="true" data-i18n="drive.sound"></button>
     </div>
     <p class="drive-hint" data-i18n="world.hint"></p>
@@ -123,7 +137,8 @@ export async function mountWorld(root, thumbnail, signal) {
   const scene = new Scene();
   scene.background = new Color(0x9fcdea);
   scene.fog = new Fog(0x9fcdea, LOAD_RADIUS === 1 ? 160 : 260, LOAD_RADIUS === 1 ? 420 : 700);
-  scene.add(new HemisphereLight(0xdff0ff, 0x7a8a68, 1.5), new AmbientLight(0xffffff, 0.35));
+  const hemisphere = new HemisphereLight(0xdff0ff, 0x7a8a68, 1.5);
+  scene.add(hemisphere, new AmbientLight(0xffffff, 0.35));
   const sun = new DirectionalLight(0xfff1d6, 2.2);
   sun.position.set(-120, 220, 90);
   scene.add(sun);
@@ -135,7 +150,8 @@ export async function mountWorld(root, thumbnail, signal) {
   stage.append(renderer.domElement);
 
   const groundMaterial = new MeshLambertMaterial({ vertexColors: true, side: DoubleSide });
-  const buildingMaterial = new MeshLambertMaterial({ vertexColors: true, side: DoubleSide, map: facadeTexture() });
+  const facade = facadeTexture();
+  const buildingMaterial = new MeshLambertMaterial({ vertexColors: true, side: DoubleSide, map: facade.texture, emissiveMap: facade.glow, emissive: new Color(0xffd98a), emissiveIntensity: 0 });
   const flatGround = new Mesh(new PlaneGeometry(6000, 6000).rotateX(-Math.PI / 2), new MeshLambertMaterial({ color: 0x8aa06f }));
   flatGround.position.y = -0.3;
   scene.add(flatGround);
@@ -448,6 +464,28 @@ export async function mountWorld(root, thumbnail, signal) {
     camera.lookAt(camTarget);
   }
 
+  // Time of day: sky, fog, ground, sun, lit windows and street lamps follow the hour (one hour passes in 30 seconds).
+  const lampMaterials = new Set();
+  for (const name of ["road_light"]) for (const part of kit.get(name)?.parts ?? []) for (const material of [part.material].flat()) if (material.name === "lamp_emissive") lampMaterials.add(material);
+  let hour = 15;
+  const timeButton = root.querySelector(".world-time");
+  const hourText = () => `${String(Math.floor(hour)).padStart(2, "0")}:${String(Math.floor((hour % 1) * 60)).padStart(2, "0")}`;
+  function setHour(value) {
+    hour = ((value % 24) + 24) % 24;
+    const state = dayAt(hour);
+    scene.background = state.sky;
+    scene.fog.color.copy(state.sky);
+    flatGround.material.color.copy(state.ground);
+    sun.intensity = state.sun;
+    hemisphere.intensity = 0.55 + state.sun * 0.38;
+    buildingMaterial.emissiveIntensity = state.lamp * 1.1;
+    for (const material of lampMaterials) { material.emissive?.copy(material.color); material.emissiveIntensity = state.lamp * 1.6; }
+    timeButton.textContent = t("world.time", { time: hourText() });
+  }
+  const PRESETS = [8, 13, 18.5, 22];
+  timeButton.addEventListener("click", () => setHour(PRESETS.find(value => value > hour + 0.01) ?? PRESETS[0]));
+  setHour(hour);
+
   const resize = () => {
     const { width, height } = stage.getBoundingClientRect();
     if (!width || !height) return;
@@ -492,6 +530,7 @@ export async function mountWorld(root, thumbnail, signal) {
     if (state.flipped && !lastFlip) notify("world.flippedHint");
     lastFlip = state.flipped;
     if (eventTimer > 0) { eventTimer -= dt; if (eventTimer <= 0) eventLine.textContent = ""; }
+    if (!paused) setHour(hour + dt / 30);
     audio.update(state.speed, 0.5);
     renderer.render(scene, camera);
   }
@@ -505,9 +544,10 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
+  stage.setHour = value => setHour(value);
   stage.setView = view => { fixedView = view; };
   stage.teleport = (x, z, heading = 0) => { previousPosition = null; vehicle.resetUpright({ position: { x, y: restHeight + 0.2, z }, heading, repair: true }); };
 
@@ -525,6 +565,8 @@ export async function mountWorld(root, thumbnail, signal) {
       for (const key of [...tiles.keys()]) unload(key);
       physics.dispose();
       scene.traverse(node => { node.geometry?.dispose(); for (const m of [node.material].flat().filter(Boolean)) { m.map?.dispose(); m.dispose(); } });
+      facade.texture.dispose();
+      facade.glow.dispose();
       renderer.dispose();
       renderer.forceContextLoss();
       renderer.domElement.remove();

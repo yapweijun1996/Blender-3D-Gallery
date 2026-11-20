@@ -746,6 +746,7 @@ export default {
   "world.flippedHint": "Terbalik: tekan R atau butang Betulkan kereta",
   "world.crash": "Langgar!",
   "world.damage": "Kerosakan",
+  "world.time": "Masa {time}",
   "world.enterMrt": "Turun ke MRT {station} (E)",
   "demo.sg-mrt.title": "Stesen MRT Singapura",
   "demo.sg-mrt.description": "Lihat kereta api masuk ke platform MRT, berhenti di pintu skrin, membuka pintu dan bertolak. Berdiri di platform, naik ke dalam, atau lihat dari atas.",
