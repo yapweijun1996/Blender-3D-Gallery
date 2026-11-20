@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { MISSIONS, arrived, distanceTo, nextMission, relativeBearing } from "../src/world/missions.js";
+import { MISSIONS, arrived, distanceTo, missionScore, nextMission, parSeconds, relativeBearing } from "../src/world/missions.js";
 
 const origin = { x: 0, z: 0 };
 
@@ -29,4 +29,17 @@ test("the next mission cycles and skips the one the car is standing in", () => {
   const inSecond = { x: MISSIONS[1].x, z: MISSIONS[1].z };
   assert.equal(nextMission(0, inSecond), 2);
   assert.ok(new Set(MISSIONS.map(mission => mission.id)).size === MISSIONS.length);
+});
+
+test("faster and cleaner runs score more, within bounds", () => {
+  const distance = 800, par = parSeconds(distance);
+  const onPar = missionScore({ distance, seconds: par });
+  assert.equal(onPar, 1000);
+  assert.ok(missionScore({ distance, seconds: par / 2 }) > onPar, "faster scores more");
+  assert.equal(missionScore({ distance, seconds: par / 10 }), 1500, "capped at 1.5 times");
+  assert.ok(missionScore({ distance, seconds: par * 2 }) < onPar, "slower scores less");
+  assert.equal(missionScore({ distance, seconds: par * 1000 }), 100, "never below the floor");
+  assert.equal(missionScore({ distance, seconds: par, damage: 1 }), 500, "full damage halves it");
+  assert.ok(missionScore({ distance, seconds: par, damage: 0.2 }) < onPar);
+  assert.equal(missionScore({ distance, seconds: par, damage: -3 }), onPar, "damage below zero is ignored");
 });

@@ -10,7 +10,7 @@ import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
 import { grovePlacements, groveRings } from "./groves.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
-import { MISSIONS, arrived, distanceTo, nextMission, relativeBearing } from "./missions.js";
+import { MISSIONS, arrived, distanceTo, missionScore, nextMission, relativeBearing } from "./missions.js";
 import { busStopPlacements, lampPlacements, nearestRoad } from "./furniture.js";
 import { addWorldPedestrians, pedestrianPaths } from "./pedestrians.js";
 import { createSignalLights, signalApproaches } from "./signals.js";
@@ -535,22 +535,25 @@ export async function mountWorld(root, thumbnail, signal) {
   }
 
   // Missions: drive to a place on the map. A gold beam marks the target, an arrow and the distance guide the way.
-  let missionIndex = 0, missionsDone = 0;
+  let missionIndex = 0, missionsDone = 0, score = 0, missionStart = { time: 0, damage: 0, distance: 0 }, missionClock = 0;
   const missionText = stage.querySelector(".world-mission-text"), missionArrow = stage.querySelector(".world-arrow");
   const beam = new Mesh(new CylinderGeometry(3, 3, 140, 20, 1, true), new MeshBasicMaterial({ color: 0xffd36a, transparent: true, opacity: 0.28, side: DoubleSide, depthWrite: false }));
   scene.add(beam);
-  function setMission(index) {
+  function setMission(index, from = null) {
     missionIndex = index;
+    missionStart = { time: missionClock, damage: from?.damage ?? 0, distance: from ? distanceTo(from.position, MISSIONS[index]) : distanceTo(start, MISSIONS[index]) };
     beam.position.set(MISSIONS[index].x, 70, MISSIONS[index].z);
   }
   setMission(0);
-  root.querySelector(".world-next").addEventListener("click", () => setMission(nextMission(missionIndex, vehicle.getState().position)));
+  root.querySelector(".world-next").addEventListener("click", () => { const state = vehicle.getState(); setMission(nextMission(missionIndex, state.position), state); });
   function updateMission(state) {
     const mission = MISSIONS[missionIndex], distance = distanceTo(state.position, mission);
     if (arrived(state.position, mission)) {
       missionsDone++;
-      notify("world.mission.done", { place: t(mission.name) });
-      setMission(nextMission(missionIndex, state.position));
+      const points = missionScore({ distance: missionStart.distance, seconds: missionClock - missionStart.time, damage: state.damage - missionStart.damage });
+      score += points;
+      notify("world.mission.done", { place: t(mission.name), points });
+      setMission(nextMission(missionIndex, state.position), state);
       return;
     }
     missionText.textContent = `${t("world.mission.drive", { place: t(mission.name) })} · ${distance >= 1000 ? `${(distance / 1000).toFixed(1)} km` : `${Math.round(distance)} m`}`;
@@ -613,6 +616,7 @@ export async function mountWorld(root, thumbnail, signal) {
     }
     const state = placeCar();
     updateEntrance(state.position);
+    if (!paused) missionClock += dt;
     updateMission(state);
     if (fixedView) { camera.position.set(...fixedView.position); camera.lookAt(...fixedView.target); } else placeCamera(state, dt);
     const tx = Math.floor(state.position.x / TILE_SIZE), tz = Math.floor(state.position.z / TILE_SIZE);
@@ -622,7 +626,7 @@ export async function mountWorld(root, thumbnail, signal) {
     previousPosition = { x: state.position.x, z: state.position.z };
     speedLabel.textContent = String(Math.round(state.speed * 3.6));
     roadLabel.textContent = state.flipped ? t("world.flipped") : "";
-    tripLabel.textContent = `${t("world.damage")} ${Math.round(state.damage * 100)}%  ·  ${(distanceDriven / 1000).toFixed(2)} km`;
+    tripLabel.textContent = `${t("world.damage")} ${Math.round(state.damage * 100)}%  ·  ${(distanceDriven / 1000).toFixed(2)} km  ·  ${t("world.score")} ${score}`;
     if (state.damage - lastCrash > 0.02) { audio.bump(); notify("world.crash"); }
     lastCrash = state.damage;
     if (state.flipped && !lastFlip) notify("world.flippedHint");
@@ -643,7 +647,7 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, missionsDone, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, missionsDone, score, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.setHour = value => setHour(value);

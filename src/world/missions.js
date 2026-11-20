@@ -27,3 +27,19 @@ export function nextMission(index, position) {
   }
   return (index + 1) % MISSIONS.length;
 }
+
+const PAR_SPEED = 11; // m/s: the average speed that earns the full 1000 points on the road distance (straight-line distance times 1.3)
+const BASE = 1000, FLOOR = 100;
+
+/** Seconds a good run takes for a straight-line distance in metres. */
+export const parSeconds = distance => (distance * 1.3) / PAR_SPEED;
+
+/**
+ * Points for one finished mission: up to 1.5 times the base for beating the par time, never below FLOOR, and the points
+ * are cut by up to half for damage taken during the mission (`damage` is the extra damage, 0 to 1).
+ */
+export function missionScore({ distance, seconds, damage = 0 }) {
+  const speed = Math.max(0, Math.min(1.5, parSeconds(distance) / Math.max(1, seconds)));
+  const clean = 1 - 0.5 * Math.max(0, Math.min(1, damage));
+  return Math.max(FLOOR, Math.round(BASE * speed * clean));
+}
