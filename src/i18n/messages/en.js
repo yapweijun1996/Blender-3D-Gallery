@@ -722,6 +722,7 @@ export default {
   "world.flippedHint": "Flipped over: press R or the Right the car button",
   "world.crash": "Crash!",
   "world.damage": "Damage",
+  "world.enterMrt": "Go down to {station} MRT (E)",
   "demo.sg-mrt.title": "Singapore MRT Station",
   "demo.sg-mrt.description": "Watch a train come into an MRT platform, stop at the screen doors, open its doors and leave. Stand on the platform, ride inside, or look from above.",
   "mrt.loading": "Building the station…",

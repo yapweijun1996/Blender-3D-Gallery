@@ -3,3 +3,7 @@
   .world-stage .drive-readout { left: auto; right: 1rem; top: .8rem; bottom: auto; transform: none; }
   .world-stage .drive-event { top: 3.4rem; }
 }
+
+.world-enter { position: absolute; left: 50%; bottom: 5.2rem; transform: translateX(-50%); min-height: 2.75rem; padding: 0 1.2rem; border: 0; border-radius: .8rem; pointer-events: auto; background: var(--drive-gold); color: var(--drive-on-gold); font: 600 1rem / 1 system-ui, sans-serif; cursor: pointer; }
+.world-enter[hidden] { display: none; }
+@media (max-width: 640px) { .world-enter { bottom: 7rem; } }

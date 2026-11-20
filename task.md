@@ -310,6 +310,7 @@ Open:
 - [ ] Cars do not yield to pedestrians or at unsignalised junctions; pedestrians have no colliders.
 - [ ] Bridges and tunnels are drawn flat; Supertrees and The Float are missing; ordinary buildings have flat colours without facades.
 - [ ] Corridor to Johor Bahru in the new engine (only Marina Bay is mapped); the older `?page=drive-jb` still covers that route.
-- [ ] MRT: no passengers, no entrance from the world page, generic platform instead of the real Bayfront or Promenade layouts.
+- [x] MRT entrances in the world (red pillar with the station sign at each of the 88 mapped entrances; within 30 m a button or E opens `?page=sg-mrt`; browser test covers it).
+- [ ] MRT: no passengers, generic platform instead of the real Bayfront or Promenade layouts.
 - [ ] The player car has no speed limit (about 180 km/h at most).
 - Note: `npm run test:world` needs the untracked `output/osm/marina_bay.json`, so it is not part of `npm test`.

@@ -46,6 +46,19 @@ try {
   await stage.evaluate(element => element.teleport(1500, 600, 0));
   await page.waitForFunction(() => { const s = document.querySelector(".drive-stage").inspectWorld(); return s.carTile[0] === 6 && s.tiles >= 9; }, undefined, { polling: 500 });
 
+  // At an MRT entrance a button goes down to the station page.
+  await stage.evaluate(element => element.teleport(-60, -20, 0));
+  await page.waitForFunction(() => document.querySelector(".drive-stage").inspectWorld().entrances > 0, undefined, { polling: 500 });
+  const entrance = (await inspect()).entranceList[0];
+  await stage.evaluate((element, [x, z]) => element.teleport(x + 3, z + 3, 0), [entrance.x, entrance.z]);
+  await page.waitForFunction(() => document.querySelector(".drive-stage").inspectWorld().nearEntrance, undefined, { polling: 500 });
+  assert.equal(await page.locator(".world-enter").isVisible(), true);
+  await page.locator(".world-enter").click();
+  await page.waitForSelector("#sg-mrt-page .drive-stage[data-state=ready]");
+  assert.match(page.url(), /page=sg-mrt/);
+  await page.goBack();
+  await page.waitForSelector("#sg-world-page .drive-stage[data-state=ready]");
+
   // Leaving the page releases the renderer.
   await page.locator("#demo-breadcrumb a").click();
   await page.waitForTimeout(500);

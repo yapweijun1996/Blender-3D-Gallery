@@ -155,5 +155,6 @@ export function buildTile(tile, { hide = () => false } = {}) {
     trees: shift((tile.trees ?? []).map(tree => tree.point)),
     lamps: shift((tile.streetLamps ?? []).map(lamp => lamp.point)),
     busStops: shift((tile.busStops ?? []).map(stop => stop.point)),
+    entrances: (tile.subwayEntrances ?? []).map(entrance => ({ name: entrance.name ?? "", x: entrance.point[0] + ox, z: entrance.point[1] + oz })),
   };
 }
