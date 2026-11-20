@@ -88,8 +88,25 @@ function addInstances(scene, geometry, material, items) {
 
 const PALETTE = [0xe8d8c0, 0xcfc3b0, 0xb8c8c4, 0xd8b8a0, 0xa9b7c9, 0xe3c9a6, 0xc5d0b5];
 
+/** Nearest distance from a point to any route sample, with a grid so the check is cheap. */
+function routeProximity(route) {
+  const cell = 40, grid = new Map();
+  for (const p of route.points) {
+    const key = `${Math.floor(p.x / cell)},${Math.floor(p.z / cell)}`;
+    (grid.get(key) ?? grid.set(key, []).get(key)).push(p);
+  }
+  return (x, z, limit) => {
+    const cx = Math.floor(x / cell), cz = Math.floor(z / cell), reach = Math.ceil(limit / cell);
+    let best = Infinity;
+    for (let i = -reach; i <= reach; i++) for (let j = -reach; j <= reach; j++)
+      for (const p of grid.get(`${cx + i},${cz + j}`) ?? []) best = Math.min(best, Math.hypot(p.x - x, p.z - z));
+    return best;
+  };
+}
+
 function buildSurroundings(scene, route) {
   const random = rng(20261120);
+  const nearest = routeProximity(route);
   const blocks = [], trees = [], lamps = [];
   for (let distance = 30; distance < route.length - 20; distance += 22) {
     const zone = zoneAt(route, distance);
@@ -101,11 +118,11 @@ function buildSurroundings(scene, route) {
       const height = zone === "city" ? 14 + random() * 52 : zone === "bay" ? 20 + random() * 60
         : zone === "johor" ? 8 + random() * 26 : zone === "checkpoint" ? 5 + random() * 10 : 3 + random() * 6;
       const wide = zone === "city" || zone === "bay" ? 14 + random() * 14 : 9 + random() * 10;
-      if (zone !== "expressway" || random() > 0.55)
+      if ((zone !== "expressway" || random() > 0.55) && nearest(pose.x, pose.z, 60) > wide * 0.9 + ROAD_HALF_WIDTH + 4)
         blocks.push({ x: pose.x, z: pose.z, y: height / 2, sx: wide, sy: height, sz: wide * (0.8 + random() * 0.6), yaw: pose.heading, color: PALETTE[Math.floor(random() * PALETTE.length)] });
       for (let k = 0; k < (zone === "expressway" ? 4 : 2); k++) {
         const near = sample(route, distance + random() * 22, side * (ROAD_HALF_WIDTH + 5 + random() * 16));
-        trees.push({ x: near.x, z: near.z, y: 2.5, sx: 0.8 + random() * 0.5, sy: 0.8 + random() * 0.8, sz: 0.8 + random() * 0.5 });
+        if (nearest(near.x, near.z, 20) > ROAD_HALF_WIDTH + 2.5) trees.push({ x: near.x, z: near.z, y: 2.5, sx: 0.8 + random() * 0.5, sy: 0.8 + random() * 0.8, sz: 0.8 + random() * 0.5 });
       }
     }
   }
