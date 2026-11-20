@@ -304,7 +304,14 @@ export async function mountDrive(root, thumbnail, signal) {
     if (Math.hypot(back.x - cameraTarget.x, back.z - cameraTarget.z) > 40) { cameraTarget.x = back.x; cameraTarget.z = back.z; } // a jump, not a drive
     world.scenery?.update(state.s);
     world.camera.position.set(cameraTarget.x, 5.4 + wobble, cameraTarget.z);
-    world.camera.lookAt(ahead.x, 1.6, ahead.z);
+    // Glance at the landmark near the start and the end of the trip, then look back down the road.
+    let look = { x: ahead.x, y: 1.6, z: ahead.z };
+    for (const focus of world.focuses) {
+      const t = focus.rising ? clamp((state.s - focus.from) / (focus.to - focus.from), 0, 1) : clamp(1 - (state.s - focus.from) / (focus.to - focus.from), 0, 1);
+      const w = t * focus.weight;
+      look = { x: look.x + (focus.x - look.x) * w, y: look.y + (focus.y - look.y) * w, z: look.z + (focus.z - look.z) * w };
+    }
+    world.camera.lookAt(look.x, look.y, look.z);
     const hour = tripHour(route, state.s);
     world.setHour(hour);
     world.renderer.render(world.scene, world.camera);

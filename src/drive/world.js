@@ -283,6 +283,7 @@ export function buildWorld(canvasHost, route, kit = new Map()) {
   const scenery = useKit ? buildScenery(scene, route, kit) : null;
   const models = useKit ? buildLandmarkModels(scene, route, kit, landmarks.stop) : null;
   if (models) landmarks.gates.push({ stop: landmarks.stop, barriers: models.barriers });
+  const focuses = models?.focuses ?? [];
   const lightMaterials = new Set();
   for (const model of kit.values()) for (const part of model.parts) for (const material of [part.material].flat()) if (material.name === "light") lightMaterials.add(material);
   const surroundings = procedural ?? { lampMaterial: new MeshBasicMaterial(), heads: { visible: true } };
@@ -306,7 +307,7 @@ export function buildWorld(canvasHost, route, kit = new Map()) {
   }
 
   return {
-    scene, camera, renderer, landmarks, setHour, scenery, kitMode: useKit,
+    scene, camera, renderer, landmarks, setHour, scenery, focuses, kitMode: useKit,
     resize(width, height) {
       renderer.setSize(width, height, false);
       camera.aspect = width / height;

@@ -94,6 +94,7 @@ export function buildScenery(scene, route, kit) {
     for (const side of [-1, 1]) {
       const choices = mixFor(zone);
       if (!choices.length) continue;
+      if (zone === "bay" && side < 0) continue; // keep the bay side open so Marina Bay Sands is visible from the start
       const name = weighted(choices);
       const size = kit.get(name)?.size;
       if (!size) continue;
@@ -184,11 +185,14 @@ export function buildLandmarkModels(scene, route, kit, stopDistance) {
     return copy;
   };
   // Marina Bay Sands stands on the bay side of the start, facing the road.
-  place("landmark_mbs", 240, -170, -Math.PI / 2, 1.15);
+  const focuses = [];
+  const mbs = place("landmark_mbs", 380, -300, -Math.PI / 2, 0.7);
+  if (mbs) focuses.push({ x: mbs.position.x, z: mbs.position.z, y: 40, from: 0, to: 260, rising: false, weight: 0.45 });
   // Woodlands checkpoint: shift the canopy so one of its lanes is the lane the car drives in.
   const checkpoint = place("landmark_checkpoint", stopDistance + 5, 1.77);
   checkpoint?.traverse(node => { if (/^barrier_/.test(node.name)) barriers.push(node); });
-  place("landmark_southkey", route.length - 20, 150, Math.PI / 2, 1.0);
+  const southkey = place("landmark_southkey", route.length - 20, 150, Math.PI / 2, 1.0);
+  if (southkey) focuses.push({ x: southkey.position.x, z: southkey.position.z, y: 60, from: route.length - 700, to: route.length - 60, rising: true, weight: 0.55 });
   scene.add(group);
-  return { group, barriers, hasCheckpoint: Boolean(checkpoint) };
+  return { group, barriers, hasCheckpoint: Boolean(checkpoint), focuses };
 }
