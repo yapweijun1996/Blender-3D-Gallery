@@ -8,6 +8,7 @@ import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
+import { VEHICLE_TYPES, buildTrafficGraph, createRandom, createTraffic } from "./traffic.js";
 import { TILE_SIZE, buildTile, buildingMesh } from "./tile-mesh.js";
 import "../drive/style.css";
 
@@ -15,11 +16,11 @@ import "../drive/style.css";
 // with a car driven by the Rapier vehicle physics (crashes, flips). Built from models/world/tiles (scripts/world/build-tiles.mjs).
 const tileUrls = import.meta.glob("../../models/world/tiles/*.json", { eager: true, query: "?url", import: "default" });
 const kitUrls = import.meta.glob([
-  "../../models/drive/kit/car_saga.glb", "../../models/sg-rain-tree/*.glb", "../../models/sg-angsana/*.glb", "../../models/sg-coconut-palm/*.glb",
+  "../../models/drive/kit/car_saga.glb", "../../models/drive/kit/car_hatchback_hd.glb", "../../models/sg-{taxi,bus-double,lorry,police,ambulance,school-bus}-hd/*.glb", "../../models/sg-rain-tree/*.glb", "../../models/sg-angsana/*.glb", "../../models/sg-coconut-palm/*.glb",
   "../../models/sg-road-light/*.glb",
 ], { eager: true, query: "?url", import: "default" });
 const landmarkUrls = import.meta.glob("../../models/sg-{marina-bay-sands-towers,marina-bay-sands-podium,esplanade-domes,esplanade-base,merlion,merlion-park,artscience-museum,helix-bridge}/*.glb", { eager: true, query: "?url", import: "default" });
-const KIT = { car_saga: "drive/kit/car_saga", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light" };
+const KIT = { car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light" };
 const TREES = ["rain_tree", "angsana", "coconut_palm"];
 const LOAD_RADIUS = 2, SOLID_RADIUS = 1; // in tiles around the car
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -115,6 +116,7 @@ export async function mountWorld(root, thumbnail, signal) {
   }
 
   // Streaming: tiles near the car are fetched and built one per frame; colliders only exist for the nearest ring.
+  let graphDirty = true;
   const tiles = new Map(); // key -> { x, z, group, solids, colliders, instances }
   const pending = new Set();
   let tileCount = 0;
@@ -136,13 +138,14 @@ export async function mountWorld(root, thumbnail, signal) {
   function buildEntry(x, z, data) {
     const built = buildTile(data, { hide: hiddenOutline });
     const group = new Group();
-    const entry = { x, z, group, solids: built.solids, colliders: null, instances: [], geometries: [] };
+    const entry = { x, z, data, group, solids: built.solids, colliders: null, instances: [], geometries: [] };
     if (built.ground) { const mesh = new Mesh(built.ground, groundMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.ground); }
     if (built.buildings) { const mesh = new Mesh(built.buildings, buildingMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.buildings); }
     addInstances(entry, built);
     scene.add(group);
     tiles.set(tileKey(x, z), entry);
     tileCount++;
+    graphDirty = true;
     return entry;
   }
   function setColliders(entry, wanted) {
@@ -164,6 +167,7 @@ export async function mountWorld(root, thumbnail, signal) {
     for (const geometry of entry.geometries) geometry.dispose();
     for (const mesh of entry.instances) mesh.dispose?.();
     tiles.delete(key);
+    graphDirty = true;
   }
   let loadChain = Promise.resolve();
   function request(x, z) {
@@ -222,6 +226,43 @@ export async function mountWorld(root, thumbnail, signal) {
   const carHolder = new Group();
   carHolder.add(car);
   scene.add(carHolder);
+
+  // Traffic: simulated on the road graph of the loaded tiles, drawn with one instanced set per vehicle model and
+  // solid (a kinematic box) for the physics when it is near the player's car.
+  const traffic = createTraffic({ graph: buildTrafficGraph([...tiles.values()].map(entry => entry.data)), random: createRandom(2025), maxVehicles: touchDevice ? 18 : 34 });
+  const trafficSets = new Map();
+  for (const type of VEHICLE_TYPES) {
+    if (trafficSets.has(type.model) || !kit.has(type.model)) continue;
+    // Room for every vehicle of the model: the instance buffers are sized by the first list given.
+    const set = instanceModel(kit.get(type.model), Array.from({ length: traffic.maxVehicles }, () => ({ x: 0, z: 0 })), { dynamic: true });
+    set.write([]);
+    for (const mesh of set.meshes) scene.add(mesh);
+    trafficSets.set(type.model, set);
+  }
+  const solidVehicles = new Map();
+  function updateTraffic(dt, state) {
+    if (graphDirty) { traffic.setGraph(buildTrafficGraph([...tiles.values()].map(entry => entry.data))); graphDirty = false; }
+    traffic.update(dt, state.position);
+    const lists = new Map([...trafficSets.keys()].map(name => [name, []]));
+    const alive = new Set();
+    for (const vehicle of traffic.vehicles) {
+      const list = lists.get(vehicle.type.model);
+      if (!list) continue;
+      const pose = traffic.pose(vehicle);
+      if (!pose) continue;
+      list.push({ x: pose.x, y: 0, z: pose.z, yaw: pose.heading });
+      alive.add(vehicle.id);
+      const near = Math.hypot(pose.x - state.position.x, pose.z - state.position.z) < 55;
+      let solid = solidVehicles.get(vehicle.id);
+      if (near && !solid) {
+        solid = physics.addKinematicBox({ halfExtents: { x: vehicle.type.width / 2, y: 0.8, z: vehicle.type.length / 2 }, position: { x: pose.x, y: 0.8, z: pose.z }, yaw: pose.heading });
+        solidVehicles.set(vehicle.id, solid);
+      } else if (!near && solid) { solid.remove(); solidVehicles.delete(vehicle.id); solid = null; }
+      solid?.setPose(pose.x, 0.8, pose.z, pose.heading);
+    }
+    for (const [id, solid] of solidVehicles) if (!alive.has(id)) { solid.remove(); solidVehicles.delete(id); }
+    for (const [name, set] of trafficSets) set.write(lists.get(name));
+  }
 
   const keys = new Set(), pad = { left: false, right: false, brake: false, gas: false };
   const keyMap = { arrowup: "gas", w: "gas", arrowdown: "brake", s: "brake", arrowleft: "left", a: "left", arrowright: "right", d: "right", " ": "hand" };
@@ -319,6 +360,7 @@ export async function mountWorld(root, thumbnail, signal) {
     last = now;
     if (!paused) {
       vehicle.setControls(controlsNow());
+      updateTraffic(dt, vehicle.getState());
       physics.step(dt);
     }
     const state = placeCar();
@@ -349,9 +391,9 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start };
+    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
-  stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); physics.step(1 / 60); } return stage.inspectWorld(); };
+  stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.setView = view => { fixedView = view; };
   stage.teleport = (x, z, heading = 0) => { previousPosition = null; vehicle.resetUpright({ position: { x, y: restHeight + 0.2, z }, heading, repair: true }); };
 
@@ -361,6 +403,7 @@ export async function mountWorld(root, thumbnail, signal) {
       cancelAnimationFrame(frame);
       observer.disconnect();
       audio.dispose();
+      for (const solid of solidVehicles.values()) solid.remove();
       for (const key of [...tiles.keys()]) unload(key);
       physics.dispose();
       scene.traverse(node => { node.geometry?.dispose(); for (const m of [node.material].flat().filter(Boolean)) { m.map?.dispose(); m.dispose(); } });

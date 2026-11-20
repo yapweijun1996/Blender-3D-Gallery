@@ -83,6 +83,22 @@ export async function createPhysicsWorld({ gravity = { x: 0, y: -9.81, z: 0 } } 
       });
     },
 
+    /** A box moved by the game (traffic): other bodies collide with it, but it never reacts. Poses are set every frame. */
+    addKinematicBox({ halfExtents, position = ORIGIN, yaw = 0 }) {
+      assertActive();
+      const body = world.createRigidBody(RAPIER.RigidBodyDesc.kinematicPositionBased()
+        .setTranslation(position.x, position.y, position.z).setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }));
+      const collider = world.createCollider(RAPIER.ColliderDesc.cuboid(halfExtents.x, halfExtents.y, halfExtents.z).setFriction(0.4), body);
+      return {
+        collider,
+        setPose(x, y, z, heading) {
+          body.setNextKinematicTranslation({ x, y, z });
+          body.setNextKinematicRotation({ x: 0, y: Math.sin(heading / 2), z: 0, w: Math.cos(heading / 2) });
+        },
+        remove() { if (!disposed) world.removeRigidBody(body); },
+      };
+    },
+
     removeStatic(collider) {
       assertActive();
       if (statics.delete(collider)) world.removeCollider(collider, true);

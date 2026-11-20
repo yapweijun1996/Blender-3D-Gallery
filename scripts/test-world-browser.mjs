@@ -25,6 +25,10 @@ try {
   assert.ok(first.tiles >= 9, `${first.tiles} tiles loaded`);
   assert.ok(Math.hypot(first.start.x, first.start.z) < 400, "starts near Marina Bay Sands");
 
+  // Traffic fills the roads around the start, with several kinds of vehicle.
+  await page.waitForFunction(() => document.querySelector('.drive-stage').inspectWorld().traffic >= 8, undefined, { polling: 500 });
+  assert.ok((await inspect()).trafficTypes.length >= 2);
+
   // Drive: the physics gives speed, and the car stays upright on the road.
   const driven = await stage.evaluate(element => element.simulate(8, { throttle: 1 }));
   assert.ok(driven.speed > 6, `speed ${driven.speed}`);
