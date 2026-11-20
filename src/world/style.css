@@ -1,7 +1,6 @@
 /* The open-world page reuses the drive page's stage and HUD; on a phone the speed readout moves to the top so the pedals do not cover it. */
 @media (max-width: 640px) {
   .world-stage .drive-readout { left: auto; right: 1rem; top: .8rem; bottom: auto; transform: none; }
-  .world-stage .drive-event { top: 3.4rem; }
 }
 
 .world-enter { position: absolute; left: 50%; bottom: 5.2rem; transform: translateX(-50%); min-height: 2.75rem; padding: 0 1.2rem; border: 0; border-radius: .8rem; pointer-events: auto; background: var(--drive-gold); color: var(--drive-on-gold); font: 600 1rem / 1 system-ui, sans-serif; cursor: pointer; }
@@ -10,4 +9,9 @@
 
 .world-mission { position: absolute; left: 50%; top: .8rem; transform: translateX(-50%); display: flex; align-items: center; gap: .55rem; max-width: calc(100% - 9rem); padding: .4rem .8rem; border-radius: .8rem; background: var(--drive-panel-soft); font: 600 .95rem / 1.2 system-ui, sans-serif; }
 .world-arrow { display: inline-block; color: var(--drive-gold); font-size: 1.3rem; transition: transform .15s linear; }
-@media (max-width: 640px) { .world-mission { top: 3.2rem; max-width: calc(100% - 2rem); font-size: .85rem; } }
+/* Phone layout: speed top right, then the minimap under it; the mission line sits left of the map under the trip line. */
+@media (max-width: 640px) {
+  .world-mission { left: 1rem; right: 6.8rem; top: 4.4rem; max-width: none; transform: none; font-size: .85rem; }
+  .world-stage .drive-minimap { top: 3.6rem; width: 5.2rem; }
+  .world-stage .drive-event { top: 10.2rem; }
+}

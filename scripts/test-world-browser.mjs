@@ -52,10 +52,15 @@ try {
   assert.ok((await inspect()).bestRecord.artscience >= 100, "the best score of the mission is recorded");
   assert.ok(JSON.parse(await page.evaluate(() => localStorage.getItem("sg-world-best"))).best.artscience >= 100, "and saved in the browser");
   await page.waitForFunction(() => /\d{3,}$/.test(document.querySelector(".drive-trip").textContent), undefined, { polling: 500 });
-  await stage.evaluate((element, [x, z]) => element.teleport(x, z, 0), [first_x, first_z]);
+  await stage.evaluate((element, [x, z, heading]) => element.teleport(x, z, heading), [first_x, first_z, first.start.heading]);
 
   // Drive: the physics gives speed, and the car stays upright on the road.
-  const driven = await stage.evaluate(element => element.simulate(8, { throttle: 1 }));
+  // (A traffic vehicle can happen to stand right in front of the start; if the car is boxed in, try again from the start.)
+  let driven = await stage.evaluate(element => element.simulate(8, { throttle: 1 }));
+  for (let attempt = 0; attempt < 3 && driven.speed < 6; attempt++) {
+    await stage.evaluate((element, [x, z, heading]) => element.teleport(x, z, heading), [first_x, first_z, first.start.heading]);
+    driven = await stage.evaluate(element => element.simulate(8, { throttle: 1 }));
+  }
   assert.ok(driven.speed > 6 && driven.speed <= 28.5, `speed ${driven.speed} (capped at 100 km/h)`);
   assert.equal(driven.flipped, false);
 
