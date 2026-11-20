@@ -69,4 +69,4 @@ export const CROSSINGS = [
 ];
 
 /** Where the Proton Saga waits at the kerb (phase 4: get in and drive). */
-export const CAR_SPOT = { x: -108, z: 40, yaw: 0 };
+export const CAR_SPOT = { x: -116.5, z: 40, yaw: 0 };

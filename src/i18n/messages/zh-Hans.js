@@ -730,7 +730,7 @@ export default {
   "demo.sg-heartland.description": "以你的 chibi 角色在一个小型新加坡组屋区里走一走:组屋、小贩中心、商店和游乐场围着一条环路。",
   "city.loading": "正在建造社区…",
   "city.run": "跑",
-  "city.hint": "用 W A S D 或方向键行走,按住 Shift 跑步,拖动画面环顾四周。手机上用摇杆和\"跑\"按钮。",
+  "city.hint": "用 W A S D 或方向键行走,按住 Shift 跑步,拖动画面环顾四周,E 上下 Proton Saga。手机上用摇杆、跑步按钮和上下车按钮。",
   "city.credit": "建筑是本图库自己的新加坡模型的游戏版。",
   "city.place.hawker": "小贩中心",
   "city.place.coffee": "咖啡店",
@@ -739,4 +739,6 @@ export default {
   "city.place.mrt": "地铁站",
   "demos.tag.walking": "步行",
   "demos.tag.city": "城市",
+  "city.action.in": "上车(E)",
+  "city.action.out": "下车(E)",
 };

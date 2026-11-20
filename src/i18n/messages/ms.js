@@ -730,7 +730,7 @@ export default {
   "demo.sg-heartland.description": "Berjalan di sebuah kejiranan HDB kecil di Singapura sebagai chibi anda: blok HDB, pusat penjaja, kedai dan taman permainan di sekeliling jalan bulatan.",
   "city.loading": "Membina kejiranan…",
   "city.run": "Lari",
-  "city.hint": "Berjalan dengan W A S D atau kekunci anak panah, tahan Shift untuk berlari, seret untuk melihat sekeliling. Di telefon guna bar bulat dan butang Lari.",
+  "city.hint": "Berjalan dengan W A S D atau kekunci anak panah, tahan Shift untuk berlari, seret untuk melihat sekeliling, E untuk masuk atau keluar Proton Saga. Di telefon guna bar bulat, butang Lari dan butang kereta.",
   "city.credit": "Bangunan ialah salinan sedia permainan daripada model Singapura galeri ini.",
   "city.place.hawker": "Pusat penjaja",
   "city.place.coffee": "Kedai kopi",
@@ -739,4 +739,6 @@ export default {
   "city.place.mrt": "Stesen MRT",
   "demos.tag.walking": "berjalan",
   "demos.tag.city": "bandar",
+  "city.action.in": "Masuk kereta (E)",
+  "city.action.out": "Keluar kereta (E)",
 };

@@ -15,3 +15,7 @@
 .city-run[aria-pressed="true"] { background: var(--city-gold); color: var(--city-on-gold); }
 .city-hint, .city-credit { margin: .6rem 0 0; color: var(--muted); font-size: .85rem; }
 @media (max-width: 40rem) { .city-stage { aspect-ratio: 4 / 5; } }
+.city-action { position: absolute; left: 50%; bottom: 1.4rem; transform: translateX(-50%); min-height: 2.8rem; padding: 0 1.1rem; border-radius: 1.4rem; border: 0; background: var(--city-gold); color: var(--city-on-gold); font: inherit; font-weight: 700; pointer-events: auto; cursor: pointer; }
+.city-action[hidden] { display: none; }
+.city-sound { position: absolute; right: 1rem; top: 1rem; min-height: 2.4rem; padding: 0 .9rem; border-radius: 1.2rem; border: 1px solid var(--city-line); background: var(--city-panel-soft); color: var(--city-ink); font: inherit; pointer-events: auto; cursor: pointer; }
+.city-sound[aria-pressed="false"] { opacity: .6; }

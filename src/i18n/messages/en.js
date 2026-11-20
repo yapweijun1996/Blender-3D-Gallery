@@ -706,7 +706,7 @@ export default {
   "demo.sg-heartland.description": "Walk round a small Singapore heartland district as your chibi: HDB blocks, a hawker centre, shops and a playground around a ring road.",
   "city.loading": "Building the neighbourhood…",
   "city.run": "Run",
-  "city.hint": "Walk with W A S D or the arrow keys, hold Shift to run, drag to look around. On a phone use the stick and the Run button.",
+  "city.hint": "Walk with W A S D or the arrow keys, hold Shift to run, drag to look around, E to get in or out of the Proton Saga. On a phone use the stick, the Run button and the car button.",
   "city.credit": "Buildings are game-ready copies of this gallery's own Singapore models.",
   "city.place.hawker": "Hawker centre",
   "city.place.coffee": "Coffee shop",
@@ -715,4 +715,6 @@ export default {
   "city.place.mrt": "MRT station",
   "demos.tag.walking": "walking",
   "demos.tag.city": "city",
+  "city.action.in": "Get in the car (E)",
+  "city.action.out": "Get out (E)",
 };

@@ -18,7 +18,8 @@ const OUTFITS = {
 const SCALE = 1.45, SPEED = 1.5, WALK_BEHIND = 140, WALK_AHEAD = 300;
 const rng = seed => () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
 
-export async function addPedestrians({ scene, route, signal, count = { female: 3, male: 3 } }) {
+export async function addPedestrians({ scene, route, signal, count = { female: 3, male: 3 }, allowed = null }) {
+  const ok = allowed ?? (s => { const zone = zoneAt(route, s); return !(zone === "expressway" || zone === "water" || zone === "checkpoint"); });
   const manifest = validateManifest(manifestData);
   const scenes = new Set();
   const random = rng(77);
@@ -74,8 +75,7 @@ export async function addPedestrians({ scene, route, signal, count = { female: 3
   function place(person, around, first = false) {
     for (let tries = 0; tries < 40; tries++) {
       const s = Math.max(30, Math.min(route.length - 60, around - (first ? 40 : 0) + random() * (WALK_AHEAD + (first ? 120 : 0))));
-      const zone = zoneAt(route, s);
-      if (zone === "expressway" || zone === "water" || zone === "checkpoint") continue;
+      if (!ok(s)) continue;
       person.s = s;
       return true;
     }
@@ -89,8 +89,7 @@ export async function addPedestrians({ scene, route, signal, count = { female: 3
       for (const person of people) {
         person.s += person.dir * person.speed * dt;
         if (person.s < playerS - WALK_BEHIND || person.s > playerS + WALK_AHEAD + 60) { if (!place(person, playerS + 60)) continue; }
-        const zone = zoneAt(route, person.s);
-        const visible = !(zone === "expressway" || zone === "water" || zone === "checkpoint");
+        const visible = ok(person.s);
         person.root.visible = visible;
         if (!visible) { place(person, playerS + 60); continue; }
         person.rig.update(dt, { L: null, R: null });
