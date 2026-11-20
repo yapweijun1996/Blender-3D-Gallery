@@ -256,7 +256,7 @@ export function buildCar(color = 0xd9453a) {
   const car = new Group();
   const body = new Mesh(new BoxGeometry(1.8, 0.7, 4.0), new MeshLambertMaterial({ color }));
   body.position.y = 0.65;
-  const cabin = new Mesh(new BoxGeometry(1.5, 0.6, 2.0), new MeshLambertMaterial({ color: 0x2c3a45 }));
+  const cabin = new Mesh(new BoxGeometry(1.5, 0.6, 2.0), new MeshLambertMaterial({ color: 0x2c3a45, transparent: true, opacity: 0.38 }));
   cabin.position.set(0, 1.2, -0.2);
   car.add(body, cabin);
   const wheelGeometry = new CylinderGeometry(0.36, 0.36, 0.3, 12);
@@ -272,6 +272,7 @@ export function buildCar(color = 0xd9453a) {
   car.add(lights);
   const driver = new Mesh(new SphereGeometry(0.28, 10, 8), new MeshLambertMaterial({ color: 0xf0c9a0 }));
   driver.position.set(-0.35, 1.65, -0.3);
+  driver.name = "driver-placeholder";
   car.add(driver);
   return car;
 }

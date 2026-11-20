@@ -1,9 +1,13 @@
 import { localize, mountMarkup, t, onLanguageChange } from "../i18n/index.js";
 import routeData from "../../models/drive/route-mbs-jb.json";
 import { buildRoute, findRoad, roadAt, sample, tripHour } from "./route.js";
+import { createRig } from "../chibi-dressup/rig.js";
+import { disposeModels, loadModels } from "../chibi-dressup/view.js";
 import { ROAD_HALF_WIDTH, buildCar, buildWorld } from "./world.js";
 import "./style.css";
 
+// The driver is the dress-up boy, loaded after the first frame so the road appears at once.
+const driverUrls = import.meta.glob("../../models/chibi-dressup/bodies/male/{body,motion,gestures}.glb", { eager: true, query: "?url", import: "default" });
 const CRUISE = 24;       // m/s, about 86 km/h
 const TOP = 34;          // m/s in manual mode
 const LANE = 2.6;
@@ -302,7 +306,7 @@ export async function mountDrive(root, thumbnail, signal) {
   observer.observe(stage);
   resize();
   stage.inspectDrive = () => ({
-    s: state.s, speed: state.speed, mode, stage: state.stage, paused, offset: state.offset,
+    driver: car.children.includes(driverBody), s: state.s, speed: state.speed, mode, stage: state.stage, paused, offset: state.offset,
     road: roadAt(route, state.s).name, length: route.length, stop: stopDistance, hour: tripHour(route, state.s),
     triangles: world.renderer.info.render.triangles, calls: world.renderer.info.render.calls,
   });
@@ -315,12 +319,35 @@ export async function mountDrive(root, thumbnail, signal) {
   frame = requestAnimationFrame(step);
   void findRoad;
 
+  const driverScenes = new Set();
+  let driverBody = null;
+  (async () => {
+    try {
+      const url = name => driverUrls[`../../models/chibi-dressup/bodies/male/${name}.glb`];
+      const [body, motion, gestures] = await loadModels(["body", "motion", "gestures"].map(url), signal, driverScenes);
+      if (signal.aborted) return;
+      let skeleton;
+      body.scene.traverse(node => { if (node.isSkinnedMesh) { skeleton = node.skeleton; node.frustumCulled = false; } });
+      const rig = createRig(body.scene, skeleton, [motion], gestures.animations);
+      rig.select("sit");
+      for (let i = 0; i < 4; i++) rig.update(0.5, { L: "grip_small", R: "grip_small" }); // sit down, settle, hold the wheel
+      body.scene.scale.setScalar(0.72);
+      body.scene.position.set(-0.38, 0.28, -0.3);
+      car.getObjectByName("driver-placeholder")?.removeFromParent();
+      car.add(body.scene);
+      driverBody = body.scene;
+    } catch (error) {
+      console.error("Drive: chibi driver failed to load", error);
+    }
+  })();
+
   return {
     dispose() {
       running = false;
       cancelAnimationFrame(frame);
       observer.disconnect();
       delete stage.inspectDrive;
+      disposeModels(driverScenes);
       world.dispose();
     },
   };
