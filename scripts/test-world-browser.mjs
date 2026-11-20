@@ -39,15 +39,15 @@ try {
   assert.ok([8, 13, 18.5, 22].includes(Math.round((await inspect()).hour * 2) / 2), "time jumped to a preset");
   await stage.evaluate(element => element.setHour(15));
 
-  // Missions: the first target is the Merlion; arriving there completes it and moves on to the next place.
-  assert.equal((await inspect()).mission, "merlion");
+  // Missions: the first target is the ArtScience Museum; arriving there completes it and moves on to the next place.
+  assert.equal((await inspect()).mission, "artscience");
   assert.ok((await page.locator(".world-mission-text").textContent()).includes(" · "));
-  await stage.evaluate(element => element.teleport(-694, -380, 0));
+  await stage.evaluate(element => element.teleport(-28, -314, 0));
   await page.waitForFunction(() => document.querySelector(".drive-stage").inspectWorld().missionsDone >= 1, undefined, { polling: 500 });
-  assert.notEqual((await inspect()).mission, "merlion");
+  assert.notEqual((await inspect()).mission, "artscience");
   assert.ok((await inspect()).score >= 100, "the finished mission scored points");
-  assert.ok((await inspect()).bestRecord.merlion >= 100, "the best score of the mission is recorded");
-  assert.ok(JSON.parse(await page.evaluate(() => localStorage.getItem("sg-world-best"))).best.merlion >= 100, "and saved in the browser");
+  assert.ok((await inspect()).bestRecord.artscience >= 100, "the best score of the mission is recorded");
+  assert.ok(JSON.parse(await page.evaluate(() => localStorage.getItem("sg-world-best"))).best.artscience >= 100, "and saved in the browser");
   await page.waitForFunction(() => /\d{3,}$/.test(document.querySelector(".drive-trip").textContent), undefined, { polling: 500 });
   await stage.evaluate((element, [x, z]) => element.teleport(x, z, 0), [first_x, first_z]);
 

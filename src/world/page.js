@@ -10,7 +10,8 @@ import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
 import { grovePlacements, groveRings } from "./groves.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
-import { MISSIONS, arrived, cleanRecord, distanceTo, missionScore, nextMission, recordScore, relativeBearing } from "./missions.js";
+import { ROAD_DISTANCES } from "./mission-distances.js";
+import { MISSIONS, arrived, cleanRecord, distanceTo, missionScore, nextMission, recordScore, relativeBearing, roadDistance } from "./missions.js";
 import { busStopPlacements, lampPlacements, nearestRoad } from "./furniture.js";
 import { addWorldPedestrians, pedestrianPaths } from "./pedestrians.js";
 import { createSignalLights, signalApproaches } from "./signals.js";
@@ -545,7 +546,9 @@ export async function mountWorld(root, thumbnail, signal) {
   scene.add(beam);
   function setMission(index, from = null) {
     missionIndex = index;
-    missionStart = { time: missionClock, damage: from?.damage ?? 0, distance: from ? distanceTo(from.position, MISSIONS[index]) : distanceTo(start, MISSIONS[index]) };
+    // The par distance is the real road distance from the place the car left (the start, or the mission just done); from anywhere else a detour estimate.
+    const origin = from?.position ?? start, straight = distanceTo(origin, MISSIONS[index]);
+    missionStart = { time: missionClock, damage: from?.damage ?? 0, distance: roadDistance(ROAD_DISTANCES, from?.placeId ?? "start", MISSIONS[index].id, straight) };
     beam.position.set(MISSIONS[index].x, 70, MISSIONS[index].z);
   }
   setMission(0);
@@ -560,7 +563,7 @@ export async function mountWorld(root, thumbnail, signal) {
       record = saved.record;
       try { localStorage.setItem(RECORD_KEY, JSON.stringify(record)); } catch { /* Not saved. */ }
       notify("world.mission.done", { place: t(mission.name), points });
-      setMission(nextMission(missionIndex, state.position), state);
+      setMission(nextMission(missionIndex, state.position), { ...state, placeId: mission.id });
       return;
     }
     const best = record.best[mission.id];

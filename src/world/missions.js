@@ -1,11 +1,11 @@
 // Drive-to missions across the map. Targets are world coordinates (x east, z south, metres); a mission is done when the car
 // is within `radius` metres of it. Pure helpers, so they can be tested without the renderer.
 export const MISSIONS = [
-  { id: "merlion", name: "world.place.merlion", x: -694.5, z: -381.5, radius: 28 },
   { id: "artscience", name: "world.place.artscience", x: -27.8, z: -315.1, radius: 45 },
   { id: "esplanade", name: "world.place.esplanade", x: -539.8, z: -702.4, radius: 60 },
-  { id: "gardens", name: "world.place.gardens", x: 270, z: 255, radius: 55 },
+  { id: "merlion", name: "world.place.merlion", x: -694.5, z: -381.5, radius: 28 },
   { id: "bayfront", name: "world.place.bayfront", x: -70, z: 24, radius: 25 },
+  { id: "gardens", name: "world.place.gardens", x: 270, z: 255, radius: 55 },
 ];
 
 export const distanceTo = (position, mission) => Math.hypot(mission.x - position.x, mission.z - position.z);
@@ -28,14 +28,21 @@ export function nextMission(index, position) {
   return (index + 1) % MISSIONS.length;
 }
 
-const PAR_SPEED = 11; // m/s: the average speed that earns the full 1000 points on the road distance (straight-line distance times 1.3)
+const PAR_SPEED = 11; // m/s: the average speed that earns the full 1000 points on the road distance
+const PAR_SLACK = 10; // seconds for junctions and turns
 const BASE = 1000, FLOOR = 100;
 
-/** Seconds a good run takes for a straight-line distance in metres. */
-export const parSeconds = distance => (distance * 1.3) / PAR_SPEED;
+/** Seconds a good run takes for a road distance in metres. */
+export const parSeconds = roadDistance => roadDistance / PAR_SPEED + PAR_SLACK;
+
+/** Road distance from a place (or the start) to a mission, from the generated table; a straight line times 1.3 when it is not known. */
+export function roadDistance(table, fromId, toId, straight) {
+  const known = table?.[fromId]?.[toId];
+  return Number.isFinite(known) ? known : straight * 1.3;
+}
 
 /**
- * Points for one finished mission: up to 1.5 times the base for beating the par time, never below FLOOR, and the points
+ * Points for one finished mission (`distance` is the road distance): up to 1.5 times the base for beating the par time, never below FLOOR, and the points
  * are cut by up to half for damage taken during the mission (`damage` is the extra damage, 0 to 1).
  */
 export function missionScore({ distance, seconds, damage = 0 }) {

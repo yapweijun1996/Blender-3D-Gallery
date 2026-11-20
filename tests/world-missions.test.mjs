@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { MISSIONS, arrived, cleanRecord, recordScore, distanceTo, missionScore, nextMission, parSeconds, relativeBearing } from "../src/world/missions.js";
+import { ROAD_DISTANCES } from "../src/world/mission-distances.js";
+import { MISSIONS, arrived, cleanRecord, recordScore, distanceTo, missionScore, nextMission, parSeconds, relativeBearing, roadDistance } from "../src/world/missions.js";
 
 const origin = { x: 0, z: 0 };
 
@@ -60,4 +61,20 @@ test("a damaged or foreign saved record is cleaned", () => {
   assert.deepEqual(cleanRecord(null), { best: {} });
   assert.deepEqual(cleanRecord({ best: { merlion: 1200.4, gardens: -5, bayfront: "x", unknown: 9 } }), { best: { merlion: 1200 } });
   assert.deepEqual(cleanRecord("garbage"), { best: {} });
+});
+
+test("the generated road distances cover every pair and are at least the straight line", () => {
+  const places = [{ id: "start", x: -61, z: -12 }, ...MISSIONS];
+  for (const from of places) for (const to of MISSIONS) {
+    if (from.id === to.id) continue;
+    const road = ROAD_DISTANCES[from.id]?.[to.id];
+    assert.ok(Number.isFinite(road), `${from.id} to ${to.id}`);
+    assert.ok(road >= Math.hypot(from.x - to.x, from.z - to.z) - 1, `${from.id} to ${to.id}: road ${road} shorter than the straight line`);
+  }
+});
+
+test("road distance falls back to a detour factor when the table does not know the pair", () => {
+  assert.equal(roadDistance(ROAD_DISTANCES, "start", "artscience", 315), ROAD_DISTANCES.start.artscience);
+  assert.equal(roadDistance(ROAD_DISTANCES, "nowhere", "artscience", 100), 130);
+  assert.equal(roadDistance(undefined, "start", "artscience", 100), 130);
 });
