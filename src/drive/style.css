@@ -8,8 +8,8 @@
 .drive-hud { position: absolute; inset: 0; pointer-events: none; color: var(--drive-ink); text-shadow: 0 1px 3px var(--drive-shadow); }
 .drive-readout { position: absolute; left: 1rem; bottom: 1rem; display: flex; align-items: baseline; gap: .4rem; }
 .drive-readout strong { font: 600 2.6rem / 1 system-ui, sans-serif; font-variant-numeric: tabular-nums; }
-.drive-road { position: absolute; left: 1rem; top: 1rem; margin: 0; font-weight: 600; }
-.drive-trip { position: absolute; left: 1rem; top: 2.6rem; margin: 0; font-size: .85rem; opacity: .9; }
+.drive-road { position: absolute; left: 1rem; top: 1rem; margin: 0; max-width: calc(100% - 9.5rem); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.drive-trip { position: absolute; left: 1rem; top: 2.6rem; margin: 0; max-width: calc(100% - 9.5rem); font-size: .85rem; opacity: .9; }
 .drive-progress { position: absolute; left: 1rem; right: 1rem; bottom: .4rem; height: .3rem; border-radius: 1rem; background: var(--drive-line); }
 .drive-progress i { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--drive-gold); }
 .drive-minimap { position: absolute; right: .8rem; top: .8rem; width: 6.5rem; height: auto; border-radius: .6rem; background: var(--drive-panel-soft); }

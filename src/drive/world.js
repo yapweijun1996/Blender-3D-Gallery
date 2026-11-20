@@ -4,6 +4,7 @@ import {
   PlaneGeometry, Quaternion, RepeatWrapping, Scene, SphereGeometry, Vector3, WebGLRenderer,
 } from "three";
 import { findRoad, project, sample } from "./route.js";
+import { buildLandmarkModels, buildScenery } from "./scenery.js";
 
 const ROAD_HALF_WIDTH = 5.5;
 const rng = seed => () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
@@ -82,7 +83,7 @@ function ribbon(route, step, half, y, texture, uvScale) {
 
 /** Zones along the route decide what stands beside the road. */
 function zoneAt(route, distance) {
-  const bukit = findRoad(route, "Bukit Timah Expressway") ?? 1e9;
+  const bukit = findRoad(route, "Pan-Island Expressway") ?? findRoad(route, "Bukit Timah Expressway") ?? 1e9;
   const woodlands = findRoad(route, "Woodlands Crossing") ?? 1e9;
   const causeway = findRoad(route, "Causeway") ?? 1e9;
   const ciq = findRoad(route, "JB CIQ") ?? 1e9;
@@ -258,13 +259,14 @@ function buildWater(scene, route) {
   return group;
 }
 
-export function buildWorld(canvasHost, route) {
+export function buildWorld(canvasHost, route, kit = new Map()) {
+  const useKit = ["building_hdb", "tree_street", "street_lamp", "landmark_checkpoint"].every(name => kit.has(name));
   const scene = new Scene();
   const hemi = new HemisphereLight(0xffffff, 0x445544, 1.1);
   const sun = new DirectionalLight(0xffe0b0, 2.2);
   sun.position.set(-300, 220, 160);
   scene.add(hemi, sun);
-  scene.fog = new Fog(0xf2b27c, 120, 720);
+  scene.fog = new Fog(0xf2b27c, useKit ? 90 : 120, useKit ? 600 : 720);
   const ground = new Mesh(new PlaneGeometry(60000, 60000), new MeshLambertMaterial({ color: 0x6f7a55 }));
   ground.rotation.x = -Math.PI / 2;
   ground.position.set(-5000, 0, -15000);
@@ -276,8 +278,14 @@ export function buildWorld(canvasHost, route) {
   scene.add(sides);
   buildRoadKit(scene, route);
   const water = buildWater(scene, route);
-  const surroundings = buildSurroundings(scene, route);
-  const landmarks = buildLandmarks(scene, route);
+  const procedural = useKit ? null : buildSurroundings(scene, route);
+  const landmarks = useKit ? { gates: [], stop: (findRoad(route, "Woodlands border checkpoint (cars) - zone 4") ?? findRoad(route, "Woodlands border checkpoint") ?? route.length * 0.75) + 150 } : buildLandmarks(scene, route);
+  const scenery = useKit ? buildScenery(scene, route, kit) : null;
+  const models = useKit ? buildLandmarkModels(scene, route, kit, landmarks.stop) : null;
+  if (models) landmarks.gates.push({ stop: landmarks.stop, barriers: models.barriers });
+  const lightMaterials = new Set();
+  for (const model of kit.values()) for (const part of model.parts) for (const material of [part.material].flat()) if (material.name === "light") lightMaterials.add(material);
+  const surroundings = procedural ?? { lampMaterial: new MeshBasicMaterial(), heads: { visible: true } };
 
   const camera = new PerspectiveCamera(58, 1, 0.5, 2200);
   const renderer = new WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
@@ -294,10 +302,11 @@ export function buildWorld(canvasHost, route) {
     hemi.intensity = 0.5 + state.sun * 0.35;
     surroundings.lampMaterial.color.setRGB(1, 0.89 * (0.55 + state.lamp * 0.45), 0.63 * (0.4 + state.lamp * 0.6));
     surroundings.heads.visible = state.lamp > 0.05;
+    for (const material of lightMaterials) { material.emissive?.copy(material.color); material.emissiveIntensity = state.lamp * 1.6; }
   }
 
   return {
-    scene, camera, renderer, landmarks, setHour,
+    scene, camera, renderer, landmarks, setHour, scenery, kitMode: useKit,
     resize(width, height) {
       renderer.setSize(width, height, false);
       camera.aspect = width / height;

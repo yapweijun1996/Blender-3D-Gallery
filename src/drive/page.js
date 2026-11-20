@@ -3,6 +3,7 @@ import routeData from "../../models/drive/route-mbs-jb.json";
 import { buildRoute, findRoad, roadAt, sample, tripHour } from "./route.js";
 import { createRig } from "../chibi-dressup/rig.js";
 import { disposeModels, loadModels } from "../chibi-dressup/view.js";
+import { cloneModel, instanceModel, loadKit } from "./kit.js";
 import { ROAD_HALF_WIDTH, buildCar, buildWorld } from "./world.js";
 import "./style.css";
 
@@ -90,10 +91,11 @@ export async function mountDrive(root, thumbnail, signal) {
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   let mode = "auto", paused = false;
   try { mode = localStorage.getItem("drive-jb-mode") === "manual" ? "manual" : "auto"; } catch { /* Use auto. */ }
-  const world = buildWorld(stage, route);
-  const car = buildCar();
+  const kitScenes = new Set();
+  const kit = await loadKit(signal, kitScenes).catch(error => { if (signal.aborted) throw error; console.error("Drive: model kit failed to load", error); return new Map(); });
+  const world = buildWorld(stage, route, kit);
+  const car = kit.has("car_hatchback") ? cloneModel(kit.get("car_hatchback"), 0xd9453a) : buildCar();
   world.scene.add(car);
-  const traffic = buildTraffic(world.scene, route);
   const { stop: stopDistance, gates } = world.landmarks;
   const state = { s: 0, speed: 0, offset: -LANE, yaw: 0, stage: "drive", pass: false, stamp: 0, stampDir: 1, done: false, time: 0 };
   const keys = new Set();
@@ -156,7 +158,7 @@ export async function mountDrive(root, thumbnail, signal) {
   stage.querySelector(".drive-replay").addEventListener("click", () => {
     Object.assign(state, { s: 0, speed: 0, offset: -LANE, yaw: 0, stage: "drive", pass: false, done: false });
     arrival.hidden = true;
-    gates[0].barrier.rotation.z = 0;
+    for (const barrier of gateBarriers()) barrier.rotation.z = 0;
   });
 
   function drawMinimap() {
@@ -228,9 +230,9 @@ export async function mountDrive(root, thumbnail, signal) {
       if (state.stamp < 0) { state.stamp = 0; state.stampDir = 1; }
       stampMarker.style.left = `${state.stamp * 100}%`;
     } else if (state.stage === "gate") {
-      const barrier = gates[0].barrier;
-      barrier.rotation.z = Math.min(1.4, barrier.rotation.z + dt * 1.6);
-      if (barrier.rotation.z >= 1.4) { state.stage = "drive"; state.pass = true; }
+      const barriers = gateBarriers();
+      for (const barrier of barriers) barrier.rotation.z = Math.min(1.4, barrier.rotation.z + dt * 1.6);
+      if (!barriers.length || barriers[0].rotation.z >= 1.4) { state.stage = "drive"; state.pass = true; }
     }
     updateTraffic(dt);
   }
@@ -242,33 +244,48 @@ export async function mountDrive(root, thumbnail, signal) {
     return 40;
   }
 
-  function buildTraffic(scene, routeData2) {
-    const cars = [];
-    const geometry = buildCar(0xffffff).children[0].geometry;
-    for (let i = 0; i < 26; i++) {
-      const color = [0x3a6ea5, 0xd8d8d8, 0xe0a030, 0x4f8f5a, 0x8a4f9e][i % 5];
-      const mesh = buildCar(color);
-      mesh.scale.setScalar(1);
-      scene.add(mesh);
-      cars.push({ mesh, s: 600 + i * (routeData2.length / 28), speed: 14 + (i % 4) * 2.5, lane: i % 2 ? LANE : -LANE });
+  const gateBarriers = () => gates[0] ? (gates[0].barriers ?? [gates[0].barrier]).filter(Boolean) : [];
+
+  // Traffic: a few vehicles live in a window around the car and are respawned ahead when they fall out of it.
+  const vehicles = [], fleets = [];
+  const paints = [0x3a6ea5, 0xd8d8d8, 0xe0a030, 0x4f8f5a, 0x8a4f9e, 0xc9473b, 0x2f2f33, 0x9fb7c9];
+  for (const [name, count] of [["car_hatchback", 9], ["car_sedan", 6], ["bus", 3], ["motorbike", 4]]) {
+    const model = kit.get(name);
+    if (!model) continue;
+    const list = [];
+    for (let i = 0; i < count; i++) {
+      const vehicle = { name, dir: i % 3 === 0 ? -1 : 1, speed: (name === "bus" ? 10 : name === "motorbike" ? 17 : 12 + (i % 4) * 2.5) + i * 0.1,
+        length: model.size.z, color: paints[(i + vehicles.length) % paints.length], s: 0, x: 0, z: 0, yaw: 0 };
+      respawn(vehicle, i);
+      list.push(vehicle); vehicles.push(vehicle);
     }
-    void geometry;
-    return cars;
+    const instanced = instanceModel(model, list.map(v => ({ x: v.x, z: v.z, yaw: v.yaw, y: 0.12, color: v.color })), { dynamic: true });
+    for (const mesh of instanced.meshes) world.scene.add(mesh);
+    fleets.push({ list, instanced });
+  }
+  function respawn(vehicle, seed = Math.random() * 100) {
+    const jitter = (seed * 37.7) % 1;
+    vehicle.s = state.s + (vehicle.dir > 0 ? 140 + jitter * 340 : 220 + jitter * 280);
+    place(vehicle);
+  }
+  function place(vehicle) {
+    const pose = sample(route, vehicle.s, vehicle.dir > 0 ? -LANE : LANE);
+    vehicle.x = pose.x; vehicle.z = pose.z; vehicle.yaw = pose.heading + (vehicle.dir > 0 ? 0 : Math.PI);
   }
   function updateTraffic(dt) {
-    for (const car2 of traffic) {
-      car2.s += car2.speed * dt;
-      if (car2.s > route.length - 60) car2.s = 100;
-      const pose = sample(route, car2.s, car2.lane);
-      car2.mesh.position.set(pose.x, 0.12, pose.z);
-      car2.mesh.rotation.y = pose.heading;
+    for (const vehicle of vehicles) {
+      vehicle.s += vehicle.dir * vehicle.speed * dt;
+      if (vehicle.s < state.s - 130 || vehicle.s > state.s + 540 || vehicle.s > route.length - 40) respawn(vehicle);
+      else place(vehicle);
     }
+    for (const { list, instanced } of fleets) instanced.write(list.map(v => ({ x: v.x, z: v.z, yaw: v.yaw, y: 0.12, color: v.color })));
   }
   function trafficAhead() {
     let allowed = null;
-    for (const car2 of traffic) {
-      const gap = car2.s - state.s;
-      if (gap > 0 && gap < 28 && Math.abs(car2.lane - state.offset) < 2.4) allowed = Math.min(allowed ?? Infinity, Math.max(0, car2.speed - (28 - gap) * 0.2));
+    for (const vehicle of vehicles) {
+      if (vehicle.dir < 0) continue;
+      const gap = vehicle.s - state.s - vehicle.length;
+      if (gap > 0 && gap < 28 && Math.abs(-LANE - state.offset) < 2.4) allowed = Math.min(allowed ?? Infinity, Math.max(0, vehicle.speed - (28 - gap) * 0.2));
     }
     return allowed;
   }
@@ -283,6 +300,7 @@ export async function mountDrive(root, thumbnail, signal) {
     cameraTarget.x += (back.x - cameraTarget.x) * 0.12;
     cameraTarget.z += (back.z - cameraTarget.z) * 0.12;
     if (Math.hypot(back.x - cameraTarget.x, back.z - cameraTarget.z) > 40) { cameraTarget.x = back.x; cameraTarget.z = back.z; } // a jump, not a drive
+    world.scenery?.update(state.s);
     world.camera.position.set(cameraTarget.x, 5.4 + wobble, cameraTarget.z);
     world.camera.lookAt(ahead.x, 1.6, ahead.z);
     const hour = tripHour(route, state.s);
@@ -331,8 +349,9 @@ export async function mountDrive(root, thumbnail, signal) {
       const rig = createRig(body.scene, skeleton, [motion], gestures.animations);
       rig.select("sit");
       for (let i = 0; i < 4; i++) rig.update(0.5, { L: "grip_small", R: "grip_small" }); // sit down, settle, hold the wheel
-      body.scene.scale.setScalar(0.72);
-      body.scene.position.set(-0.38, 0.28, -0.3);
+      const seat = kit.has("car_hatchback") ? [-0.4, 0.34, 0.1] : [-0.38, 0.28, -0.3];
+      body.scene.scale.setScalar(kit.has("car_hatchback") ? 0.66 : 0.72);
+      body.scene.position.set(...seat);
       car.getObjectByName("driver-placeholder")?.removeFromParent();
       car.add(body.scene);
       driverBody = body.scene;
@@ -348,6 +367,7 @@ export async function mountDrive(root, thumbnail, signal) {
       observer.disconnect();
       delete stage.inspectDrive;
       disposeModels(driverScenes);
+      disposeModels(kitScenes);
       world.dispose();
     },
   };
