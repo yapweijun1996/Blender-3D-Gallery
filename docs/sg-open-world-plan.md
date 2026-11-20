@@ -1,0 +1,43 @@
+# Singapore open world: rebuild plan (2026-11-20)
+
+Owner feedback on the first drive demo: poor overall detail, too few vehicle types, no real physics (wants crashes and flips),
+poor building quality, a route that feels fake with no junctions, no real Singapore or Johor Bahru map. Owner decisions:
+real OpenStreetMap road network, first as a corridor (about 1 km wide, Marina Bay to Johor Bahru), then wider; a real physics engine
+(Rapier) with crashes and flips; traffic on the network with traffic lights at junctions and several vehicle types; everything
+as realistic as the web budget allows. Next after the cars: the MRT (stations and trains), also realistic.
+
+## Findings (feasibility, measured today)
+
+- Overpass returns real data for a 1.7 km by 2 km box at Marina Bay: 2,841 ways, including primary, secondary, tertiary and
+  residential roads, service roads, footways and cycleways, 293 buildings (216 with a height or level count) and 26 water polygons;
+  raw JSON 2.2 MB. The corridor needs filtering and compact tiles.
+- Rapier (`@dimforge/rapier3d-compat` 0.21.0, WASM embedded) runs in Node and the browser and has a vehicle controller
+  (`createVehicleController`); a headless run settled a box on a ground plane at the expected height. Added as a dependency.
+
+## Architecture
+
+1. Data pipeline (`scripts/osm-corridor.mjs`): fetch the corridor in tiles from Overpass with a generic client name, keep only
+   drivable roads (motorway to residential and service), crossings and traffic signals, building footprints with height, water, parks and
+   rail; simplify to 1 m, write compact binary tiles (500 m) to `models/world/tiles/`, plus an index. Licence note: OpenStreetMap
+   contributors (ODbL), credit shown in the app.
+2. Road network: a graph (nodes at junctions, edges with lane count, speed, one-way, class), lane geometry, junction patches,
+   traffic-light plans per signalised junction, road markings and kerbs generated per edge.
+3. Streaming: tiles within 600 m of the player are built and physics colliders created; far tiles are dropped.
+4. Physics (Rapier): vehicle controller per vehicle (suspension, steering, brakes), building and kerb colliders, crash response
+   (impulse, deformation by a damage factor, flips allowed), pedestrians as kinematic capsules.
+5. Traffic AI: vehicles follow lane paths on the graph, obey signals, keep distance, turn at junctions, yield to the player.
+6. Buildings: extruded footprints with real height and a facade shader (window grid, floor lines, colour by use) plus the existing
+   game-ready models for landmarks and shophouses; roofs and podiums where tagged.
+7. Vehicles: more types (taxi, SBS bus, double bus, lorry, van, ambulance, school bus, police, motorbikes) from the existing gallery
+   models converted to game-ready form.
+8. MRT (next): stations (entrances, concourse, platforms with screen doors) and trains, from the existing MRT models.
+
+## Milestones
+
+M1 data and network: corridor tiles for the first 3 km, graph builder with tests, a top-down debug view. Gate: network has no
+disconnected components along the route, junction count and lane counts plausible, tiles under 150 KB each.
+M2 physics vehicle on the real roads with kerb and building colliders. Gate: headless Rapier tests (settle, drive, crash, flip), real-browser drive.
+M3 traffic and signals on the graph. Gate: no vehicle overlap over 5 minutes of simulation, signal cycles respected.
+M4 buildings with facades and landmarks; Johor Bahru side. Gate: draw-call and triangle budget on a phone profile.
+M5 vehicle variety and MRT.
+Each milestone ends with tests, an independent look at screenshots and a push to main.
