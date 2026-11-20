@@ -6,6 +6,7 @@ import { clone } from "three/addons/utils/SkeletonUtils.js";
 import manifestData from "../../models/chibi-dressup/manifest.json";
 import { getLanguage, localize, mountMarkup, onLanguageChange, t } from "../i18n/index.js";
 import { loadConfig, validateManifest } from "../chibi-dressup/config.js";
+import { createProps } from "../chibi-dressup/props.js";
 import { bindModule, createRig } from "../chibi-dressup/rig.js";
 import { disposeModels, getBounds, loadModels } from "../chibi-dressup/view.js";
 import { createDriveAudio } from "../drive/audio.js";
@@ -18,7 +19,7 @@ import "./style.css";
 
 const kitUrls = import.meta.glob("../../models/city/kit/*.glb", { eager: true, query: "?url", import: "default" });
 const driveUrls = import.meta.glob("../../models/drive/kit/{car_saga,car_hatchback_hd,bus_hd,van_hd}.glb", { eager: true, query: "?url", import: "default" });
-const dressupUrls = import.meta.glob("../../models/chibi-dressup/{*.glb,bodies/**/*.glb,modules/*.glb}", { eager: true, query: "?url", import: "default" });
+const dressupUrls = import.meta.glob("../../models/chibi-dressup/{*.glb,bodies/**/*.glb,modules/*.glb,props/*.glb}", { eager: true, query: "?url", import: "default" });
 const KIT = ["hdb_block", "hdb_void_deck", "hdb_coffee_shop", "provision_shop", "shoplot", "public_market", "mrt_entrance", "hawker_stall", "chicken_rice_stall", "bus_shelter",
   "signal_pole", "zebra_crossing", "street_sign", "heritage_lamp", "bench", "block_sign", "playground_slide", "playground_swing", "rain_tree_hd", "angsana_tree",
   "tembusu_tree_hd", "frangipani_tree", "coconut_palm"];
@@ -49,6 +50,7 @@ export async function mountCity(root, thumbnail, signal) {
         <div class="city-stick" aria-hidden="true"><i></i></div>
         <button type="button" class="city-run" aria-pressed="false" data-i18n="city.run"></button>
         <button type="button" class="city-action" hidden></button>
+        <p class="city-toast" role="status" hidden></p>
         <button type="button" class="city-sound" aria-pressed="true" data-i18n="drive.sound"></button>
       </div>
     </div>
@@ -151,6 +153,13 @@ export async function mountCity(root, thumbnail, signal) {
   const covered = new Set(worn.flatMap(m => m.excludesSlots ?? []));
   void covered;
   const rig = createRig(body.scene, skeleton, motions, gestures.animations);
+  // Props for the interactions: a cup from the stalls and a bag from the provision shop, held with the dress-up carry clips.
+  let props = null;
+  try {
+    const [chair, cup, box, bag, shelf] = await loadModels(["chair", "cup", "box", "bag", "shelf_item"].map(name => dressUrl(`props/${name}.glb`)), signal, playerScenes);
+    const hand = skeleton.bones.find(bone => bone.name === "mixamorigRightHand");
+    if (hand) props = createProps({ root: body.scene, hand, chair: chair.scene, cup: cup.scene, box: box.scene, bag: bag.scene, shelf: shelf.scene, fitted: bodySpec.sockets });
+  } catch (error) { console.error("City: carry props failed to load", error); }
   rig.select("idle");
   body.scene.scale.setScalar(SCALE);
   const player = { x: 0, z: 22, yaw: Math.PI, speed: 0, clip: "idle" };
@@ -233,6 +242,22 @@ export async function mountCity(root, thumbnail, signal) {
   const placeList = BUILDINGS.filter(b => places.some(([m]) => m === b.model)).map(b => ({ ...b, key: places.find(([m]) => m === b.model)[1], r: Math.max(kit.get(b.model).size.x * b.sx, kit.get(b.model).size.z * b.sz) * 0.55 }));
   let last = performance.now(), frame = 0, running2 = true;
   const carNear = () => car && Math.hypot(player.x - drive.x, player.z - drive.z) < 4.5;
+  // Stalls and the provision shop: stand beside one and press E to order or buy; the carry clips play for a few seconds.
+  const stations = [
+    ...PROPS.filter(p => p.model === "hawker_stall" || p.model === "chicken_rice_stall").map(p => ({ x: p.x, z: p.z, r: 3.6, clip: "hold", action: "city.action.order", toast: "city.toast.order" })),
+    ...BUILDINGS.filter(b => b.model === "provision_shop").map(b => ({ x: b.x, z: b.z, r: 6, clip: "bag", action: "city.action.buy", toast: "city.toast.buy" })),
+  ];
+  const stationNear = () => stations.find(s => Math.hypot(player.x - s.x, player.z - s.z) < s.r);
+  let task = null; // { clip, until }
+  const toast = stage.querySelector(".city-toast");
+  let toastUntil = 0;
+  function useStation() {
+    const station = stationNear();
+    if (!station || task) return;
+    task = { clip: station.clip, until: performance.now() + 5500 };
+    player.clip = station.clip; rig.select(station.clip);
+    toast.textContent = t(station.toast); toast.hidden = false; toastUntil = performance.now() + 5500;
+  }
   function toggleCar() {
     if (!car) return;
     if (mode === "walk" && carNear()) {
@@ -244,8 +269,9 @@ export async function mountCity(root, thumbnail, signal) {
       cam.distance = 7.5;
     }
   }
-  addEventListener("keydown", event => { if (event.key === "e" || event.key === "E") toggleCar(); }, { signal });
-  actionButton.addEventListener("click", toggleCar);
+  const interact = () => { if (mode === "walk" && stationNear() && !carNear()) useStation(); else toggleCar(); };
+  addEventListener("keydown", event => { if (event.key === "e" || event.key === "E") interact(); }, { signal });
+  actionButton.addEventListener("click", interact);
   function step(now) {
     if (!running2) return;
     frame = requestAnimationFrame(step);
@@ -264,7 +290,7 @@ export async function mountCity(root, thumbnail, signal) {
       for (const box of colliders) { const out = pushOut(x, z, box, 2.1); if (out) { [x, z] = out; drive.speed *= 0.6; } }
       drive.x = clamp(x, -140, 140); drive.z = clamp(z, -112, 112);
       player.x = drive.x; player.z = drive.z; player.speed = 0;
-    } else if (magnitude > 0.1) {
+    } else if (magnitude > 0.1 && !task) {
       const forwardX = -Math.sin(cam.yaw), forwardZ = -Math.cos(cam.yaw);
       const rightX = Math.cos(cam.yaw), rightZ = -Math.sin(cam.yaw);
       let dirX = forwardX * -iz + rightX * ix, dirZ = forwardZ * -iz + rightZ * ix;
@@ -278,9 +304,11 @@ export async function mountCity(root, thumbnail, signal) {
       while (turn > Math.PI) turn -= 2 * Math.PI; while (turn < -Math.PI) turn += 2 * Math.PI;
       player.yaw += turn * (1 - Math.exp(-dt * 12));
     } else player.speed = 0;
+    if (task && (performance.now() > task.until || magnitude > 0.5)) { task = null; player.clip = ""; }
     if (mode === "walk") {
-      const wanted = player.speed > RUN * 0.6 ? "run" : player.speed > 0 ? "walk" : "idle";
+      const wanted = task ? task.clip : player.speed > RUN * 0.6 ? "run" : player.speed > 0 ? "walk" : "idle";
       if (wanted !== player.clip) { player.clip = wanted; rig.select(wanted); }
+      props?.sync(rig.current, rig.time);
       rig.update(dt, { L: null, R: null });
       body.scene.position.set(player.x, 0.05, player.z);
       body.scene.rotation.y = player.yaw;
@@ -302,7 +330,9 @@ export async function mountCity(root, thumbnail, signal) {
     for (const p of placeList) if (Math.hypot(player.x - p.x, player.z - p.z) < p.r) { near = t(p.key); break; }
     placeLabel.textContent = near;
     placeLabel.hidden = !near;
-    const action = mode === "drive" ? (Math.abs(drive.speed) < 3 ? "city.action.out" : "") : carNear() ? "city.action.in" : "";
+    const station = mode === "walk" && !carNear() && !task ? stationNear() : null;
+    const action = mode === "drive" ? (Math.abs(drive.speed) < 3 ? "city.action.out" : "") : carNear() ? "city.action.in" : station ? station.action : "";
+    if (toastUntil && performance.now() > toastUntil) { toast.hidden = true; toastUntil = 0; }
     actionButton.hidden = !action;
     if (action) actionButton.textContent = t(action);
     renderer.render(scene, camera);
@@ -314,7 +344,7 @@ export async function mountCity(root, thumbnail, signal) {
   };
   const observer = new ResizeObserver(resize); observer.observe(stage); resize();
   onLanguageChange(() => { runButton.textContent = t("city.run"); }, signal);
-  stage.inspectCity = () => ({ mode, car: { x: drive.x, z: drive.z, speed: drive.speed }, pedestrians: pedestrians?.count ?? 0, x: player.x, z: player.z, yaw: player.yaw, clip: player.clip, speed: player.speed, triangles: renderer.info.render.triangles, calls: renderer.info.render.calls, place: placeLabel.textContent });
+  stage.inspectCity = () => ({ mode, task: task?.clip ?? null, props: Boolean(props), car: { x: drive.x, z: drive.z, speed: drive.speed }, pedestrians: pedestrians?.count ?? 0, x: player.x, z: player.z, yaw: player.yaw, clip: player.clip, speed: player.speed, triangles: renderer.info.render.triangles, calls: renderer.info.render.calls, place: placeLabel.textContent });
   stage.teleport = (x, z) => { player.x = x; player.z = z; };
   stage.dataset.state = "ready"; stage.setAttribute("aria-busy", "false");
   stage.querySelector(".city-loading").remove(); root.querySelector(".city-poster").remove();

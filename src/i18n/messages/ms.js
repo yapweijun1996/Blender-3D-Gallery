@@ -741,4 +741,8 @@ export default {
   "demos.tag.city": "bandar",
   "city.action.in": "Masuk kereta (E)",
   "city.action.out": "Keluar kereta (E)",
+  "city.action.order": "Pesan makanan (E)",
+  "city.action.buy": "Beli barangan (E)",
+  "city.toast.order": "Selamat menjamu selera!",
+  "city.toast.buy": "Terima kasih, datang lagi!",
 };

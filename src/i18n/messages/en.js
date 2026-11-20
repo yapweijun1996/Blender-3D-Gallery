@@ -717,4 +717,8 @@ export default {
   "demos.tag.city": "city",
   "city.action.in": "Get in the car (E)",
   "city.action.out": "Get out (E)",
+  "city.action.order": "Order food (E)",
+  "city.action.buy": "Buy groceries (E)",
+  "city.toast.order": "Enjoy your meal!",
+  "city.toast.buy": "Thanks, come again!",
 };

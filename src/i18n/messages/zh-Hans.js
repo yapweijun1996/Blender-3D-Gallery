@@ -741,4 +741,8 @@ export default {
   "demos.tag.city": "城市",
   "city.action.in": "上车(E)",
   "city.action.out": "下车(E)",
+  "city.action.order": "点餐(E)",
+  "city.action.buy": "买东西(E)",
+  "city.toast.order": "请慢用!",
+  "city.toast.buy": "谢谢惠顾!",
 };
