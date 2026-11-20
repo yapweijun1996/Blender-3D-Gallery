@@ -312,6 +312,7 @@ Open:
 - [ ] Bridges and tunnels are drawn flat; Supertrees and The Float are missing; ordinary buildings now have a procedural facade (window bay and storey texture, one bay per 3.6 m and one storey per 3.2 m) but no shopfronts, balconies or roof detail.
 - [ ] Corridor to Johor Bahru in the new engine (only Marina Bay is mapped); the older `?page=drive-jb` still covers that route.
 - [x] MRT entrances in the world (red pillar with the station sign at each of the 88 mapped entrances; within 30 m a button or E opens `?page=sg-mrt`; browser test covers it).
-- [ ] MRT: no passengers, generic platform instead of the real Bayfront or Promenade layouts.
+- [x] MRT passengers: six chibis (three on phones) at three doorways, one boards and one gets off at each, swapping every cycle (`src/mrt/passengers.js`, 3 tests; screenshot checked).
+- [ ] MRT: generic platform instead of the real Bayfront or Promenade layouts.
 - [x] The player car is capped at 100 km/h (28 m/s); the fastest mapped limit is 90 km/h.
 - Note: `npm run test:world` needs the untracked `output/osm/marina_bay.json`, so it is not part of `npm test`.

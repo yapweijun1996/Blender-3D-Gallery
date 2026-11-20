@@ -25,6 +25,11 @@ try {
   assert.equal(built.carriages, 3);
   assert.equal(built.screenDoors, 6);
 
+  // Passengers load after the first frame, then wait on the platform.
+  await page.waitForFunction(() => document.querySelector('.drive-stage').inspectMrt().loadedPeople >= 3, undefined, { polling: 1000, timeout: 150_000 });
+  await at(2);
+  await page.waitForFunction(() => document.querySelector('.drive-stage').inspectMrt().people >= 2, undefined, { polling: 500 });
+
   // Stopped at the platform with the doors open, then shut, then gone.
   await at(20);
   await page.waitForFunction(() => { const s = document.querySelector(".drive-stage").inspectMrt(); return s.phase === "boarding" && Math.abs(s.x) < 0.01; });

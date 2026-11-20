@@ -7,6 +7,8 @@ import { disposeModels } from "../chibi-dressup/view.js";
 import { createDriveAudio } from "../drive/audio.js";
 import { cloneModel, loadKitFrom } from "../drive/kit.js";
 import { createQualityGovernor } from "../drive/quality.js";
+import { createPeople } from "../drive/pedestrians.js";
+import { passengerPose } from "./passengers.js";
 import { trainState } from "./schedule.js";
 import "../drive/style.css";
 
@@ -147,6 +149,12 @@ export async function mountMrt(root, thumbnail, signal) {
   if (kit.has("station-sign")) { place("station-sign", 0, DECK + 2.6, -2.3, Math.PI); place("station-sign", -30, DECK + 2.6, -2.3, Math.PI); place("station-sign", 30, DECK + 2.6, -2.3, Math.PI); }
   if (kit.has("route-map")) for (const x of [-12, 12]) place("route-map", x, DECK + 1.0, -2.4, Math.PI);
 
+  // Passengers: the dress-up chibis, loaded after the first frame; each follows passengerPose(index, clock).
+  let passengers = null;
+  createPeople({ scene, signal, count: touchDevice ? { female: 2, male: 1 } : { female: 3, male: 3 }, seed: 9 })
+    .then(result => { if (signal.aborted) disposeModels(result.scenes); else { passengers = result; for (const person of passengers.people) { person.clip = null; person.root.visible = false; } } })
+    .catch(error => { if (!signal.aborted) console.error("MRT: passengers failed to load", error); });
+
   let view = "platform", paused = false, clock = 0;
   const audio = createDriveAudio();
   let lastPhase = null, soundOn = true;
@@ -214,6 +222,17 @@ export async function mountMrt(root, thumbnail, signal) {
       camera.position.copy(eye);
       camera.lookAt(ahead);
     } else controls.update();
+    if (passengers) {
+      passengers.people.forEach((person, index) => {
+        const pose = passengerPose(index, clock);
+        person.root.visible = pose.visible;
+        if (!pose.visible) return;
+        if (person.clip !== pose.clip) { person.rig.select(pose.clip); person.clip = pose.clip; }
+        person.rig.update(paused ? 0 : dt, { L: null, R: null });
+        person.root.position.set(pose.x, DECK, pose.z);
+        person.root.rotation.y = pose.heading;
+      });
+    }
     statusLabel.textContent = t(phaseKeys[state.phase]);
     nextLabel.textContent = state.phase === "arriving" ? t("mrt.next", { seconds: Math.ceil(state.remaining) }) : "";
     if (state.phase === "opening" && lastPhase !== "opening") audio.beep();
@@ -228,7 +247,7 @@ export async function mountMrt(root, thumbnail, signal) {
   stage.querySelector(".drive-poster").hidden = true;
   frame = requestAnimationFrame(step);
 
-  stage.inspectMrt = () => ({ phase: trainState(clock).phase, clock, x: carriages[1]?.group.position.x ?? null, doors: trainState(clock).doors, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, carriages: carriages.length, screenDoors: screenDoors.length, view });
+  stage.inspectMrt = () => ({ phase: trainState(clock).phase, clock, x: carriages[1]?.group.position.x ?? null, doors: trainState(clock).doors, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, carriages: carriages.length, people: passengers ? passengers.people.filter(person => person.root.visible).length : 0, loadedPeople: passengers ? passengers.people.length : 0, screenDoors: screenDoors.length, view });
   stage.setClock = value => { clock = value; };
 
   return {
@@ -238,6 +257,7 @@ export async function mountMrt(root, thumbnail, signal) {
       observer.disconnect();
       controls.dispose();
       audio.dispose();
+      if (passengers) { for (const person of passengers.people) person.rig.dispose(); disposeModels(passengers.scenes); }
       scene.traverse(node => { node.geometry?.dispose(); for (const m of [node.material].flat().filter(Boolean)) { m.map?.dispose(); m.dispose(); } });
       disposeModels(scenes);
       renderer.dispose();
