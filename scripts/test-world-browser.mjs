@@ -72,6 +72,12 @@ try {
   assert.ok(driven.speed > 6 && driven.speed <= 28.5, `speed ${driven.speed} (capped at 100 km/h)`);
   assert.equal(driven.flipped, false);
 
+  // The model's wheels turn while the car moves.
+  const spinBefore = (await inspect()).wheelSpin;
+  assert.ok((await inspect()).wheels >= 2, "the model has wheel nodes");
+  await stage.evaluate(element => element.simulate(1, { throttle: 1 }));
+  await page.waitForFunction(before => Math.abs(document.querySelector(".drive-stage").inspectWorld().wheelSpin - before) > 0.5, spinBefore, { polling: 300 });
+
   // Every vehicle the player can pick drives (the button steps through the nine of them and wraps round).
   const seen = new Set();
   for (let i = 0; i < 9; i++) {

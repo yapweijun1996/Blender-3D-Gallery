@@ -344,12 +344,19 @@ export async function mountWorld(root, thumbnail, signal) {
     if (car) carHolder.remove(car);
     car = kit.has(choice.model) ? cloneModel(kit.get(choice.model)) : new Group();
     carHolder.add(car);
+    // The wheels of the model (named wheel_FL, wheel_RR and so on) turn with the speed, the front ones steer.
+    wheelNodes = [];
+    car.traverse(node => {
+      if (!/^wheel_/.test(node.name)) return;
+      node.rotation.order = "YXZ";
+      wheelNodes.push({ node, radius: Math.max(0.2, node.position.y || 0.3), front: /^wheel_F/.test(node.name), angle: 0 });
+    });
     playerChoice = PLAYER_VEHICLES.indexOf(choice);
     cameraBack = choice.back;
     vehicleButton.textContent = t("world.vehicle", { name: t(`world.vehicle.${choice.id}`) });
     try { localStorage.setItem("sg-world-vehicle", choice.id); } catch { /* Not saved. */ }
   }
-  let cameraBack = 8.5;
+  let cameraBack = 8.5, wheelNodes = [];
   const vehicleButton = root.querySelector(".world-vehicle");
   let savedVehicle = "saga";
   try { savedVehicle = localStorage.getItem("sg-world-vehicle") ?? "saga"; } catch { /* Use the default. */ }
@@ -523,8 +530,14 @@ export async function mountWorld(root, thumbnail, signal) {
 
   const camTarget = new Vector3(), camPosition = new Vector3(), quaternion = new Quaternion();
   let camHeading = start.heading, camReady = false;
-  function placeCar() {
+  function placeCar(dt = 0) {
     const state = vehicle.getState();
+    const steering = state.wheels[0]?.steering ?? 0;
+    for (const wheel of wheelNodes) {
+      wheel.angle += state.forwardSpeed * dt / wheel.radius;
+      wheel.node.rotation.x = -wheel.angle;
+      wheel.node.rotation.y = wheel.front ? steering : 0;
+    }
     carHolder.position.set(state.position.x, state.position.y - restHeight, state.position.z);
     quaternion.set(state.quaternion.x, state.quaternion.y, state.quaternion.z, state.quaternion.w);
     carHolder.quaternion.copy(quaternion);
@@ -679,7 +692,7 @@ export async function mountWorld(root, thumbnail, signal) {
       updateTraffic(dt, vehicle.getState());
       physics.step(dt);
     }
-    const state = placeCar();
+    const state = placeCar(paused ? 0 : dt);
     updateEntrance(state.position);
     const effects = damageEffects(state.damage);
     smoke.update(dt, { x: state.position.x + Math.sin(state.heading) * 1.6, y: state.position.y + 0.9, z: state.position.z + Math.cos(state.heading) * 1.6 }, effects.smoke);
@@ -717,7 +730,7 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, vehicleId: PLAYER_VEHICLES[playerChoice].id, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, vehicleId: PLAYER_VEHICLES[playerChoice].id, wheels: wheelNodes.length, wheelSpin: wheelNodes[0]?.angle ?? 0, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.hurt = amount => vehicle.crash.addImpact((4 + amount * 40) * 1300); // test hook: damage the car by about `amount`
