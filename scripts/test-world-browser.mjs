@@ -22,6 +22,7 @@ try {
   assert.equal(await page.locator(".drive-heading h1").textContent(), messages.en["demo.sg-world.title"]);
   await page.waitForFunction(() => document.querySelector(".drive-stage").inspectWorld().triangles > 10_000, undefined, { polling: 500 });
   const first = await inspect();
+  const first_x = first.x, first_z = first.z;
   assert.ok(first.tiles >= 9, `${first.tiles} tiles loaded`);
   assert.ok(Math.hypot(first.start.x, first.start.z) < 400, "starts near Marina Bay Sands");
   assert.equal(first.supertrees, 11);
@@ -37,6 +38,14 @@ try {
   await page.locator(".world-time").click();
   assert.ok([8, 13, 18.5, 22].includes(Math.round((await inspect()).hour * 2) / 2), "time jumped to a preset");
   await stage.evaluate(element => element.setHour(15));
+
+  // Missions: the first target is the Merlion; arriving there completes it and moves on to the next place.
+  assert.equal((await inspect()).mission, "merlion");
+  assert.ok((await page.locator(".world-mission-text").textContent()).includes(" · "));
+  await stage.evaluate(element => element.teleport(-694, -380, 0));
+  await page.waitForFunction(() => document.querySelector(".drive-stage").inspectWorld().missionsDone >= 1, undefined, { polling: 500 });
+  assert.notEqual((await inspect()).mission, "merlion");
+  await stage.evaluate((element, [x, z]) => element.teleport(x, z, 0), [first_x, first_z]);
 
   // Drive: the physics gives speed, and the car stays upright on the road.
   const driven = await stage.evaluate(element => element.simulate(8, { throttle: 1 }));

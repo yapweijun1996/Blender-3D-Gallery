@@ -7,3 +7,7 @@
 .world-enter { position: absolute; left: 50%; bottom: 5.2rem; transform: translateX(-50%); min-height: 2.75rem; padding: 0 1.2rem; border: 0; border-radius: .8rem; pointer-events: auto; background: var(--drive-gold); color: var(--drive-on-gold); font: 600 1rem / 1 system-ui, sans-serif; cursor: pointer; }
 .world-enter[hidden] { display: none; }
 @media (max-width: 640px) { .world-enter { bottom: 7rem; } }
+
+.world-mission { position: absolute; left: 50%; top: .8rem; transform: translateX(-50%); display: flex; align-items: center; gap: .55rem; max-width: calc(100% - 9rem); padding: .4rem .8rem; border-radius: .8rem; background: var(--drive-panel-soft); font: 600 .95rem / 1.2 system-ui, sans-serif; }
+.world-arrow { display: inline-block; color: var(--drive-gold); font-size: 1.3rem; transition: transform .15s linear; }
+@media (max-width: 640px) { .world-mission { top: 3.2rem; max-width: calc(100% - 2rem); font-size: .85rem; } }

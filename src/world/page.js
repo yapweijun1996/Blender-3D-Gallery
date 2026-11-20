@@ -1,5 +1,5 @@
 import {
-  AdditiveBlending, AmbientLight, BoxGeometry, CanvasTexture, Color, DirectionalLight, DoubleSide, Fog, Group, HemisphereLight, InstancedMesh, Matrix4, Mesh, MeshBasicMaterial, MeshLambertMaterial, PerspectiveCamera, PlaneGeometry, Quaternion, RepeatWrapping, Scene, SRGBColorSpace, Vector3, WebGLRenderer,
+  AdditiveBlending, AmbientLight, BoxGeometry, CylinderGeometry, CanvasTexture, Color, DirectionalLight, DoubleSide, Fog, Group, HemisphereLight, InstancedMesh, Matrix4, Mesh, MeshBasicMaterial, MeshLambertMaterial, PerspectiveCamera, PlaneGeometry, Quaternion, RepeatWrapping, Scene, SRGBColorSpace, Vector3, WebGLRenderer,
 } from "three";
 import { localize, mountMarkup, t } from "../i18n/index.js";
 import { disposeModels } from "../chibi-dressup/view.js";
@@ -10,6 +10,7 @@ import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
 import { grovePlacements, groveRings } from "./groves.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
+import { MISSIONS, arrived, distanceTo, nextMission, relativeBearing } from "./missions.js";
 import { busStopPlacements, lampPlacements, nearestRoad } from "./furniture.js";
 import { addWorldPedestrians, pedestrianPaths } from "./pedestrians.js";
 import { createSignalLights, signalApproaches } from "./signals.js";
@@ -125,6 +126,7 @@ export async function mountWorld(root, thumbnail, signal) {
         <p class="drive-road" aria-live="polite"></p>
         <p class="drive-trip"></p>
         <p class="drive-event" role="status" aria-live="polite"></p>
+        <div class="world-mission" aria-live="off"><span class="world-arrow" aria-hidden="true">➤</span><span class="world-mission-text"></span></div>
         <button type="button" class="world-enter" hidden></button>
         <div class="drive-pad">
           <div class="drive-steer"><button type="button" data-key="left">◀</button><button type="button" data-key="right">▶</button></div>
@@ -137,6 +139,7 @@ export async function mountWorld(root, thumbnail, signal) {
       <button type="button" class="drive-horn" data-i18n="drive.horn"></button>
       <button type="button" class="drive-reset" data-i18n="world.reset"></button>
       <button type="button" class="world-time"></button>
+      <button type="button" class="world-next" data-i18n="world.mission.next"></button>
       <button type="button" class="drive-sound" aria-pressed="true" data-i18n="drive.sound"></button>
     </div>
     <p class="drive-hint" data-i18n="world.hint"></p>
@@ -439,7 +442,7 @@ export async function mountWorld(root, thumbnail, signal) {
   const pauseButton = root.querySelector(".drive-pause");
   pauseButton.addEventListener("click", () => { paused = !paused; localize(pauseButton, paused ? "common.play" : "common.pause"); });
   let eventTimer = 0, lastCrash = 0, lastFlip = false;
-  const notify = key => { eventLine.textContent = t(key); eventTimer = 2.6; };
+  const notify = (key, params) => { eventLine.textContent = t(key, params); eventTimer = 2.6; };
   function resetCar() {
     // Right the car where it stands (lifted a little); repairs it as well.
     vehicle.resetUpright({ repair: true });
@@ -531,6 +534,29 @@ export async function mountWorld(root, thumbnail, signal) {
     headlightPools.instanceMatrix.needsUpdate = true;
   }
 
+  // Missions: drive to a place on the map. A gold beam marks the target, an arrow and the distance guide the way.
+  let missionIndex = 0, missionsDone = 0;
+  const missionText = stage.querySelector(".world-mission-text"), missionArrow = stage.querySelector(".world-arrow");
+  const beam = new Mesh(new CylinderGeometry(3, 3, 140, 20, 1, true), new MeshBasicMaterial({ color: 0xffd36a, transparent: true, opacity: 0.28, side: DoubleSide, depthWrite: false }));
+  scene.add(beam);
+  function setMission(index) {
+    missionIndex = index;
+    beam.position.set(MISSIONS[index].x, 70, MISSIONS[index].z);
+  }
+  setMission(0);
+  root.querySelector(".world-next").addEventListener("click", () => setMission(nextMission(missionIndex, vehicle.getState().position)));
+  function updateMission(state) {
+    const mission = MISSIONS[missionIndex], distance = distanceTo(state.position, mission);
+    if (arrived(state.position, mission)) {
+      missionsDone++;
+      notify("world.mission.done", { place: t(mission.name) });
+      setMission(nextMission(missionIndex, state.position));
+      return;
+    }
+    missionText.textContent = `${t("world.mission.drive", { place: t(mission.name) })} · ${distance >= 1000 ? `${(distance / 1000).toFixed(1)} km` : `${Math.round(distance)} m`}`;
+    missionArrow.style.transform = `rotate(${(-relativeBearing(state.position, state.heading, mission)).toFixed(3)}rad)`;
+  }
+
   // Time of day: sky, fog, ground, sun, lit windows and street lamps follow the hour (one hour passes in 30 seconds).
   const lampMaterials = new Set();
   for (const name of ["road_light"]) for (const part of kit.get(name)?.parts ?? []) for (const material of [part.material].flat()) if (material.name === "lamp_emissive") lampMaterials.add(material);
@@ -587,6 +613,7 @@ export async function mountWorld(root, thumbnail, signal) {
     }
     const state = placeCar();
     updateEntrance(state.position);
+    updateMission(state);
     if (fixedView) { camera.position.set(...fixedView.position); camera.lookAt(...fixedView.target); } else placeCamera(state, dt);
     const tx = Math.floor(state.position.x / TILE_SIZE), tz = Math.floor(state.position.z / TILE_SIZE);
     carTile = [tx, tz];
@@ -616,10 +643,11 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, missionsDone, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.setHour = value => setHour(value);
+  stage.setMission = index => setMission(index);
   stage.setView = view => { fixedView = view; };
   stage.teleport = (x, z, heading = 0) => { previousPosition = null; vehicle.resetUpright({ position: { x, y: restHeight + 0.2, z }, heading, repair: true }); };
 
@@ -630,6 +658,8 @@ export async function mountWorld(root, thumbnail, signal) {
       observer.disconnect();
       audio.dispose();
       pedestrians?.dispose();
+      beam.geometry.dispose();
+      beam.material.dispose();
       signalLights.dispose();
       for (const mesh of furnitureMeshes) mesh.dispose?.();
       for (const solid of solidVehicles.values()) solid.remove();
