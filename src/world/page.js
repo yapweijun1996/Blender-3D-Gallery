@@ -734,6 +734,13 @@ export async function mountWorld(root, thumbnail, signal) {
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.hurt = amount => vehicle.crash.addImpact((4 + amount * 40) * 1300); // test hook: damage the car by about `amount`
+  // Test hook: apply a steering input for a few physics steps and read the angle the front wheel nodes are given.
+  stage.steerCheck = input => {
+    for (let i = 0; i < 20; i++) { vehicle.setControls(input); physics.step(1 / 60); }
+    placeCar(0);
+    const front = wheelNodes.filter(wheel => wheel.front).map(wheel => wheel.node.rotation.y), rear = wheelNodes.filter(wheel => !wheel.front).map(wheel => wheel.node.rotation.y);
+    return { front, rear };
+  };
   stage.setHour = value => setHour(value);
   stage.setMission = index => setMission(index);
   stage.setView = view => { fixedView = view; };

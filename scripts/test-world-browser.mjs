@@ -78,6 +78,13 @@ try {
   await stage.evaluate(element => element.simulate(1, { throttle: 1 }));
   await page.waitForFunction(before => Math.abs(document.querySelector(".drive-stage").inspectWorld().wheelSpin - before) > 0.5, spinBefore, { polling: 300 });
 
+  // Steering left turns the front wheel nodes to the left (positive angle), right the other way, and the rear wheels stay straight.
+  const left = await stage.evaluate(element => element.steerCheck({ throttle: 1, steer: 1 }));
+  assert.ok(left.front.length >= 1 && left.front.every(angle => angle > 0.1), `front wheels left: ${left.front}`);
+  assert.ok(left.rear.every(angle => angle === 0), "rear wheels do not steer");
+  const right = await stage.evaluate(element => element.steerCheck({ throttle: 1, steer: -1 }));
+  assert.ok(right.front.every(angle => angle < -0.1), `front wheels right: ${right.front}`);
+
   // Every vehicle the player can pick drives (the button steps through the nine of them and wraps round).
   const seen = new Set();
   for (let i = 0; i < 9; i++) {
@@ -88,6 +95,7 @@ try {
     const run = await stage.evaluate(element => element.simulate(7, { throttle: 1 }));
     assert.ok(run.speed > 2, `${chosen.vehicleId} drives: speed ${run.speed}`);
     assert.equal(run.flipped, false, `${chosen.vehicleId} stays upright`);
+    assert.ok((await inspect()).wheels >= 2, `${chosen.vehicleId} has wheel nodes`);
   }
   assert.equal(seen.size, 9, "nine different vehicles");
 
