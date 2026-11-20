@@ -72,6 +72,36 @@ function facadeTexture() {
   return { texture, glow };
 }
 
+/** Glass curtain wall for towers: a pane per bay and storey with thin mullions, and the same panes lit at night. */
+function towerTexture() {
+  const size = 128, make = fill => {
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = size;
+    const context = canvas.getContext("2d");
+    fill(context);
+    return canvas;
+  };
+  const texture = new CanvasTexture(make(context => {
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, size, size);
+    const glass = context.createLinearGradient(0, 0, 0, size);
+    glass.addColorStop(0, "#9db4c2");
+    glass.addColorStop(1, "#6f8a9b");
+    context.fillStyle = glass;
+    context.fillRect(8, 14, size - 16, size - 30);
+    context.fillStyle = "#e6eaec";
+    context.fillRect(0, size - 8, size, 8); // spandrel
+  }));
+  const glow = new CanvasTexture(make(context => {
+    context.fillStyle = "#000000";
+    context.fillRect(0, 0, size, size);
+    context.fillStyle = "#ffffff";
+    context.fillRect(8, 14, size - 16, size - 30);
+  }));
+  for (const map of [texture, glow]) { map.wrapS = map.wrapT = RepeatWrapping; map.colorSpace = SRGBColorSpace; map.anisotropy = 4; }
+  return { texture, glow };
+}
+
 async function fetchTile(key, signal) {
   const url = tileUrls[`../../models/world/tiles/${key}.json`];
   if (!url) return null;
@@ -151,7 +181,8 @@ export async function mountWorld(root, thumbnail, signal) {
   stage.append(renderer.domElement);
 
   const groundMaterial = new MeshLambertMaterial({ vertexColors: true, side: DoubleSide });
-  const facade = facadeTexture();
+  const facade = facadeTexture(), glass = towerTexture();
+  const towerMaterial = new MeshLambertMaterial({ vertexColors: true, side: DoubleSide, map: glass.texture, emissiveMap: glass.glow, emissive: new Color(0xa9c0ee), emissiveIntensity: 0 });
   const buildingMaterial = new MeshLambertMaterial({ vertexColors: true, side: DoubleSide, map: facade.texture, emissiveMap: facade.glow, emissive: new Color(0xffd98a), emissiveIntensity: 0 });
   const flatGround = new Mesh(new PlaneGeometry(6000, 6000).rotateX(-Math.PI / 2), new MeshLambertMaterial({ color: 0x8aa06f }));
   flatGround.position.y = -0.3;
@@ -192,6 +223,7 @@ export async function mountWorld(root, thumbnail, signal) {
     const group = new Group();
     const entry = { x, z, data, busStops: built.busStops, entrances: built.entrances, group, solids: built.solids, colliders: null, instances: [], geometries: [] };
     if (built.ground) { const mesh = new Mesh(built.ground, groundMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.ground); }
+    if (built.towers) { const mesh = new Mesh(built.towers, towerMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.towers); }
     if (built.buildings) { const mesh = new Mesh(built.buildings, buildingMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.buildings); }
     addInstances(entry, built);
     scene.add(group);
@@ -514,6 +546,7 @@ export async function mountWorld(root, thumbnail, signal) {
     sun.intensity = state.sun;
     hemisphere.intensity = 0.55 + state.sun * 0.38;
     buildingMaterial.emissiveIntensity = state.lamp * 1.1;
+    towerMaterial.emissiveIntensity = state.lamp * 0.32;
     ambient.intensity = 0.12 + 0.23 * (1 - state.lamp);
     headlightPools.material.opacity = state.lamp * 0.55;
     headlightPools.visible = state.lamp > 0.02;
@@ -606,6 +639,8 @@ export async function mountWorld(root, thumbnail, signal) {
       scene.traverse(node => { node.geometry?.dispose(); for (const m of [node.material].flat().filter(Boolean)) { m.map?.dispose(); m.dispose(); } });
       facade.texture.dispose();
       facade.glow.dispose();
+      glass.texture.dispose();
+      glass.glow.dispose();
       renderer.dispose();
       renderer.forceContextLoss();
       renderer.domElement.remove();

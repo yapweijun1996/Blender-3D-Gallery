@@ -4,6 +4,8 @@ import { BufferAttribute, BufferGeometry, Color, ShapeUtils, Vector2 } from "thr
 export const TILE_SIZE = 250;
 const ZEBRA_Y = 0.06, ROAD_Y = 0.03, KERB_Y = 0.12, PATH_Y = 0.05, WATER_Y = 0.02, PARK_Y = 0.01;
 const ZEBRA = new Color(0xe9e9e1), ASPHALT = new Color(0x3b3e43), KERB = new Color(0xb9b9b2), PATH = new Color(0x9c9a90), WATER = new Color(0x2f7391), PARK = new Color(0x5f8f4a);
+const GLASS = [0x7f98a6, 0x6f8ea0, 0x88a0ad, 0x7890a0].map(hex => new Color(hex));
+export const TOWER_HEIGHT = 55; // taller buildings get the glass curtain-wall facade
 const WALLS = [0xd9d4c8, 0xc9cfd3, 0xe0d2b8, 0xb9c4c9, 0xcfc5c0, 0xd6dad0].map(hex => new Color(hex));
 const ROOFS = [0x8e8f91, 0x7b8085, 0x9a8f86].map(hex => new Color(hex));
 
@@ -68,13 +70,13 @@ function fillPolygon(batch, ring, y, color) {
 export const BAY = 3.6, FLOOR = 3.2;
 const PLAIN = [0.03, 0.03];
 
-function extrude(batch, ring, height, wall, roof) {
+function extrude(batch, ring, height, wall, roof, { bay = BAY, floor = FLOOR } = {}) {
   const { points, triangles } = triangulate(ring);
-  const floors = Math.max(1, Math.round(height / FLOOR));
+  const floors = Math.max(1, Math.round(height / floor));
   let along = 0;
   for (let i = 0; i < points.length; i++) {
     const a = points[i], b = points[(i + 1) % points.length];
-    const length = Math.hypot(b.x - a.x, b.y - a.y), u0 = along / BAY, u1 = (along + length) / BAY;
+    const length = Math.hypot(b.x - a.x, b.y - a.y), u0 = along / bay, u1 = (along + length) / bay;
     batch.quad([a.x, 0, a.y], [b.x, 0, b.y], [b.x, height, b.y], [a.x, height, a.y], wall, [u0, 0], [u1, 0], [u1, floors], [u0, floors]);
     along += length;
   }
@@ -130,7 +132,7 @@ export function buildingMesh(ring, height) {
 export function buildTile(tile, { hide = () => false } = {}) {
   const [ox, oz] = origin(tile);
   const shift = points => points.map(([x, z]) => [x + ox, z + oz]);
-  const ground = createBatch(), buildings = createBatch({ uv: true });
+  const ground = createBatch(), buildings = createBatch({ uv: true }), towers = createBatch({ uv: true });
 
   for (const park of tile.parks ?? []) fillPolygon(ground, shift(park.geometry), PARK_Y, PARK);
   for (const water of tile.water ?? []) fillPolygon(ground, shift(water.geometry), WATER_Y, WATER);
@@ -157,12 +159,16 @@ export function buildTile(tile, { hide = () => false } = {}) {
     if (ring.length < 4) continue;
     const height = Math.max(3, building.height ?? 9);
     const seed = hash(building.id);
-    if (!hide(building.name)) extrude(buildings, ring, height, WALLS[seed % WALLS.length], ROOFS[(seed >> 3) % ROOFS.length]);
+    if (!hide(building.name)) {
+      if (height >= TOWER_HEIGHT) extrude(towers, ring, height, GLASS[seed % GLASS.length], ROOFS[(seed >> 3) % ROOFS.length], { bay: 2.4, floor: 4 });
+      else extrude(buildings, ring, height, WALLS[seed % WALLS.length], ROOFS[(seed >> 3) % ROOFS.length]);
+    }
     solids.push({ id: building.id, name: building.name, ring, height });
   }
   return {
     ground: ground.empty ? null : ground.build(),
     buildings: buildings.empty ? null : buildings.build(),
+    towers: towers.empty ? null : towers.build(),
     solids,
     trees: shift((tile.trees ?? []).map(tree => tree.point)),
     lamps: shift((tile.streetLamps ?? []).map(lamp => lamp.point)),
