@@ -177,7 +177,7 @@ export async function mountWorld(root, thumbnail, signal) {
   const landmarkKit = await loadKitFrom(LANDMARKS.flatMap(landmark => landmark.models).map(name => [name, landmarkUrls[`../../models/${name}/${name}.glb`]]), signal, kitScenes)
     .catch(error => { if (signal.aborted) throw error; console.error("World: landmarks failed to load", error); return new Map(); });
   const physics = await createPhysicsWorld();
-  physics.addGround({ halfWidth: 3000, halfDepth: 3000 });
+  physics.addGround({ halfWidth: 60000, halfDepth: 60000 }); // the whole route: about 30 km to the north
   signal.throwIfAborted();
 
   const scene = new Scene();
@@ -278,15 +278,20 @@ export async function mountWorld(root, thumbnail, signal) {
     const key = tileKey(x, z);
     if (tiles.has(key) || pending.has(key) || failed.has(key) || !tileUrls[`../../models/world/tiles/${key}.json`]) return;
     pending.add(key);
-    loadChain = loadChain.then(() => fetchTile(key, signal)).then(data => { if (data && !signal.aborted) ready.push({ x, z, data }); })
-      .catch(error => { if (!signal.aborted) { failed.add(key); console.error("World: tile failed", key, error); } })
-      .finally(() => pending.delete(key));
+    // A tile stays "pending" from the request until it is built or dropped, so it is never fetched twice while it waits in `ready`.
+    loadChain = loadChain.then(() => fetchTile(key, signal)).then(data => { if (data && !signal.aborted) ready.push({ x, z, data }); else pending.delete(key); })
+      .catch(error => { pending.delete(key); if (!signal.aborted) { failed.add(key); console.error("World: tile failed", key, error); } });
   }
   const ready = [];
   function updateTiles(cx, cz) {
     for (let dz = -LOAD_RADIUS; dz <= LOAD_RADIUS; dz++) for (let dx = -LOAD_RADIUS; dx <= LOAD_RADIUS; dx++) request(cx + dx, cz + dz);
-    const next = ready.shift();
-    if (next && !tiles.has(tileKey(next.x, next.z))) buildEntry(next.x, next.z, next.data);
+    // Build one waiting tile per frame, skipping tiles the car has already left behind.
+    let next = ready.shift();
+    while (next && Math.max(Math.abs(next.x - cx), Math.abs(next.z - cz)) > LOAD_RADIUS) { pending.delete(tileKey(next.x, next.z)); next = ready.shift(); }
+    if (next) {
+      pending.delete(tileKey(next.x, next.z));
+      if (!tiles.has(tileKey(next.x, next.z))) buildEntry(next.x, next.z, next.data);
+    }
     for (const [key, entry] of tiles) {
       const distance = Math.max(Math.abs(entry.x - cx), Math.abs(entry.z - cz));
       if (distance > LOAD_RADIUS + 1) unload(key);
@@ -693,6 +698,7 @@ export async function mountWorld(root, thumbnail, signal) {
       physics.step(dt);
     }
     const state = placeCar(paused ? 0 : dt);
+    flatGround.position.x = state.position.x; flatGround.position.z = state.position.z; // the green plane under everything follows the car
     updateEntrance(state.position);
     const effects = damageEffects(state.damage);
     smoke.update(dt, { x: state.position.x + Math.sin(state.heading) * 1.6, y: state.position.y + 0.9, z: state.position.z + Math.cos(state.heading) * 1.6 }, effects.smoke);
@@ -730,7 +736,7 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, vehicleId: PLAYER_VEHICLES[playerChoice].id, wheels: wheelNodes.length, wheelSpin: wheelNodes[0]?.angle ?? 0, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { y: state.position.y, loading: { pending: pending.size, ready: ready.length, failed: failed.size }, tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, vehicleId: PLAYER_VEHICLES[playerChoice].id, wheels: wheelNodes.length, wheelSpin: wheelNodes[0]?.angle ?? 0, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.hurt = amount => vehicle.crash.addImpact((4 + amount * 40) * 1300); // test hook: damage the car by about `amount`

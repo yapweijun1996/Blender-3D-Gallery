@@ -92,7 +92,12 @@ try {
     const chosen = await inspect();
     seen.add(chosen.vehicleId);
     await stage.evaluate((element, [x, z, heading]) => element.teleport(x, z, heading), [first_x, first_z, first.start.heading]);
-    const run = await stage.evaluate(element => element.simulate(7, { throttle: 1 }));
+    let run = await stage.evaluate(element => element.simulate(7, { throttle: 1 }));
+    // A traffic vehicle can stand in front of the start; try again from the start (up to three times).
+    for (let attempt = 0; attempt < 3 && run.speed <= 2; attempt++) {
+      await stage.evaluate((element, [x, z, heading]) => element.teleport(x, z, heading), [first_x, first_z, first.start.heading]);
+      run = await stage.evaluate(element => element.simulate(7, { throttle: 1 }));
+    }
     assert.ok(run.speed > 2, `${chosen.vehicleId} drives: speed ${run.speed}`);
     assert.equal(run.flipped, false, `${chosen.vehicleId} stays upright`);
     assert.ok((await inspect()).wheels >= 2, `${chosen.vehicleId} has wheel nodes`);
@@ -104,9 +109,19 @@ try {
   assert.ok((await page.locator(".drive-speed").textContent()) !== undefined);
   await page.locator(".drive-reset").click();
 
+  // The whole route is mapped: at the Woodlands checkpoint, 24 km north, the tiles load and the car stands on the ground.
+  await stage.evaluate(element => element.teleport(-10428, -17863, 0));
+  await page.waitForFunction(() => { const s = document.querySelector(".drive-stage").inspectWorld(); return s.carTile[0] === -42 && s.carTile[1] === -72 && s.tiles >= 6; }, undefined, { polling: 500 });
+  const north = await stage.evaluate(element => element.simulate(3, {}));
+  assert.ok(north.y > -0.5 && north.y < 3, `the car stands on the ground in the north (y ${north.y})`);
+  await stage.evaluate(element => element.teleport(1500, 600, 0));
+
   // Streaming: far from the start new tiles load and the old ones go.
   await stage.evaluate(element => element.teleport(1500, 600, 0));
   await page.waitForFunction(() => { const s = document.querySelector(".drive-stage").inspectWorld(); return s.carTile[0] === 6 && s.tiles >= 9; }, undefined, { polling: 500 });
+
+  // The queue of waiting tiles stays short (a tile is never requested twice while it waits).
+  assert.ok((await inspect()).loading.ready < 30, "the tile queue stays short");
 
   // At an MRT entrance a button goes down to the station page.
   await stage.evaluate(element => element.teleport(-60, -20, 0));

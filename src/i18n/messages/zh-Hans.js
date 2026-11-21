@@ -768,6 +768,8 @@ export default {
   "world.place.esplanade": "滨海艺术中心",
   "world.place.gardens": "滨海湾花园",
   "world.place.bayfront": "海湾舫地铁站",
+  "world.place.woodlands": "兀兰关卡",
+  "world.place.johor": "新山",
   "world.enterMrt": "下到{station}地铁站(E)",
   "demo.sg-mrt.title": "新加坡地铁站",
   "demo.sg-mrt.description": "看一列地铁进站、停在屏蔽门前、开门、再离站。可以站在站台上、坐进车厢里,或从上面看。",

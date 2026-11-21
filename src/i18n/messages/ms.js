@@ -768,6 +768,8 @@ export default {
   "world.place.esplanade": "Esplanade",
   "world.place.gardens": "Gardens by the Bay",
   "world.place.bayfront": "MRT Bayfront",
+  "world.place.woodlands": "Pusat Pemeriksaan Woodlands",
+  "world.place.johor": "Johor Bahru",
   "world.enterMrt": "Turun ke MRT {station} (E)",
   "demo.sg-mrt.title": "Stesen MRT Singapura",
   "demo.sg-mrt.description": "Lihat kereta api masuk ke platform MRT, berhenti di pintu skrin, membuka pintu dan bertolak. Berdiri di platform, naik ke dalam, atau lihat dari atas.",

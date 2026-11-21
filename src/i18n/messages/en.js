@@ -744,6 +744,8 @@ export default {
   "world.place.esplanade": "Esplanade",
   "world.place.gardens": "Gardens by the Bay",
   "world.place.bayfront": "Bayfront MRT",
+  "world.place.woodlands": "Woodlands Checkpoint",
+  "world.place.johor": "Johor Bahru",
   "world.enterMrt": "Go down to {station} MRT (E)",
   "demo.sg-mrt.title": "Singapore MRT Station",
   "demo.sg-mrt.description": "Watch a train come into an MRT platform, stop at the screen doors, open its doors and leave. Stand on the platform, ride inside, or look from above.",
