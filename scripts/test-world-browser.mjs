@@ -116,6 +116,19 @@ try {
   assert.ok(north.y > -0.5 && north.y < 3, `the car stands on the ground in the north (y ${north.y})`);
   await stage.evaluate(element => element.teleport(1500, 600, 0));
 
+  // The Woodlands checkpoint: arriving opens the passport game, a stamp in the green zone completes the mission with a bonus.
+  const before = await inspect();
+  await stage.evaluate(element => element.setMission(5)); // Woodlands Checkpoint
+  await stage.evaluate(element => element.teleport(-10428, -17863, 0));
+  await page.waitForFunction(() => document.querySelector(".drive-stage").inspectWorld().checkpoint === "show", undefined, { polling: 500 });
+  assert.equal(await page.locator(".world-passport").isVisible(), true);
+  assert.equal(await stage.evaluate(element => element.stampHit()), true);
+  await page.waitForFunction(count => document.querySelector(".drive-stage").inspectWorld().missionsDone > count, before.missionsDone, { polling: 500 });
+  const after = await inspect();
+  assert.ok(after.score >= before.score + 300, `the checkpoint bonus counted (${before.score} to ${after.score})`);
+  assert.equal(await page.locator(".world-passport").isVisible(), false);
+  await stage.evaluate(element => element.teleport(1500, 600, 0));
+
   // Streaming: far from the start new tiles load and the old ones go.
   await stage.evaluate(element => element.teleport(1500, 600, 0));
   await page.waitForFunction(() => { const s = document.querySelector(".drive-stage").inspectWorld(); return s.carTile[0] === 6 && s.tiles >= 9; }, undefined, { polling: 500 });

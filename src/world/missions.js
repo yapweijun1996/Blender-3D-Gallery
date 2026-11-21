@@ -7,7 +7,7 @@ export const MISSIONS = [
   { id: "bayfront", name: "world.place.bayfront", x: -70, z: 24, radius: 25 },
   { id: "gardens", name: "world.place.gardens", x: 270, z: 255, radius: 55 },
   // The long drive: the Woodlands checkpoint and Johor Bahru (the end of the route in models/drive/route-mbs-jb.json), about 30 km north.
-  { id: "woodlands", name: "world.place.woodlands", x: -10428, z: -17863, radius: 80 },
+  { id: "woodlands", name: "world.place.woodlands", x: -10428, z: -17863, radius: 80, checkpoint: true },
   { id: "johor", name: "world.place.johor", x: -9524, z: -23727, radius: 90 },
 ];
 

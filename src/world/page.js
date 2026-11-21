@@ -9,6 +9,7 @@ import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { createQualityGovernor } from "../drive/quality.js";
 import { createPhysicsWorld } from "./physics/world.js";
 import { createSmoke, damageEffects } from "./damage.js";
+import { STAMP_ZONE, createStamp } from "./stamp.js";
 import { grovePlacements, groveRings } from "./groves.js";
 import { LANDMARKS, hiddenOutline } from "./landmarks.js";
 import { ROAD_DISTANCES } from "./mission-distances.js";
@@ -41,6 +42,7 @@ const PLAYER_VEHICLES = [
   { id: "double-bus", model: "sg-bus-double-hd", type: "bus", back: 15 }, { id: "lorry", model: "sg-lorry-hd", type: "lorry", back: 12 },
   { id: "motorbike", model: "motorbike_hd", type: "motorbike", back: 6 },
 ];
+const CHECKPOINT_BONUS = 300;
 const PLAYER_TOP_SPEED = 28; // m/s, 100 km/h: the fastest limit on the mapped roads is 90 km/h
 const SOLID_RADIUS = 1; // in tiles around the car; phones load a smaller ring of tiles
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -139,6 +141,12 @@ export async function mountWorld(root, thumbnail, signal) {
         <p class="drive-event" role="status" aria-live="polite"></p>
         <div class="world-mission" aria-live="off"><span class="world-arrow" aria-hidden="true">➤</span><span class="world-mission-text"></span></div>
         <canvas class="drive-minimap" width="160" height="200" aria-hidden="true"></canvas>
+        <div class="drive-passport world-passport" role="dialog" hidden>
+          <h2 data-i18n="drive.passport.title"></h2>
+          <p class="drive-passport-text"></p>
+          <div class="drive-stamp-bar" hidden><i class="drive-stamp-zone"></i><b class="drive-stamp-marker"></b></div>
+          <button type="button" class="drive-passport-action"></button>
+        </div>
         <button type="button" class="world-enter" hidden></button>
         <div class="drive-pad">
           <div class="drive-steer"><button type="button" data-key="left">◀</button><button type="button" data-key="right">▶</button></div>
@@ -625,17 +633,55 @@ export async function mountWorld(root, thumbnail, signal) {
     });
   }
 
+  // The checkpoint: stop at the Woodlands barrier and play the passport stamp game before the mission counts.
+  const passport = stage.querySelector(".world-passport"), passportText = stage.querySelector(".drive-passport-text");
+  const stampBar = stage.querySelector(".drive-stamp-bar"), stampMarker = stage.querySelector(".drive-stamp-marker"), passportAction = stage.querySelector(".drive-passport-action");
+  stage.querySelector(".drive-stamp-zone").style.left = `${STAMP_ZONE[0] * 100}%`;
+  stage.querySelector(".drive-stamp-zone").style.width = `${(STAMP_ZONE[1] - STAMP_ZONE[0]) * 100}%`;
+  let stamp = null;
+  function renderPassport() {
+    passport.hidden = !stamp;
+    if (!stamp) return;
+    const showing = stamp.state.phase === "show";
+    passportText.textContent = t(showing ? "drive.passport.show" : "drive.passport.stamp");
+    stampBar.hidden = showing;
+    localize(passportAction, showing ? "drive.passport.showButton" : "drive.passport.stampButton");
+  }
+  function pressPassport() {
+    if (!stamp) return;
+    const result = stamp.press();
+    if (result === "hit") {
+      audio.stamp();
+      const state = vehicle.getState();
+      stamp = null;
+      renderPassport();
+      completeMission(state, CHECKPOINT_BONUS);
+    } else if (result === "miss") passportText.textContent = t("drive.passport.again");
+    else renderPassport();
+  }
+  passportAction.addEventListener("click", pressPassport);
+  addEventListener("keydown", event => { if (stamp && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); event.stopImmediatePropagation(); pressPassport(); } }, { signal, capture: true });
+
+  function completeMission(state, bonus = 0) {
+    const mission = MISSIONS[missionIndex];
+    missionsDone++;
+    const points = missionScore({ distance: missionStart.distance, seconds: missionClock - missionStart.time, damage: state.damage - missionStart.damage }) + bonus;
+    score += points;
+    const saved = recordScore(record, mission.id, points);
+    record = saved.record;
+    try { localStorage.setItem(RECORD_KEY, JSON.stringify(record)); } catch { /* Not saved. */ }
+    notify("world.mission.done", { place: t(mission.name), points });
+    setMission(nextMission(missionIndex, state.position), { ...state, placeId: mission.id });
+  }
+
   function updateMission(state) {
     const mission = MISSIONS[missionIndex], distance = distanceTo(state.position, mission);
     if (arrived(state.position, mission)) {
-      missionsDone++;
-      const points = missionScore({ distance: missionStart.distance, seconds: missionClock - missionStart.time, damage: state.damage - missionStart.damage });
-      score += points;
-      const saved = recordScore(record, mission.id, points);
-      record = saved.record;
-      try { localStorage.setItem(RECORD_KEY, JSON.stringify(record)); } catch { /* Not saved. */ }
-      notify("world.mission.done", { place: t(mission.name), points });
-      setMission(nextMission(missionIndex, state.position), { ...state, placeId: mission.id });
+      if (!mission.checkpoint) { completeMission(state); return; }
+      // A checkpoint needs the car to be (nearly) stopped at the barrier.
+      if (stamp) return;
+      if (state.speed < 2) { stamp = createStamp(); renderPassport(); audio.beep(); return; }
+      missionText.textContent = t("world.checkpoint.stop");
       return;
     }
     const best = record.best[mission.id];
@@ -706,6 +752,7 @@ export async function mountWorld(root, thumbnail, signal) {
     wasStalled = effects.stalled;
     if (!paused) missionClock += dt;
     updateMission(state);
+    if (stamp) { if (!paused) stamp.update(dt); if (stamp.state.phase === "stamp") stampMarker.style.left = `${stamp.state.value * 100}%`; }
     drawMinimap(state);
     if (fixedView) { camera.position.set(...fixedView.position); camera.lookAt(...fixedView.target); } else placeCamera(state, dt);
     const tx = Math.floor(state.position.x / TILE_SIZE), tz = Math.floor(state.position.z / TILE_SIZE);
@@ -736,7 +783,7 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { y: state.position.y, loading: { pending: pending.size, ready: ready.length, failed: failed.size }, tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, vehicleId: PLAYER_VEHICLES[playerChoice].id, wheels: wheelNodes.length, wheelSpin: wheelNodes[0]?.angle ?? 0, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { y: state.position.y, loading: { pending: pending.size, ready: ready.length, failed: failed.size }, tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, vehicleId: PLAYER_VEHICLES[playerChoice].id, wheels: wheelNodes.length, wheelSpin: wheelNodes[0]?.angle ?? 0, checkpoint: stamp ? stamp.state.phase : null, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.hurt = amount => vehicle.crash.addImpact((4 + amount * 40) * 1300); // test hook: damage the car by about `amount`
@@ -749,6 +796,13 @@ export async function mountWorld(root, thumbnail, signal) {
   };
   stage.setHour = value => setHour(value);
   stage.setMission = index => setMission(index);
+  stage.stampHit = () => { // test hook: show the passport, sweep the marker into the green zone and press
+    if (!stamp) return false;
+    if (stamp.state.phase === "show") pressPassport();
+    stamp.state.value = (STAMP_ZONE[0] + STAMP_ZONE[1]) / 2;
+    pressPassport();
+    return true;
+  };
   stage.setView = view => { fixedView = view; };
   stage.teleport = (x, z, heading = 0) => { previousPosition = null; vehicle.resetUpright({ position: { x, y: restHeight + 0.2, z }, heading, repair: true }); };
 
