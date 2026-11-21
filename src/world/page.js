@@ -679,7 +679,7 @@ export async function mountWorld(root, thumbnail, signal) {
     if (arrived(state.position, mission)) {
       if (!mission.checkpoint) { completeMission(state); return; }
       // A checkpoint needs the car to be (nearly) stopped at the barrier.
-      if (stamp) return;
+      if (stamp) { missionText.textContent = t(mission.name); return; }
       if (state.speed < 2) { stamp = createStamp(); renderPassport(); audio.beep(); return; }
       missionText.textContent = t("world.checkpoint.stop");
       return;
