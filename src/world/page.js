@@ -29,10 +29,10 @@ import "./style.css";
 const tileUrls = import.meta.glob("../../models/world/tiles/*.json", { eager: true, query: "?url", import: "default" });
 const kitUrls = import.meta.glob([
   "../../models/drive/kit/car_saga.glb", "../../models/drive/kit/car_hatchback_hd.glb", "../../models/drive/kit/motorbike_hd.glb", "../../models/sg-{taxi,bus-double,lorry,police,ambulance,school-bus}-hd/*.glb", "../../models/sg-rain-tree/*.glb", "../../models/sg-angsana/*.glb", "../../models/sg-coconut-palm/*.glb",
-  "../../models/sg-road-light/*.glb", "../../models/sg-bus-shelter-sbs/*.glb", "../../models/sg-bus-stop-flag/*.glb", "../../models/sg-station-sign/*.glb", "../../models/sg-supertree-{tall,mid,short}/*.glb",
+  "../../models/sg-road-light/*.glb", "../../models/sg-bus-shelter-sbs/*.glb", "../../models/sg-bus-stop-flag/*.glb", "../../models/sg-station-sign/*.glb", "../../models/sg-bayfront-entrance/*.glb", "../../models/sg-supertree-{tall,mid,short}/*.glb",
 ], { eager: true, query: "?url", import: "default" });
 const landmarkUrls = import.meta.glob("../../models/sg-{marina-bay-sands-towers,marina-bay-sands-podium,esplanade-domes,esplanade-base,merlion,merlion-park,artscience-museum,helix-bridge,flower-dome,cloud-forest,the-float,checkpoint-canopy,checkpoint-lane,checkpoint-building}/*.glb", { eager: true, query: "?url", import: "default" });
-const KIT = { motorbike_hd: "drive/kit/motorbike_hd", car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light", bus_shelter: "sg-bus-shelter-sbs/sg-bus-shelter-sbs", bus_flag: "sg-bus-stop-flag/sg-bus-stop-flag", station_sign: "sg-station-sign/sg-station-sign", "sg-supertree-tall": "sg-supertree-tall/sg-supertree-tall", "sg-supertree-mid": "sg-supertree-mid/sg-supertree-mid", "sg-supertree-short": "sg-supertree-short/sg-supertree-short" };
+const KIT = { motorbike_hd: "drive/kit/motorbike_hd", car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light", bus_shelter: "sg-bus-shelter-sbs/sg-bus-shelter-sbs", bus_flag: "sg-bus-stop-flag/sg-bus-stop-flag", station_sign: "sg-station-sign/sg-station-sign", bayfront_entrance: "sg-bayfront-entrance/sg-bayfront-entrance", "sg-supertree-tall": "sg-supertree-tall/sg-supertree-tall", "sg-supertree-mid": "sg-supertree-mid/sg-supertree-mid", "sg-supertree-short": "sg-supertree-short/sg-supertree-short" };
 const TREES = ["rain_tree", "angsana", "coconut_palm"];
 // The cars the player can pick: the model, the physics type and how far the chase camera stays back.
 const PLAYER_VEHICLES = [
@@ -408,14 +408,18 @@ export async function mountWorld(root, thumbnail, signal) {
       return { ...entrance, yaw: road ? Math.atan2(road.x - entrance.x, road.z - entrance.z) : 0 };
     });
     stationEntrances = entrances;
-    if (entrances.length) {
-      const pillars = new InstancedMesh(pillarGeometry, pillarMaterial, entrances.length);
-      entrances.forEach((entrance, index) => pillars.setMatrixAt(index, new Matrix4().makeTranslation(entrance.x, 1.7, entrance.z)));
+    // Bayfront Exit B has its own modelled canopy; the other entrances are a red pillar with the station sign on top.
+    const modelled = entrances.filter(entrance => kit.has("bayfront_entrance") && /Bayfront.*Exit B/i.test(entrance.name));
+    const plain = entrances.filter(entrance => !modelled.includes(entrance));
+    if (plain.length) {
+      const pillars = new InstancedMesh(pillarGeometry, pillarMaterial, plain.length);
+      plain.forEach((entrance, index) => pillars.setMatrixAt(index, new Matrix4().makeTranslation(entrance.x, 1.7, entrance.z)));
       pillars.frustumCulled = false;
       scene.add(pillars);
       furnitureMeshes.push(pillars);
-      if (kit.has("station_sign")) for (const mesh of instanceModel(kit.get("station_sign"), entrances.map(entrance => ({ x: entrance.x, y: 3.4, z: entrance.z, yaw: entrance.yaw, scale: 1.3 }))).meshes) { scene.add(mesh); furnitureMeshes.push(mesh); }
+      if (kit.has("station_sign")) for (const mesh of instanceModel(kit.get("station_sign"), plain.map(entrance => ({ x: entrance.x, y: 3.4, z: entrance.z, yaw: entrance.yaw, scale: 1.3 }))).meshes) { scene.add(mesh); furnitureMeshes.push(mesh); }
     }
+    if (modelled.length) for (const mesh of instanceModel(kit.get("bayfront_entrance"), modelled.map(entrance => ({ x: entrance.x, y: 0, z: entrance.z, yaw: entrance.yaw, scale: 1 }))).meshes) { scene.add(mesh); furnitureMeshes.push(mesh); }
     for (const [name, placements] of [["road_light", lampPlacements(graph)], ["bus_shelter", shelters], ["bus_flag", flags]]) {
       if (!kit.has(name) || !placements.length) continue;
       for (const mesh of instanceModel(kit.get(name), placements.map(item => ({ ...item, scale: 1 }))).meshes) { scene.add(mesh); furnitureMeshes.push(mesh); }
