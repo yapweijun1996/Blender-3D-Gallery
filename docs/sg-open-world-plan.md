@@ -1,5 +1,7 @@
 # Singapore open world: rebuild plan (2026-11-20)
 
+How to play, regenerate the data and run the checks: [sg-open-world-guide.md](sg-open-world-guide.md).
+
 Owner feedback on the first drive demo: poor overall detail, too few vehicle types, no real physics (wants crashes and flips),
 poor building quality, a route that feels fake with no junctions, no real Singapore or Johor Bahru map. Owner decisions:
 real OpenStreetMap road network, first as a corridor (about 1 km wide, Marina Bay to Johor Bahru), then wider; a real physics engine
