@@ -17,4 +17,16 @@ export const LANDMARKS = [
   { id: "helix", models: ["sg-helix-bridge"], pose: { x: -22.5, z: -453.8, yaw: -1.563 } },
 ];
 
+// The Woodlands Checkpoint (mission target at -10428, -17863): a canopy over the mapped car lanes (road heading 2.77 rad), three booth lanes
+// across it, and the border complex fitted onto the mapped "Woodlands Checkpoint" outlines.
+const CHECKPOINT = { x: -10423, z: -17864, heading: 2.77 };
+const across = offset => ({ x: CHECKPOINT.x + Math.cos(CHECKPOINT.heading) * offset, z: CHECKPOINT.z - Math.sin(CHECKPOINT.heading) * offset, yaw: CHECKPOINT.heading });
+LANDMARKS.push(
+  { id: "checkpoint-canopy", models: ["sg-checkpoint-canopy"], pose: across(0) },
+  { id: "checkpoint-lane-1", models: ["sg-checkpoint-lane"], pose: across(-6.6), boom: true },
+  { id: "checkpoint-lane-2", models: ["sg-checkpoint-lane"], pose: across(0), boom: true },
+  { id: "checkpoint-lane-3", models: ["sg-checkpoint-lane"], pose: across(6.6), boom: true },
+  { id: "checkpoint-building", models: ["sg-checkpoint-building"], pose: { x: -10264.6, z: -17931.7, yaw: 0 }, hide: /^Woodlands Checkpoint( \(Block B\))?$/i },
+);
+
 export const hiddenOutline = name => LANDMARKS.some(landmark => landmark.hide?.test(name ?? ""));

@@ -127,6 +127,8 @@ try {
   const after = await inspect();
   assert.ok(after.score >= before.score + 300, `the checkpoint bonus counted (${before.score} to ${after.score})`);
   assert.equal(await page.locator(".world-passport").isVisible(), false);
+  assert.ok(after.booms >= 3, "the checkpoint lanes have boom arms");
+  await page.waitForFunction(() => document.querySelector(".drive-stage").inspectWorld().boomOpen > 0.9, undefined, { polling: 500 });
   await stage.evaluate(element => element.teleport(1500, 600, 0));
 
   // Streaming: far from the start new tiles load and the old ones go.

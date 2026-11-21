@@ -31,7 +31,7 @@ const kitUrls = import.meta.glob([
   "../../models/drive/kit/car_saga.glb", "../../models/drive/kit/car_hatchback_hd.glb", "../../models/drive/kit/motorbike_hd.glb", "../../models/sg-{taxi,bus-double,lorry,police,ambulance,school-bus}-hd/*.glb", "../../models/sg-rain-tree/*.glb", "../../models/sg-angsana/*.glb", "../../models/sg-coconut-palm/*.glb",
   "../../models/sg-road-light/*.glb", "../../models/sg-bus-shelter-sbs/*.glb", "../../models/sg-bus-stop-flag/*.glb", "../../models/sg-station-sign/*.glb", "../../models/sg-supertree-{tall,mid,short}/*.glb",
 ], { eager: true, query: "?url", import: "default" });
-const landmarkUrls = import.meta.glob("../../models/sg-{marina-bay-sands-towers,marina-bay-sands-podium,esplanade-domes,esplanade-base,merlion,merlion-park,artscience-museum,helix-bridge,flower-dome,cloud-forest,the-float}/*.glb", { eager: true, query: "?url", import: "default" });
+const landmarkUrls = import.meta.glob("../../models/sg-{marina-bay-sands-towers,marina-bay-sands-podium,esplanade-domes,esplanade-base,merlion,merlion-park,artscience-museum,helix-bridge,flower-dome,cloud-forest,the-float,checkpoint-canopy,checkpoint-lane,checkpoint-building}/*.glb", { eager: true, query: "?url", import: "default" });
 const KIT = { motorbike_hd: "drive/kit/motorbike_hd", car_saga: "drive/kit/car_saga", car_hatchback_hd: "drive/kit/car_hatchback_hd", "sg-taxi-hd": "sg-taxi-hd/sg-taxi-hd", "sg-bus-double-hd": "sg-bus-double-hd/sg-bus-double-hd", "sg-lorry-hd": "sg-lorry-hd/sg-lorry-hd", "sg-police-hd": "sg-police-hd/sg-police-hd", "sg-ambulance-hd": "sg-ambulance-hd/sg-ambulance-hd", "sg-school-bus-hd": "sg-school-bus-hd/sg-school-bus-hd", rain_tree: "sg-rain-tree/sg-rain-tree", angsana: "sg-angsana/sg-angsana", coconut_palm: "sg-coconut-palm/sg-coconut-palm", road_light: "sg-road-light/sg-road-light", bus_shelter: "sg-bus-shelter-sbs/sg-bus-shelter-sbs", bus_flag: "sg-bus-stop-flag/sg-bus-stop-flag", station_sign: "sg-station-sign/sg-station-sign", "sg-supertree-tall": "sg-supertree-tall/sg-supertree-tall", "sg-supertree-mid": "sg-supertree-mid/sg-supertree-mid", "sg-supertree-short": "sg-supertree-short/sg-supertree-short" };
 const TREES = ["rain_tree", "angsana", "coconut_palm"];
 // The cars the player can pick: the model, the physics type and how far the chase camera stays back.
@@ -212,6 +212,7 @@ export async function mountWorld(root, thumbnail, signal) {
   flatGround.position.y = -0.3;
   scene.add(flatGround);
 
+  const booms = [];
   for (const landmark of LANDMARKS) {
     for (const name of landmark.models) {
       const model = landmarkKit.get(name);
@@ -220,6 +221,8 @@ export async function mountWorld(root, thumbnail, signal) {
       copy.position.set(landmark.pose.x, 0, landmark.pose.z);
       copy.rotation.y = landmark.pose.yaw;
       scene.add(copy);
+      // Checkpoint lanes: keep the boom arms to open when the passport is stamped.
+      if (landmark.boom) copy.traverse(node => { if (node.name === "boom_arm") booms.push(node); });
     }
   }
 
@@ -638,7 +641,7 @@ export async function mountWorld(root, thumbnail, signal) {
   const stampBar = stage.querySelector(".drive-stamp-bar"), stampMarker = stage.querySelector(".drive-stamp-marker"), passportAction = stage.querySelector(".drive-passport-action");
   stage.querySelector(".drive-stamp-zone").style.left = `${STAMP_ZONE[0] * 100}%`;
   stage.querySelector(".drive-stamp-zone").style.width = `${(STAMP_ZONE[1] - STAMP_ZONE[0]) * 100}%`;
-  let stamp = null;
+  let stamp = null, boomOpenUntil = -1, boomOpen = 0;
   function renderPassport() {
     passport.hidden = !stamp;
     if (!stamp) return;
@@ -670,6 +673,7 @@ export async function mountWorld(root, thumbnail, signal) {
     const saved = recordScore(record, mission.id, points);
     record = saved.record;
     try { localStorage.setItem(RECORD_KEY, JSON.stringify(record)); } catch { /* Not saved. */ }
+    if (mission.checkpoint) boomOpenUntil = missionClock + 9; // lift the barriers for a while
     notify("world.mission.done", { place: t(mission.name), points });
     setMission(nextMission(missionIndex, state.position), { ...state, placeId: mission.id });
   }
@@ -752,6 +756,9 @@ export async function mountWorld(root, thumbnail, signal) {
     wasStalled = effects.stalled;
     if (!paused) missionClock += dt;
     updateMission(state);
+    // The checkpoint barriers swing up (about a second) while boomOpenUntil lies ahead, then down again.
+    boomOpen += ((missionClock < boomOpenUntil ? 1 : 0) - boomOpen) * Math.min(1, dt * 3);
+    for (const arm of booms) arm.rotation.z = -Math.PI / 2 * boomOpen;
     if (stamp) { if (!paused) stamp.update(dt); if (stamp.state.phase === "stamp") stampMarker.style.left = `${stamp.state.value * 100}%`; }
     drawMinimap(state);
     if (fixedView) { camera.position.set(...fixedView.position); camera.lookAt(...fixedView.target); } else placeCamera(state, dt);
@@ -783,7 +790,7 @@ export async function mountWorld(root, thumbnail, signal) {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { y: state.position.y, loading: { pending: pending.size, ready: ready.length, failed: failed.size }, tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, vehicleId: PLAYER_VEHICLES[playerChoice].id, wheels: wheelNodes.length, wheelSpin: wheelNodes[0]?.angle ?? 0, checkpoint: stamp ? stamp.state.phase : null, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    return { y: state.position.y, loading: { pending: pending.size, ready: ready.length, failed: failed.size }, tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, vehicleId: PLAYER_VEHICLES[playerChoice].id, wheels: wheelNodes.length, wheelSpin: wheelNodes[0]?.angle ?? 0, checkpoint: stamp ? stamp.state.phase : null, booms: booms.length, boomOpen, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
   stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
   stage.hurt = amount => vehicle.crash.addImpact((4 + amount * 40) * 1300); // test hook: damage the car by about `amount`
