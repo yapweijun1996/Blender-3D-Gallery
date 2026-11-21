@@ -40,6 +40,16 @@ try {
   await at(2);
   await page.waitForFunction(() => { const s = document.querySelector(".drive-stage").inspectMrt(); return s.phase === "arriving" && s.x < -20; });
 
+  // The Bayfront platforms (Circle and Downtown line) load on demand and the train serves them too.
+  for (const [click, expected] of [[1, "circle"], [2, "downtown"], [3, "generic"]]) {
+    await page.locator(".mrt-station").click();
+    await page.waitForFunction(id => document.querySelector(".drive-stage").inspectMrt().station === id, expected, { polling: 500 });
+    await at(20);
+    await page.waitForFunction(() => { const s = document.querySelector(".drive-stage").inspectMrt(); return s.phase === "boarding" && Math.abs(s.x) < 0.01; }, undefined, { polling: 300 });
+    assert.equal((await inspect()).screenDoors, 6, `${expected}: six opening screen doors`);
+    if (expected !== "generic") await page.screenshot({ path: `/tmp/mrt-${expected}.png` });
+  }
+
   // Views.
   for (const view of ["inside", "overview", "platform"]) {
     await page.locator(`[data-view="${view}"]`).click();

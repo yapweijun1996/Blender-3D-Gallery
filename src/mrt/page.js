@@ -14,16 +14,23 @@ import "../drive/style.css";
 
 // A Singapore MRT platform built from the gallery's MRT kit: a train comes in, stops at the screen doors, the doors open,
 // it waits and leaves. Platform along X, the track at +Z, the train three carriages long.
-const urls = import.meta.glob("../../models/sg-{mrt-platform,mrt-carriage,platform-screen-door,fare-gate,station-sign,route-map}/*.glb", { eager: true, query: "?url", import: "default" });
+const urls = import.meta.glob("../../models/sg-{mrt-platform,mrt-carriage,platform-screen-door,fare-gate,station-sign,route-map,bayfront-platform-circle,bayfront-platform-downtown}/*.glb", { eager: true, query: "?url", import: "default" });
 const KIT = ["mrt-platform", "mrt-carriage", "platform-screen-door", "fare-gate", "station-sign", "route-map"];
 const CARRIAGES = 3, CARRIAGE_PITCH = 20.7;
-const TRACK_Z = 4.2, DECK = 1.15, WHEEL_RADIUS = 0.43;
-const PLATFORM_EDGE_Z = 2.2;
+const WHEEL_RADIUS = 0.43;
+// The stations: deckY is the platform floor, edgeZ where the screen doors stand, trackZ the middle of the track; wallOffset and ceiling
+// close the shell around the track. The generic platform has fixed panels between the doors and the gates and signs; the Bayfront island
+// platforms bring their own side screens (the ones on the track side are hidden and replaced by the opening doors).
+const STATIONS = [
+  { id: "generic", model: "mrt-platform", deckY: 1.15, edgeZ: 2.2, trackZ: 4.2, wallOffset: 4.5, ceiling: 6.25, hide: /^$/, fixedDoors: true, extras: true },
+  { id: "circle", model: "bayfront-platform-circle", deckY: 0, edgeZ: 5.3, trackZ: 7.1, wallOffset: 3.4, ceiling: 4.6, hide: /^Front_Platform_Screen_Door/, fixedDoors: false, extras: false },
+  { id: "downtown", model: "bayfront-platform-downtown", deckY: 0, edgeZ: 5.3, trackZ: 7.1, wallOffset: 3.4, ceiling: 4.6, hide: /^Front_Platform_Screen_Door/, fixedDoors: false, extras: false },
+];
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-const VIEWS = {
-  platform: { position: [7, 2.6, -1.4], target: [0, 1.7, TRACK_Z] },
-  overview: { position: [-30, 4.2, 7.4], target: [0, 1.8, 0] },
-};
+// Camera presets relative to the station.
+const viewFor = (name, { deckY, edgeZ, trackZ }) => name === "platform"
+  ? { position: [7, deckY + 1.45, edgeZ - 3.6], target: [0, deckY + 0.55, trackZ] }
+  : { position: [-30, deckY + 3.05, trackZ + 3.2], target: [0, deckY + 0.65, edgeZ - 2.2] };
 
 export async function mountMrt(root, thumbnail, signal) {
   mountMarkup(root, `<section class="drive">
@@ -45,6 +52,7 @@ export async function mountMrt(root, thumbnail, signal) {
         <button type="button" data-view="inside" aria-pressed="false" data-i18n="mrt.view.inside"></button>
         <button type="button" data-view="overview" aria-pressed="false" data-i18n="mrt.view.overview"></button>
       </div>
+      <button type="button" class="mrt-station"></button>
       <button type="button" class="drive-pause" data-i18n="common.pause"></button>
       <button type="button" class="drive-sound" aria-pressed="true" data-i18n="drive.sound"></button>
     </div>
@@ -85,41 +93,20 @@ export async function mountMrt(root, thumbnail, signal) {
   controls.minDistance = 1.5;
   controls.maxDistance = 70;
 
-  // Station shell: track bed, rails, sleepers, a back wall and a ceiling.
-  const concrete = new MeshLambertMaterial({ color: 0x5b5f66 }), steel = new MeshLambertMaterial({ color: 0x9aa0a8 }), tunnel = new MeshLambertMaterial({ color: 0x23272d });
-  const bed = new Mesh(new BoxGeometry(400, 0.2, 7.4), concrete);
-  bed.position.set(0, -0.2, TRACK_Z);
-  scene.add(bed);
-  for (const side of [-0.75, 0.75]) {
-    const rail = new Mesh(new BoxGeometry(400, 0.16, 0.08), steel);
-    rail.position.set(0, 0.03, TRACK_Z + side);
-    scene.add(rail);
-  }
-  const sleepers = new InstancedMesh(new BoxGeometry(0.22, 0.08, 2.4), new MeshLambertMaterial({ color: 0x3b3d40 }), 330);
-  const matrix = new Matrix4();
-  for (let i = 0; i < 330; i++) { matrix.makeTranslation(-98.5 + i * 0.6, -0.04, TRACK_Z); sleepers.setMatrixAt(i, matrix); }
-  scene.add(sleepers);
-  const wall = new Mesh(new BoxGeometry(400, 9, 0.4), tunnel);
-  wall.position.set(0, 4.3, TRACK_Z + 4.5);
-  scene.add(wall);
-  const ceiling = new Mesh(new BoxGeometry(400, 0.3, 14), tunnel);
-  ceiling.position.set(0, 7.4, TRACK_Z - 1);
-  scene.add(ceiling);
-
-  const place = (name, x, y, z, yaw = 0) => {
+  const place = (name, x, y, z, yaw = 0, parent = scene) => {
     const copy = cloneModel(kit.get(name));
     copy.position.set(x, y, z);
     copy.rotation.y = yaw;
-    scene.add(copy);
+    parent.add(copy);
     return copy;
   };
-  if (kit.has("mrt-platform")) place("mrt-platform", 0, 0, 0);
 
   // The train: carriages along X (yaw 90 degrees turns the carriage's +Z nose to +X and its right-hand doors towards the platform).
+  // Their height and distance from the platform follow the chosen station (see placeTrain).
   const carriages = [];
   if (kit.has("mrt-carriage")) {
     for (let i = 0; i < CARRIAGES; i++) {
-      const group = place("mrt-carriage", 0, -0.05, TRACK_Z, Math.PI / 2);
+      const group = place("mrt-carriage", 0, 0, 0, Math.PI / 2);
       const doors = [], wheels = [];
       group.traverse(node => {
         if (/^door_R/.test(node.name)) doors.push({ node, base: node.position.z, stroke: node.userData.openTranslationMeters?.[2] ?? 0 });
@@ -129,25 +116,80 @@ export async function mountMrt(root, thumbnail, signal) {
     }
   }
 
-  // Platform screen doors at every doorway of the stopped train, fixed panels between them.
-  const screenDoors = [];
-  if (kit.has("platform-screen-door")) {
-    const doorwayXs = carriages.flatMap(carriage => [carriage.offset - 3.4, carriage.offset + 3.4]);
-    for (const x of doorwayXs) {
-      const group = place("platform-screen-door", x, DECK, PLATFORM_EDGE_Z);
-      const leaves = [];
-      group.traverse(node => { if (/^leaf_/.test(node.name)) leaves.push({ node, base: node.position.x, stroke: node.userData.openTranslationMeters?.[0] ?? 0 }); });
-      screenDoors.push(leaves);
-    }
-    for (let x = -58.5; x <= 58.5; x += 3) {
-      if (doorwayXs.some(doorway => Math.abs(doorway - x) < 3.1)) continue;
-      place("platform-screen-door", x, DECK, PLATFORM_EDGE_Z);
-    }
+  // The station: a platform with its track, shell and screen doors. The generic one comes from the MRT kit; the Bayfront ones (Circle
+  // and Downtown line island platforms) are loaded when first chosen. Everything that depends on the station hangs in one group.
+  const concrete = new MeshLambertMaterial({ color: 0x5b5f66 }), steel = new MeshLambertMaterial({ color: 0x9aa0a8 }), tunnel = new MeshLambertMaterial({ color: 0x23272d }), sleeperMaterial = new MeshLambertMaterial({ color: 0x3b3d40 });
+  const sleeperGeometry = new BoxGeometry(0.22, 0.08, 2.4);
+  let station = STATIONS[0], stationIndex = 0, stationGroup = null, screenDoors = [];
+  const matrix = new Matrix4();
+  const stationAt = index => STATIONS[((index % STATIONS.length) + STATIONS.length) % STATIONS.length];
+
+  function placeTrain() {
+    for (const carriage of carriages) { carriage.group.position.y = station.deckY - 1.2; carriage.group.position.z = station.trackZ; }
   }
-  // Fare gates and signs at the far end of the platform.
-  if (kit.has("fare-gate")) for (let i = 0; i < 4; i++) place("fare-gate", -38 + i * 2.2, DECK, -2.0, Math.PI);
-  if (kit.has("station-sign")) { place("station-sign", 0, DECK + 2.6, -2.3, Math.PI); place("station-sign", -30, DECK + 2.6, -2.3, Math.PI); place("station-sign", 30, DECK + 2.6, -2.3, Math.PI); }
-  if (kit.has("route-map")) for (const x of [-12, 12]) place("route-map", x, DECK + 1.0, -2.4, Math.PI);
+
+  function buildStation() {
+    if (stationGroup) {
+      scene.remove(stationGroup);
+      stationGroup.traverse(node => { if (node.userData.own) node.geometry?.dispose(); });
+    }
+    stationGroup = new Group();
+    scene.add(stationGroup);
+    const { deckY, trackZ, edgeZ } = station, floor = deckY - 1.2; // the wheels touch the rails at `floor`
+    const own = mesh => { mesh.userData.own = true; stationGroup.add(mesh); return mesh; };
+    own(new Mesh(new BoxGeometry(400, 0.2, 7.4), concrete)).position.set(0, floor - 0.15, trackZ);
+    for (const side of [-0.75, 0.75]) own(new Mesh(new BoxGeometry(400, 0.16, 0.08), steel)).position.set(0, floor + 0.08, trackZ + side);
+    const sleepers = own(new InstancedMesh(sleeperGeometry, sleeperMaterial, 330));
+    sleepers.userData.own = false; // shares the geometry
+    for (let i = 0; i < 330; i++) { matrix.makeTranslation(-98.5 + i * 0.6, floor - 0.02, trackZ); sleepers.setMatrixAt(i, matrix); }
+    own(new Mesh(new BoxGeometry(400, 9, 0.4), tunnel)).position.set(0, deckY + 3.15, trackZ + station.wallOffset);
+    own(new Mesh(new BoxGeometry(400, 0.3, 14), tunnel)).position.set(0, deckY + station.ceiling, trackZ - 1);
+
+    const platform = kit.get(station.model);
+    if (platform) {
+      const copy = cloneModel(platform);
+      copy.traverse(node => { if (station.hide.test(node.name)) node.visible = false; });
+      stationGroup.add(copy);
+    }
+    // Platform screen doors at every doorway of the stopped train (these open), fixed panels between them (generic platform only).
+    screenDoors = [];
+    if (kit.has("platform-screen-door")) {
+      const doorwayXs = carriages.flatMap(carriage => [carriage.offset - 3.4, carriage.offset + 3.4]);
+      for (const x of doorwayXs) {
+        const group = place("platform-screen-door", x, deckY, edgeZ, 0, stationGroup);
+        const leaves = [];
+        group.traverse(node => { if (/^leaf_/.test(node.name)) leaves.push({ node, base: node.position.x, stroke: node.userData.openTranslationMeters?.[0] ?? 0 }); });
+        screenDoors.push(leaves);
+      }
+      if (station.fixedDoors) for (let x = -58.5; x <= 58.5; x += 3) {
+        if (doorwayXs.some(doorway => Math.abs(doorway - x) < 3.1)) continue;
+        place("platform-screen-door", x, deckY, edgeZ, 0, stationGroup);
+      }
+    }
+    if (station.extras) {
+      // Fare gates, signs and route maps at the far end of the generic platform.
+      if (kit.has("fare-gate")) for (let i = 0; i < 4; i++) place("fare-gate", -38 + i * 2.2, deckY, -2.0, Math.PI, stationGroup);
+      if (kit.has("station-sign")) for (const x of [0, -30, 30]) place("station-sign", x, deckY + 2.6, -2.3, Math.PI, stationGroup);
+      if (kit.has("route-map")) for (const x of [-12, 12]) place("route-map", x, deckY + 1.0, -2.4, Math.PI, stationGroup);
+    }
+    placeTrain();
+  }
+
+  async function chooseStation(index) {
+    const next = stationAt(index);
+    if (next.model && !kit.has(next.model)) {
+      const loaded = await loadKitFrom([[next.model, urls[`../../models/sg-${next.model}/sg-${next.model}.glb`]]], signal, scenes).catch(error => { console.error("MRT: station failed to load", error); return new Map(); });
+      for (const [name, model] of loaded) kit.set(name, model);
+      if (!kit.has(next.model)) return;
+    }
+    stationIndex = ((index % STATIONS.length) + STATIONS.length) % STATIONS.length;
+    station = next;
+    buildStation();
+    stationButton.textContent = t("mrt.station", { name: t(`mrt.station.${station.id}`) });
+    setView(view);
+  }
+  const stationButton = root.querySelector(".mrt-station");
+  stationButton.addEventListener("click", () => { void chooseStation(stationIndex + 1); });
 
   // Passengers: the dress-up chibis, loaded after the first frame; each follows passengerPose(index, clock).
   let passengers = null;
@@ -162,7 +204,7 @@ export async function mountMrt(root, thumbnail, signal) {
     view = name;
     for (const button of root.querySelectorAll("[data-view]")) button.setAttribute("aria-pressed", String(button.dataset.view === name));
     if (name !== "inside") {
-      const preset = VIEWS[name];
+      const preset = viewFor(name, station);
       camera.position.set(...preset.position);
       controls.target.set(...preset.target);
       controls.enabled = true;
@@ -175,6 +217,7 @@ export async function mountMrt(root, thumbnail, signal) {
   soundButton.addEventListener("click", () => { soundOn = !soundOn; audio.enabled = soundOn; audio.start(); soundButton.setAttribute("aria-pressed", String(soundOn)); });
   for (const name of ["pointerdown", "keydown"]) addEventListener(name, () => audio.start(), { signal, passive: true });
   setView("platform");
+  await chooseStation(0);
 
   const eye = new Vector3(), ahead = new Vector3();
   function apply(state) {
@@ -217,8 +260,8 @@ export async function mountMrt(root, thumbnail, signal) {
     if (view === "inside" && carriages[1]) {
       // Stand in the middle carriage, looking along the aisle towards the front of the train.
       const middle = carriages[1].group;
-      eye.set(middle.position.x - 3.5, 1.75 - 0.05 + 0.2, middle.position.z - 0.2);
-      ahead.set(middle.position.x + 8, 1.6, middle.position.z);
+      eye.set(middle.position.x - 3.5, station.deckY + 0.75, middle.position.z - 0.2);
+      ahead.set(middle.position.x + 8, station.deckY + 0.45, middle.position.z);
       camera.position.copy(eye);
       camera.lookAt(ahead);
     } else controls.update();
@@ -229,7 +272,7 @@ export async function mountMrt(root, thumbnail, signal) {
         if (!pose.visible) return;
         if (person.clip !== pose.clip) { person.rig.select(pose.clip); person.clip = pose.clip; }
         person.rig.update(paused ? 0 : dt, { L: null, R: null });
-        person.root.position.set(pose.x, DECK, pose.z);
+        person.root.position.set(pose.x, station.deckY, pose.z + (station.edgeZ - 2.2)); // the passengers' z is laid out for the generic platform edge
         person.root.rotation.y = pose.heading;
       });
     }
@@ -247,7 +290,8 @@ export async function mountMrt(root, thumbnail, signal) {
   stage.querySelector(".drive-poster").hidden = true;
   frame = requestAnimationFrame(step);
 
-  stage.inspectMrt = () => ({ phase: trainState(clock).phase, clock, x: carriages[1]?.group.position.x ?? null, doors: trainState(clock).doors, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, carriages: carriages.length, people: passengers ? passengers.people.filter(person => person.root.visible).length : 0, loadedPeople: passengers ? passengers.people.length : 0, screenDoors: screenDoors.length, view });
+  stage.inspectMrt = () => ({ phase: trainState(clock).phase, clock, x: carriages[1]?.group.position.x ?? null, doors: trainState(clock).doors, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, carriages: carriages.length, people: passengers ? passengers.people.filter(person => person.root.visible).length : 0, loadedPeople: passengers ? passengers.people.length : 0, screenDoors: screenDoors.length, view, station: station.id });
+  stage.setStation = index => chooseStation(index);
   stage.setClock = value => { clock = value; };
 
   return {
