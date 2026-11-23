@@ -34,17 +34,9 @@ function strip(id, rows, left, right) {
   return meshData(id, positions, indices);
 }
 
-function terrainSurface(sections, halfWidth) {
-  const x = sections.map(section => section.x), z = sections.map(section => section.z);
-  const minX = Math.min(...x) - TERRAIN_MARGIN, maxX = Math.max(...x) + TERRAIN_MARGIN;
-  const minZ = Math.min(...z) - TERRAIN_MARGIN, maxZ = Math.max(...z) + TERRAIN_MARGIN;
+export function terrainSurfaceFromHole({ minX, maxX, minZ, maxZ }, boundary) {
   const outline = [[minX, minZ], [minX, maxZ], [maxX, maxZ], [maxX, minZ]].map(point => new Vector2(...point));
-  // Cut one continuous opening across tile boundaries, including the flush surface approaches.
-  const edge = (section, offset) => {
-    const [x, , z] = pointOffset(section, offset);
-    return new Vector2(x, z);
-  };
-  const hole = [...sections.map(section => edge(section, -halfWidth)), ...sections.toReversed().map(section => edge(section, halfWidth))];
+  const hole = boundary.map(point => new Vector2(...point));
   const triangles = ShapeUtils.triangulateShape(outline, [hole]);
   const points = [...outline, ...hole];
   const indices = triangles.flatMap(([a, b, c]) => {
@@ -55,11 +47,25 @@ function terrainSurface(sections, halfWidth) {
   return meshData("terrain", points.flatMap(({ x, y }) => [x, 0, y]), indices);
 }
 
-/** Road, open cuts and enclosed tube. The renderer and Rapier use these same triangles. */
-export function createTunnelGeometry(profile) {
+function terrainSurface(sections, halfWidth) {
+  const x = sections.map(section => section.x), z = sections.map(section => section.z);
+  const bounds = {
+    minX: Math.min(...x) - TERRAIN_MARGIN, maxX: Math.max(...x) + TERRAIN_MARGIN,
+    minZ: Math.min(...z) - TERRAIN_MARGIN, maxZ: Math.max(...z) + TERRAIN_MARGIN,
+  };
+  // Cut one continuous opening across tile boundaries, including the flush surface approaches.
+  const edge = (section, offset) => {
+    const [x, , z] = pointOffset(section, offset);
+    return [x, z];
+  };
+  return terrainSurfaceFromHole(bounds, [...sections.map(section => edge(section, -halfWidth)),
+    ...sections.toReversed().map(section => edge(section, halfWidth))]);
+}
+
+function tunnelSections(profile) {
   const points = [...profile.approaches.entry, ...profile.fragments.flatMap(fragment => fragment.points), ...profile.approaches.exit]
     .filter((point, index, all) => index === 0 || point.s > all[index - 1].s);
-  const sections = points.map((point, index) => {
+  return points.map((point, index) => {
     const before = index > 0 ? unitDirection(points[index - 1], point) : unitDirection(point, points[1]);
     const after = index < points.length - 1 ? unitDirection(point, points[index + 1]) : before;
     const length = Math.hypot(before[0] + after[0], before[1] + after[1]);
@@ -67,6 +73,10 @@ export function createTunnelGeometry(profile) {
     const miter = tx * after[0] + tz * after[1];
     return { ...point, tx, tz, rx: -tz / miter, rz: tx / miter };
   });
+}
+
+/** Road, open cuts and enclosed tube. The renderer and Rapier use these same triangles. */
+export function createTunnelGeometry(profile, { sections = tunnelSections(profile), includeTerrain = true } = {}) {
   const tunnel = sections.filter(({ s }) => s >= 0 && s <= profile.length);
   const covered = tunnel.filter(({ y }) => y + CLEARANCE + MIN_ROOF_THICKNESS <= 0);
   const half = profile.width / 2;
@@ -84,7 +94,7 @@ export function createTunnelGeometry(profile) {
     strip("road", sections, row => pointOffset(row, left), row => pointOffset(row, right)),
     meshData("walls", wallPositions, wallIndices),
     strip("ceiling", covered, row => pointOffset(row, right, row.y + CLEARANCE), row => pointOffset(row, left, row.y + CLEARANCE)),
-    terrainSurface(sections, half),
+    ...(includeTerrain ? [terrainSurface(sections, half)] : []),
     strip("cover", covered, row => pointOffset(row, left, 0), row => pointOffset(row, right, 0)),
     meshData("portals", portalPositions, [0, 1, 2, 1, 3, 2, 4, 6, 5, 5, 6, 7]),
   ];
@@ -124,3 +134,5 @@ export function tunnelMarkings(profile, sections) {
   }
   return meshData("markings", positions, indices);
 }
+
+export { pointOffset, strip as roadStrip };

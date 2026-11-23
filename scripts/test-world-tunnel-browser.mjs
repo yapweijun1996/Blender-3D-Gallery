@@ -205,23 +205,23 @@ async function drive(page, input, tap, origin, label) {
       lastAdvance = performance.now();
     }
     // Use bounded look-ahead to press the same digital controls as a player. Scene state is read-only.
-    const lookAhead = (touch ? 11 : 8) + state.speed * 0.65;
+    const lookAhead = 11 + state.speed * 0.65;
     const target = pointAt(state.along + lookAhead);
     const wanted = Math.atan2(target.x - state.position.x, target.z - state.position.z);
     const error = angleDifference(wanted, state.heading);
     const directions = [];
-    if (state.speed < (touch ? 7 : 10)) directions.push("gas");
-    if (state.speed > (touch ? 8 : 11) && (touch || Math.abs(error) > 0.14)) directions.push("brake");
+    if (state.speed < 7) directions.push("gas");
+    if (state.speed > 8) directions.push("brake");
     const turn = error > 0.05 ? "left" : error < -0.05 ? "right" : null;
     recent.push([state.along.toFixed(1), state.lateral.toFixed(1), state.position.y.toFixed(2), state.speed.toFixed(1), [...directions, turn].filter(Boolean).join("+")]);
     if (recent.length > 18) recent.shift();
     await input.set(turn ? [...directions, turn] : directions);
-    if (touch && turn) {
-      // Release the turn before any potentially slow screenshot, state read or layout command.
+    if (turn) {
+      // Bound the turn on both input types so a slow browser read cannot keep steering held.
       await page.waitForTimeout(Math.min(100, 40 + 150 * Math.abs(error)));
       await input.set(directions);
     }
-    await page.waitForTimeout(touch ? 45 : 65);
+    await page.waitForTimeout(45);
   }
   assert.fail(`did not finish ${label} route within 120 seconds: ${JSON.stringify(await readState(page))}`);
 }

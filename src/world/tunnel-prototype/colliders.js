@@ -1,4 +1,4 @@
-/** Install the triangles used to render the prototype as static Rapier colliders. */
+/** Install rendered tunnel meshes as static Rapier colliders. */
 export function installTunnelColliders(physics, surfaces) {
   const colliders = [];
 
@@ -7,8 +7,10 @@ export function installTunnelColliders(physics, surfaces) {
   }
 
   try {
-    for (const { position, indices } of surfaces) {
-      colliders.push(physics.addStaticTrimesh({ vertices: position, indices, friction: 1 }));
+    for (const { position, indices, convex } of surfaces) {
+      colliders.push(convex
+        ? physics.addStaticConvexHull({ vertices: position, friction: 1 })
+        : physics.addStaticTrimesh({ vertices: position, indices, friction: 1 }));
     }
   } catch (error) {
     dispose();

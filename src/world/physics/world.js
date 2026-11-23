@@ -75,6 +75,13 @@ export async function createPhysicsWorld({ gravity = { x: 0, y: -9.81, z: 0 } } 
       return addStatic(RAPIER.ColliderDesc.trimesh(vertexBuffer, indexBuffer, RAPIER.TriMeshFlags.FIX_INTERNAL_EDGES), options);
     },
 
+    addStaticConvexHull({ vertices, ...options }) {
+      assertActive();
+      const shape = RAPIER.ColliderDesc.convexHull(vertices instanceof Float32Array ? vertices : new Float32Array(vertices));
+      if (!shape) throw new Error("Static convex hull needs a volume");
+      return addStatic(shape, options);
+    },
+
     /** Flat, finite ground tile whose top face lies at height. All dimensions are in meters. */
     addGround({ x = 0, z = 0, height = 0, halfWidth = 500, halfDepth = 500, thickness = 1, friction } = {}) {
       assertActive();

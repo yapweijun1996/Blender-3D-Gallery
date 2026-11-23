@@ -41,7 +41,7 @@ node --test tests/world-fort-canning-crossings.test.mjs tests/world-tunnel-strea
 
 A Rapier sedan travels the extended approach, both portals and all three tile seams. At the parking aisle and Fort Canning Road, pairs of sedans drive across the same location at different heights in the same physics world. The chassis separation is 5.50 m and 5.45 m respectively at the closest points on plan.
 
-The default-map gate reports four unresolved overlaps in the fixed map data.
+The original centered profile reports four overlaps in the fixed map data.
 
 - **Penang Road merge.** The full road width begins overlapping the exit 52.20 m after the last edge of the Fort Canning Road crossing. At the prototype's 8% grade limit this gives at most 4.18 m of depth against the model's 4.90 m roof clearance and thickness. Keeping the Penang Road merge at ground level requires an adjusted road profile or alignment. [LTA route map](https://onemotoring.lta.gov.sg/content/dam/onemotoring/Driving/Road_Closures/Temporary/FCT/FCTTT801TunnelClosureMapApr2025.pdf).
 - **Innovation Bridge.** The mapped two-storey bridge intersects the entrance cut. The tile renderer and Rapier support a closed elevated footprint when an underside height is supplied. Choosing the modeled height still needs an explicit integration decision. [SMU description](https://admissions.smu.edu.sg/our-community/news/smu-expands-city-campus-footprint-new-sustainable-development-named-tahir).
@@ -50,6 +50,21 @@ The default-map gate reports four unresolved overlaps in the fixed map data.
 The existing streamed tiles end where the three Fort Canning Link lanes and two Penang Road lanes merge. A separately pinned API sample verifies 168.71 m of five-lane, one-way Penang Road from the merge to a signal. The complete junction and turn data belong in the tile extraction before enabling the through route. [OpenStreetMap merge continuation](https://api.openstreetmap.org/api/0.6/way/888048852/full.json), [middle segment](https://api.openstreetmap.org/api/0.6/way/74559749/full.json), [signal approach](https://api.openstreetmap.org/api/0.6/way/888048851/full.json).
 
 The extended alignment, depth, roof and grade checks use game dimensions. The fixed inputs give plan geometry and layer tags. Default-world activation also requires the affected tiles to be ready together and the traffic graph to use the accepted grades.
+
+#### Three-plus-two-lane merge candidate
+
+The simulated exit keeps the three Fort Canning Link lanes and the two level Penang Road lanes separated until they meet at Y=0. All five lanes align with the pinned downstream road. The road triangles share the same vertices at the seam, and the two full-width mitered approaches have no positive-area overlap. The adjusted ascent peaks at 7.24%, within the 8% grade limit. Two Rapier sedans drove alongside each other through the seam without touching, with all four wheels supported on each car within four metres of it. Both drove at least 18 m into the mapped five-lane exit.
+
+The roof covers the full Fort Canning Road and `774912614:0` footprints. The other footway, `1552288080:0`, clears the shifted cut. Over 9,100 independent surface probes verified both drawn ribbons. The initial Rapier capsule test dropped below the flat surface during sustained walking. The candidate now gives the exact pavement triangles 120 mm of convex support with their tops at the drawn pavement height. Both capsules walked the full mapped footways, about 113.46 m and 22.97 m.
+
+The Innovation Bridge uses its mapped footprint with a 3.00 m simulated underside relative to the flat surface datum. Over the full crossing envelope the carriageway has at least 5.258 m of modeled clearance. The ray check hit the bridge underside and a Sedan drove through with wheel support.
+
+```sh
+npm run test:world
+node --test tests/world-fort-canning-merge.test.mjs tests/world-fort-canning-clearance.test.mjs
+```
+
+Default-map acceptance still needs the downstream junction and approach tiles, preloading and coordinated terrain replacement, traffic elevations and route continuity through the common exit. The local merge overlaps Dhoby Ghaut Green's surface polygon where its original roads run. Keep the road visible above the park fill and update the affected paint with the streamed geometry.
 
 ## Data pipeline (only needed when the map changes)
 
