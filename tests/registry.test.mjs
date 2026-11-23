@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { loadCatalog, validateCatalog, validateMetadata } from '../scripts/catalog.mjs';
 import { loadDemos, validateDemos } from '../scripts/demo-registry.mjs';
+import { demoRoutes } from '../src/demo-routes.js';
 
 const raw = JSON.parse(fs.readFileSync('models/catalog.json', 'utf8'));
 const demos = JSON.parse(fs.readFileSync('data/demos.json', 'utf8'));
@@ -132,6 +133,24 @@ test('demo registry resolves verified posters and legacy launch routes', () => {
     assert.deepEqual(demo.technologies, ['Three.js']);
     assert.equal(demo.status, 'available');
   }
+});
+
+test('every demo has a lazy-loadable module, static shell page and registry entry', () => {
+  const shell = fs.readFileSync('index.html', 'utf8');
+  const shellPages = [...shell.matchAll(/<main\b[^>]*\bid="([^"\s]+)-page"/g)].map(match => match[1]);
+  assert.deepEqual(shellPages.sort(), ['gallery', 'demos', 'about', ...Object.keys(demoRoutes)].sort());
+  for (const [page, modulePath] of Object.entries(demoRoutes)) {
+    assert.match(modulePath, /^\.\/[^/]+\/page\.js$/, page);
+    assert.ok(fs.existsSync(path.join('src', modulePath)), page);
+  }
+
+  const catalog = validateCatalog(raw);
+  const incomplete = demos.filter(demo => demo.id !== 'solar-system');
+  assert.throws(() => validateDemos(incomplete, catalog), /missing launch route \?page=solar/);
+  const unavailable = demos.map(demo => demo.id === 'solar-system' ? { ...demo, status: 'unavailable' } : demo);
+  const solar = validateDemos(unavailable, catalog).find(demo => demo.id === 'solar-system');
+  assert.equal(solar.route, '?page=solar');
+  assert.equal(solar.status, 'unavailable');
 });
 
 test('demo schema rejects duplicates, missing posters, invalid routes and malformed values', () => {

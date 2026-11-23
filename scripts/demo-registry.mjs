@@ -1,14 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
+import { demoRoutes } from "../src/demo-routes.js";
 import { loadCatalog, textField, tagsField } from "./catalog.mjs";
 
-// Each launch route must have a corresponding explicit lazy loader in the application.
-const routes = new Set(["?page=game", "?page=solar", "?page=product-studio", "?page=shelf-inspector", "?page=chibi-motion", "?page=tripo-motion", "?page=chibi-dressup", "?page=drive-jb", "?page=sg-heartland", "?page=sg-world", "?page=sg-mrt"]);
+const routes = new Set(Object.keys(demoRoutes).map(page => `?page=${page}`));
 export function validateDemos(input, catalog) {
   if (!Array.isArray(input) || !input.length) throw new Error("Invalid demos registry");
   const ids = new Set(), slugs = new Set(), launchRoutes = new Set();
   const assets = new Map(catalog.collections.flatMap((collection) => collection.assets).map((asset) => [asset.id, asset]));
-  return input.map((value) => {
+  const demos = input.map((value) => {
     if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("Invalid demo");
     const demo = structuredClone(value);
     for (const [field, seen] of [["id", ids], ["slug", slugs]]) {
@@ -27,6 +27,10 @@ export function validateDemos(input, catalog) {
     demo.thumbnail = asset.thumbnail;
     return demo;
   });
+  for (const route of routes) {
+    if (!launchRoutes.has(route)) throw new Error(`Invalid demo registry: missing launch route ${route}`);
+  }
+  return demos;
 }
 export function loadDemos(root = process.cwd(), catalog = loadCatalog(root)) {
   return validateDemos(JSON.parse(fs.readFileSync(path.join(root, "data/demos.json"), "utf8")), catalog);

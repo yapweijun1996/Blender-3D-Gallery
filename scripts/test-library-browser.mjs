@@ -6,7 +6,7 @@ import { serveBuild, launchOptions, openModelFilters } from './browser-test-util
 
 const catalog = JSON.parse(await fs.readFile(new URL('../models/catalog.json', import.meta.url), 'utf8'));
 const demoCatalog = JSON.parse(await fs.readFile(new URL('../data/demos.json', import.meta.url), 'utf8'));
-const expectedDemoIds = demoCatalog.filter(demo => demo.status === 'available').map(demo => demo.id).sort();
+const expectedDemoIds = demoCatalog.map(demo => demo.id).sort();
 const expectedAssetCount = catalog.collections.reduce((count, collection) => count + collection.assets.length, 0);
 const server = await serveBuild();
 const browser = await chromium.launch(launchOptions);
@@ -184,19 +184,20 @@ try {
     await noOverflow(page);
   }, {viewport:{width:390,height:844}, hasTouch:true});
   await run('demo search/category combine and clear', async page => {
+    const shownDemoIds = async () => (await page.locator('.demo-card').evaluateAll(nodes => nodes.map(node => node.dataset.demoId))).sort();
+    const simulationDemoIds = demoCatalog.filter(demo => demo.category === 'Simulation').map(demo => demo.id).sort();
     await page.goto(server.url+'?page=demos');
     await page.locator('#demo-search').fill('  sOlAr   sYstEm ');
-    assert.equal(await page.locator('.demo-card').count(),1);
+    assert.deepEqual(await shownDemoIds(), ['solar-system']);
     await page.locator('#demo-category').selectOption('Game');
     assert.equal(await page.locator('.demo-card').count(),0);
     await page.getByRole('button',{name:/clear filters/i}).last().click();
     await page.waitForFunction(count=>document.querySelectorAll('.demo-card').length===count,expectedDemoIds.length);
-    assert.equal(await page.locator('.demo-card').count(),expectedDemoIds.length);
-      assert.deepEqual((await page.locator('.demo-card').evaluateAll(nodes=>nodes.map(n=>n.dataset.demoId))).sort(),expectedDemoIds);
+    assert.deepEqual(await shownDemoIds(), expectedDemoIds);
     await page.locator('#demo-category').selectOption('Simulation');
-    assert.equal(await page.locator('.demo-card').count(),1);
+    assert.deepEqual(await shownDemoIds(), simulationDemoIds);
     await page.reload();
-    assert.equal(await page.locator('.demo-card').count(),1);
+    assert.deepEqual(await shownDemoIds(), simulationDemoIds);
   });
   await run('mobile footer source link and back-to-top remain reachable', async page => {
     for (const index of ['models', 'demos']) {

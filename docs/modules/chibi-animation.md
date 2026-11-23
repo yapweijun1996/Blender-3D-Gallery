@@ -289,4 +289,4 @@ Rig contract the bodies and modules must satisfy (enforced by thrown errors): Mi
    these files only for i18n key scanning.
 7. Duplication: visitor v2/v3 demos; the three mixer-based add-ons each reimplement reduced-motion handling; `chibi-motion` and `chibi-dressup` each have their own
    renderer/dispose boilerplate.
-8. `fish-motion.js` is statically imported into the main viewer bundle while every other add-on is a dynamic import.
+8. Resolved. `fish-motion.js` loads on demand when a fish viewer opens.

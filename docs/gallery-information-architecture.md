@@ -35,9 +35,11 @@ The model registry requires unique collection and asset IDs/slugs, nonempty name
 
 Build-time metadata reads actual GLBs: format, bytes, triangle count, stored vertex count, material count and embedded animation count. Stored vertices count each referenced POSITION accessor once, rather than multiplying instances. Zero embedded animations does not imply the web demo is static: orbital movement and gameplay belong to JavaScript. Missing license terms are disclosed; existing downloads remain available without granting new redistribution rights.
 
-Demo entries have unique IDs/slugs, title, category, description, tags, technologies, availability status, a catalog thumbnail identity and an explicit allowlisted launch route. `virtual:gallery-demos` resolves posters through Vite, as the existing model virtual catalog does for asset URLs. JSON values are content, not executable modules. DOM text uses text nodes/textContent rather than interpreting registry HTML.
+Demo entries have unique IDs/slugs, title, category, description, tags, technologies, availability status, a catalog thumbnail identity and a public launch route. [The lazy loader table](../src/demo-routes.js) supplies the routes accepted by both the runtime and the build validator. Each loader must have one registry entry. A content ID can differ from its route, as with `solar-system` at `?page=solar`. The virtual demo registry resolves posters through Vite. The route table uses explicit import paths defined in code. Registry text is rendered as text.
 
-To add a model: retain source/provenance, add a catalog entry and standalone GLB/poster, validate rights and run tests/build. To add a demo: add registry content, implement an explicit lazy module branch and its lifecycle interface, extend the route allowlist, and test direct links plus disposal. Do not turn registry strings into arbitrary imports or evaluate code from JSON.
+To add a model, retain source and provenance, add a catalog entry and standalone GLB/poster, verify rights, and run the tests and build. To add a demo, add registry content and a static page section, enter its module path in the loader table, and wire its mount and disposal interface in the shell. Test direct links and disposal. The [interaction classifier](../src/model-interaction.js) keeps the model flag and filter aligned with the opening viewer controls for the cart, visitors and fish.
+
+Browser tests for registry-driven filters should compare the exact matching IDs from `data/demos.json` with the visible cards, including after reload. Keep separate fixed expectations for public aliases and other compatibility guarantees.
 
 ## Interactive shopping cart
 

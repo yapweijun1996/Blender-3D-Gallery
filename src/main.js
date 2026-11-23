@@ -9,6 +9,8 @@ import "virtual:gallery-palette-colors.css";
 import "./style.css";
 import catalog from "virtual:gallery-catalog";
 import demos from "virtual:gallery-demos";
+import { demoRoutes } from "./demo-routes.js";
+import { interactionKind } from "./model-interaction.js";
 import { setupPwa } from "./pwa/register.js";
 import { pwaCopy } from "./pwa/copy.js";
 import { getLanguage, localize, localizeTree, number, onLanguageChange, plural, syncLanguageAcrossTabs, t } from "./i18n/index.js";
@@ -36,7 +38,9 @@ const assetById = new Map(
     [a.slug ?? a.id, a],
   ]),
 );
-const demoPages = ["game", "solar", "product-studio", "shelf-inspector", "chibi-motion", "tripo-motion", "chibi-dressup", "drive-jb", "sg-heartland", "sg-world", "sg-mrt"];
+const demoPages = Object.keys(demoRoutes);
+const demoLoaders = import.meta.glob("./*/page.js");
+const demosByRoute = new Map(demos.map(demo => [demo.route, demo]));
 const motionDemos = {
   "chibi-motion": { assetId: "gjh-chibi-motion" },
   "tripo-motion": {
@@ -83,8 +87,7 @@ function refreshDemoOfflineStatus() {
   }
 }
 
-const hasInteractiveControls = (asset) =>
-  asset.id === "interactive-shopping-cart" || asset.id === "gjh-mall-visitor-v2" || asset.id === "gjh-visitor-v3" || asset.collectionId === "singapore-fish";
+const hasInteractiveControls = (asset) => interactionKind(asset) !== null;
 const isSearchMode = () => {
   const params = new URL(location.href).searchParams;
   return params.get("page") === "models" || (!params.has("page") && ["q", "theme", "category", "collection", "feature"].some((key) => params.has(key)));
@@ -667,39 +670,30 @@ async function syncRoute() {
       localize(element("p", "route-loading"), "shell.loadingExperience"),
     );
     try {
-      let module;
-      if (page === "game") module = await import("./game/page.js");
-      else if (page === "solar") module = await import("./solar/page.js");
-      else if (motion) module = await import("./chibi-motion/page.js");
-      else if (dressup) module = await import("./chibi-dressup/page.js");
-      else if (drive) module = await import("./drive/page.js");
-      else if (city) module = await import("./city/page.js");
-      else if (world) module = await import("./world/page.js");
-      else if (mrt) module = await import("./mrt/page.js");
-      else if (page === "shelf-inspector") module = await import("./shelf-inspector/page.js");
-      else module = await import("./product-studio/page.js");
+      const module = await demoLoaders[demoRoutes[page]]();
       if (run !== routeRun || controller.signal.aborted) return;
+      const demo = demosByRoute.get(`?page=${page}`);
       const result =
         page === "game"
           ? await module.mountGame(root, assets, controller.signal, () =>
               navigate("gallery", true),
             )
           : motion
-            ? await module.mountMotion(root, assetById.get(motion.assetId), controller.signal, { ...motion, titleKey: demoTitleKey(demos.find(demo => demo.route === `?page=${page}`)) })
+            ? await module.mountMotion(root, assetById.get(motion.assetId), controller.signal, { ...motion, titleKey: demoTitleKey(demo) })
           : page === "shelf-inspector"
             ? await module.mountShelfInspector(root, controller.signal)
           : page === "product-studio"
             ? await module.mountProductStudio(root, assetById.get("demo-food-tin"), controller.signal, [assetById.get("demo-beverage-can")].filter(Boolean))
           : dressup
-            ? await module.mountDressup(root, demos.find(demo => demo.id === page).thumbnail, controller.signal)
+            ? await module.mountDressup(root, demo.thumbnail, controller.signal)
           : drive
-            ? await module.mountDrive(root, demos.find(demo => demo.id === page).thumbnail, controller.signal)
+            ? await module.mountDrive(root, demo.thumbnail, controller.signal)
           : city
-            ? await module.mountCity(root, demos.find(demo => demo.id === page).thumbnail, controller.signal)
+            ? await module.mountCity(root, demo.thumbnail, controller.signal)
           : world
-            ? await module.mountWorld(root, demos.find(demo => demo.id === page).thumbnail, controller.signal)
+            ? await module.mountWorld(root, demo.thumbnail, controller.signal)
           : mrt
-            ? await module.mountMrt(root, demos.find(demo => demo.id === page).thumbnail, controller.signal)
+            ? await module.mountMrt(root, demo.thumbnail, controller.signal)
           : await module.mountSolar(
               root,
               module.solarSceneAssets(assets),
@@ -806,7 +800,7 @@ document.addEventListener("click", (event) => {
 window.addEventListener("popstate", () => void syncRoute());
 window.addEventListener("hashchange", () => void syncRoute());
 function refreshTitle(page) {
-  const demo = demos.find(item => item.route === `?page=${page}`);
+  const demo = demosByRoute.get(`?page=${page}`);
   const key = demo ? demoTitleKey(demo) : page === "gallery" ? "nav.models" : `nav.${page}`;
   document.title = t("shell.pageTitle", { title: t(key) });
 }

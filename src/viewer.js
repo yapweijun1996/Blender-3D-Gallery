@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-import createFishMotion from "./fish-motion.js";
+import { interactionKind } from "./model-interaction.js";
 import { acquireModelViewerRenderer } from "./model-viewer-renderer.js";
 import { fitViewerBounds, fitViewerObject, syncViewerSize } from "./viewer-framing.js";
 
@@ -213,22 +213,23 @@ export default async function createViewer(
       });
     }
     scene.add(model);
-    if (asset.collectionId === "singapore-fish")
+    const interaction = interactionKind(asset);
+    if (interaction === "fish") {
+      const { default: createFishMotion } = await import("./fish-motion.js");
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
       fishMotion = createFishMotion({ model, clips: gltf.animations, container, invalidate });
-    if (asset.id === 'interactive-shopping-cart') {
+    } else if (interaction === "cart") {
       const { default: createCartDemo } = await import('./shopping-cart/demo.js');
       cartDemo = await createCartDemo({ model, scene, container, signal, invalidate });
       if (disposed || signal.aborted) {
         cartDemo.dispose();
         throw new DOMException('Viewer closed', 'AbortError');
       }
-    }
-    if (asset.id === 'gjh-mall-visitor-v2') {
+    } else if (interaction === "visitor-v2") {
       const { default: createVisitorDemo } = await import('./visitor-v2/demo.js');
       if (disposed || signal.aborted) throw new DOMException('Viewer closed', 'AbortError');
       visitorDemo = createVisitorDemo({ model, clips: gltf.animations, container, invalidate });
-    }
-    if (asset.id === 'gjh-visitor-v3') {
+    } else if (interaction === "visitor-v3") {
       const { default: createVisitorDemo } = await import('./visitor-v3/demo.js');
       if (disposed || signal.aborted) throw new DOMException('Viewer closed', 'AbortError');
       visitorDemo = createVisitorDemo({ model, clips: gltf.animations, container, invalidate });
