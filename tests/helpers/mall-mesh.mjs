@@ -46,14 +46,16 @@ export async function measureCorridor(root) {
   physics.step(FIXED_DT);
   const cylinder = new RAPIER.Cylinder(BODY.height / 2, BODY.radius);
   const rotation = { x: 0, y: 0, z: 0, w: 1 };
+  const isFloor = collider => floorHandles.has(collider.handle);
+  const projectFloor = point => physics.world.projectPoint(point, false, undefined, undefined, undefined, undefined, isFloor)?.point;
   const surface = (x, z) => {
     const hit = physics.world.castRay(new RAPIER.Ray({ x, y: .1, z }, { x: 0, y: -1, z: 0 }), .5, true,
-      undefined, undefined, undefined, undefined, collider => floorHandles.has(collider.handle));
+      undefined, undefined, undefined, undefined, isFloor);
     return hit ? .1 - hit.timeOfImpact : null;
   };
-  const sweep = (start, dx, dz) => {
+  const sweep = (start, dx, dz, shape = cylinder) => {
     const hit = physics.world.castShape({ x: start.x, y: BODY.height / 2, z: start.z }, rotation, { x: dx, y: 0, z: dz },
-      cylinder, 0, 1, true, undefined, undefined, undefined, undefined, collider => obstacleIds.has(collider.handle));
+      shape, 0, 1, true, undefined, undefined, undefined, undefined, collider => obstacleIds.has(collider.handle));
     return hit && { fraction: hit.time_of_impact, module: obstacleIds.get(hit.collider.handle) };
   };
   function overlaps(id, side) {
@@ -62,7 +64,7 @@ export async function measureCorridor(root) {
     return modules.filter(other => other !== subject && obstacleIds.has(other.collider.handle) &&
       subject.collider.shape.intersectsShape(origin, rotation, other.collider.shape, origin, rotation)).map(other => other.id);
   }
-  return { surface, sweep, overlaps, visitor, dispose: () => physics.dispose() };
+  return { surface, projectFloor, sweep, overlaps, visitor, dispose: () => physics.dispose() };
 }
 
 const footprint = [[0, 0], ...Array.from({ length: 24 }, (_, i) => [

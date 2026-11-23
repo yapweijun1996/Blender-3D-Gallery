@@ -1,0 +1,96 @@
+{
+  "id": "mall-wall-module-2m",
+  "name": "Mall Wall Module · 2 m",
+  "summary": "A two-metre honed limestone wall with a bronze plinth, brass lip and two courses of cladding.",
+  "description": "An original wall for the modular mall grid. Two-metre end sockets, a ground-centre pivot and three authored levels of detail support repeated interior runs.",
+  "category": "Shopping Mall",
+  "tags": [
+    "mall",
+    "wall",
+    "architecture",
+    "modular",
+    "limestone",
+    "LOD"
+  ],
+  "status": "validated",
+  "created": "2026-11-24",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Original editor-ready Blender meshes, a procedural packed limestone image and authored PBR materials. All three levels are editable.",
+  "source": "sources/mall-wall-module-2m.blend",
+  "generator": "generate.py",
+  "export": "exports/mall-wall-module-2m.glb",
+  "preview": "previews/mall-wall-module-2m.jpg",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.5,
+      0.22,
+      1
+    ]
+  },
+  "assembly": {
+    "backlog_id": "MALL-STR-010",
+    "pitch_m": 2,
+    "gltf_dimensions_xyz_m": [
+      2,
+      2.8,
+      0.15
+    ],
+    "gltf_front": "+Z",
+    "origin": "finished floor, wall centreline",
+    "connectors_gltf_m": [
+      [
+        -1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ]
+    ],
+    "plinth_height_m": 0.12,
+    "cladding_joint_m": 0.004
+  },
+  "rights": "Original project asset. Public download and redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original Blender-3D-Gallery geometry, generated limestone texture, materials and render."
+    }
+  ],
+  "accuracy_notes": "Fictional interior finish. The measured straight-run interfaces use this 2 m family. Physical-device performance, other wall systems and construction performance require separate assessment.",
+  "levels": [
+    {
+      "level": "LOD0",
+      "file": "exports/mall-wall-module-2m.glb",
+      "triangles": 548,
+      "draw_calls": 12,
+      "bytes": 165976,
+      "sha256": "78cb88496c5f5bd79f3787301fc7cfcb05b2378883b27fe67d43669da6d50ddd"
+    },
+    {
+      "level": "LOD1",
+      "file": "exports/mall-wall-module-2m-lod1.glb",
+      "triangles": 140,
+      "draw_calls": 4,
+      "bytes": 11320,
+      "sha256": "b96c1c6f66ae25daac63640ec56eb22b7e1c87cf63be6131864a9097705abd8a"
+    },
+    {
+      "level": "LOD2",
+      "file": "exports/mall-wall-module-2m-lod2.glb",
+      "triangles": 44,
+      "draw_calls": 1,
+      "bytes": 4256,
+      "sha256": "a5df7544341c66094a69739fb51f5ae2769cdc7d55bbf75fda378ad450423570"
+    }
+  ],
+  "sha256": {
+    "source": "5ab2bec742cbb31bc438d25b51e5af134eb18560d1d668dcca8cea969c7bc10a",
+    "preview": "991e141e76a4f8fc4d42522a0a41fbdfc025282e652f5e94fd10b504148ca9d9",
+    "texture": "87952161fded4ff950248811a8db62aaf09b56d3e7a3fd17ac91c4e538882fc8",
+    "glb": "78cb88496c5f5bd79f3787301fc7cfcb05b2378883b27fe67d43669da6d50ddd"
+  }
+}

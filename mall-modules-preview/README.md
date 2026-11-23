@@ -10,6 +10,16 @@ Run `node --test tests/mall-floor-transition.test.mjs`. The test measures seven 
 
 With Vite running, `node scripts/test-mall-floor-transition.mjs` checks both actual GLB downloads, a failed load and retry, module selection and return to the furnished corridor. Set `MALL_PREVIEW_SITE` for a different Vite address. This sample covers a straight interior floor joint. Edge trim, corner details and the ceiling need their own measurements.
 
+### Straight wall on the 2 m floor
+
+Select **Show 2 m wall run** in the floor view or open `/mall-modules-preview/?view=wall-run`. Three unscaled [straight wall modules](../models/mall-wall-module-2m/README.md) stand on the back edge of the 2 m floor. Their ground-centre pivots sit at X = −2, 0 and 2 m and Z = −1.925 m. The stone faces point toward the aisle. Both pairs of end connectors meet, and 615 paired floor and underside probes found contact at the finished surface. [Wall and floor preview](wall-on-floor.png)
+
+The two half-joints form a 4 mm mortar strip recessed 10 mm from the limestone face. The bronze skirting and crown project 3 mm beyond it. The 1.80 m visitor travelled 8.4 m along the wall in both directions combined. At six approaches around the joins, the visitor stopped within one 25 mm movement step of the independent cylinder contact. A rounded capsule cleared the projecting skirt and touched the main face about 3 mm farther in.
+
+Run `node --test tests/mall-wall-run.test.mjs` to repeat the contact check. At one shared triangle edge on the floor, a single-precision Rapier point ray returned the slab underside. The test records the raw value and checks that a Three.js ray and the nearest point on the actual Rapier triangles agree at the same coordinate within 1 μm. This check resolved 18 probes on the measured walk. Taking out the tile or lowering it by 100 mm still fails the support check.
+
+At this pitch the original 1.2 m wall would leave two 800 mm openings. The original ceiling cassette placed at its 3 m grid height stands 200 mm above the new 2.8 m wall. A wall-top closure or a separately placed ceiling is still needed for an enclosed room.
+
 ## Furnished corridor
 
 The wall selection is the new 1.2 m solid wall; the corridor also retains the existing glass partitions for the shopfronts. The ceiling is intentionally a partial cutaway for visibility. This visual arrangement is not a construction or safety specification; see the individual asset READMEs and `docs/verification/p0-assembly/README.md` for actual dimensions, interfaces, prior checks, and rights. The preview does not change or export source assets, and it is not part of the production Gallery build.

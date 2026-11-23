@@ -11,3 +11,5 @@
 #joystick span { display: block; margin: auto; width: 28px; height: 28px; border-radius: 50%; background: currentColor; }
 .canvas-wrap:has(#joystick:not([hidden])) .canvas-caption { display: none; }
 @media(max-width:520px) { #walk-tools { padding: 12px 14px 0; } }
+#wall-option:not([hidden]) { display: inline-flex; align-items: center; gap: 7px; min-height: 36px; margin-top: 4px; color: #345541; font-size: 13px; cursor: pointer; }
+#wall-toggle { width: 17px; height: 17px; accent-color: #234a37; }

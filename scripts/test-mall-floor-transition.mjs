@@ -3,11 +3,13 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 import { floorTransitionPaths } from '../mall-modules-preview/floor-transition.js';
+import { wallRunPath } from '../mall-modules-preview/wall-run.js';
 import { launchOptions } from './browser-test-utils.mjs';
 
 const url = new URL('mall-modules-preview/?view=floor-transition', process.env.MALL_PREVIEW_SITE ?? 'http://127.0.0.1:5173/');
 const hashes = await Promise.all(Object.values(floorTransitionPaths).map(async path =>
   createHash('sha256').update(await readFile(path)).digest('hex')));
+const wallHash = createHash('sha256').update(await readFile(wallRunPath)).digest('hex');
 const browser = await chromium.launch(launchOptions);
 try {
   for (const width of [1080, 390]) {
@@ -46,6 +48,15 @@ try {
     if (process.env.MALL_GRID_SHOTS) await page.locator('#canvas-wrap').screenshot({
       path: process.env.MALL_GRID_SHOTS + '/floor-transition-' + width + '.png',
     });
+    const wall = page.getByRole('checkbox', { name: 'Show 2 m wall run' });
+    await wall.check();
+    await ready('wall-run');
+    assert.deepEqual((await page.evaluate(() => window.floorTransfers)).sort(), [...hashes, wallHash].sort());
+    if (process.env.MALL_GRID_SHOTS) await page.locator('#canvas-wrap').screenshot({
+      path: process.env.MALL_GRID_SHOTS + '/wall-run-' + width + '.png',
+    });
+    await wall.uncheck();
+    await ready('floor-transition');
     await page.locator('[data-module="floor"]').click();
     await ready('floor');
     await page.locator('#assembly-button').click();
@@ -54,7 +65,7 @@ try {
     await transition.click();
     await ready('floor-transition');
     assert.deepEqual(errors, []);
-    console.log('PASS', width, 'px, both GLB hashes, failed load and retry, individual floor and furnished corridor');
+    console.log('PASS', width, 'px, three GLB hashes, optional walls, failed load and retry, individual floor and furnished corridor');
     await page.close();
   }
 } finally {
