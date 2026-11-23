@@ -1,0 +1,51 @@
+{
+  "blender_version": "5.1.2",
+  "procedure": "Run verify_source.py in each of two relocated package copies twice. Each run launches three independent Blender subprocesses for the saved, fresh, and edited source paths.",
+  "previous_difference": {
+    "component": "HANGER_TopPlate_1 through HANGER_TopPlate_4",
+    "attribute": "Unused TEXCOORD_0",
+    "recorded_adjacent_float32_values": [
+      0.3958333432674408,
+      0.3958333730697632
+    ]
+  },
+  "changed_render_attributes": "Only the four steel top plates lost their unused TEXCOORD_0 accessor. All other render attributes, triangle indices, original texture bytes, and four material definitions were identical.",
+  "runs": [
+    {
+      "checkout": "checkout with a space",
+      "run": 1,
+      "fresh_and_saved_source_sha256": "ee1e0f816625c473b61ac3fa5d053b13132912c8ee686218b7184460e8529525",
+      "edited_export_differs_from_canonical": true,
+      "edited_underside_m": 0.007,
+      "adjacent_underside_m": 0.008,
+      "edited_material_roughness": 0.71
+    },
+    {
+      "checkout": "checkout with a space",
+      "run": 2,
+      "fresh_and_saved_source_sha256": "ee1e0f816625c473b61ac3fa5d053b13132912c8ee686218b7184460e8529525",
+      "edited_export_differs_from_canonical": true,
+      "edited_underside_m": 0.007,
+      "adjacent_underside_m": 0.008,
+      "edited_material_roughness": 0.71
+    },
+    {
+      "checkout": "deeper checkout",
+      "run": 1,
+      "fresh_and_saved_source_sha256": "ee1e0f816625c473b61ac3fa5d053b13132912c8ee686218b7184460e8529525",
+      "edited_export_differs_from_canonical": true,
+      "edited_underside_m": 0.007,
+      "adjacent_underside_m": 0.008,
+      "edited_material_roughness": 0.71
+    },
+    {
+      "checkout": "deeper checkout",
+      "run": 2,
+      "fresh_and_saved_source_sha256": "ee1e0f816625c473b61ac3fa5d053b13132912c8ee686218b7184460e8529525",
+      "edited_export_differs_from_canonical": true,
+      "edited_underside_m": 0.007,
+      "adjacent_underside_m": 0.008,
+      "edited_material_roughness": 0.71
+    }
+  ]
+}

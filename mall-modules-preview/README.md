@@ -34,6 +34,12 @@ Choose **Straight wall and ceiling**, or open `/mall-modules-preview/?view=wall-
 
 Run `node --test tests/mall-wall-ceiling.test.mjs`. The check verifies four pairs of cassette connectors, 417 paired wall-top and rail contacts, and nine transverse rails extending into the aisle. Each of the 20 recessed panels sits 8 mm above the grid underside. The 20 hanger assemblies reach Y = 3.16 m. This sample covers one straight ceiling row. [Ceiling cutaway](ceiling-on-wall.png)
 
+### Two-metre ceiling bay
+
+Open [the 6 × 2 m corridor](./?view=ceiling-infill) and select **Inspect ceiling joint** to look up from the open end. Click the button again or select **Reset view** to return to the whole assembly. Each of the five bays uses an original 1.2 m square cassette and an [800 mm perimeter cassette](../models/mall-ceiling-infill-800/README.md). The final 200 mm field meets the wall with a 176 mm panel and an unscaled perimeter rail. The ceiling underside sits at Y = 2.8 m.
+
+Run `node --test tests/mall-ceiling-infill.test.mjs` to check the installed triangles. Both wall runs have 0.105120 m² of grid-to-wall contact. The real flanges and webs meet at the ten cassettes' internal joins. A visitor walked 9.9 m across both sides of the aisle with 9,950 floor probes. Substituting the original cassette alone leaves an 800 mm opening. Adding a second full cassette creates a 400 mm overhang. [Installed bay](ceiling-infill-bay.webp) · [Joint viewed from the aisle](ceiling-infill-joint.webp)
+
 ### Right-angle corner and return
 
 Choose **Corner with two walls**, or open `/mall-modules-preview/?view=wall-corner`. The [2 m corner](../models/mall-wall-corner-2m/README.md) turns the wall along the right boundary of the same floor. Each arm measures 2 m from the centreline turn to its connector. The wall thickness brings the outside footprint to 2.075 m square. The rear straight faces +Z and the right return faces −X. [Installed corner](corner-on-floor.png)

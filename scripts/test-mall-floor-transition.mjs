@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
+import { ceilingInfillPaths } from '../mall-modules-preview/ceiling-infill.js';
 import { cornerFloorPath, floorEdgePaths, insideMitrePath } from '../mall-modules-preview/floor-edge.js';
 import { floorTransitionPaths } from '../mall-modules-preview/floor-transition.js';
 import { shellAssetPaths } from '../mall-modules-preview/shell-layout.js';
@@ -19,8 +20,10 @@ const shellViews = [
   ['inside-floor-edge', insideMitrePath],
   ['wall-run', wallRunPath],
   ['wall-ceiling', shellAssetPaths.ceiling],
+  ['ceiling-infill', ceilingInfillPaths.ceilingInfill],
   ['wall-corner', wallCornerPath],
 ];
+const jointLabels = { 'inside-floor-edge': 'Inspect inside mitre', 'ceiling-infill': 'Inspect ceiling joint' };
 const browser = await chromium.launch(launchOptions);
 try {
   for (const width of [1080, 390]) {
@@ -53,26 +56,27 @@ try {
     for (const [view, ...files] of shellViews) {
       await layouts.selectOption(view);
       await ready(view);
-      const inspectMitre = page.getByRole('button', { name: 'Inspect inside mitre' });
-      if (view === 'inside-floor-edge') {
+      const inspectJoint = page.locator('#inspect-joint');
+      if (jointLabels[view]) {
+        assert.equal(await inspectJoint.textContent(), jointLabels[view]);
         const canvas = page.locator('#canvas-wrap canvas');
         const overview = await canvas.screenshot();
-        await inspectMitre.focus();
-        await inspectMitre.press('Enter');
-        assert.equal(await inspectMitre.getAttribute('aria-pressed'), 'true');
+        await inspectJoint.focus();
+        await inspectJoint.press('Enter');
+        assert.equal(await inspectJoint.getAttribute('aria-pressed'), 'true');
         const closeup = await canvas.screenshot();
-        assert.ok(!closeup.equals(overview), 'inspection enlarges the installed mitre');
+        assert.ok(!closeup.equals(overview), 'inspection shows the installed joint');
         if (process.env.MALL_GRID_SHOTS) await page.locator('#canvas-wrap').screenshot({
-          path: process.env.MALL_GRID_SHOTS + '/inside-mitre-detail-' + width + '.png',
+          path: process.env.MALL_GRID_SHOTS + '/' + (view === 'inside-floor-edge' ? 'inside-mitre' : view) + '-detail-' + width + '.png',
         });
-        await inspectMitre.click();
-        assert.equal(await inspectMitre.getAttribute('aria-pressed'), 'false');
+        await inspectJoint.click();
+        assert.equal(await inspectJoint.getAttribute('aria-pressed'), 'false');
         assert.ok((await canvas.screenshot()).equals(overview), 'the second activation restores the overview');
-        await inspectMitre.click();
+        await inspectJoint.click();
         await page.getByRole('button', { name: 'Reset camera view' }).click();
-        assert.equal(await inspectMitre.getAttribute('aria-pressed'), 'false');
+        assert.equal(await inspectJoint.getAttribute('aria-pressed'), 'false');
       } else {
-        assert.ok(await inspectMitre.isHidden());
+        assert.ok(await inspectJoint.isHidden());
       }
       if (view === 't-junction') threeWayImage = await page.locator('canvas').first().screenshot();
       if (view === 'cross-junction') {

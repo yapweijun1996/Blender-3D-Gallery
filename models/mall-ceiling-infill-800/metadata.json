@@ -1,0 +1,130 @@
+{
+  "id": "mall-ceiling-infill-800",
+  "name": "Mall Ceiling Perimeter Infill",
+  "summary": "An 800 mm-deep suspended ceiling cassette closes a 2 m corridor beside the original 1.2 m ceiling module.",
+  "description": "Two standard 600 mm bays continue the existing ceiling rhythm. The final 200 mm field meets the wall with a finished ivory rail. Four removable fibre panels, nine T-rails and four steel hanger assemblies remain individually editable.",
+  "category": "Shopping Mall",
+  "tags": [
+    "mall",
+    "ceiling",
+    "perimeter",
+    "infill",
+    "suspended",
+    "2 m grid"
+  ],
+  "status": "validated",
+  "created": "2026-11-24",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Adapted the original project-owned 1.2 m cassette in Blender. The short panels and cross rails are cut in local mesh coordinates to preserve the real T sections, panel bevels and fibre texture density.",
+  "source": "sources/mall-ceiling-infill-800.blend",
+  "generator": "generate.py",
+  "export": "exports/mall-ceiling-infill-800.glb",
+  "preview": "previews/mall-ceiling-infill-800.jpg",
+  "root": "ASSET_MallCeilingInfill800",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.82,
+      -1.85,
+      1.32
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        -7,
+        5
+      ]
+    }
+  },
+  "dimensions": {
+    "axis_order": "glTF X, Y, Z in metres",
+    "bounds": [
+      [
+        -0.6,
+        0,
+        -0.4
+      ],
+      [
+        0.6,
+        0.36,
+        0.4
+      ]
+    ],
+    "width_m": 1.2,
+    "depth_m": 0.8,
+    "height_m": 0.36,
+    "datum": "Grid underside Y=0; legacy cassette at -Z, perimeter wall at +Z.",
+    "row_pitch_z_m": [
+      0.6,
+      0.2
+    ],
+    "column_pitch_x_m": 0.6,
+    "panel_underside_m": 0.008,
+    "panel_top_m": 0.024,
+    "interior_flange_width_m": 0.024,
+    "boundary_flange_width_m": 0.012,
+    "rail_height_m": 0.032,
+    "web_width_m": 0.003
+  },
+  "connectors": {
+    "node_prefix": "CONNECTOR_",
+    "gltf_positions_m": {
+      "XN": [
+        -0.6,
+        0.018,
+        0
+      ],
+      "XP": [
+        0.6,
+        0.018,
+        0
+      ],
+      "ZN": [
+        0,
+        0.018,
+        -0.4
+      ],
+      "ZP": [
+        0,
+        0.018,
+        0.4
+      ]
+    },
+    "role": "Mating-edge registration markers."
+  },
+  "metrics": {
+    "glb_bytes": 139600,
+    "triangles": 1724,
+    "vertices": 3312,
+    "mesh_primitives": 29,
+    "meshes": 25,
+    "materials": 4,
+    "textures": 1,
+    "texture_dimensions": [
+      256,
+      256
+    ],
+    "animations": 0
+  },
+  "sha256": {
+    "glb": "ee1e0f816625c473b61ac3fa5d053b13132912c8ee686218b7184460e8529525",
+    "source": "64296e3a6cb076d78e3e740daabd6313fa9653c25fb76cab281988171b3f5ec9",
+    "texture": "e47fe2b2ec0503f081c2a25b65bb799f756cd2822793c18f03e3c386771c35ea",
+    "preview": "48b23fd04c4a7c0a7faf3e6a3ca1ee89f912c0985dd2cea8be3f389d3c3e2ee6"
+  },
+  "attribution": [
+    {
+      "credit": "Original geometry, materials and packed mineral-fibre artwork from the Blender-3D-Gallery mall ceiling panel. Perimeter adaptation and thumbnail produced for the same project.",
+      "upstream_source": "../mall-ceiling-panel/sources/mall-ceiling-panel-module.blend",
+      "upstream_source_sha256": "61dc761bb83dc51d914f8cc3a6ec82de8408c3720dad7a869c248af46ba49163"
+    }
+  ],
+  "rights": "Owner-project reuse of the original assets and adaptation is authorized. Public download and redistribution terms are unspecified.",
+  "accuracy_notes": "Decorative ceiling geometry. Mounting checks establish mesh contact and clearance in the gallery assembly. No structural, acoustic, fire or electrical performance has been assessed.",
+  "reports": [
+    "reports/geometry.json",
+    "reports/source-reimport.json",
+    "reports/relocation.json"
+  ]
+}

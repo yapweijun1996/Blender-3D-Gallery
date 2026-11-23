@@ -1,7 +1,12 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import {createHash} from 'node:crypto';import {loadCatalog} from '../scripts/catalog.mjs';import {report,assembly} from '../models/mall-ceiling-panel/validate.mjs';
 const root='models/mall-ceiling-panel',collection=loadCatalog().collections.find(c=>c.id==='mall-ceiling-panel'),asset=collection.assets[0],m=JSON.parse(fs.readFileSync(asset.metadata));
-test('ceiling is one logical kit and preserves redistribution restriction',()=>{
- assert.equal(collection.assets.length,1);assert.equal(asset.id,'mall-ceiling-panel-module');assert.equal(asset.downloadable,false);assert.equal(asset.license,m.rights);assert.match(asset.license,/redistribution terms have not been specified/);assert.equal(m.display.previewRotationY,0);assert.equal(m.quality_gate.overall,'NEEDS REVIEW');
+test('ceiling kit registers the full cassette and perimeter infill with the same redistribution restriction',()=>{
+ assert.deepEqual(collection.assets.map(part=>part.id),['mall-ceiling-panel-module','mall-ceiling-infill-800']);
+ for (const part of collection.assets) {
+  assert.equal(part.downloadable,false);
+  assert.equal(part.license,m.rights);
+ }
+ assert.match(asset.license,/redistribution terms have not been specified/);assert.equal(m.display.previewRotationY,0);assert.equal(m.quality_gate.overall,'NEEDS REVIEW');
 });
 test('ceiling source is genuinely editable with independent panels, grid and hangers',()=>{
  const s=JSON.parse(fs.readFileSync(root+'/reports/sources.json'));assert.equal(s.source_reopened,'PASS');assert.equal(s.editable_mesh_parts,25);assert.equal(s.closed_manifold_meshes,25);assert.equal(s.connector_empties,4);assert.equal(s.packed_original_textures,1);

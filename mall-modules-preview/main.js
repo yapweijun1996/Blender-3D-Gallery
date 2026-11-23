@@ -16,6 +16,7 @@ import { assembleCrossJunction, assembleTJunction } from './floor-junctions.js';
 import { assembleFloorTransition, floorTransitionPaths } from './floor-transition.js';
 import { assembleEscalatorTerminals, descendingJourneyView, escalatorTerminalPaths, journeyView, passengerView } from './escalator-terminal.js';
 import { setupEscalatorRide } from './escalator-ride-controls.js';
+import { assembleCeilingInfill, ceilingInfillPaths } from './ceiling-infill.js';
 import { assembleCornerFloor, assembleWallCeiling, assembleWalledFloor, wallCornerPath, wallRunPath } from './wall-run.js';
 
 import { createCollisionWorld } from '../docs/verification/mall-corridor/collision.js';
@@ -132,6 +133,11 @@ if (renderer) {
       name: 'Inside floor edge', subtitle: 'A 45° mitre joins the two exposed metal faces inside an L-shaped floor.',
       inputs: [squareFloor, { id: 'edge2m', path: floorEdgePaths.edge2m }, { id: 'insideMitre2m', path: insideMitrePath }],
       build: assembleInsideFloorEdge,
+      joint: {
+        label: 'Inspect inside mitre',
+        find: group => group.children.find(part => part.userData.moduleId === 'insideMitre2m'),
+        target: [.05, -.035, .05], direction: [1.2, .85, 1], radius: .21,
+      },
     },
     'wall-run': {
       name: 'Straight wall run', subtitle: 'Three 2 m walls stand on the finished floor, with their stone faces toward the aisle.',
@@ -142,6 +148,20 @@ if (renderer) {
       name: 'Wall and ceiling', subtitle: 'Five ceiling cassettes sit at the 2.8 m wall head. The front stays open for inspection.',
       inputs: [...wallAssets, byId.ceiling],
       build: sources => assembleWalledFloor(sources).add(assembleWallCeiling(sources.ceiling)),
+    },
+    'ceiling-infill': {
+      name: 'Two-metre ceiling bay', subtitle: 'Full cassettes and 800 mm cut cassettes meet over a six-metre aisle.',
+      inputs: Object.entries(ceilingInfillPaths).map(([id, path]) => ({ id, path })),
+      build(sources) {
+        const bay = assembleCeilingInfill(sources);
+        // The wall heads enclose the underside. Add neutral fill for the joint inspection.
+        return bay.add(new THREE.AmbientLight(0xffffff, 1.1));
+      },
+      joint: {
+        label: 'Inspect ceiling joint',
+        find: group => group.getObjectByName('Perimeter cassette 4'),
+        target: [-.08, 0, -.16], direction: [1.2, -1.55, -.16], radius: .78,
+      },
     },
     'enclosed-shop': {
       name: 'Enclosed shop', subtitle: 'Open the doors to walk inside the six-metre shop. Show the ceiling to inspect the closed shell.',
@@ -225,18 +245,19 @@ if (renderer) {
   }
 
   let inspection = null;
-  const floorEdgeTools = $('#floor-edge-tools');
-  const inspectMitreButton = $('#inspect-mitre');
-  inspectMitreButton.addEventListener('click', () => {
-    const object = current?.children.find(part => part.userData.moduleId === 'insideMitre2m');
+  const jointTools = $('#joint-tools');
+  const jointButton = $('#inspect-joint');
+  jointButton.addEventListener('click', () => {
+    const joint = assemblies[selected]?.joint;
+    const object = current && joint?.find(current);
     if (!object) return;
     if (inspection?.object === object) {
       inspectAssembly();
       return;
     }
-    inspection = { object, target: [.05, -.035, .05], direction: [1.2, .85, 1], radius: .21 };
+    inspection = { object, target: joint.target, direction: joint.direction, radius: joint.radius };
     frame(object, selected, inspection);
-    inspectMitreButton.setAttribute('aria-pressed', 'true');
+    jointButton.setAttribute('aria-pressed', 'true');
   });
   const terminalTools = $('#terminal-tools');
   const terminalButtons = terminalTools.querySelectorAll('[data-terminal]');
@@ -307,7 +328,7 @@ if (renderer) {
     ride.close();
     inspection = null;
     updateTerminalButtons();
-    inspectMitreButton.setAttribute('aria-pressed', 'false');
+    jointButton.setAttribute('aria-pressed', 'false');
     camera.fov = 34;
     camera.updateProjectionMatrix();
     if (current) frame(current, selected);
@@ -368,6 +389,7 @@ if (renderer) {
     if (assemblies[id]) margin = id === 'assembly' ? (camera.aspect < 1.35 ? 1.08 : .8) : .94;
     // Bring the display furniture forward while keeping the entrance in frame.
     if (assemblies[id]?.showroom) margin = .67;
+    if (id === 'ceiling-infill') margin = 1.07;
     if (id === 'escalator-terminals') margin = camera.aspect >= 1.35 ? .82 : .98;
     const radius = focus ? focus.radius : Math.max(sphere.radius, .25) * margin;
     const distance = radius / Math.sin(Math.min(vertical,horizontal));
@@ -382,6 +404,7 @@ if (renderer) {
     if (id === 't-junction' || id === 'cross-junction') direction.set(.6,7,-4);
     if (id === 'escalator-terminals') direction.set(1, .8, 1.1);
     if (id === 'wall-run' || id === 'wall-ceiling') direction.set(2.3,2.6,6);
+    if (id === 'ceiling-infill') direction.set(7, 3.2, 2.4);
     if (id === 'wall-corner') direction.set(-3.1,2.8,5.4);
     if (focus) direction.fromArray(focus.direction).transformDirection(object.matrixWorld);
     camera.position.copy(sphere.center).add(direction.normalize().multiplyScalar(distance));
@@ -394,8 +417,8 @@ if (renderer) {
     ride.close();
     inspection = null;
     terminalTools.hidden = true;
-    floorEdgeTools.hidden = true;
-    inspectMitreButton.setAttribute('aria-pressed', 'false');
+    jointTools.hidden = true;
+    jointButton.setAttribute('aria-pressed', 'false');
     if (visitor?.state.walking) visitor.setWalking(false);
     walkTools.hidden = true;
     message.textContent = '';
@@ -419,7 +442,10 @@ if (renderer) {
       const sources = Object.fromEntries(loaded);
       current = item ? sources[id].clone(true) : view.build(sources);
       scene.add(current); frame(current,id);
-      floorEdgeTools.hidden = id !== 'inside-floor-edge';
+      if (view.joint) {
+        jointButton.textContent = view.joint.label;
+        jointTools.hidden = false;
+      }
       if (id === 'escalator-terminals') {
         updateTerminalButtons();
         terminalTools.hidden = false;

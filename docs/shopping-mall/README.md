@@ -75,6 +75,10 @@ At public `main` commit `bcc52e77`, all eleven fixtures below had a catalog entr
 
 At the audited commit, the Gallery offered the TV demo table for download. Its asset-specific license expressly authorizes owner-project reuse and leaves public redistribution terms unspecified. [Asset license](../../models/tv-demo-table/LICENSE.md)
 
+### Ceiling at the perimeter of a 2 m bay
+
+The 1.2 m ceiling grid repeats five times along a 6 m corridor. Across its 2 m width, pair each existing square cassette with the native 800 mm perimeter cassette. The short field preserves the panel recess and tee section at the wall head. The [installed corridor and mesh checks](../../mall-modules-preview/README.md#two-metre-ceiling-bay) cover the two parallel walls.
+
 ### Concave floor edge on the 2 m grid
 
 Two square-ended 60 mm trims overlap at a re-entrant corner. The [inside mitre](../../models/mall-floor-inside-mitre-2m/README.md) carries both arms through one welded diagonal. Its exposed face follows the bronze fascia of the original straight section, including the recessed channel. In the five-tile L, both connections to the straight trims fall on the next 2 m grid lines. [Assembly and verified contacts](../../mall-modules-preview/README.md#inside-floor-edge)
