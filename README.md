@@ -44,7 +44,7 @@ During `npm run dev`, editing `models/catalog.json`, registered asset metadata o
 
 To roll back, revert the problematic commit on `main` and let the same workflow deploy the restored build.
 
-[Fast deployment contract](docs/deployment.md) · [Maintenance tool contracts](docs/tools.md) · [Work closeout, 2026-11-18](docs/2026-11-18-closeout.md)
+[Fast deployment contract](docs/deployment.md) · [Maintenance tool contracts](docs/tools.md) · [Work closeout, 2026-11-24](task.md#work-closeout--2026-11-24) · [Work closeout, 2026-11-18](docs/2026-11-18-closeout.md)
 
 ## Play and test
 

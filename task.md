@@ -176,6 +176,15 @@ Acceptance coverage E001–E100 must be tracked against deterministic assertions
 
 ---
 
+## Work closeout — 2026-11-24
+
+- **Mall ceiling.** The editable [800 mm perimeter cassette](models/mall-ceiling-infill-800/README.md) closes the gap beside the 1.2 m cassette in a [6 × 2 m corridor](mall-modules-preview/README.md#two-metre-ceiling-bay). The assembled meshes meet each wall head across 0.10512 m². The corridor and joint inspection are available in the local preview.
+- **Christmas wreath.** The [Woodland Christmas Wreath](models/christmas-wreath/README.md) retains 75 editable sprig groups. The shipped GLB uses 91,494 triangles, down from 153,630. Its center opening and bow remain visible at gallery card size.
+- **Verification.** On release commit `0b314d20`, 1,052 repository tests and 50 world tests passed locally. Both gallery viewers passed desktop and emulated touch checks. On Pages build `c50686dcd7175d21`, Chromium opened both direct links and decoded GLBs with the same SHA-256 hashes as the repository exports. [Release workflow](https://github.com/yapweijun1996/Blender-3D-Gallery/actions/runs/45290347730) · [Ceiling model](https://yapweijun1996.github.io/Blender-3D-Gallery/?model=mall-ceiling-infill-800) · [Wreath model](https://yapweijun1996.github.io/Blender-3D-Gallery/?model=christmas-wreath)
+- **Open work.** The repeated-floor performance check still needs a connected physical phone. The CIQ Link outside lane on `201940662:0` still needs a regression test and a correction for the measured 82.76 mm difference between the rendered asphalt and intended traffic surface. The mapped lower road at Kheam Hock still needs a supported elevation profile. [Bridge investigation](docs/verification/sg-world-remaining-passages.md#next-assessments)
+
+---
+
 # Singapore and Malaysia Festival Models — 2026-11-15
 
 **Status:** F01–F06 and the standalone [Christmas wreath](models/christmas-wreath/README.md) are implemented. Four [existing gallery models](docs/festival-models/README.md#reuse-check-on-2026-11-24) cover several later concepts, including the mooncake mould tools and Christmas mall display.
