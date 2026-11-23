@@ -8,6 +8,8 @@ export const escalatorTerminalPaths = {
   escalatorTransition2m: 'models/mall-escalator-floor-transition-2m/exports/mall-escalator-floor-transition-2m.glb',
 };
 
+export const passengerView = { target: [0, .83, 0], radius: 1.45, direction: [.3, 2.35, 1.6] };
+
 export function assembleEscalatorTerminals(sources) {
   const group = new Group();
   group.name = 'Escalator and two finished floor terminals';
@@ -50,5 +52,5 @@ export function assembleEscalatorTerminals(sources) {
       radius: 1.15,
     };
   }
-  return { group, inspections };
+  return { group, machine, inspections };
 }

@@ -79,6 +79,30 @@ export const launchOptions = {
   headless: true,
   args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
 };
+export function waitForRenderedFrames(page) {
+  return page.evaluate(() => new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('Two animation frames did not render in 45 seconds')), 45000);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      clearTimeout(timer);
+      resolve();
+    }));
+  }));
+}
+
+export async function captureCanvas(page, canvas, path) {
+  await canvas.evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }));
+  await waitForRenderedFrames(page);
+  const bounds = await canvas.boundingBox();
+  if (!bounds || bounds.width < 100 || bounds.height < 100) throw new Error('Canvas has no usable screenshot area');
+  // Clicking a control can scroll the page to a fractional pixel. Compare the same
+  // raster rectangle on every capture, including the return to the initial camera.
+  const clip = {
+    x: Math.floor(bounds.x), y: Math.floor(bounds.y),
+    width: Math.round(bounds.width), height: Math.round(bounds.height),
+  };
+  return page.screenshot({ clip, timeout: 60000, ...(path ? { path } : {}) });
+}
+
 export async function openModelFilters(page) {
   const toggle = page.getByRole("button", { name: /^Filters/ });
   if (await toggle.getAttribute("aria-expanded") === "false") await toggle.click();

@@ -46,6 +46,16 @@ Each landing uses the original escalator, one [2 m transition](../models/mall-es
 
 With the local Vite server running, `node scripts/test-mall-escalator-terminals.mjs` checks the two detail controls, overview reset, layout switching and the three loaded GLBs on desktop and phone-sized Chromium views. Set `MALL_PREVIEW_SITE` to the server's base URL if it uses another port.
 
+#### Ride a step
+
+Select **Ride a step** to load the GJH visitor on a lower flat step. The camera follows the passenger for 17.8 seconds while the 58 native steps and both handrail seams move. Use **Pause ride** or drag **Ride position** to inspect either shoe. With reduced motion enabled, the ride opens paused. Selecting a terminal or **Reset view** returns to the empty escalator in its original pose. [Passenger on the incline](escalator-passenger.webp)
+
+The passenger faces uphill and stays on the same tread until it reaches the upper flat. The normal corridor visitor has a 1.12 m turning diameter. The narrowest measured opening between the handrail seams is 1.015 m. The fixed-facing pose keeps the original visitor and both shoes within the measured space. [Clearance and shoe support](../docs/verification/mall-escalator-passenger/README.md)
+
+The ride starts after boarding and ends before stepping off. The [boarding and exit study](../docs/verification/mall-escalator-passenger/transfers.md) records where the original walking animation loses contact on each transfer. Run `node --test tests/mall-escalator-passenger.test.mjs` to reproduce the 60 Hz checks of the native clips, foot contacts, seeking, replay and pose restoration.
+
+With the local preview running, `node scripts/test-mall-escalator-passenger.mjs` checks playback, keyboard seeking, reduced motion, a failed passenger load and a late load after leaving the view.
+
 ### Full-depth floor edging
 
 Choose **Finished floor edge** or open `/mall-modules-preview/?view=finished-edge`. Two [2 m straight profiles and their mitred return](../models/mall-floor-edge-2m/README.md) finish the outside edges of the same four slabs. The 60 mm cap sits flush and its bronze fascia covers the 100 mm slab depth. The straight profiles use a top-centre pivot. The paired return uses the corner tile centre at finished-floor elevation. [Installed straight and mitred edges](finished-floor-edge.png)

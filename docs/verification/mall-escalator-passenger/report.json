@@ -1,0 +1,222 @@
+{
+  "units": "metres and seconds",
+  "sha256": {
+    "machine": "b14375e54f366d3238fb32141bb9d25ca87add72664770e9a8541db9266bd501",
+    "visitor": "43d08b67f4450b6aac478cfca4ca664044662cd79021ed15d55ef5612e312be2"
+  },
+  "sections": [
+    {
+      "station": "lower deck",
+      "z": 5.12,
+      "floorY": 0,
+      "widths": {}
+    },
+    {
+      "station": "lower handrail return",
+      "z": 4.8,
+      "floorY": 0,
+      "widths": {
+        "handrail": 1.019999981
+      }
+    },
+    {
+      "station": "lower belt seam",
+      "z": 4.601602554,
+      "floorY": 0,
+      "widths": {
+        "handrail": 1.019999981,
+        "seam": 1.015000023
+      }
+    },
+    {
+      "station": "lower comb",
+      "z": 4.52,
+      "floorY": 0,
+      "widths": {
+        "skirt": 1.065000057,
+        "guard": 1.080000043,
+        "handrail": 1.019999981
+      }
+    },
+    {
+      "station": "lower flat tread",
+      "z": 3.62,
+      "floorY": 0,
+      "widths": {
+        "skirt": 1.065000057,
+        "guard": 1.080000043,
+        "handrail": 1.019999981
+      }
+    },
+    {
+      "station": "lower change of gradient",
+      "z": 2.4,
+      "floorY": 0.18921384,
+      "widths": {
+        "skirt": 1.065000057,
+        "guard": 1.080000043,
+        "handrail": 1.019999981
+      }
+    },
+    {
+      "station": "incline lower",
+      "z": 1.04,
+      "floorY": 0.989047542,
+      "widths": {
+        "skirt": 1.065000057,
+        "guard": 1.080000043,
+        "handrail": 1.019999981
+      }
+    },
+    {
+      "station": "incline middle",
+      "z": 0.037,
+      "floorY": 1.589047149,
+      "widths": {
+        "skirt": 1.065000057,
+        "guard": 1.080000043,
+        "handrail": 1.019999981
+      }
+    },
+    {
+      "station": "incline upper",
+      "z": -1.3,
+      "floorY": 2.389046624,
+      "widths": {
+        "skirt": 1.065000057,
+        "guard": 1.080000043,
+        "handrail": 1.019999981
+      }
+    },
+    {
+      "station": "upper flat tread",
+      "z": -3.2,
+      "floorY": 2.999999955,
+      "widths": {
+        "skirt": 1.065000057,
+        "guard": 1.080000043,
+        "handrail": 1.019999981
+      }
+    },
+    {
+      "station": "upper handrail return",
+      "z": -3.95,
+      "floorY": 2.999999955,
+      "widths": {
+        "handrail": 1.019999981
+      }
+    },
+    {
+      "station": "upper comb",
+      "z": -4.3,
+      "floorY": 2.999999958,
+      "widths": {}
+    },
+    {
+      "station": "upper deck",
+      "z": -5.12,
+      "floorY": 3.000000009,
+      "widths": {}
+    }
+  ],
+  "narrowest": {
+    "station": "lower belt seam",
+    "part": "seam",
+    "width": 1.015000023,
+    "y": 0.937996089,
+    "z": 4.601602554,
+    "left": -0.507500011,
+    "right": 0.507500011
+  },
+  "clearance": {
+    "diameter": 1.12,
+    "height": 1.8,
+    "excessPerSide": 0.052499989,
+    "fixedHeadingYaw": 3.141592654,
+    "body": {
+      "idle": {
+        "samples": 121,
+        "width": 0.678934619,
+        "depth": 0.436894829,
+        "sideMargin": 0.168032701
+      },
+      "walk": {
+        "samples": 121,
+        "width": 0.670078464,
+        "depth": 0.956650719,
+        "sideMargin": 0.172460756
+      }
+    },
+    "shiftWitness": {
+      "rootX": 0.33,
+      "mesh": "Emerald_polo",
+      "vertex": [
+        0.54869034,
+        0.728561467,
+        3.65926823
+      ],
+      "glass": [
+        0.540000021,
+        0.560000002
+      ]
+    },
+    "rotationWitness": {
+      "yaw": -1.852364158,
+      "vertex": [
+        0.542598665,
+        0.321645043,
+        3.62
+      ],
+      "glass": [
+        0.540000021,
+        0.560000002
+      ]
+    }
+  },
+  "carried": {
+    "sampleHz": 120,
+    "period": 46.416667938,
+    "consecutiveSamples": 2184,
+    "soleRays": 4368,
+    "supportedSeconds": [
+      0.166666667,
+      18.358333333
+    ],
+    "lowerFlatSeconds": [
+      0.166666667,
+      2.458333333
+    ],
+    "upperFlatSeconds": [
+      16.041666667,
+      18.358333333
+    ],
+    "publicRideSeconds": [
+      0.3,
+      18.1
+    ],
+    "stanceInStep": [
+      0,
+      0.200000003,
+      0.24
+    ],
+    "shoeWidth": 0.423582248,
+    "shoeDepth": 0.30255875,
+    "maxIdleShoeDrift": 0,
+    "ribs": 25,
+    "ribWidth": 0.023000002,
+    "ribGap": 0.01699999,
+    "toeMargin": 0.02103913,
+    "heelMargin": 0.022811917,
+    "combMargin": 0.00011548,
+    "publicCombMargin": 0.066758151,
+    "outsideRibMargin": 0.279708854,
+    "minimumRibMargin": 0.008892795,
+    "soleError": 8.5e-8,
+    "centredStanceOverlaps": 1186,
+    "shiftedDrops": [
+      0.019999996,
+      0.019999996
+    ],
+    "returnAngle": 3.141592566
+  }
+}

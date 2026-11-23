@@ -4,7 +4,7 @@ import { mkdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
 import { escalatorTerminalPaths } from '../mall-modules-preview/escalator-terminal.js';
-import { launchOptions, recordConsumedGlbHashes } from './browser-test-utils.mjs';
+import { captureCanvas, launchOptions, recordConsumedGlbHashes } from './browser-test-utils.mjs';
 
 const url = new URL('mall-modules-preview/?view=escalator-terminals', process.env.MALL_PREVIEW_SITE || 'http://127.0.0.1:5173/');
 const output = process.env.MALL_PREVIEW_OUTPUT;
@@ -25,12 +25,8 @@ try {
     await page.waitForFunction(expected => expected.every(hash => window.consumedModelHashes.includes(hash)), hashes);
     const lower = page.getByRole('button', { name: 'Inspect lower terminal' });
     const upper = page.getByRole('button', { name: 'Inspect upper terminal' });
-    const screenshot = async name => {
-      const canvas = page.locator('#canvas-wrap canvas');
-      await canvas.evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }));
-      await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-      return canvas.screenshot(output ? { path: join(output, width + '-' + name + '.png') } : {});
-    };
+    const canvas = page.locator('#canvas-wrap canvas');
+    const screenshot = name => captureCanvas(page, canvas, output && join(output, width + '-' + name + '.png'));
     const overview = await screenshot('overview');
     await lower.focus();
     await lower.press('Enter');

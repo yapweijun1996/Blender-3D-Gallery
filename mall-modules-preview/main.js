@@ -13,7 +13,8 @@ import { arrival, assembleCorridor, corridorAssetPaths } from './corridor-layout
 import { shellLayout } from './shell-layout.js';
 import { assembleCornerTileFloor, assembleFinishedFloorEdge, cornerFloorPath, floorEdgePaths } from './floor-edge.js';
 import { assembleFloorTransition, floorTransitionPaths } from './floor-transition.js';
-import { assembleEscalatorTerminals, escalatorTerminalPaths } from './escalator-terminal.js';
+import { assembleEscalatorTerminals, escalatorTerminalPaths, passengerView } from './escalator-terminal.js';
+import { setupEscalatorRide } from './escalator-ride-controls.js';
 import { assembleCornerFloor, assembleWallCeiling, assembleWalledFloor, wallCornerPath, wallRunPath } from './wall-run.js';
 
 import { createCollisionWorld } from '../docs/verification/mall-corridor/collision.js';
@@ -76,7 +77,10 @@ if (renderer) {
   const controls = new OrbitControls(camera, renderer.domElement); controls.enableDamping = true; controls.minDistance = 1; controls.maxDistance = 30; controls.maxPolarAngle = Math.PI * .88;
   const loader = new GLTFLoader(); const cache = new Map();
   const load = (item) => {
-    if (!cache.has(item.id)) cache.set(item.id, loader.loadAsync(asset(item.path)).then(gltf => gltf.scene).catch(error => { cache.delete(item.id); throw error; }));
+    if (!cache.has(item.id)) cache.set(item.id, loader.loadAsync(asset(item.path)).then(gltf => {
+      if (item.withAnimations) gltf.scene.animations = gltf.animations;
+      return gltf.scene;
+    }).catch(error => { cache.delete(item.id); throw error; }));
     return cache.get(item.id);
   };
   const byId = Object.fromEntries(modules.map(item => [item.id, item]));
@@ -99,7 +103,7 @@ if (renderer) {
     },
     'escalator-terminals': {
       name: 'Escalator landings', subtitle: 'Inspect the metal transition where each landing meets the terrazzo floor.',
-      inputs: Object.entries(escalatorTerminalPaths).map(([id, path]) => ({ id, path })),
+      inputs: Object.entries(escalatorTerminalPaths).map(([id, path]) => ({ id, path, withAnimations: id === 'escalator' })),
       build(sources) {
         escalatorTerminals ??= assembleEscalatorTerminals(sources);
         return escalatorTerminals.group;
@@ -208,6 +212,19 @@ if (renderer) {
   let inspection = null;
   const terminalTools = $('#terminal-tools');
   const terminalButtons = terminalTools.querySelectorAll('[data-terminal]');
+  const ride = setupEscalatorRide({
+    loadAvatar: () => load({ id: 'mallVisitor', path: 'models/gjh-mall-visitor/exports/gjh-mall-visitor.glb', withAnimations: true }),
+    getMachine: () => current === escalatorTerminals?.group ? escalatorTerminals.machine : null,
+    focusPassenger(object) {
+      inspection = { object, ...passengerView };
+      updateTerminalButtons();
+      frame(object, selected, inspection);
+    },
+    moveCamera(delta) {
+      camera.position.add(delta);
+      controls.target.add(delta);
+    },
+  });
   function updateTerminalButtons() {
     for (const button of terminalButtons) {
       const focus = escalatorTerminals?.inspections[button.dataset.terminal];
@@ -216,6 +233,7 @@ if (renderer) {
   }
   for (const button of terminalButtons) {
     button.addEventListener('click', () => {
+      ride.close();
       const focus = escalatorTerminals.inspections[button.dataset.terminal];
       inspection = focus;
       frame(focus.object, selected, focus);
@@ -257,6 +275,7 @@ if (renderer) {
   });
 
   function inspectAssembly() {
+    ride.close();
     inspection = null;
     updateTerminalButtons();
     camera.fov = 34;
@@ -341,6 +360,7 @@ if (renderer) {
   function resize() { const {width,height} = wrap.getBoundingClientRect(); if (!width || !height) return; renderer.setSize(width,height,false); camera.aspect=width/height; camera.updateProjectionMatrix(); if (current && !visitor?.state.walking) frame(inspection?.object ?? current, selected, inspection); }
   new ResizeObserver(resize).observe(wrap); resize();
   async function select(id) {
+    ride.close();
     inspection = null;
     terminalTools.hidden = true;
     if (visitor?.state.walking) visitor.setWalking(false);
@@ -387,6 +407,7 @@ if (renderer) {
   renderer.setAnimationLoop(now => {
     const dt = lastFrame === undefined ? 0 : (now - lastFrame) / 1000;
     lastFrame = now;
+    ride.update(dt);
     if (visitor && current === visitor.visual.parent) {
       visitor.visual.visible = !inspection || !controls.enabled;
       visitor.update(dt);
