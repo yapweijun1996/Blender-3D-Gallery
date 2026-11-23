@@ -1,0 +1,112 @@
+{
+  "id": "ramadan-bazaar-air-balang-stall",
+  "name": "Ramadan Bazaar Air Balang Stall",
+  "summary": "One Malaysian Ramadan-market beverage stall with three coolers and a fictional local pour.",
+  "description": "Original Malaysian-inspired Ramadan bazaar stall with striped awning, three large air balang dispensers, visible ice and cups, and one fictional on-device lime-drink pour. No payment, ordering or real brand.",
+  "category": "Festivals & Local Life",
+  "tags": [
+    "Ramadan bazaar",
+    "Air balang",
+    "Outdoor market",
+    "Iced drinks",
+    "Illustrative pour",
+    "Malaysia"
+  ],
+  "status": "validated",
+  "created": "2026-11-23",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Original Blender geometry, materials, authored lever, stream and cup-fill movement, and true studio render.",
+  "source": "ramadan-bazaar-air-balang-stall.blend",
+  "generator": "generate.py",
+  "export": "exports/ramadan-bazaar-air-balang-stall.glb",
+  "preview": "previews/studio.webp",
+  "rights": "Original project asset; redistribution terms for public downloads are not specified.",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.4,
+      0.3,
+      1
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ],
+      "hemisphereIntensity": 1.7,
+      "directionalIntensity": 1.95
+    }
+  },
+  "animation": {
+    "name": "AIR_BALANG_POUR",
+    "duration_seconds": 2.25,
+    "fps": 24,
+    "glTF_front": "+Z",
+    "lever": {
+      "node": "AIR_BALANG_TAP_LEVER",
+      "anchor_m": [
+        -0.6,
+        1.27,
+        0.303
+      ],
+      "rest_x_radians": 0,
+      "open_x_radians": 0.87
+    },
+    "stream": {
+      "node": "AIR_BALANG_STREAM",
+      "anchor_m": [
+        -0.6,
+        1.159,
+        0.329
+      ],
+      "rest_y_scale": 0.001,
+      "pour_y_scale": 1,
+      "end_y_scale": 0.001
+    },
+    "cup": {
+      "node": "AIR_BALANG_CUP_FILL",
+      "anchor_m": [
+        -0.6,
+        0.996,
+        0.329
+      ],
+      "rest_y_scale": 0.01,
+      "end_y_scale": 0.96
+    }
+  },
+  "accuracy_notes": "Fictional unbranded market scene, not an exact installation, recipe, equipment certification or real vending/payment. The sample is a local animation only.",
+  "attribution": [
+    {
+      "credit": "Original Blender geometry, lettering, animation and true studio render; no external assets."
+    },
+    {
+      "credit": "Kampong Bharu Development Corporation article reprint, background only",
+      "url": "https://www.pkb.gov.my/?p=6971"
+    },
+    {
+      "credit": "Bernama bazaar reporting, background only",
+      "url": "https://www.bernama.com/bm/am/news.php?id=2525582"
+    }
+  ],
+  "metrics": {
+    "glb_bytes": 424820,
+    "glb_sha256": "988986e540c5c4aba5f1eb1d9dfcdf84454d283f2db5a097eb12035a2ba4a5b1",
+    "source_sha256": "7559112cbaba8b960a26b2dffed831ceb74c1908a5542a3342c8f971c38753b3",
+    "preview_sha256": "6ef4538b9920fe7e62ed91f8dbaf54722d0e14c2ba46cc902f4738ad2ce298aa",
+    "preview_bytes": 14690,
+    "triangles": 10536,
+    "vertices": 13634,
+    "meshes": 67,
+    "materials": 18,
+    "draw_calls": 67,
+    "animations": 1,
+    "maximum_texture_dimension_px": 0,
+    "dimensions_gltf_xyz_m": [
+      2.3627,
+      2.485,
+      1.4755
+    ]
+  }
+}
