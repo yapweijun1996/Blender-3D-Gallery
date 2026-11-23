@@ -12,6 +12,8 @@ const url = new URL('mall-modules-preview/?view=floor-transition', process.env.M
 const hashes = await Promise.all(Object.values(floorTransitionPaths).map(async path =>
   createHash('sha256').update(await readFile(path)).digest('hex')));
 const shellViews = [
+  ['t-junction'],
+  ['cross-junction'],
   ['corner-floor', cornerFloorPath],
   ['finished-edge', ...Object.values(floorEdgePaths)],
   ['wall-run', wallRunPath],
@@ -46,9 +48,15 @@ try {
     });
     const layouts = page.getByRole('combobox', { name: 'Assembly' });
     const expected = [...hashes];
+    let threeWayImage;
     for (const [view, ...files] of shellViews) {
       await layouts.selectOption(view);
       await ready(view);
+      if (view === 't-junction') threeWayImage = await page.locator('canvas').first().screenshot();
+      if (view === 'cross-junction') {
+        const fourWayImage = await page.locator('canvas').first().screenshot();
+        assert.ok(!threeWayImage.equals(fourWayImage), 'the fourth arm changes the rendered junction');
+      }
       for (const file of files) expected.push(createHash('sha256').update(await readFile(file)).digest('hex'));
       assert.deepEqual((await page.evaluate(() => window.consumedModelHashes)).sort(), [...expected].sort());
       if (process.env.MALL_GRID_SHOTS) await page.locator('#canvas-wrap').screenshot({

@@ -10,6 +10,12 @@ Run `node --test tests/mall-floor-transition.test.mjs`. The test measures seven 
 
 With Vite running, `node scripts/test-mall-floor-transition.mjs` checks both actual GLB downloads, a failed load and retry, module selection and return to the furnished corridor. Set `MALL_PREVIEW_SITE` for a different Vite address. This sample covers a straight interior floor joint. Edge trim, corner details and the ceiling need their own measurements.
 
+### T-junction and four-way junction
+
+Choose **T-junction** or **Four-way junction** in the Assembly selector. Both use the [2 m straight tile](../models/mall-floor-module-2m/README.md) with its original terrazzo finish. The T joins three arms with four tiles. A fifth tile opens the fourth arm at the cross junction. Each shared edge spans 2 m and all wearing surfaces meet at the same elevation. [T-junction](t-junction.webp) · [Four-way junction](cross-junction.webp)
+
+Run `node --test tests/mall-floor-junctions.test.mjs` to check the three tile LODs. The six directed routes through the T and twelve through the cross cover a total of 216 m across the three LODs. The tests sample 4,242 points at the arm seams and 217,800 points beneath the walking visitor. Removing the centre tile interrupts the crossing. Removing an arm blocks that branch. The visitor also stops at the open re-entrant corners. The T keeps its missing branch when the whole assembly turns by a quarter, half or three-quarter turn.
+
 ### Straight wall on the 2 m floor
 
 Choose **Straight wall** from the **Assembly** menu in the floor view or open `/mall-modules-preview/?view=wall-run`. Three unscaled [straight wall modules](../models/mall-wall-module-2m/README.md) stand on the back edge of the 2 m floor. Their ground-centre pivots sit at X = −2, 0 and 2 m and Z = −1.925 m. The stone faces point toward the aisle. Both pairs of end connectors meet, and 615 paired floor and underside probes found contact at the finished surface. [Wall and floor preview](wall-on-floor.png)

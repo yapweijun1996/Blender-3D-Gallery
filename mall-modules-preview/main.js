@@ -12,6 +12,7 @@ import { batchStaticMeshes } from './batch-static.js';
 import { arrival, assembleCorridor, corridorAssetPaths } from './corridor-layout.js';
 import { shellLayout } from './shell-layout.js';
 import { assembleCornerTileFloor, assembleFinishedFloorEdge, cornerFloorPath, floorEdgePaths } from './floor-edge.js';
+import { assembleCrossJunction, assembleTJunction } from './floor-junctions.js';
 import { assembleFloorTransition, floorTransitionPaths } from './floor-transition.js';
 import { assembleEscalatorTerminals, descendingJourneyView, escalatorTerminalPaths, journeyView, passengerView } from './escalator-terminal.js';
 import { setupEscalatorRide } from './escalator-ride-controls.js';
@@ -38,8 +39,9 @@ const furnishings = Object.entries(corridorAssetPaths)
   .filter(([id]) => !modules.some(item => item.id === id))
   .map(([id, path]) => ({ id, path }));
 const transitionAssets = Object.entries(floorTransitionPaths).map(([id, path]) => ({ id, path }));
+const squareFloor = { id: 'floor2m', path: floorTransitionPaths.floor2m };
 const cornerFloorAssets = [
-  { id: 'floor2m', path: floorTransitionPaths.floor2m },
+  squareFloor,
   { id: 'cornerFloor2m', path: cornerFloorPath },
 ];
 const wallAssets = [...transitionAssets, { id: 'wall2m', path: wallRunPath }];
@@ -100,6 +102,14 @@ if (renderer) {
     'floor-transition': {
       name: 'Floor grid transition', subtitle: 'Five 1.2 m bays meet three 2 m bays along a six-metre joint.',
       inputs: transitionAssets, build: assembleFloorTransition,
+    },
+    't-junction': {
+      name: 'T-junction', subtitle: 'Four 2 m tiles join three corridor arms.',
+      inputs: [squareFloor], build: assembleTJunction,
+    },
+    'cross-junction': {
+      name: 'Four-way junction', subtitle: 'Five 2 m tiles connect four corridor arms.',
+      inputs: [squareFloor], build: assembleCrossJunction,
     },
     'escalator-terminals': {
       name: 'Escalator landings', subtitle: 'Inspect the metal transition where each landing meets the terrazzo floor.',
@@ -350,6 +360,7 @@ if (renderer) {
     if (id === 'finished-edge') direction.set(3.7,2.6,5.1);
     if (id === 'corner-floor') direction.set(3.5,5.3,5.2);
     if (id === 'floor-transition') direction.set(1.2,5.5,5.1);
+    if (id === 't-junction' || id === 'cross-junction') direction.set(.6,7,-4);
     if (id === 'escalator-terminals') direction.set(1, .8, 1.1);
     if (id === 'wall-run' || id === 'wall-ceiling') direction.set(2.3,2.6,6);
     if (id === 'wall-corner') direction.set(-3.1,2.8,5.4);

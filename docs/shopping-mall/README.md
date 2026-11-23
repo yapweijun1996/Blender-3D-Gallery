@@ -75,6 +75,15 @@ At public `main` commit `bcc52e77`, all eleven fixtures below had a catalog entr
 
 At the audited commit, the Gallery offered the TV demo table for download. Its asset-specific license expressly authorizes owner-project reuse and leaves public redistribution terms unspecified. [Asset license](../../models/tv-demo-table/LICENSE.md)
 
+### T-junction and cross-junction on the 2 m grid
+
+| Planned ID | Assembly | Existing asset and fit |
+| --- | --- | --- |
+| `MALL-STR-003` | T-junction | Four instances of the 2 m straight tile form a centre and three arms. The fourth side ends at a floor edge. |
+| `MALL-STR-004` | Cross-junction | Five instances of the same tile connect four arms. The concave corners remain open. |
+
+Both assemblies reuse the editable `MALL-STR-001` floor asset and its original material. Each tile is 2 × 2 × 0.1 m. The assembled T occupies 6 × 4 m and the cross occupies 6 × 6 m. The same connector and navigation checks run on all three LODs. [Preview and measured routes](../../mall-modules-preview/README.md#t-junction-and-four-way-junction) · [Tile source and reuse terms](../../models/mall-floor-module-2m/README.md)
+
 ### Escalator terminal on the 2 m grid
 
 The existing escalator’s upper and lower crossbeams project 20 mm past the finished deck. An ordinary slab placed flush there intersects the beam. The [editable 2 m transition](../../models/mall-escalator-floor-transition-2m/README.md) has a recess that clears the beam by 5 mm above, behind and on either side. The [assembled landings](../../mall-modules-preview/README.md#escalator-landings) show how both finished shoulders meet adjacent slabs. [Measured joints and reproduction](../verification/mall-escalator-floor-joint/README.md#installed-blender-part)
