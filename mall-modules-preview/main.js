@@ -337,7 +337,7 @@ if (renderer) {
       visitorRequest = null;
     }
   };
-  wrap.inspectVisitor = () => ({ angle: activeWalkScene()?.doorAngle ?? 0, visitor: visitor?.state ?? null, drawCalls: renderer.info.render.calls });
+  wrap.inspectVisitor = () => ({ angle: activeWalkScene()?.doorAngle ?? 0, visitor: visitor?.state ?? null, drawCalls: renderer.info.render.calls, renderFrame: renderer.info.render.frame });
 
   function frame(object, id, focus = null) {
     object.updateMatrixWorld(true);

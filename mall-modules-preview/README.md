@@ -16,6 +16,8 @@ Choose **T-junction** or **Four-way junction** in the Assembly selector. Both us
 
 Run `node --test tests/mall-floor-junctions.test.mjs` to check the three tile LODs. The six directed routes through the T and twelve through the cross cover a total of 216 m across the three LODs. The tests sample 4,242 points at the arm seams and 217,800 points beneath the walking visitor. Removing the centre tile interrupts the crossing. Removing an arm blocks that branch. The visitor also stops at the open re-entrant corners. The T keeps its missing branch when the whole assembly turns by a quarter, half or three-quarter turn.
 
+The [phone sampling procedure](../docs/verification/mall-floor-phone-performance.md) uses these four- and five-tile assemblies and the 25-tile enclosed shop to record frame intervals on a connected device.
+
 ### Straight wall on the 2 m floor
 
 Choose **Straight wall** from the **Assembly** menu in the floor view or open `/mall-modules-preview/?view=wall-run`. Three unscaled [straight wall modules](../models/mall-wall-module-2m/README.md) stand on the back edge of the 2 m floor. Their ground-centre pivots sit at X = −2, 0 and 2 m and Z = −1.925 m. The stone faces point toward the aisle. Both pairs of end connectors meet, and 615 paired floor and underside probes found contact at the finished surface. [Wall and floor preview](wall-on-floor.png)
