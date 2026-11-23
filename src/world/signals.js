@@ -8,7 +8,7 @@ const LAMP_ORDER = ["red", "amber", "green"]; // top to bottom
 const STOP_LINE = 6;       // metres before the junction
 const POLE_HEIGHT = 5;
 
-/** The approaches of signalised junctions in a traffic graph: { x, z, dx, dz, phase } with (dx, dz) the direction of travel. */
+/** The verges of signalised approaches. A configured approach may use a separate terminal bearing for its phase. */
 export function signalApproaches(graph) {
   const approaches = [];
   for (const nodeId of graph.signalised) {
@@ -18,10 +18,15 @@ export function signalApproaches(graph) {
     for (const id of node.backward) arrive.push({ edge: graph.edges.get(id), direction: 1 });
     for (const id of node.forward) { const edge = graph.edges.get(id); if (edge && !edge.oneway) arrive.push({ edge, direction: -1 }); }
     for (const { edge, direction } of arrive) {
-      if (!edge || edge.length < STOP_LINE * 2) continue;
-      const at = sampleEdge(edge, edge.length - STOP_LINE, direction);
-      const side = edge.width / 2 + 1.4; // the left verge of the approach: left of travel is (dz, -dx)
-      approaches.push({ x: at.x + at.dz * side, z: at.z - at.dx * side, dx: at.dx, dz: at.dz, phase: phaseOf(at.dx, at.dz) });
+      if (!edge) continue;
+      const configured = direction > 0 && edge.forwardSignal?.approach.terminal === edge.id ? edge.forwardSignal.approach : null;
+      if (!configured && edge.length < STOP_LINE * 2) continue;
+      const at = configured?.line ?? sampleEdge(edge, edge.length - STOP_LINE, direction);
+      const side = (at.width ?? edge.width) / 2 + 1.4; // the left verge of the approach: left of travel is (dz, -dx)
+      const { dx, dz } = at;
+      const approach = { x: at.x + dz * side, z: at.z - dx * side, dx, dz, phase: configured?.phase ?? phaseOf(dx, dz) };
+      if (configured) approach.signalBearing = configured.bearing;
+      approaches.push(approach);
     }
   }
   return approaches;
@@ -57,7 +62,8 @@ export function createSignalLights(scene, capacity = 96) {
     /** Light the lamp that matches each approach's state. `stateOf(dx, dz)` returns "green", "amber" or "red". */
     update(stateOf) {
       current.forEach((item, index) => {
-        const state = stateOf(item.dx, item.dz);
+        const { dx, dz } = item.signalBearing ?? item;
+        const state = stateOf(dx, dz);
         LAMP_ORDER.forEach((name, lamp) => lamps.setColorAt(index * 3 + lamp, name === state ? COLORS[name] : COLORS.off));
       });
       if (lamps.instanceColor) lamps.instanceColor.needsUpdate = true;

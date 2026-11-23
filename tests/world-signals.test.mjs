@@ -25,13 +25,18 @@ test("signalised junctions get poles on the verge of each approach", () => {
 test("lamps show one colour per approach and follow the state", () => {
   const scene = new Scene();
   const lights = createSignalLights(scene, 8);
-  lights.setApproaches([{ x: 0, z: 0, dx: 0, dz: 1, phase: 1 }, { x: 10, z: 0, dx: 1, dz: 0, phase: 0 }]);
-  assert.equal(lights.count, 2);
+  lights.setApproaches([
+    { x: 0, z: 0, dx: 0, dz: 1, phase: 1 },
+    { x: 10, z: 0, dx: 1, dz: 0, phase: 0 },
+    { x: 20, z: 0, dx: 1, dz: 0, phase: 1, signalBearing: { dx: 0, dz: 1 } },
+  ]);
+  assert.equal(lights.count, 3);
   lights.update((dx, dz) => (dz ? "red" : "green"));
   const lamps = lights.meshes[2];
   const read = index => { const target = new Color(); lamps.getColorAt(index, target); return target; };
   assert.ok(read(0).r > 0.9 && read(0).g < 0.2, "first approach: red lamp lit");
   assert.ok(read(1).r < 0.1 && read(1).g < 0.1, "first approach: amber lamp off");
   assert.ok(read(5).g > 0.5 && read(5).r < 0.1, "second approach: green lamp lit");
+  assert.ok(read(6).r > 0.9 && read(8).g < 0.1, "the upstream pole uses the terminal bearing for its lights");
   lights.dispose();
 });

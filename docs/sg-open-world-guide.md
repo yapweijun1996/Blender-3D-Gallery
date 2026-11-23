@@ -66,6 +66,14 @@ node --test tests/world-fort-canning-merge.test.mjs tests/world-fort-canning-cle
 
 Default-map acceptance still needs the downstream junction and approach tiles, preloading and coordinated terrain replacement, traffic elevations and route continuity through the common exit. The local merge overlaps Dhoby Ghaut Green's surface polygon where its original roads run. Keep the road visible above the park fill and update the affected paint with the streamed geometry.
 
+#### Penang Road junction source checks
+
+The pinned junction data extend the five-lane Penang Road exit through the signal at node `408999681`. Penang Road continues straight and the two Penang Lane approaches join from opposite sides. The public-road overlay excludes the private service arm and verifies the mapped no-U-turn restriction. The next public fork has a verified left turn to Clemenceau Avenue and a through route on Penang Road. The source marks right turns on the incoming lanes at that fork, and those movements remain unassigned pending a mapped destination. [Signal incident ways](https://api.openstreetmap.org/api/0.6/node/408999681/ways.json), [OSM turn restriction](https://api.openstreetmap.org/api/0.6/relation/12351517.json), [first fork incident ways](https://api.openstreetmap.org/api/0.6/node/1275666711/ways.json).
+
+The offline tile builder produces the public-road overlay across `-7_-7`, `-8_-7` and `-8_-8`. A route that spans two tiles requires both matching fragments. The terminal signal approach includes a mapped pedestrian crossing less than six metres before the junction. The simulated stop line is 15 m upstream of the junction, on the preceding graph edge. The traffic stop line and rendered signal use the same approach. A bus stops with its nose clear of the crossing on red and proceeds to the public exit on green.
+
+The traffic engine can accept explicit forward lane assignments for a one-way merge. The Link lanes continue into downstream lanes 1–3 and the Penang feeder into lanes 4–5, numbered from the left. The same assignments control following distance and the lane taken at the merge. All five vehicles continued into the pinned Penang Road lanes in the offline traffic test. The default map still needs to load the overlay, enable these rules and coordinate collision activation before it can use the tunnel.
+
 ## Data pipeline (only needed when the map changes)
 
 ```sh
