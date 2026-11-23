@@ -1,0 +1,120 @@
+{
+  "id": "mall-wall-corner-2m",
+  "name": "Mall Wall Corner · 2 m",
+  "summary": "A 90° turn for the two-metre limestone interior wall, with continuous bronze trims.",
+  "description": "Two 2 m centreline arms enclose a mitered backing and trim. Separate arm meshes preserve the clear inside aisle. All three authored detail levels mate to the straight family.",
+  "category": "Shopping Mall",
+  "tags": [
+    "mall",
+    "wall",
+    "corner",
+    "architecture",
+    "modular",
+    "limestone",
+    "LOD"
+  ],
+  "status": "validated",
+  "created": "2026-11-24",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "The actual original straight-wall Blender profiles were extended to a shared miter. Packed original project stone artwork supplies the close level.",
+  "source": "sources/mall-wall-corner-2m.blend",
+  "generator": "generate.py",
+  "export": "exports/mall-wall-corner-2m.glb",
+  "preview": "previews/mall-wall-corner-2m.jpg",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      -1,
+      0.5,
+      1.12
+    ]
+  },
+  "assembly": {
+    "backlog_id": "MALL-STR-011",
+    "centreline_arm_m": 2,
+    "wall_depth_m": 0.15,
+    "gltf_dimensions_xyz_m": [
+      2.075,
+      2.8,
+      2.075
+    ],
+    "gltf_bounds_m": [
+      [
+        -2,
+        0,
+        -0.075
+      ],
+      [
+        0.075,
+        2.8,
+        2
+      ]
+    ],
+    "origin": "finished floor at the 90-degree centreline turn",
+    "connectors_gltf_m": [
+      [
+        -2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        2
+      ]
+    ],
+    "interior_normals_gltf": [
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        -1,
+        0,
+        0
+      ]
+    ],
+    "mate": "mall-wall-module-2m"
+  },
+  "rights": "Original project asset. Public download and redistribution terms have not been specified.",
+  "attribution": [
+    {
+      "credit": "Original Blender-3D-Gallery geometry and render. Uses the original honed limestone texture and finish profiles from mall-wall-module-2m."
+    }
+  ],
+  "accuracy_notes": "Fictional interior corner for the 2 m wall grid. The 90° turn and two straight joins were measured. Other wall families, installation, physical-device performance and building ratings require separate review.",
+  "levels": [
+    {
+      "level": "LOD0",
+      "file": "exports/mall-wall-corner-2m.glb",
+      "triangles": 1068,
+      "draw_calls": 24,
+      "bytes": 206328,
+      "sha256": "95cba3ad11eb3ca8d76082615af895403e5b09c9f773dcd800b8d7271029b1f7"
+    },
+    {
+      "level": "LOD1",
+      "file": "exports/mall-wall-corner-2m-lod1.glb",
+      "triangles": 264,
+      "draw_calls": 8,
+      "bytes": 20708,
+      "sha256": "1d5214bdf7a7ea0c5b23eef775f75dafc4bfc2b5e6c116561e3991415f94906b"
+    },
+    {
+      "level": "LOD2",
+      "file": "exports/mall-wall-corner-2m-lod2.glb",
+      "triangles": 68,
+      "draw_calls": 2,
+      "bytes": 6960,
+      "sha256": "fa9bb7d6f592557a6522d2a35545c0bc4105a6378cc18f06faef011a68c96691"
+    }
+  ],
+  "sha256": {
+    "source": "938e334165956b74fd2ee0da14ee7b799777c65cc42dcb0ff049457aafb77592",
+    "preview": "02fef07bc8df39bfdcc34aef747007af2b742736db69891981f20ddb074123d8",
+    "texture": "87952161fded4ff950248811a8db62aaf09b56d3e7a3fd17ac91c4e538882fc8",
+    "glb": "95cba3ad11eb3ca8d76082615af895403e5b09c9f773dcd800b8d7271029b1f7"
+  }
+}

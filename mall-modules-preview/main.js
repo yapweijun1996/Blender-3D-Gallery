@@ -6,7 +6,7 @@ import { batchStaticMeshes } from './batch-static.js';
 import { arrival, assembleCorridor, corridorAssetPaths } from './corridor-layout.js';
 import { shellLayout } from './shell-layout.js';
 import { assembleFloorTransition, floorTransitionPaths } from './floor-transition.js';
-import { assembleWalledFloor, wallRunPath } from './wall-run.js';
+import { assembleCornerFloor, assembleWallCeiling, assembleWalledFloor, wallCornerPath, wallRunPath } from './wall-run.js';
 
 import { createCollisionWorld } from '../docs/verification/mall-corridor/collision.js';
 import { createVisitor } from '../docs/verification/mall-corridor/visitor.js';
@@ -29,6 +29,7 @@ const furnishings = Object.entries(corridorAssetPaths)
   .filter(([id]) => !modules.some(item => item.id === id))
   .map(([id, path]) => ({ id, path }));
 const transitionAssets = Object.entries(floorTransitionPaths).map(([id, path]) => ({ id, path }));
+const wallAssets = [...transitionAssets, { id: 'wall2m', path: wallRunPath }];
 const $ = (selector) => document.querySelector(selector);
 const list = $('#module-list');
 for (const item of modules) {
@@ -78,8 +79,18 @@ if (renderer) {
     },
     'wall-run': {
       name: 'Straight wall run', subtitle: 'Three 2 m walls stand on the finished floor, with their stone faces toward the aisle.',
-      inputs: [...transitionAssets, { id: 'wall2m', path: wallRunPath }],
+      inputs: wallAssets,
       build: assembleWalledFloor,
+    },
+    'wall-ceiling': {
+      name: 'Wall and ceiling', subtitle: 'Five ceiling cassettes sit at the 2.8 m wall head. The front stays open for inspection.',
+      inputs: [...wallAssets, byId.ceiling],
+      build: sources => assembleWalledFloor(sources).add(assembleWallCeiling(sources.ceiling)),
+    },
+    'wall-corner': {
+      name: 'Right-angle wall corner', subtitle: 'The inside finishes turn from the rear wall onto the return along the right edge.',
+      inputs: [...wallAssets, { id: 'wallCorner2m', path: wallCornerPath }],
+      build: assembleCornerFloor,
     },
   };
   let current = null; let requestId = 0; let selected = 'assembly';
@@ -176,13 +187,15 @@ if (renderer) {
     const box = new THREE.Box3().setFromObject(object); const sphere = box.getBoundingSphere(new THREE.Sphere());
     controls.target.copy(sphere.center);
     const vertical = THREE.MathUtils.degToRad(camera.fov/2); const horizontal = Math.atan(Math.tan(vertical)*camera.aspect);
-    const margin = id === 'assembly' ? (camera.aspect < 1.35 ? 1.08 : .8) : id === 'floor-transition' || id === 'wall-run' ? .94 : 1.2;
+    let margin = 1.2;
+    if (assemblies[id]) margin = id === 'assembly' ? (camera.aspect < 1.35 ? 1.08 : .8) : .94;
     const distance = Math.max(sphere.radius, .25) / Math.sin(Math.min(vertical,horizontal)) * margin;
     const direction = new THREE.Vector3(6,4,7);
     if (id === 'ceiling') direction.set(4,-3,5);
     if (id === 'assembly') direction.set(6,3.5,10);
     if (id === 'floor-transition') direction.set(1.2,5.5,5.1);
-    if (id === 'wall-run') direction.set(2.3,2.6,6);
+    if (id === 'wall-run' || id === 'wall-ceiling') direction.set(2.3,2.6,6);
+    if (id === 'wall-corner') direction.set(-3.1,2.8,5.4);
     camera.position.copy(sphere.center).add(direction.normalize().multiplyScalar(distance));
     controls.minDistance = Math.max(.2, sphere.radius * .65); controls.maxDistance = Math.max(10, sphere.radius * 12);
     camera.near = Math.max(.01, distance / 100); camera.far = distance * 20; camera.updateProjectionMatrix(); controls.update();
@@ -195,14 +208,14 @@ if (renderer) {
     message.textContent = '';
     selected = id; const request = ++requestId;
     const item = byId[id], view = item ?? assemblies[id];
-    const gridView = id === 'floor-transition' || id === 'wall-run';
+    const gridView = !item && id !== 'assembly';
     $('#view-kicker').textContent = view.kicker ?? 'THE ASSEMBLY';
     $('#view-title').textContent = view.name;
     $('#view-subtitle').textContent = view.subtitle;
     assemblyButton.classList.toggle('active', id === 'assembly'); assemblyButton.setAttribute('aria-pressed', String(id === 'assembly'));
     transitionButton.classList.toggle('active', gridView); transitionButton.setAttribute('aria-pressed', String(gridView));
-    $('#wall-option').hidden = !gridView;
-    $('#wall-toggle').checked = id === 'wall-run';
+    $('#grid-option').hidden = !gridView;
+    if (gridView) $('#grid-layout').value = id;
     for (const button of list.querySelectorAll('button')) button.setAttribute('aria-pressed', String(button.dataset.module === id));
     status.textContent = 'Loading 3D model…'; status.dataset.state = 'loading';
     try {
@@ -223,7 +236,7 @@ if (renderer) {
   }
   assemblyButton.addEventListener('click', () => select('assembly'));
   transitionButton.addEventListener('click', () => select('floor-transition'));
-  $('#wall-toggle').addEventListener('change', event => select(event.target.checked ? 'wall-run' : 'floor-transition'));
+  $('#grid-layout').addEventListener('change', event => select(event.target.value));
   list.addEventListener('click', event => { const button = event.target.closest('button[data-module]'); if (button) select(button.dataset.module); });
   $('#reset-button').addEventListener('click', () => { if (visitor?.state.walking) visitor.setWalking(false); else if (current) frame(current, selected); });
   let lastFrame;

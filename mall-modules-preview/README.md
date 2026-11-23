@@ -12,13 +12,25 @@ With Vite running, `node scripts/test-mall-floor-transition.mjs` checks both act
 
 ### Straight wall on the 2 m floor
 
-Select **Show 2 m wall run** in the floor view or open `/mall-modules-preview/?view=wall-run`. Three unscaled [straight wall modules](../models/mall-wall-module-2m/README.md) stand on the back edge of the 2 m floor. Their ground-centre pivots sit at X = −2, 0 and 2 m and Z = −1.925 m. The stone faces point toward the aisle. Both pairs of end connectors meet, and 615 paired floor and underside probes found contact at the finished surface. [Wall and floor preview](wall-on-floor.png)
+Choose **Straight wall** from the **Assembly** menu in the floor view or open `/mall-modules-preview/?view=wall-run`. Three unscaled [straight wall modules](../models/mall-wall-module-2m/README.md) stand on the back edge of the 2 m floor. Their ground-centre pivots sit at X = −2, 0 and 2 m and Z = −1.925 m. The stone faces point toward the aisle. Both pairs of end connectors meet, and 615 paired floor and underside probes found contact at the finished surface. [Wall and floor preview](wall-on-floor.png)
 
 The two half-joints form a 4 mm mortar strip recessed 10 mm from the limestone face. The bronze skirting and crown project 3 mm beyond it. The 1.80 m visitor travelled 8.4 m along the wall in both directions combined. At six approaches around the joins, the visitor stopped within one 25 mm movement step of the independent cylinder contact. A rounded capsule cleared the projecting skirt and touched the main face about 3 mm farther in.
 
 Run `node --test tests/mall-wall-run.test.mjs` to repeat the contact check. At one shared triangle edge on the floor, a single-precision Rapier point ray returned the slab underside. The test records the raw value and checks that a Three.js ray and the nearest point on the actual Rapier triangles agree at the same coordinate within 1 μm. This check resolved 18 probes on the measured walk. Taking out the tile or lowering it by 100 mm still fails the support check.
 
-At this pitch the original 1.2 m wall would leave two 800 mm openings. The original ceiling cassette placed at its 3 m grid height stands 200 mm above the new 2.8 m wall. A wall-top closure or a separately placed ceiling is still needed for an enclosed room.
+At this pitch the original 1.2 m wall would leave two 800 mm openings. The original ceiling cassette placed at its 3 m grid height stands 200 mm above the new 2.8 m wall. The sample below seats the same cassette at the new datum.
+
+### Wall and ceiling
+
+Choose **Straight wall and ceiling**, or open `/mall-modules-preview/?view=wall-ceiling`. Five original 1.2 m cassettes cover the same 6 m as the three 2 m walls. Their underside rail sits at Y = 2.80 m, and the rear edge is at Z = −2 m. The 12 mm rear half-rail contacts the actual wall tops. The cassettes extend 1.2 m into the room, where this cutaway shows the underside.
+
+Run `node --test tests/mall-wall-ceiling.test.mjs`. The check verifies four pairs of cassette connectors, 417 paired wall-top and rail contacts, and nine transverse rails extending into the aisle. Each of the 20 recessed panels sits 8 mm above the grid underside. The 20 hanger assemblies reach Y = 3.16 m. This sample covers one straight ceiling row. [Ceiling cutaway](ceiling-on-wall.png)
+
+### Right-angle corner and return
+
+Choose **Corner with two walls**, or open `/mall-modules-preview/?view=wall-corner`. The [2 m corner](../models/mall-wall-corner-2m/README.md) turns the wall along the right boundary of the same floor. Each arm measures 2 m from the centreline turn to its connector. The wall thickness brings the outside footprint to 2.075 m square. The rear straight faces +Z and the right return faces −X. [Installed corner](corner-on-floor.png)
+
+Run `node --test tests/mall-wall-corner-2m.test.mjs`. Seventy mesh rays check the inside and outside of the mitre. Of 809 wall-base probes, 769 reach the floor at the same elevation and 40 meet the original tile’s shallow grout recess. The visitor traversed both joins and returned over a 9.128 m route. An earlier continuous L-shaped backing produced a rectangular collision box across the empty aisle. Each arm now has its own mesh bounds and meets its partner on the same mitre plane. Recombining the same triangles reproduces the obstruction.
 
 ## Furnished corridor
 

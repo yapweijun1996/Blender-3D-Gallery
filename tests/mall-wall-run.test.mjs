@@ -8,7 +8,8 @@ import { assembleFloorTransition, floorTransitionPaths } from '../mall-modules-p
 import { shellAssetPaths } from '../mall-modules-preview/shell-layout.js';
 import { assembleWalledFloor, assembleWallRun, wallRunPath } from '../mall-modules-preview/wall-run.js';
 import { readGlb } from '../models/mall-floor-tile/glb.mjs';
-import { checkFloor, measureCorridor } from './helpers/mall-mesh.mjs';
+import { checkFloor } from './helpers/mall-mesh.mjs';
+import { measureWallContact } from './helpers/mall-wall-contact.mjs';
 
 async function load(path) {
   return (await readGlb(fileURLToPath(new URL('../' + path, import.meta.url)))).scene;
@@ -34,31 +35,6 @@ function run(source = wallSource) {
   const group = assembleWallRun(source);
   group.updateMatrixWorld(true);
   return group;
-}
-
-// Preserve the shared floor checks. A vertical ray can miss a coplanar shared edge.
-async function measureWallContact(root) {
-  const scene = await measureCorridor(root);
-  const floors = root.children.filter(part => part.userData.moduleId === 'floor' || part.userData.moduleId === 'floor2m');
-  const ray = new Raycaster(new Vector3(), down, 0, .5);
-  const corrections = { count: 0, maxDistanceMetres: 0 };
-  function supportedHeight(x, z) {
-    const y = scene.surface(x, z);
-    if (y !== null && y >= -.001001) return y;
-    ray.ray.origin.set(x, .1, z);
-    const hit = ray.intersectObjects(floors, true)[0];
-    if (!hit || (y !== null && hit.point.y <= y + .000001)) return y;
-    // Same x/z, no shifted or averaged probes. The closest point on the float32
-    // Rapier triangles must match the double-precision hit in all three axes.
-    const nearest = scene.projectFloor(hit.point);
-    if (!nearest) return y;
-    const distance = hit.point.distanceTo(nearest);
-    if (distance > .000001) return y;
-    corrections.count++;
-    corrections.maxDistanceMetres = Math.max(corrections.maxDistanceMetres, distance);
-    return nearest.y;
-  }
-  return { ...scene, rawSurface: scene.surface, surface: supportedHeight, corrections };
 }
 
 test('three native 2 m walls mate at the two connectors and stand on the real mixed-grid floor', t => {

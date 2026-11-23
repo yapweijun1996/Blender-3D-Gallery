@@ -1,0 +1,189 @@
+{
+  "toleranceM": 0.000001,
+  "levels": {
+    "LOD0": {
+      "sha256": "95cba3ad11eb3ca8d76082615af895403e5b09c9f773dcd800b8d7271029b1f7",
+      "straightSha256": "78cb88496c5f5bd79f3787301fc7cfcb05b2378883b27fe67d43669da6d50ddd",
+      "bytes": 206328,
+      "triangles": 1068,
+      "draws": 24,
+      "bounds": {
+        "min": [
+          -2,
+          0,
+          -0.07500000298023224
+        ],
+        "max": [
+          0.07500000298023224,
+          2.799999952316284,
+          2
+        ]
+      },
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "miterFaceAudit": {
+        "interiorCapTriangles": 0,
+        "crossingTriangles": 0,
+        "largestThinArmExtentM": 0.13700000196695328
+      },
+      "diagonalAndPanelHits": 18
+    },
+    "LOD1": {
+      "sha256": "1d5214bdf7a7ea0c5b23eef775f75dafc4bfc2b5e6c116561e3991415f94906b",
+      "straightSha256": "b96c1c6f66ae25daac63640ec56eb22b7e1c87cf63be6131864a9097705abd8a",
+      "bytes": 20708,
+      "triangles": 264,
+      "draws": 8,
+      "bounds": {
+        "min": [
+          -2,
+          0,
+          -0.07500000298023224
+        ],
+        "max": [
+          0.07500000298023224,
+          2.799999952316284,
+          2
+        ]
+      },
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "miterFaceAudit": {
+        "interiorCapTriangles": 0,
+        "crossingTriangles": 0,
+        "largestThinArmExtentM": 0.13700000196695328
+      },
+      "diagonalAndPanelHits": 18
+    },
+    "LOD2": {
+      "sha256": "fa9bb7d6f592557a6522d2a35545c0bc4105a6378cc18f06faef011a68c96691",
+      "straightSha256": "a5df7544341c66094a69739fb51f5ae2769cdc7d55bbf75fda378ad450423570",
+      "bytes": 6960,
+      "triangles": 68,
+      "draws": 2,
+      "bounds": {
+        "min": [
+          -2,
+          0,
+          -0.07500000298023224
+        ],
+        "max": [
+          0.07500000298023224,
+          2.799999952316284,
+          2
+        ]
+      },
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "miterFaceAudit": {
+        "interiorCapTriangles": 0,
+        "crossingTriangles": 0,
+        "largestThinArmExtentM": 0.15000000596046448
+      },
+      "diagonalAndPanelHits": 18
+    }
+  },
+  "straightConnections": [
+    {
+      "cornerLevel": 0,
+      "straightLevel": 0,
+      "gapsM": [
+        0,
+        0
+      ],
+      "frontAndRearHits": 120,
+      "largestFlushDifferenceM": 4.440892098500626e-16
+    },
+    {
+      "cornerLevel": 0,
+      "straightLevel": 1,
+      "gapsM": [
+        0,
+        0
+      ],
+      "frontAndRearHits": 120,
+      "largestFlushDifferenceM": 3.3306690738754696e-16
+    },
+    {
+      "cornerLevel": 0,
+      "straightLevel": 2,
+      "gapsM": [
+        0,
+        0
+      ],
+      "frontAndRearHits": 120,
+      "largestFlushDifferenceM": 4.440892098500626e-16
+    },
+    {
+      "cornerLevel": 1,
+      "straightLevel": 0,
+      "gapsM": [
+        0,
+        0
+      ],
+      "frontAndRearHits": 120,
+      "largestFlushDifferenceM": 4.440892098500626e-16
+    },
+    {
+      "cornerLevel": 1,
+      "straightLevel": 1,
+      "gapsM": [
+        0,
+        0
+      ],
+      "frontAndRearHits": 120,
+      "largestFlushDifferenceM": 3.3306690738754696e-16
+    },
+    {
+      "cornerLevel": 1,
+      "straightLevel": 2,
+      "gapsM": [
+        0,
+        0
+      ],
+      "frontAndRearHits": 120,
+      "largestFlushDifferenceM": 4.440892098500626e-16
+    },
+    {
+      "cornerLevel": 2,
+      "straightLevel": 0,
+      "gapsM": [
+        0,
+        0
+      ],
+      "frontAndRearHits": 120,
+      "largestFlushDifferenceM": 4.440892098500626e-16
+    },
+    {
+      "cornerLevel": 2,
+      "straightLevel": 1,
+      "gapsM": [
+        0,
+        0
+      ],
+      "frontAndRearHits": 120,
+      "largestFlushDifferenceM": 3.3306690738754696e-16
+    },
+    {
+      "cornerLevel": 2,
+      "straightLevel": 2,
+      "gapsM": [
+        0,
+        0
+      ],
+      "frontAndRearHits": 120,
+      "largestFlushDifferenceM": 4.440892098500626e-16
+    }
+  ],
+  "negativeControls": [
+    "Reversed public face of a return straight",
+    "Return straight displaced 5 mm along its run"
+  ],
+  "result": "pass"
+}
