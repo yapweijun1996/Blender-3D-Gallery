@@ -64,6 +64,14 @@ Choose **Home furnishings shop** or open `/mall-modules-preview/?view=home-furni
 
 Open the doors and enter from the apron. The two viewing points connect along a 13.5 m loop. Run `node --test tests/mall-home-furnishings.test.mjs` to verify the furnished route in both directions. The check samples 27,225 points under the visitor's footprint and 126 triangles at furniture supports, including the lamp on the 622.5 mm cabinet top. The controller stops within one 25 mm movement step of independent mesh sweeps against the sofa and dining table. Moving the sofa into the doorway blocks the route. The furniture is displayed in its static pose. [Showroom cutaway](home-furnishings.png)
 
+### Pharmacy and beauty shop
+
+Choose **Pharmacy and beauty shop** or open `/mall-modules-preview/?view=pharmacy-beauty`. Enter through the double doors. The new [cosmetics tester bar](../models/mall-cosmetics-tester-bar/README.md) stands on the left, the [stocked shelf](../models/medicine-health-box-set/README.md) on the right and the [pickup counter](../models/pharmacy-counter/README.md) at the back. **Inspect tester bar** frames the eight shade samples and mirror from the customer side. **Reset view** returns to the shop overview. [Shop cutaway](pharmacy-beauty.png) · [Tester close-up](pharmacy-beauty-tester.png)
+
+The three fixtures sit at their original scale. The 0.814 m-wide pickup opening gives the customer a sightline to the tray, and the right-hand aisle leads staff to the open rear rack. The 18.18 m customer loop visits all three fixtures from the entrance. The 11.88 m staff route runs from the stock display around the counter and back.
+
+Run `node --test tests/mall-pharmacy-beauty.test.mjs` to check floor support, sightlines and full-body clearance along both routes, including controls with the door shut, the tester reversed and the staff aisle obstructed. With the local server running, `MALL_PREVIEW_SITE=http://127.0.0.1:5173/ node scripts/test-mall-pharmacy-beauty.mjs` checks the nine loaded GLBs and the inspect, reset, roof and shop controls at desktop and touch viewport sizes. It also interrupts the tester download and retries through the shop selector.
+
 ## Furnished corridor
 
 The wall selection is the new 1.2 m solid wall; the corridor also retains the existing glass partitions for the shopfronts. The ceiling is intentionally a partial cutaway for visibility. This visual arrangement is not a construction or safety specification; see the individual asset READMEs and `docs/verification/p0-assembly/README.md` for actual dimensions, interfaces, prior checks, and rights. The preview does not change or export source assets, and it is not part of the production Gallery build.

@@ -1,0 +1,110 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import { chromium } from 'playwright';
+import { beautyPaths } from '../mall-modules-preview/pharmacy-beauty.js';
+import { roomAssetPaths } from '../mall-modules-preview/room-layout.js';
+import { launchOptions, recordConsumedGlbHashes } from './browser-test-utils.mjs';
+
+const url = new URL('mall-modules-preview/?view=pharmacy-beauty', process.env.MALL_PREVIEW_SITE ?? 'http://127.0.0.1:5173/');
+const paths = Object.values({ ...roomAssetPaths, ...beautyPaths });
+const expected = (await Promise.all(paths.map(async path =>
+  createHash('sha256').update(await readFile(path)).digest('hex')))).sort();
+const ready = (page, id) => page.locator('#canvas-wrap[data-view="' + id + '"] #canvas-status[data-state="ready"]')
+  .waitFor({ state: 'attached', timeout: 120000 });
+const rendered = page => page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+const readVisitor = page => page.locator('#canvas-wrap').evaluate(el => el.inspectVisitor().visitor);
+const browser = await chromium.launch(launchOptions);
+
+try {
+  for (const width of [1080, 390]) {
+    const touch = width === 390;
+    const page = await browser.newPage({ viewport: { width, height: 844 }, hasTouch: touch });
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.addInitScript(recordConsumedGlbHashes);
+    if (touch) {
+      await page.route('**/mall-cosmetics-tester-bar.glb', route => route.abort(), { times: 1 });
+    }
+    await page.goto(url.href, { waitUntil: 'domcontentloaded' });
+    if (touch) {
+      await page.locator('#canvas-status[data-state="error"]').waitFor();
+      assert.equal(await page.getByRole('button', { name: 'Inspect tester bar' }).count(), 0);
+      const layouts = page.getByRole('combobox', { name: 'Assembly' });
+      await layouts.selectOption('enclosed-shop');
+      await ready(page, 'enclosed-shop');
+      await layouts.selectOption('pharmacy-beauty');
+    }
+    await ready(page, 'pharmacy-beauty');
+    assert.deepEqual(await page.evaluate(() => window.consumedModelHashes.slice().sort()), expected);
+    assert.equal(await readVisitor(page), null);
+
+    const inspect = page.getByRole('button', { name: 'Inspect tester bar' });
+    const canvas = page.locator('#canvas-wrap canvas');
+    const layouts = page.getByRole('combobox', { name: 'Assembly' });
+    const reset = page.getByRole('button', { name: 'Reset camera view' });
+    async function shot(name) {
+      await rendered(page);
+      const path = process.env.MALL_GRID_SHOTS && process.env.MALL_GRID_SHOTS + '/pharmacy-' + name + '-' + width + '.png';
+      const image = await canvas.screenshot(path ? { path } : {});
+      // Scroll position can change the outermost antialiased border pixel.
+      // Compare the rendered interior directly, including the complete tester.
+      return page.evaluate(async encoded => {
+        const image = new Image();
+        image.src = 'data:image/png;base64,' + encoded;
+        await image.decode();
+        const surface = document.createElement('canvas');
+        surface.width = image.width - 4;
+        surface.height = image.height - 4;
+        surface.getContext('2d').drawImage(image, -2, -2);
+        return surface.toDataURL();
+      }, image.toString('base64'));
+    }
+    const overview = await shot('overview');
+    if (touch) await inspect.tap();
+    else { await inspect.focus(); await page.keyboard.press('Enter'); }
+    const detail = await shot('tester');
+    assert.ok(overview !== detail, 'inspect moves from the shop overview to the installed tester');
+    await reset.click();
+    assert.ok(overview === await shot('reset'), 'reset restores the original view of the shop');
+    await page.getByRole('button', { name: 'Show ceiling' }).click();
+    await inspect.click();
+    assert.ok(detail === await shot('under-roof'), 'the inspection camera stays inside the shop below the ceiling');
+    await layouts.selectOption('enclosed-shop');
+    await ready(page, 'enclosed-shop');
+    assert.equal(await inspect.count(), 0);
+    await layouts.selectOption('pharmacy-beauty');
+    await ready(page, 'pharmacy-beauty');
+    assert.equal(await page.getByRole('button', { name: 'Hide ceiling' }).count(), 1);
+    assert.deepEqual(await page.evaluate(() => window.consumedModelHashes.slice().sort()), expected, 'switches reuse installed fixtures');
+
+    if (!touch) {
+      // A late visitor download must respect a more recent request to inspect the tester.
+      let release, started;
+      const gate = new Promise(resolve => { release = resolve; });
+      const download = new Promise(resolve => { started = resolve; });
+      await page.route('**/gjh-mall-visitor.glb', async route => { started(); await gate; await route.continue(); });
+      const walk = page.locator('#walk');
+      await walk.click();
+      await download;
+      await inspect.click();
+      release();
+      await page.waitForFunction(() => Boolean(document.querySelector('#canvas-wrap').inspectVisitor().visitor));
+      assert.equal((await readVisitor(page)).walking, false);
+      await walk.click();
+      assert.equal((await readVisitor(page)).walking, true);
+      const before = (await readVisitor(page)).position;
+      await inspect.click();
+      const after = await readVisitor(page);
+      assert.equal(after.walking, false);
+      assert.deepEqual(after.position, before, 'inspection preserves visitor position');
+      assert.ok(detail === await shot('after-walking'), 'the visitor does not obscure the inspection camera');
+    }
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    assert.deepEqual(errors, []);
+    await page.close();
+    console.log('PASS pharmacy and beauty shop at ' + width + 'px, nine exact GLBs, inspection, reset, roof and scene selection');
+  }
+} finally {
+  await browser.close();
+}

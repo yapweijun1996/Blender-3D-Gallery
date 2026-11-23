@@ -291,7 +291,7 @@ This is the detailed planning checklist requested for building a complete virtua
 - [ ] 珠宝托盘
 - [ ] 手表展示座
 - [ ] 香水展示台
-- [ ] 化妆品试用台
+- [x] [化妆品试用台](../../models/mall-cosmetics-tester-bar/README.md)
 - [ ] 手机展示防盗座
 - [ ] 电视展示墙
 - [ ] 电子产品体验桌
@@ -365,7 +365,7 @@ This is the detailed planning checklist requested for building a complete virtua
 - [ ] 运动用品店
 - [ ] 美容护肤店
 - [ ] 美妆店
-- [ ] 药妆店
+- [x] [药妆店](../../mall-modules-preview/README.md#pharmacy-and-beauty-shop)（6 m 店型，含试色、取货和货架）
 - [ ] 香水店
 - [ ] 药房
 - [ ] 便利店
@@ -417,7 +417,7 @@ This is the detailed planning checklist requested for building a complete virtua
 
 - [ ] 药妆店收银台
 - [ ] 药妆店中岛货架
-- [ ] 化妆品试用品台
+- [x] [化妆品试用品台](../../models/mall-cosmetics-tester-bar/README.md)（同一件 MALL-RET-020）
 - [ ] 护肤品壁架
 - [ ] 药品展示柜
 - [ ] 超市入口闸门
