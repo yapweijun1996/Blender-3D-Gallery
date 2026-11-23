@@ -5,7 +5,7 @@ import { shopfrontBays } from './shopfront-layout.js';
 import { batchStaticMeshes } from './batch-static.js';
 import { arrival, assembleCorridor, corridorAssetPaths } from './corridor-layout.js';
 import { shellLayout } from './shell-layout.js';
-import { assembleCornerTileFloor, cornerFloorPath } from './floor-edge.js';
+import { assembleCornerTileFloor, assembleFinishedFloorEdge, cornerFloorPath, floorEdgePaths } from './floor-edge.js';
 import { assembleFloorTransition, floorTransitionPaths } from './floor-transition.js';
 import { assembleCornerFloor, assembleWallCeiling, assembleWalledFloor, wallCornerPath, wallRunPath } from './wall-run.js';
 
@@ -85,6 +85,11 @@ if (renderer) {
     'corner-floor': {
       name: 'Outside floor corner', subtitle: 'Champagne and terrazzo bands follow the two outside edges of a four-tile floor.',
       inputs: cornerFloorAssets, build: assembleCornerTileFloor,
+    },
+    'finished-edge': {
+      name: 'Finished floor edge', subtitle: 'Two straight profiles join the mitred return and cover the full depth of both exposed edges.',
+      inputs: [...cornerFloorAssets, ...Object.entries(floorEdgePaths).map(([id, path]) => ({ id, path }))],
+      build: assembleFinishedFloorEdge,
     },
     'wall-run': {
       name: 'Straight wall run', subtitle: 'Three 2 m walls stand on the finished floor, with their stone faces toward the aisle.',
@@ -202,6 +207,7 @@ if (renderer) {
     const direction = new THREE.Vector3(6,4,7);
     if (id === 'ceiling') direction.set(4,-3,5);
     if (id === 'assembly') direction.set(6,3.5,10);
+    if (id === 'finished-edge') direction.set(3.7,2.6,5.1);
     if (id === 'corner-floor') direction.set(3.5,5.3,5.2);
     if (id === 'floor-transition') direction.set(1.2,5.5,5.1);
     if (id === 'wall-run' || id === 'wall-ceiling') direction.set(2.3,2.6,6);

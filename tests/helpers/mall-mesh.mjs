@@ -40,7 +40,7 @@ export async function measureCorridor(root) {
     const collider = physics.addStaticTrimesh(triangles(object));
     modules.push({ id, x: object.position.x, collider });
     if (id === 'floor' || id === 'cornerTile' || id === 'floor2m' || id === 'cornerFloor2m') floorHandles.add(collider.handle);
-    else if (id !== 'floorEdge' && id !== 'mitredTrim') obstacleIds.set(collider.handle, id);
+    else if (!['floorEdge', 'mitredTrim', 'edge2m', 'mitredEdge2m'].includes(id)) obstacleIds.set(collider.handle, id);
   }
   assert.equal(visitor.floors.length, floorHandles.size, 'all installed floor cells reach the visitor');
   physics.step(FIXED_DT);

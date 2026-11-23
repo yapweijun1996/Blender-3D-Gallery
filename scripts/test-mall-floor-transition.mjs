@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-import { cornerFloorPath } from '../mall-modules-preview/floor-edge.js';
+import { cornerFloorPath, floorEdgePaths } from '../mall-modules-preview/floor-edge.js';
 import { floorTransitionPaths } from '../mall-modules-preview/floor-transition.js';
 import { shellAssetPaths } from '../mall-modules-preview/shell-layout.js';
 import { wallCornerPath, wallRunPath } from '../mall-modules-preview/wall-run.js';
@@ -13,6 +13,7 @@ const hashes = await Promise.all(Object.values(floorTransitionPaths).map(async p
   createHash('sha256').update(await readFile(path)).digest('hex')));
 const shellViews = [
   ['corner-floor', cornerFloorPath],
+  ['finished-edge', ...Object.values(floorEdgePaths)],
   ['wall-run', wallRunPath],
   ['wall-ceiling', shellAssetPaths.ceiling],
   ['wall-corner', wallCornerPath],
@@ -57,10 +58,10 @@ try {
     });
     const layouts = page.getByRole('combobox', { name: 'Assembly' });
     const expected = [...hashes];
-    for (const [view, file] of shellViews) {
+    for (const [view, ...files] of shellViews) {
       await layouts.selectOption(view);
       await ready(view);
-      expected.push(createHash('sha256').update(await readFile(file)).digest('hex'));
+      for (const file of files) expected.push(createHash('sha256').update(await readFile(file)).digest('hex'));
       assert.deepEqual((await page.evaluate(() => window.floorTransfers)).sort(), [...expected].sort());
       if (process.env.MALL_GRID_SHOTS) await page.locator('#canvas-wrap').screenshot({
         path: process.env.MALL_GRID_SHOTS + '/' + view + '-' + width + '.png',

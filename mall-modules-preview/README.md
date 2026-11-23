@@ -38,6 +38,14 @@ Choose **Outside floor corner** or open `/mall-modules-preview/?view=corner-floo
 
 Run `node --test tests/mall-floor-corner-tile-2m.test.mjs`. The check inspects both sides of all four internal joins with 2,424 surface rays. It distinguishes the two champagne arms and samples both sides of their boundaries to 10 μm. Each direction of the 6.025 m visitor route has 6,075 footprint probes. A reversed tile still fills the square but places its bands on the wrong edges. Removing it leaves an unsupported quarter of the floor.
 
+### Full-depth floor edging
+
+Choose **Finished floor edge** or open `/mall-modules-preview/?view=finished-edge`. Two [2 m straight profiles and their mitred return](../models/mall-floor-edge-2m/README.md) finish the outside edges of the same four slabs. The 60 mm cap sits flush and its bronze fascia covers the 100 mm slab depth. The straight profiles use a top-centre pivot. The paired return uses the corner tile centre at finished-floor elevation. [Installed straight and mitred edges](finished-floor-edge.png)
+
+Run `node --test tests/mall-floor-edge-kit-2m.test.mjs`. Both straight-to-return joints match at 56 paired end-face samples. Another 568 paired samples check the slab and trim, including a 1 mm relief at 99 mm depth where the underside bevel recedes. The old 1.2 m trim leaves an 800 mm opening at 2 m centres and exposes 70 mm of the side.
+
+The visible cap extends beyond the four walkable cells. At each outer edge the visitor stops with its footprint on the slab. A ray cast exactly on the triangle boundary can miss in Rapier. The verifier checks the point against the actual GLB triangles and the closest point on the physics mesh within 1 μm, and verifies that probing 10 μm farther out finds no floor support.
+
 ## Furnished corridor
 
 The wall selection is the new 1.2 m solid wall; the corridor also retains the existing glass partitions for the shopfronts. The ceiling is intentionally a partial cutaway for visibility. This visual arrangement is not a construction or safety specification; see the individual asset READMEs and `docs/verification/p0-assembly/README.md` for actual dimensions, interfaces, prior checks, and rights. The preview does not change or export source assets, and it is not part of the production Gallery build.

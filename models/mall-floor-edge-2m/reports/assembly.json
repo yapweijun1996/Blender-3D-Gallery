@@ -1,0 +1,278 @@
+{
+  "toleranceM": 0.000001,
+  "forms": {
+    "StraightLOD0": {
+      "file": "mall-floor-edge-2m.glb",
+      "sha256": "98cc4ad1733113365d932ca506ecc9369fc9017b1c17e20583eb360a41450489",
+      "bytes": 15968,
+      "triangles": 296,
+      "draws": 3,
+      "gltfBoundsM": [
+        [
+          -1,
+          -0.10000000149011612,
+          -0.029999999329447746
+        ],
+        [
+          1,
+          0,
+          0.029999999329447746
+        ]
+      ],
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "StraightLOD1": {
+      "file": "mall-floor-edge-2m-lod1.glb",
+      "sha256": "1a626a5f170089b3157ba59c7d9f7bb3ddbbfc75d1ddc76ef69591fc34f40a02",
+      "bytes": 9200,
+      "triangles": 128,
+      "draws": 3,
+      "gltfBoundsM": [
+        [
+          -1,
+          -0.10000000149011612,
+          -0.029999999329447746
+        ],
+        [
+          1,
+          0,
+          0.029999999329447746
+        ]
+      ],
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "StraightLOD2": {
+      "file": "mall-floor-edge-2m-lod2.glb",
+      "sha256": "7088ca940ee283808ac5ddb9729d1620d6022c5ea9afa8dd33bc216a6a0eb6ad",
+      "bytes": 5524,
+      "triangles": 64,
+      "draws": 1,
+      "gltfBoundsM": [
+        [
+          -1,
+          -0.10000000149011612,
+          -0.029999999329447746
+        ],
+        [
+          1,
+          0,
+          0.029999999329447746
+        ]
+      ],
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "MitreLOD0": {
+      "file": "mall-floor-edge-2m-mitre.glb",
+      "sha256": "0258a9e23bb4d6f4bcb3eacdb8c651cce8b19e9617c3bd7d54b8640207b24e22",
+      "bytes": 30176,
+      "triangles": 562,
+      "draws": 6,
+      "gltfBoundsM": [
+        [
+          -1,
+          -0.10000000149011612,
+          -1
+        ],
+        [
+          1.059999942779541,
+          0,
+          1.059999942779541
+        ]
+      ],
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "diagonal": {
+        "trianglesChecked": 562,
+        "internalCapTriangles": 0,
+        "crossingTriangles": 0,
+        "rayHits": 22
+      }
+    },
+    "MitreLOD1": {
+      "file": "mall-floor-edge-2m-mitre-lod1.glb",
+      "sha256": "56f27593bd1ec69b87e57be4fd98b644ee352d53dead0b07df2e579e0f033e9e",
+      "bytes": 16156,
+      "triangles": 226,
+      "draws": 6,
+      "gltfBoundsM": [
+        [
+          -1,
+          -0.10000000149011612,
+          -1
+        ],
+        [
+          1.059999942779541,
+          0,
+          1.059999942779541
+        ]
+      ],
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "diagonal": {
+        "trianglesChecked": 226,
+        "internalCapTriangles": 0,
+        "crossingTriangles": 0,
+        "rayHits": 22
+      }
+    },
+    "MitreLOD2": {
+      "file": "mall-floor-edge-2m-mitre-lod2.glb",
+      "sha256": "cc25f0d18fbd917870443555f5355a6c3dcf718196e50dcb5d9056ed26ec2226",
+      "bytes": 8956,
+      "triangles": 98,
+      "draws": 2,
+      "gltfBoundsM": [
+        [
+          -1,
+          -0.10000000149011612,
+          -1
+        ],
+        [
+          1.059999942779541,
+          0,
+          1.059999942779541
+        ]
+      ],
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "diagonal": {
+        "trianglesChecked": 98,
+        "internalCapTriangles": 0,
+        "crossingTriangles": 0,
+        "rayHits": 22
+      }
+    }
+  },
+  "joins": [
+    {
+      "mitreLOD": 0,
+      "straightLOD": 0,
+      "topSoffitAndFasciaHits": 168,
+      "maximumPairedStepM": 5.654990697934181e-8,
+      "endGapsM": [
+        0,
+        0
+      ]
+    },
+    {
+      "mitreLOD": 0,
+      "straightLOD": 1,
+      "topSoffitAndFasciaHits": 168,
+      "maximumPairedStepM": 5.654990697934181e-8,
+      "endGapsM": [
+        0,
+        0
+      ]
+    },
+    {
+      "mitreLOD": 0,
+      "straightLOD": 2,
+      "topSoffitAndFasciaHits": 168,
+      "maximumPairedStepM": 5.654990697934181e-8,
+      "endGapsM": [
+        0,
+        0
+      ]
+    },
+    {
+      "mitreLOD": 1,
+      "straightLOD": 0,
+      "topSoffitAndFasciaHits": 168,
+      "maximumPairedStepM": 5.654990697934181e-8,
+      "endGapsM": [
+        0,
+        0
+      ]
+    },
+    {
+      "mitreLOD": 1,
+      "straightLOD": 1,
+      "topSoffitAndFasciaHits": 168,
+      "maximumPairedStepM": 5.654990697934181e-8,
+      "endGapsM": [
+        0,
+        0
+      ]
+    },
+    {
+      "mitreLOD": 1,
+      "straightLOD": 2,
+      "topSoffitAndFasciaHits": 168,
+      "maximumPairedStepM": 5.654990697934181e-8,
+      "endGapsM": [
+        0,
+        0
+      ]
+    },
+    {
+      "mitreLOD": 2,
+      "straightLOD": 0,
+      "topSoffitAndFasciaHits": 168,
+      "maximumPairedStepM": 5.654990697934181e-8,
+      "endGapsM": [
+        0,
+        0
+      ]
+    },
+    {
+      "mitreLOD": 2,
+      "straightLOD": 1,
+      "topSoffitAndFasciaHits": 168,
+      "maximumPairedStepM": 5.654990697934181e-8,
+      "endGapsM": [
+        0,
+        0
+      ]
+    },
+    {
+      "mitreLOD": 2,
+      "straightLOD": 2,
+      "topSoffitAndFasciaHits": 168,
+      "maximumPairedStepM": 5.654990697934181e-8,
+      "endGapsM": [
+        0,
+        0
+      ]
+    }
+  ],
+  "tileContacts": [
+    {
+      "tile": "mall-floor-module-2m.glb",
+      "sha256": "ee20ed28ff37b505b005ed9a6426c22b66972c663e2c896a304b4e6fbfe4b750",
+      "surfaceHitsPerLOD": [
+        128,
+        128,
+        128
+      ]
+    },
+    {
+      "tile": "mall-floor-corner-2m.glb",
+      "sha256": "32f61d3bc7a51b2af859c1e9c253e3c81b82548f58a0c9667377c950d0839e41",
+      "surfaceHitsPerLOD": [
+        128,
+        128,
+        128
+      ]
+    }
+  ],
+  "controls": [
+    "5 mm straight displacement leaves a through gap",
+    "Legacy 30 mm trim leaves the lower fascia exposed"
+  ],
+  "result": "pass"
+}

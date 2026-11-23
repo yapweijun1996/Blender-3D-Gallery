@@ -1,0 +1,143 @@
+{
+  "id": "mall-floor-edge-2m",
+  "name": "Mall Floor Edge · 2 m",
+  "summary": "Champagne-capped full-depth bronze trim for the 2 m floor, supplied as a straight strip and a matched outside mitre.",
+  "description": "A two-metre floor trim with a flush decorative cap, recessed fascia and bronze button details. A companion pair follows the 90-degree outside corner.",
+  "category": "Shopping Mall",
+  "tags": [
+    "mall",
+    "floor",
+    "edge trim",
+    "outside corner",
+    "modular",
+    "architecture"
+  ],
+  "status": "validated",
+  "created": "2026-11-24",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Original editable extruded PBR sections and geometric fasteners with a shared 45-degree outside mitre. No external imagery or geometry.",
+  "source": "sources/mall-floor-edge-2m.blend",
+  "generator": "generate.py",
+  "export": "exports/mall-floor-edge-2m.glb",
+  "preview": "previews/mall-floor-edge-2m.jpg",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.53,
+      0.35,
+      1
+    ]
+  },
+  "assembly": {
+    "grid_m": 2,
+    "full_depth_m": 0.1,
+    "cap_width_m": 0.06,
+    "straight_bounds_gltf_m": [
+      [
+        -1,
+        -0.1,
+        -0.03
+      ],
+      [
+        1,
+        0,
+        0.03
+      ]
+    ],
+    "outside_mitre_bounds_gltf_m": [
+      [
+        -1,
+        -0.1,
+        -1
+      ],
+      [
+        1.06,
+        0,
+        1.06
+      ]
+    ],
+    "mitre_top_endpoints_gltf_m": [
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        1.06,
+        0,
+        1.06
+      ]
+    ],
+    "origin": "Straight at top centre. Mitre at its adjoining tile centre, finished floor elevation."
+  },
+  "rights": "Original owner-project geometry and materials. Public download and redistribution terms are unspecified.",
+  "accuracy_notes": "Decorative fictional exterior edge for the 100 mm mall floor. The straight and 90-degree outside mitre were measured. Other angles and installation performance require separate review.",
+  "attribution": [
+    {
+      "credit": "Original geometry, material finishes, procedural tooling and Blender studio renders by the Blender-3D-Gallery project."
+    }
+  ],
+  "variants": [
+    {
+      "form": "Straight",
+      "level": "LOD0",
+      "file": "exports/mall-floor-edge-2m.glb",
+      "triangles": 296,
+      "draw_calls": 3,
+      "bytes": 15968,
+      "sha256": "98cc4ad1733113365d932ca506ecc9369fc9017b1c17e20583eb360a41450489"
+    },
+    {
+      "form": "Straight",
+      "level": "LOD1",
+      "file": "exports/mall-floor-edge-2m-lod1.glb",
+      "triangles": 128,
+      "draw_calls": 3,
+      "bytes": 9200,
+      "sha256": "1a626a5f170089b3157ba59c7d9f7bb3ddbbfc75d1ddc76ef69591fc34f40a02"
+    },
+    {
+      "form": "Straight",
+      "level": "LOD2",
+      "file": "exports/mall-floor-edge-2m-lod2.glb",
+      "triangles": 64,
+      "draw_calls": 1,
+      "bytes": 5524,
+      "sha256": "7088ca940ee283808ac5ddb9729d1620d6022c5ea9afa8dd33bc216a6a0eb6ad"
+    },
+    {
+      "form": "Mitre",
+      "level": "LOD0",
+      "file": "exports/mall-floor-edge-2m-mitre.glb",
+      "triangles": 562,
+      "draw_calls": 6,
+      "bytes": 30176,
+      "sha256": "0258a9e23bb4d6f4bcb3eacdb8c651cce8b19e9617c3bd7d54b8640207b24e22"
+    },
+    {
+      "form": "Mitre",
+      "level": "LOD1",
+      "file": "exports/mall-floor-edge-2m-mitre-lod1.glb",
+      "triangles": 226,
+      "draw_calls": 6,
+      "bytes": 16156,
+      "sha256": "56f27593bd1ec69b87e57be4fd98b644ee352d53dead0b07df2e579e0f033e9e"
+    },
+    {
+      "form": "Mitre",
+      "level": "LOD2",
+      "file": "exports/mall-floor-edge-2m-mitre-lod2.glb",
+      "triangles": 98,
+      "draw_calls": 2,
+      "bytes": 8956,
+      "sha256": "cc25f0d18fbd917870443555f5355a6c3dcf718196e50dcb5d9056ed26ec2226"
+    }
+  ],
+  "sha256": {
+    "source": "a7af80c9f730d83db05412070b864e93d539dbc7cdf87c9d4b7dd41f256eb644",
+    "preview": "d7a8df846c3cc065dd4798cdab9116a72501a5556ef326feec0d21fba0110b47",
+    "glb": "98cc4ad1733113365d932ca506ecc9369fc9017b1c17e20583eb360a41450489",
+    "mitre_preview": "2795ada94366dfff01d6bf4d06c963d5e4f7271a0ec59962c79026e91cd83eab"
+  }
+}
