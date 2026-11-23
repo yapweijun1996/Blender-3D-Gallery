@@ -6,6 +6,7 @@ const APPROACH = "646887291:0"; // Mount Rosie Road
 const PRIVATE_ARM = "33876790:0";
 const PUBLIC_ROADS = new Set(["33875671:0", "33875672:1", "261041684:0", "261041685:0",
   "646368536:0", "646886085:0", "274465127:0"]); // Goldhill Avenue, Goldhill Place and Mount Rosie Terrace.
+const requiredTiles = ["-13_-18", "-12_-18", "-13_-17", "-12_-17"];
 const observer = { x: -3072, z: -4233 }; // Park clear of the junction, within the ambient spawn radius.
 const start = { x: -2975.1743, z: -4258.9831, heading: .5243 }; // A straight section of the private arm.
 
@@ -80,6 +81,32 @@ async function drivePrivateRoad(page, stage, pause) {
   return { advance, crossTrack, groundedWheels: after.groundedWheels, damage: after.damage };
 }
 
+async function loadMountRosie(page, stage, pause) {
+  // Drain Bayfront's serial tile queue before requesting the remote neighborhood.
+  await pause.click();
+  await page.waitForFunction(() => {
+    const { loading } = document.querySelector(".world-stage").inspectWorld();
+    return !loading.pending && !loading.ready;
+  }, null, { polling: 250, timeout: 120_000 });
+  const arrivals = requiredTiles.map(key => page.waitForResponse(response => {
+    const tile = new URL(response.url()).pathname.match(/\/(-?\d+_-?\d+)(?:-[\w-]+)?\.json$/)?.[1];
+    return tile === key && response.ok();
+  }, { timeout: 150_000 }));
+  // Use a complete local graph so ambient spawn choices include the same neighboring roads.
+  const installed = page.waitForFunction(() => {
+    const { carTile, loading } = document.querySelector(".world-stage").inspectWorld();
+    if (loading.failed) throw new Error("world tile stream failed");
+    return carTile[0] === -13 && carTile[1] === -17 && !loading.pending && !loading.ready;
+  }, null, { polling: 250, timeout: 150_000 });
+  await Promise.all([...arrivals, installed, stage.evaluate((element, point) => element.teleport(point.x, point.z), observer)]);
+  const edges = await stage.evaluate((element, arm) => {
+    element.simulate(.1, { brake: 1 });
+    return [element.inspectRoad(-2985.9, -4266.825).edgeId,
+      element.inspectRoad(-3021.366, -4195.242).edgeId, element.inspectRoad(arm.x, arm.z).edgeId];
+  }, start);
+  assert.deepEqual(edges, [APPROACH, "33875671:0", PRIVATE_ARM], "the public feeder, public approach and private arm are installed");
+}
+
 async function checkWorld(browser, baseUrl, baseline = false) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, serviceWorkers: "block", locale: "en" });
   try {
@@ -95,16 +122,10 @@ async function checkWorld(browser, baseUrl, baseline = false) {
     await stage.waitFor({ timeout: 120_000 });
     assert.ok(await stage.evaluate(element => typeof element.inspectTraffic === "function"), "the world exposes live traffic diagnostics");
     const pause = page.locator(".drive-pause");
-    await pause.click();
-    await stage.evaluate((element, point) => element.teleport(point.x, point.z), observer);
-    await page.waitForFunction(([x, z]) => {
-      const { carTile, loading } = document.querySelector(".world-stage").inspectWorld();
-      return carTile[0] === x && carTile[1] === z && !loading.pending;
-    }, [-13, -17], { polling: 150, timeout: 60_000 });
-    const ready = await stage.evaluate(element => element.simulate(.1, { brake: 1 }));
-    assert.equal(ready.loading.failed, 0, "Mount Rosie tiles load successfully");
+    await loadMountRosie(page, stage, pause);
     const traffic = await observeTraffic(stage, baseline);
     const drive = await drivePrivateRoad(page, stage, pause);
+    assert.equal(await stage.evaluate(element => element.inspectWorld().loading.failed), 0, "world tiles load successfully");
     assert.deepEqual(errors, []);
     return { ...traffic, drive };
   } finally {
