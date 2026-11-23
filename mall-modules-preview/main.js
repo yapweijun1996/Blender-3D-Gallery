@@ -5,6 +5,7 @@ import { shopfrontBays } from './shopfront-layout.js';
 import { batchStaticMeshes } from './batch-static.js';
 import { arrival, assembleCorridor, corridorAssetPaths } from './corridor-layout.js';
 import { shellLayout } from './shell-layout.js';
+import { assembleCornerTileFloor, cornerFloorPath } from './floor-edge.js';
 import { assembleFloorTransition, floorTransitionPaths } from './floor-transition.js';
 import { assembleCornerFloor, assembleWallCeiling, assembleWalledFloor, wallCornerPath, wallRunPath } from './wall-run.js';
 
@@ -29,6 +30,10 @@ const furnishings = Object.entries(corridorAssetPaths)
   .filter(([id]) => !modules.some(item => item.id === id))
   .map(([id, path]) => ({ id, path }));
 const transitionAssets = Object.entries(floorTransitionPaths).map(([id, path]) => ({ id, path }));
+const cornerFloorAssets = [
+  { id: 'floor2m', path: floorTransitionPaths.floor2m },
+  { id: 'cornerFloor2m', path: cornerFloorPath },
+];
 const wallAssets = [...transitionAssets, { id: 'wall2m', path: wallRunPath }];
 const $ = (selector) => document.querySelector(selector);
 const list = $('#module-list');
@@ -76,6 +81,10 @@ if (renderer) {
     'floor-transition': {
       name: 'Floor grid transition', subtitle: 'Five 1.2 m bays meet three 2 m bays along a six-metre joint.',
       inputs: transitionAssets, build: assembleFloorTransition,
+    },
+    'corner-floor': {
+      name: 'Outside floor corner', subtitle: 'Champagne and terrazzo bands follow the two outside edges of a four-tile floor.',
+      inputs: cornerFloorAssets, build: assembleCornerTileFloor,
     },
     'wall-run': {
       name: 'Straight wall run', subtitle: 'Three 2 m walls stand on the finished floor, with their stone faces toward the aisle.',
@@ -193,6 +202,7 @@ if (renderer) {
     const direction = new THREE.Vector3(6,4,7);
     if (id === 'ceiling') direction.set(4,-3,5);
     if (id === 'assembly') direction.set(6,3.5,10);
+    if (id === 'corner-floor') direction.set(3.5,5.3,5.2);
     if (id === 'floor-transition') direction.set(1.2,5.5,5.1);
     if (id === 'wall-run' || id === 'wall-ceiling') direction.set(2.3,2.6,6);
     if (id === 'wall-corner') direction.set(-3.1,2.8,5.4);

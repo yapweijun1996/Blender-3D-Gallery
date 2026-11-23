@@ -32,6 +32,12 @@ Choose **Corner with two walls**, or open `/mall-modules-preview/?view=wall-corn
 
 Run `node --test tests/mall-wall-corner-2m.test.mjs`. Seventy mesh rays check the inside and outside of the mitre. Of 809 wall-base probes, 769 reach the floor at the same elevation and 40 meet the original tile’s shallow grout recess. The visitor traversed both joins and returned over a 9.128 m route. An earlier continuous L-shaped backing produced a rectangular collision box across the empty aisle. Each arm now has its own mesh bounds and meets its partner on the same mitre plane. Recombining the same triangles reproduces the obstruction.
 
+### Two-metre outside floor corner
+
+Choose **Outside floor corner** or open `/mall-modules-preview/?view=corner-floor`. Three straight slabs and one [corner slab](../models/mall-floor-corner-2m/README.md) make a 4 × 4 m floor. All four underside pivots sit at Y = −0.10 m. On the corner tile, the champagne and eucalyptus terrazzo inlays follow +X and +Z and meet at 45°. The adjacent straight slabs have a plain finish. [Installed corner tile](corner-tile-on-floor.png)
+
+Run `node --test tests/mall-floor-corner-tile-2m.test.mjs`. The check inspects both sides of all four internal joins with 2,424 surface rays. It distinguishes the two champagne arms and samples both sides of their boundaries to 10 μm. Each direction of the 6.025 m visitor route has 6,075 footprint probes. A reversed tile still fills the square but places its bands on the wrong edges. Removing it leaves an unsupported quarter of the floor.
+
 ## Furnished corridor
 
 The wall selection is the new 1.2 m solid wall; the corridor also retains the existing glass partitions for the shopfronts. The ceiling is intentionally a partial cutaway for visibility. This visual arrangement is not a construction or safety specification; see the individual asset READMEs and `docs/verification/p0-assembly/README.md` for actual dimensions, interfaces, prior checks, and rights. The preview does not change or export source assets, and it is not part of the production Gallery build.

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
+import { cornerFloorPath } from '../mall-modules-preview/floor-edge.js';
 import { floorTransitionPaths } from '../mall-modules-preview/floor-transition.js';
 import { shellAssetPaths } from '../mall-modules-preview/shell-layout.js';
 import { wallCornerPath, wallRunPath } from '../mall-modules-preview/wall-run.js';
@@ -11,6 +12,7 @@ const url = new URL('mall-modules-preview/?view=floor-transition', process.env.M
 const hashes = await Promise.all(Object.values(floorTransitionPaths).map(async path =>
   createHash('sha256').update(await readFile(path)).digest('hex')));
 const shellViews = [
+  ['corner-floor', cornerFloorPath],
   ['wall-run', wallRunPath],
   ['wall-ceiling', shellAssetPaths.ceiling],
   ['wall-corner', wallCornerPath],
@@ -74,7 +76,7 @@ try {
     await transition.click();
     await ready('floor-transition');
     assert.deepEqual(errors, []);
-    console.log('PASS', width, 'px, five GLB hashes, straight wall, ceiling, corner, failed load and retry, individual floor and corridor');
+    console.log('PASS', width, 'px,', expected.length, 'distinct assembly GLBs, failed load and retry, individual floor and corridor');
     await page.close();
   }
 } finally {

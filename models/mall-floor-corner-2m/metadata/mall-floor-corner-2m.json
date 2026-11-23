@@ -1,0 +1,97 @@
+{
+  "id": "mall-floor-corner-2m",
+  "name": "Mall Outside Corner Floor 2 m",
+  "summary": "A 2 m outside-corner floor with twin mitred champagne lines around an inset eucalyptus terrazzo ribbon.",
+  "description": "A 2 m outside-corner floor with twin mitred champagne lines around an inset eucalyptus terrazzo ribbon.",
+  "category": "Shopping Mall",
+  "tags": [
+    "mall",
+    "floor",
+    "outside corner",
+    "mitre",
+    "terrazzo",
+    "champagne",
+    "modular",
+    "LOD"
+  ],
+  "status": "validated",
+  "created": "2026-11-24",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Original Blender mesh cuts in the native 2 m straight-floor source, with true diagonal joints, a flush colored-stone border and a baked material response for distant use.",
+  "generator": "generate.py",
+  "paths": {
+    "source": "sources/mall-floor-corner-2m.blend",
+    "glb": "exports/mall-floor-corner-2m.glb",
+    "preview": "previews/mall-floor-corner-2m.webp"
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.8,
+      0.71,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "underside centre"
+  },
+  "registry_id": "MALL-STR-002",
+  "assembly": {
+    "pitch_m": 2,
+    "finished_height_m": 0.1,
+    "joint_width_m": 0.004,
+    "paver_pitch_m": 0.5,
+    "finish_height_from_world_floor_m": 0,
+    "outside_edges": [
+      "+X",
+      "+Z"
+    ],
+    "band_offsets_from_each_exposed_edge_m": [
+      0.025,
+      0.053,
+      0.103,
+      0.117
+    ],
+    "inlay_turn_degrees": 90,
+    "mitre_cut_degrees": 45
+  },
+  "accuracy_notes": "The three digital meshes have a measured 2 × 2 m footprint and a level 100 mm wearing surface. The two indexed metal arms meet across 45-degree cuts. Device performance and physical construction suitability require separate evaluation.",
+  "attribution": [
+    {
+      "credit": "Original derivative of the owner-project mall-floor-module-2m mesh, using the original seed 421 terrazzo artwork. Corner geometry, smoked finish and baked response authored for Blender-3D-Gallery."
+    }
+  ],
+  "rights": "Original owner-project geometry and texture. Reuse in the owner’s projects is authorized. Public redistribution terms are unspecified.",
+  "sha256": {
+    "source": "11ed57d981838281e7f316bc3263a976fc639fbd39ea66aa74317fdb57792cd7",
+    "glb": "32f61d3bc7a51b2af859c1e9c253e3c81b82548f58a0c9667377c950d0839e41",
+    "preview": "f128c3a64beb5f3c8be3a558d7ab27a4a74bed86efd2d4e730ac3cbd7ac33a83"
+  },
+  "lods": [
+    {
+      "level": 0,
+      "file": "exports/mall-floor-corner-2m.glb",
+      "bytes": 173580,
+      "triangles": 1344,
+      "draws": 7,
+      "sha256": "32f61d3bc7a51b2af859c1e9c253e3c81b82548f58a0c9667377c950d0839e41"
+    },
+    {
+      "level": 1,
+      "file": "exports/mall-floor-corner-2m-lod1.glb",
+      "bytes": 154120,
+      "triangles": 832,
+      "draws": 7,
+      "sha256": "8618d587eb295cc3a33a9d65d94de3c460b99c659da9d0d5904e0f13f534010f"
+    },
+    {
+      "level": 2,
+      "file": "exports/mall-floor-corner-2m-lod2.glb",
+      "bytes": 67088,
+      "triangles": 36,
+      "draws": 1,
+      "sha256": "866f376eb56b03a06c6ce80bae74467306cb39fd71543ae51cb028b5e7b5844b"
+    }
+  ]
+}
