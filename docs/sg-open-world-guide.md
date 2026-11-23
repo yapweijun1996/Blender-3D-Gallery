@@ -14,6 +14,10 @@ Plan and per-milestone status: [sg-open-world-plan.md](sg-open-world-plan.md). O
 
 Ordinary AI traffic follows the mapped motor access. A destination-only, private or permit road can still appear on the minimap and support the player’s vehicle while ambient cars choose public routes. After building, run `npm run test:world-ambient-access` to watch the junction and drive the side road with keyboard controls. [Access rules and counts](verification/sg-world-remaining-passages.md#ambient-traffic-access).
 
+### Tile streaming
+
+As the player moves, the world downloads nearby tiles one at a time and installs up to one per frame. Before starting a queued download, the loader checks whether that tile is still near the player. A later visit can request it again. Run `npm run test:world-tile-queue` after building to reproduce the delayed-request check. The test changes location while one request is in flight, then returns and checks the road surface.
+
 ### Raffles Boulevard underpass
 
 On the ordinary map, drive east on Raffles Boulevard through the covered section beside Millenia Walk. The five-lane road and the north footway share the simulated surface datum. The mapped soffit is 4.5 m above that datum and the roof top is 6 m. The connecting service drive leads toward destination-access roads and stays outside the through-traffic network. The AI reserves the left lane for buses throughout the simulation. The source records Monday–Saturday, 07:30–23:00.
