@@ -1,8 +1,8 @@
 # Singapore and Malaysia Festival Models
 
 Status: F01–F06 (Christmas tree, gift boxes, New Year clock, lion dance head,
-kumquat tree and rabbit lantern) are implemented and locally verified. The
-remaining backlog is proposed.
+kumquat tree and rabbit lantern) are implemented and locally verified. Several
+later concepts already have models in the gallery; see the inventory update below.
 A local result alone does not establish publication. The execution checklist
 and order live in
 [task.md](../../task.md#singapore-and-malaysia-festival-models--2026-11-15).
@@ -47,6 +47,16 @@ At the initial catalog inspection, no Christmas or Gregorian New Year model was
 identified by name. F01–F03 add the Christmas tree, gift boxes and countdown
 clock. Recheck the current catalog before creating each model to avoid
 duplicates; the inventory may change.
+
+### Reuse check on 2026-11-24
+
+Four existing models cover parts of the later concept list. On this date, Chromium opened each public gallery viewer and loaded a GLB whose SHA-256 matched the local export.
+
+| Concept | Existing geometry |
+| --- | --- |
+| Mid-Autumn mould tools | The [wooden mooncake mould workboard](../../models/wooden-mooncake-mould-workboard/README.md) contains a carved hand mould and a separate cake with the matching raised impression. |
+| Christmas mall display | The [seasonal Christmas set](../../models/seasonal-christmas-decor/README.md) combines a decorated tree, four wrapped presents and two hanging snowflakes. A standalone wreath remains a separate idea. |
+| Floral garlands | The [Deepavali lamps and rangoli set](../../models/deepavali-lamps-rangoli/README.md) includes two hanging marigold garlands. The [flower-garland stall](../../models/festival-flower-garland-stall/README.md) has additional retail stock and wrapping supplies. |
 
 ## Proposed model backlog
 

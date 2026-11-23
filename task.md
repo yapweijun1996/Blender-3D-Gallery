@@ -178,7 +178,7 @@ Acceptance coverage E001–E100 must be tracked against deterministic assertions
 
 # Singapore and Malaysia Festival Models — 2026-11-15
 
-**Status:** F01–F06 implemented and locally verified; later items remain planned.
+**Status:** F01–F06 are implemented and locally verified. Four [existing gallery models](docs/festival-models/README.md#reuse-check-on-2026-11-24) cover several later concepts, including the mooncake mould tools and Christmas mall display.
 Work through one model at a time. See the [festival model
 brief](docs/festival-models/README.md) for concept images, existing inventory,
 design ideas and per-model acceptance criteria. Recheck the catalog before
