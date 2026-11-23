@@ -29,7 +29,7 @@ npm run build:deploy && npm run test:tunnel
 
 ### Default-world tunnel integration checks
 
-On the [ordinary Singapore Open World map](https://yapweijun1996.github.io/Blender-3D-Gallery/?page=sg-world), approach Fort Canning Link from Victoria Street to drive under Fort Canning Road and join the five-lane Penang Road exit. The world starts loading the six required tiles within 800 m of the tunnel area. It keeps the original road in place until the tiles are verified, nearby vehicles and pedestrians are clear of the cut, and Rapier has indexed the new collision surfaces. If a tile fails to load, the surface remains drivable. The map retries once when the player leaves the protected patch or returns after leaving the preload area.
+On the [ordinary Singapore Open World map](https://yapweijun1996.github.io/Blender-3D-Gallery/?page=sg-world), turn from Stamford Road onto Fort Canning Link to drive under Fort Canning Road and join the five-lane Penang Road exit. The world starts loading the six required tiles within 800 m of the tunnel area. It keeps the original road in place until the tiles are verified, nearby vehicles and pedestrians are clear of the cut, and Rapier has indexed the new collision surfaces. If a tile fails to load, the surface remains drivable. The map retries once when the player leaves the protected patch or returns after leaving the preload area.
 
 The 531.274 m simulation extends the descent and ascent along the connected Fort Canning Link ways in the pinned snapshot. It spans four tiles and keeps the mapped upstream footways and SMU Connexion above the roof. The accepted cut stays installed for the driving session, including trips away from Fort Canning and back.
 
@@ -40,6 +40,7 @@ node scripts/world/fort-canning-integration.mjs > scripts/world/fort-canning-int
 npm run test:world
 node --test tests/world-fort-canning-crossings.test.mjs tests/world-tunnel-streaming.test.mjs tests/world-overhead-structures.test.mjs
 npm run build:deploy && npm run test:streamed-tunnel
+STREAMED_TUNNEL_PROFILE=mobile npm run test:streamed-tunnel
 ```
 
 A Rapier sedan travels the extended approach, both portals and all three tile seams. At the parking aisle and Fort Canning Road, pairs of sedans drive across the same location at different heights in the same physics world. The chassis separation is 5.50 m and 5.45 m respectively at the closest points on plan.

@@ -10,6 +10,9 @@ import { FORT_CANNING_TILES } from "../src/world/tunnel-integration/route.js";
 import { nearestTunnelSection } from "../src/world/tunnel-prototype/geometry.js";
 
 const site = process.env.STREAMED_TUNNEL_SITE;
+const browserProfile = process.env.STREAMED_TUNNEL_PROFILE ?? "desktop";
+assert.ok(["desktop", "mobile"].includes(browserProfile), "STREAMED_TUNNEL_PROFILE must be desktop or mobile");
+const mobile = browserProfile === "mobile";
 const output = process.env.STREAMED_TUNNEL_SHOTS ?? await mkdtemp(join(tmpdir(), "gallery-world-tunnel-browser-"));
 const server = site ? { url: new URL("./", site).href, close() {} } : await serveBuild(process.env.STREAMED_TUNNEL_DIST);
 const { lanes: { link }, seam } = createFortCanningMergeGeometry(profile);
@@ -44,6 +47,38 @@ function teleport(stage, { x, z, heading = 0 }) {
 
 function settle(stage) {
   return stage.evaluate(element => element.simulate(1.5, { brake: 1 }));
+}
+
+async function checkTouchPedal(page, context, stage, start) {
+  const pedal = stage.locator('[data-key="gas"]');
+  await pedal.scrollIntoViewIfNeeded();
+  await pedal.evaluate(element => element.addEventListener("pointerdown", event => {
+    element.dataset.testPointerType = event.pointerType;
+  }, { once: true }));
+  const box = await pedal.boundingBox();
+  assert.ok(box, "the touch accelerator is visible");
+  const point = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+  const viewport = page.viewportSize();
+  assert.ok(point.x >= 0 && point.x < viewport.width && point.y >= 0 && point.y < viewport.height,
+    "the touch accelerator is inside the viewport");
+  const input = await context.newCDPSession(page);
+  try {
+    await input.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [point] });
+    await page.waitForFunction(({ x, z }) => {
+      const position = document.querySelector(".world-stage").inspectWorld();
+      return position.speed > 2 && Math.hypot(position.x - x, position.z - z) > 1.2;
+    }, { x: start.x, z: start.z }, { polling: 100, timeout: 15_000 });
+    assert.equal(await pedal.getAttribute("data-test-pointer-type"), "touch");
+    const driven = await stage.evaluate(element => element.inspectWorld());
+    assert.ok(driven.groundedWheels === 4 && !driven.flipped, "the touch drive keeps four wheels supported");
+    return { metres: Math.hypot(driven.x - start.x, driven.z - start.z), speed: driven.speed };
+  } finally {
+    try {
+      await input.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    } finally {
+      await input.detach();
+    }
+  }
 }
 
 async function drive(stage, path, { label, from, through, to, pace, merge = null, crossingShot = null }) {
@@ -126,9 +161,12 @@ let browser;
 try {
   await mkdir(output, { recursive: true });
   browser = await chromium.launch({ channel: "chrome", args: ["--enable-unsafe-swiftshader"] });
-  const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: "en", serviceWorkers: "block" });
+  const device = mobile ? { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }
+    : { viewport: { width: 1440, height: 900 } };
+  const context = await browser.newContext({ ...device, locale: "en", serviceWorkers: "block" });
   const page = await context.newPage();
   page.setDefaultTimeout(45_000);
+  const press = locator => mobile ? locator.tap() : locator.click();
   const requests = new Map(), injected = new Set(), errors = [];
   let fault = true;
   await page.route("**/*.json", async route => {
@@ -157,6 +195,8 @@ try {
   const first = await inspect();
   assert.equal(first.fortCanning, "idle", "the distant Bayfront start uses the ordinary ground");
   const { start } = first;
+  assert.equal(await page.evaluate(() => matchMedia("(pointer: coarse)").matches), mobile);
+  const touchDrive = mobile ? await checkTouchPedal(page, context, stage, first) : null;
   const waitForStatus = status => page.waitForFunction(wanted =>
     document.querySelector(".world-stage")?.inspectWorld?.().fortCanning === wanted, status, { polling: 100 });
   const waitForCell = ({ x, z }) => page.waitForFunction(([tx, tz]) => {
@@ -183,7 +223,7 @@ try {
   assert.ok(FORT_CANNING_TILES.every(tile => requests.has(tile)), "every required map tile was requested");
   assert.ok((await inspect()).traffic > 0, "world traffic is enabled");
 
-  await pause.click();
+  await press(pause);
   const upperStation = nearestTunnelSection(upperRoad, fortCanningRoad.at).s;
   const upper = await drive(stage, upperRoad, { label: "Fort Canning Road", from: upperStation - 13, through: upperStation,
     to: upperStation + 15, pace: 11.5 });
@@ -199,7 +239,7 @@ try {
     `the run samples the merge and returns to the surface: ${JSON.stringify(lower)}`);
   await stage.locator(":scope > canvas").screenshot({ path: join(output, "penang-road-exit.png") });
 
-  await pause.click();
+  await press(pause);
   await teleport(stage, start);
   await waitForCell(start);
   await page.waitForFunction(() => document.querySelector(".world-stage")?.inspectWorld?.().nearbyTraffic > 0,
@@ -209,21 +249,25 @@ try {
   assert.ok(bayfront.nearbyTraffic > 0 && bayfront.groundedWheels === 4 && Math.abs(bayfront.y - baseline.y) < .15,
     `Bayfront has local traffic and ordinary road support after returning: ${JSON.stringify(bayfront)}`);
 
-  await pause.click();
+  await press(pause);
   const bore = link.find(({ y }) => y < -5.48).s + 12;
   await drive(stage, link, { label: "Fort Canning return", from: 1, through: bore - 7, to: bore, pace: 10.5 });
-  const beforeSwap = await settle(stage);
-  assert.ok(beforeSwap.y < -4.1 && beforeSwap.speed < .2, "the car is parked on the lower road before changing vehicle");
-  await page.locator(".world-vehicle").click();
+  let beforeSwap = await settle(stage);
+  for (let attempt = 0; attempt < 5 && beforeSwap.speed >= .2; attempt++) {
+    beforeSwap = await stage.evaluate(element => element.simulate(.5, { brake: 1, handbrake: 1 }));
+  }
+  assert.ok(beforeSwap.y < -4.1 && beforeSwap.speed < .2,
+    `the car parks on the lower road before changing vehicle: ${JSON.stringify(beforeSwap)}`);
+  await press(page.locator(".world-vehicle"));
   const afterSwap = await inspect();
   assert.notEqual(afterSwap.vehicleId, beforeSwap.vehicleId);
   assert.ok(afterSwap.groundedWheels === 4 && Math.abs(afterSwap.y - beforeSwap.y) < .25,
     `a vehicle change preserves the actual tunnel deck: ${JSON.stringify(afterSwap)}`);
 
-  await page.locator("#demo-breadcrumb a").click();
+  await press(page.locator("#demo-breadcrumb a"));
   await page.waitForFunction(() => !document.querySelector("#sg-world-page .world-stage > canvas"));
   assert.deepEqual(errors, []);
-  console.log(JSON.stringify({ result: "PASS", fallbackY: baseline.y, upper, lower,
+  console.log(JSON.stringify({ result: "PASS", profile: browserProfile, touchDrive, fallbackY: baseline.y, upper, lower,
     bayfront: { y: bayfront.y, nearbyTraffic: bayfront.nearbyTraffic },
     tunnelSwap: { from: beforeSwap.vehicleId, to: afterSwap.vehicleId, y: afterSwap.y }, screenshots: output }));
 } finally {

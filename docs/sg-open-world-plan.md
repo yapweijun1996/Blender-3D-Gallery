@@ -57,6 +57,8 @@ vegetation), vehicles to `output/drive-models/gameC`, MRT to `output/mrt-models/
 
 ## Status (2026-11-21)
 
+This table records the November 21 milestone. The [current driving guide](sg-open-world-guide.md#default-world-tunnel-integration-checks) covers the later Fort Canning integration.
+
 Verified in Chrome (software GL), an iPhone 15 WebKit emulation and Node; nothing here was measured on a real phone. Commands: `npm test` (783 tests),
 `npm run test:world` (road-network tiles, needs the untracked `output/osm/marina_bay.json`), `npm run test:openworld`, `npm run test:mrt`.
 

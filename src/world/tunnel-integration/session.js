@@ -16,15 +16,33 @@ export function createWorldFortCanning({ physics, signal, scene, flatGround, til
       ]);
       const route = await prepareFortCanningRoute(fetchTile, loadingSignal);
       const road = createFortCanningVisuals(route.geometry, flatGround.material);
-      const prepared = new Map();
-      function dispose() {
-        for (const [key, entry] of prepared) {
-          if (tiles.get(key) === entry) tiles.delete(key);
-          disposeEntry(entry);
+      const prepared = new Map(), replaced = new Map();
+      const ordinaryGrassVisible = flatGround.visible;
+      let disposed = false;
+      function disposeEntries(owned) {
+        const errors = [];
+        for (const entry of owned) {
+          try { disposeEntry(entry); }
+          catch (error) { errors.push(error); }
         }
+        if (errors.length) throw new AggregateError(errors, 'Fort Canning tile cleanup failed');
+      }
+      function dispose() {
+        if (disposed) return;
+        disposed = true;
+        for (const [key, entry] of prepared) {
+          if (tiles.get(key) !== entry) continue;
+          const previous = replaced.get(key);
+          if (previous) tiles.set(key, previous.entry);
+          else tiles.delete(key);
+        }
+        for (const { entry, visible } of replaced.values()) entry.group.visible = visible;
+        replaced.clear();
+        const owned = [...prepared.values()];
         prepared.clear();
-        road.dispose();
-        flatGround.visible = true;
+        flatGround.visible = ordinaryGrassVisible;
+        try { disposeEntries(owned); }
+        finally { road.dispose(); }
       }
       try {
         for (const [key, data] of route.tiles) {
@@ -41,15 +59,22 @@ export function createWorldFortCanning({ physics, signal, scene, flatGround, til
       entries = prepared;
       function publish() {
         scene.add(road.group);
-        for (const entry of prepared.values()) scene.add(entry.group);
         for (const [key, entry] of prepared) {
+          scene.add(entry.group);
+          if (disposed) return;
           const previous = tiles.get(key);
-          if (previous) disposeEntry(previous);
+          if (previous) replaced.set(key, { entry: previous, visible: previous.group.visible });
           tiles.set(key, entry);
+          if (previous) previous.group.visible = false;
         }
-        flatGround.visible = false;
+        if (!disposed) flatGround.visible = false;
       }
-      return { ...route, visuals: { publish, dispose } };
+      function commit() {
+        const obsolete = [...replaced.values()].map(({ entry }) => entry);
+        replaced.clear();
+        disposeEntries(obsolete);
+      }
+      return { ...route, visuals: { publish, commit, dispose } };
     },
     createGround(world, geometry) {
       const ground = createStreamedTunnelGround(world, geometry);

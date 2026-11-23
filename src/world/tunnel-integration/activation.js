@@ -145,8 +145,8 @@ export function createFortCanningActivation({ physics, signal, safetyBounds, req
 
   function afterPhysics({ substeps } = {}) {
     if (status !== 'staged' || !Number.isInteger(substeps) || substeps <= 0) return available;
+    const { visuals, ...bundle } = candidate;
     try {
-      const { visuals, ...bundle } = candidate;
       visuals.publish();
       if (status !== 'staged') return available;
       // Keep the original plane until the cut and its exterior panels are in Rapier's query index.
@@ -155,7 +155,11 @@ export function createFortCanningActivation({ physics, signal, safetyBounds, req
       status = 'active';
     } catch (error) {
       fail(error);
+      return available;
     }
+    // The route and scene are committed. Retiring the old tile resources cannot roll back the cut.
+    try { visuals.commit?.(); }
+    catch (error) { if (status === 'active') failure = error; }
     return available;
   }
 
