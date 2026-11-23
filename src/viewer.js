@@ -24,6 +24,7 @@ export default async function createViewer(
   let cartDemo;
   let pickupDemo;
   let lohHeiDemo;
+  let railReloadDemo;
   let visitorDemo;
   let animationPreview;
   let buildingLoop;
@@ -163,6 +164,7 @@ export default async function createViewer(
     cartDemo?.dispose();
     pickupDemo?.dispose();
     lohHeiDemo?.dispose();
+    railReloadDemo?.dispose();
     visitorDemo?.dispose();
     animationPreview?.dispose();
     buildingLoop?.dispose();
@@ -325,6 +327,23 @@ export default async function createViewer(
       }
       if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
     }
+    if (interaction === "rail-reload") {
+      try {
+        const { default: createRailReloadDemo } = await import("./rail-reload/demo.js");
+        if (!disposed && !signal.aborted) {
+          railReloadDemo = createRailReloadDemo({
+            model, clips: gltf.animations, container,
+            invalidate() {
+              lastDraw = 0;
+              invalidate();
+            },
+          });
+        }
+      } catch {
+        // The booth remains available as an ordinary model if the add-on fails.
+      }
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+    }
     frameForResize = () => {
       if (!model) return;
       const viewDirection = camera.position.clone().sub(controls.target);
@@ -341,6 +360,7 @@ export default async function createViewer(
       cartDemo?.reset();
       pickupDemo?.reset();
       lohHeiDemo?.reset();
+      railReloadDemo?.reset();
       visitorDemo?.reset();
       animationPreview?.reset();
       chibiRig?.reset();
@@ -451,6 +471,7 @@ export default async function createViewer(
       const elapsed = lastDraw ? (now - lastDraw) / 1000 : 0;
       const pickupActive = pickupDemo?.update(elapsed);
       const lohHeiActive = lohHeiDemo?.update(elapsed);
+      const railReloadActive = railReloadDemo?.update(elapsed);
       const visitorActive = visitorDemo?.update(elapsed);
       const animationActive = animationPreview?.update(elapsed);
       const buildingActive = buildingLoop?.update(elapsed);
@@ -458,7 +479,7 @@ export default async function createViewer(
       const fishActive = fishMotion?.update();
       const changed = controls.update();
       renderer.render(scene, camera);
-      if (changed || active || pickupActive || lohHeiActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
+      if (changed || active || pickupActive || lohHeiActive || railReloadActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
     };
     invalidate();
     return { reset, dispose, setView };
