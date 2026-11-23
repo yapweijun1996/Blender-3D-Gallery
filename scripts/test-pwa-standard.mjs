@@ -7,7 +7,8 @@ import { chromium } from "playwright";
 import { serveBuild, launchOptions, gameReady } from "./browser-test-utils.mjs";
 const catalog = JSON.parse(await fs.readFile(new URL("../models/catalog.json", import.meta.url), "utf8"));
 const { version } = JSON.parse(await fs.readFile(new URL("../package.json", import.meta.url), "utf8"));
-const expectedDemoCount = JSON.parse(await fs.readFile(new URL("../data/demos.json", import.meta.url), "utf8")).length;
+const expectedDemos = JSON.parse(await fs.readFile(new URL("../data/demos.json", import.meta.url), "utf8"));
+const expectedDemoIds = expectedDemos.map(({ id }) => id).sort();
 const expectedAssetCount = catalog.collections.reduce((total, collection) => total + collection.assets.length, 0);
 const artifacts =
   process.env.TEST_ARTIFACT_DIR || "/tmp/blender-gallery-pwa-standard";
@@ -229,7 +230,7 @@ try {
         await page.setViewportSize({ width, height });
         for (const [route, input, count] of [
           ["", "#model-search", expectedAssetCount],
-          ["?page=demos", "#demo-search", expectedDemoCount],
+          ["?page=demos", "#demo-search", expectedDemos.length],
         ]) {
           await page.goto(server.url + route);
           await safeInsets(page);
@@ -247,9 +248,9 @@ try {
             count,
           );
           if (route) {
-            const expected = [["game", "?page=game"], ["solar-system", "?page=solar"], ["product-studio", "?page=product-studio"], ["shelf-inspector", "?page=shelf-inspector"], ["chibi-motion", "?page=chibi-motion"], ["tripo-chibi-motion", "?page=tripo-motion"]];
-            assert.deepEqual((await page.locator(".demo-card").evaluateAll(cards => cards.map(c => c.dataset.demoId))).sort(), expected.map(([id]) => id).sort());
-            for (const [id, target] of expected) {
+            const ids = await page.locator(".demo-card").evaluateAll(cards => cards.map(c => c.dataset.demoId));
+            assert.deepEqual(ids.sort(), expectedDemoIds);
+            for (const { id, route: target } of expectedDemos) {
               const card = page.locator(`.demo-card[data-demo-id="${id}"]`);
               assert.equal(await card.count(), 1);
               assert.equal(await card.locator("h2 a").getAttribute("href"), target);
@@ -506,7 +507,10 @@ try {
         .locator('meta[http-equiv="Content-Security-Policy"]')
         .getAttribute("content");
       assert.ok(policy);
-      assert.doesNotMatch(policy, /unsafe-inline|unsafe-eval|\*/);
+      const sources = policy.split(";").flatMap(directive => directive.trim().split(/\s+/).slice(1));
+      // The WebAssembly permission used by Rapier does not enable JavaScript eval.
+      assert.ok(!sources.includes("'unsafe-inline'") && !sources.includes("'unsafe-eval'"));
+      assert.doesNotMatch(policy, /\*/);
       assert.deepEqual(
         await page.evaluate(() => window.standardCsp),
         [],

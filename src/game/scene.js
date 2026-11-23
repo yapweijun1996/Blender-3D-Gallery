@@ -2,6 +2,7 @@ import { localize } from "../i18n/index.js";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GAME_ASSET_IDS } from "./assets.js";
 import { legalPlacement, TABLE } from "./table.js";
 import { aimContact, postContact } from "./presentation.js";
 export async function createGameScene(container, assets, signal, progress) {
@@ -132,23 +133,14 @@ export async function createGameScene(container, assets, signal, progress) {
   ghost.rotation.x = -Math.PI / 2;
   scene.add(ghost);
   try {
-    const ids = [
-      "pool-table",
-      "cue-stick-01",
-      "cue-ball",
-      ...Array.from(
-        { length: 15 },
-        (_, i) => `ball-${String(i + 1).padStart(2, "0")}`,
-      ),
-    ];
     let done = 0,
       index = 0;
     await Promise.all(
       Array.from({ length: 4 }, async () => {
-        while (index < ids.length) {
+        while (index < GAME_ASSET_IDS.length) {
           if (disposed || signal.aborted)
             throw new DOMException("Canceled", "AbortError");
-          const id = ids[index++],
+          const id = GAME_ASSET_IDS[index++],
             asset = assets.find((a) => a.id === id);
           if (!asset) throw new Error("Missing " + id);
           // We show completed-model progress, not byte progress. The pinned
@@ -175,7 +167,7 @@ export async function createGameScene(container, assets, signal, progress) {
             tableWidth = bounds.max.x - bounds.min.x;
           } else
             balls.set(id === "cue-ball" ? 0 : Number(id.slice(-2)), obj);
-          progress(++done, ids.length);
+          progress(++done, GAME_ASSET_IDS.length);
         }
       }),
     );

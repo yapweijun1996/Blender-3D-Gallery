@@ -1,6 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import { GAME_ASSET_IDS } from "../src/game/assets.js";
+import { RULES_VERSION } from "../src/game/rules.js";
+import { TABLE } from "../src/game/table.js";
 import { loadCatalog } from "./catalog.mjs";
 const hash = (b) => crypto.createHash("sha256").update(b).digest("hex");
 export function pwaBuildPlugin(version) {
@@ -30,20 +33,8 @@ export function pwaBuildPlugin(version) {
           bytes: fs.statSync(p).size,
         }));
       const template = fs.readFileSync("src/pwa/sw-template.js", "utf8");
-      const build = hash(
-        JSON.stringify(files) + template + (process.env.B3G_TEST_BUILD || ""),
-      ).slice(0, 16);
-      const ids = [
-        "pool-table",
-        "cue-stick-01",
-        "cue-ball",
-        ...Array.from(
-          { length: 15 },
-          (_, i) => `ball-${String(i + 1).padStart(2, "0")}`,
-        ),
-      ];
       const catalog = loadCatalog().collections.flatMap((c) => c.assets);
-      const required = ids.map((id) => {
+      const required = GAME_ASSET_IDS.map((id) => {
         const a = catalog.find((a) => a.id === id);
         if (!a) throw new Error("Missing game asset " + id);
         const digest = hash(fs.readFileSync(a.file));
@@ -53,16 +44,20 @@ export function pwaBuildPlugin(version) {
         if (!file) throw new Error("Game asset not emitted: " + id);
         return { ...file, id };
       });
+      if (!required.length) throw new Error("Game pack has no assets");
+      const offlineGame = {
+        version: [RULES_VERSION, TABLE.version].join("/"),
+        files: required,
+      };
+      const build = hash(
+        JSON.stringify({ files, offlineGame }) + template + (process.env.B3G_TEST_BUILD || ""),
+      ).slice(0, 16);
       const shell = files.filter(
         (f) =>
           f.url === "index.html" ||
           /\.(js|css|webmanifest|png|svg)$/.test(f.url),
       );
-      const pack = {
-        build,
-        version: "casual-8ball-v1/billiards-2026-11-v1",
-        files: required,
-      };
+      const pack = { build, ...offlineGame };
       fs.writeFileSync(
         path.join(root, "build-info.json"),
         JSON.stringify({ build, version }),

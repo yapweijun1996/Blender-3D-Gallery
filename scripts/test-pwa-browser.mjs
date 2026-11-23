@@ -5,6 +5,7 @@ import path from "node:path";
 import os from "node:os";
 import crypto from "node:crypto";
 import { chromium } from "playwright";
+import { messages } from "../src/i18n/index.js";
 import {
   serveBuild,
   launchOptions,
@@ -481,10 +482,9 @@ try {
     async (tab) => {
       await clickUpdate(tab);
       await updateError(tab);
-      assert.match(
-        await tab.locator("#pwa-update-status").innerText(),
-        /activation unavailable/i,
-      );
+      const status = tab.locator("#pwa-update-status");
+      assert.equal(await status.getAttribute("data-i18n"), "pwa.failed");
+      assert.equal(await status.innerText(), messages.en["pwa.failed"]);
       assert.equal((await request(tab, "PACK_STATUS")).build, a.build);
       await tab.locator("[data-update-action=close]").click();
       assert.equal(

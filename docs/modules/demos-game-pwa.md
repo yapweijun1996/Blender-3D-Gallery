@@ -25,6 +25,7 @@ UI text is localized through `src/i18n/index.js` (`localize`, `t`, `mountMarkup`
 | `presentation.js` | `aimContact` (guide ray), `postContact`, `shotFeedback` (uses i18n) | pure + i18n |
 | `copy.js` | `englishGameMessage`, `gameMessageKey`, `translateGameMessage` | i18n |
 | `storage.js` | `validateMatch`, `openGameStore` (IndexedDB + ownership) | IndexedDB |
+| `assets.js` | Ordered required GLB IDs shared by the scene and the offline pack build | pure |
 | `scene.js` | `createGameScene` (Three.js view) | DOM/WebGL |
 | `page.js` | `mountGame` (controller, UI, input, loop) | DOM |
 | `style.css` | Styles (not analysed) | - |
@@ -183,8 +184,6 @@ Web Locks, `crypto.randomUUID`/`getRandomValues`.
   `previous` record.
 - A `recovery` caused by `shot.invalid` is never saved; reload returns to the
   `pending` pre-shot checkpoint via rolled-back resume.
-- `pwa-build.mjs` hard-codes the game version string (see 2.3) instead of
-  importing `RULES_VERSION` / `TABLE.version`.
 - Physics is a 2D impulse model without spin or throw; `postContact` is
   documented in code as a frictionless estimate only.
 
@@ -210,15 +209,15 @@ Offline shell + offline Game pack + coordinated, consent-based updates.
 
 1. Walk `dist/`, hash every file (SHA-256, bytes), excluding `sw.js`,
    `build-info.json`, `game-pack.json`.
-2. `build` id = first 16 hex of SHA-256 of (file list + template text +
-   `B3G_TEST_BUILD` env).
-3. Resolve the 18 game asset ids (`pool-table`, `cue-stick-01`, `cue-ball`,
-   `ball-01..15`) through `loadCatalog()`; match each source GLB to an emitted
-   `.glb` by hash. Missing asset or unemitted GLB throws (build fails).
+2. Resolve the required Game GLB IDs from `src/game/assets.js` through
+   `loadCatalog()` and match source GLBs to emitted files by hash. The build
+   fails for an empty pack, missing asset or missing emitted GLB.
+3. Compute the build ID from the emitted file list, the Game pack contents
+   and version, the worker template and the optional `B3G_TEST_BUILD` value.
 4. Shell = `index.html` plus all `.js/.css/.webmanifest/.png/.svg` files.
 5. Write `build-info.json` `{build, version}`, `game-pack.json`, and `sw.js`
-   (placeholders replaced with JSON). `game-pack.version` is the literal
-   `"casual-8ball-v1/billiards-2026-11-v1"`.
+   (placeholders replaced with JSON). The pack version joins `RULES_VERSION`
+   and `TABLE.version` with a slash. App version still comes from `package.json`.
 
 ### 2.3 Service worker behaviour (`sw-template.js`)
 
@@ -240,6 +239,8 @@ Offline shell + offline Game pack + coordinated, consent-based updates.
   `UPDATE_READY_REPLY` protocol 2, aborts if a new tab appeared / a tab is not
   ready / expiry (<= 15 s) / `CANCEL_UPDATE`; only then `skipWaiting()`;
   finally sends `UPDATE_DECISION`).
+- Pack readiness requires a manifest for this build with at least one file,
+  the completion marker and a cached entry for every required file.
 - Old caches are intentionally never deleted (comment in `sw-template.js`).
 
 ### 2.4 Page-side flow (`register.js`)
@@ -287,8 +288,6 @@ references the pack.
 
 - `pwa-build.mjs` has no direct test; it is only exercised through built-output
   browser tests.
-- `sw-template.js` hard-codes `PACK.files.length !== 18`; the id list lives in
-  `pwa-build.mjs` (two places must change together).
 - Only Game assets are in the offline pack; other demos (Solar, Shelf, Product
   Studio) have no explicit offline pack and rely on whatever the shell/fetch
   path serves.

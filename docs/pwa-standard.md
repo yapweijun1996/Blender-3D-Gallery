@@ -21,7 +21,7 @@ Retain Editorial Moss as the default, preserve gallery assets and original sourc
 | Content | Guaranteed scope |
 | --- | --- |
 | HTML/scripts/CSS/icons/registry metadata | Available after successful shell preparation; first-ever launch requires network |
-| Game | Offline after explicit successful preparation of all18 verified GLBs; compatible checkpoints can resume |
+| Game | Offline after explicit successful preparation of all required verified GLBs, currently 18. Compatible checkpoints can resume. |
 | Gallery posters/arbitrary GLBs | Not guaranteed offline; absent resources show truthful fallback/recovery |
 | Solar System | Online GLB loading; excluded from Game pack |
 | Original Blender files | Not downloaded by installation or Game preparation |

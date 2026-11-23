@@ -285,7 +285,7 @@ Documentation added: [FEATURES_MAP.md](FEATURES_MAP.md) (refreshed to `fb9d5070`
 - [x] Dress-up offers only verified modules. Saved selections, defaults and body switches also exclude pending modules.
 - [x] GitHub Pages requires `npm test`, `npm run test:world` and `npm run validate:assets` to pass, including when the deployment job restores a cached build.
 - [x] Added `npm run test:dressup` for `scripts/test-chibi-dressup-browser.mjs` (script entry only; the browser test itself was not run here and it needs a production build).
-- [ ] `scripts/pwa-build.mjs:63` hard-codes the Game version string and `src/pwa/sw-template.js:57` hard-codes 18 pack files.
+- [x] The online Game and its offline pack share the same asset IDs. The pack version derives from the rules and table versions. The worker checks a nonempty manifest and every listed file before reporting offline readiness.
 - [ ] Demo route and interactive-asset lists are duplicated by hand across `src/main.js`, `scripts/demo-registry.mjs`, `src/viewer.js` and `data/demos.json`.
 - [ ] `src/visitor-v2/demo.js` and `src/visitor-v3/demo.js` share a scaffold; untested. `src/fish-motion.js` is the only viewer add-on imported statically.
 - Superseded: the manifest now has two bodies (`neutral`, `female`) and seven `female-*` modules carrying `bodyIds` and `family`; the sync script candidates define those fields directly and fall back to the previous manifest values. No `hat` module is listed. Default prop sockets still come from untracked `output/modular-chibi-parts/*/attachment.json` (not re-verified).

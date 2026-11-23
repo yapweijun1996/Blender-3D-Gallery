@@ -8,6 +8,7 @@ const SCOPE = self.registration.scope,
 const absolute = (url) => new URL(url, SCOPE).href;
 const shellEntries = new Map(SHELL.map((entry) => [absolute(entry.url), entry]));
 const marker = absolute("__game-pack-ready__");
+const packFiles = PACK.build === BUILD && Array.isArray(PACK.files) ? PACK.files : [];
 const sha = async (buffer) =>
   [...new Uint8Array(await crypto.subtle.digest("SHA-256", buffer))]
     .map((n) => n.toString(16).padStart(2, "0"))
@@ -53,9 +54,10 @@ self.addEventListener("install", (event) =>
 // builds rather than deleting by cache count; only each preparation job deletes
 // its own temporary candidate. Users may clear site storage explicitly.
 async function packReady(name = PACK_CACHE) {
+  if (packFiles.length === 0) return false;
   const cache = await caches.open(name);
-  if (!(await cache.match(marker)) || PACK.files.length !== 18) return false;
-  for (const entry of PACK.files)
+  if (!(await cache.match(marker))) return false;
+  for (const entry of packFiles)
     if (!(await cache.match(absolute(entry.url)))) return false;
   return true;
 }
@@ -67,15 +69,16 @@ async function prepareGame(progress) {
   preparing = (async () => {
     const candidate = PACK_CACHE + "-candidate-" + crypto.randomUUID();
     try {
+      if (packFiles.length === 0) throw new Error("Incomplete pack");
       const cache = await caches.open(candidate);
       let count = 0,
         index = 0;
       const results = await Promise.allSettled(
         Array.from({ length: 3 }, async () => {
-          while (index < PACK.files.length) {
-            const entry = PACK.files[index++];
+          while (index < packFiles.length) {
+            const entry = packFiles[index++];
             await cache.put(absolute(entry.url), await verified(entry));
-            progress({ progress: ++count, total: PACK.files.length });
+            progress({ progress: ++count, total: packFiles.length });
           }
         }),
       );
@@ -87,7 +90,7 @@ async function prepareGame(progress) {
       );
       if (!(await packReady(candidate))) throw new Error("Incomplete pack");
       const published = await caches.open(PACK_CACHE);
-      for (const entry of PACK.files)
+      for (const entry of packFiles)
         await published.put(
           absolute(entry.url),
           await cache.match(absolute(entry.url)),
