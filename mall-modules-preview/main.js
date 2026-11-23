@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { assembleComputerShop, computerPaths } from './computer-shop.js';
 import { assemblePharmacyBeauty, beautyPaths } from './pharmacy-beauty.js';
 import { assembleHomeFurnishings, furnishingPaths } from './home-furnishings.js';
 import { assembleRoom, roomArrival, roomAssetPaths } from './room-layout.js';
@@ -76,6 +77,13 @@ if (renderer) {
     return cache.get(item.id);
   };
   const byId = Object.fromEntries(modules.map(item => [item.id, item]));
+  function furnishedShop(id, name, subtitle, fixtures, assemble) {
+    return {
+      name, subtitle, showroom: true,
+      inputs: Object.entries({ ...roomAssetPaths, ...fixtures }).map(([id, path]) => ({ id, path })),
+      build: sources => shopScene(sources, id, assemble),
+    };
+  }
   const assemblies = {
     assembly: {
       name: 'The corridor', subtitle: 'A cutaway with shopfronts, lighting and corner modules.',
@@ -109,16 +117,15 @@ if (renderer) {
       inputs: Object.entries(roomAssetPaths).map(([id, path]) => ({ id, path })),
       build: sources => shopScene(sources, 'enclosed-shop', assembleRoom),
     },
-    'pharmacy-beauty': {
-      name: 'Pharmacy and beauty shop', subtitle: 'Inspect the shade samples, browse the shelves or walk up to the service counter.',
-      inputs: Object.entries({ ...roomAssetPaths, ...beautyPaths }).map(([id, path]) => ({ id, path })),
-      build: sources => shopScene(sources, 'pharmacy-beauty', assemblePharmacyBeauty),
-    },
-    'home-furnishings': {
-      name: 'Home furnishings shop', subtitle: 'Walk through the furnished displays or inspect the room from above.',
-      inputs: Object.entries({ ...roomAssetPaths, ...furnishingPaths }).map(([id, path]) => ({ id, path })),
-      build: sources => shopScene(sources, 'home-furnishings', assembleHomeFurnishings),
-    },
+    'computer-shop': furnishedShop('computer-shop', 'Computer shop',
+      'Walk around the demo table, inspect the tethered laptop or browse the electronics shelf.',
+      computerPaths, assembleComputerShop),
+    'pharmacy-beauty': furnishedShop('pharmacy-beauty', 'Pharmacy and beauty shop',
+      'Inspect the shade samples, browse the shelves or walk up to the service counter.',
+      beautyPaths, assemblePharmacyBeauty),
+    'home-furnishings': furnishedShop('home-furnishings', 'Home furnishings shop',
+      'Walk through the furnished displays or inspect the room from above.',
+      furnishingPaths, assembleHomeFurnishings),
     'wall-corner': {
       name: 'Right-angle wall corner', subtitle: 'The inside finishes turn from the rear wall onto the return along the right edge.',
       inputs: [...wallAssets, { id: 'wallCorner2m', path: wallCornerPath }],
@@ -180,14 +187,14 @@ if (renderer) {
     return room.group;
   }
 
-  let framedTester = null;
-  const testerButton = $('#inspect-tester');
-  testerButton.addEventListener('click', () => {
-    const tester = activeWalkScene()?.testerBar;
-    if (!tester) return;
+  let inspection = null;
+  const inspectButton = $('#inspect-fixture');
+  inspectButton.addEventListener('click', () => {
+    const focus = activeWalkScene()?.inspection;
+    if (!focus) return;
     if (visitor?.state.walking) visitor.setWalking(false);
-    framedTester = tester;
-    frame(tester, 'tester-detail');
+    inspection = focus;
+    frame(focus.object, selected, focus);
   });
   const roofButton = $('#shop-roof');
   function showWalkControls() {
@@ -196,7 +203,8 @@ if (renderer) {
     if (!active) return;
     doorButton.textContent = active.doorAngle ? 'Close doors' : 'Open doors';
     doorButton.setAttribute('aria-pressed', String(Boolean(active.doorAngle)));
-    testerButton.hidden = !active.testerBar;
+    inspectButton.hidden = !active.inspection;
+    if (active.inspection) inspectButton.textContent = active.inspection.label;
     roofButton.hidden = !active.roof;
     if (active.roof) {
       roofButton.setAttribute('aria-pressed', String(active.roof.visible));
@@ -215,7 +223,7 @@ if (renderer) {
   });
 
   function inspectAssembly() {
-    framedTester = null;
+    inspection = null;
     camera.fov = 34;
     camera.updateProjectionMatrix();
     if (current) frame(current, selected);
@@ -255,7 +263,7 @@ if (renderer) {
       $('#reset-visitor').hidden = false;
       message.textContent = '';
       showWalkControls();
-      if (request === requestId && active === activeWalkScene() && !framedTester) visitor.setWalking(true);
+      if (request === requestId && active === activeWalkScene() && !inspection) visitor.setWalking(true);
     } catch (error) {
       message.textContent = 'Unable to load the visitor. Select Walk visitor to retry.';
       console.error('Visitor loading failed', error);
@@ -266,38 +274,37 @@ if (renderer) {
   };
   wrap.inspectVisitor = () => ({ angle: activeWalkScene()?.doorAngle ?? 0, visitor: visitor?.state ?? null, drawCalls: renderer.info.render.calls });
 
-  function frame(object, id) {
+  function frame(object, id, focus = null) {
     object.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(object); const sphere = box.getBoundingSphere(new THREE.Sphere());
-    if (id === 'tester-detail') sphere.center.y = box.min.y + .70 * (box.max.y - box.min.y);
+    if (focus) object.localToWorld(sphere.center.fromArray(focus.target));
     controls.target.copy(sphere.center);
     const vertical = THREE.MathUtils.degToRad(camera.fov/2); const horizontal = Math.atan(Math.tan(vertical)*camera.aspect);
     let margin = 1.2;
     if (assemblies[id]) margin = id === 'assembly' ? (camera.aspect < 1.35 ? 1.08 : .8) : .94;
     // Bring the display furniture forward while keeping the entrance in frame.
-    if (id === 'home-furnishings' || id === 'pharmacy-beauty') margin = .67;
-    if (id === 'tester-detail') margin = .62;
-    const distance = Math.max(sphere.radius, .25) / Math.sin(Math.min(vertical,horizontal)) * margin;
+    if (assemblies[id]?.showroom) margin = .67;
+    const radius = focus ? focus.radius : Math.max(sphere.radius, .25) * margin;
+    const distance = radius / Math.sin(Math.min(vertical,horizontal));
     const direction = new THREE.Vector3(6,4,7);
     if (id === 'ceiling') direction.set(4,-3,5);
     if (id === 'assembly') direction.set(6,3.5,10);
-    if (id === 'home-furnishings' || id === 'pharmacy-beauty') direction.set(1.2,7.6,5.2);
-    // Frame the swatches from the fixture's customer side, including its installed rotation.
-    if (id === 'tester-detail') direction.set(.22,.46,1).transformDirection(object.matrixWorld);
+    if (assemblies[id]?.showroom) direction.set(1.2,7.6,5.2);
     if (id === 'enclosed-shop') direction.set(2.3,4.8,7);
     if (id === 'finished-edge') direction.set(3.7,2.6,5.1);
     if (id === 'corner-floor') direction.set(3.5,5.3,5.2);
     if (id === 'floor-transition') direction.set(1.2,5.5,5.1);
     if (id === 'wall-run' || id === 'wall-ceiling') direction.set(2.3,2.6,6);
     if (id === 'wall-corner') direction.set(-3.1,2.8,5.4);
+    if (focus) direction.fromArray(focus.direction).transformDirection(object.matrixWorld);
     camera.position.copy(sphere.center).add(direction.normalize().multiplyScalar(distance));
     controls.minDistance = Math.max(.2, sphere.radius * .65); controls.maxDistance = Math.max(10, sphere.radius * 12);
     camera.near = Math.max(.01, distance / 100); camera.far = distance * 20; camera.updateProjectionMatrix(); controls.update();
   }
-  function resize() { const {width,height} = wrap.getBoundingClientRect(); if (!width || !height) return; renderer.setSize(width,height,false); camera.aspect=width/height; camera.updateProjectionMatrix(); if (current && !visitor?.state.walking) frame(framedTester ?? current, framedTester ? 'tester-detail' : selected); }
+  function resize() { const {width,height} = wrap.getBoundingClientRect(); if (!width || !height) return; renderer.setSize(width,height,false); camera.aspect=width/height; camera.updateProjectionMatrix(); if (current && !visitor?.state.walking) frame(inspection?.object ?? current, selected, inspection); }
   new ResizeObserver(resize).observe(wrap); resize();
   async function select(id) {
-    framedTester = null;
+    inspection = null;
     if (visitor?.state.walking) visitor.setWalking(false);
     walkTools.hidden = true;
     message.textContent = '';
@@ -339,7 +346,7 @@ if (renderer) {
     const dt = lastFrame === undefined ? 0 : (now - lastFrame) / 1000;
     lastFrame = now;
     if (visitor && current === visitor.visual.parent) {
-      visitor.visual.visible = !framedTester || !controls.enabled;
+      visitor.visual.visible = !inspection || !controls.enabled;
       visitor.update(dt);
     }
     if (controls.enabled) controls.update();

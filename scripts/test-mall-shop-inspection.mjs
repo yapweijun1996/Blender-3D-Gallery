@@ -2,12 +2,20 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
+import { computerPaths } from '../mall-modules-preview/computer-shop.js';
 import { beautyPaths } from '../mall-modules-preview/pharmacy-beauty.js';
 import { roomAssetPaths } from '../mall-modules-preview/room-layout.js';
 import { launchOptions, recordConsumedGlbHashes } from './browser-test-utils.mjs';
 
-const url = new URL('mall-modules-preview/?view=pharmacy-beauty', process.env.MALL_PREVIEW_SITE ?? 'http://127.0.0.1:5173/');
-const paths = Object.values({ ...roomAssetPaths, ...beautyPaths });
+const shops = {
+  'pharmacy-beauty': { paths: beautyPaths, label: 'Inspect tester bar', dependency: beautyPaths.testerBar },
+  'computer-shop': { paths: computerPaths, label: 'Inspect demo laptop', dependency: computerPaths.securityTether },
+};
+const id = process.argv[2];
+assert.ok(Object.hasOwn(shops, id), 'Specify a shop: ' + Object.keys(shops).join(' or '));
+const shop = shops[id];
+const url = new URL('mall-modules-preview/?view=' + id, process.env.MALL_PREVIEW_SITE ?? 'http://127.0.0.1:5173/');
+const paths = Object.values({ ...roomAssetPaths, ...shop.paths });
 const expected = (await Promise.all(paths.map(async path =>
   createHash('sha256').update(await readFile(path)).digest('hex')))).sort();
 const ready = (page, id) => page.locator('#canvas-wrap[data-view="' + id + '"] #canvas-status[data-state="ready"]')
@@ -24,31 +32,31 @@ try {
     page.on('pageerror', error => errors.push(error.message));
     await page.addInitScript(recordConsumedGlbHashes);
     if (touch) {
-      await page.route('**/mall-cosmetics-tester-bar.glb', route => route.abort(), { times: 1 });
+      await page.route('**/' + shop.dependency, route => route.abort(), { times: 1 });
     }
     await page.goto(url.href, { waitUntil: 'domcontentloaded' });
     if (touch) {
       await page.locator('#canvas-status[data-state="error"]').waitFor();
-      assert.equal(await page.getByRole('button', { name: 'Inspect tester bar' }).count(), 0);
+      assert.equal(await page.getByRole('button', { name: shop.label }).count(), 0);
       const layouts = page.getByRole('combobox', { name: 'Assembly' });
       await layouts.selectOption('enclosed-shop');
       await ready(page, 'enclosed-shop');
-      await layouts.selectOption('pharmacy-beauty');
+      await layouts.selectOption(id);
     }
-    await ready(page, 'pharmacy-beauty');
+    await ready(page, id);
     assert.deepEqual(await page.evaluate(() => window.consumedModelHashes.slice().sort()), expected);
     assert.equal(await readVisitor(page), null);
 
-    const inspect = page.getByRole('button', { name: 'Inspect tester bar' });
+    const inspect = page.getByRole('button', { name: shop.label });
     const canvas = page.locator('#canvas-wrap canvas');
     const layouts = page.getByRole('combobox', { name: 'Assembly' });
     const reset = page.getByRole('button', { name: 'Reset camera view' });
     async function shot(name) {
       await rendered(page);
-      const path = process.env.MALL_GRID_SHOTS && process.env.MALL_GRID_SHOTS + '/pharmacy-' + name + '-' + width + '.png';
-      const image = await canvas.screenshot(path ? { path } : {});
+      const path = process.env.MALL_GRID_SHOTS && process.env.MALL_GRID_SHOTS + '/' + id + '-' + name + '-' + width + '.png';
+      const image = await canvas.screenshot({ path: path || undefined, timeout: 90000 });
       // Scroll position can change the outermost antialiased border pixel.
-      // Compare the rendered interior directly, including the complete tester.
+      // Compare the rendered interior directly, including the inspected display.
       return page.evaluate(async encoded => {
         const image = new Image();
         image.src = 'data:image/png;base64,' + encoded;
@@ -63,8 +71,8 @@ try {
     const overview = await shot('overview');
     if (touch) await inspect.tap();
     else { await inspect.focus(); await page.keyboard.press('Enter'); }
-    const detail = await shot('tester');
-    assert.ok(overview !== detail, 'inspect moves from the shop overview to the installed tester');
+    const detail = await shot('detail');
+    assert.ok(overview !== detail, 'inspect moves from the shop overview to the installed fixture');
     await reset.click();
     assert.ok(overview === await shot('reset'), 'reset restores the original view of the shop');
     await page.getByRole('button', { name: 'Show ceiling' }).click();
@@ -73,13 +81,13 @@ try {
     await layouts.selectOption('enclosed-shop');
     await ready(page, 'enclosed-shop');
     assert.equal(await inspect.count(), 0);
-    await layouts.selectOption('pharmacy-beauty');
-    await ready(page, 'pharmacy-beauty');
+    await layouts.selectOption(id);
+    await ready(page, id);
     assert.equal(await page.getByRole('button', { name: 'Hide ceiling' }).count(), 1);
     assert.deepEqual(await page.evaluate(() => window.consumedModelHashes.slice().sort()), expected, 'switches reuse installed fixtures');
 
     if (!touch) {
-      // A late visitor download must respect a more recent request to inspect the tester.
+      // A late visitor download must respect a more recent request to inspect the display.
       let release, started;
       const gate = new Promise(resolve => { release = resolve; });
       const download = new Promise(resolve => { started = resolve; });
@@ -103,7 +111,7 @@ try {
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     assert.deepEqual(errors, []);
     await page.close();
-    console.log('PASS pharmacy and beauty shop at ' + width + 'px, nine exact GLBs, inspection, reset, roof and scene selection');
+    console.log('PASS', id, width + 'px,', expected.length, 'exact GLBs, inspection, reset, roof and scene selection');
   }
 } finally {
   await browser.close();

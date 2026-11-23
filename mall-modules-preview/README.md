@@ -70,7 +70,15 @@ Choose **Pharmacy and beauty shop** or open `/mall-modules-preview/?view=pharmac
 
 The three fixtures sit at their original scale. The 0.814 m-wide pickup opening gives the customer a sightline to the tray, and the right-hand aisle leads staff to the open rear rack. The 18.18 m customer loop visits all three fixtures from the entrance. The 11.88 m staff route runs from the stock display around the counter and back.
 
-Run `node --test tests/mall-pharmacy-beauty.test.mjs` to check floor support, sightlines and full-body clearance along both routes, including controls with the door shut, the tester reversed and the staff aisle obstructed. With the local server running, `MALL_PREVIEW_SITE=http://127.0.0.1:5173/ node scripts/test-mall-pharmacy-beauty.mjs` checks the nine loaded GLBs and the inspect, reset, roof and shop controls at desktop and touch viewport sizes. It also interrupts the tester download and retries through the shop selector.
+Run `node --test tests/mall-pharmacy-beauty.test.mjs` to check floor support, sightlines and full-body clearance along both routes, including controls with the door shut, the tester reversed and the staff aisle obstructed. With the local server running, `MALL_PREVIEW_SITE=http://127.0.0.1:5173/ node scripts/test-mall-shop-inspection.mjs pharmacy-beauty` checks the nine loaded GLBs and the inspect, reset, roof and shop controls at desktop and touch viewport sizes. It also interrupts the tester download and retries through the shop selector.
+
+### Computer shop
+
+Choose **Computer shop** or open `/mall-modules-preview/?view=computer-shop`. Enter through the double doors to reach the central [TV demo table](../models/tv-demo-table/README.md). **Inspect demo laptop** frames the [open notebook](../models/laptop/README.md), its keyboard and both ends of the [product security tether](../models/mall-product-security-tether/README.md). The original three screens remain on the table. The right aisle leads to the [electronics shelf](../models/shelf-electronics-display/README.md) and the left aisle returns to the entrance. [Shop cutaway](computer-shop.png) · [Tethered laptop](computer-shop-laptop.png)
+
+The 19.24 m visitor loop includes 775 checked positions. Both ends of the tether make physical contact, with the table base at desk height and the device pad 20 mm higher on the palm rest. The preview displays the laptop open. The geometry test independently runs its 2.5 s lid clip through 301 poses and measures clearance over the lead and sensor. Turning the tether around leaves a measurable 20 mm gap under the device pad.
+
+Run `node --test tests/mall-computer-shop.test.mjs` to check the mounted fixtures, lid motion, display sightlines and both aisles. With the local server running, `MALL_PREVIEW_SITE=http://127.0.0.1:5173/ node scripts/test-mall-shop-inspection.mjs computer-shop` verifies ten exact GLBs, keyboard and touch inspection, reset, the roof toggle and recovery from a failed tether download.
 
 ## Furnished corridor
 

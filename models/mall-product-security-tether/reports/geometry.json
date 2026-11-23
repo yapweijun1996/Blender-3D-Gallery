@@ -1,0 +1,124 @@
+{
+  "axis": "glTF +Y up; table at origin, install root on table at (+.770,+.800,+.320) metres",
+  "laptopSha256": "9ae4251907b6f59893a5f2a409d25f2e4fea87026cae9ddebb939d8549ae7077",
+  "tableSha256": "af96aaa8cd60dcbc61557b27ea67c468084749a049a580ed960ce3cc3e05dfaf",
+  "clip": "MOVABLE_LidAction",
+  "clipDurationSeconds": 2.5,
+  "levels": [
+    {
+      "level": "LOD0",
+      "file": "exports/mall-product-security-tether.glb",
+      "sha256": "143563ccbaf552d5b94afa89bda59c120764c390d5b9574b806eae0e4e23c08e",
+      "bytes": 99884,
+      "draws": 15,
+      "triangles": 2648,
+      "validator": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0
+      },
+      "bounds": [
+        [
+          -0.1665000021457672,
+          0,
+          -0.026499999687075615
+        ],
+        [
+          0.026499999687075615,
+          0.02969999983906746,
+          0.0409993939101696
+        ]
+      ],
+      "seat": {
+        "points": 18,
+        "maximumGapM": 1.1920928910669204e-8
+      },
+      "lid": {
+        "poses": 301,
+        "footprintGridPitchM": 0.003,
+        "maximumProjectionAbovePalmPlaneM": 0.009403479152110816,
+        "footprintRaysPerPose": 99,
+        "lidIntersections": 13501,
+        "minimumGapM": 0.012716563423741278,
+        "clipTimeAtMinimumS": 1.25
+      }
+    },
+    {
+      "level": "LOD1",
+      "file": "exports/mall-product-security-tether-lod1.glb",
+      "sha256": "1e491c723fcb56d2a71c768da144b95ed130e7d5915eb3a691f852ba1f407bf9",
+      "bytes": 63584,
+      "draws": 6,
+      "triangles": 1402,
+      "validator": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0
+      },
+      "bounds": [
+        [
+          -0.1665000021457672,
+          0,
+          -0.026499999687075615
+        ],
+        [
+          0.026499999687075615,
+          0.02954075112938881,
+          0.04088030382990837
+        ]
+      ],
+      "seat": {
+        "points": 18,
+        "maximumGapM": 1.1920928910669204e-8
+      },
+      "lid": {
+        "poses": 301,
+        "footprintGridPitchM": 0.003,
+        "maximumProjectionAbovePalmPlaneM": 0.00935439896922019,
+        "footprintRaysPerPose": 97,
+        "lidIntersections": 13261,
+        "minimumGapM": 0.012765643606631905,
+        "clipTimeAtMinimumS": 1.25
+      }
+    },
+    {
+      "level": "LOD2",
+      "file": "exports/mall-product-security-tether-lod2.glb",
+      "sha256": "3529d9f48f3a8b81104689a13b4ab04a9b00d9cdeecf20e0922e6b268186c2a3",
+      "bytes": 24792,
+      "draws": 2,
+      "triangles": 500,
+      "validator": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0
+      },
+      "bounds": [
+        [
+          -0.1665000021457672,
+          0,
+          -0.026499999687075615
+        ],
+        [
+          0.026499999687075615,
+          0.029077498242259026,
+          0.04099881276488304
+        ]
+      ],
+      "seat": {
+        "points": 18,
+        "maximumGapM": 1.1920928910669204e-8
+      },
+      "lid": {
+        "poses": 301,
+        "footprintGridPitchM": 0.003,
+        "maximumProjectionAbovePalmPlaneM": 0.008895178255982072,
+        "footprintRaysPerPose": 95,
+        "lidIntersections": 12990,
+        "minimumGapM": 0.013224864319870022,
+        "clipTimeAtMinimumS": 1.25
+      }
+    }
+  ],
+  "negativeControl": "Raising the installed tether 3 mm broke both-surface seating."
+}

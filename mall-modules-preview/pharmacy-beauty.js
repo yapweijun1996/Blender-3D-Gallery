@@ -21,5 +21,11 @@ export function assemblePharmacyBeauty(sources) {
   room.group.traverse(object => {
     if (object.userData.moduleId === 'testerBar') testerBar = object;
   });
-  return { ...room, testerBar };
+  return {
+    ...room, testerBar,
+    inspection: {
+      object: testerBar, label: 'Inspect tester bar',
+      target: [0, 1.05, 0], direction: [.22, .46, 1], radius: .611,
+    },
+  };
 }

@@ -389,7 +389,7 @@ This is the detailed planning checklist requested for building a complete virtua
 - [ ] 床品店
 - [ ] FairPrice 风格超市
 - [ ] 迷你超市
-- [ ] 电脑店
+- [x] [电脑店](../../mall-modules-preview/README.md#computer-shop)（含实物演示台与陈列柜）
 - [ ] 手机店
 - [ ] 电子产品店
 - [ ] 面包店
@@ -474,7 +474,7 @@ This is the detailed planning checklist requested for building a complete virtua
 - [ ] 游戏机展示台
 - [ ] 电子店收银柜台
 - [ ] 产品信息牌
-- [ ] 产品防盗线
+- [x] [产品防盗线](../../models/mall-product-security-tether/README.md)（配合笔电、展示桌）
 - [ ] 维修服务柜台
 
 ### 21. 面包店与餐饮模型（P1）
