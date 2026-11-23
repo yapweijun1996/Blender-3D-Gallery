@@ -1,0 +1,105 @@
+{
+  "id": "mall-carpark-help-point",
+  "name": "Mall Car Park Help Point",
+  "summary": "Unbranded mall car park help-point pedestal with a fictional local press and light response.",
+  "description": "Original SG/MY-inspired car park assistance pedestal with bilingual labels, recessed speaker hardware and a simulation-only button press and visual acknowledgement. No call, audio, data or live service.",
+  "category": "Shopping Mall",
+  "tags": [
+    "Mall car park",
+    "Help point",
+    "Intercom",
+    "Assistance",
+    "Simulation",
+    "Bantuan",
+    "Singapore",
+    "Malaysia"
+  ],
+  "status": "validated",
+  "created": "2026-11-23",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Original Blender geometry, materials, bilingual mesh lettering, authored button/lens motion and true studio render.",
+  "source": "mall-carpark-help-point.blend",
+  "generator": "generate.py",
+  "export": "exports/mall-carpark-help-point.glb",
+  "preview": "previews/studio.webp",
+  "rights": "Original project asset; redistribution terms for public downloads are not specified.",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.54,
+      0.33,
+      1
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        6,
+        5
+      ],
+      "hemisphereIntensity": 1.76,
+      "directionalIntensity": 1.86
+    }
+  },
+  "animation": {
+    "name": "CARPARK_HELP_PRESS",
+    "duration_seconds": 1.5,
+    "glTF_front": "+Z",
+    "button": {
+      "node": "CARPARK_HELP_BUTTON",
+      "start_m": [
+        0,
+        0.841,
+        0.223
+      ],
+      "depressed_m": [
+        0,
+        0.841,
+        0.211
+      ],
+      "end_m": [
+        0,
+        0.841,
+        0.223
+      ]
+    },
+    "indicator": {
+      "node": "CARPARK_HELP_INDICATOR",
+      "start_m": [
+        0,
+        0.963,
+        0.171
+      ],
+      "end_m": [
+        0,
+        0.963,
+        0.197
+      ]
+    }
+  },
+  "accuracy_notes": "Fictional educational preview only. No outbound operation, dialling, audio, request dispatch, personal data, parking gate control, real installation or compliance claim.",
+  "attribution": [
+    {
+      "credit": "Original Blender geometry, materials, authored animation and studio render. Bilingual mesh letters use bundled Blender Bfont. No external assets, photos, textures, source CAD or brand designs."
+    }
+  ],
+  "metrics": {
+    "glb_bytes": 140780,
+    "glb_sha256": "54e9d255095ad104a154332ebdf3941faf2b609fc7a403426f7a91db186734ba",
+    "source_sha256": "6be627956d508ca40039b5c00636cb3d347d5a1637a1d25dfb04b4bad822173f",
+    "preview_sha256": "6d6f56e867d3f0338ac6dc5cc99dd9ba56a1c8d5a1ce1c8c78e302d65ea3a044",
+    "preview_bytes": 8618,
+    "triangles": 2485,
+    "vertices": 4455,
+    "meshes": 19,
+    "materials": 10,
+    "draw_calls": 19,
+    "animations": 1,
+    "maximum_texture_dimension_px": 0,
+    "dimensions_gltf_xyz_m": [
+      0.93,
+      1.30527,
+      0.627
+    ]
+  }
+}
