@@ -104,9 +104,10 @@ function deck(batch, points, heights, width, solids) {
 }
 
 /** Triangulate a closed ring (the last point repeats the first) lying on the ground. */
-function triangulate(ring) {
+function triangulate(ring, clockwise = false) {
   const points = ring.slice(0, -1).map(([x, z]) => new Vector2(x, z));
   if (points.length < 3) return { points, triangles: [] };
+  if (clockwise && !ShapeUtils.isClockWise(points)) points.reverse();
   return { points, triangles: ShapeUtils.triangulateShape(points, []) };
 }
 
@@ -122,18 +123,22 @@ function fillPolygon(batch, ring, y, color) {
 export const BAY = 3.6, FLOOR = 3.2;
 const PLAIN = [0.03, 0.03];
 
-function extrude(batch, ring, height, wall, roof, { bay = BAY, floor = FLOOR } = {}) {
-  const { points, triangles } = triangulate(ring);
+function extrude(batch, ring, height, wall, roof, { bay = BAY, floor = FLOOR, base = 0 } = {}) {
+  const { points, triangles } = triangulate(ring, base > 0);
+  const top = base + height;
   const floors = Math.max(1, Math.round(height / floor));
   let along = 0;
   for (let i = 0; i < points.length; i++) {
     const a = points[i], b = points[(i + 1) % points.length];
     const length = Math.hypot(b.x - a.x, b.y - a.y), u0 = along / bay, u1 = (along + length) / bay;
-    batch.quad([a.x, 0, a.y], [b.x, 0, b.y], [b.x, height, b.y], [a.x, height, a.y], wall, [u0, 0], [u1, 0], [u1, floors], [u0, floors]);
+    batch.quad([a.x, base, a.y], [b.x, base, b.y], [b.x, top, b.y], [a.x, top, a.y], wall, [u0, 0], [u1, 0], [u1, floors], [u0, floors]);
     along += length;
   }
   for (const [a, b, c] of triangles) {
-    batch.triangle([points[a].x, height, points[a].y], [points[c].x, height, points[c].y], [points[b].x, height, points[b].y], roof, PLAIN, PLAIN, PLAIN);
+    batch.triangle([points[a].x, top, points[a].y], [points[c].x, top, points[c].y], [points[b].x, top, points[b].y], roof, PLAIN, PLAIN, PLAIN);
+    if (base > 0) {
+      batch.triangle([points[a].x, base, points[a].y], [points[b].x, base, points[b].y], [points[c].x, base, points[c].y], roof, PLAIN, PLAIN, PLAIN);
+    }
   }
 }
 
@@ -162,26 +167,30 @@ function zebra(batch, tile, point, ox, oz) {
   }
 }
 
-/** Triangle list of a building for the physics collider: walls and roof, vertices XYZ and indices. */
-export function buildingMesh(ring, height) {
-  const { points, triangles } = triangulate(ring);
+/** Physics walls and roof, with an underside for buildings raised above ground. */
+export function buildingMesh(ring, height, base = 0) {
+  const { points, triangles } = triangulate(ring, base > 0);
   const vertices = [], indices = [];
-  for (const point of points) vertices.push(point.x, 0, point.y);
-  for (const point of points) vertices.push(point.x, height, point.y);
+  for (const point of points) vertices.push(point.x, base, point.y);
+  for (const point of points) vertices.push(point.x, base + height, point.y);
   const count = points.length;
   for (let i = 0; i < count; i++) {
     const j = (i + 1) % count;
     indices.push(i, j, count + j, i, count + j, count + i);
   }
-  for (const [a, b, c] of triangles) indices.push(count + a, count + b, count + c);
+  for (const [a, b, c] of triangles) {
+    if (base > 0) indices.push(count + a, count + c, count + b, a, b, c);
+    else indices.push(count + a, count + b, count + c);
+  }
   return { vertices, indices };
 }
 
 /**
  * Builds the meshes of one tile. Returns geometries in world coordinates (the tile origin is already added) plus
  * the point features and the buildings, which the page uses for colliders and instanced props.
+ * An optional buildingBase callback declares an elevated underside in world metres.
  */
-export function buildTile(tile, { hide = () => false } = {}) {
+export function buildTile(tile, { hide = () => false, buildingBase } = {}) {
   const [ox, oz] = origin(tile);
   const shift = points => points.map(([x, z]) => [x + ox, z + oz]);
   const ground = createBatch(), buildings = createBatch({ uv: true }), towers = createBatch({ uv: true });
@@ -212,12 +221,16 @@ export function buildTile(tile, { hide = () => false } = {}) {
     const ring = shift(building.geometry);
     if (ring.length < 4) continue;
     const height = Math.max(3, building.height ?? 9);
+    const base = buildingBase?.(building) ?? 0;
+    if (!Number.isFinite(base) || base < 0) throw new RangeError(`Invalid base height for building ${building.id}`);
     const seed = hash(building.id);
     if (!hide(building.name)) {
-      if (height >= TOWER_HEIGHT) extrude(towers, ring, height, GLASS[seed % GLASS.length], ROOFS[(seed >> 3) % ROOFS.length], { bay: 2.4, floor: 4 });
-      else extrude(buildings, ring, height, WALLS[seed % WALLS.length], ROOFS[(seed >> 3) % ROOFS.length]);
+      if (height >= TOWER_HEIGHT) extrude(towers, ring, height, GLASS[seed % GLASS.length], ROOFS[(seed >> 3) % ROOFS.length], { bay: 2.4, floor: 4, base });
+      else extrude(buildings, ring, height, WALLS[seed % WALLS.length], ROOFS[(seed >> 3) % ROOFS.length], { base });
     }
-    solids.push({ id: building.id, name: building.name, ring, height });
+    const solid = { id: building.id, name: building.name, ring, height };
+    if (base > 0) solid.base = base;
+    solids.push(solid);
   }
   return {
     ground: ground.empty ? null : ground.build(),

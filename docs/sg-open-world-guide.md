@@ -27,7 +27,29 @@ node --test tests/world-tunnel-prototype.test.mjs
 npm run build:deploy && npm run test:tunnel
 ```
 
-Default-world integration still needs the actual surface and overhead layouts at the approaches, including the projected crossing with Fort Canning Road, plus streaming, AI route choice and target-device measurement. The opt-in prototype has its own scene and vehicle and uses the main site's route disposal and retry.
+### Default-world tunnel integration checks
+
+The 531.274 m simulation extends the descent and ascent along the connected Fort Canning Link ways in the pinned snapshot. It spans four tiles and keeps the mapped upstream footways and SMU Connexion above the roof. The local ground owner keeps the exterior ground installed when it swaps the cut and restores the flat patch on unload. Rapier updates the new patch's query index on the next physics step, so the cut must load before a vehicle enters it.
+
+Run the offline checks from the repository root.
+
+```sh
+node scripts/world/fort-canning-integration.mjs > scripts/world/fort-canning-integration.json
+npm run test:world
+node --test tests/world-fort-canning-crossings.test.mjs tests/world-tunnel-streaming.test.mjs tests/world-overhead-structures.test.mjs
+```
+
+A Rapier sedan travels the extended approach, both portals and all three tile seams. At the parking aisle and Fort Canning Road, pairs of sedans drive across the same location at different heights in the same physics world. The chassis separation is 5.50 m and 5.45 m respectively at the closest points on plan.
+
+The default-map gate reports four unresolved overlaps in the fixed map data.
+
+- **Penang Road merge.** The full road width begins overlapping the exit 52.20 m after the last edge of the Fort Canning Road crossing. At the prototype's 8% grade limit this gives at most 4.18 m of depth against the model's 4.90 m roof clearance and thickness. Keeping the Penang Road merge at ground level requires an adjusted road profile or alignment. [LTA route map](https://onemotoring.lta.gov.sg/content/dam/onemotoring/Driving/Road_Closures/Temporary/FCT/FCTTT801TunnelClosureMapApr2025.pdf).
+- **Innovation Bridge.** The mapped two-storey bridge intersects the entrance cut. The tile renderer and Rapier support a closed elevated footprint when an underside height is supplied. Choosing the modeled height still needs an explicit integration decision. [SMU description](https://admissions.smu.edu.sg/our-community/news/smu-expands-city-campus-footprint-new-sustainable-development-named-tahir).
+- **Two exit footways.** The `774912614:0` and `1552288080:0` footprints intersect the open ascent in plan. Validate walkable continuity and the required clearance for both paths before enabling the cut.
+
+The existing streamed tiles end where the three Fort Canning Link lanes and two Penang Road lanes merge. A separately pinned API sample verifies 168.71 m of five-lane, one-way Penang Road from the merge to a signal. The complete junction and turn data belong in the tile extraction before enabling the through route. [OpenStreetMap merge continuation](https://api.openstreetmap.org/api/0.6/way/888048852/full.json), [middle segment](https://api.openstreetmap.org/api/0.6/way/74559749/full.json), [signal approach](https://api.openstreetmap.org/api/0.6/way/888048851/full.json).
+
+The extended alignment, depth, roof and grade checks use game dimensions. The fixed inputs give plan geometry and layer tags. Default-world activation also requires the affected tiles to be ready together and the traffic graph to use the accepted grades.
 
 ## Data pipeline (only needed when the map changes)
 
