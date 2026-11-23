@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What is RAG? (three.js)</title>
+<style>
+  html, body { margin: 0; background: #000; height: 100%; overflow: hidden; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  #stage { position: relative; width: 1280px; height: 720px; transform-origin: 0 0; }
+  canvas { display: block; width: 1280px; height: 720px; }
+  #caption { position: absolute; left: 0; right: 0; bottom: 34px; text-align: center; }
+  #caption span { display: inline-block; max-width: 1060px; padding: 12px 26px; border-radius: 14px; background: rgba(7, 11, 24, .78); color: #fff; font-size: 30px; font-weight: 600; letter-spacing: .2px; }
+  #caption span:empty { display: none; }
+  #ui { position: fixed; left: 12px; bottom: 10px; color: #9aa7c7; font-size: 13px; display: flex; gap: 10px; align-items: center; }
+  body.render #ui { display: none; }
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="c" width="1280" height="720"></canvas><div id="caption"><span></span></div></div>
+<div id="ui"><button id="play">Pause</button><input id="seek" type="range" min="0" max="28" step="0.01" value="0" style="width:420px"><span id="time">0.0 s</span></div>
+<script type="module">
+  import { createScene, CAPTIONS, DURATION } from './scene.js';
+  const canvas = document.getElementById('c');
+  const { render } = createScene(canvas, 1280, 720);
+  const cap = document.querySelector('#caption span');
+  window.renderAt = (t) => {
+    render(t);
+    const c = CAPTIONS.find(([a, b]) => t >= a && t < b);
+    cap.textContent = c ? c[2] : '';
+  };
+  window.DURATION = DURATION;
+  const params = new URLSearchParams(location.search);
+  if (params.has('render')) {
+    document.body.classList.add('render');
+    window.renderAt(Number(params.get('t') || 0));
+    window.ready = true;
+  } else {
+    const fit = () => { document.getElementById('stage').style.transform = `scale(${Math.min(innerWidth / 1280, (innerHeight - 40) / 720)})`; };
+    addEventListener('resize', fit); fit();
+    const seek = document.getElementById('seek'), play = document.getElementById('play'), time = document.getElementById('time');
+    let playing = true, t0 = performance.now(), base = 0;
+    play.onclick = () => { playing = !playing; play.textContent = playing ? 'Pause' : 'Play'; t0 = performance.now(); base = Number(seek.value); };
+    seek.oninput = () => { base = Number(seek.value); t0 = performance.now(); window.renderAt(base); time.textContent = base.toFixed(1) + ' s'; };
+    (function loop() {
+      if (playing) { const t = (base + (performance.now() - t0) / 1000) % DURATION; seek.value = t; window.renderAt(t); time.textContent = t.toFixed(1) + ' s'; }
+      requestAnimationFrame(loop);
+    })();
+  }
+</script>
+</body>
+</html>

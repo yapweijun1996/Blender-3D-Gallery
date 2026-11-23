@@ -1,0 +1,345 @@
+{
+  "sha256": "dcd47b3af6cde7cff02df2f9c68e5cb5d09cc965e258c7fb9cac04b31969cd33",
+  "motion_sha256": "31c41ce9695e8448aaf5cd7820d8bcf44e6456ed8a4268f0d5e66f6e9c3c2059",
+  "clips": {
+    "rest": {
+      "samples": 1,
+      "max_vertices_inside": 0,
+      "max_tri_pairs": 0,
+      "total_vertices_inside": 0,
+      "total_tri_pairs": 0,
+      "minimum_m": 0.0015535407001152635,
+      "max_triangle_depth_mm": 0,
+      "shortfall_samples": 0,
+      "zones": {},
+      "frame": 1.0,
+      "zone": "Left leg",
+      "body_joint": "mixamorig:LeftUpLeg",
+      "vertex": 1683
+    },
+    "idle": {
+      "samples": 177,
+      "max_vertices_inside": 0,
+      "max_tri_pairs": 0,
+      "total_vertices_inside": 0,
+      "total_tri_pairs": 0,
+      "minimum_m": 0.0010614183265715837,
+      "max_triangle_depth_mm": 0,
+      "shortfall_samples": 0,
+      "zones": {},
+      "frame": 66.0,
+      "zone": "Left leg",
+      "body_joint": "mixamorig:LeftUpLeg",
+      "vertex": 1683
+    },
+    "walk": {
+      "samples": 113,
+      "max_vertices_inside": 13,
+      "max_tri_pairs": 30,
+      "total_vertices_inside": 93,
+      "total_tri_pairs": 345,
+      "minimum_m": -0.00787938293069601,
+      "max_triangle_depth_mm": 2.7018412872578286,
+      "shortfall_samples": 50,
+      "zones": {
+        "torso": {
+          "minimum_m": -0.00787938293069601,
+          "frame": 34.5,
+          "body_joint": "mixamorig:Hips"
+        },
+        "Left leg": {
+          "minimum_m": -0.0010959532810375094,
+          "frame": 41.0,
+          "body_joint": "mixamorig:LeftLeg"
+        },
+        "Right leg": {
+          "minimum_m": -0.0007402909104712307,
+          "frame": 22.0,
+          "body_joint": "mixamorig:RightUpLeg"
+        }
+      },
+      "frame": 34.5,
+      "zone": "torso",
+      "body_joint": "mixamorig:Hips",
+      "vertex": 201,
+      "triangle_zone": "Left leg",
+      "triangle_frame": 18.0,
+      "triangle_body_joint": "mixamorig:LeftHandThumb3"
+    },
+    "run": {
+      "samples": 61,
+      "max_vertices_inside": 66,
+      "max_tri_pairs": 193,
+      "total_vertices_inside": 664,
+      "total_tri_pairs": 3693,
+      "minimum_m": -0.0039960406720638275,
+      "max_triangle_depth_mm": 2.8919271382004865,
+      "shortfall_samples": 61,
+      "zones": {
+        "Left leg": {
+          "minimum_m": -0.0035061684902757406,
+          "frame": 1.0,
+          "body_joint": "mixamorig:LeftLeg"
+        },
+        "Right foot": {
+          "minimum_m": 0.0002742565702646971,
+          "frame": 0.0,
+          "body_joint": "mixamorig:RightLeg"
+        },
+        "torso": {
+          "minimum_m": -0.0015675080940127373,
+          "frame": 4.0,
+          "body_joint": "mixamorig:LeftUpLeg"
+        },
+        "Left foot": {
+          "minimum_m": -0.0019518525805324316,
+          "frame": 2.0,
+          "body_joint": "mixamorig:LeftLeg"
+        },
+        "Right leg": {
+          "minimum_m": -0.0039960406720638275,
+          "frame": 9.0,
+          "body_joint": "mixamorig:RightLeg"
+        }
+      },
+      "frame": 9.0,
+      "zone": "Right leg",
+      "body_joint": "mixamorig:RightLeg",
+      "vertex": 3219,
+      "triangle_zone": "Left leg",
+      "triangle_frame": 1.0,
+      "triangle_body_joint": "mixamorig:LeftLeg"
+    },
+    "wave": {
+      "samples": 129,
+      "max_vertices_inside": 0,
+      "max_tri_pairs": 0,
+      "total_vertices_inside": 0,
+      "total_tri_pairs": 0,
+      "minimum_m": 0.000748883408959955,
+      "max_triangle_depth_mm": 0,
+      "shortfall_samples": 0,
+      "zones": {},
+      "frame": 19.0,
+      "zone": "Left leg",
+      "body_joint": "mixamorig:LeftForeArm",
+      "vertex": 1840
+    },
+    "jump": {
+      "samples": 101,
+      "max_vertices_inside": 1,
+      "max_tri_pairs": 6,
+      "total_vertices_inside": 4,
+      "total_tri_pairs": 24,
+      "minimum_m": -0.0002313628647243604,
+      "max_triangle_depth_mm": 0.2313694974064302,
+      "shortfall_samples": 8,
+      "zones": {
+        "Left leg": {
+          "minimum_m": -0.0002313628647243604,
+          "frame": 9.0,
+          "body_joint": "mixamorig:LeftLeg"
+        }
+      },
+      "frame": 9.0,
+      "zone": "Left leg",
+      "body_joint": "mixamorig:LeftLeg",
+      "vertex": 1371,
+      "triangle_zone": "Left leg",
+      "triangle_frame": 9.0,
+      "triangle_body_joint": "mixamorig:LeftLeg"
+    },
+    "nod": {
+      "samples": 113,
+      "max_vertices_inside": 0,
+      "max_tri_pairs": 0,
+      "total_vertices_inside": 0,
+      "total_tri_pairs": 0,
+      "minimum_m": 0.001554023940116167,
+      "max_triangle_depth_mm": 0,
+      "shortfall_samples": 0,
+      "zones": {},
+      "frame": 0.0,
+      "zone": "Left leg",
+      "body_joint": "mixamorig:LeftUpLeg",
+      "vertex": 1683
+    },
+    "dance": {
+      "samples": 129,
+      "max_vertices_inside": 0,
+      "max_tri_pairs": 0,
+      "total_vertices_inside": 0,
+      "total_tri_pairs": 0,
+      "minimum_m": 0.0007819524616934359,
+      "max_triangle_depth_mm": 0,
+      "shortfall_samples": 0,
+      "zones": {},
+      "frame": 8.0,
+      "zone": "Left leg",
+      "body_joint": "mixamorig:LeftUpLeg",
+      "vertex": 1683
+    },
+    "sit_down": {
+      "samples": 74,
+      "max_vertices_inside": 11,
+      "max_tri_pairs": 61,
+      "total_vertices_inside": 146,
+      "total_tri_pairs": 656,
+      "minimum_m": -0.0016339520225301385,
+      "max_triangle_depth_mm": 1.088474992916854,
+      "shortfall_samples": 35,
+      "zones": {
+        "torso": {
+          "minimum_m": -0.0012216586619615555,
+          "frame": 20.4,
+          "body_joint": "mixamorig:Hips"
+        },
+        "Right leg": {
+          "minimum_m": -0.0012408304028213024,
+          "frame": 24.0,
+          "body_joint": "mixamorig:RightUpLeg"
+        },
+        "Left leg": {
+          "minimum_m": -0.0016339520225301385,
+          "frame": 21.2,
+          "body_joint": "mixamorig:LeftUpLeg"
+        }
+      },
+      "frame": 21.2,
+      "zone": "Left leg",
+      "body_joint": "mixamorig:LeftUpLeg",
+      "vertex": 1321,
+      "triangle_zone": "Right leg",
+      "triangle_frame": 28.8,
+      "triangle_body_joint": "mixamorig:RightUpLeg"
+    },
+    "sit_idle": {
+      "samples": 181,
+      "max_vertices_inside": 7,
+      "max_tri_pairs": 63,
+      "total_vertices_inside": 969,
+      "total_tri_pairs": 11179,
+      "minimum_m": -0.0010884819785133004,
+      "max_triangle_depth_mm": 1.1055690429905745,
+      "shortfall_samples": 181,
+      "zones": {
+        "torso": {
+          "minimum_m": -0.00033986434573307633,
+          "frame": 54.4,
+          "body_joint": "mixamorig:Hips"
+        },
+        "Left leg": {
+          "minimum_m": -0.0010047029936686158,
+          "frame": 1.6,
+          "body_joint": "mixamorig:LeftLeg"
+        },
+        "Right leg": {
+          "minimum_m": -0.0010884819785133004,
+          "frame": 59.2,
+          "body_joint": "mixamorig:RightUpLeg"
+        }
+      },
+      "frame": 59.2,
+      "zone": "Right leg",
+      "body_joint": "mixamorig:RightUpLeg",
+      "vertex": 3373,
+      "triangle_zone": "torso",
+      "triangle_frame": 53.6,
+      "triangle_body_joint": "mixamorig:Hips"
+    },
+    "stand_up": {
+      "samples": 61,
+      "max_vertices_inside": 11,
+      "max_tri_pairs": 61,
+      "total_vertices_inside": 121,
+      "total_tri_pairs": 493,
+      "minimum_m": -0.0032146964222192764,
+      "max_triangle_depth_mm": 1.0884466902371637,
+      "shortfall_samples": 28,
+      "zones": {
+        "torso": {
+          "minimum_m": -0.0020312259439378977,
+          "frame": 8.4,
+          "body_joint": "mixamorig:Hips"
+        },
+        "Left leg": {
+          "minimum_m": -0.001616339897736907,
+          "frame": 5.6,
+          "body_joint": "mixamorig:Hips"
+        },
+        "Right leg": {
+          "minimum_m": -0.0032146964222192764,
+          "frame": 8.0,
+          "body_joint": "mixamorig:Hips"
+        }
+      },
+      "frame": 8.0,
+      "zone": "Right leg",
+      "body_joint": "mixamorig:Hips",
+      "vertex": 2986,
+      "triangle_zone": "Right leg",
+      "triangle_frame": 0.0,
+      "triangle_body_joint": "mixamorig:RightUpLeg"
+    },
+    "hold_item": {
+      "samples": 121,
+      "max_vertices_inside": 0,
+      "max_tri_pairs": 0,
+      "total_vertices_inside": 0,
+      "total_tri_pairs": 0,
+      "minimum_m": 0.001528610591776669,
+      "max_triangle_depth_mm": 0,
+      "shortfall_samples": 0,
+      "zones": {},
+      "frame": 12.8,
+      "zone": "Left leg",
+      "body_joint": "mixamorig:LeftUpLeg",
+      "vertex": 1683
+    },
+    "hold_box": {
+      "samples": 121,
+      "max_vertices_inside": 0,
+      "max_tri_pairs": 0,
+      "total_vertices_inside": 0,
+      "total_tri_pairs": 0,
+      "minimum_m": 0.0015702445525676012,
+      "max_triangle_depth_mm": 0,
+      "shortfall_samples": 0,
+      "zones": {},
+      "frame": 12.0,
+      "zone": "Left leg",
+      "body_joint": "mixamorig:LeftUpLeg",
+      "vertex": 1683
+    },
+    "hold_bag": {
+      "samples": 121,
+      "max_vertices_inside": 0,
+      "max_tri_pairs": 0,
+      "total_vertices_inside": 0,
+      "total_tri_pairs": 0,
+      "minimum_m": 0.0015446365578100085,
+      "max_triangle_depth_mm": 0,
+      "shortfall_samples": 0,
+      "zones": {},
+      "frame": 12.0,
+      "zone": "Left leg",
+      "body_joint": "mixamorig:LeftUpLeg",
+      "vertex": 1683
+    },
+    "take_item": {
+      "samples": 121,
+      "max_vertices_inside": 0,
+      "max_tri_pairs": 0,
+      "total_vertices_inside": 0,
+      "total_tri_pairs": 0,
+      "minimum_m": 0.0015327996807172894,
+      "max_triangle_depth_mm": 0,
+      "shortfall_samples": 0,
+      "zones": {},
+      "frame": 18.8,
+      "zone": "Left leg",
+      "body_joint": "mixamorig:LeftUpLeg",
+      "vertex": 1683
+    }
+  }
+}

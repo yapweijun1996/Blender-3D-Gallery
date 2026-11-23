@@ -1,0 +1,115 @@
+{
+  "master_sha256": "0339318b375836ab8891e49bda178da7e6f115e012e83385d9f8850949a7bd6f",
+  "motion_sha256": "3484f5978e94f3e714b320357397d107dd490d56f2eeb64770be292322f9aa2c",
+  "additional_actions_sha256": "0d3a57ae8906edeebee590b67d0e84333640389340bfbfbe0af041ccf8f871c9",
+  "source_reports": [
+    "studio-modules/jeans/round3/body_baseline_comparison.json",
+    "actions-fix/body_selfcheck_after.json"
+  ],
+  "results": {
+    "rest": {
+      "samples": 1,
+      "peak_body_pairs": 318
+    },
+    "walk": {
+      "peak_body_pairs": 521,
+      "body_pairs_total": 56802
+    },
+    "run": {
+      "peak_body_pairs": 577,
+      "body_pairs_total": 33779
+    },
+    "wave": {
+      "peak_body_pairs": 317,
+      "body_pairs_total": 40762
+    },
+    "jump": {
+      "peak_body_pairs": 322,
+      "body_pairs_total": 32090
+    },
+    "idle": {
+      "peak_body_pairs": 317,
+      "body_pairs_total": 55946
+    },
+    "nod": {
+      "peak_body_pairs": 317,
+      "body_pairs_total": 35675
+    },
+    "dance": {
+      "peak_body_pairs": 313,
+      "body_pairs_total": 39846
+    },
+    "sit_down": {
+      "samples": 73,
+      "peak_body_pairs": 396,
+      "body_pairs_total": 24931,
+      "peak_knee_pairs": 15,
+      "peak_knee_frame": 33.5,
+      "knee_pairs_total": 220,
+      "deepest_knee": {
+        "frame": 35.5,
+        "depth_mm": 4.141088,
+        "triangles": [
+          4941,
+          4943
+        ],
+        "regions": [
+          "LeftLeg",
+          "LeftUpLeg"
+        ]
+      }
+    },
+    "sit_idle": {
+      "samples": 181,
+      "peak_body_pairs": 401,
+      "body_pairs_total": 71893,
+      "peak_knee_pairs": 15,
+      "peak_knee_frame": 0.0,
+      "knee_pairs_total": 2715,
+      "deepest_knee": {
+        "frame": 0.0,
+        "depth_mm": 4.100275,
+        "triangles": [
+          4941,
+          4943
+        ],
+        "regions": [
+          "LeftLeg",
+          "LeftUpLeg"
+        ]
+      }
+    },
+    "stand_up": {
+      "samples": 61,
+      "peak_body_pairs": 396,
+      "body_pairs_total": 20867,
+      "peak_knee_pairs": 15,
+      "peak_knee_frame": 0.0,
+      "knee_pairs_total": 181,
+      "deepest_knee": {
+        "frame": 0.5,
+        "depth_mm": 4.133855,
+        "triangles": [
+          4941,
+          4943
+        ],
+        "regions": [
+          "LeftLeg",
+          "LeftUpLeg"
+        ]
+      }
+    },
+    "hold_item": {
+      "samples": 121,
+      "peak_body_pairs": 460,
+      "body_pairs_total": 55510,
+      "peak_knee_pairs": 0,
+      "peak_knee_frame": 0.0,
+      "knee_pairs_total": 0,
+      "deepest_knee": {
+        "frame": 0.0,
+        "depth_mm": 0.0
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "blender": "5.1.2",
+  "engine": "Cycles CPU",
+  "threads": 2,
+  "samples": 16,
+  "views": [
+    "FRONT",
+    "REAR",
+    "LEFT",
+    "RIGHT",
+    "TOP",
+    "THREE QUARTER"
+  ],
+  "models": {
+    "bus": {
+      "source": "models/singapore-public-bus/exports/singapore-public-bus.glb",
+      "source_sha256": "381f2a588a25387dbc7ab2065863e95024d3c34ac418fd54ef6fbab8818a4d69",
+      "file": "bus_hd.glb",
+      "glb_sha256": "53cae9b4b4b062a828bb7d8b1973cfb70e5beb7e1b341b3b9b15e65de6bb6974",
+      "sheet": "bus_comparison.png",
+      "sheet_sha256": "417508b1062f273721e12b2af86b5653fdce01566a72543a905b7963c2d5b954",
+      "visual_review": {
+        "status": "PASS",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "findings": "Matched the roof, window and door bands, green-and-white livery, front sign and lamps, and wheel openings. Tire shading is smoother after resampling."
+      },
+      "runtime_check": "PASS: repository Three.js GLTFLoader; paint/light material lookup and isolated X-axis rotation for all four wheels."
+    },
+    "van": {
+      "source": "models/delivery-van/exports/optimized.glb",
+      "source_sha256": "516e226d1c2d7a0add904c9c51ff8c9a3a30267ba36eea6a04bf741ea7dd1a92",
+      "file": "van_hd.glb",
+      "glb_sha256": "d569f9213852e144281e8678a5d8a44d4743fdeaed5f40fb8c3ffd34fa73623a",
+      "sheet": "van_comparison.png",
+      "sheet_sha256": "23e46c482db446d6437603b14bc57c7d0bf0eb7b7ef1cf19f798b3d5916cb84d",
+      "visual_review": {
+        "status": "PASS",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "findings": "Matched the ivory body, eased roof and nose, transparent cabin, doors, bumpers and amber rear lamps. Kept the original chassis bevel and bumper roughness in the reviewed export."
+      },
+      "runtime_check": "PASS: repository Three.js GLTFLoader; paint/light material lookup and isolated X-axis rotation for all four wheels."
+    },
+    "truck": {
+      "source": "models/cargo-truck/exports/cargo-truck.glb",
+      "source_sha256": "11d7b8cacaa409b24800c9cdcd7eceb9fe2f6c903975223a4d16bccfb052ec6c",
+      "file": "truck_hd.glb",
+      "glb_sha256": "8316e2cfaea43a97f40c498b697ed67cb67fc315db41b2f70b5d5a89657d0686",
+      "sheet": "truck_comparison.png",
+      "sheet_sha256": "a580845acc22129d8fffa63fe110f3cb930c296d239d6c4dc367adff1517a8c2",
+      "visual_review": {
+        "status": "PASS",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "findings": "Matched the teal cab, white cargo box, glazing, wheels, lamps, grille and bumper. Re-render confirmed the dark cab-door strip was eliminated by separating coincident end faces inside the original stiles."
+      },
+      "runtime_check": "PASS: repository Three.js GLTFLoader; paint/light material lookup and isolated X-axis rotation for all four wheels."
+    }
+  }
+}

@@ -1,0 +1,11 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const cp = require('node:child_process');
+const scratch = process.env.HAIR_CHECKER_DIR || '/private/tmp/claude-501/-Users-yapweijun--claude-spares-spare-Iu3lC0/26a84d71-25c7-41e6-b903-49317aeebb05/scratchpad/modular';
+const temp = path.join(__dirname, '.runtime');
+fs.mkdirSync(temp, {recursive:true});
+const env = {...process.env, DYLD_INSERT_LIBRARIES:path.join(scratch,'guard.dylib'), TMPDIR:temp, TMP:temp, TEMP:temp, BLENDER_USER_RESOURCES:temp, XDG_CACHE_HOME:temp, PYTHONDONTWRITEBYTECODE:'1', OPENBLAS_NUM_THREADS:'1', OMP_NUM_THREADS:'2', VECLIB_MAXIMUM_THREADS:'2'};
+const [script,...args]=process.argv.slice(2);
+const res=cp.spawnSync(path.join(scratch,'B/Blender.app/Contents/MacOS/Blender'),['-b','-noaudio','-t','2','--factory-startup','--disable-autoexec','--python-exit-code','1','--python',path.join(__dirname,script),'--',...args],{env,cwd:__dirname,stdio:'inherit'});
+if(res.error)throw res.error;
+process.exit(res.status ?? 1);

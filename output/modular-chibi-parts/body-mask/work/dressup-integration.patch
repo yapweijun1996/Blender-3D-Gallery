@@ -1,0 +1,342 @@
+--- a/models/chibi-dressup/manifest.json
++++ b/models/chibi-dressup/manifest.json
+@@ -36,6 +36,7 @@
+         "ms": "Baju-T"
+       },
+       "file": "modules/top-tshirt.glb",
++      "hides": ["torso","upper_arm_L","upper_arm_R"],
+       "status": "pending",
+       "source": "sol-tshirt/v3/top_tshirt_v3.glb",
+       "bytes": 132516,
+@@ -50,6 +51,7 @@
+         "ms": "Baju hud"
+       },
+       "file": "modules/top-hoodie.glb",
++      "hides": ["torso","upper_arm_L","upper_arm_R","forearm_L","forearm_R"],
+       "status": "pending",
+       "source": "hoodie-fit-sol/round2/top_hoodie_v2.glb",
+       "bytes": 1236560,
+@@ -64,6 +66,7 @@
+         "ms": "Kasut sukan"
+       },
+       "file": "modules/shoes-sneakers.glb",
++      "hides": ["foot_L","foot_R"],
+       "status": "pending",
+       "source": "shoes-sol/shoes_sneaker_v1.glb",
+       "bytes": 131708,
+--- a/scripts/sync-chibi-dressup-modules.mjs
++++ b/scripts/sync-chibi-dressup-modules.mjs
+@@ -54,7 +54,10 @@
+   const sha256 = createHash("sha256").update(input.bytes).digest("hex");
+   const status = previous?.sha256 === sha256 ? previous.status : "pending";
+   copies.push({
+-    module: { id, slot, label, file, status, source: input.source, bytes: input.bytes.length, sha256 },
++    module: {
++      id, slot, label, file, ...(previous?.hides && { hides: previous.hides }),
++      status, source: input.source, bytes: input.bytes.length, sha256,
++    },
+     bytes: input.bytes,
+   });
+ }
+--- a/src/chibi-dressup/config.js
++++ b/src/chibi-dressup/config.js
+@@ -5,6 +5,12 @@
+ export const HANDS = ["L", "R"];
+ export const GESTURES = ["fist", "open_relaxed", "point", "thumbs_up", "peace", "ok", "grip_small", "pinch", "open_wide"];
+ 
++export const BODY_REGIONS = Object.freeze([
++  "head", "neck", "torso", "pelvis", "upper_arm_L", "upper_arm_R",
++  "forearm_L", "forearm_R", "hand_L", "hand_R", "thigh_L", "thigh_R",
++  "shin_L", "shin_R", "foot_L", "foot_R",
++]);
++
+ const supportedSlots = ["hair", "top", "bottom", "shoes", "hat"];
+ const isRecord = value => value !== null && typeof value === "object" && !Array.isArray(value);
+ const isSlug = value => typeof value === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+@@ -22,6 +28,9 @@
+     if (!isRecord(module) || !isSlug(module.id) || ids.has(module.id) ||
+         !manifest.slots.includes(module.slot) || typeof module.file !== "string" ||
+         !/^modules\/[a-z0-9]+(?:[-_][a-z0-9]+)*\.glb$/.test(module.file) || files.has(module.file) ||
++        (module.hides !== undefined && (!Array.isArray(module.hides) ||
++          !module.hides.every(region => BODY_REGIONS.includes(region)) ||
++          new Set(module.hides).size !== module.hides.length)) ||
+         !isRecord(module.label) || !Object.keys(languages).every(locale => isText(module.label[locale])) ||
+         !["verified", "pending"].includes(module.status) ||
+         !Number.isSafeInteger(module.bytes) || module.bytes <= 0 ||
+--- a/src/chibi-dressup/page.js
++++ b/src/chibi-dressup/page.js
+@@ -1,11 +1,11 @@
+ import { getLanguage, localize, mountMarkup, onLanguageChange } from "../i18n/index.js";
+-import bodyUrl from "../../models/chibi-dressup/base_body.glb?url";
++import bodyUrl from "../../models/chibi-dressup/base_body_regions.glb?url";
+ import motionUrl from "../../models/chibi-dressup/motion-clips.glb?url";
+ import poseUrl from "../../models/chibi-dressup/hand_gestures.glb?url";
+ import manifestData from "../../models/chibi-dressup/manifest.json";
+ import { CLIPS, GESTURES, HANDS, loadConfig, saveConfig, validateManifest } from "./config.js";
+ import { bindModule, createRig } from "./rig.js";
+-import { createView, disposeModels, getBounds, loadModels } from "./view.js";
++import { applyBodyMask, createView, disposeModels, getBodyRegions, getBounds, loadModels } from "./view.js";
+ import "./style.css";
+ 
+ const moduleUrls = import.meta.glob("../../models/chibi-dressup/modules/*.glb", {
+@@ -73,14 +73,7 @@
+     ], signal, scenes);
+     signal.throwIfAborted();
+ 
+-    let skeleton;
+-    body.scene.traverse(node => {
+-      if (!node.isSkinnedMesh) return;
+-      if (skeleton && node.skeleton !== skeleton) throw new Error("Body has multiple skeletons");
+-      skeleton = node.skeleton;
+-      node.frustumCulled = false;
+-    });
+-    if (!skeleton) throw new Error("Body has no skeleton");
++    const { regions, skeleton } = getBodyRegions(body.scene);
+     const bounds = getBounds(body.scene);
+     const modules = new Map(manifest.modules.map((module, index) => [
+       module.id, bindModule(body.scene, models[index].scene, skeleton),
+@@ -93,11 +86,15 @@
+     let playing = !motionPreference.matches;
+ 
+     function renderConfig() {
+-      for (const { id, slot } of manifest.modules) {
++      const worn = [];
++      for (const module of manifest.modules) {
++        const { id, slot } = module;
+         const selected = config.modules[slot] === id;
++        if (selected) worn.push(module);
+         moduleButtons.get(id).setAttribute("aria-pressed", String(selected));
+         for (const mesh of modules.get(id)) mesh.visible = selected;
+       }
++      applyBodyMask(regions, worn);
+       for (const [clip, button] of clipButtons)
+         button.setAttribute("aria-pressed", String(config.animation === clip));
+       localize(playButton, playing ? "common.pause" : "common.play");
+@@ -193,6 +190,7 @@
+     stage.inspectDressup = () => ({
+       ...rig.inspect(),
+       triangles: view.triangles,
++      bodyRegions: Object.fromEntries([...regions].map(([name, mesh]) => [name, mesh.visible])),
+       modules: Object.fromEntries([...modules].map(([id, meshes]) => [id, meshes.every(mesh => mesh.visible)])),
+     });
+     const loading = stage.querySelector(".dressup-loading");
+--- a/src/chibi-dressup/rig.js
++++ b/src/chibi-dressup/rig.js
+@@ -67,17 +67,26 @@
+     for (const gesture of GESTURES) {
+       const name = `hand_${gesture}_${side}`;
+       const clip = AnimationClip.findByName(clips, name);
+-      if (!clip || clip.tracks.length !== expected || expected === 0) throw new Error(`Missing hand pose ${name}`);
+-      const seen = new Set();
+-      poses.set(name, clip.tracks.map(track => {
++      if (!clip || expected === 0) throw new Error(`Missing hand pose ${name}`);
++      const rotations = new Set();
++      const scales = new Set();
++      const channels = clip.tracks.map(track => {
+         const { nodeName, propertyName } = PropertyBinding.parseTrackName(track.name);
+         const bone = byName.get(nodeName);
++        const isRotation = propertyName === "quaternion";
++        const seen = isRotation ? rotations : scales;
+         if (!bone || !digits[side].test(nodeName) || seen.has(bone) ||
+-            propertyName !== "quaternion" || track.times.length !== 1)
++            (!isRotation && propertyName !== "scale") || track.times.length !== 1 ||
++            track.values.length !== (isRotation ? 4 : 3) || !track.values.every(Number.isFinite))
+           throw new Error(`Invalid hand pose track: ${track.name}`);
+         seen.add(bone);
+-        return { bone, pose: new Quaternion().fromArray(track.values).normalize(), baseline: new Quaternion() };
+-      }));
++        const target = bone[propertyName];
++        const pose = target.clone().fromArray(track.values);
++        if (isRotation) pose.normalize();
++        return { target, pose, baseline: target.clone() };
++      });
++      if (rotations.size !== expected) throw new Error(`Incomplete hand pose ${name}`);
++      poses.set(name, channels);
+     }
+   }
+   return poses;
+@@ -129,7 +138,7 @@
+   let overridden = [];
+ 
+   function restoreFingers() {
+-    for (const { bone, baseline } of overridden) bone.quaternion.copy(baseline);
++    for (const { target, baseline } of overridden) target.copy(baseline);
+     overridden = [];
+   }
+ 
+@@ -148,8 +157,8 @@
+         const pose = gestures.get(`hand_${hands[side]}_${side}`);
+         if (!pose) continue;
+         for (const entry of pose) {
+-          entry.baseline.copy(entry.bone.quaternion);
+-          entry.bone.quaternion.copy(entry.pose);
++          entry.baseline.copy(entry.target);
++          entry.target.copy(entry.pose);
+           overridden.push(entry);
+         }
+       }
+--- a/src/chibi-dressup/view.js
++++ b/src/chibi-dressup/view.js
+@@ -4,6 +4,32 @@
+ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+ 
++import { BODY_REGIONS } from "./config.js";
++
++export function getBodyRegions(scene) {
++  const regions = new Map();
++  let skeleton;
++  scene.traverse(node => {
++    if (!node.isSkinnedMesh) return;
++    if (!BODY_REGIONS.includes(node.name) || regions.has(node.name))
++      throw new Error(`Invalid body region: ${node.name}`);
++    if (skeleton && node.skeleton !== skeleton) throw new Error("Body has multiple skeletons");
++    skeleton = node.skeleton;
++    regions.set(node.name, node);
++    node.frustumCulled = false;
++  });
++  if (regions.size !== BODY_REGIONS.length) throw new Error("Body is missing regions");
++  return { regions, skeleton };
++}
++
++export function applyBodyMask(regions, wornModules) {
++  const references = new Map();
++  for (const { hides = [] } of wornModules) {
++    for (const region of hides) references.set(region, (references.get(region) ?? 0) + 1);
++  }
++  for (const [region, mesh] of regions) mesh.visible = !references.has(region);
++}
++
+ export function loadModels(urls, signal, scenes) {
+   const loader = new GLTFLoader();
+   return Promise.allSettled(urls.map(async url => {
+--- a/tests/chibi-dressup-config.test.mjs
++++ b/tests/chibi-dressup-config.test.mjs
+@@ -2,9 +2,14 @@
+ import { createHash } from "node:crypto";
+ import { readFileSync } from "node:fs";
+ import test from "node:test";
++import { Texture } from "three";
++import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+ import { messages } from "../src/i18n/index.js";
+-import { CLIPS, GESTURES, HANDS, STORAGE_KEY, loadConfig, saveConfig, validateManifest } from "../src/chibi-dressup/config.js";
++import { BODY_REGIONS, CLIPS, GESTURES, HANDS, STORAGE_KEY, loadConfig, saveConfig, validateManifest } from "../src/chibi-dressup/config.js";
+ 
++import { bindModule, createRig } from "../src/chibi-dressup/rig.js";
++import { applyBodyMask, getBodyRegions } from "../src/chibi-dressup/view.js";
++
+ const directory = new URL("../models/chibi-dressup/", import.meta.url);
+ const manifest = JSON.parse(readFileSync(new URL("manifest.json", directory), "utf8"));
+ 
+@@ -42,6 +47,10 @@
+     value => { value.modules[0].bytes = "1"; },
+     value => { value.modules[0].sha256 = "abc"; },
+     value => { value.defaults.top = value.defaults.hair; },
++    value => { value.modules[0].hides = "torso"; },
++    value => { value.modules[0].hides = null; },
++    value => { value.modules[0].hides = ["neck", "neck"]; },
++    value => { value.modules[0].hides = ["left-forearm"]; },
+   ]) {
+     const invalid = structuredClone(manifest);
+     change(invalid);
+@@ -78,3 +87,100 @@
+   assert.equal(loadConfig(manifest, { getItem: blocked }).animation, "idle");
+   assert.doesNotThrow(() => saveConfig(old, manifest, { setItem: blocked }));
+ });
++
++test("dress-up region names and skin in the body GLB match the manifest contract", () => {
++  const data = readFileSync(new URL("base_body_regions.glb", directory));
++  const gltf = JSON.parse(data.toString("utf8", 20, 20 + data.readUInt32LE(12)));
++  assert.equal(gltf.skins.length, 1);
++  assert.equal(gltf.skins[0].joints.length, 65);
++  const nodes = gltf.nodes.filter(node => node.mesh !== undefined);
++  assert.deepEqual(nodes.map(node => node.name).sort(), [...BODY_REGIONS].sort());
++  assert.ok(nodes.every(node => node.skin === 0 && gltf.meshes[node.mesh].name === node.name));
++});
++
++test("body masks follow equipped modules and restore only after the last reference is removed", () => {
++  const regions = new Map(BODY_REGIONS.map(name => [name, { visible: true }]));
++  const top = manifest.modules.find(module => module.id === "top-tshirt");
++  const hoodie = manifest.modules.find(module => module.id === "top-hoodie");
++  const bottom = { hides: ["torso", "pelvis"] };
++  const hair = manifest.modules.find(module => module.id === "hair-bob");
++  const visible = region => regions.get(region).visible;
++  applyBodyMask(regions, [top, bottom, hair]);
++  assert.equal(visible("torso"), false);
++  assert.equal(visible("upper_arm_L"), false);
++  assert.equal(visible("pelvis"), false);
++  assert.equal(visible("forearm_L"), true);
++  applyBodyMask(regions, [hoodie, bottom, hair]);
++  assert.equal(visible("forearm_L"), false);
++  assert.equal(visible("hand_L"), true);
++  applyBodyMask(regions, [bottom, hair]);
++  assert.equal(visible("torso"), false);
++  assert.equal(visible("forearm_L"), true);
++  assert.equal(visible("upper_arm_L"), true);
++  applyBodyMask(regions, [hair]);
++  assert.ok([...regions.values()].every(mesh => mesh.visible));
++});
++
++test("real region GLB preserves the original faces and supports clips and hand poses", async () => {
++  // The embedded image is validated separately. Node has no browser image decoder.
++  const loader = new GLTFLoader().register(() => ({
++    name: "node-test-textures",
++    loadTexture: () => Promise.resolve(new Texture()),
++  }));
++  const load = name => loader.parseAsync(Uint8Array.from(readFileSync(new URL(name, directory))).buffer, "");
++  const [original, body, motion, gestures, ...garments] = await Promise.all([
++    load("base_body.glb"), load("base_body_regions.glb"), load("motion-clips.glb"), load("hand_gestures.glb"),
++    ...manifest.modules.map(module => load(module.file)),
++  ]);
++  const { regions, skeleton } = getBodyRegions(body.scene);
++  const originalMesh = original.scene.getObjectByName("Base_Body");
++  assert.deepEqual(skeleton.bones.map(bone => bone.name), originalMesh.skeleton.bones.map(bone => bone.name));
++  assert.deepEqual(skeleton.boneInverses, originalMesh.skeleton.boneInverses);
++
++  function faceKeys(meshes) {
++    const faces = [];
++    for (const { geometry } of meshes) {
++      const attributes = ["position", "normal", "uv", "skinIndex", "skinWeight"].map(name => geometry.getAttribute(name));
++      for (let corner = 0; corner < geometry.index.count; corner += 3) {
++        const triangle = [];
++        for (let index = corner; index < corner + 3; index++) {
++          const vertex = geometry.index.getX(index);
++          for (const { array, itemSize } of attributes)
++            triangle.push(...array.subarray(vertex * itemSize, (vertex + 1) * itemSize));
++        }
++        faces.push(JSON.stringify(triangle));
++      }
++    }
++    return faces.sort();
++  }
++
++  assert.deepEqual(faceKeys(regions.values()), faceKeys([originalMesh]));
++  for (const garment of garments) {
++    assert.ok(bindModule(body.scene, garment.scene, skeleton).every(mesh => mesh.skeleton === skeleton));
++  }
++  const rig = createRig(body.scene, skeleton, motion, gestures.animations);
++  const finger = "mixamorigLeftHandIndex1";
++  const fingerScale = skeleton.bones.find(bone => bone.name === finger).scale;
++  const stack = gestures.animations.find(action => action.name === "hand_fist_L");
++  const track = stack.tracks.find(candidate => candidate.name === finger + ".quaternion");
++  const scaleTrack = stack.tracks.find(candidate => candidate.name === finger + ".scale");
++  for (const clip of CLIPS) {
++    rig.select(clip);
++    rig.update(0.125, { L: null, R: null });
++    const before = rig.inspect();
++    assert.equal(before.clip, clip);
++    assert.ok(before.time > 0);
++    const baselineScale = fingerScale.toArray();
++    rig.update(0, { L: "fist", R: null });
++    const rotation = rig.inspect().joints.find(joint => joint.name === finger).rotation;
++    const dot = rotation.reduce((sum, value, index) => sum + value * track.values[index], 0);
++    assert.ok(Math.abs(Math.abs(dot) - 1) < 1e-6);
++    assert.deepEqual(fingerScale.toArray(), Array.from(scaleTrack.values));
++    rig.update(0, { L: "open_wide", R: "point" });
++    assert.deepEqual(fingerScale.toArray(), baselineScale);
++    rig.update(0, { L: null, R: null });
++    assert.deepEqual(rig.inspect().joints, before.joints);
++    assert.deepEqual(fingerScale.toArray(), baselineScale);
++  }
++  rig.dispose();
++});

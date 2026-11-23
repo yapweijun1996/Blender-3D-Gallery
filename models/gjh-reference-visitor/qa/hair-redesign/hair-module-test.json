@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "blender": "5.1.2",
+  "sha256": {
+    "source": "889e5f696d4b97181061b53facd0276d55efc4a01f352612b2cb48162a88476f",
+    "module": "2ae2005d81a7c8542854342d0cf726503d0f061fdcecee11198b3aee16ff8674"
+  },
+  "source_and_module_unchanged": true,
+  "source_mesh": "Hair_Module",
+  "module_mesh": "Hair_Module.001",
+  "counts": {
+    "source_vertices": 31472,
+    "module_vertices": 31472
+  },
+  "threshold_m": 1e-05,
+  "rest": {
+    "source_to_module": {
+      "max_m": 0.0,
+      "p95_m": 0.0,
+      "mean_m": 0.0
+    },
+    "module_to_source": {
+      "max_m": 0.0,
+      "p95_m": 0.0,
+      "mean_m": 0.0
+    }
+  },
+  "head_rotation_radians": [
+    0.20943951023931956,
+    -0.29670597283903605,
+    0.13962634015954636
+  ],
+  "rotated_head": {
+    "source_to_module": {
+      "max_m": 3.611995111896249e-07,
+      "p95_m": 1.3348812899494078e-07,
+      "mean_m": 7.350914440680148e-08
+    },
+    "module_to_source": {
+      "max_m": 3.611995111896249e-07,
+      "p95_m": 1.3348812899494078e-07,
+      "mean_m": 7.350914440680148e-08
+    }
+  },
+  "hide_original_show_module": {
+    "original_visible": false,
+    "module_visible": true
+  },
+  "show_original_hide_module": {
+    "original_visible": true,
+    "module_visible": false
+  },
+  "limitations": [
+    "Tests numerical geometry and visibility in Blender only; no browser or Three.js runtime is exercised.",
+    "Tests one head rotation, not animation throughout every action.",
+    "Nearest-vertex comparison does not compare shading, materials or mesh topology."
+  ]
+}

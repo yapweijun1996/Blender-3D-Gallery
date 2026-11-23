@@ -1,0 +1,306 @@
+[
+  {
+    "file": "mrt_carriage.glb",
+    "triangles": 5812,
+    "budget": 7000,
+    "bytes": 329004,
+    "size_m": {
+      "x": 3.075,
+      "y": 3.7,
+      "z": 20.48
+    },
+    "primitives": 16,
+    "materials": [
+      "glass",
+      "light",
+      "paint",
+      "trim",
+      "tire"
+    ],
+    "validator": {
+      "version": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "result": "pass"
+    },
+    "sha256": "76735d466f43f105597676a589e5d0d973c250100ff7de0ece609ddfbec6d8bd",
+    "checks": {
+      "doorCrossingRays": 64,
+      "walkableAisleMeters": 0.7,
+      "floorSamples": 231,
+      "doorSillSamples": 12,
+      "openChecks": "pass"
+    }
+  },
+  {
+    "file": "mrt_platform.glb",
+    "triangles": 3498,
+    "budget": 3500,
+    "bytes": 250180,
+    "size_m": {
+      "x": 120,
+      "y": 4.33,
+      "z": 5.1
+    },
+    "primitives": 6,
+    "materials": [
+      "concrete",
+      "metal",
+      "roof",
+      "seat",
+      "trim",
+      "wall"
+    ],
+    "validator": {
+      "version": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "result": "pass"
+    },
+    "sha256": "84eb6b46e7f7a709d0b3fcdbfa66b12c71bfaa71d8440926f2fc31d29ca73052",
+    "checks": {
+      "platformLengthMeters": 120,
+      "continuousDeckSamples": 120
+    }
+  },
+  {
+    "file": "platform_screen_door.glb",
+    "triangles": 466,
+    "budget": 700,
+    "bytes": 37132,
+    "size_m": {
+      "x": 3,
+      "y": 2.6,
+      "z": 0.602
+    },
+    "primitives": 11,
+    "materials": [
+      "glass",
+      "metal",
+      "paint",
+      "plate",
+      "trim"
+    ],
+    "validator": {
+      "version": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "result": "pass"
+    },
+    "sha256": "a443fd1b9d9db20bd5213f4f0b21c2191fe63770d67e7d7457342f23579c35b7",
+    "checks": {
+      "bayWidthMeters": 3,
+      "passageRays": 16,
+      "openChecks": "pass"
+    }
+  },
+  {
+    "file": "fare_gate.glb",
+    "triangles": 384,
+    "budget": 600,
+    "bytes": 31796,
+    "size_m": {
+      "x": 1.92,
+      "y": 1.0725,
+      "z": 1.2145
+    },
+    "primitives": 5,
+    "materials": [
+      "light",
+      "metal",
+      "rubber",
+      "glass"
+    ],
+    "validator": {
+      "version": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "result": "pass"
+    },
+    "sha256": "52d45f5953a62b40a54c72a94da6c388b9d2ac227a9a23d16a36e9feb578a1d9",
+    "checks": {
+      "passageRays": 12,
+      "openChecks": "pass"
+    }
+  },
+  {
+    "file": "station_sign.glb",
+    "triangles": 343,
+    "budget": 400,
+    "bytes": 23932,
+    "size_m": {
+      "x": 2.6,
+      "y": 0.64,
+      "z": 0.2728
+    },
+    "primitives": 4,
+    "materials": [
+      "metal",
+      "paint",
+      "plate",
+      "trim"
+    ],
+    "validator": {
+      "version": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "result": "pass"
+    },
+    "sha256": "2064bf2257b9ef86d445a545a25cf7028b71c94f2eaae4664ff13b010fecff67",
+    "checks": {}
+  },
+  {
+    "file": "route_map.glb",
+    "triangles": 298,
+    "budget": 300,
+    "bytes": 17380,
+    "size_m": {
+      "x": 1.8,
+      "y": 0.8,
+      "z": 0.0693
+    },
+    "primitives": 3,
+    "materials": [
+      "metal",
+      "plate",
+      "trim"
+    ],
+    "validator": {
+      "version": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "result": "pass"
+    },
+    "sha256": "79476367efca4552bc86c0467360dd4ea337e414bf20a5542974f2866a61a29b",
+    "checks": {}
+  },
+  {
+    "file": "train_seat.glb",
+    "triangles": 248,
+    "budget": 250,
+    "bytes": 17176,
+    "size_m": {
+      "x": 2.186,
+      "y": 1.065524,
+      "z": 0.548475
+    },
+    "primitives": 2,
+    "materials": [
+      "metal",
+      "seat"
+    ],
+    "validator": {
+      "version": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "result": "pass"
+    },
+    "sha256": "c22a30871761f15094b64c00e73a63b4076773e3ae3e647960150852f04162b3",
+    "checks": {}
+  },
+  {
+    "file": "train_door.glb",
+    "triangles": 276,
+    "budget": 300,
+    "bytes": 20872,
+    "size_m": {
+      "x": 2.3,
+      "y": 2.3,
+      "z": 0.55
+    },
+    "primitives": 5,
+    "materials": [
+      "glass",
+      "metal",
+      "paint",
+      "rubber",
+      "trim"
+    ],
+    "validator": {
+      "version": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "result": "pass"
+    },
+    "sha256": "4a929bde2d165425823bafd03562b0504e34c5d8f635a9c61b4c257555d52c7c",
+    "checks": {}
+  },
+  {
+    "file": "grab_handle.glb",
+    "triangles": 116,
+    "budget": 120,
+    "bytes": 8408,
+    "size_m": {
+      "x": 0.56,
+      "y": 0.457455,
+      "z": 0.042
+    },
+    "primitives": 3,
+    "materials": [
+      "metal",
+      "rubber",
+      "trim"
+    ],
+    "validator": {
+      "version": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "result": "pass"
+    },
+    "sha256": "65958cb5b5011c04aa8b251aa3bf54e0245919ef309838473c379b318cf683bb",
+    "checks": {}
+  },
+  {
+    "file": "card_reader.glb",
+    "triangles": 148,
+    "budget": 150,
+    "bytes": 13856,
+    "size_m": {
+      "x": 0.085,
+      "y": 0.15,
+      "z": 0.051
+    },
+    "primitives": 4,
+    "materials": [
+      "light",
+      "metal",
+      "rubber",
+      "screen"
+    ],
+    "validator": {
+      "version": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "result": "pass"
+    },
+    "sha256": "c8fdbe2a8d12d8591780d1d50e1bb03a62c0218b881ffbb439e743c1fe7eaf77",
+    "checks": {}
+  },
+  {
+    "file": "arrival_display.glb",
+    "triangles": 200,
+    "budget": 200,
+    "bytes": 16504,
+    "size_m": {
+      "x": 2,
+      "y": 0.86,
+      "z": 0.3262
+    },
+    "primitives": 5,
+    "materials": [
+      "metal",
+      "plate",
+      "rubber",
+      "screen",
+      "trim"
+    ],
+    "validator": {
+      "version": "2.0.0-dev.3.10",
+      "errors": 0,
+      "warnings": 0,
+      "result": "pass"
+    },
+    "sha256": "f437be9f9860fccb3cd46f955ce1197c8a4650f9262bde09be2c7e60de70881e",
+    "checks": {}
+  }
+]

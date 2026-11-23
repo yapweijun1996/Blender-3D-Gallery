@@ -1,0 +1,50 @@
+{
+  "bodyJoints": 65,
+  "clipNames": [
+    "idle",
+    "walk",
+    "run",
+    "wave",
+    "jump",
+    "nod",
+    "dance",
+    "sit_down",
+    "sit_idle",
+    "stand_up",
+    "hold_item",
+    "hold_box",
+    "hold_bag",
+    "take_item"
+  ],
+  "gestureNames": [
+    "hand_fist_L",
+    "hand_fist_R",
+    "hand_grip_small_L",
+    "hand_grip_small_R",
+    "hand_ok_L",
+    "hand_ok_R",
+    "hand_open_relaxed_L",
+    "hand_open_relaxed_R",
+    "hand_open_wide_L",
+    "hand_open_wide_R",
+    "hand_peace_L",
+    "hand_peace_R",
+    "hand_pinch_L",
+    "hand_pinch_R",
+    "hand_point_L",
+    "hand_point_R",
+    "hand_thumbs_up_L",
+    "hand_thumbs_up_R"
+  ],
+  "moduleMeshes": {
+    "male-dress.glb": 1,
+    "male-hair-bob.glb": 1,
+    "male-hair-sidepart.glb": 1,
+    "male-hair-spiky.glb": 2,
+    "male-jeans.glb": 1,
+    "male-sneakers.glb": 6,
+    "male-tshirt.glb": 1
+  },
+  "createRigAcceptedAllInputs": true,
+  "limitations": "Image decoding is validated in Blender. The demo legacy in-place branch discards non-Hips translations and animated scales, so the smoke test uses complete tracks for clip playback."
+}

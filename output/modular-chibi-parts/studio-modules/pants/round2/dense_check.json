@@ -1,0 +1,639 @@
+{
+  "sha256": "e62868f63c4a093ee49a5c8244bf24bba6ca0493b8316a87cbd0bac712af4e00",
+  "bytes": 4334092,
+  "triangles": 7999,
+  "exported_vertices": 7264,
+  "joints": 65,
+  "max_influences": 4,
+  "unweighted_vertices": 0,
+  "textures": {
+    "2021972c-c4a6-489b-b101-4e4d09a77963_normal_1024": [
+      1024,
+      1024
+    ],
+    "2021972c-c4a6-489b-b101-4e4d09a77963_basecolor_1024": [
+      1024,
+      1024
+    ],
+    "2021972c-c4a6-489b-b101-4e4d09a77963_rm_1024": [
+      1024,
+      1024
+    ]
+  },
+  "rest_bounds": [
+    [
+      -0.15105372667312622,
+      -0.11924009025096893,
+      0.07295183092355728
+    ],
+    [
+      0.15273945033550262,
+      0.08361252397298813,
+      0.4159368872642517
+    ]
+  ],
+  "rest_clearance_m": {
+    "all": {
+      "min": 0.00144999532494694,
+      "p10": 0.003320848336443305,
+      "median": 0.005923864431679249,
+      "p90": 0.01996279507875442,
+      "p95": 0.02620384767651557,
+      "max": 0.029800014570355415
+    },
+    "crotch / inner thigh": {
+      "min": 0.0021085129119455814,
+      "p10": 0.005497543141245842,
+      "median": 0.009317435324192047,
+      "p90": 0.014764375053346157,
+      "p95": 0.016259655356407166,
+      "max": 0.01813487336039543
+    },
+    "hips": {
+      "min": 0.002000002423301339,
+      "p10": 0.003234832175076008,
+      "median": 0.0037089702673256397,
+      "p90": 0.006203445140272379,
+      "p95": 0.007903235452249628,
+      "max": 0.018146250396966934
+    },
+    "left cuff": {
+      "min": 0.003959589172154665,
+      "p10": 0.005499886814504862,
+      "median": 0.005600683856755495,
+      "p90": 0.006882532965391876,
+      "p95": 0.008749795239418743,
+      "max": 0.012503954581916332
+    },
+    "left knee": {
+      "min": 0.0036107702180743217,
+      "p10": 0.006587628275156021,
+      "median": 0.015159457921981812,
+      "p90": 0.027900896966457367,
+      "p95": 0.02941480278968811,
+      "max": 0.029699599370360374
+    },
+    "left lower leg": {
+      "min": 0.0054245623759925365,
+      "p10": 0.0057115149684250355,
+      "median": 0.01173369586467743,
+      "p90": 0.017069339752197266,
+      "p95": 0.01832151003181934,
+      "max": 0.020096775144338608
+    },
+    "left thigh": {
+      "min": 0.0018505186308175325,
+      "p10": 0.005457843188196421,
+      "median": 0.014037315733730793,
+      "p90": 0.027750201523303986,
+      "p95": 0.028737520799040794,
+      "max": 0.029800014570355415
+    },
+    "right cuff": {
+      "min": 0.003904670476913452,
+      "p10": 0.005497143417596817,
+      "median": 0.005526198074221611,
+      "p90": 0.007230455335229636,
+      "p95": 0.008906421763822435,
+      "max": 0.012490625493228436
+    },
+    "right knee": {
+      "min": 0.004711750894784927,
+      "p10": 0.006829060614109039,
+      "median": 0.014484488405287266,
+      "p90": 0.028544541820883756,
+      "p95": 0.0295273020863533,
+      "max": 0.029697349295020103
+    },
+    "right lower leg": {
+      "min": 0.00219062902033329,
+      "p10": 0.005594202131032944,
+      "median": 0.010972024872899055,
+      "p90": 0.016661159321665765,
+      "p95": 0.018144965171813965,
+      "max": 0.02009493112564087
+    },
+    "right thigh": {
+      "min": 0.0020000049844384193,
+      "p10": 0.005618283525109291,
+      "median": 0.014152332209050655,
+      "p90": 0.02892506048083306,
+      "p95": 0.02941860184073448,
+      "max": 0.029799968004226685
+    },
+    "waistband": {
+      "min": 0.00144999532494694,
+      "p10": 0.0031515649054199455,
+      "median": 0.003675602376461029,
+      "p90": 0.007285688072443008,
+      "p95": 0.008731883112341177,
+      "max": 0.015336310490965843
+    }
+  },
+  "clips": {
+    "rest": {
+      "samples": 1,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.00144999532494694,
+      "minimum_frame": 1.0,
+      "minimum_zone": "waistband",
+      "minimum_vertex": 1709,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 1.0,
+      "frames_with_overlap": 0
+    },
+    "walk": {
+      "samples": 113,
+      "max_verts_inside": 172,
+      "min_signed_distance_m": -0.017936747521162033,
+      "minimum_frame": 27.0,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 6919,
+      "max_triangle_pairs": 649,
+      "max_pairs_frame": 38.5,
+      "frames_with_overlap": 113,
+      "deepest_triangle_sample": {
+        "frame": 27.0,
+        "zone": "right thigh",
+        "signed_distance_m": -0.012627402320504189
+      },
+      "minimum_body_zone": "mixamorig:RightUpLeg"
+    },
+    "run": {
+      "samples": 61,
+      "max_verts_inside": 298,
+      "min_signed_distance_m": -0.025171058252453804,
+      "minimum_frame": 26.5,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 6919,
+      "max_triangle_pairs": 1158,
+      "max_pairs_frame": 11.0,
+      "frames_with_overlap": 61,
+      "deepest_triangle_sample": {
+        "frame": 26.5,
+        "zone": "right thigh",
+        "signed_distance_m": -0.018919190391898155
+      },
+      "minimum_body_zone": "mixamorig:RightUpLeg"
+    },
+    "wave": {
+      "samples": 129,
+      "max_verts_inside": 70,
+      "min_signed_distance_m": -0.006108810193836689,
+      "minimum_frame": 43.5,
+      "minimum_zone": "hips",
+      "minimum_vertex": 2436,
+      "max_triangle_pairs": 99,
+      "max_pairs_frame": 15.5,
+      "frames_with_overlap": 129,
+      "deepest_triangle_sample": {
+        "frame": 8.0,
+        "zone": "waistband",
+        "signed_distance_m": -0.0059694452211260796
+      },
+      "minimum_body_zone": "mixamorig:LeftForeArm"
+    },
+    "jump": {
+      "samples": 101,
+      "max_verts_inside": 127,
+      "min_signed_distance_m": -0.008938298560678959,
+      "minimum_frame": 9.0,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 6919,
+      "max_triangle_pairs": 474,
+      "max_pairs_frame": 9.0,
+      "frames_with_overlap": 52,
+      "deepest_triangle_sample": {
+        "frame": 4.0,
+        "zone": "waistband",
+        "signed_distance_m": -0.006205998361110687
+      },
+      "minimum_body_zone": "mixamorig:RightUpLeg"
+    },
+    "idle": {
+      "samples": 177,
+      "max_verts_inside": 62,
+      "min_signed_distance_m": -0.005600588861852884,
+      "minimum_frame": 22.0,
+      "minimum_zone": "waistband",
+      "minimum_vertex": 2102,
+      "max_triangle_pairs": 89,
+      "max_pairs_frame": 21.5,
+      "frames_with_overlap": 177,
+      "deepest_triangle_sample": {
+        "frame": 22.0,
+        "zone": "waistband",
+        "signed_distance_m": -0.005402133800089359
+      },
+      "minimum_body_zone": "mixamorig:LeftForeArm"
+    },
+    "nod": {
+      "samples": 113,
+      "max_verts_inside": 63,
+      "min_signed_distance_m": -0.00543127441778779,
+      "minimum_frame": 17.0,
+      "minimum_zone": "waistband",
+      "minimum_vertex": 2102,
+      "max_triangle_pairs": 86,
+      "max_pairs_frame": 33.5,
+      "frames_with_overlap": 113,
+      "deepest_triangle_sample": {
+        "frame": 17.0,
+        "zone": "waistband",
+        "signed_distance_m": -0.005205266177654266
+      },
+      "minimum_body_zone": "mixamorig:LeftForeArm"
+    },
+    "dance": {
+      "samples": 129,
+      "max_verts_inside": 1,
+      "min_signed_distance_m": -0.0010890710400417447,
+      "minimum_frame": 0.0,
+      "minimum_zone": "left thigh",
+      "minimum_vertex": 6761,
+      "max_triangle_pairs": 8,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 129,
+      "deepest_triangle_sample": {
+        "frame": 0.0,
+        "zone": "left thigh",
+        "signed_distance_m": -0.0004713675007224083
+      },
+      "minimum_body_zone": "mixamorig:LeftUpLeg"
+    }
+  },
+  "remaining_by_clip_and_zone": {
+    "walk": {
+      "hips": {
+        "max_triangle_pairs": 207,
+        "max_pairs_frame": 17.5,
+        "deepest_triangle_sample_m": -0.008664749562740326,
+        "deepest_triangle_frame": 39.5,
+        "max_verts_inside": 51,
+        "min_signed_distance_m": -0.008107238449156284,
+        "minimum_frame": 12.5,
+        "body_zone": "mixamorig:LeftHand"
+      },
+      "left knee": {
+        "max_triangle_pairs": 31,
+        "max_pairs_frame": 15.0,
+        "deepest_triangle_sample_m": -0.005729878321290016,
+        "deepest_triangle_frame": 27.0,
+        "max_verts_inside": 5,
+        "min_signed_distance_m": -0.004831355530768633,
+        "minimum_frame": 15.5,
+        "body_zone": "mixamorig:LeftHandMiddle3"
+      },
+      "left thigh": {
+        "max_triangle_pairs": 414,
+        "max_pairs_frame": 11.5,
+        "deepest_triangle_sample_m": -0.010043300688266754,
+        "deepest_triangle_frame": 2.0,
+        "max_verts_inside": 106,
+        "min_signed_distance_m": -0.010508673265576363,
+        "minimum_frame": 15.0,
+        "body_zone": "mixamorig:LeftHandRing1"
+      },
+      "right thigh": {
+        "max_triangle_pairs": 149,
+        "max_pairs_frame": 34.5,
+        "deepest_triangle_sample_m": -0.012627402320504189,
+        "deepest_triangle_frame": 27.0,
+        "max_verts_inside": 40,
+        "min_signed_distance_m": -0.017936747521162033,
+        "minimum_frame": 27.0,
+        "body_zone": "mixamorig:RightUpLeg"
+      },
+      "waistband": {
+        "max_triangle_pairs": 185,
+        "max_pairs_frame": 35.0,
+        "deepest_triangle_sample_m": -0.006864032242447138,
+        "deepest_triangle_frame": 29.5,
+        "max_verts_inside": 102,
+        "min_signed_distance_m": -0.007864770479500294,
+        "minimum_frame": 12.0,
+        "body_zone": "mixamorig:LeftForeArm"
+      },
+      "crotch / inner thigh": {
+        "max_triangle_pairs": 6,
+        "max_pairs_frame": 33.5,
+        "deepest_triangle_sample_m": -0.0007644791039638221,
+        "deepest_triangle_frame": 35.0,
+        "max_verts_inside": 1,
+        "min_signed_distance_m": -0.0002804991090670228,
+        "minimum_frame": 34.0,
+        "body_zone": "mixamorig:LeftUpLeg"
+      },
+      "right knee": {
+        "max_triangle_pairs": 68,
+        "max_pairs_frame": 28.0,
+        "deepest_triangle_sample_m": -0.011410437524318695,
+        "deepest_triangle_frame": 22.0,
+        "max_verts_inside": 17,
+        "min_signed_distance_m": -0.012853683903813362,
+        "minimum_frame": 22.0,
+        "body_zone": "mixamorig:RightLeg"
+      }
+    },
+    "run": {
+      "crotch / inner thigh": {
+        "max_triangle_pairs": 88,
+        "max_pairs_frame": 13.0,
+        "deepest_triangle_sample_m": -0.005357463378459215,
+        "deepest_triangle_frame": 27.0,
+        "max_verts_inside": 33,
+        "min_signed_distance_m": -0.005623307544738054,
+        "minimum_frame": 27.0,
+        "body_zone": "mixamorig:Hips"
+      },
+      "hips": {
+        "max_triangle_pairs": 323,
+        "max_pairs_frame": 27.0,
+        "deepest_triangle_sample_m": -0.010526126250624657,
+        "deepest_triangle_frame": 29.0,
+        "max_verts_inside": 116,
+        "min_signed_distance_m": -0.007785525172948837,
+        "minimum_frame": 18.0,
+        "body_zone": "mixamorig:LeftUpLeg"
+      },
+      "left knee": {
+        "max_triangle_pairs": 232,
+        "max_pairs_frame": 15.0,
+        "deepest_triangle_sample_m": -0.00936865620315075,
+        "deepest_triangle_frame": 14.0,
+        "max_verts_inside": 104,
+        "min_signed_distance_m": -0.01385477464646101,
+        "minimum_frame": 12.0,
+        "body_zone": "mixamorig:LeftUpLeg"
+      },
+      "left lower leg": {
+        "max_triangle_pairs": 56,
+        "max_pairs_frame": 1.0,
+        "deepest_triangle_sample_m": -0.005561660975217819,
+        "deepest_triangle_frame": 1.0,
+        "max_verts_inside": 11,
+        "min_signed_distance_m": -0.005079546943306923,
+        "minimum_frame": 2.0,
+        "body_zone": "mixamorig:LeftUpLeg"
+      },
+      "left thigh": {
+        "max_triangle_pairs": 279,
+        "max_pairs_frame": 15.5,
+        "deepest_triangle_sample_m": -0.007837057113647461,
+        "deepest_triangle_frame": 22.5,
+        "max_verts_inside": 46,
+        "min_signed_distance_m": -0.007232777774333954,
+        "minimum_frame": 20.0,
+        "body_zone": "mixamorig:LeftUpLeg"
+      },
+      "right cuff": {
+        "max_triangle_pairs": 40,
+        "max_pairs_frame": 0.0,
+        "deepest_triangle_sample_m": -0.0050505842082202435,
+        "deepest_triangle_frame": 9.5,
+        "max_verts_inside": 27,
+        "min_signed_distance_m": -0.002915620105341077,
+        "minimum_frame": 9.0,
+        "body_zone": "mixamorig:RightUpLeg"
+      },
+      "right knee": {
+        "max_triangle_pairs": 232,
+        "max_pairs_frame": 11.0,
+        "deepest_triangle_sample_m": -0.01656324975192547,
+        "deepest_triangle_frame": 25.0,
+        "max_verts_inside": 107,
+        "min_signed_distance_m": -0.013844069093465805,
+        "minimum_frame": 25.0,
+        "body_zone": "mixamorig:RightLeg"
+      },
+      "right thigh": {
+        "max_triangle_pairs": 412,
+        "max_pairs_frame": 26.0,
+        "deepest_triangle_sample_m": -0.018919190391898155,
+        "deepest_triangle_frame": 26.5,
+        "max_verts_inside": 92,
+        "min_signed_distance_m": -0.025171058252453804,
+        "minimum_frame": 26.5,
+        "body_zone": "mixamorig:RightUpLeg"
+      },
+      "waistband": {
+        "max_triangle_pairs": 158,
+        "max_pairs_frame": 29.0,
+        "deepest_triangle_sample_m": -0.006679287645965815,
+        "deepest_triangle_frame": 23.0,
+        "max_verts_inside": 83,
+        "min_signed_distance_m": -0.006576840300112963,
+        "minimum_frame": 23.0,
+        "body_zone": "mixamorig:LeftForeArm"
+      },
+      "right lower leg": {
+        "max_triangle_pairs": 158,
+        "max_pairs_frame": 8.0,
+        "deepest_triangle_sample_m": -0.007187784183770418,
+        "deepest_triangle_frame": 8.5,
+        "max_verts_inside": 39,
+        "min_signed_distance_m": -0.008046211674809456,
+        "minimum_frame": 8.5,
+        "body_zone": "mixamorig:RightUpLeg"
+      },
+      "left cuff": {
+        "max_triangle_pairs": 32,
+        "max_pairs_frame": 24.0,
+        "deepest_triangle_sample_m": -0.002457236871123314,
+        "deepest_triangle_frame": 25.0,
+        "max_verts_inside": 10,
+        "min_signed_distance_m": -0.002165776677429676,
+        "minimum_frame": 9.0,
+        "body_zone": "mixamorig:LeftFoot"
+      }
+    },
+    "wave": {
+      "hips": {
+        "max_triangle_pairs": 27,
+        "max_pairs_frame": 16.5,
+        "deepest_triangle_sample_m": -0.00533430278301239,
+        "deepest_triangle_frame": 10.5,
+        "max_verts_inside": 13,
+        "min_signed_distance_m": -0.006108810193836689,
+        "minimum_frame": 43.5,
+        "body_zone": "mixamorig:LeftForeArm"
+      },
+      "waistband": {
+        "max_triangle_pairs": 76,
+        "max_pairs_frame": 11.5,
+        "deepest_triangle_sample_m": -0.0059694452211260796,
+        "deepest_triangle_frame": 8.0,
+        "max_verts_inside": 62,
+        "min_signed_distance_m": -0.006068446673452854,
+        "minimum_frame": 48.0,
+        "body_zone": "mixamorig:LeftForeArm"
+      }
+    },
+    "jump": {
+      "hips": {
+        "max_triangle_pairs": 117,
+        "max_pairs_frame": 9.0,
+        "deepest_triangle_sample_m": -0.004630658309906721,
+        "deepest_triangle_frame": 43.5,
+        "max_verts_inside": 66,
+        "min_signed_distance_m": -0.005697210785001516,
+        "minimum_frame": 2.5,
+        "body_zone": "mixamorig:LeftForeArm"
+      },
+      "waistband": {
+        "max_triangle_pairs": 75,
+        "max_pairs_frame": 43.5,
+        "deepest_triangle_sample_m": -0.006205998361110687,
+        "deepest_triangle_frame": 4.0,
+        "max_verts_inside": 54,
+        "min_signed_distance_m": -0.006028724834322929,
+        "minimum_frame": 43.0,
+        "body_zone": "mixamorig:LeftForeArm"
+      },
+      "right thigh": {
+        "max_triangle_pairs": 18,
+        "max_pairs_frame": 7.5,
+        "deepest_triangle_sample_m": -0.0051819803193211555,
+        "deepest_triangle_frame": 9.0,
+        "max_verts_inside": 1,
+        "min_signed_distance_m": -0.008938298560678959,
+        "minimum_frame": 9.0,
+        "body_zone": "mixamorig:RightUpLeg"
+      },
+      "left thigh": {
+        "max_triangle_pairs": 274,
+        "max_pairs_frame": 9.0,
+        "deepest_triangle_sample_m": -0.005468292627483606,
+        "deepest_triangle_frame": 9.0,
+        "max_verts_inside": 47,
+        "min_signed_distance_m": -0.004677844699472189,
+        "minimum_frame": 9.0,
+        "body_zone": "mixamorig:LeftHandMiddle1"
+      },
+      "left cuff": {
+        "max_triangle_pairs": 2,
+        "max_pairs_frame": 9.0,
+        "deepest_triangle_sample_m": 0.0,
+        "deepest_triangle_frame": 9.0
+      },
+      "right knee": {
+        "max_triangle_pairs": 4,
+        "max_pairs_frame": 9.0,
+        "deepest_triangle_sample_m": -8.429381523455959e-06,
+        "deepest_triangle_frame": 9.0,
+        "max_verts_inside": 0,
+        "min_signed_distance_m": 0.00012574382708407938,
+        "minimum_frame": 9.0,
+        "body_zone": "mixamorig:RightLeg"
+      }
+    },
+    "idle": {
+      "hips": {
+        "max_triangle_pairs": 17,
+        "max_pairs_frame": 18.5,
+        "deepest_triangle_sample_m": -0.003704540431499481,
+        "deepest_triangle_frame": 36.0,
+        "max_verts_inside": 7,
+        "min_signed_distance_m": -0.004051191732287407,
+        "minimum_frame": 39.0,
+        "body_zone": "mixamorig:LeftForeArm"
+      },
+      "waistband": {
+        "max_triangle_pairs": 79,
+        "max_pairs_frame": 56.0,
+        "deepest_triangle_sample_m": -0.005402133800089359,
+        "deepest_triangle_frame": 22.0,
+        "max_verts_inside": 55,
+        "min_signed_distance_m": -0.005600588861852884,
+        "minimum_frame": 22.0,
+        "body_zone": "mixamorig:LeftForeArm"
+      }
+    },
+    "nod": {
+      "hips": {
+        "max_triangle_pairs": 11,
+        "max_pairs_frame": 13.5,
+        "deepest_triangle_sample_m": -0.0034656981006264687,
+        "deepest_triangle_frame": 43.5,
+        "max_verts_inside": 5,
+        "min_signed_distance_m": -0.003381364280357957,
+        "minimum_frame": 33.0,
+        "body_zone": "mixamorig:LeftForeArm"
+      },
+      "waistband": {
+        "max_triangle_pairs": 76,
+        "max_pairs_frame": 12.0,
+        "deepest_triangle_sample_m": -0.005205266177654266,
+        "deepest_triangle_frame": 17.0,
+        "max_verts_inside": 58,
+        "min_signed_distance_m": -0.00543127441778779,
+        "minimum_frame": 17.0,
+        "body_zone": "mixamorig:LeftForeArm"
+      }
+    },
+    "dance": {
+      "hips": {
+        "max_triangle_pairs": 2,
+        "max_pairs_frame": 0.0,
+        "deepest_triangle_sample_m": -0.0004713675007224083,
+        "deepest_triangle_frame": 0.0
+      },
+      "left thigh": {
+        "max_triangle_pairs": 6,
+        "max_pairs_frame": 0.0,
+        "deepest_triangle_sample_m": -0.00038657523691654205,
+        "deepest_triangle_frame": 0.0,
+        "max_verts_inside": 1,
+        "min_signed_distance_m": -0.0010890710400417447,
+        "minimum_frame": 0.0,
+        "body_zone": "mixamorig:LeftUpLeg"
+      }
+    }
+  },
+  "base_body_self_contacts_at_minimum_frames": {
+    "rest": {
+      "frame": 1.0,
+      "arm_pelvis_pairs": 0
+    },
+    "walk": {
+      "frame": 27.0,
+      "arm_pelvis_pairs": 181
+    },
+    "run": {
+      "frame": 26.5,
+      "arm_pelvis_pairs": 0
+    },
+    "wave": {
+      "frame": 43.5,
+      "arm_pelvis_pairs": 51
+    },
+    "jump": {
+      "frame": 9.0,
+      "arm_pelvis_pairs": 69
+    },
+    "idle": {
+      "frame": 22.0,
+      "arm_pelvis_pairs": 43
+    },
+    "nod": {
+      "frame": 17.0,
+      "arm_pelvis_pairs": 42
+    },
+    "dance": {
+      "frame": 0.0,
+      "arm_pelvis_pairs": 0
+    }
+  },
+  "texture_matches_round1_bytes": {
+    "normal": true,
+    "base_color": true,
+    "metallic_roughness": true
+  },
+  "source_sha256": {
+    "master": "0339318b375836ab8891e49bda178da7e6f115e012e83385d9f8850949a7bd6f",
+    "motion": "ffccda1ba2a50eb10948853e03d17f0d095cd9b953d644c03c4fb9cb95529410",
+    "pants_v1": "31649fcca978beb05a49330b5a26e5a37a0f6dea6c1608aef601a52949784f01"
+  },
+  "blend_sha256": "4c2e4290c01d71f5a1eb88f17b1abd8ab61d58ce639bc709cc18de4a90418d5a",
+  "blend_bytes": 4328350
+}

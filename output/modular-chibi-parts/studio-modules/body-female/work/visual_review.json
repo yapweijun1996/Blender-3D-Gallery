@@ -1,0 +1,146 @@
+{
+  "matched_rest_matrix_max_component_error": 0,
+  "exported_channels": {
+    "hand_fist_L": 20,
+    "hand_fist_R": 20,
+    "hand_grip_small_L": 20,
+    "hand_grip_small_R": 20,
+    "hand_ok_L": 20,
+    "hand_ok_R": 20,
+    "hand_open_relaxed_L": 20,
+    "hand_open_relaxed_R": 20,
+    "hand_open_wide_L": 20,
+    "hand_open_wide_R": 20,
+    "hand_peace_L": 20,
+    "hand_peace_R": 20,
+    "hand_pinch_L": 20,
+    "hand_pinch_R": 20,
+    "hand_point_L": 20,
+    "hand_point_R": 20,
+    "hand_thumbs_up_L": 20,
+    "hand_thumbs_up_R": 20
+  },
+  "animation_sample_sha256": {
+    "hand_fist_L": "bcb6df2081fc6f21d56083d6cb59c66313653202a3931c646be323ef2f501188",
+    "hand_fist_R": "0a7dcf64ffa769b0863cfc4413e4fabd05eea546714f586b04ec97c559a64868",
+    "hand_grip_small_L": "6980aa22460637264eea53e00922b57f43c0978f4fc27ee560b47e20d9c48a5f",
+    "hand_grip_small_R": "7ba2f42af789cb121b992a948f961cc0077708b72c0803c30ed05af8c287806b",
+    "hand_ok_L": "75c8c2f1cd017cd98689597f851b9bf027236133bc7e25746b1744302bc5dc8b",
+    "hand_ok_R": "a049eba1deb7ffc71702349f94d9c5fa3602e60469d7524341a6875a9f87e475",
+    "hand_open_relaxed_L": "da7a59d63e1cbce8c73ad68f11c99a11466895a9ea048ab06599a8bcc72b32a2",
+    "hand_open_relaxed_R": "1957b71a43e049e33c6bd146e45dde6bb269dc459524f8427c6d358b373c090f",
+    "hand_open_wide_L": "c2401aa124c3f89f87bf82d6d70b3aa99ae59897ffd46cb03afcfd254889ebed",
+    "hand_open_wide_R": "6a12bcf6c81c819a1eb6ebf78cbc2ddcfec6b17c3b07f0abac4cfa4ae5f64bef",
+    "hand_peace_L": "edf55f03a3c96841bb0e261ab2a70d4a46b00d690b806e963cab41109f03046c",
+    "hand_peace_R": "ac5a0aa331ac50f359c829e679d4acc8e6212b281e320a77f4a25b8f4d75a5f0",
+    "hand_pinch_L": "9aa733fbc9462ff18a9ad01f188e5fb5104eafaf4b858d0ff85b0411210974be",
+    "hand_pinch_R": "0cc9b6e584f73a03244abc6b5f02b98557f9d127d4a9d209e5237fbaccf3a7e3",
+    "hand_point_L": "c5ab2ad737759725e161d70fb9982cee2bd8db9d4b647b3336d98c85d9e88b33",
+    "hand_point_R": "b15a3a385a4088e93487ce57c8db4bbde12c22bd755af84d90b41dac0bc86409",
+    "hand_thumbs_up_L": "f6ed6f06b2c386ed02f65e5168d94c7713cb1a2f3b14a983ac0e6e3405258b59",
+    "hand_thumbs_up_R": "990d6c1c555c607c3b3cd5093db9d57ba466a73910b5b73782e49d60b70818a1"
+  },
+  "body_comparison": {
+    "file": "body_comparison.png",
+    "left": "Read-only Studio input studio_rigged.glb",
+    "right": "Repaired module body_female_v1.glb",
+    "source_sha256": "a4e3df41cb970ec52fdc5b21c4ba3093171af1caa5161b817d2eb4c00b9ac916",
+    "body_sha256": "31e16b400988b18c18ee30e988ee28a42b0b968073b0f12c5afda2dc678143f6",
+    "render": "440 px front orthographic, Cycles CPU, same camera, 3 area lights, 8 samples, AgX. Alpha > 0.995 in both images and |X| < 0.258 m. Mean RGB-channel absolute deviation in display-referred 8-bit values.",
+    "comparison": {
+      "face_head": {
+        "pixels": 20236,
+        "mean_abs_srgb_8bit": 0.43811365962028503,
+        "p95": 1.9999998807907104,
+        "p99": 5.999999523162842
+      },
+      "body": {
+        "pixels": 20882,
+        "mean_abs_srgb_8bit": 0.33912786841392517,
+        "p95": 1.3333332538604736,
+        "p99": 2.999999761581421
+      },
+      "nonhand": {
+        "pixels": 41118,
+        "mean_abs_srgb_8bit": 0.38784316182136536,
+        "p95": 1.6666665077209473,
+        "p99": 4.333333492279053
+      }
+    }
+  },
+  "sha256": {
+    "female-body-tpose.png": "a733a2722f75b7eeb7524b2ce4f322d7b8e03a5c38fda6072a9b1c6cda8d46cc",
+    "body_female_v1.glb": "31e16b400988b18c18ee30e988ee28a42b0b968073b0f12c5afda2dc678143f6",
+    "hand_gestures_female.glb": "c692ca7398bea37a9890016be1c361100b06a9d70fe968060a5fa2e6028d1965",
+    "contact_sheet.png": "21de35b640b6254d9b3b14f015bd94112c95d20040c947d87c46e2f87e1d6f7b",
+    "gesture_closeups.png": "ae982ca2da01a39832cb8390e6645260880d37870e24a0a9575c6954601bea2a",
+    "body_comparison.png": "56817e1393a3a3fd59b010f3caa8e6109096d1ffb0d45596fda2284f650987c8"
+  },
+  "renderer": "Cycles CPU with the exported materials and a three-area-light studio",
+  "blender": "5.1.2",
+  "overview_tiles": 54,
+  "detail_tiles": 24,
+  "grip_gauges": {
+    "L": {
+      "axis": [
+        -0.029963,
+        0.998752,
+        -0.03995
+      ],
+      "center_mm": [
+        331,
+        -20,
+        506
+      ],
+      "diameter_mm": 40
+    },
+    "R": {
+      "axis": [
+        0.029963,
+        0.998752,
+        -0.03995
+      ],
+      "center_mm": [
+        -331,
+        -20,
+        506
+      ],
+      "diameter_mm": 40
+    }
+  },
+  "inputs": "The original animation accessors from the library target the exact body nodes by name. Blender imports the inspection copy with its skin and evaluates each rotation using the imported action and action_slot.",
+  "independent_visual_review": {
+    "reviewer": "Independent visual reviewer, separate from the geometry and pose authors",
+    "status": "Reviewed. All nine gesture identities, including the revised fist thumb crossing to the middle finger, are visible on both hands.",
+    "evidence": [
+      "contact_sheet.png",
+      "gesture_closeups.png",
+      "body_comparison.png"
+    ],
+    "findings": {
+      "body appearance": "PASS. Front camera shows the original bald head, eyes, garment shapes, torso, legs and feet. Hands are edge-on after correction, with the expected changed silhouette.",
+      "rest thumb and wrist": "The thumb has a free tapered shaft with a rounded tip on both sides. The two flexion regions are visible in flexed views; the rest surface has little secondary joint definition. The final wrist replaces the earlier narrow ventral point with a broader heel. A shallow angled shelf at the palm-to-wrist transition remains visible frontally and in the palmar views.",
+      "fist": "PASS for the requested cross-row wrap. Four fingers curl toward the palm. The thumb now crosses the radial palm diagonally to the lower edge of the curled middle finger on both sides. This is a low wrap; a recess remains under the proximal bent finger segments. The separate mesh audit measures each distal pad against the palm.",
+      "open_relaxed": "PASS. Both hands have four separate fingers. In the thumb-side view each finger bends slightly forward.",
+      "point": "PASS. Each index is straight, with the remaining three digits folded.",
+      "thumbs_up": "PASS. The thumb stands above the curled fingers in both hands. The thumb root holds its volume in this pose. A shallow plane break remains visible near the thenar junction at close range.",
+      "peace": "PASS. The two straight separated fingers form a V in both hands.",
+      "ok": "PASS for visual identity. The three free fingers extend and a thumb-index ring is visible from the side. The pulps appear tangent at the edge of the visible tips; the mesh surface audit supplies the actual distance.",
+      "grip_small": "PASS for shape. Both on-axis details show the correctly scaled 40 mm cross-section held between the hooked shafts, palm and thumb. The measured mesh clearance is supplied separately.",
+      "pinch": "PASS for visual identity. The three free fingers flex while the thumb and index converge. The two angles show nearly tangent pulps. Consult the surface audit for the distance.",
+      "open_wide": "PASS. Both hands spread all five digits, with a straighter side silhouette than relaxed."
+    },
+    "fist_wrap_measurement": {
+      "definition": "For each hand, average the skin points in the distal 3.5 mm cap in the bind direction; evaluate these same points in the exported fist. Project thumb, index and middle centroids onto world Y. Report (thumbY - indexY)/(middleY - indexY).",
+      "left_percent": 88.3275,
+      "right_percent": 87.49451,
+      "early_candidate_left_percent": 32.43891,
+      "early_candidate_right_percent": 33.03765
+    },
+    "limitations": [
+      "The reference supplies a frontal neutral pose only. Dorsal/palmar appearance and posed finger-pad shape cannot be matched directly to it.",
+      "A few-pixel silhouette cannot establish sub-millimetre contact or triangle intersections.",
+      "Thumb tip and several small-joint silhouettes retain visible low-poly facets in macro views."
+    ]
+  }
+}

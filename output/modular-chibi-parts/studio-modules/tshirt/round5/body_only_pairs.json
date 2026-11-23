@@ -1,0 +1,154 @@
+{
+  "master_sha256": "0339318b375836ab8891e49bda178da7e6f115e012e83385d9f8850949a7bd6f",
+  "actions_sha256": "0d3a57ae8906edeebee590b67d0e84333640389340bfbfbe0af041ccf8f871c9",
+  "source_audit": "actions-fix/body_selfcheck_after.json",
+  "source_audit_sha256": "1d51a06b16a813657f3ea4d690e4ad53469fd092c9805375b15dbba6a3c9465d",
+  "count_type": "Body self-intersection pairs excluding rest-adjacent triangles",
+  "clips": {
+    "sit_down": {
+      "samples": 73,
+      "target_integer": 111,
+      "target_half": 109,
+      "target_total": 220,
+      "all_integer": 12645,
+      "all_half": 12286,
+      "target_by_region": {
+        "LeftLeg / LeftUpLeg": 107,
+        "RightLeg / RightUpLeg": 113
+      },
+      "deepest_target": {
+        "frame": 35.5,
+        "depth_mm": 4.141088,
+        "triangles": [
+          4941,
+          4943
+        ],
+        "regions": [
+          "LeftLeg",
+          "LeftUpLeg"
+        ]
+      },
+      "deepest_all": {
+        "frame": 16.5,
+        "depth_mm": 7.317939,
+        "triangles": [
+          3161,
+          3184
+        ],
+        "regions": [
+          "RightUpLeg",
+          "RightUpLeg"
+        ]
+      },
+      "peak_target_pairs": 15,
+      "peak_all_pairs": 396,
+      "peak_knee_pairs": 15
+    },
+    "sit_idle": {
+      "samples": 181,
+      "target_integer": 1365,
+      "target_half": 1350,
+      "target_total": 2715,
+      "all_integer": 36145,
+      "all_half": 35748,
+      "target_by_region": {
+        "LeftLeg / LeftUpLeg": 1267,
+        "RightLeg / RightUpLeg": 1448
+      },
+      "deepest_target": {
+        "frame": 0.0,
+        "depth_mm": 4.100275,
+        "triangles": [
+          4941,
+          4943
+        ],
+        "regions": [
+          "LeftLeg",
+          "LeftUpLeg"
+        ]
+      },
+      "deepest_all": {
+        "frame": 71.0,
+        "depth_mm": 5.701645,
+        "triangles": [
+          2182,
+          2183
+        ],
+        "regions": [
+          "Head",
+          "Head"
+        ]
+      },
+      "peak_target_pairs": 15,
+      "peak_all_pairs": 401,
+      "peak_knee_pairs": 15
+    },
+    "stand_up": {
+      "samples": 61,
+      "target_integer": 95,
+      "target_half": 86,
+      "target_total": 181,
+      "all_integer": 10625,
+      "all_half": 10242,
+      "target_by_region": {
+        "LeftLeg / LeftUpLeg": 88,
+        "RightLeg / RightUpLeg": 93
+      },
+      "deepest_target": {
+        "frame": 0.5,
+        "depth_mm": 4.133855,
+        "triangles": [
+          4941,
+          4943
+        ],
+        "regions": [
+          "LeftLeg",
+          "LeftUpLeg"
+        ]
+      },
+      "deepest_all": {
+        "frame": 16.5,
+        "depth_mm": 7.352081,
+        "triangles": [
+          1981,
+          1992
+        ],
+        "regions": [
+          "LeftUpLeg",
+          "LeftUpLeg"
+        ]
+      },
+      "peak_target_pairs": 15,
+      "peak_all_pairs": 396,
+      "peak_knee_pairs": 15
+    },
+    "hold_item": {
+      "samples": 121,
+      "target_integer": 0,
+      "target_half": 0,
+      "target_total": 0,
+      "all_integer": 27985,
+      "all_half": 27525,
+      "target_by_region": {},
+      "deepest_target": {
+        "frame": 0.0,
+        "depth_mm": 0.0
+      },
+      "deepest_all": {
+        "frame": 56.0,
+        "depth_mm": 8.583875,
+        "triangles": [
+          1115,
+          3431
+        ],
+        "regions": [
+          "RightForeArm",
+          "RightArm"
+        ]
+      },
+      "peak_target_pairs": 0,
+      "peak_all_pairs": 460,
+      "peak_knee_pairs": 0
+    }
+  }
+}

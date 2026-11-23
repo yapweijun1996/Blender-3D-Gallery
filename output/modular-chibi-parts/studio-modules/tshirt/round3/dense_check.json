@@ -1,0 +1,302 @@
+{
+  "glb_sha256": "6d21284ee87de7cd95c6ce498ff8a7a1e27e5cb8e609f819764e91e12095e4ee",
+  "samples": 824,
+  "clips": {
+    "rest": {
+      "samples": 1,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.0009991173865273595,
+      "minimum_vertex_frame": 1.0,
+      "vertex": 4221,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 1.0,
+      "sum_triangle_pairs": 0
+    },
+    "walk": {
+      "samples": 113,
+      "max_verts_inside": 13,
+      "min_signed_dist": -0.0007338074501603842,
+      "minimum_vertex_frame": 16.0,
+      "vertex": 4255,
+      "max_triangle_pairs": 68,
+      "max_pair_frame": 13.5,
+      "sum_triangle_pairs": 2670
+    },
+    "run": {
+      "samples": 61,
+      "max_verts_inside": 18,
+      "min_signed_dist": -0.0007981900125741959,
+      "minimum_vertex_frame": 10.0,
+      "vertex": 2832,
+      "max_triangle_pairs": 51,
+      "max_pair_frame": 9.0,
+      "sum_triangle_pairs": 459
+    },
+    "wave": {
+      "samples": 129,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.0007423061178997159,
+      "minimum_vertex_frame": 0.0,
+      "vertex": 4249,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 0.0,
+      "sum_triangle_pairs": 0
+    },
+    "jump": {
+      "samples": 101,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.00031899826717562973,
+      "minimum_vertex_frame": 8.0,
+      "vertex": 738,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 0.0,
+      "sum_triangle_pairs": 0
+    },
+    "idle": {
+      "samples": 177,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.0006498572183772922,
+      "minimum_vertex_frame": 80.0,
+      "vertex": 4249,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 0.0,
+      "sum_triangle_pairs": 0
+    },
+    "nod": {
+      "samples": 113,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.0007423061178997159,
+      "minimum_vertex_frame": 0.0,
+      "vertex": 4249,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 0.0,
+      "sum_triangle_pairs": 0
+    },
+    "dance": {
+      "samples": 129,
+      "max_verts_inside": 7,
+      "min_signed_dist": -0.0002599108265712857,
+      "minimum_vertex_frame": 49.0,
+      "vertex": 4221,
+      "max_triangle_pairs": 39,
+      "max_pair_frame": 48.0,
+      "sum_triangle_pairs": 362
+    }
+  },
+  "rest_clearance_m": {
+    "overall": {
+      "min": 0.0009991173865273595,
+      "p10": 0.003392029460519552,
+      "median": 0.005860897246748209,
+      "p90": 0.011024165060371165,
+      "p95": 0.013792728399857864,
+      "max": 0.019301600754261017
+    },
+    "back panel": {
+      "min": 0.0025226997677236795,
+      "p10": 0.003654308104887605,
+      "median": 0.007466975599527359,
+      "p90": 0.012340555805712939,
+      "p95": 0.0128544214181602,
+      "max": 0.015149630606174469
+    },
+    "collar": {
+      "min": 0.004466180689632893,
+      "p10": 0.00525509025901556,
+      "median": 0.006323219742625952,
+      "p90": 0.013391708210110672,
+      "p95": 0.01573963277041912,
+      "max": 0.019301600754261017
+    },
+    "front panel": {
+      "min": 0.00217405054718256,
+      "p10": 0.00328987929970026,
+      "median": 0.0037929872050881386,
+      "p90": 0.011798094026744366,
+      "p95": 0.01578442007303238,
+      "max": 0.01816268265247345
+    },
+    "hem": {
+      "min": 0.0024684746749699116,
+      "p10": 0.004292338714003563,
+      "median": 0.006644970504567027,
+      "p90": 0.011735191661864522,
+      "p95": 0.013806752581149339,
+      "max": 0.018316354602575302
+    },
+    "shoulder / armpit": {
+      "min": 0.0009991173865273595,
+      "p10": 0.0051549095660448074,
+      "median": 0.006169737782329321,
+      "p90": 0.00916228722780943,
+      "p95": 0.010235145688056946,
+      "max": 0.016427800059318542
+    },
+    "sleeve / cuff": {
+      "min": 0.00198516552336514,
+      "p10": 0.003072974272072315,
+      "median": 0.005972336977720261,
+      "p90": 0.0072648611851036556,
+      "p95": 0.008809760026633737,
+      "max": 0.014607781544327736
+    }
+  },
+  "residuals": {
+    "rest": {},
+    "walk": {
+      "vertex": {
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.00020671576203312725,
+          "frame": 22.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.0007338074501603842,
+          "frame": 16.0
+        },
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": 2.1768677470390685e-05,
+          "frame": 22.0
+        },
+        "front panel / Spine1": {
+          "min_signed_dist": 3.019179894181434e-05,
+          "frame": 34.0
+        },
+        "back panel / Spine1": {
+          "min_signed_dist": -1.9432849512668326e-05,
+          "frame": 34.0
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.0002624404733069241,
+          "frame": 21.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -2.1706891857320443e-05,
+          "frame": 34.0
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.0006697073113173246,
+          "frame": 14.0
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.0004997249925509095,
+          "frame": 22.0
+        }
+      },
+      "triangle witness": {
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.0007338074501603842,
+          "frame": 16.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.0005727870739065111,
+          "frame": 35.0
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.001013473840430379,
+          "frame": 16.0
+        },
+        "front panel / Spine1": {
+          "min_signed_dist": -0.0005727870739065111,
+          "frame": 35.0
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.0005957718240097165,
+          "frame": 48.0
+        },
+        "back panel / Spine1": {
+          "min_signed_dist": -0.00038693720125593245,
+          "frame": 35.0
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.0004997249925509095,
+          "frame": 22.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -6.428764027077705e-05,
+          "frame": 34.0
+        },
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -5.831037196912803e-05,
+          "frame": 22.0
+        }
+      }
+    },
+    "run": {
+      "vertex": {
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.0007981900125741959,
+          "frame": 10.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": 3.2061107049230486e-05,
+          "frame": 24.0
+        },
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": 0.00019229392637498677,
+          "frame": 24.5
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": 1.875717134680599e-05,
+          "frame": 24.0
+        },
+        "hem / RightUpLeg": {
+          "min_signed_dist": 0.0004907796974293888,
+          "frame": 15.5
+        }
+      },
+      "triangle witness": {
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.0009293037001043558,
+          "frame": 10.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.00013913767179474235,
+          "frame": 9.0
+        }
+      }
+    },
+    "wave": {},
+    "jump": {
+      "vertex": {
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": 0.00031899826717562973,
+          "frame": 8.0
+        }
+      }
+    },
+    "idle": {},
+    "nod": {},
+    "dance": {
+      "vertex": {
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": 0.0004099819343537092,
+          "frame": 8.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.0002599108265712857,
+          "frame": 49.0
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": 7.057083712425083e-05,
+          "frame": 49.0
+        }
+      },
+      "triangle witness": {
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.0005113719962537289,
+          "frame": 49.0
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.0003668205172289163,
+          "frame": 49.0
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.00014730318798683584,
+          "frame": 49.0
+        }
+      }
+    }
+  },
+  "motion_sha256": "3484f5978e94f3e714b320357397d107dd490d56f2eeb64770be292322f9aa2c",
+  "master_sha256": "0339318b375836ab8891e49bda178da7e6f115e012e83385d9f8850949a7bd6f"
+}

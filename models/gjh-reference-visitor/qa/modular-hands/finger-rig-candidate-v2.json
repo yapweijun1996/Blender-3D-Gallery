@@ -1,0 +1,90 @@
+{
+  "status": "PASS",
+  "sha256": "bd44a14549527889e3fab09c29b15dcb10240fd174c85de6ce9dfbd9ff54036e",
+  "three": "0.187.0",
+  "checks": [
+    {
+      "slot": "Finger_Index_L",
+      "bone": "FingerIndexL",
+      "own_max_m": 0.022826799220707142,
+      "other_max_m": 0,
+      "isolatedHidden": true
+    },
+    {
+      "slot": "Finger_Middle_L",
+      "bone": "FingerMiddleL",
+      "own_max_m": 0.022826799220707135,
+      "other_max_m": 0,
+      "isolatedHidden": true
+    },
+    {
+      "slot": "Finger_Ring_L",
+      "bone": "FingerRingL",
+      "own_max_m": 0.02282676836707265,
+      "other_max_m": 0,
+      "isolatedHidden": true
+    },
+    {
+      "slot": "Finger_Pinky_L",
+      "bone": "FingerPinkyL",
+      "own_max_m": 0.0208126431076383,
+      "other_max_m": 0,
+      "isolatedHidden": true
+    },
+    {
+      "slot": "Finger_Thumb_L",
+      "bone": "FingerThumbL",
+      "own_max_m": 0.021172844725179087,
+      "other_max_m": 0,
+      "isolatedHidden": true
+    },
+    {
+      "slot": "Finger_Index_R",
+      "bone": "FingerIndexR",
+      "own_max_m": 0.022826799220707173,
+      "other_max_m": 0,
+      "isolatedHidden": true
+    },
+    {
+      "slot": "Finger_Middle_R",
+      "bone": "FingerMiddleR",
+      "own_max_m": 0.022826799220707097,
+      "other_max_m": 0,
+      "isolatedHidden": true
+    },
+    {
+      "slot": "Finger_Ring_R",
+      "bone": "FingerRingR",
+      "own_max_m": 0.02282676836707269,
+      "other_max_m": 0,
+      "isolatedHidden": true
+    },
+    {
+      "slot": "Finger_Pinky_R",
+      "bone": "FingerPinkyR",
+      "own_max_m": 0.020812643107638317,
+      "other_max_m": 0,
+      "isolatedHidden": true
+    },
+    {
+      "slot": "Finger_Thumb_R",
+      "bone": "FingerThumbR",
+      "own_max_m": 0.021172844725179087,
+      "other_max_m": 0,
+      "isolatedHidden": true
+    }
+  ],
+  "animations": [
+    "idle",
+    "walk",
+    "run",
+    "sit",
+    "stand_up"
+  ],
+  "missing": [],
+  "limitations": [
+    "Node GLTFLoader structure/skin math only; no visual or browser rendering.",
+    "Each finger is a rigid one-segment joint, not a multi-joint anatomically articulated finger.",
+    "One X-axis rotation per finger; full range of motion and gesture/hand intersections not tested."
+  ]
+}

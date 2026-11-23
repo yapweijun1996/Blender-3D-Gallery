@@ -1,0 +1,98 @@
+{
+  "body_sha256": "31e16b400988b18c18ee30e988ee28a42b0b968073b0f12c5afda2dc678143f6",
+  "channels": "Blender decoded RGB float values in the active colour space; compare with a Blender 1024-pixel resize. 24 x 24 unused tile excluded.",
+  "textures": {
+    "base_color": {
+      "source_px": [
+        4096,
+        4096
+      ],
+      "body_px": [
+        1024,
+        1024
+      ],
+      "outside_hand_tile_pixels": 1048000,
+      "mean_abs_rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_abs_rgb": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "normal": {
+      "source_px": [
+        2048,
+        2048
+      ],
+      "body_px": [
+        1024,
+        1024
+      ],
+      "outside_hand_tile_pixels": 1048000,
+      "mean_abs_rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_abs_rgb": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "roughness_metallic": {
+      "source_px": [
+        2048,
+        2048
+      ],
+      "body_px": [
+        1024,
+        1024
+      ],
+      "outside_hand_tile_pixels": 1048000,
+      "mean_abs_rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_abs_rgb": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "mirror_definition": "Unique rest-space points reflected across world X=0, closest opposite point on any triangle. Sampling weights each unique point equally.",
+  "source_mirror": {
+    "whole": {
+      "vertices": 4451,
+      "mean_mm": 0.07454206125008993,
+      "p95_mm": 0.457723144791089,
+      "max_mm": 3.1220540404319763
+    },
+    "hands": {
+      "vertices": 806,
+      "mean_mm": 0.003256359058882715,
+      "p95_mm": 0.00021894597423965934,
+      "max_mm": 1.686753355897963
+    }
+  },
+  "body_mirror": {
+    "whole": {
+      "vertices": 4994,
+      "mean_mm": 0.06854615056120623,
+      "p95_mm": 0.3819063102127981,
+      "max_mm": 3.1220540404319763
+    },
+    "hands": {
+      "vertices": 1286,
+      "mean_mm": 0.007157419932593526,
+      "p95_mm": 0.0004234973687289312,
+      "max_mm": 1.468496397137642
+    }
+  }
+}

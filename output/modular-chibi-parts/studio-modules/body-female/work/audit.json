@@ -1,0 +1,2317 @@
+{
+  "source_sha256": "a4e3df41cb970ec52fdc5b21c4ba3093171af1caa5161b817d2eb4c00b9ac916",
+  "source": {
+    "welded_nonmanifold_edges": {
+      "3": 9,
+      "1": 8
+    },
+    "welded_hand_nonmanifold_edges": {},
+    "hand_nonmanifold_examples": [],
+    "vertices": 18075,
+    "triangles": 8901,
+    "height_m": 0.9770005941390991,
+    "feet_z_m": 1.7258571460843086e-08,
+    "bounds_m": [
+      [
+        -0.415846,
+        -0.186414,
+        0.0
+      ],
+      [
+        0.415847,
+        0.186414,
+        0.977001
+      ]
+    ],
+    "wrist_plane_x_abs_m": {
+      "L": 0.2861669063568115,
+      "R": 0.2787695825099945
+    },
+    "triangles_touching_wrist_distal": {
+      "L": 819,
+      "R": 852
+    },
+    "hand_triangles_by_centroid": {
+      "L": 810,
+      "R": 837
+    },
+    "max_influences": 4,
+    "weight_sum_min": 0.9999998696148396,
+    "weight_sum_max": 1.0000001192092896,
+    "unweighted": 0,
+    "vertices_over_four": 0,
+    "max_weight_sum_error": 1.30385160446167e-07,
+    "mixed_digit_any": 926,
+    "mixed_digit_over_point_two": 211,
+    "worst_second_digit_weight": 0.4557473063468933,
+    "bind_rest_max_mm": 0.00029849435668438673,
+    "crossings": {
+      "whole": 0,
+      "involving_either_hand": 0,
+      "Left": 0,
+      "Right": 0,
+      "outside_hands": 0,
+      "new_vs_bind": 0,
+      "missing_vs_bind": 0,
+      "hand_parts": {},
+      "hand_examples": []
+    }
+  },
+  "body": {
+    "welded_nonmanifold_edges": {
+      "3": 9,
+      "1": 8
+    },
+    "welded_hand_nonmanifold_edges": {},
+    "hand_nonmanifold_examples": [],
+    "vertices": 8639,
+    "triangles": 9987,
+    "height_m": 0.9770007133483887,
+    "feet_z_m": -6.627041670981271e-08,
+    "bounds_m": [
+      [
+        -0.416392,
+        -0.186414,
+        -0.0
+      ],
+      [
+        0.416392,
+        0.186414,
+        0.977001
+      ]
+    ],
+    "wrist_plane_x_abs_m": {
+      "L": 0.2861669063568115,
+      "R": 0.27876946330070496
+    },
+    "triangles_touching_wrist_distal": {
+      "L": 1361,
+      "R": 1396
+    },
+    "hand_triangles_by_centroid": {
+      "L": 1315,
+      "R": 1381
+    },
+    "max_influences": 4,
+    "weight_sum_min": 0.999999888241291,
+    "weight_sum_max": 1.0000001192092896,
+    "unweighted": 0,
+    "vertices_over_four": 0,
+    "max_weight_sum_error": 1.1920928955078125e-07,
+    "mixed_digit_any": 0,
+    "mixed_digit_over_point_two": 0,
+    "worst_second_digit_weight": 0.0,
+    "bind_rest_max_mm": 0.00043399230344220996,
+    "crossings": {
+      "whole": 0,
+      "involving_either_hand": 0,
+      "Left": 0,
+      "Right": 0,
+      "outside_hands": 0,
+      "new_vs_bind": 0,
+      "missing_vs_bind": 0,
+      "hand_parts": {},
+      "hand_examples": []
+    }
+  },
+  "nonhand_drift": {
+    "source_to_final": {
+      "within_original_symmetric_cut": {
+        "vertices": 14817,
+        "maximum_mm": 0.0002387966162586963,
+        "over_0_5_mm": 0,
+        "witness_mm": [
+          -86.993309,
+          -39.194702,
+          625.203796
+        ]
+      },
+      "at_or_proximal_to_wrist": {
+        "vertices": 14752,
+        "maximum_mm": 0.0002387966162586963,
+        "over_0_5_mm": 0,
+        "witness_mm": [
+          -86.993309,
+          -39.194702,
+          625.203796
+        ]
+      },
+      "dominant_joint_nonhand": {
+        "vertices": 14732,
+        "maximum_mm": 0.0002387966162586963,
+        "over_0_5_mm": 0,
+        "witness_mm": [
+          -86.993309,
+          -39.194702,
+          625.203796
+        ]
+      }
+    },
+    "final_to_source": {
+      "within_original_symmetric_cut": {
+        "vertices": 6892,
+        "maximum_mm": 6.991048809140921,
+        "over_0_5_mm": 77,
+        "witness_mm": [
+          -286.199951,
+          0.182552,
+          524.114563
+        ]
+      },
+      "at_or_proximal_to_wrist": {
+        "vertices": 6779,
+        "maximum_mm": 0.0002387966162586963,
+        "over_0_5_mm": 0,
+        "witness_mm": [
+          -86.993301,
+          -39.194691,
+          625.204041
+        ]
+      },
+      "dominant_joint_nonhand": {
+        "vertices": 6809,
+        "maximum_mm": 5.453196819871664,
+        "over_0_5_mm": 47,
+        "witness_mm": [
+          286.200012,
+          -33.276104,
+          559.167053
+        ]
+      }
+    },
+    "final_at_or_inside_seam_to_original_triangles_max_mm": 0.00020078589102467959,
+    "reverse_point_to_point_note": "Clipping inserts new vertices along source edges at the seam. Their distances to the original triangle surfaces are measured separately."
+  },
+  "source_crossing_comparison": {
+    "original_unique_triangle_pair_signatures": 0,
+    "final_unique_triangle_pair_signatures": 0,
+    "common": 0,
+    "new": 0,
+    "removed": 0
+  },
+  "nonhand_surface": {
+    "source_wholly_inside_cut_triangles": 7262,
+    "corresponded_triangles": 7262,
+    "max_uv_component_error": 0.0,
+    "max_corner_normal_degrees": 0.5059038400650024,
+    "p99_corner_normal_degrees": 0.02797645330429077
+  },
+  "parent_changes": {},
+  "body_glb": {
+    "sha256": "31e16b400988b18c18ee30e988ee28a42b0b968073b0f12c5afda2dc678143f6",
+    "bytes": 4183108,
+    "meshes": 1,
+    "skins": 1,
+    "skin_joints": [
+      65
+    ],
+    "materials": 1,
+    "images": 3,
+    "animations": 0,
+    "nodes": 67,
+    "clips": {}
+  },
+  "textures_px": {
+    "Female_BaseColor": [
+      1024,
+      1024
+    ],
+    "Female_Normal": [
+      1024,
+      1024
+    ],
+    "Female_RoughnessMetallic": [
+      1024,
+      1024
+    ]
+  },
+  "library_glb": {
+    "sha256": "c692ca7398bea37a9890016be1c361100b06a9d70fe968060a5fa2e6028d1965",
+    "bytes": 94528,
+    "meshes": 0,
+    "skins": 1,
+    "skin_joints": [
+      65
+    ],
+    "materials": 0,
+    "images": 0,
+    "animations": 18,
+    "nodes": 66,
+    "clips": {
+      "hand_fist_L": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_fist_R": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_grip_small_L": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_grip_small_R": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_ok_L": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_ok_R": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_open_relaxed_L": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_open_relaxed_R": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_open_wide_L": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_open_wide_R": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_peace_L": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_peace_R": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_pinch_L": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_pinch_R": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_point_L": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_point_R": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_thumbs_up_L": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      },
+      "hand_thumbs_up_R": {
+        "channels": {
+          "rotation": 20
+        },
+        "invalid_bones": [],
+        "times_s": [
+          0.0
+        ],
+        "max_samples": 1
+      }
+    }
+  },
+  "rig_compatibility": {
+    "joints_in_both": 65,
+    "body_only": [],
+    "library_only": [],
+    "max_world_matrix_component_error": 0.0,
+    "max_local_matrix_component_error": 0.0,
+    "differing_joint_parents": [],
+    "max_inverse_bind_identity_error": 5.534476196222826e-07
+  },
+  "gesture_checks": {
+    "clips": {
+      "hand_fist_L": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 88.02072143554688,
+        "tip_center_mm": {
+          "Index": [
+            330.918915,
+            -41.759361,
+            529.699097
+          ],
+          "Middle": [
+            331.341949,
+            -25.519131,
+            527.602173
+          ],
+          "Ring": [
+            329.250214,
+            -8.590397,
+            527.290405
+          ],
+          "Pinky": [
+            331.144928,
+            7.542017,
+            529.711975
+          ],
+          "Thumb": [
+            329.052673,
+            -26.635481,
+            518.70575
+          ]
+        },
+        "pulp_to_palm_mm": {
+          "Index": 0.22026,
+          "Middle": 0.22042,
+          "Ring": 0.22019,
+          "Pinky": 0.22094,
+          "Thumb": 4.27465
+        },
+        "terminal_to_palm_mm": {
+          "Index": 0.22026,
+          "Middle": 0.22042,
+          "Ring": 0.22019,
+          "Pinky": 0.22094,
+          "Thumb": 4.10912
+        },
+        "tip_center_to_palm_mm": {
+          "Index": 1.6511,
+          "Middle": 1.80044,
+          "Ring": 1.69662,
+          "Pinky": 1.58555,
+          "Thumb": 10.1198
+        },
+        "thumb_pulp_to_folded_parts_mm": {
+          "Index": 6.42355,
+          "Middle": 0.2989,
+          "Ring": 12.01669,
+          "Pinky": 29.16477
+        }
+      },
+      "hand_open_relaxed_L": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 28.322959899902344,
+        "tip_center_mm": {
+          "Index": [
+            403.309814,
+            -53.224991,
+            524.742981
+          ],
+          "Middle": [
+            409.606049,
+            -29.620789,
+            518.124023
+          ],
+          "Ring": [
+            403.475159,
+            -4.700443,
+            514.8125
+          ],
+          "Pinky": [
+            387.090851,
+            17.406801,
+            516.561523
+          ],
+          "Thumb": [
+            329.804993,
+            -94.435928,
+            526.912354
+          ]
+        }
+      },
+      "hand_point_L": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 88.02072143554688,
+        "tip_center_mm": {
+          "Index": [
+            405.865875,
+            -55.704952,
+            541.410645
+          ],
+          "Middle": [
+            331.341949,
+            -25.519131,
+            527.602173
+          ],
+          "Ring": [
+            329.250214,
+            -8.590397,
+            527.290405
+          ],
+          "Pinky": [
+            331.144928,
+            7.542017,
+            529.711975
+          ],
+          "Thumb": [
+            332.100616,
+            -35.521816,
+            515.544922
+          ]
+        },
+        "pulp_to_palm_mm": {
+          "Middle": 0.22042,
+          "Ring": 0.22019,
+          "Pinky": 0.22094
+        },
+        "terminal_to_palm_mm": {
+          "Middle": 0.22042,
+          "Ring": 0.22019,
+          "Pinky": 0.22094
+        },
+        "tip_center_to_palm_mm": {
+          "Middle": 1.80044,
+          "Ring": 1.69662,
+          "Pinky": 1.58555
+        }
+      },
+      "hand_thumbs_up_L": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 88.02072143554688,
+        "tip_center_mm": {
+          "Index": [
+            330.918915,
+            -41.759361,
+            529.699097
+          ],
+          "Middle": [
+            331.341949,
+            -25.519131,
+            527.602173
+          ],
+          "Ring": [
+            329.250214,
+            -8.590397,
+            527.290405
+          ],
+          "Pinky": [
+            331.144928,
+            7.542017,
+            529.711975
+          ],
+          "Thumb": [
+            314.536804,
+            -74.200523,
+            586.120056
+          ]
+        },
+        "pulp_to_palm_mm": {
+          "Index": 0.22026,
+          "Middle": 0.22042,
+          "Ring": 0.22019,
+          "Pinky": 0.22094
+        },
+        "terminal_to_palm_mm": {
+          "Index": 0.22026,
+          "Middle": 0.22042,
+          "Ring": 0.22019,
+          "Pinky": 0.22094
+        },
+        "tip_center_to_palm_mm": {
+          "Index": 1.6511,
+          "Middle": 1.80044,
+          "Ring": 1.69662,
+          "Pinky": 1.58555
+        },
+        "thumb_above_highest_other_center_mm": 56.40810775756836,
+        "thumb_tip_surface_above_other_tip_surfaces_mm": 55.49764633178711
+      },
+      "hand_peace_L": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 86.21296691894531,
+        "tip_center_mm": {
+          "Index": [
+            403.5896,
+            -63.580952,
+            538.064331
+          ],
+          "Middle": [
+            415.062073,
+            -25.394968,
+            541.087708
+          ],
+          "Ring": [
+            329.250214,
+            -8.590397,
+            527.290405
+          ],
+          "Pinky": [
+            331.144928,
+            7.542017,
+            529.711975
+          ],
+          "Thumb": [
+            332.100616,
+            -35.521816,
+            515.544922
+          ]
+        },
+        "pulp_to_palm_mm": {
+          "Ring": 0.22019,
+          "Pinky": 0.22094
+        },
+        "terminal_to_palm_mm": {
+          "Ring": 0.22019,
+          "Pinky": 0.22094
+        },
+        "tip_center_to_palm_mm": {
+          "Ring": 1.69662,
+          "Pinky": 1.58555
+        }
+      },
+      "hand_ok_L": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 78.04521179199219,
+        "tip_center_mm": {
+          "Index": [
+            341.276367,
+            -54.366699,
+            503.484009
+          ],
+          "Middle": [
+            410.473236,
+            -27.551661,
+            520.831543
+          ],
+          "Ring": [
+            403.050873,
+            -0.977977,
+            515.574036
+          ],
+          "Pinky": [
+            386.610168,
+            22.365904,
+            518.266663
+          ],
+          "Thumb": [
+            340.250122,
+            -57.371758,
+            507.387268
+          ]
+        },
+        "pulp_to_pulp": {
+          "distance_mm": 0.37027,
+          "witness_world_mm": [
+            [
+              340.58484,
+              -54.1715,
+              506.68639
+            ],
+            [
+              340.89154,
+              -54.04434,
+              506.52249
+            ]
+          ],
+          "triangles": [
+            67,
+            33
+          ],
+          "witness_outward_normals_dot": -0.953221,
+          "estimated_area_within_1mm_sqmm": {
+            "Thumb": 5.5326,
+            "Index": 3.9039
+          }
+        },
+        "terminal_to_terminal": {
+          "distance_mm": 0.37027,
+          "witness_world_mm": [
+            [
+              340.58484,
+              -54.1715,
+              506.68639
+            ],
+            [
+              340.89154,
+              -54.04434,
+              506.52249
+            ]
+          ],
+          "triangles": [
+            96,
+            40
+          ]
+        }
+      },
+      "hand_grip_small_L": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 73.7244644165039,
+        "tip_center_mm": {
+          "Index": [
+            354.105865,
+            -45.419731,
+            506.277252
+          ],
+          "Middle": [
+            353.709106,
+            -26.691355,
+            504.975739
+          ],
+          "Ring": [
+            352.748077,
+            -7.358938,
+            504.930664
+          ],
+          "Pinky": [
+            352.532776,
+            11.313293,
+            507.70401
+          ],
+          "Thumb": [
+            300.481476,
+            -62.141853,
+            503.037048
+          ]
+        },
+        "pulp_to_pulp": {
+          "distance_mm": 48.62318,
+          "witness_world_mm": [
+            [
+              306.32077,
+              -61.04364,
+              504.6907
+            ],
+            [
+              352.91854,
+              -47.63119,
+              508.2916
+            ]
+          ],
+          "triangles": [
+            67,
+            33
+          ]
+        },
+        "terminal_to_terminal": {
+          "distance_mm": 46.64765,
+          "witness_world_mm": [
+            [
+              309.35425,
+              -64.27404,
+              509.37343
+            ],
+            [
+              352.91855,
+              -47.63119,
+              508.2916
+            ]
+          ],
+          "triangles": [
+            96,
+            40
+          ]
+        },
+        "pulp_to_palm_mm": {
+          "Index": 22.63094,
+          "Middle": 23.12119,
+          "Ring": 22.48465,
+          "Pinky": 21.29716,
+          "Thumb": 20.78349
+        },
+        "terminal_to_palm_mm": {
+          "Index": 22.17959,
+          "Middle": 22.77196,
+          "Ring": 21.97391,
+          "Pinky": 20.41927,
+          "Thumb": 18.5099
+        },
+        "tip_center_to_palm_mm": {
+          "Index": 28.78982,
+          "Middle": 28.72581,
+          "Ring": 28.55289,
+          "Pinky": 27.60895,
+          "Thumb": 28.45506
+        },
+        "cylinder": {
+          "diameter_mm": 40,
+          "axis": [
+            -0.029963,
+            0.998752,
+            -0.03995
+          ],
+          "center_mm": [
+            331.0,
+            -20.0,
+            506.0
+          ],
+          "min_axis_to_skin_mm": {
+            "Palm": 22.73246,
+            "Index": 21.112,
+            "Middle": 21.27777,
+            "Ring": 20.96011,
+            "Pinky": 21.31514,
+            "Thumb": 20.75293
+          },
+          "nearest_radial_offset_mm": {
+            "Palm": [
+              -4.376258,
+              0.76048,
+              22.294276
+            ],
+            "Index": [
+              21.069234,
+              0.678455,
+              1.159218
+            ],
+            "Middle": [
+              21.202189,
+              0.568098,
+              -1.699425
+            ],
+            "Ring": [
+              20.949197,
+              0.617435,
+              -0.276265
+            ],
+            "Pinky": [
+              20.723254,
+              0.818529,
+              4.920565
+            ],
+            "Thumb": [
+              -19.566937,
+              -0.310691,
+              6.908154
+            ]
+          },
+          "penetration_triangle_counts": {
+            "Palm": 0,
+            "Index": 0,
+            "Middle": 0,
+            "Ring": 0,
+            "Pinky": 0,
+            "Thumb": 0
+          },
+          "total_penetrations": 0
+        }
+      },
+      "hand_pinch_L": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 78.12722778320312,
+        "tip_center_mm": {
+          "Index": [
+            341.087067,
+            -55.760517,
+            503.734039
+          ],
+          "Middle": [
+            384.988892,
+            -28.330664,
+            492.112701
+          ],
+          "Ring": [
+            375.442322,
+            -6.16959,
+            491.866577
+          ],
+          "Pinky": [
+            361.37738,
+            12.872811,
+            500.355835
+          ],
+          "Thumb": [
+            340.048218,
+            -58.620499,
+            507.735016
+          ]
+        },
+        "pulp_to_pulp": {
+          "distance_mm": 0.3765,
+          "witness_world_mm": [
+            [
+              340.38389,
+              -55.44537,
+              506.92821
+            ],
+            [
+              340.70026,
+              -55.33117,
+              506.75903
+            ]
+          ],
+          "triangles": [
+            67,
+            33
+          ],
+          "witness_outward_normals_dot": -0.88593,
+          "estimated_area_within_1mm_sqmm": {
+            "Thumb": 5.5326,
+            "Index": 3.9039
+          }
+        },
+        "terminal_to_terminal": {
+          "distance_mm": 0.3765,
+          "witness_world_mm": [
+            [
+              340.38389,
+              -55.44537,
+              506.92821
+            ],
+            [
+              340.70026,
+              -55.33117,
+              506.75903
+            ]
+          ],
+          "triangles": [
+            96,
+            40
+          ]
+        }
+      },
+      "hand_open_wide_L": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 9.842601776123047,
+        "tip_center_mm": {
+          "Index": [
+            404.085327,
+            -62.642426,
+            543.728943
+          ],
+          "Middle": [
+            414.766846,
+            -33.27459,
+            544.309387
+          ],
+          "Ring": [
+            410.868439,
+            -1.134862,
+            544.212097
+          ],
+          "Pinky": [
+            393.559357,
+            26.158562,
+            543.457642
+          ],
+          "Thumb": [
+            321.378967,
+            -100.578552,
+            541.368774
+          ]
+        }
+      },
+      "hand_fist_R": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 88.02178955078125,
+        "tip_center_mm": {
+          "Index": [
+            -330.918182,
+            -41.759335,
+            529.696045
+          ],
+          "Middle": [
+            -331.341278,
+            -25.519188,
+            527.598694
+          ],
+          "Ring": [
+            -332.26593,
+            -8.432402,
+            527.748474
+          ],
+          "Pinky": [
+            -331.145599,
+            7.542099,
+            529.721375
+          ],
+          "Thumb": [
+            -328.857758,
+            -26.702221,
+            518.848511
+          ]
+        },
+        "pulp_to_palm_mm": {
+          "Index": 0.21999,
+          "Middle": 0.22019,
+          "Ring": 0.22011,
+          "Pinky": 0.22076,
+          "Thumb": 4.28013
+        },
+        "terminal_to_palm_mm": {
+          "Index": 0.21999,
+          "Middle": 0.22019,
+          "Ring": 0.22011,
+          "Pinky": 0.22076,
+          "Thumb": 4.27514
+        },
+        "tip_center_to_palm_mm": {
+          "Index": 1.60316,
+          "Middle": 1.80037,
+          "Ring": 1.83629,
+          "Pinky": 1.62891,
+          "Thumb": 9.9458
+        },
+        "thumb_pulp_to_folded_parts_mm": {
+          "Index": 6.0506,
+          "Middle": 0.29841,
+          "Ring": 13.88402,
+          "Pinky": 29.52268
+        }
+      },
+      "hand_open_relaxed_R": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 28.323328018188477,
+        "tip_center_mm": {
+          "Index": [
+            -403.309662,
+            -53.224983,
+            524.742737
+          ],
+          "Middle": [
+            -409.605865,
+            -29.620846,
+            518.12384
+          ],
+          "Ring": [
+            -403.474854,
+            -4.700493,
+            514.812195
+          ],
+          "Pinky": [
+            -387.090576,
+            17.406723,
+            516.561401
+          ],
+          "Thumb": [
+            -329.804871,
+            -94.43586,
+            526.912048
+          ]
+        }
+      },
+      "hand_point_R": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 88.02178955078125,
+        "tip_center_mm": {
+          "Index": [
+            -405.865753,
+            -55.704987,
+            541.410217
+          ],
+          "Middle": [
+            -331.341278,
+            -25.519188,
+            527.598694
+          ],
+          "Ring": [
+            -332.26593,
+            -8.432402,
+            527.748474
+          ],
+          "Pinky": [
+            -331.145599,
+            7.542099,
+            529.721375
+          ],
+          "Thumb": [
+            -332.904572,
+            -35.414448,
+            513.755554
+          ]
+        },
+        "pulp_to_palm_mm": {
+          "Middle": 0.22019,
+          "Ring": 0.22011,
+          "Pinky": 0.22076
+        },
+        "terminal_to_palm_mm": {
+          "Middle": 0.22019,
+          "Ring": 0.22011,
+          "Pinky": 0.22076
+        },
+        "tip_center_to_palm_mm": {
+          "Middle": 1.80037,
+          "Ring": 1.83629,
+          "Pinky": 1.62891
+        }
+      },
+      "hand_thumbs_up_R": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 88.02178955078125,
+        "tip_center_mm": {
+          "Index": [
+            -330.918182,
+            -41.759335,
+            529.696045
+          ],
+          "Middle": [
+            -331.341278,
+            -25.519188,
+            527.598694
+          ],
+          "Ring": [
+            -332.26593,
+            -8.432402,
+            527.748474
+          ],
+          "Pinky": [
+            -331.145599,
+            7.542099,
+            529.721375
+          ],
+          "Thumb": [
+            -314.536896,
+            -74.20089,
+            586.120117
+          ]
+        },
+        "pulp_to_palm_mm": {
+          "Index": 0.21999,
+          "Middle": 0.22019,
+          "Ring": 0.22011,
+          "Pinky": 0.22076
+        },
+        "terminal_to_palm_mm": {
+          "Index": 0.21999,
+          "Middle": 0.22019,
+          "Ring": 0.22011,
+          "Pinky": 0.22076
+        },
+        "tip_center_to_palm_mm": {
+          "Index": 1.60316,
+          "Middle": 1.80037,
+          "Ring": 1.83629,
+          "Pinky": 1.62891
+        },
+        "thumb_above_highest_other_center_mm": 56.39875030517578,
+        "thumb_tip_surface_above_other_tip_surfaces_mm": 55.50050735473633
+      },
+      "hand_peace_R": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 83.07565307617188,
+        "tip_center_mm": {
+          "Index": [
+            -403.589508,
+            -63.580952,
+            538.064209
+          ],
+          "Middle": [
+            -415.062012,
+            -25.395031,
+            541.087585
+          ],
+          "Ring": [
+            -332.26593,
+            -8.432402,
+            527.748474
+          ],
+          "Pinky": [
+            -331.145599,
+            7.542099,
+            529.721375
+          ],
+          "Thumb": [
+            -332.904572,
+            -35.414448,
+            513.755554
+          ]
+        },
+        "pulp_to_palm_mm": {
+          "Ring": 0.22011,
+          "Pinky": 0.22076
+        },
+        "terminal_to_palm_mm": {
+          "Ring": 0.22011,
+          "Pinky": 0.22076
+        },
+        "tip_center_to_palm_mm": {
+          "Ring": 1.83629,
+          "Pinky": 1.62891
+        }
+      },
+      "hand_ok_R": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 76.97919464111328,
+        "tip_center_mm": {
+          "Index": [
+            -341.375793,
+            -52.928116,
+            505.025757
+          ],
+          "Middle": [
+            -410.473175,
+            -27.551714,
+            520.831421
+          ],
+          "Ring": [
+            -403.050537,
+            -0.978047,
+            515.573608
+          ],
+          "Pinky": [
+            -386.609985,
+            22.365799,
+            518.266541
+          ],
+          "Thumb": [
+            -340.380493,
+            -55.85677,
+            508.815063
+          ]
+        },
+        "pulp_to_pulp": {
+          "distance_mm": 0.36968,
+          "witness_world_mm": [
+            [
+              -340.75609,
+              -52.63736,
+              508.23253
+            ],
+            [
+              -341.07394,
+              -52.54704,
+              508.06677
+            ]
+          ],
+          "triangles": [
+            67,
+            33
+          ],
+          "witness_outward_normals_dot": -0.952464,
+          "estimated_area_within_1mm_sqmm": {
+            "Thumb": 5.8738,
+            "Index": 6.5757
+          }
+        },
+        "terminal_to_terminal": {
+          "distance_mm": 0.36968,
+          "witness_world_mm": [
+            [
+              -340.75609,
+              -52.63736,
+              508.23253
+            ],
+            [
+              -341.07394,
+              -52.54704,
+              508.06677
+            ]
+          ],
+          "triangles": [
+            96,
+            40
+          ]
+        }
+      },
+      "hand_grip_small_R": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 73.72472381591797,
+        "tip_center_mm": {
+          "Index": [
+            -354.115479,
+            -45.354679,
+            506.277313
+          ],
+          "Middle": [
+            -353.708832,
+            -26.69142,
+            504.975739
+          ],
+          "Ring": [
+            -352.747833,
+            -7.358998,
+            504.930969
+          ],
+          "Pinky": [
+            -352.532623,
+            11.313221,
+            507.704193
+          ],
+          "Thumb": [
+            -294.047668,
+            -57.924335,
+            497.627136
+          ]
+        },
+        "pulp_to_pulp": {
+          "distance_mm": 54.84169,
+          "witness_world_mm": [
+            [
+              -299.28279,
+              -54.55257,
+              499.37582
+            ],
+            [
+              -352.96271,
+              -47.04385,
+              507.72415
+            ]
+          ],
+          "triangles": [
+            67,
+            33
+          ]
+        },
+        "terminal_to_terminal": {
+          "distance_mm": 50.22515,
+          "witness_world_mm": [
+            [
+              -304.36179,
+              -58.74103,
+              502.19119
+            ],
+            [
+              -352.94925,
+              -47.57791,
+              508.29114
+            ]
+          ],
+          "triangles": [
+            96,
+            40
+          ]
+        },
+        "pulp_to_palm_mm": {
+          "Index": 22.63048,
+          "Middle": 23.11937,
+          "Ring": 22.48451,
+          "Pinky": 21.29684,
+          "Thumb": 20.75707
+        },
+        "terminal_to_palm_mm": {
+          "Index": 22.17913,
+          "Middle": 22.77064,
+          "Ring": 21.97376,
+          "Pinky": 20.42791,
+          "Thumb": 19.74259
+        },
+        "tip_center_to_palm_mm": {
+          "Index": 28.77842,
+          "Middle": 28.724,
+          "Ring": 28.5555,
+          "Pinky": 27.6086,
+          "Thumb": 27.67528
+        },
+        "cylinder": {
+          "diameter_mm": 40,
+          "axis": [
+            0.029963,
+            0.998752,
+            -0.03995
+          ],
+          "center_mm": [
+            -331.0,
+            -20.0,
+            506.0
+          ],
+          "min_axis_to_skin_mm": {
+            "Palm": 22.73233,
+            "Index": 21.14434,
+            "Middle": 21.2775,
+            "Ring": 20.95986,
+            "Pinky": 21.31501,
+            "Thumb": 21.8182
+          },
+          "nearest_radial_offset_mm": {
+            "Palm": [
+              4.376103,
+              0.76048,
+              22.294173
+            ],
+            "Index": [
+              -21.102642,
+              0.678715,
+              1.140666
+            ],
+            "Middle": [
+              -21.201919,
+              0.56809,
+              -1.699427
+            ],
+            "Ring": [
+              -20.948948,
+              0.617435,
+              -0.276076
+            ],
+            "Pinky": [
+              -20.723073,
+              0.818531,
+              4.920741
+            ],
+            "Thumb": [
+              19.940148,
+              -0.244118,
+              8.85239
+            ]
+          },
+          "penetration_triangle_counts": {
+            "Palm": 0,
+            "Index": 0,
+            "Middle": 0,
+            "Ring": 0,
+            "Pinky": 0,
+            "Thumb": 0
+          },
+          "total_penetrations": 0
+        }
+      },
+      "hand_pinch_R": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 75.89111328125,
+        "tip_center_mm": {
+          "Index": [
+            -342.022003,
+            -54.845417,
+            506.516266
+          ],
+          "Middle": [
+            -384.988678,
+            -28.330723,
+            492.112579
+          ],
+          "Ring": [
+            -375.441864,
+            -6.169648,
+            491.866425
+          ],
+          "Pinky": [
+            -361.377136,
+            12.872727,
+            500.355835
+          ],
+          "Thumb": [
+            -341.343323,
+            -57.59256,
+            510.151215
+          ]
+        },
+        "pulp_to_pulp": {
+          "distance_mm": 0.36872,
+          "witness_world_mm": [
+            [
+              -341.5368,
+              -54.34562,
+              509.6875
+            ],
+            [
+              -341.85848,
+              -54.25171,
+              509.5337
+            ]
+          ],
+          "triangles": [
+            67,
+            33
+          ],
+          "witness_outward_normals_dot": -0.891422,
+          "estimated_area_within_1mm_sqmm": {
+            "Thumb": 10.1916,
+            "Index": 9.2478
+          }
+        },
+        "terminal_to_terminal": {
+          "distance_mm": 0.36872,
+          "witness_world_mm": [
+            [
+              -341.5368,
+              -54.34562,
+              509.6875
+            ],
+            [
+              -341.85848,
+              -54.25171,
+              509.5337
+            ]
+          ],
+          "triangles": [
+            96,
+            40
+          ]
+        }
+      },
+      "hand_open_wide_R": {
+        "action_slot": "OBFemale_Rig.001",
+        "frame": 0.0,
+        "crossings": {
+          "whole": 0,
+          "involving_either_hand": 0,
+          "Left": 0,
+          "Right": 0,
+          "outside_hands": 0,
+          "new_vs_bind": 0,
+          "missing_vs_bind": 0,
+          "hand_parts": {},
+          "hand_examples": []
+        },
+        "nonhand_pose_drift_mm": 0.00018881747382692993,
+        "max_vertex_motion_mm": 9.84261417388916,
+        "tip_center_mm": {
+          "Index": [
+            -404.085144,
+            -62.642433,
+            543.728577
+          ],
+          "Middle": [
+            -414.766754,
+            -33.274666,
+            544.309326
+          ],
+          "Ring": [
+            -410.868286,
+            -1.13491,
+            544.21167
+          ],
+          "Pinky": [
+            -393.559326,
+            26.158504,
+            543.457458
+          ],
+          "Thumb": [
+            -321.378876,
+            -100.578651,
+            541.368347
+          ]
+        }
+      }
+    },
+    "json_replay": {
+      "blend_sha256": "4ba9dc515a16496312db06bd089467aee6334452a60ee5cf67edec2bea0b870f",
+      "json_sha256": "1f96de044c802a0ca5698441655e47f64761f36d401ef6f62243ae5f24e760bc",
+      "rest_max_mm": 0.0004227271119816578,
+      "per_clip_vertex_max_mm": {
+        "hand_fist_L": 0.000534,
+        "hand_open_relaxed_L": 0.000534,
+        "hand_point_L": 0.000534,
+        "hand_thumbs_up_L": 0.000534,
+        "hand_peace_L": 0.000534,
+        "hand_ok_L": 0.000534,
+        "hand_grip_small_L": 0.000534,
+        "hand_pinch_L": 0.000534,
+        "hand_open_wide_L": 0.000534,
+        "hand_fist_R": 0.000503,
+        "hand_open_relaxed_R": 0.000551,
+        "hand_point_R": 0.000486,
+        "hand_thumbs_up_R": 0.000486,
+        "hand_peace_R": 0.000486,
+        "hand_ok_R": 0.000486,
+        "hand_grip_small_R": 0.000568,
+        "hand_pinch_R": 0.000515,
+        "hand_open_wide_R": 0.000497
+      },
+      "max_over_all_mm": 0.000568
+    },
+    "rest_frame": {
+      "L": {
+        "volar_unit": [
+          0.011703,
+          2e-06,
+          -0.999931
+        ],
+        "volar_angle_to_down_deg": 0.6708556522096519,
+        "wrist_to_knuckles_mm": 63.20486,
+        "thumb_angle_to_forward_deg": 25.08105664339203,
+        "thumb_direction_unit": [
+          0.419865,
+          -0.905709,
+          -0.05835
+        ],
+        "thumb_root_to_tip_mm": 53.964725494384766,
+        "thumb_joint_intervals_mm": [
+          15.999986,
+          17.999977,
+          17.99999
+        ],
+        "thumb_sections_frac_of_root_to_tip": {
+          "0.3": {
+            "width_mm": 16.70062,
+            "depth_mm": 20.23404
+          },
+          "0.5": {
+            "width_mm": 17.89471,
+            "depth_mm": 17.21294
+          },
+          "0.7": {
+            "width_mm": 15.44251,
+            "depth_mm": 14.72149
+          },
+          "0.85": {
+            "width_mm": 14.23812,
+            "depth_mm": 13.32776
+          },
+          "0.95": {
+            "width_mm": 11.94321,
+            "depth_mm": 11.07988
+          }
+        }
+      },
+      "R": {
+        "volar_unit": [
+          0.005445,
+          0.0,
+          -0.999985
+        ],
+        "volar_angle_to_down_deg": 0.3115330002733851,
+        "wrist_to_knuckles_mm": 70.59095,
+        "thumb_angle_to_forward_deg": 25.08105664339203,
+        "thumb_direction_unit": [
+          -0.419865,
+          -0.905709,
+          -0.058354
+        ],
+        "thumb_root_to_tip_mm": 53.96485900878906,
+        "thumb_joint_intervals_mm": [
+          16.000017,
+          18.000015,
+          17.999971
+        ],
+        "thumb_sections_frac_of_root_to_tip": {
+          "0.3": {
+            "width_mm": 16.74144,
+            "depth_mm": 20.23406
+          },
+          "0.5": {
+            "width_mm": 17.89471,
+            "depth_mm": 17.21295
+          },
+          "0.7": {
+            "width_mm": 15.44251,
+            "depth_mm": 14.72148
+          },
+          "0.85": {
+            "width_mm": 14.23812,
+            "depth_mm": 13.32776
+          },
+          "0.95": {
+            "width_mm": 11.94321,
+            "depth_mm": 11.07987
+          }
+        }
+      }
+    },
+    "bind_landmarks": {
+      "L": {
+        "Index": {
+          "root_mm": [
+            348.219849,
+            -44.499615,
+            542.276672
+          ],
+          "distal_tip_mm": [
+            406.246948,
+            -53.690178,
+            540.841553
+          ],
+          "axis_unit": [
+            0.987394,
+            -0.156387,
+            -0.02442
+          ],
+          "distal_axis_unit": [
+            0.98738,
+            -0.156386,
+            -0.024997
+          ],
+          "pad_support_unit": [
+            0.814407,
+            -0.12899,
+            -0.565777
+          ],
+          "root_tip_length_mm": 58.76795196533203,
+          "pulp_triangles": 33,
+          "terminal_triangles": 40,
+          "center_tip_vertices": 9
+        },
+        "Middle": {
+          "root_mm": [
+            350.502808,
+            -26.523344,
+            542.726685
+          ],
+          "distal_tip_mm": [
+            415.045624,
+            -29.905859,
+            541.144592
+          ],
+          "axis_unit": [
+            0.99833,
+            -0.05232,
+            -0.024471
+          ],
+          "distal_axis_unit": [
+            0.998317,
+            -0.05232,
+            -0.024997
+          ],
+          "pad_support_unit": [
+            0.823428,
+            -0.043154,
+            -0.565777
+          ],
+          "root_tip_length_mm": 64.65072631835938,
+          "pulp_triangles": 30,
+          "terminal_triangles": 40,
+          "center_tip_vertices": 9
+        },
+        "Ring": {
+          "root_mm": [
+            350.502808,
+            -7.476631,
+            542.726807
+          ],
+          "distal_tip_mm": [
+            411.13031,
+            -4.299247,
+            541.24292
+          ],
+          "axis_unit": [
+            0.998331,
+            0.052321,
+            -0.024435
+          ],
+          "distal_axis_unit": [
+            0.998318,
+            0.05232,
+            -0.024988
+          ],
+          "pad_support_unit": [
+            0.823434,
+            0.043154,
+            -0.565769
+          ],
+          "root_tip_length_mm": 60.72882843017578,
+          "pulp_triangles": 30,
+          "terminal_triangles": 40,
+          "center_tip_vertices": 9
+        },
+        "Pinky": {
+          "root_mm": [
+            348.211243,
+            10.551251,
+            542.276672
+          ],
+          "distal_tip_mm": [
+            395.451447,
+            18.881016,
+            541.111145
+          ],
+          "axis_unit": [
+            0.984517,
+            0.173598,
+            -0.02429
+          ],
+          "distal_axis_unit": [
+            0.9845,
+            0.173593,
+            -0.024998
+          ],
+          "pad_support_unit": [
+            0.812031,
+            0.143183,
+            -0.565777
+          ],
+          "root_tip_length_mm": 47.98314666748047,
+          "pulp_triangles": 36,
+          "terminal_triangles": 48,
+          "center_tip_vertices": 9
+        },
+        "Thumb": {
+          "root_mm": [
+            304.816803,
+            -49.234352,
+            542.087158
+          ],
+          "distal_tip_mm": [
+            327.474701,
+            -98.110687,
+            538.938293
+          ],
+          "axis_unit": [
+            0.419865,
+            -0.905709,
+            -0.05835
+          ],
+          "distal_axis_unit": [
+            0.419822,
+            -0.905623,
+            -0.059976
+          ],
+          "pad_support_unit": [
+            0.33825,
+            -0.729659,
+            -0.594293
+          ],
+          "root_tip_length_mm": 53.964725494384766,
+          "pulp_triangles": 67,
+          "terminal_triangles": 96,
+          "center_tip_vertices": 17
+        }
+      },
+      "R": {
+        "Index": {
+          "root_mm": [
+            -348.219788,
+            -44.499569,
+            542.27655
+          ],
+          "distal_tip_mm": [
+            -406.246857,
+            -53.690205,
+            540.84137
+          ],
+          "axis_unit": [
+            -0.987394,
+            -0.156389,
+            -0.024422
+          ],
+          "distal_axis_unit": [
+            -0.98738,
+            -0.156386,
+            -0.024989
+          ],
+          "pad_support_unit": [
+            -0.814411,
+            -0.128991,
+            -0.56577
+          ],
+          "root_tip_length_mm": 58.76793670654297,
+          "pulp_triangles": 33,
+          "terminal_triangles": 40,
+          "center_tip_vertices": 9
+        },
+        "Middle": {
+          "root_mm": [
+            -350.502655,
+            -26.523327,
+            542.726685
+          ],
+          "distal_tip_mm": [
+            -415.045532,
+            -29.905918,
+            541.144592
+          ],
+          "axis_unit": [
+            -0.99833,
+            -0.052321,
+            -0.024471
+          ],
+          "distal_axis_unit": [
+            -0.998318,
+            -0.05232,
+            -0.024994
+          ],
+          "pad_support_unit": [
+            -0.82343,
+            -0.043154,
+            -0.565774
+          ],
+          "root_tip_length_mm": 64.65079498291016,
+          "pulp_triangles": 30,
+          "terminal_triangles": 40,
+          "center_tip_vertices": 9
+        },
+        "Ring": {
+          "root_mm": [
+            -350.502655,
+            -7.476604,
+            542.726624
+          ],
+          "distal_tip_mm": [
+            -411.130219,
+            -4.299292,
+            541.242615
+          ],
+          "axis_unit": [
+            -0.998331,
+            0.05232,
+            -0.024437
+          ],
+          "distal_axis_unit": [
+            -0.998317,
+            0.05232,
+            -0.024996
+          ],
+          "pad_support_unit": [
+            -0.823429,
+            0.043154,
+            -0.565776
+          ],
+          "root_tip_length_mm": 60.728919982910156,
+          "pulp_triangles": 30,
+          "terminal_triangles": 40,
+          "center_tip_vertices": 9
+        },
+        "Pinky": {
+          "root_mm": [
+            -348.211212,
+            10.551283,
+            542.276611
+          ],
+          "distal_tip_mm": [
+            -395.451385,
+            18.880957,
+            541.110962
+          ],
+          "axis_unit": [
+            -0.984517,
+            0.173596,
+            -0.024294
+          ],
+          "distal_axis_unit": [
+            -0.9845,
+            0.173594,
+            -0.024998
+          ],
+          "pad_support_unit": [
+            -0.812031,
+            0.143183,
+            -0.565777
+          ],
+          "root_tip_length_mm": 47.98310470581055,
+          "pulp_triangles": 36,
+          "terminal_triangles": 48,
+          "center_tip_vertices": 9
+        },
+        "Thumb": {
+          "root_mm": [
+            -304.81665,
+            -49.234364,
+            542.087219
+          ],
+          "distal_tip_mm": [
+            -327.474609,
+            -98.110802,
+            538.93811
+          ],
+          "axis_unit": [
+            -0.419865,
+            -0.905709,
+            -0.058354
+          ],
+          "distal_axis_unit": [
+            -0.419826,
+            -0.905621,
+            -0.059972
+          ],
+          "pad_support_unit": [
+            -0.338254,
+            -0.729659,
+            -0.594291
+          ],
+          "root_tip_length_mm": 53.96485900878906,
+          "pulp_triangles": 67,
+          "terminal_triangles": 96,
+          "center_tip_vertices": 17
+        }
+      }
+    },
+    "shaft_ownership": {
+      "L": {
+        "Index": {
+          "samples": 73,
+          "with_foreign": 0,
+          "max_foreign": 0.0
+        },
+        "Middle": {
+          "samples": 72,
+          "with_foreign": 0,
+          "max_foreign": 0.0
+        },
+        "Ring": {
+          "samples": 72,
+          "with_foreign": 0,
+          "max_foreign": 0.0
+        },
+        "Pinky": {
+          "samples": 73,
+          "with_foreign": 0,
+          "max_foreign": 0.0
+        },
+        "Thumb": {
+          "samples": 163,
+          "with_foreign": 0,
+          "max_foreign": 0.0
+        },
+        "note": "Independent shaft sample uses proximity to a sole bone chain, next-chain distance margin >2 mm, centerline distance <14 mm, and distal shaft position beyond 45 percent."
+      },
+      "R": {
+        "Index": {
+          "samples": 73,
+          "with_foreign": 0,
+          "max_foreign": 0.0
+        },
+        "Middle": {
+          "samples": 72,
+          "with_foreign": 0,
+          "max_foreign": 0.0
+        },
+        "Ring": {
+          "samples": 72,
+          "with_foreign": 0,
+          "max_foreign": 0.0
+        },
+        "Pinky": {
+          "samples": 73,
+          "with_foreign": 0,
+          "max_foreign": 0.0
+        },
+        "Thumb": {
+          "samples": 163,
+          "with_foreign": 0,
+          "max_foreign": 0.0
+        },
+        "note": "Independent shaft sample uses proximity to a sole bone chain, next-chain distance margin >2 mm, centerline distance <14 mm, and distal shaft position beyond 45 percent."
+      }
+    },
+    "palm_triangles": {
+      "L": 159,
+      "R": 184
+    }
+  },
+  "khronos": {
+    "body": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0
+    },
+    "library": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0
+    }
+  },
+  "gates": {
+    "static_one_mesh_one_skin_65_joints_no_animation": true,
+    "all_parents_preserved": true,
+    "all_vertex_weights": true,
+    "zero_mixed_digit_weights": true,
+    "triangles_within_budget": true,
+    "preserved_vertex_positions": true,
+    "every_texture_within_1024": true,
+    "khronos_body_zero_errors_warnings": true,
+    "clip_names_correct_one_sample_finger_tracks_only": true,
+    "clip_library_skeleton_only": true,
+    "free_shafts_zero_foreign_weights": true,
+    "zero_whole_body_crossings_bind_and_all_18_poses": true,
+    "all_pinch_and_ok_pulp_gaps_under_1_mm": true,
+    "fist_four_pulps_within_1_mm_of_palmar_skin": true,
+    "fist_thumb_pulp_within_1_mm_of_a_folded_digit": true,
+    "thumbs_up_higher_than_other_tips": true,
+    "grip_skin_and_center_gaps_15_to_30_mm": true,
+    "grips_clear_declared_40mm_gauges": true,
+    "khronos_library_zero_errors_warnings": true
+  }
+}

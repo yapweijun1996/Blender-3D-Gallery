@@ -1,0 +1,72 @@
+{
+  "sha256": "1151c309948ebabb36f87a13c3336a89442da3371010d6c648705b88971311fa",
+  "bytes": 276652,
+  "triangles": 2780,
+  "textures": [
+    [
+      512,
+      512
+    ]
+  ],
+  "joints": 65,
+  "sameHierarchy": true,
+  "bindError": 0.0000017900019884109497,
+  "errors": 0,
+  "warnings": 0,
+  "report": {
+    "uri": "bottom-shorts-r3.glb",
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "validatedAt": "2026-11-19T16:31:07.578Z",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "UNUSED_MESH_TANGENT",
+          "message": "Tangents are not used because the material has no normal texture.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+        }
+      ],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "Khronos glTF Blender I/O v5.1.20",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 257988
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/jpeg",
+          "storage": "buffer-view",
+          "image": {
+            "width": 512,
+            "height": 512,
+            "format": "rgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 0,
+      "materialCount": 1,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 1,
+      "totalVertexCount": 2481,
+      "totalTriangleCount": 2780,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 6
+    }
+  }
+}

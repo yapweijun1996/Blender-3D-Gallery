@@ -1,0 +1,99 @@
+{
+  "export_sha256": "707cfe6abeb6dff9b9c7e22cf92b0eef23cd3fdc493e580c0584bbc818853d85",
+  "motion": {
+    "rest": {
+      "samples": 1,
+      "max_vertices_inside": 0,
+      "max_triangle_pairs": 0,
+      "min_signed_distance_m": 0.0036269917764002457,
+      "min_distance_frame": 1.0
+    },
+    "walk": {
+      "samples": 225,
+      "max_vertices_inside": 0,
+      "max_triangle_pairs": 0,
+      "min_signed_distance_m": 0.001213189670124848,
+      "min_distance_frame": 16.25
+    },
+    "run": {
+      "samples": 121,
+      "max_vertices_inside": 0,
+      "max_triangle_pairs": 0,
+      "min_signed_distance_m": 0.0025498033137409948,
+      "min_distance_frame": 5.0
+    },
+    "wave": {
+      "samples": 65,
+      "max_vertices_inside": 0,
+      "max_triangle_pairs": 0,
+      "min_signed_distance_m": 0.003626991980127059,
+      "min_distance_frame": 0.0
+    },
+    "jump": {
+      "samples": 51,
+      "max_vertices_inside": 0,
+      "max_triangle_pairs": 0,
+      "min_signed_distance_m": 0.003383259247584647,
+      "min_distance_frame": 19.0
+    },
+    "idle": {
+      "samples": 89,
+      "max_vertices_inside": 0,
+      "max_triangle_pairs": 0,
+      "min_signed_distance_m": 0.003626991980127059,
+      "min_distance_frame": 0.0
+    },
+    "nod": {
+      "samples": 57,
+      "max_vertices_inside": 0,
+      "max_triangle_pairs": 0,
+      "min_signed_distance_m": 0.003626991980127059,
+      "min_distance_frame": 0.0
+    },
+    "dance": {
+      "samples": 65,
+      "max_vertices_inside": 0,
+      "max_triangle_pairs": 0,
+      "min_signed_distance_m": 0.0036269744305172935,
+      "min_distance_frame": 33.0
+    }
+  },
+  "floor": {
+    "rest_left": {
+      "min_margin_m": -0.006000114604830742,
+      "frame": 1.0,
+      "shoe_z_m": -0.006000114604830742,
+      "body_z_m": 2.026565859569729e-10
+    },
+    "rest_right": {
+      "min_margin_m": -0.0060001094825565815,
+      "frame": 1.0,
+      "shoe_z_m": -0.0060001094825565815,
+      "body_z_m": 1.39440203383856e-07
+    },
+    "walk_left": {
+      "min_margin_m": -0.014913571998476982,
+      "frame": 40.0,
+      "shoe_z_m": -0.02410479448735714,
+      "body_z_m": -0.009191222488880157
+    },
+    "walk_right": {
+      "min_margin_m": -0.014842925127595663,
+      "frame": 26.0,
+      "shoe_z_m": -0.02174234390258789,
+      "body_z_m": -0.0068994187749922276
+    },
+    "run_left": {
+      "min_margin_m": -0.013530537486076355,
+      "frame": 7.5,
+      "shoe_z_m": -0.013530537486076355,
+      "body_z_m": 0.0009297842625528574
+    },
+    "run_right": {
+      "min_margin_m": -0.015607126988470554,
+      "frame": 15.5,
+      "shoe_z_m": -0.015607126988470554,
+      "body_z_m": 0.0003825968597084284
+    }
+  }
+}

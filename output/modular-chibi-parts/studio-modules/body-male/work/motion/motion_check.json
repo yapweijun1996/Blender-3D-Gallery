@@ -1,0 +1,1533 @@
+{
+  "body_sha256": "09d5e03d5da489e350432bb521e59255393a167a2847ae602b7d92a6a102e387",
+  "body_file": "body_male_v1.glb",
+  "motion_sha256": "ffccda1ba2a50eb10948853e03d17f0d095cd9b953d644c03c4fb9cb95529410",
+  "blender_version": "5.1.2",
+  "joint_hierarchy_matches": true,
+  "vertices": 8171,
+  "seam_pairs": 4198,
+  "edge_counts": {
+    "all": 17705,
+    "shoulder": 448,
+    "elbow": 430,
+    "hip": 1031,
+    "knee": 155,
+    "wrist": 1843
+  },
+  "method": "Direct original Action + action_slot on target, sampled every integer frame inclusive at 24 fps. Tear diagnostic measures separation of pairs coincident within a 0.1 micrometre rounded grid in rest pose. Edge strain uses edges of at least 0.5 mm rest length, with hip zone within 80 mm and shoulder, elbow and knee zones within 55 mm of bilateral pivots. Wrist strain uses both rest-space x strips from 245 to 345 mm lateral. An intact shared edge can stretch without creating a seam. Renders use the complete imported target, its materials, orthographic three-quarter views and Cycles CPU. Both the untouched local-quaternion assignment and source-to-target world-rest-basis transfer are evaluated. Images show direct binding if all 25 nonfinger frames differ by under 0.1 degree, otherwise the transfer. Local joint translations are converted through the corresponding 3x3 rest-basis transformation. Only evaluation changes; no retargeted Action is saved in either delivered asset.",
+  "clips": {
+    "walk": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        1,
+        57
+      ],
+      "count": 57,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 2.365746021270752,
+          "frame": 3,
+          "rest_edge_mm": 4.725551605224609,
+          "rest_midpoint_m": [
+            0.3453516960144043,
+            0.0037347450852394104,
+            0.5511692762374878
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.8234901428222656,
+          "frame": 1,
+          "rest_edge_mm": 13.531258583068848,
+          "rest_midpoint_m": [
+            -0.06506244838237762,
+            -0.007654473185539246,
+            0.5779095888137817
+          ]
+        },
+        "elbow": {
+          "ratio": 1.2734603881835938,
+          "frame": 35,
+          "rest_edge_mm": 23.04286766052246,
+          "rest_midpoint_m": [
+            0.17126810550689697,
+            0.015308869071304798,
+            0.5434646010398865
+          ]
+        },
+        "hip": {
+          "ratio": 1.6986569166183472,
+          "frame": 22,
+          "rest_edge_mm": 7.160101413726807,
+          "rest_midpoint_m": [
+            -0.022963136434555054,
+            -0.08993935585021973,
+            0.3100043535232544
+          ]
+        },
+        "knee": {
+          "ratio": 1.8370211124420166,
+          "frame": 28,
+          "rest_edge_mm": 20.070093154907227,
+          "rest_midpoint_m": [
+            -0.04975368082523346,
+            -0.07080334424972534,
+            0.19136083126068115
+          ]
+        },
+        "wrist": {
+          "ratio": 2.3021786212921143,
+          "frame": 57,
+          "rest_edge_mm": 5.755616188049316,
+          "rest_midpoint_m": [
+            0.3442847430706024,
+            -0.057996347546577454,
+            0.5484988689422607
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 1195.716064453125,
+      "min_z_m": -0.03625759109854698,
+      "max_sole_z_m": -0.0006214735331013799
+    },
+    "run": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        30
+      ],
+      "count": 31,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 5.075259208679199,
+          "frame": 3,
+          "rest_edge_mm": 5.412474632263184,
+          "rest_midpoint_m": [
+            -0.000956608506385237,
+            0.050710491836071014,
+            0.40568482875823975
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.9084770679473877,
+          "frame": 3,
+          "rest_edge_mm": 13.531258583068848,
+          "rest_midpoint_m": [
+            -0.06506244838237762,
+            -0.007654473185539246,
+            0.5779095888137817
+          ]
+        },
+        "elbow": {
+          "ratio": 1.9771978855133057,
+          "frame": 4,
+          "rest_edge_mm": 23.042896270751953,
+          "rest_midpoint_m": [
+            -0.17126768827438354,
+            0.015308801084756851,
+            0.5434646606445312
+          ]
+        },
+        "hip": {
+          "ratio": 1.7587529420852661,
+          "frame": 12,
+          "rest_edge_mm": 6.051362991333008,
+          "rest_midpoint_m": [
+            -0.04975365847349167,
+            -0.10142101347446442,
+            0.3387085199356079
+          ]
+        },
+        "knee": {
+          "ratio": 2.0578365325927734,
+          "frame": 9,
+          "rest_edge_mm": 20.070098876953125,
+          "rest_midpoint_m": [
+            -0.07271695137023926,
+            -0.07463060319423676,
+            0.19327443838119507
+          ]
+        },
+        "wrist": {
+          "ratio": 2.2652032375335693,
+          "frame": 6,
+          "rest_edge_mm": 5.5142693519592285,
+          "rest_midpoint_m": [
+            0.31726008653640747,
+            -0.06182356923818588,
+            0.5433560609817505
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 565.6591186523438,
+      "min_z_m": -0.021117547526955605,
+      "max_sole_z_m": 0.017182596027851105
+    },
+    "wave": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        64
+      ],
+      "count": 65,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 1.7991913557052612,
+          "frame": 19,
+          "rest_edge_mm": 22.963254928588867,
+          "rest_midpoint_m": [
+            -0.17126770317554474,
+            -0.00669770035892725,
+            0.5128469467163086
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.789820909500122,
+          "frame": 0,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "elbow": {
+          "ratio": 1.7991913557052612,
+          "frame": 19,
+          "rest_edge_mm": 22.963254928588867,
+          "rest_midpoint_m": [
+            -0.17126770317554474,
+            -0.00669770035892725,
+            0.5128469467163086
+          ]
+        },
+        "hip": {
+          "ratio": 1.0126279592514038,
+          "frame": 19,
+          "rest_edge_mm": 8.11877155303955,
+          "rest_midpoint_m": [
+            -0.11290256679058075,
+            -0.03444503992795944,
+            0.39228957891464233
+          ]
+        },
+        "knee": {
+          "ratio": 1.0000008344650269,
+          "frame": 0,
+          "rest_edge_mm": 28.254091262817383,
+          "rest_midpoint_m": [
+            0.11481653153896332,
+            -0.04401310533285141,
+            0.20284238457679749
+          ]
+        },
+        "wrist": {
+          "ratio": 1.1892447471618652,
+          "frame": 40,
+          "rest_edge_mm": 11.732929229736328,
+          "rest_midpoint_m": [
+            -0.27661263942718506,
+            -0.026417503133416176,
+            0.5740823149681091
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 381.3619079589844,
+      "min_z_m": -3.047239260922652e-07,
+      "max_sole_z_m": -3.047239260922652e-07,
+      "frame_19_right_wrist_above_elbow_mm": 99.50494766235352
+    },
+    "jump": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        50
+      ],
+      "count": 51,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 2.888512372970581,
+          "frame": 9,
+          "rest_edge_mm": 5.412474632263184,
+          "rest_midpoint_m": [
+            -0.000956608506385237,
+            0.050710491836071014,
+            0.40568482875823975
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.8741816282272339,
+          "frame": 9,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "elbow": {
+          "ratio": 1.2597980499267578,
+          "frame": 34,
+          "rest_edge_mm": 23.04286766052246,
+          "rest_midpoint_m": [
+            0.17126810550689697,
+            0.015308869071304798,
+            0.5434646010398865
+          ]
+        },
+        "hip": {
+          "ratio": 1.1608694791793823,
+          "frame": 9,
+          "rest_edge_mm": 16.461490631103516,
+          "rest_midpoint_m": [
+            0.074630968272686,
+            -0.09376665204763412,
+            0.3674126863479614
+          ]
+        },
+        "knee": {
+          "ratio": 1.703033447265625,
+          "frame": 9,
+          "rest_edge_mm": 20.070110321044922,
+          "rest_midpoint_m": [
+            0.0727173313498497,
+            -0.07463057339191437,
+            0.19327431917190552
+          ]
+        },
+        "wrist": {
+          "ratio": 1.0001112222671509,
+          "frame": 25,
+          "rest_edge_mm": 0.5952510237693787,
+          "rest_midpoint_m": [
+            -0.28235340118408203,
+            -0.046642038971185684,
+            0.5260971784591675
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 428.0480041503906,
+      "min_z_m": -0.021097470074892044,
+      "max_sole_z_m": 0.21078862249851227
+    },
+    "idle": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        88
+      ],
+      "count": 89,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 1.8007020950317383,
+          "frame": 66,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.8007020950317383,
+          "frame": 66,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "elbow": {
+          "ratio": 1.2043551206588745,
+          "frame": 22,
+          "rest_edge_mm": 23.04286766052246,
+          "rest_midpoint_m": [
+            0.17126810550689697,
+            0.015308869071304798,
+            0.5434646010398865
+          ]
+        },
+        "hip": {
+          "ratio": 1.0211899280548096,
+          "frame": 22,
+          "rest_edge_mm": 9.757522583007812,
+          "rest_midpoint_m": [
+            -0.09568018466234207,
+            -0.08132822811603546,
+            0.37602391839027405
+          ]
+        },
+        "knee": {
+          "ratio": 1.0000008344650269,
+          "frame": 0,
+          "rest_edge_mm": 28.254091262817383,
+          "rest_midpoint_m": [
+            0.11481653153896332,
+            -0.04401310533285141,
+            0.20284238457679749
+          ]
+        },
+        "wrist": {
+          "ratio": 1.0000793933868408,
+          "frame": 51,
+          "rest_edge_mm": 0.5952510237693787,
+          "rest_midpoint_m": [
+            -0.28235340118408203,
+            -0.046642038971185684,
+            0.5260971784591675
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 388.8456115722656,
+      "min_z_m": -3.047239260922652e-07,
+      "max_sole_z_m": -3.047239260922652e-07
+    },
+    "nod": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        56
+      ],
+      "count": 57,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 1.7926737070083618,
+          "frame": 26,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.7926737070083618,
+          "frame": 26,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "elbow": {
+          "ratio": 1.1761119365692139,
+          "frame": 39,
+          "rest_edge_mm": 23.04286766052246,
+          "rest_midpoint_m": [
+            0.17126810550689697,
+            0.015308869071304798,
+            0.5434646010398865
+          ]
+        },
+        "hip": {
+          "ratio": 1.0000096559524536,
+          "frame": 0,
+          "rest_edge_mm": 2.7062230110168457,
+          "rest_midpoint_m": [
+            -0.11481621861457825,
+            -0.050710659474134445,
+            0.37411028146743774
+          ]
+        },
+        "knee": {
+          "ratio": 1.0000008344650269,
+          "frame": 0,
+          "rest_edge_mm": 28.254091262817383,
+          "rest_midpoint_m": [
+            0.11481653153896332,
+            -0.04401310533285141,
+            0.20284238457679749
+          ]
+        },
+        "wrist": {
+          "ratio": 1.0000697374343872,
+          "frame": 16,
+          "rest_edge_mm": 0.5952510237693787,
+          "rest_midpoint_m": [
+            -0.28235340118408203,
+            -0.046642038971185684,
+            0.5260971784591675
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 371.2944641113281,
+      "min_z_m": -3.047239260922652e-07,
+      "max_sole_z_m": -3.047239260922652e-07
+    },
+    "dance": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        64
+      ],
+      "count": 65,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 1.8710880279541016,
+          "frame": 0,
+          "rest_edge_mm": 5.412474632263184,
+          "rest_midpoint_m": [
+            -0.000956608506385237,
+            0.050710491836071014,
+            0.40568482875823975
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.746301293373108,
+          "frame": 8,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "elbow": {
+          "ratio": 1.6248323917388916,
+          "frame": 8,
+          "rest_edge_mm": 23.04286766052246,
+          "rest_midpoint_m": [
+            0.17126810550689697,
+            0.015308869071304798,
+            0.5434646010398865
+          ]
+        },
+        "hip": {
+          "ratio": 1.1418691873550415,
+          "frame": 0,
+          "rest_edge_mm": 4.278911113739014,
+          "rest_midpoint_m": [
+            -0.002870215568691492,
+            0.004783958196640015,
+            0.3090476393699646
+          ]
+        },
+        "knee": {
+          "ratio": 1.3403499126434326,
+          "frame": 0,
+          "rest_edge_mm": 20.070110321044922,
+          "rest_midpoint_m": [
+            0.0727173313498497,
+            -0.07463057339191437,
+            0.19327431917190552
+          ]
+        },
+        "wrist": {
+          "ratio": 1.0000545978546143,
+          "frame": 25,
+          "rest_edge_mm": 0.5940496325492859,
+          "rest_midpoint_m": [
+            0.2823536992073059,
+            -0.046642400324344635,
+            0.5260974764823914
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 262.7147216796875,
+      "min_z_m": -0.0007122061215341091,
+      "max_sole_z_m": 0.002014349913224578
+    },
+    "joint_bends": {
+      "slot": null,
+      "frames": [
+        0,
+        0
+      ],
+      "count": 1,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 3.853749990463257,
+          "frame": 0,
+          "rest_edge_mm": 5.412474632263184,
+          "rest_midpoint_m": [
+            -0.000956608506385237,
+            0.050710491836071014,
+            0.40568482875823975
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.5924835205078125,
+          "frame": 0,
+          "rest_edge_mm": 21.13648796081543,
+          "rest_midpoint_m": [
+            0.08037173748016357,
+            -0.029660914093255997,
+            0.5788663625717163
+          ]
+        },
+        "elbow": {
+          "ratio": 1.9050424098968506,
+          "frame": 0,
+          "rest_edge_mm": 23.04286766052246,
+          "rest_midpoint_m": [
+            0.17126810550689697,
+            0.015308869071304798,
+            0.5434646010398865
+          ]
+        },
+        "hip": {
+          "ratio": 1.5818699598312378,
+          "frame": 0,
+          "rest_edge_mm": 8.341219902038574,
+          "rest_midpoint_m": [
+            0.011481798253953457,
+            0.02487676590681076,
+            0.3090476393699646
+          ]
+        },
+        "knee": {
+          "ratio": 1.9791897535324097,
+          "frame": 0,
+          "rest_edge_mm": 20.070110321044922,
+          "rest_midpoint_m": [
+            0.0727173313498497,
+            -0.07463057339191437,
+            0.19327431917190552
+          ]
+        },
+        "wrist": {
+          "ratio": 1.0000239610671997,
+          "frame": 0,
+          "rest_edge_mm": 0.5940496325492859,
+          "rest_midpoint_m": [
+            0.2823536992073059,
+            -0.046642400324344635,
+            0.5260974764823914
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 382.4584045410156,
+      "min_z_m": -0.03365510329604149,
+      "max_sole_z_m": -0.03365510329604149
+    }
+  },
+  "images": {
+    "run": {
+      "file": "run_frame_008.png",
+      "sha256": "644d0968c6b157a84828a66cc520ee9bd59a85b7b93b58829862ce7fa535a8ef",
+      "frame": 8,
+      "camera_direction": [
+        0.5595617890357971,
+        -0.8228849768638611,
+        0.09874619543552399
+      ],
+      "ortho_scale_m": 1.0051547288894653
+    },
+    "wave": {
+      "file": "wave_frame_019.png",
+      "sha256": "32c17439363ba8fdbc23a9f22a895f877a02f8990eca07923560fd9e69f576ca",
+      "frame": 19,
+      "camera_direction": [
+        -0.21384434401988983,
+        -0.9720197319984436,
+        0.09720197319984436
+      ],
+      "ortho_scale_m": 1.1397137641906738
+    },
+    "jump": {
+      "file": "jump_frame_009.png",
+      "sha256": "0767d92349ab462693bcf9a77286b024949ea66a09455d7b657070c0051dc63a",
+      "frame": 9,
+      "camera_direction": [
+        0.48042723536491394,
+        -0.8735040426254272,
+        0.07861536741256714
+      ],
+      "ortho_scale_m": 1.102428674697876
+    },
+    "joint_bends": {
+      "file": "joint_bends_frame_000.png",
+      "sha256": "9c902da59793d48027f817333af55f3e03d5bde1e9972d7d0a69ad2847ffe1ce",
+      "frame": 0,
+      "camera_direction": [
+        0.6674728989601135,
+        -0.7416365742683411,
+        0.06674729287624359
+      ],
+      "ortho_scale_m": 1.1598697900772095
+    }
+  },
+  "joint_bend_degrees": {
+    "LeftArm": [
+      "Y",
+      58
+    ],
+    "LeftForeArm": [
+      "Z",
+      -82
+    ],
+    "RightArm": [
+      "Y",
+      -34
+    ],
+    "RightForeArm": [
+      "Z",
+      32
+    ],
+    "LeftUpLeg": [
+      "X",
+      -62
+    ],
+    "LeftLeg": [
+      "X",
+      88
+    ],
+    "RightUpLeg": [
+      "X",
+      12
+    ],
+    "RightLeg": [
+      "X",
+      20
+    ]
+  },
+  "rest_basis_difference_degrees": {
+    "mixamorig:Hips": 0.0,
+    "mixamorig:LeftUpLeg": 0.0,
+    "mixamorig:LeftLeg": 0.0,
+    "mixamorig:LeftFoot": 0.0,
+    "mixamorig:LeftToeBase": 0.0,
+    "mixamorig:LeftToe_End": 0.0,
+    "mixamorig:RightUpLeg": 0.0,
+    "mixamorig:RightLeg": 0.0,
+    "mixamorig:RightFoot": 0.0,
+    "mixamorig:RightToeBase": 0.0,
+    "mixamorig:RightToe_End": 0.0,
+    "mixamorig:Spine": 0.0,
+    "mixamorig:Spine1": 0.0,
+    "mixamorig:Spine2": 0.0,
+    "mixamorig:LeftShoulder": 0.0,
+    "mixamorig:LeftArm": 0.0,
+    "mixamorig:LeftForeArm": 0.0,
+    "mixamorig:LeftHand": 0.0,
+    "mixamorig:LeftHandIndex1": 178.60212880423137,
+    "mixamorig:LeftHandIndex2": 178.0854212801001,
+    "mixamorig:LeftHandIndex3": 177.5022246570287,
+    "mixamorig:LeftHandIndex4": 178.08550453465017,
+    "mixamorig:LeftHandMiddle1": 179.99083886952747,
+    "mixamorig:LeftHandMiddle2": 179.92390360955406,
+    "mixamorig:LeftHandMiddle3": 179.36019732828404,
+    "mixamorig:LeftHandMiddle4": 179.92372969315585,
+    "mixamorig:LeftHandPinky1": 176.8914103204712,
+    "mixamorig:LeftHandPinky2": 176.69587999885567,
+    "mixamorig:LeftHandPinky3": 179.82690869326245,
+    "mixamorig:LeftHandPinky4": 176.6956649719547,
+    "mixamorig:LeftHandRing1": 179.60180173132397,
+    "mixamorig:LeftHandRing2": 179.56905486862252,
+    "mixamorig:LeftHandRing3": 178.9944832523698,
+    "mixamorig:LeftHandRing4": 179.5695494738615,
+    "mixamorig:LeftHandThumb1": 140.8869840636873,
+    "mixamorig:LeftHandThumb2": 150.9289225521838,
+    "mixamorig:LeftHandThumb3": 150.92868617485573,
+    "mixamorig:LeftHandThumb4": 150.92830162042495,
+    "mixamorig:Neck": 0.0,
+    "mixamorig:Head": 0.0,
+    "mixamorig:HeadTop_End": 0.0,
+    "mixamorig:RightShoulder": 0.0,
+    "mixamorig:RightArm": 0.0,
+    "mixamorig:RightForeArm": 0.0,
+    "mixamorig:RightHand": 0.0,
+    "mixamorig:RightHandIndex1": 34.440799986981986,
+    "mixamorig:RightHandIndex2": 57.75528842509415,
+    "mixamorig:RightHandIndex3": 55.45726451137282,
+    "mixamorig:RightHandIndex4": 57.754043836481586,
+    "mixamorig:RightHandMiddle1": 179.98869372821463,
+    "mixamorig:RightHandMiddle2": 179.9355699283702,
+    "mixamorig:RightHandMiddle3": 179.45633480609993,
+    "mixamorig:RightHandMiddle4": 179.93578690697248,
+    "mixamorig:RightHandPinky1": 40.12070604449115,
+    "mixamorig:RightHandPinky2": 43.458407090876,
+    "mixamorig:RightHandPinky3": 58.876177273736424,
+    "mixamorig:RightHandPinky4": 43.45755842959848,
+    "mixamorig:RightHandRing1": 38.177429478120374,
+    "mixamorig:RightHandRing2": 90.31693156615893,
+    "mixamorig:RightHandRing3": 93.6277184788405,
+    "mixamorig:RightHandRing4": 90.31634396744245,
+    "mixamorig:RightHandThumb1": 60.25494796173414,
+    "mixamorig:RightHandThumb2": 72.46883342288734,
+    "mixamorig:RightHandThumb3": 72.46861387307221,
+    "mixamorig:RightHandThumb4": 72.46898364085116
+  },
+  "raw_direct_clips": {
+    "walk": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        1,
+        57
+      ],
+      "count": 57,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 2.362199306488037,
+          "frame": 5,
+          "rest_edge_mm": 5.755556583404541,
+          "rest_midpoint_m": [
+            -0.3442845940589905,
+            -0.05796654522418976,
+            0.548252522945404
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.8234894275665283,
+          "frame": 1,
+          "rest_edge_mm": 13.531258583068848,
+          "rest_midpoint_m": [
+            -0.06506244838237762,
+            -0.007654473185539246,
+            0.5779095888137817
+          ]
+        },
+        "elbow": {
+          "ratio": 1.2734593152999878,
+          "frame": 35,
+          "rest_edge_mm": 23.04286766052246,
+          "rest_midpoint_m": [
+            0.17126810550689697,
+            0.015308869071304798,
+            0.5434646010398865
+          ]
+        },
+        "hip": {
+          "ratio": 1.6986571550369263,
+          "frame": 22,
+          "rest_edge_mm": 7.160101413726807,
+          "rest_midpoint_m": [
+            -0.022963136434555054,
+            -0.08993935585021973,
+            0.3100043535232544
+          ]
+        },
+        "knee": {
+          "ratio": 1.8370211124420166,
+          "frame": 28,
+          "rest_edge_mm": 20.070093154907227,
+          "rest_midpoint_m": [
+            -0.04975368082523346,
+            -0.07080334424972534,
+            0.19136083126068115
+          ]
+        },
+        "wrist": {
+          "ratio": 2.362199306488037,
+          "frame": 5,
+          "rest_edge_mm": 5.755556583404541,
+          "rest_midpoint_m": [
+            -0.3442845940589905,
+            -0.05796654522418976,
+            0.548252522945404
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 1188.138427734375,
+      "min_z_m": -0.03625747561454773,
+      "max_sole_z_m": -0.0006214069435372949
+    },
+    "run": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        30
+      ],
+      "count": 31,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 5.075255393981934,
+          "frame": 3,
+          "rest_edge_mm": 5.412474632263184,
+          "rest_midpoint_m": [
+            -0.000956608506385237,
+            0.050710491836071014,
+            0.40568482875823975
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.9084774255752563,
+          "frame": 3,
+          "rest_edge_mm": 13.531258583068848,
+          "rest_midpoint_m": [
+            -0.06506244838237762,
+            -0.007654473185539246,
+            0.5779095888137817
+          ]
+        },
+        "elbow": {
+          "ratio": 1.9772001504898071,
+          "frame": 4,
+          "rest_edge_mm": 23.042896270751953,
+          "rest_midpoint_m": [
+            -0.17126768827438354,
+            0.015308801084756851,
+            0.5434646606445312
+          ]
+        },
+        "hip": {
+          "ratio": 1.7587571144104004,
+          "frame": 12,
+          "rest_edge_mm": 6.051362991333008,
+          "rest_midpoint_m": [
+            -0.04975365847349167,
+            -0.10142101347446442,
+            0.3387085199356079
+          ]
+        },
+        "knee": {
+          "ratio": 2.0578367710113525,
+          "frame": 9,
+          "rest_edge_mm": 20.070098876953125,
+          "rest_midpoint_m": [
+            -0.07271695137023926,
+            -0.07463060319423676,
+            0.19327443838119507
+          ]
+        },
+        "wrist": {
+          "ratio": 2.28239369392395,
+          "frame": 11,
+          "rest_edge_mm": 5.755556583404541,
+          "rest_midpoint_m": [
+            -0.3442845940589905,
+            -0.05796654522418976,
+            0.548252522945404
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 555.4791259765625,
+      "min_z_m": -0.021117547526955605,
+      "max_sole_z_m": 0.0171826109290123
+    },
+    "wave": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        64
+      ],
+      "count": 65,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 1.7991913557052612,
+          "frame": 19,
+          "rest_edge_mm": 22.963254928588867,
+          "rest_midpoint_m": [
+            -0.17126770317554474,
+            -0.00669770035892725,
+            0.5128469467163086
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.7898213863372803,
+          "frame": 0,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "elbow": {
+          "ratio": 1.7991913557052612,
+          "frame": 19,
+          "rest_edge_mm": 22.963254928588867,
+          "rest_midpoint_m": [
+            -0.17126770317554474,
+            -0.00669770035892725,
+            0.5128469467163086
+          ]
+        },
+        "hip": {
+          "ratio": 1.0126279592514038,
+          "frame": 19,
+          "rest_edge_mm": 8.11877155303955,
+          "rest_midpoint_m": [
+            -0.11290256679058075,
+            -0.03444503992795944,
+            0.39228957891464233
+          ]
+        },
+        "knee": {
+          "ratio": 1.0000007152557373,
+          "frame": 0,
+          "rest_edge_mm": 22.722763061523438,
+          "rest_midpoint_m": [
+            0.08419893682003021,
+            -0.06793300807476044,
+            0.18561989068984985
+          ]
+        },
+        "wrist": {
+          "ratio": 1.189245581626892,
+          "frame": 40,
+          "rest_edge_mm": 11.732929229736328,
+          "rest_midpoint_m": [
+            -0.27661263942718506,
+            -0.026417503133416176,
+            0.5740823149681091
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 381.36181640625,
+      "min_z_m": -3.047239260922652e-07,
+      "max_sole_z_m": -3.047239260922652e-07,
+      "frame_19_right_wrist_above_elbow_mm": 99.50494766235352
+    },
+    "jump": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        50
+      ],
+      "count": 51,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 2.888512372970581,
+          "frame": 9,
+          "rest_edge_mm": 5.412474632263184,
+          "rest_midpoint_m": [
+            -0.000956608506385237,
+            0.050710491836071014,
+            0.40568482875823975
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.8741838932037354,
+          "frame": 9,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "elbow": {
+          "ratio": 1.2597988843917847,
+          "frame": 11,
+          "rest_edge_mm": 23.04286766052246,
+          "rest_midpoint_m": [
+            0.17126810550689697,
+            0.015308869071304798,
+            0.5434646010398865
+          ]
+        },
+        "hip": {
+          "ratio": 1.1608694791793823,
+          "frame": 9,
+          "rest_edge_mm": 16.461490631103516,
+          "rest_midpoint_m": [
+            0.074630968272686,
+            -0.09376665204763412,
+            0.3674126863479614
+          ]
+        },
+        "knee": {
+          "ratio": 1.703032374382019,
+          "frame": 9,
+          "rest_edge_mm": 20.070110321044922,
+          "rest_midpoint_m": [
+            0.0727173313498497,
+            -0.07463057339191437,
+            0.19327431917190552
+          ]
+        },
+        "wrist": {
+          "ratio": 1.0000723600387573,
+          "frame": 27,
+          "rest_edge_mm": 0.5940496325492859,
+          "rest_midpoint_m": [
+            0.2823536992073059,
+            -0.046642400324344635,
+            0.5260974764823914
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 428.0480041503906,
+      "min_z_m": -0.021097457036376,
+      "max_sole_z_m": 0.21078859269618988
+    },
+    "idle": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        88
+      ],
+      "count": 89,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 1.8007030487060547,
+          "frame": 66,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.8007030487060547,
+          "frame": 66,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "elbow": {
+          "ratio": 1.204355239868164,
+          "frame": 22,
+          "rest_edge_mm": 23.04286766052246,
+          "rest_midpoint_m": [
+            0.17126810550689697,
+            0.015308869071304798,
+            0.5434646010398865
+          ]
+        },
+        "hip": {
+          "ratio": 1.0211899280548096,
+          "frame": 22,
+          "rest_edge_mm": 9.757522583007812,
+          "rest_midpoint_m": [
+            -0.09568018466234207,
+            -0.08132822811603546,
+            0.37602391839027405
+          ]
+        },
+        "knee": {
+          "ratio": 1.0000007152557373,
+          "frame": 0,
+          "rest_edge_mm": 22.722763061523438,
+          "rest_midpoint_m": [
+            0.08419893682003021,
+            -0.06793300807476044,
+            0.18561989068984985
+          ]
+        },
+        "wrist": {
+          "ratio": 1.000124454498291,
+          "frame": 46,
+          "rest_edge_mm": 0.5952510237693787,
+          "rest_midpoint_m": [
+            -0.28235340118408203,
+            -0.046642038971185684,
+            0.5260971784591675
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 388.8455810546875,
+      "min_z_m": -3.047239260922652e-07,
+      "max_sole_z_m": -3.047239260922652e-07
+    },
+    "nod": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        56
+      ],
+      "count": 57,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 1.79267418384552,
+          "frame": 26,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.79267418384552,
+          "frame": 26,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "elbow": {
+          "ratio": 1.176112174987793,
+          "frame": 36,
+          "rest_edge_mm": 23.04286766052246,
+          "rest_midpoint_m": [
+            0.17126810550689697,
+            0.015308869071304798,
+            0.5434646010398865
+          ]
+        },
+        "hip": {
+          "ratio": 1.0000096559524536,
+          "frame": 0,
+          "rest_edge_mm": 2.7062230110168457,
+          "rest_midpoint_m": [
+            -0.11481621861457825,
+            -0.050710659474134445,
+            0.37411028146743774
+          ]
+        },
+        "knee": {
+          "ratio": 1.0000007152557373,
+          "frame": 0,
+          "rest_edge_mm": 22.722763061523438,
+          "rest_midpoint_m": [
+            0.08419893682003021,
+            -0.06793300807476044,
+            0.18561989068984985
+          ]
+        },
+        "wrist": {
+          "ratio": 1.000059962272644,
+          "frame": 27,
+          "rest_edge_mm": 0.5952510237693787,
+          "rest_midpoint_m": [
+            -0.28235340118408203,
+            -0.046642038971185684,
+            0.5260971784591675
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 371.2943420410156,
+      "min_z_m": -3.047239260922652e-07,
+      "max_sole_z_m": -3.047239260922652e-07
+    },
+    "dance": {
+      "slot": "Armature.001",
+      "quaternion_fcurves": 260,
+      "frames": [
+        0,
+        64
+      ],
+      "count": 65,
+      "max_seam_gap_mm": 0,
+      "max_seam_pairs_over_0p1mm": 0,
+      "max_seam_pairs_over_0p5mm": 0,
+      "max_edge_stretch_ratio": {
+        "all": {
+          "ratio": 1.8710887432098389,
+          "frame": 0,
+          "rest_edge_mm": 5.412474632263184,
+          "rest_midpoint_m": [
+            -0.000956608506385237,
+            0.050710491836071014,
+            0.40568482875823975
+          ]
+        },
+        "shoulder": {
+          "ratio": 1.7463027238845825,
+          "frame": 8,
+          "rest_edge_mm": 11.48163890838623,
+          "rest_midpoint_m": [
+            -0.06410563737154007,
+            -0.029660958796739578,
+            0.5798231363296509
+          ]
+        },
+        "elbow": {
+          "ratio": 1.6248323917388916,
+          "frame": 8,
+          "rest_edge_mm": 23.04286766052246,
+          "rest_midpoint_m": [
+            0.17126810550689697,
+            0.015308869071304798,
+            0.5434646010398865
+          ]
+        },
+        "hip": {
+          "ratio": 1.1418691873550415,
+          "frame": 0,
+          "rest_edge_mm": 4.278911113739014,
+          "rest_midpoint_m": [
+            -0.002870215568691492,
+            0.004783958196640015,
+            0.3090476393699646
+          ]
+        },
+        "knee": {
+          "ratio": 1.340349793434143,
+          "frame": 0,
+          "rest_edge_mm": 20.070110321044922,
+          "rest_midpoint_m": [
+            0.0727173313498497,
+            -0.07463057339191437,
+            0.19327431917190552
+          ]
+        },
+        "wrist": {
+          "ratio": 1.0000739097595215,
+          "frame": 54,
+          "rest_edge_mm": 0.5940496325492859,
+          "rest_midpoint_m": [
+            0.2823536992073059,
+            -0.046642400324344635,
+            0.5260974764823914
+          ]
+        }
+      },
+      "max_vertices_displacement_mm": 262.7147216796875,
+      "min_z_m": -0.0007121677044779062,
+      "max_sole_z_m": 0.0020143508445471525
+    }
+  },
+  "render_playback_mode": "direct",
+  "all_rotation_modes_quaternion": true,
+  "render_settings": {
+    "engine": "Cycles",
+    "device": "CPU",
+    "samples": 14,
+    "denoising": true,
+    "size_px": [
+      640,
+      704
+    ],
+    "view_transform": "AgX",
+    "materials": "Original body texture and material, default Blender glTF reimport.",
+    "projection": "orthographic"
+  },
+  "independent_visual_review": {
+    "reviewer": "motion_review, separate from body and gesture authors",
+    "body_sha256": "09d5e03d5da489e350432bb521e59255393a167a2847ae602b7d92a6a102e387",
+    "joint_separation": "PASS",
+    "run_frame_008.png": "Shoulders, elbows and the supporting hip and knee stay attached. The front hand is conspicuously splayed under the source Run finger channels. A small abdomen crease and a light-to-dark transition at the front wrist remain.",
+    "wave_frame_019.png": "The right wrist rises above the elbow as expected. The shoulder and elbow silhouettes stay continuous. A narrow horizontal shading transition is visible on the raised wrist.",
+    "jump_frame_009.png": "Both crouched knees and hip/shorts boundaries remain closed. A shallow angular depression is visible at the front of the knee on camera left.",
+    "joint_bends_frame_000.png": "Skin remains continuous at the shoulder, elbow, lifted 62-degree hip and 88-degree knee. The raised knee has a small indentation and the distant wrist shows a cuff-like change in tone.",
+    "scope": "Four freshly generated images inspected; each is tied to the promoted export by its SHA-256 in this record. All integer frames of the seven source clips were independently scanned for seam opening."
+  },
+  "source_strain_comparison": {
+    "studio_input_sha256": "6bdceb1bf381678860f1f55dd0c23beafc4aff02cb0e83a6398fea62a56f80e9",
+    "mode": "Original Studio body, every integer source frame transferred through its own bind axes, preserving source joint locations.",
+    "maxima": {
+      "walk": {
+        "global": {
+          "ratio": 2.6236653327941895,
+          "frame": 53,
+          "rest_edge_mm": 11.48170280456543,
+          "rest_midpoint_m": [
+            -0.32626989483833313,
+            -0.050710681825876236,
+            0.5166740417480469
+          ]
+        },
+        "wrist_strip": {
+          "ratio": 2.6236653327941895,
+          "frame": 53,
+          "rest_edge_mm": 11.48170280456543,
+          "rest_midpoint_m": [
+            -0.32626989483833313,
+            -0.050710681825876236,
+            0.5166740417480469
+          ]
+        }
+      },
+      "run": {
+        "global": {
+          "ratio": 5.075264930725098,
+          "frame": 3,
+          "rest_edge_mm": 5.412471771240234,
+          "rest_midpoint_m": [
+            -0.0009566113585606217,
+            0.05071049556136131,
+            0.40568482875823975
+          ]
+        },
+        "wrist_strip": {
+          "ratio": 2.728649616241455,
+          "frame": 4,
+          "rest_edge_mm": 11.48170280456543,
+          "rest_midpoint_m": [
+            -0.32626989483833313,
+            -0.050710681825876236,
+            0.5166740417480469
+          ]
+        }
+      },
+      "wave": {
+        "global": {
+          "ratio": 1.7991870641708374,
+          "frame": 19,
+          "rest_edge_mm": 22.963285446166992,
+          "rest_midpoint_m": [
+            -0.17126767337322235,
+            -0.006697683595120907,
+            0.5128468871116638
+          ]
+        },
+        "wrist_strip": {
+          "ratio": 1.1879750490188599,
+          "frame": 40,
+          "rest_edge_mm": 19.231515884399414,
+          "rest_midpoint_m": [
+            -0.28034329414367676,
+            -0.026790576055645943,
+            0.5740822553634644
+          ]
+        }
+      },
+      "jump": {
+        "global": {
+          "ratio": 2.8885157108306885,
+          "frame": 9,
+          "rest_edge_mm": 5.412471771240234,
+          "rest_midpoint_m": [
+            -0.0009566113585606217,
+            0.05071049556136131,
+            0.40568482875823975
+          ]
+        },
+        "wrist_strip": {
+          "ratio": 1.000020980834961,
+          "frame": 27,
+          "rest_edge_mm": 3.3145174980163574,
+          "rest_midpoint_m": [
+            -0.33679479360580444,
+            -0.022963374853134155,
+            0.5138037204742432
+          ]
+        }
+      },
+      "idle": {
+        "global": {
+          "ratio": 1.8006986379623413,
+          "frame": 66,
+          "rest_edge_mm": 11.481650352478027,
+          "rest_midpoint_m": [
+            -0.06410562992095947,
+            -0.029660962522029877,
+            0.5798230767250061
+          ]
+        },
+        "wrist_strip": {
+          "ratio": 1.000022292137146,
+          "frame": 48,
+          "rest_edge_mm": 3.3145174980163574,
+          "rest_midpoint_m": [
+            -0.33679479360580444,
+            -0.022963374853134155,
+            0.5138037204742432
+          ]
+        }
+      },
+      "nod": {
+        "global": {
+          "ratio": 1.7926713228225708,
+          "frame": 26,
+          "rest_edge_mm": 11.481650352478027,
+          "rest_midpoint_m": [
+            -0.06410562992095947,
+            -0.029660962522029877,
+            0.5798230767250061
+          ]
+        },
+        "wrist_strip": {
+          "ratio": 1.0000163316726685,
+          "frame": 41,
+          "rest_edge_mm": 3.314484119415283,
+          "rest_midpoint_m": [
+            0.3367950916290283,
+            -0.0229632705450058,
+            0.5138036012649536
+          ]
+        }
+      },
+      "dance": {
+        "global": {
+          "ratio": 1.8710941076278687,
+          "frame": 0,
+          "rest_edge_mm": 5.412471771240234,
+          "rest_midpoint_m": [
+            -0.0009566113585606217,
+            0.05071049556136131,
+            0.40568482875823975
+          ]
+        },
+        "wrist_strip": {
+          "ratio": 1.0000189542770386,
+          "frame": 35,
+          "rest_edge_mm": 9.757555961608887,
+          "rest_midpoint_m": [
+            0.34444954991340637,
+            -0.03635852038860321,
+            0.49945151805877686
+          ]
+        }
+      },
+      "joint_bends": {
+        "global": {
+          "ratio": 3.853752851486206,
+          "frame": 0,
+          "rest_edge_mm": 5.412471771240234,
+          "rest_midpoint_m": [
+            -0.0009566113585606217,
+            0.05071049556136131,
+            0.40568482875823975
+          ]
+        },
+        "wrist_strip": {
+          "ratio": 1.0000156164169312,
+          "frame": 0,
+          "rest_edge_mm": 4.6873369216918945,
+          "rest_midpoint_m": [
+            -0.33009713888168335,
+            -0.045926664024591446,
+            0.5195444822311401
+          ]
+        }
+      }
+    },
+    "diagnosis": "The peak global run strain on the lower back matches the same source edge and frame to 0.00001x. In the final asset the highest wrist-strip walk/run strain is at the right index socket (x=-344.285 mm)."
+  }
+}

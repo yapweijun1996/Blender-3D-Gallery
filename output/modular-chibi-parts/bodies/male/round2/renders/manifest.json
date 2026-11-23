@@ -1,0 +1,105 @@
+{
+  "renderer": "Cycles CPU",
+  "clip": "idle",
+  "blender_frame": 24,
+  "motion_sha256": "cea31d64c313b409f3d7380cab89d0d56635f75c59cb62c32cbb66b0bb1ce2fe",
+  "modules": {
+    "tshirt": {
+      "sha256": "f391118a8cfa9f7c1c0d1ed463330c3be6e1e1c3d45a83fab3036dc99b125645",
+      "views": [
+        "renders/tshirt/front.png",
+        "renders/tshirt/left-three-quarter.png",
+        "renders/tshirt/left.png",
+        "renders/tshirt/back.png",
+        "renders/tshirt/right.png",
+        "renders/tshirt/right-three-quarter.png"
+      ],
+      "sheet": "renders/tshirt/six-views.png"
+    },
+    "dress": {
+      "sha256": "58f535cdaef3d90b829f1bb40f3f79d478493c6df540c9d1ef3aa12fcbdf3f13",
+      "views": [
+        "renders/dress/front.png",
+        "renders/dress/left-three-quarter.png",
+        "renders/dress/left.png",
+        "renders/dress/back.png",
+        "renders/dress/right.png",
+        "renders/dress/right-three-quarter.png"
+      ],
+      "sheet": "renders/dress/six-views.png"
+    },
+    "sneakers": {
+      "sha256": "aae73ece7a72dbe30fd564efc6b22ea2c73f3184923cfe728c0007f1546a9244",
+      "views": [
+        "renders/sneakers/front.png",
+        "renders/sneakers/left-three-quarter.png",
+        "renders/sneakers/left.png",
+        "renders/sneakers/back.png",
+        "renders/sneakers/right.png",
+        "renders/sneakers/right-three-quarter.png"
+      ],
+      "sheet": "renders/sneakers/six-views.png"
+    },
+    "hair-bob": {
+      "sha256": "87b48c94f31e3a4306672b5a5761d262f8f19b1f8fb126300e6a3c255a3f4ef8",
+      "views": [
+        "renders/hair-bob/front.png",
+        "renders/hair-bob/left-three-quarter.png",
+        "renders/hair-bob/left.png",
+        "renders/hair-bob/back.png",
+        "renders/hair-bob/right.png",
+        "renders/hair-bob/right-three-quarter.png"
+      ],
+      "sheet": "renders/hair-bob/six-views.png"
+    },
+    "hair-sidepart": {
+      "sha256": "a659971572bbc36e4e7786cd3fc28f651030f2f944778dd5efb90b3f72eaf83c",
+      "views": [
+        "renders/hair-sidepart/front.png",
+        "renders/hair-sidepart/left-three-quarter.png",
+        "renders/hair-sidepart/left.png",
+        "renders/hair-sidepart/back.png",
+        "renders/hair-sidepart/right.png",
+        "renders/hair-sidepart/right-three-quarter.png"
+      ],
+      "sheet": "renders/hair-sidepart/six-views.png"
+    },
+    "hair-spiky": {
+      "sha256": "3a7215ef4b66055329026654dab410ef3882bed24c6ff968a19adb784a197c44",
+      "views": [
+        "renders/hair-spiky/front.png",
+        "renders/hair-spiky/left-three-quarter.png",
+        "renders/hair-spiky/left.png",
+        "renders/hair-spiky/back.png",
+        "renders/hair-spiky/right.png",
+        "renders/hair-spiky/right-three-quarter.png"
+      ],
+      "sheet": "renders/hair-spiky/six-views.png"
+    },
+    "jeans": {
+      "sha256": "b12ab55becd417370074a7179349caa2aec7318a92aef91e0c856ffeee2041d7",
+      "views": [
+        "renders/jeans/front.png",
+        "renders/jeans/left-three-quarter.png",
+        "renders/jeans/left.png",
+        "renders/jeans/back.png",
+        "renders/jeans/right.png",
+        "renders/jeans/right-three-quarter.png"
+      ],
+      "sheet": "renders/jeans/six-views.png"
+    }
+  },
+  "outfit_pairs": {
+    "idle_f24": {
+      "tshirt/jeans": 77,
+      "jeans/sneakers": 1383,
+      "dress/sneakers": 0
+    },
+    "rest": {
+      "tshirt/jeans": 80,
+      "jeans/sneakers": 1383,
+      "dress/sneakers": 0
+    }
+  },
+  "outfits": "renders/outfits.png"
+}

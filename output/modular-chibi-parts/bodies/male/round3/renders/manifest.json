@@ -1,0 +1,61 @@
+{
+  "renderer": "Cycles CPU",
+  "resolution_per_view": [
+    360,
+    420
+  ],
+  "clip": "idle",
+  "frame": 24,
+  "motion_sha256": "cea31d64c313b409f3d7380cab89d0d56635f75c59cb62c32cbb66b0bb1ce2fe",
+  "body_master_sha256": "6a08340476bd793435f4179d5d13a44d2a644177c2da65cbf58a396bba4a16a5",
+  "assets": {
+    "hair-spiky": "3a7215ef4b66055329026654dab410ef3882bed24c6ff968a19adb784a197c44",
+    "tshirt": "f391118a8cfa9f7c1c0d1ed463330c3be6e1e1c3d45a83fab3036dc99b125645",
+    "jeans": "bf9321664c0d28b7ed5d02861d42d4ecfc2aa7afd00c13d4bf98df4337e6e958",
+    "sneakers": "aae73ece7a72dbe30fd564efc6b22ea2c73f3184923cfe728c0007f1546a9244",
+    "hair-bob": "87b48c94f31e3a4306672b5a5761d262f8f19b1f8fb126300e6a3c255a3f4ef8",
+    "dress": "40c91df243b6ffc1deba8a9e9c742f4d5bed40d731af0405f13db45ed6aadfaa"
+  },
+  "views": {
+    "dress": {
+      "sheet": "renders/dress/six-views.png",
+      "sheet_sha256": "4e49993b392cc68ed8404f8b82ba29b3105713ace3c68b2c67f93e92c9364ada",
+      "panels": {
+        "renders/dress/front.png": "be8b6cb144ef2e519c1142b708671f0719d51fed1851c9faa9241b33a602e346",
+        "renders/dress/left-three-quarter.png": "2561e2017707cc1f9c67debf97e2318a90ff1bf3bfa97926706e20d6e0b91363",
+        "renders/dress/left.png": "97cad884eb49cd2e9669f94119456cf40c968a2c93c7e9dea5bd0b484192d0bd",
+        "renders/dress/back.png": "82a0c4b955b5fbc21aadc6fb86f3346fc45695703ad6573a8b8ff4bf67f4427b",
+        "renders/dress/right.png": "256e97eec2123e08f3daed333637c722714d00ea91290f04c927272eaef59401",
+        "renders/dress/right-three-quarter.png": "19d1e35fe2fe25d8689b85649fffb23ea10d11e91e943e2a68ebd9cae18dd7ed"
+      }
+    },
+    "jeans": {
+      "sheet": "renders/jeans/six-views.png",
+      "sheet_sha256": "b74f4e360792679a61654226de061d1e414fa2468d56039f3f3b8e4a69daee10",
+      "panels": {
+        "renders/jeans/front.png": "b5666b22ea67939181464ed2b51aecdaf4096eb4b8b732a7be3a9e39650e2300",
+        "renders/jeans/left-three-quarter.png": "528b9657a407cc8bfc2935768f67b9280854d1737f76801c9b746e8934269e5f",
+        "renders/jeans/left.png": "1a7b39cc907ccbd10f1fc4814748300e78d6f63adc024bc35bec3f09267d5464",
+        "renders/jeans/back.png": "f804962833ed0c5f85bef1ce997293f52a9ed0bfe3f8c111068a60ada7df6067",
+        "renders/jeans/right.png": "8e93dbdceb2db47fbe303dc2a15d7802d8a0f1de0c80cbab45a877783b5d50cf",
+        "renders/jeans/right-three-quarter.png": "bef0e8286f64a0b764aae73bcc446aa82501a9d6d3b7b947a137ccc3d17bc6c3"
+      }
+    }
+  },
+  "outfit_layers": {
+    "rest": {
+      "tshirt/jeans": 0,
+      "jeans/sneakers": 0,
+      "dress/sneakers": 0
+    },
+    "idle_f24": {
+      "tshirt/jeans": 0,
+      "jeans/sneakers": 0,
+      "dress/sneakers": 0
+    }
+  },
+  "outfits": {
+    "sheet": "renders/outfits.png",
+    "sha256": "4316c0e5c181548a2f77e9712a613353d012df6489392e90cd03a7644541eb11"
+  }
+}

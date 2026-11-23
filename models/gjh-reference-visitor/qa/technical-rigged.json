@@ -1,0 +1,289 @@
+{
+  "kind": "rigged_glb_inspection",
+  "path": "/Users/yapweijun/Documents/GitHub/Blender-3D-Gallery/models/gjh-reference-visitor/exports/gjh-reference-visitor-rigged.glb",
+  "sha256": "463c8385e589319f5b47c4f73ce324e0f634ef278851c5cff773578b6ef5602d",
+  "bytes": 1957708,
+  "header": {
+    "magic": "glTF",
+    "version": 2,
+    "declaredLength": 1957708,
+    "lengthMatches": true,
+    "asset": {
+      "generator": "Khronos glTF Blender I/O v5.1.20",
+      "version": "2.0"
+    }
+  },
+  "scene": {
+    "meshNodes": 27,
+    "primitives": 35,
+    "triangles": 56736,
+    "positionVerticesSummed": 30048,
+    "meshes": 27,
+    "materials": [
+      "Skin face.001",
+      "Hair.001",
+      "Hoodie.001",
+      "Hoodie rib.001",
+      "Hoodie seam.001",
+      "Tee.001",
+      "Drawstring.001",
+      "Skin.001",
+      "Sock.001",
+      "Shoe rubber.001",
+      "Shoe.001",
+      "GJH Hoodie Ivory",
+      "GJH Purple",
+      "Backpack Charcoal",
+      "Backpack Pocket",
+      "Logo White",
+      "Cargo Pocket"
+    ],
+    "materialCount": 17,
+    "skins": 1,
+    "animations": [
+      "idle",
+      "walk",
+      "run",
+      "sit",
+      "stand_up"
+    ],
+    "morphTargetPrimitives": 0,
+    "unit": "metres",
+    "heightAxis": "+Y",
+    "skinsDetail": [
+      {
+        "name": "Visitor Rig.001",
+        "jointCount": 9,
+        "joints": [
+          "Root",
+          "Spine",
+          "Head",
+          "UpperArm.L",
+          "UpperArm.R",
+          "UpperLeg.L",
+          "LowerLeg.L",
+          "UpperLeg.R",
+          "LowerLeg.R"
+        ],
+        "inverseBindMatrices": 6
+      }
+    ],
+    "animationsDetail": [
+      {
+        "name": "idle",
+        "channels": 27,
+        "targets": [
+          "translation",
+          "rotation",
+          "scale"
+        ]
+      },
+      {
+        "name": "walk",
+        "channels": 27,
+        "targets": [
+          "translation",
+          "rotation",
+          "scale"
+        ]
+      },
+      {
+        "name": "run",
+        "channels": 27,
+        "targets": [
+          "translation",
+          "rotation",
+          "scale"
+        ]
+      },
+      {
+        "name": "sit",
+        "channels": 27,
+        "targets": [
+          "translation",
+          "rotation",
+          "scale"
+        ]
+      },
+      {
+        "name": "stand_up",
+        "channels": 27,
+        "targets": [
+          "translation",
+          "rotation",
+          "scale"
+        ]
+      }
+    ],
+    "naiveNodeTransformedBoundsGLTF": {
+      "min": [
+        -0.3283797800540924,
+        0,
+        -0.33307817578315735
+      ],
+      "max": [
+        0.3273448050022125,
+        1.2950655221939087,
+        0.24941562116146088
+      ],
+      "size": [
+        0.6557245850563049,
+        1.2950655221939087,
+        0.5824937969446182
+      ]
+    },
+    "skinnedBoundsGLTF": {
+      "min": [
+        -0.3283797800540924,
+        -2.918540964458316e-09,
+        -0.33307817578315735
+      ],
+      "max": [
+        0.3273448050022125,
+        1.2950655221939087,
+        0.24941562116146088
+      ],
+      "size": [
+        0.6557245850563049,
+        1.2950655251124497,
+        0.5824937969446182
+      ],
+      "method": "Linear blend skinning at default node transforms: weighted joint world matrix * inverse bind matrix * POSITION; mesh node transforms ignored as specified by glTF.",
+      "weightSumMaxError": 2.9802322387695312e-08,
+      "weightSumFailures": 0
+    }
+  },
+  "referenceTargets": {
+    "height_m": 1.3,
+    "heightDeviation_m": -0.0049344748875503885,
+    "triangleTarget": 2300,
+    "triangleRange": [
+      1500,
+      3000
+    ],
+    "trianglesWithinRange": false,
+    "materialRange": [
+      4,
+      6
+    ],
+    "materialsWithinRange": false
+  },
+  "validator": {
+    "status": "RUN",
+    "version": "2.0.0-dev.3.10",
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 17,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/9/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/10/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/11/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/12/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/13/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/14/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/15/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/16/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/17/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/18/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/19/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/20/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/21/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/22/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/23/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/24/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/25/primitives/0/attributes/TEXCOORD_0"
+      }
+    ],
+    "truncated": false
+  },
+  "limitations": [
+    "Bounds use default skin joint transforms and inverse bind matrices; animation deformation was not evaluated.",
+    "Triangle count includes scene mesh instances; appearance, rig, animation, expression and runtime/device playback were not evaluated.",
+    "Reference budget is an illustrated target; reported separately from structural validity."
+  ]
+}

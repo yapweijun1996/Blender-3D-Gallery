@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "slots": [
+    "hair",
+    "top",
+    "bottom",
+    "shoes",
+    "hat"
+  ],
+  "defaults": {
+    "hair": "hair-bob",
+    "top": "top-tshirt",
+    "shoes": "shoes-sneakers"
+  },
+  "modules": [
+    {
+      "id": "hair-bob",
+      "slot": "hair",
+      "label": {
+        "en": "Bob haircut",
+        "zh-Hans": "\u6ce2\u6ce2\u5934",
+        "ms": "Rambut bob"
+      },
+      "file": "modules/hair-bob.glb",
+      "status": "verified",
+      "source": "hair-fit-astra/round2/hair_bob_v2.glb",
+      "bytes": 227404,
+      "sha256": "32cadfa94be111706295032933e823529364047484f2cd78b71c7919abfd811d"
+    },
+    {
+      "id": "top-tshirt",
+      "slot": "top",
+      "label": {
+        "en": "T-shirt",
+        "zh-Hans": "T \u6064",
+        "ms": "Baju-T"
+      },
+      "file": "modules/top-tshirt.glb",
+      "hides": ["torso","upper_arm_L","upper_arm_R"],
+      "status": "pending",
+      "source": "sol-tshirt/v3/top_tshirt_v3.glb",
+      "bytes": 132516,
+      "sha256": "803060a461f42c27c1255ed9deeb828d3a1d4e62ef72817dddbdbb37dd744ba3"
+    },
+    {
+      "id": "top-hoodie",
+      "slot": "top",
+      "label": {
+        "en": "Hoodie",
+        "zh-Hans": "\u8fde\u5e3d\u886b",
+        "ms": "Baju hud"
+      },
+      "file": "modules/top-hoodie.glb",
+      "hides": ["torso","upper_arm_L","upper_arm_R","forearm_L","forearm_R"],
+      "status": "pending",
+      "source": "hoodie-fit-sol/round2/top_hoodie_v2.glb",
+      "bytes": 1236560,
+      "sha256": "b7a1de41be3037702509ba540ac200f75647132e70f5f5b3e4ec3920be8640b5"
+    },
+    {
+      "id": "shoes-sneakers",
+      "slot": "shoes",
+      "label": {
+        "en": "Sneakers",
+        "zh-Hans": "\u8fd0\u52a8\u978b",
+        "ms": "Kasut sukan"
+      },
+      "file": "modules/shoes-sneakers.glb",
+      "hides": ["foot_L","foot_R"],
+      "status": "pending",
+      "source": "shoes-sol/shoes_sneaker_v1.glb",
+      "bytes": 131708,
+      "sha256": "feb5e9b43d3780bee40e183c516ed4ed527c2000686653e92c462efab860132b"
+    }
+  ]
+}

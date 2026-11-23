@@ -1,0 +1,206 @@
+{
+  "geometry": {
+    "vertices": 5160,
+    "triangles": 8006,
+    "nonhand_n": 2790,
+    "nonhand_max_delta": 0.00015103326435007933,
+    "outside_wrist_max_delta": 0.0,
+    "nonhand_weight_changes": 26
+  },
+  "rig": {
+    "bones": 65,
+    "changed_parents": [],
+    "nonhand_matrix_delta": 9.834766387939453e-07,
+    "nonhand_tail_delta": 0.0,
+    "groups": 65
+  },
+  "weights": {
+    "bleed_joint_threshold_source": 70,
+    "bleed_chain_total_source": 78,
+    "bleed_above_0.2": 0,
+    "mixed_chains_any_weight": 0,
+    "unweighted": 0,
+    "above_four": 0,
+    "max_influences": 4,
+    "max_sum_error": 1.0058283805847168e-07
+  },
+  "hands": {
+    "Left": {
+      "palm_faces": 36,
+      "palm_area_mean_normal": [
+        0.08072887,
+        0.02948221,
+        -0.98729634
+      ],
+      "palm_unit_normal": [
+        0.08145956,
+        0.02974906,
+        -0.99623257
+      ],
+      "degrees_from_down": 4.975041489545588,
+      "thumb_surface_dir": [
+        0.51294851,
+        -0.84877539,
+        -0.12831359
+      ],
+      "index_surface_dir": [
+        0.97913247,
+        -0.19112481,
+        0.06907199
+      ],
+      "thumb_index_degrees": 49.03456325911435,
+      "surface_splay_degrees": [
+        7.5682,
+        6.5856,
+        7.5103
+      ],
+      "bone_splay_degrees": [
+        6.5,
+        6.5,
+        6.5
+      ],
+      "free_finger_vertices_with_foreign_weights": 0,
+      "sections": {
+        "0.34": {
+          "closed_loops": 4,
+          "open_or_branched": 0,
+          "min_clear_y_gap": 0.0087675,
+          "y_centers": [
+            -0.051990949999999994,
+            -0.02477535,
+            0.0017954000000000004,
+            0.0271452
+          ]
+        },
+        "0.38": {
+          "closed_loops": 4,
+          "open_or_branched": 0,
+          "min_clear_y_gap": 0.014103699999999997,
+          "y_centers": [
+            -0.05629015,
+            -0.02831235,
+            0.00356765,
+            0.03412415
+          ]
+        }
+      }
+    },
+    "Right": {
+      "palm_faces": 24,
+      "palm_area_mean_normal": [
+        -0.09641638,
+        0.0364025,
+        -0.98020595
+      ],
+      "palm_unit_normal": [
+        -0.09782418,
+        0.03693402,
+        -0.99451816
+      ],
+      "degrees_from_down": 6.002079532680657,
+      "thumb_surface_dir": [
+        -0.52751082,
+        -0.83524096,
+        -0.15525764
+      ],
+      "index_surface_dir": [
+        -0.97554332,
+        -0.18582152,
+        0.1174126
+      ],
+      "thumb_index_degrees": 49.33870475266585,
+      "surface_splay_degrees": [
+        7.347,
+        6.5606,
+        7.542
+      ],
+      "bone_splay_degrees": [
+        6.5,
+        6.5,
+        6.5
+      ],
+      "free_finger_vertices_with_foreign_weights": 0,
+      "sections": {
+        "0.34": {
+          "closed_loops": 4,
+          "open_or_branched": 0,
+          "min_clear_y_gap": 0.008841599999999998,
+          "y_centers": [
+            -0.04953555,
+            -0.02384965,
+            0.0024443499999999996,
+            0.02817795
+          ]
+        },
+        "0.38": {
+          "closed_loops": 4,
+          "open_or_branched": 0,
+          "min_clear_y_gap": 0.012327999999999999,
+          "y_centers": [
+            -0.0519765,
+            -0.0262246,
+            0.00469145,
+            0.035679550000000004
+          ]
+        }
+      }
+    }
+  },
+  "glb": {
+    "meshes": 1,
+    "skins": 1,
+    "joints": 65,
+    "animations": 0,
+    "vertices": 5160,
+    "triangles": 8006,
+    "max_skin_weight_delta": 1.1920928955078125e-07,
+    "max_rest_skin_matrix_delta": 4.76837158203125e-07
+  },
+  "renderer": "cycles",
+  "poses": {
+    "fist": {
+      "max_duplicate_seam_opening": 0.0,
+      "nonhand_original_to_pose_max_delta": 0.00015109240842172637,
+      "intersecting_triangle_pairs": 0,
+      "renders": {
+        "left_fist_dorsal.png": "41da1e5b3ba829154152f07855c1c971c8bea232a18199f8514cd940496c44e3",
+        "left_fist_palmar.png": "3749d5d3b00f9867906fb596a00c63a900aaaff81da1b8f56b9095a09cd828ee",
+        "left_fist_radial.png": "f22214f932329c6ca0684ae87d8ba9221f64f916c93dd019009a939791936bbf",
+        "right_fist_dorsal.png": "0df5b755023721101523d1a637d4fd44b4bb8665f2b2dbfbba904e35cae37b01",
+        "right_fist_palmar.png": "2e64e5bb2df385fee3aa1cf4f79ab2cdb4b7410096db7ff5dcbae7544caee7df",
+        "right_fist_radial.png": "f7c7e6d82abcbb875e48f2c8a811a7407e27bf7d37ab2045ebfb64c0281e41ca"
+      },
+      "non_thumb_segments": 32,
+      "min_curl_degrees": 69.99999967119774,
+      "max_curl_degrees": 69.99999967119774
+    },
+    "spread": {
+      "max_duplicate_seam_opening": 0.0,
+      "nonhand_original_to_pose_max_delta": 0.00015109240842172637,
+      "intersecting_triangle_pairs": 0,
+      "renders": {
+        "left_spread_dorsal.png": "559d72de744ae25f7de9d5d50eba7db542797ff7afa3239383647fc554738d18",
+        "left_spread_palmar.png": "89bbd5786e5fb21a86382bc737b18b67cd29d4a804a8147dccd9ae00c030fd87",
+        "left_spread_radial.png": "68111d87325367f0d849493538a6231a13d42fa220869ea4c837a6b75cf0da32",
+        "right_spread_dorsal.png": "18691dfc044e6db70fca7d0cfce5bf149e500b23c9af2f45a803ed1312d7922f",
+        "right_spread_palmar.png": "bf0b22fd6f17c86924d3bcf887ab39b601282733cc0cc6ce99b4b496b9432d1e",
+        "right_spread_radial.png": "8c5c8455f7184724fe360a99b9e0a041fa1c52725820a051c7b60987beb33d6a"
+      },
+      "finger_root_spread_degrees": [
+        -12,
+        -4,
+        4,
+        12
+      ]
+    }
+  },
+  "topology": {
+    "nonmanifold_hand_edges": 0,
+    "rest_intersecting_triangle_pairs": 0
+  },
+  "files": {
+    "GJH_Chibi_Master_rigged.blend": "ea0143947869e6c9be0b02fcf5371a7566b978e3c376239ca7deab284526e5a0",
+    "hands_fixed.blend": "0339318b375836ab8891e49bda178da7e6f115e012e83385d9f8850949a7bd6f",
+    "base_body_handfix.glb": "404d83fa84630baf77a2d7fb443c80955ab5270e3dc09b652c7167547b8ae853"
+  }
+}

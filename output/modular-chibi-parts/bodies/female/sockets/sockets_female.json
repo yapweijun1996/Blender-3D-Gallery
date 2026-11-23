@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "units": "metres",
+  "coordinates": "glTF Y-up",
+  "quaternion_order": "xyzw",
+  "composition": "joint world matrix × socket local TRS; replace the prop node TRS",
+  "sockets": {
+    "hold_item": {
+      "clip": "hold_item",
+      "prop": "actions-astra/prop.glb",
+      "node": "Tasting cup",
+      "bone": "mixamorig:RightHand",
+      "gltf_joint_local": {
+        "translation_m": [
+          -0.04804442077875137,
+          0.10195858031511307,
+          -0.030294254422187805
+        ],
+        "quaternion_xyzw": [
+          -0.684034526348114,
+          0.5148372650146484,
+          0.514096200466156,
+          0.052388206124305725
+        ]
+      },
+      "left_hand": "none",
+      "source_fps": 30
+    },
+    "hold_box": {
+      "clip": "hold_box",
+      "prop": "actions-hold2/props/box.glb",
+      "node": "Parcel",
+      "bone": "mixamorig:RightHand",
+      "gltf_joint_local": {
+        "translation_m": [
+          -0.1804261952638626,
+          0.11244220286607742,
+          -0.2424047589302063
+        ],
+        "quaternion_xyzw": [
+          0.4519941508769989,
+          0.025143297389149666,
+          -0.698103129863739,
+          0.554726243019104
+        ]
+      },
+      "left_hand": "baked support; use a single rigid right-hand parent",
+      "source_fps": 24
+    },
+    "hold_bag": {
+      "clip": "hold_bag",
+      "prop": "actions-hold2/props/bag.glb",
+      "node": "Market bag",
+      "bone": "mixamorig:RightHand",
+      "gltf_joint_local": {
+        "translation_m": [
+          -0.05172641575336456,
+          0.09019677340984344,
+          0.025425590574741364
+        ],
+        "quaternion_xyzw": [
+          0.6481467485427856,
+          -0.02216053009033203,
+          -0.1857699453830719,
+          0.7381763458251953
+        ]
+      },
+      "left_hand": "none",
+      "source_fps": 24
+    },
+    "jar": {
+      "clip": "take_item",
+      "prop": "actions-hold2/props/shelf_item.glb",
+      "node": "Jam jar",
+      "bone": "mixamorig:RightHand",
+      "gltf_joint_local": {
+        "translation_m": [
+          -0.0500379353761673,
+          0.13292144238948822,
+          -0.01698286086320877
+        ],
+        "quaternion_xyzw": [
+          0.05248573422431946,
+          -0.9011874198913574,
+          -0.12233547866344452,
+          0.41248106956481934
+        ]
+      },
+      "left_hand": "none",
+      "source_fps": 24,
+      "shelf": {
+        "node": "Display rail",
+        "fps": 24,
+        "cycle_frames": 48,
+        "attach_frame": 29,
+        "attach_seconds": 1.2083333333333333,
+        "release_frame": 0,
+        "return_frames": [
+          3,
+          16
+        ],
+        "return_interpolation": "smoothstep position and quaternion slerp",
+        "first_play": "Hold at pickup_stop_gltf until attach_frame.",
+        "repeat_play": "Release at release_pose_gltf on frame 0; settle to return_stop_gltf by frame 3; move to pickup_stop_gltf through frame 16; attach on frame 29.",
+        "world_gltf": {
+          "translation_m": [
+            -0.13999232649803162,
+            0,
+            -0.009348738938570023
+          ],
+          "quaternion_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale_xyz": [
+            1,
+            1.1821448802947998,
+            1
+          ]
+        },
+        "pickup_stop_gltf": {
+          "translation_m": [
+            -0.31376761198043823,
+            0.5972349643707275,
+            0.20944622159004211
+          ],
+          "quaternion_xyzw": [
+            -0.041740138083696365,
+            0.07471860200166702,
+            0.37349116802215576,
+            0.9236770272254944
+          ]
+        },
+        "return_stop_gltf": {
+          "translation_m": [
+            -0.3273063600063324,
+            0.5972349643707275,
+            0.13147954642772675
+          ],
+          "quaternion_xyzw": [
+            -0.041740138083696365,
+            0.07471860200166702,
+            0.37349116802215576,
+            0.9236770272254944
+          ]
+        },
+        "release_pose_gltf": {
+          "translation_m": [
+            -0.3273063600063324,
+            0.5358172655105591,
+            0.13147954642772675
+          ],
+          "quaternion_xyzw": [
+            0.07389702647924423,
+            0.04639991745352745,
+            0.42887574434280396,
+            0.8991395831108093
+          ]
+        },
+        "deck_height_m": 0.522508052658512
+      }
+    }
+  },
+  "chair": {
+    "prop": "actions-astra/chair.glb",
+    "node": "Chair",
+    "world_gltf": {
+      "translation_m": [
+        0,
+        0,
+        -0.028
+      ],
+      "quaternion_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale_xyz": [
+        1,
+        0.9600726966820066,
+        1
+      ]
+    },
+    "seat_top_m": 0.24193831956386566,
+    "clips": [
+      "sit_down",
+      "sit_idle",
+      "stand_up"
+    ],
+    "scale_pivot": "chair asset floor origin"
+  },
+  "verification_status": {
+    "hold_item": "passed mesh replay on 121 samples",
+    "hold_box": "failed mesh replay on 193 samples; bilateral grip and penetration out of tolerance",
+    "hold_bag": "fitted candidate; independent mesh replay pending",
+    "jar": "fitted candidate; approach, shelf and reset replay pending",
+    "chair": "zero entry vertices and zero triangle pairs on all 315 samples; seat contact fit pending"
+  }
+}

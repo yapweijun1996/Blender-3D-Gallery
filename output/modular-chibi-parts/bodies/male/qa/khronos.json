@@ -1,0 +1,1239 @@
+{
+  "body_male.glb": {
+    "bytes": 1196676,
+    "sha256": "176ab94b3a1c68c3862b75963a35105155d8b875384e718e065e48b39d293625",
+    "triangles": 9974,
+    "images": [
+      {
+        "name": "Body_Male_Normal",
+        "mime": "image/png",
+        "size": [
+          320,
+          320
+        ]
+      },
+      {
+        "name": "Body_Male_BaseColor",
+        "mime": "image/jpeg",
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "Body_Male_MetallicRoughness",
+        "mime": "image/png",
+        "size": [
+          320,
+          320
+        ]
+      }
+    ],
+    "skinnedNodes": [
+      "Base_Body"
+    ],
+    "joints": 65,
+    "animations": {},
+    "bounds": [
+      [
+        -0.4175909161567688,
+        0.4175909161567688
+      ],
+      [
+        -2.9367461351625934e-8,
+        0.9778534173965454
+      ],
+      [
+        -0.18849030137062073,
+        0.18849030137062073
+      ]
+    ],
+    "hierarchyMatchesNeutral": true,
+    "validator": {
+      "uri": "body_male.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-11-19T11:28:01.818Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 2,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "IMAGE_NPOT_DIMENSIONS",
+            "message": "Image has non-power-of-two dimensions: 320x320.",
+            "severity": 2,
+            "pointer": "/images/0"
+          },
+          {
+            "code": "IMAGE_NPOT_DIMENSIONS",
+            "message": "Image has non-power-of-two dimensions: 320x320.",
+            "severity": 2,
+            "pointer": "/images/2"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.1.20",
+        "extensionsUsed": [
+          "KHR_materials_specular"
+        ],
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 1177388
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 320,
+              "height": 320,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/jpeg",
+            "storage": "buffer-view",
+            "image": {
+              "width": 1024,
+              "height": 1024,
+              "format": "rgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/2",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 320,
+              "height": 320,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 1,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 1,
+        "totalVertexCount": 8171,
+        "totalTriangleCount": 9974,
+        "maxUVs": 1,
+        "maxInfluences": 4,
+        "maxAttributes": 6
+      }
+    }
+  },
+  "motion_male.glb": {
+    "bytes": 1778324,
+    "sha256": "31c41ce9695e8448aaf5cd7820d8bcf44e6456ed8a4268f0d5e66f6e9c3c2059",
+    "triangles": 0,
+    "images": [],
+    "skinnedNodes": [],
+    "joints": 65,
+    "animations": {
+      "idle": {
+        "duration": 3.6666667461395264,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "walk": {
+        "duration": 2.375,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "run": {
+        "duration": 1.25,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "wave": {
+        "duration": 2.6666667461395264,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "jump": {
+        "duration": 2.0833332538604736,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "nod": {
+        "duration": 2.3333332538604736,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "dance": {
+        "duration": 2.6666667461395264,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "sit_down": {
+        "duration": 1.2000000476837158,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "sit_idle": {
+        "duration": 3,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "stand_up": {
+        "duration": 1,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "hold_item": {
+        "duration": 2,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "hold_box": {
+        "duration": 2,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "hold_bag": {
+        "duration": 2,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      },
+      "take_item": {
+        "duration": 2,
+        "channels": {
+          "translation": 65,
+          "rotation": 65,
+          "scale": 65
+        }
+      }
+    },
+    "bounds": [],
+    "hierarchyMatchesNeutral": true,
+    "validator": {
+      "uri": "motion_male.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-11-19T11:28:02.020Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/skins/0"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Male chibi bind-relative retarget",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 1151808
+          }
+        ],
+        "animationCount": 14,
+        "materialCount": 0,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": false,
+        "hasDefaultScene": true,
+        "drawCallCount": 0,
+        "totalVertexCount": 0,
+        "totalTriangleCount": 0,
+        "maxUVs": 0,
+        "maxInfluences": 0,
+        "maxAttributes": 0
+      }
+    }
+  },
+  "hand_gestures_male.glb": {
+    "bytes": 95796,
+    "sha256": "140e8d616494344c13f23f895e690588a05b671fb6ce72441e152741ff1ad310",
+    "triangles": 0,
+    "images": [],
+    "skinnedNodes": [],
+    "joints": 65,
+    "animations": {
+      "hand_fist_L": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_fist_R": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_grip_small_L": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_grip_small_R": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_ok_L": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_ok_R": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_open_relaxed_L": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_open_relaxed_R": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_open_wide_L": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_open_wide_R": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_peace_L": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_peace_R": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_pinch_L": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_pinch_R": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_point_L": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_point_R": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_thumbs_up_L": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      },
+      "hand_thumbs_up_R": {
+        "duration": 0,
+        "channels": {
+          "rotation": 20
+        }
+      }
+    },
+    "bounds": [],
+    "hierarchyMatchesNeutral": true,
+    "validator": {
+      "uri": "hand_gestures_male.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-11-19T11:28:02.040Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/skins/0"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.1.20",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 8772
+          }
+        ],
+        "animationCount": 18,
+        "materialCount": 0,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": false,
+        "hasDefaultScene": true,
+        "drawCallCount": 0,
+        "totalVertexCount": 0,
+        "totalTriangleCount": 0,
+        "maxUVs": 0,
+        "maxInfluences": 0,
+        "maxAttributes": 0
+      }
+    }
+  },
+  "male-dress.glb": {
+    "bytes": 965224,
+    "sha256": "1d19dea96b15e8bdd92ddd781605ec776f46e0a5e24b25e5b1495104db710071",
+    "triangles": 4042,
+    "images": [
+      {
+        "name": "bcb4ccf7-fea9-47e5-bd76-ab7321db1b6c_normal",
+        "mime": "image/png",
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "bcb4ccf7-fea9-47e5-bd76-ab7321db1b6c_basecolor",
+        "mime": "image/jpeg",
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "bcb4ccf7-fea9-47e5-bd76-ab7321db1b6c_rm",
+        "mime": "image/png",
+        "size": [
+          512,
+          512
+        ]
+      }
+    ],
+    "skinnedNodes": [
+      "Dress"
+    ],
+    "joints": 65,
+    "animations": {},
+    "bounds": [
+      [
+        -0.14608389139175415,
+        0.1442326307296753
+      ],
+      [
+        0.23910292983055115,
+        0.5961908102035522
+      ],
+      [
+        -0.0772252231836319,
+        0.14159898459911346
+      ]
+    ],
+    "hierarchyMatchesNeutral": true,
+    "validator": {
+      "uri": "male-dress.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-11-19T11:28:02.065Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.1.20",
+        "extensionsUsed": [
+          "KHR_materials_specular"
+        ],
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 945948
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 512,
+              "height": 512,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/jpeg",
+            "storage": "buffer-view",
+            "image": {
+              "width": 1024,
+              "height": 1024,
+              "format": "rgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/2",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 512,
+              "height": 512,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 1,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 1,
+        "totalVertexCount": 2860,
+        "totalTriangleCount": 4042,
+        "maxUVs": 1,
+        "maxInfluences": 4,
+        "maxAttributes": 6
+      }
+    }
+  },
+  "male-hair-bob.glb": {
+    "bytes": 227028,
+    "sha256": "87b48c94f31e3a4306672b5a5761d262f8f19b1f8fb126300e6a3c255a3f4ef8",
+    "triangles": 2994,
+    "images": [
+      {
+        "name": "Bob_Chestnut",
+        "mime": "image/jpeg",
+        "size": [
+          1024,
+          1024
+        ]
+      }
+    ],
+    "skinnedNodes": [
+      "Hair_Bob"
+    ],
+    "joints": 65,
+    "animations": {},
+    "bounds": [
+      [
+        -0.20644083619117737,
+        0.20832966268062592
+      ],
+      [
+        0.617400050163269,
+        0.9855667352676392
+      ],
+      [
+        -0.20898403227329254,
+        0.1969887763261795
+      ]
+    ],
+    "hierarchyMatchesNeutral": true,
+    "validator": {
+      "uri": "male-hair-bob.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-11-19T11:28:02.083Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 1,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/65"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.1.20",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 208444
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/jpeg",
+            "storage": "buffer-view",
+            "image": {
+              "width": 1024,
+              "height": 1024,
+              "format": "rgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 1,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 1,
+        "totalVertexCount": 1756,
+        "totalTriangleCount": 2994,
+        "maxUVs": 1,
+        "maxInfluences": 4,
+        "maxAttributes": 5
+      }
+    }
+  },
+  "male-hair-sidepart.glb": {
+    "bytes": 123952,
+    "sha256": "a659971572bbc36e4e7786cd3fc28f651030f2f944778dd5efb90b3f72eaf83c",
+    "triangles": 2982,
+    "images": [],
+    "skinnedNodes": [
+      "Hair_Sidepart"
+    ],
+    "joints": 65,
+    "animations": {},
+    "bounds": [
+      [
+        -0.20285221934318542,
+        0.21245068311691284
+      ],
+      [
+        0.6904662847518921,
+        1.034638524055481
+      ],
+      [
+        -0.22312913835048676,
+        0.22157052159309387
+      ]
+    ],
+    "hierarchyMatchesNeutral": true,
+    "validator": {
+      "uri": "male-hair-sidepart.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-11-19T11:28:02.096Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 1,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/65"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.1.20",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 105660
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 1,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": false,
+        "hasDefaultScene": true,
+        "drawCallCount": 1,
+        "totalVertexCount": 1493,
+        "totalTriangleCount": 2982,
+        "maxUVs": 0,
+        "maxInfluences": 4,
+        "maxAttributes": 5
+      }
+    }
+  },
+  "male-hair-spiky.glb": {
+    "bytes": 1060180,
+    "sha256": "3a7215ef4b66055329026654dab410ef3882bed24c6ff968a19adb784a197c44",
+    "triangles": 2972,
+    "images": [
+      {
+        "name": "Spiky_normal",
+        "mime": "image/png",
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "Spiky_basecolor",
+        "mime": "image/jpeg",
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "Spiky_rm",
+        "mime": "image/png",
+        "size": [
+          512,
+          512
+        ]
+      }
+    ],
+    "skinnedNodes": [
+      "Hair_Spiky"
+    ],
+    "joints": 65,
+    "animations": {},
+    "bounds": [
+      [
+        -0.2525872588157654,
+        0.24114994704723358
+      ],
+      [
+        0.647268533706665,
+        1.0434731245040894
+      ],
+      [
+        -0.23168303072452545,
+        0.24681489169597626
+      ]
+    ],
+    "hierarchyMatchesNeutral": true,
+    "validator": {
+      "uri": "male-hair-spiky.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-11-19T11:28:02.116Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 2,
+        "numInfos": 1,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/0/material"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/1/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/65"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.1.20",
+        "extensionsUsed": [
+          "KHR_materials_specular"
+        ],
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 1039884
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 512,
+              "height": 512,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/jpeg",
+            "storage": "buffer-view",
+            "image": {
+              "width": 1024,
+              "height": 1024,
+              "format": "rgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/2",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 512,
+              "height": 512,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 2,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 2,
+        "totalVertexCount": 3073,
+        "totalTriangleCount": 2972,
+        "maxUVs": 1,
+        "maxInfluences": 4,
+        "maxAttributes": 5
+      }
+    }
+  },
+  "male-jeans.glb": {
+    "bytes": 1197104,
+    "sha256": "dcd47b3af6cde7cff02df2f9c68e5cb5d09cc965e258c7fb9cac04b31969cd33",
+    "triangles": 4704,
+    "images": [
+      {
+        "name": "52c58228-76ed-4cf9-b68a-eaa3fde4bb12_normal",
+        "mime": "image/png",
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "52c58228-76ed-4cf9-b68a-eaa3fde4bb12_basecolor",
+        "mime": "image/jpeg",
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "52c58228-76ed-4cf9-b68a-eaa3fde4bb12_rm",
+        "mime": "image/png",
+        "size": [
+          512,
+          512
+        ]
+      }
+    ],
+    "skinnedNodes": [
+      "Jeans"
+    ],
+    "joints": 65,
+    "animations": {},
+    "bounds": [
+      [
+        -0.14163891971111298,
+        0.14183543622493744
+      ],
+      [
+        0.07115840911865234,
+        0.4196154475212097
+      ],
+      [
+        -0.0780181884765625,
+        0.1398707926273346
+      ]
+    ],
+    "hierarchyMatchesNeutral": true,
+    "validator": {
+      "uri": "male-jeans.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-11-19T11:28:02.139Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.1.20",
+        "extensionsUsed": [
+          "KHR_materials_specular"
+        ],
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 1177820
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 512,
+              "height": 512,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/jpeg",
+            "storage": "buffer-view",
+            "image": {
+              "width": 1024,
+              "height": 1024,
+              "format": "rgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/2",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 512,
+              "height": 512,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 1,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 1,
+        "totalVertexCount": 4170,
+        "totalTriangleCount": 4704,
+        "maxUVs": 1,
+        "maxInfluences": 4,
+        "maxAttributes": 6
+      }
+    }
+  },
+  "male-sneakers.glb": {
+    "bytes": 196800,
+    "sha256": "aae73ece7a72dbe30fd564efc6b22ea2c73f3184923cfe728c0007f1546a9244",
+    "triangles": 3492,
+    "images": [],
+    "skinnedNodes": [
+      "Sneaker_Pair"
+    ],
+    "joints": 65,
+    "animations": {},
+    "bounds": [
+      [
+        -0.15069720149040222,
+        0.1508699357509613
+      ],
+      [
+        -0.006402559578418732,
+        0.11725132912397385
+      ],
+      [
+        -0.05314168706536293,
+        0.17953123152256012
+      ]
+    ],
+    "hierarchyMatchesNeutral": true,
+    "validator": {
+      "uri": "male-sneakers.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-11-19T11:28:02.158Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.1.20",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 173128
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 6,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": false,
+        "hasDefaultScene": true,
+        "drawCallCount": 6,
+        "totalVertexCount": 3364,
+        "totalTriangleCount": 3492,
+        "maxUVs": 0,
+        "maxInfluences": 4,
+        "maxAttributes": 4
+      }
+    }
+  },
+  "male-tshirt.glb": {
+    "bytes": 1245816,
+    "sha256": "0cda28b40949a61fd8109db1d5e85732ef4011d5a7765884e32c99cc43fb61ce",
+    "triangles": 4699,
+    "images": [
+      {
+        "name": "9ed558fa-0093-48e9-8855-c0dddeebafca_normal",
+        "mime": "image/png",
+        "size": [
+          512,
+          512
+        ]
+      },
+      {
+        "name": "9ed558fa-0093-48e9-8855-c0dddeebafca_basecolor",
+        "mime": "image/jpeg",
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "9ed558fa-0093-48e9-8855-c0dddeebafca_rm",
+        "mime": "image/png",
+        "size": [
+          512,
+          512
+        ]
+      }
+    ],
+    "skinnedNodes": [
+      "tshirt_v5"
+    ],
+    "joints": 65,
+    "animations": {},
+    "bounds": [
+      [
+        -0.1294718086719513,
+        0.1289009153842926
+      ],
+      [
+        0.3886309862136841,
+        0.6062968373298645
+      ],
+      [
+        -0.0770156979560852,
+        0.13054074347019196
+      ]
+    ],
+    "hierarchyMatchesNeutral": true,
+    "validator": {
+      "uri": "male-tshirt.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-11-19T11:28:02.180Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.1.20",
+        "extensionsUsed": [
+          "KHR_materials_specular"
+        ],
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 1226532
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 512,
+              "height": 512,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/jpeg",
+            "storage": "buffer-view",
+            "image": {
+              "width": 1024,
+              "height": 1024,
+              "format": "rgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/2",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 512,
+              "height": 512,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 1,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 1,
+        "totalVertexCount": 4308,
+        "totalTriangleCount": 4699,
+        "maxUVs": 1,
+        "maxInfluences": 4,
+        "maxAttributes": 6
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "status": "FAIL",
+  "blender": "5.1.2",
+  "sha256": {
+    "character": "6ff6dc4be35bf09f82961236df7e80c9fcbcb1d4018a999f4e170af565d99343",
+    "module": "62a703e193953b09712f17d279b8de0ec0dc6373cbae5132fd2b77ad91e898f3"
+  },
+  "inputs_unchanged": true,
+  "character_hair_node": "Hair_Module.002",
+  "character_hair_partSlot": "Hair",
+  "head_bone": "Head",
+  "module_node": "Hair_Module.001",
+  "vertex_counts": {
+    "character": 4486,
+    "module": 4486
+  },
+  "threshold_m": 1e-05,
+  "rest": {
+    "character_to_module": {
+      "max_m": 0.012945345602929592,
+      "p95_m": 7.219377948786132e-07,
+      "mean_m": 2.5779072037203847e-05
+    },
+    "module_to_character": {
+      "max_m": 0.013361592777073383,
+      "p95_m": 7.219377948786132e-07,
+      "mean_m": 3.205079651883273e-05
+    }
+  },
+  "head_rotation_degrees": [
+    12,
+    -17,
+    8
+  ],
+  "rotated_head": {
+    "character_to_module": {
+      "max_m": 0.012945315800607204,
+      "p95_m": 7.246623567880306e-07,
+      "mean_m": 2.5801373448651766e-05
+    },
+    "module_to_character": {
+      "max_m": 0.013361481949687004,
+      "p95_m": 7.246623567880306e-07,
+      "mean_m": 3.2073159329890863e-05
+    }
+  },
+  "swap": {
+    "original_visible": false,
+    "replacement_visible": true
+  },
+  "restore": {
+    "original_visible": true,
+    "replacement_visible": false
+  },
+  "limitations": [
+    "Blender importer and visibility tested; no browser/Three.js runtime or full animation cycle tested.",
+    "Only a rigid head rotation was tested.",
+    "Nearest vertices do not establish topology or shading equality."
+  ]
+}

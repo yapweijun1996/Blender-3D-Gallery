@@ -1,0 +1,495 @@
+{
+  "inventory": {
+    "joints": 65,
+    "nodes": 66,
+    "hierarchy_differences": [],
+    "meshes": 0,
+    "clips": {
+      "hold_item": {
+        "seconds": 2,
+        "samples": 61,
+        "channels": {
+          "rotation": 65,
+          "translation": 5,
+          "scale": 2
+        },
+        "hips_translation": true
+      },
+      "sit_down": {
+        "seconds": 1.2,
+        "samples": 37,
+        "channels": {
+          "rotation": 65,
+          "translation": 5,
+          "scale": 2
+        },
+        "hips_translation": true
+      },
+      "sit_idle": {
+        "seconds": 3,
+        "samples": 91,
+        "channels": {
+          "rotation": 65,
+          "translation": 5,
+          "scale": 2
+        },
+        "hips_translation": true
+      },
+      "stand_up": {
+        "seconds": 1,
+        "samples": 31,
+        "channels": {
+          "rotation": 65,
+          "translation": 5,
+          "scale": 2
+        },
+        "hips_translation": true
+      }
+    },
+    "chair": {
+      "meshes": 1,
+      "triangles": 1052,
+      "materials": 4
+    },
+    "prop": {
+      "meshes": 1,
+      "triangles": 572,
+      "materials": 4
+    }
+  },
+  "clips": {
+    "sit_down": {
+      "frames": 37,
+      "measurements": {
+        "top_z_mm": {
+          "min": 975.999207,
+          "max": 1098.721313
+        },
+        "hips_y_mm": {
+          "min": -183.624297,
+          "max": -44.436038
+        },
+        "hips_z_mm": {
+          "min": 350.623518,
+          "max": 471.618086
+        },
+        "floor_min_mm": {
+          "min": -0.000315,
+          "max": -0.000122
+        },
+        "below_minus_1mm": {
+          "min": 0,
+          "max": 0
+        },
+        "left_heel_mm": {
+          "min": -0.00016,
+          "max": 2e-06
+        },
+        "left_forefoot_mm": {
+          "min": -0.000315,
+          "max": -0.000122
+        },
+        "left_sole_drift_mm": {
+          "min": 0.0,
+          "max": 0.000304
+        },
+        "right_heel_mm": {
+          "min": -0.000176,
+          "max": -3.9e-05
+        },
+        "right_forefoot_mm": {
+          "min": -0.000133,
+          "max": 4.9e-05
+        },
+        "right_sole_drift_mm": {
+          "min": 0.0,
+          "max": 0.000227
+        },
+        "chair_vertices_inside": {
+          "min": 0,
+          "max": 0
+        },
+        "chair_vertices_over_2mm": {
+          "min": 0,
+          "max": 0
+        },
+        "chair_deepest_mm": {
+          "min": 0,
+          "max": 0
+        },
+        "chair_triangle_pairs": {
+          "min": 0,
+          "max": 0
+        },
+        "left_thigh_from_horizontal_deg": {
+          "min": 7.984626,
+          "max": 82.284081
+        },
+        "left_shin_from_vertical_deg": {
+          "min": 2e-06,
+          "max": 4.4e-05
+        },
+        "left_seat_gap_mm": {
+          "min": 0.358224,
+          "max": 123.215111
+        },
+        "left_seat_witnesses_2mm": {
+          "min": 0,
+          "max": 3
+        },
+        "right_thigh_from_horizontal_deg": {
+          "min": 7.869274,
+          "max": 82.268403
+        },
+        "right_shin_from_vertical_deg": {
+          "min": 7e-06,
+          "max": 4.6e-05
+        },
+        "right_seat_gap_mm": {
+          "min": 0.200629,
+          "max": 123.181374
+        },
+        "right_seat_witnesses_2mm": {
+          "min": 0,
+          "max": 3
+        }
+      }
+    },
+    "sit_idle": {
+      "frames": 91,
+      "measurements": {
+        "top_z_mm": {
+          "min": 974.105347,
+          "max": 977.38916
+        },
+        "hips_y_mm": {
+          "min": -44.436038,
+          "max": -44.436038
+        },
+        "hips_z_mm": {
+          "min": 350.623518,
+          "max": 350.623518
+        },
+        "floor_min_mm": {
+          "min": -0.000313,
+          "max": -0.000188
+        },
+        "below_minus_1mm": {
+          "min": 0,
+          "max": 0
+        },
+        "left_heel_mm": {
+          "min": -9.7e-05,
+          "max": -4e-05
+        },
+        "left_forefoot_mm": {
+          "min": -0.000313,
+          "max": -0.000188
+        },
+        "left_sole_drift_mm": {
+          "min": 6e-05,
+          "max": 0.000149
+        },
+        "right_heel_mm": {
+          "min": -0.000191,
+          "max": -6.4e-05
+        },
+        "right_forefoot_mm": {
+          "min": -9.7e-05,
+          "max": 5.8e-05
+        },
+        "right_sole_drift_mm": {
+          "min": 0.000121,
+          "max": 0.00026
+        },
+        "chair_vertices_inside": {
+          "min": 0,
+          "max": 0
+        },
+        "chair_vertices_over_2mm": {
+          "min": 0,
+          "max": 0
+        },
+        "chair_deepest_mm": {
+          "min": 0,
+          "max": 0
+        },
+        "chair_triangle_pairs": {
+          "min": 0,
+          "max": 0
+        },
+        "left_thigh_from_horizontal_deg": {
+          "min": 7.984615,
+          "max": 7.984639
+        },
+        "left_shin_from_vertical_deg": {
+          "min": 4e-06,
+          "max": 2e-05
+        },
+        "left_seat_gap_mm": {
+          "min": 0.358224,
+          "max": 0.358254
+        },
+        "left_seat_witnesses_2mm": {
+          "min": 3,
+          "max": 3
+        },
+        "right_thigh_from_horizontal_deg": {
+          "min": 7.869249,
+          "max": 7.869274
+        },
+        "right_shin_from_vertical_deg": {
+          "min": 2.1e-05,
+          "max": 3.5e-05
+        },
+        "right_seat_gap_mm": {
+          "min": 0.200599,
+          "max": 0.200629
+        },
+        "right_seat_witnesses_2mm": {
+          "min": 3,
+          "max": 3
+        }
+      }
+    },
+    "stand_up": {
+      "frames": 31,
+      "measurements": {
+        "top_z_mm": {
+          "min": 975.999207,
+          "max": 1098.77417
+        },
+        "hips_y_mm": {
+          "min": -183.624297,
+          "max": -44.436038
+        },
+        "hips_z_mm": {
+          "min": 350.623518,
+          "max": 471.618086
+        },
+        "floor_min_mm": {
+          "min": -0.000306,
+          "max": -9.7e-05
+        },
+        "below_minus_1mm": {
+          "min": 0,
+          "max": 0
+        },
+        "left_heel_mm": {
+          "min": -0.000145,
+          "max": -4e-06
+        },
+        "left_forefoot_mm": {
+          "min": -0.000306,
+          "max": -9.7e-05
+        },
+        "left_sole_drift_mm": {
+          "min": 0.0,
+          "max": 0.000328
+        },
+        "right_heel_mm": {
+          "min": -0.000192,
+          "max": -3e-05
+        },
+        "right_forefoot_mm": {
+          "min": -9.9e-05,
+          "max": 8.9e-05
+        },
+        "right_sole_drift_mm": {
+          "min": 0.0,
+          "max": 0.000317
+        },
+        "chair_vertices_inside": {
+          "min": 0,
+          "max": 0
+        },
+        "chair_vertices_over_2mm": {
+          "min": 0,
+          "max": 0
+        },
+        "chair_deepest_mm": {
+          "min": 0,
+          "max": 0
+        },
+        "chair_triangle_pairs": {
+          "min": 0,
+          "max": 0
+        },
+        "left_thigh_from_horizontal_deg": {
+          "min": 7.984626,
+          "max": 82.284081
+        },
+        "left_shin_from_vertical_deg": {
+          "min": 2e-06,
+          "max": 4.8e-05
+        },
+        "left_seat_gap_mm": {
+          "min": 0.358254,
+          "max": 132.492371
+        },
+        "left_seat_witnesses_2mm": {
+          "min": 0,
+          "max": 3
+        },
+        "right_thigh_from_horizontal_deg": {
+          "min": 7.869251,
+          "max": 82.268403
+        },
+        "right_shin_from_vertical_deg": {
+          "min": 1.2e-05,
+          "max": 4.6e-05
+        },
+        "right_seat_gap_mm": {
+          "min": 0.200629,
+          "max": 132.487946
+        },
+        "right_seat_witnesses_2mm": {
+          "min": 0,
+          "max": 3
+        }
+      }
+    },
+    "hold_item": {
+      "frames": 61,
+      "measurements": {
+        "top_z_mm": {
+          "min": 998.682922,
+          "max": 1000.056152
+        },
+        "hips_y_mm": {
+          "min": -9.760894,
+          "max": -9.760894
+        },
+        "hips_z_mm": {
+          "min": 372.864634,
+          "max": 372.864634
+        },
+        "floor_min_mm": {
+          "min": -0.00015,
+          "max": -0.00015
+        },
+        "below_minus_1mm": {
+          "min": 0,
+          "max": 0
+        },
+        "left_heel_mm": {
+          "min": -0.00015,
+          "max": -0.00015
+        },
+        "left_forefoot_mm": {
+          "min": -0.000108,
+          "max": -0.000108
+        },
+        "left_sole_drift_mm": {
+          "min": 0.0,
+          "max": 0.0
+        },
+        "right_heel_mm": {
+          "min": -2.3e-05,
+          "max": -2.3e-05
+        },
+        "right_forefoot_mm": {
+          "min": -6.1e-05,
+          "max": -6.1e-05
+        },
+        "right_sole_drift_mm": {
+          "min": 0.0,
+          "max": 0.0
+        },
+        "cup_body_triangle_pairs": {
+          "min": 0,
+          "max": 0
+        },
+        "thumb_pad_gap_mm": {
+          "min": 0.365,
+          "max": 0.36511
+        },
+        "index_pad_gap_mm": {
+          "min": 0.27109,
+          "max": 0.27121
+        },
+        "elbow_flexion_deg": {
+          "min": 101.442477,
+          "max": 101.442531
+        },
+        "cup_center_z_mm": {
+          "min": 552.90155,
+          "max": 555.507385
+        }
+      }
+    }
+  },
+  "body": {
+    "vertices": 6010,
+    "triangles": 9512,
+    "height_m": 0.9995116591453552
+  },
+  "chair_closed_parts": 9,
+  "support_vertex_counts": {
+    "left": {
+      "sole": 15,
+      "heel": 4,
+      "forefoot": 8
+    },
+    "right": {
+      "sole": 16,
+      "heel": 4,
+      "forefoot": 9
+    }
+  },
+  "half_frame_checks": {
+    "sit_down": {
+      "samples": 36,
+      "min_floor_mm": -0.05076779052615166,
+      "max_sole_drift_mm": 0.04610420763492584,
+      "max_chair_triangle_pairs": 0
+    },
+    "sit_idle": {
+      "samples": 90,
+      "min_floor_mm": -0.00031310555641539395,
+      "max_sole_drift_mm": 0.0002521116111893207,
+      "max_chair_triangle_pairs": 0
+    },
+    "stand_up": {
+      "samples": 30,
+      "min_floor_mm": -0.07307413220405579,
+      "max_sole_drift_mm": 0.06631021946668625,
+      "max_chair_triangle_pairs": 0
+    }
+  },
+  "maximum_mesh_seam_mm": {
+    "sit_down -> sit_idle": 0.00018431719217915088,
+    "sit_idle -> sit_idle": 0.00018431719217915088,
+    "sit_idle -> stand_up": 0.00018431719217915088,
+    "stand_up -> sit_down": 0.00016049041005317122,
+    "hold_item -> hold_item": 0.00013657139788847417
+  },
+  "round_trip": {
+    "max_rest_matrix_component_error": 2.1979212760925293e-06,
+    "max_quaternion_length_error": 1.1920928955078125e-07,
+    "grip_bones": 20,
+    "max_grip_quaternion_component_error": 7.897615432739258e-07,
+    "max_gltf_socket_witness_error_mm": 0.00041108371669984283
+  },
+  "gates": {
+    "contract": true,
+    "inventory": true,
+    "triangle_budgets": true,
+    "sit_down_floor": true,
+    "sit_down_chair": true,
+    "sit_down_plant": true,
+    "sit_idle_floor": true,
+    "sit_idle_chair": true,
+    "sit_idle_plant": true,
+    "stand_up_floor": true,
+    "stand_up_chair": true,
+    "stand_up_plant": true,
+    "hold_item_floor": true,
+    "grasp": true,
+    "pelvis_support": true,
+    "loop_and_transition_continuity": true,
+    "same_grip": true,
+    "same_bind": true,
+    "socket": true
+  }
+}

@@ -1,0 +1,6640 @@
+{
+  "status": "PASS",
+  "three": "0.187.0",
+  "sha256": {
+    "character": "6ff6dc4be35bf09f82961236df7e80c9fcbcb1d4018a999f4e170af565d99343",
+    "manifest": "10b191ab021b3b70327907834afe2263be6b50fb611374114c5216c6e253f853"
+  },
+  "threshold_m": 0.00001,
+  "modules": {
+    "Arm.L": {
+      "status": "PASS",
+      "file": "arm-l.glb",
+      "sha256": "b161011b460080ee7f3c1116572c0a48d2b29005725e2ddeebf159abca52affc",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "UpperArm.L"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.010886474750412682
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.04947109521489337
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.09004446288962528
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05003985314561269
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05003985314561269
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Arm.R": {
+      "status": "PASS",
+      "file": "arm-r.glb",
+      "sha256": "8eb9a73c6bdea3a1de355748b75f3823120e7ff381b31c6d74ed0270aea0d5a3",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "UpperArm.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.010887465034763389
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.049415806864437826
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.0899585854269566
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05003985314561269
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05003985314561269
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Backpack": {
+      "status": "PASS",
+      "file": "backpack.glb",
+      "sha256": "78289eee531f8f221786a801f925e439796791f4001ca77175d6ed1b7d1f22d9",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 6,
+      "source_mesh_count": 6,
+      "source_geometry_match": true,
+      "bones": [
+        "Spine"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.0068085064379317045
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.006780494506025237
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.006734425283698638
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.006780494506025237
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.006780494506025237
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Body": {
+      "status": "PASS",
+      "file": "body.glb",
+      "sha256": "30e648b3b44436f8c7c99ba6221c2be39204ad87087a0fc271e6baf0d637a54b",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Spine"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.0029186725062463463
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.002906664343186277
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.0028869153756535875
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.002906664343186277
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.002906664343186277
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Brow.L": {
+      "status": "PASS",
+      "file": "brow-l.glb",
+      "sha256": "908de4ca46329f474ef7dd0108bd253c5e3b157362b2b498db2204a069d83c55",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Head"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.005380475009061866
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005358338362654565
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.0053219318024677114
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005358338362654565
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005358338362654565
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Brow.R": {
+      "status": "PASS",
+      "file": "brow-r.glb",
+      "sha256": "f1aafe1515e62bec8528843abf74ea4434d1a552ebccfb127a3224ec3f6ccd0a",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Head"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.005377104296908183
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005354981518470354
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.005318597765941669
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005354981518470354
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005354981518470354
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Ear.L": {
+      "status": "PASS",
+      "file": "ear-l.glb",
+      "sha256": "412b46638b4fa96e1d6f20d928040d2c6c86a32f122a8ff53c02fd80b226edf4",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Head"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.006776842791424897
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.006748961131835564
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.006703106159078076
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.006748961131835564
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.006748961131835564
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Ear.R": {
+      "status": "PASS",
+      "file": "ear-r.glb",
+      "sha256": "177546ba63e387de2e17c43b22580678caadb0ecc7fc160b029fddf9807e494f",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Head"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.006776842769567315
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0067489611100679065
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.006703106137458307
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0067489611100679065
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0067489611100679065
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Eye.L": {
+      "status": "PASS",
+      "file": "eye-l.glb",
+      "sha256": "c068dd2c4b18a13f83544ef37e84f45a59821de35dcbbfd3aef4847da9608cba",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Head"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.0056219294748438365
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005598799423184519
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.00556075908038066
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005598799423184519
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005598799423184519
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Eye.R": {
+      "status": "PASS",
+      "file": "eye-r.glb",
+      "sha256": "8c209f8aa5c0b554bb949dec9d59775b15b0a958de4776f448ed52f0e97f76ab",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Head"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.005691632522010174
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005668215694237953
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.005629703711257813
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005668215694237953
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.005668215694237953
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Finger_Index_L": {
+      "status": "PASS",
+      "file": "finger-index-l.glb",
+      "sha256": "9b12074452872f14f3bc3dfb934b8ff70609f299f6001f1027950d37e11400cc",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Finger.Index.L"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.011397897572988295
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0666034911432621
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.12030779624129619
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06625744139457433
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06625744139457433
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Finger_Index_R": {
+      "status": "PASS",
+      "file": "finger-index-r.glb",
+      "sha256": "9c81e1f1391972e13835b0d9ba4a294eaec095b81e1b40377890eba899d806dc",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Finger.Index.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.011397607316987064
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06666100467862181
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.12040041427230601
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06625744418747288
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06625744418747288
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Finger_Middle_L": {
+      "status": "PASS",
+      "file": "finger-middle-l.glb",
+      "sha256": "c7d6185cbddad3a409da8f304717c423db7c7536ace547042c306a02cac6412f",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Finger.Middle.L"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.011850977096817476
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06698973860247599
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.12127705209653217
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06696883357601452
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06696883357601452
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Finger_Middle_R": {
+      "status": "PASS",
+      "file": "finger-middle-r.glb",
+      "sha256": "80d38accd3a955f2d95db3a1939bf1ddcbe50f7f729eb1528383c43652496e35",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Finger.Middle.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.011850824087733828
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0670507953393258
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.12137537076307911
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06696882800095386
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06696882800095386
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Finger_Pinky_L": {
+      "status": "PASS",
+      "file": "finger-pinky-l.glb",
+      "sha256": "c09599e42a3667e516beefb06698c7c677e9ff4223196e59bef8dc1ce89f8ef2",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Finger.Pinky.L"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.012435313362213984
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06374934731868706
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.11620880069810097
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06469243750037054
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06469243750037053
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Finger_Pinky_R": {
+      "status": "PASS",
+      "file": "finger-pinky-r.glb",
+      "sha256": "1139bdb6b2dd1db7e3b576cf45b0642e841191787d6d1dede5b1f5debac442c6",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Finger.Pinky.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.012435533533653833
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06382134549241605
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.11632456418554017
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06469244121565433
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06469244121565434
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Finger_Ring_L": {
+      "status": "PASS",
+      "file": "finger-ring-l.glb",
+      "sha256": "5495c6b8e76880c0988284b2ca6e54820836657de773d021db76e11bdc886e46",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Finger.Ring.L"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.012200471864849134
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06614126171489561
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.12009040330071866
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06654200004443461
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06654200004443461
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Finger_Ring_R": {
+      "status": "PASS",
+      "file": "finger-ring-r.glb",
+      "sha256": "969902e1d4a8f49c8196ae049d56b5d76f934b53a1533d19ab2ff42eeb29b931",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Finger.Ring.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.012200486591410195
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06620693612992477
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.12019611321244028
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06654199910648229
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06654199910648229
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Finger_Thumb_L": {
+      "status": "PASS",
+      "file": "finger-thumb-l.glb",
+      "sha256": "83330258d2aa4031dae9a63f7922d02e4f01062544aaa874fb416ba1d1cd52ec",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Finger.Thumb.L"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.010440657853361922
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.060789318472635
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.10975251009323748
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06045517752656767
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06045517752656767
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Finger_Thumb_R": {
+      "status": "PASS",
+      "file": "finger-thumb-r.glb",
+      "sha256": "a3c469d030bae15724b16a1f9c223d01811c957e9812afeeb742a265af046fef",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Finger.Thumb.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.010437980294826852
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06095649624921113
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.11001870268477797
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06045517742772604
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06045517742772604
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Hair": {
+      "status": "PASS",
+      "file": "hair.glb",
+      "sha256": "f6eff2354fc19533dac6bda5887a3ac8cdc58a3aa631ac70a6bef6fbc0ce6cb9",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Head"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.00824542664630857
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.008211502858197084
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.008155710828504602
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.008211502858197084
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.008211502858197084
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Hat": {
+      "status": "PASS",
+      "file": "hat.glb",
+      "sha256": "ea67af0c3ad0b9a474e6ca8f6c5aca9536f3ce6e4f10c2586c49cf5535b4b4a8",
+      "inputs_unchanged": true,
+      "optional": true,
+      "mesh_count": 3,
+      "source_mesh_count": 0,
+      "source_geometry_match": false,
+      "bones": [
+        "Head"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": null
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.008969194346589543
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.008932292793571585
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.008871603446765429
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.008932292793571585
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.008932292793571585
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Head": {
+      "status": "PASS",
+      "file": "head.glb",
+      "sha256": "325cbc5e4785f65cb284036f2621425a383d9de9533fde4d0d7f4462b845b553",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 3,
+      "source_mesh_count": 3,
+      "source_geometry_match": true,
+      "bones": [
+        "Head"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.006597591928385397
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.006570447752562232
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.006525805666645161
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.006570447752562232
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.006570447752562232
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Hoodie": {
+      "status": "PASS",
+      "file": "hoodie.glb",
+      "sha256": "00b6b8d389b78cb18ee0e15fcf133b754bdf3fc7b62da862589d0bb9f0df1e6d",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 14,
+      "source_mesh_count": 14,
+      "source_geometry_match": true,
+      "bones": [
+        "Spine",
+        "UpperArm.L",
+        "UpperArm.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.010540035245126634
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05074138363005768
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.09261536032360265
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05160069156478442
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05160069156478442
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Jeans": {
+      "status": "PASS",
+      "file": "jeans.glb",
+      "sha256": "6b4926522330b0f0aab9c58599ebc5a0573df3c3e9e93aa3acabc12da29142d3",
+      "inputs_unchanged": true,
+      "optional": true,
+      "mesh_count": 1,
+      "source_mesh_count": 0,
+      "source_geometry_match": false,
+      "bones": [
+        "LowerLeg.L",
+        "LowerLeg.R",
+        "Root",
+        "UpperLeg.L",
+        "UpperLeg.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": null
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": null
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06696442066458148
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.11659468970746752
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.10877321218239726
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.10877321218239726
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Leg.L": {
+      "status": "PASS",
+      "file": "leg-l.glb",
+      "sha256": "fb580550cb539a2bf0c5d4af1fb27e7028ae7be204ae82314b8dd8aa83517906",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "LowerLeg.L",
+        "UpperLeg.L"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05503563573809503
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.09582495910593866
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.10242792343326164
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.10242792343326164
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Leg.R": {
+      "status": "PASS",
+      "file": "leg-r.glb",
+      "sha256": "f1fd3e8bede50ce6842a017176354b33002a6356ea76cc1f872e60982433669b",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "LowerLeg.R",
+        "UpperLeg.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.054438698670556354
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.09350335196568987
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.10242792343326164
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.10242792343326164
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Mouth": {
+      "status": "PASS",
+      "file": "mouth.glb",
+      "sha256": "9f4ef2d4d165443709bb9ebdc9faf54c38c0a422d5c68037cbe7ae81f2b293ec",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Head"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.004823519599396079
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.004803674409588368
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.00477103644429495
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.004803674409588368
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.004803674409588368
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Nose": {
+      "status": "PASS",
+      "file": "nose.glb",
+      "sha256": "cccdc440dda76c8104f6898f93b676a9cab3e9200d1664e2b6635bcb4fe717d0",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "Head"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.00470301379090615
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.004683664392728007
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.0046518418204923
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.004683664392728007
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.004683664392728007
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Palm_L": {
+      "status": "PASS",
+      "file": "palm-l.glb",
+      "sha256": "87ad3ce095d228e53d929ee017c252fb2a192bada39a31f1e8b2ca0f8b6b652f",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "UpperArm.L"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.011955646761384537
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.061858172470634284
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.11246437406987052
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0624161743414808
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0624161743414808
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Palm_R": {
+      "status": "PASS",
+      "file": "palm-r.glb",
+      "sha256": "433de313713cfc307e006d343acd4a25f616abe9398e0be752657c2e353b48e0",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "UpperArm.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.01195605400902199
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06192597568661527
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.11257347825606466
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0624161743414808
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0624161743414808
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Shoe.L": {
+      "status": "PASS",
+      "file": "shoe-l.glb",
+      "sha256": "0fd07aeaae06cb428cec80354bdb9da371cff105b73ee4a51fbe472038c45b66",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 2,
+      "source_mesh_count": 2,
+      "source_geometry_match": true,
+      "bones": [
+        "LowerLeg.L"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.10596006144689217
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.18449171012270119
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0994904079371151
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0994904079371151
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Shoe.R": {
+      "status": "PASS",
+      "file": "shoe-r.glb",
+      "sha256": "af29e6ea755cb524fab89532098c5c9f76371d5f9e2c984c88dea0509a4417d8",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 2,
+      "source_mesh_count": 2,
+      "source_geometry_match": true,
+      "bones": [
+        "LowerLeg.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.1048107787276187
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.18002192192207117
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0994904079371151
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.0994904079371151
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Shorts": {
+      "status": "PASS",
+      "file": "shorts.glb",
+      "sha256": "78973f453a01be6ac3141c41587b76aa127fbbfb053897f305ed8e34f3fdb4df",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 3,
+      "source_mesh_count": 3,
+      "source_geometry_match": true,
+      "bones": [
+        "Root"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Sock.L": {
+      "status": "PASS",
+      "file": "sock-l.glb",
+      "sha256": "e44b2aafaf4905a72abb1091fac5e221a81356740a1dcc21c1112216c710d46c",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "LowerLeg.L",
+        "UpperLeg.L"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06994827904737924
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.12179001640216015
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.10191924241166414
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.10191924241166414
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Sock.R": {
+      "status": "PASS",
+      "file": "sock-r.glb",
+      "sha256": "b62b8ee38fb3eeb091c58ee8a2c76731c52f6f2c7fb1e74569a3d83bb13ee057",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "LowerLeg.R",
+        "UpperLeg.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.06918959379658322
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.1188393386838667
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.10191924241166414
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.10191924241166414
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Wrist_L": {
+      "status": "PASS",
+      "file": "wrist-l.glb",
+      "sha256": "963ef6711732b55b5cbf5f70dcd49421b77079a8181a9ac41b8a751103f85d54",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "UpperArm.L"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.010599104827350438
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.04950623817006392
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.09064033587455521
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05070816276945523
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05070816276945523
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    },
+    "Wrist_R": {
+      "status": "PASS",
+      "file": "wrist-r.glb",
+      "sha256": "31d10a9b39fac82fb915e49dca4bc611972c2c16668aeea5e78b075213046808",
+      "inputs_unchanged": true,
+      "optional": false,
+      "mesh_count": 1,
+      "source_mesh_count": 1,
+      "source_geometry_match": true,
+      "bones": [
+        "UpperArm.R"
+      ],
+      "samples": [
+        {
+          "label": "rest",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "idle:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "walk:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "run:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "sit:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.25",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.5",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:0.75",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "stand_up:1",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        },
+        {
+          "label": "head:12,-17,8",
+          "independent_max_m": 0,
+          "original_max_m": 0
+        }
+      ],
+      "clipMotion": {
+        "idle": {
+          "duration_s": 2.0333333015441895,
+          "max_sampled_displacement_m": 0.010599964429837225
+        },
+        "walk": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.04954894047123382
+        },
+        "run": {
+          "duration_s": 0.699999988079071,
+          "max_sampled_displacement_m": 0.09070967368858929
+        },
+        "sit": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05070816276945523
+        },
+        "stand_up": {
+          "duration_s": 1.0333333015441895,
+          "max_sampled_displacement_m": 0.05070816276945523
+        }
+      },
+      "swap": true,
+      "max_m": 0
+    }
+  },
+  "limitations": [
+    "Three.js GLTFLoader in Node with texture decoding stubbed; no rendered, material, or browser validation.",
+    "Five evenly spaced samples per animation plus one mixed head rotation; no continuous motion, contact, or full range-of-motion validation.",
+    "Character slot geometry must match the independently exported module in position ordering.",
+    "For optional modules, independent module skeleton is driven by matching character bone local transforms; no original character mesh exists for comparison."
+  ],
+  "inputs_unchanged": true
+}

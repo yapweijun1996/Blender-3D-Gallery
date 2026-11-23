@@ -1,0 +1,1309 @@
+{
+  "glb_sha256": "b3720ea4780f0cc98e28185749cb6f0284a7132481cf0a7e8eb419183e8b5034",
+  "samples": 824,
+  "clips": {
+    "rest": {
+      "samples": 1,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.001999986357986927,
+      "minimum_vertex_frame": 1.0,
+      "vertex": 3331,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 1.0,
+      "sum_triangle_pairs": 0
+    },
+    "walk": {
+      "samples": 113,
+      "max_verts_inside": 168,
+      "min_signed_dist": -0.014424324966967106,
+      "minimum_vertex_frame": 52.5,
+      "vertex": 3186,
+      "max_triangle_pairs": 640,
+      "max_pair_frame": 7.0,
+      "sum_triangle_pairs": 55080
+    },
+    "run": {
+      "samples": 61,
+      "max_verts_inside": 167,
+      "min_signed_dist": -0.012843367643654346,
+      "minimum_vertex_frame": 24.0,
+      "vertex": 3149,
+      "max_triangle_pairs": 525,
+      "max_pair_frame": 8.0,
+      "sum_triangle_pairs": 17048
+    },
+    "wave": {
+      "samples": 129,
+      "max_verts_inside": 89,
+      "min_signed_dist": -0.009171191602945328,
+      "minimum_vertex_frame": 9.0,
+      "vertex": 3198,
+      "max_triangle_pairs": 359,
+      "max_pair_frame": 0.0,
+      "sum_triangle_pairs": 31036
+    },
+    "jump": {
+      "samples": 101,
+      "max_verts_inside": 118,
+      "min_signed_dist": -0.010377617552876472,
+      "minimum_vertex_frame": 9.0,
+      "vertex": 3215,
+      "max_triangle_pairs": 388,
+      "max_pair_frame": 3.0,
+      "sum_triangle_pairs": 19860
+    },
+    "idle": {
+      "samples": 177,
+      "max_verts_inside": 115,
+      "min_signed_dist": -0.00849186722189188,
+      "minimum_vertex_frame": 66.0,
+      "vertex": 3198,
+      "max_triangle_pairs": 370,
+      "max_pair_frame": 52.5,
+      "sum_triangle_pairs": 62692
+    },
+    "nod": {
+      "samples": 113,
+      "max_verts_inside": 91,
+      "min_signed_dist": -0.0088916951790452,
+      "minimum_vertex_frame": 17.0,
+      "vertex": 3198,
+      "max_triangle_pairs": 366,
+      "max_pair_frame": 14.0,
+      "sum_triangle_pairs": 40424
+    },
+    "dance": {
+      "samples": 129,
+      "max_verts_inside": 46,
+      "min_signed_dist": -0.004796633031219244,
+      "minimum_vertex_frame": 48.0,
+      "vertex": 3215,
+      "max_triangle_pairs": 141,
+      "max_pair_frame": 39.5,
+      "sum_triangle_pairs": 9807
+    }
+  },
+  "rest_clearance_m": {
+    "overall": {
+      "min": 0.001999986357986927,
+      "p10": 0.004579011956229806,
+      "median": 0.009376059286296368,
+      "p90": 0.02097309585660696,
+      "p95": 0.020999442785978317,
+      "max": 0.027586355805397034
+    },
+    "back panel": {
+      "min": 0.0030084417667239904,
+      "p10": 0.005465180613100529,
+      "median": 0.010833073407411575,
+      "p90": 0.01573507860302925,
+      "p95": 0.018777016550302505,
+      "max": 0.020513929426670074
+    },
+    "collar": {
+      "min": 0.004766273777931929,
+      "p10": 0.005210579931735992,
+      "median": 0.010554753243923187,
+      "p90": 0.020162513852119448,
+      "p95": 0.020964374765753746,
+      "max": 0.02102755196392536
+    },
+    "front panel": {
+      "min": 0.0028069335967302322,
+      "p10": 0.009182382188737391,
+      "median": 0.020580856129527092,
+      "p90": 0.02099992334842682,
+      "p95": 0.02099996618926525,
+      "max": 0.027586355805397034
+    },
+    "hem": {
+      "min": 0.001999986357986927,
+      "p10": 0.0035358969122171405,
+      "median": 0.0075802248902618885,
+      "p90": 0.013960305228829384,
+      "p95": 0.016541575081646442,
+      "max": 0.02080957591533661
+    },
+    "shoulder / armpit": {
+      "min": 0.001999995205551386,
+      "p10": 0.003911684732884169,
+      "median": 0.00699635362252593,
+      "p90": 0.011681666597723961,
+      "p95": 0.013512707315385342,
+      "max": 0.020923417061567307
+    },
+    "sleeve / cuff": {
+      "min": 0.0021001542918384075,
+      "p10": 0.003548327716998756,
+      "median": 0.006692674942314625,
+      "p90": 0.009428994730114937,
+      "p95": 0.011066733859479427,
+      "max": 0.017770320177078247
+    }
+  },
+  "residuals": {
+    "rest": {},
+    "walk": {
+      "vertex": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.005896572954952717,
+          "frame": 37.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.0045384070836007595,
+          "frame": 9.5
+        },
+        "front panel / RightArm": {
+          "min_signed_dist": -0.008380914106965065,
+          "frame": 6.0
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.003133235964924097,
+          "frame": 22.0
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.0037320079281926155,
+          "frame": 37.0
+        },
+        "front panel / Spine1": {
+          "min_signed_dist": -0.0018634708831086755,
+          "frame": 22.0
+        },
+        "hem / Hips": {
+          "min_signed_dist": -0.006625449750572443,
+          "frame": 35.0
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.00524908397346735,
+          "frame": 16.5
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.002463253680616617,
+          "frame": 49.0
+        },
+        "back panel / Spine1": {
+          "min_signed_dist": -0.0009910271037369967,
+          "frame": 33.5
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.01344287022948265,
+          "frame": 54.5
+        },
+        "hem / LeftUpLeg": {
+          "min_signed_dist": -0.0030782849062234163,
+          "frame": 33.5
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.014424324966967106,
+          "frame": 52.5
+        },
+        "front panel / RightForeArm": {
+          "min_signed_dist": -0.010061745531857014,
+          "frame": 31.5
+        },
+        "back panel / RightArm": {
+          "min_signed_dist": -0.0017484964337199926,
+          "frame": 35.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.007670183666050434,
+          "frame": 43.5
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -0.0058037759736180305,
+          "frame": 5.5
+        },
+        "shoulder / armpit / Spine2": {
+          "min_signed_dist": -0.0031163436360657215,
+          "frame": 38.5
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.010520934127271175,
+          "frame": 45.0
+        },
+        "sleeve / cuff / Spine2": {
+          "min_signed_dist": -0.000244480645051226,
+          "frame": 7.0
+        },
+        "hem / RightForeArm": {
+          "min_signed_dist": -0.009441184811294079,
+          "frame": 35.0
+        },
+        "front panel / LeftUpLeg": {
+          "min_signed_dist": -0.0015072226524353027,
+          "frame": 35.0
+        },
+        "front panel / Hips": {
+          "min_signed_dist": -0.0013955979375168681,
+          "frame": 35.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.003216036595404148,
+          "frame": 49.0
+        },
+        "hem / RightUpLeg": {
+          "min_signed_dist": -0.0014877315843477845,
+          "frame": 21.5
+        },
+        "front panel / RightUpLeg": {
+          "min_signed_dist": -4.6698238293174654e-05,
+          "frame": 21.0
+        }
+      },
+      "triangle witness": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.005896572954952717,
+          "frame": 37.0
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -0.005866151303052902,
+          "frame": 5.5
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.003133235964924097,
+          "frame": 22.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.0045384070836007595,
+          "frame": 9.5
+        },
+        "shoulder / armpit / Spine2": {
+          "min_signed_dist": -0.0037689763121306896,
+          "frame": 2.5
+        },
+        "front panel / RightArm": {
+          "min_signed_dist": -0.008753718808293343,
+          "frame": 32.5
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.003920412622392178,
+          "frame": 3.0
+        },
+        "front panel / RightForeArm": {
+          "min_signed_dist": -0.010884858667850494,
+          "frame": 3.5
+        },
+        "hem / RightForeArm": {
+          "min_signed_dist": -0.010066043585538864,
+          "frame": 30.5
+        },
+        "back panel / RightArm": {
+          "min_signed_dist": -0.0033609895035624504,
+          "frame": 6.5
+        },
+        "front panel / RightShoulder": {
+          "min_signed_dist": -0.0005743429064750671,
+          "frame": 38.0
+        },
+        "front panel / Spine1": {
+          "min_signed_dist": -0.00297933304682374,
+          "frame": 22.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.006102765444666147,
+          "frame": 50.0
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.006102455779910088,
+          "frame": 16.5
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.01148283015936613,
+          "frame": 52.5
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.014635235071182251,
+          "frame": 52.5
+        },
+        "back panel / Spine1": {
+          "min_signed_dist": -0.0019125636899843812,
+          "frame": 27.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.005871435161679983,
+          "frame": 16.0
+        },
+        "hem / Hips": {
+          "min_signed_dist": -0.0032421767245978117,
+          "frame": 8.0
+        },
+        "hem / LeftUpLeg": {
+          "min_signed_dist": -0.0032482859678566456,
+          "frame": 35.0
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.014790758490562439,
+          "frame": 45.5
+        },
+        "back panel / LeftUpLeg": {
+          "min_signed_dist": -0.002022217493504286,
+          "frame": 25.0
+        },
+        "front panel / LeftUpLeg": {
+          "min_signed_dist": -0.0032482859678566456,
+          "frame": 35.0
+        },
+        "sleeve / cuff / Spine2": {
+          "min_signed_dist": -0.000244480645051226,
+          "frame": 7.0
+        },
+        "front panel / Hips": {
+          "min_signed_dist": -0.0032421767245978117,
+          "frame": 8.0
+        },
+        "hem / RightUpLeg": {
+          "min_signed_dist": -0.0024029298219829798,
+          "frame": 20.5
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.003681156551465392,
+          "frame": 48.0
+        },
+        "hem / Spine1": {
+          "min_signed_dist": -0.0029793037101626396,
+          "frame": 22.0
+        },
+        "front panel / RightUpLeg": {
+          "min_signed_dist": -0.0009460734436288476,
+          "frame": 47.5
+        }
+      }
+    },
+    "run": {
+      "vertex": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.005855280440300703,
+          "frame": 11.5
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.004468239843845367,
+          "frame": 25.0
+        },
+        "hem / RightUpLeg": {
+          "min_signed_dist": -0.002965309424325824,
+          "frame": 0.0
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.00428537093102932,
+          "frame": 24.5
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.004682689439505339,
+          "frame": 11.5
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.006779051385819912,
+          "frame": 0.0
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.012316401116549969,
+          "frame": 8.5
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.0036725099198520184,
+          "frame": 0.5
+        },
+        "front panel / RightArm": {
+          "min_signed_dist": -0.005565036088228226,
+          "frame": 8.0
+        },
+        "hem / RightHandThumb3": {
+          "min_signed_dist": -0.004748998675495386,
+          "frame": 2.0
+        },
+        "hem / RightHandThumb4": {
+          "min_signed_dist": -0.0013121453812345862,
+          "frame": 2.0
+        },
+        "sleeve / cuff / RightShoulder": {
+          "min_signed_dist": -0.0023713461123406887,
+          "frame": 6.5
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.0035453930031508207,
+          "frame": 23.5
+        },
+        "hem / Hips": {
+          "min_signed_dist": -0.002235937397927046,
+          "frame": 18.0
+        },
+        "back panel / RightShoulder": {
+          "min_signed_dist": -0.0010409506503492594,
+          "frame": 3.0
+        },
+        "front panel / RightShoulder": {
+          "min_signed_dist": -0.0007144315168261528,
+          "frame": 3.0
+        },
+        "collar / RightShoulder": {
+          "min_signed_dist": 8.306256495416164e-05,
+          "frame": 3.0
+        },
+        "hem / RightHandIndex1": {
+          "min_signed_dist": -0.004184240009635687,
+          "frame": 5.5
+        },
+        "hem / RightHandIndex2": {
+          "min_signed_dist": -0.005168522242456675,
+          "frame": 3.0
+        },
+        "front panel / RightHandThumb2": {
+          "min_signed_dist": -0.001280857715755701,
+          "frame": 3.0
+        },
+        "hem / LeftUpLeg": {
+          "min_signed_dist": -0.0013392840046435595,
+          "frame": 24.0
+        },
+        "front panel / RightHandThumb3": {
+          "min_signed_dist": -0.003110614139586687,
+          "frame": 19.5
+        },
+        "front panel / RightHand": {
+          "min_signed_dist": -0.003771525342017412,
+          "frame": 4.5
+        },
+        "front panel / RightHandIndex1": {
+          "min_signed_dist": -0.0037933539133518934,
+          "frame": 4.0
+        },
+        "hem / RightHandMiddle1": {
+          "min_signed_dist": -0.004916341044008732,
+          "frame": 5.0
+        },
+        "hem / RightHand": {
+          "min_signed_dist": -0.0059589119628071785,
+          "frame": 5.0
+        },
+        "front panel / RightHandThumb1": {
+          "min_signed_dist": 0.0001742684398777783,
+          "frame": 5.0
+        },
+        "hem / RightHandThumb1": {
+          "min_signed_dist": -0.0008984889136627316,
+          "frame": 6.0
+        },
+        "sleeve / cuff / Spine2": {
+          "min_signed_dist": -0.00409228540956974,
+          "frame": 7.0
+        },
+        "back panel / Spine1": {
+          "min_signed_dist": -0.0004373960546217859,
+          "frame": 23.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.012843367643654346,
+          "frame": 24.0
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.011232253164052963,
+          "frame": 23.0
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -0.0018641274655237794,
+          "frame": 10.5
+        },
+        "hem / RightForeArm": {
+          "min_signed_dist": -0.009648405946791172,
+          "frame": 28.5
+        },
+        "front panel / RightForeArm": {
+          "min_signed_dist": -0.007388997357338667,
+          "frame": 8.5
+        },
+        "shoulder / armpit / LeftShoulder": {
+          "min_signed_dist": -0.00365627883002162,
+          "frame": 24.5
+        },
+        "back panel / RightArm": {
+          "min_signed_dist": -0.005461899563670158,
+          "frame": 9.0
+        },
+        "back panel / RightForeArm": {
+          "min_signed_dist": -0.0005413061007857323,
+          "frame": 9.5
+        },
+        "sleeve / cuff / LeftShoulder": {
+          "min_signed_dist": -0.0002685989602468908,
+          "frame": 11.5
+        },
+        "back panel / RightUpLeg": {
+          "min_signed_dist": 7.388471567537636e-05,
+          "frame": 14.5
+        },
+        "hem / RightHandThumb2": {
+          "min_signed_dist": -0.0019912375137209892,
+          "frame": 14.0
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.0032709247898310423,
+          "frame": 29.5
+        },
+        "front panel / RightHandThumb4": {
+          "min_signed_dist": -0.0028177574276924133,
+          "frame": 19.0
+        },
+        "hem / RightHandIndex3": {
+          "min_signed_dist": -0.00016539749049115926,
+          "frame": 20.0
+        },
+        "collar / RightArm": {
+          "min_signed_dist": -0.0027501522563397884,
+          "frame": 22.0
+        }
+      },
+      "triangle witness": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.005855280440300703,
+          "frame": 11.5
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.004902410786598921,
+          "frame": 11.0
+        },
+        "back panel / RightUpLeg": {
+          "min_signed_dist": -0.0002771932340692729,
+          "frame": 0.0
+        },
+        "hem / RightUpLeg": {
+          "min_signed_dist": -0.003549369750544429,
+          "frame": 15.0
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.006058004219084978,
+          "frame": 9.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.006175787653774023,
+          "frame": 29.5
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.006779051385819912,
+          "frame": 0.0
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.009153040125966072,
+          "frame": 23.0
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.011065318249166012,
+          "frame": 9.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.003896763315424323,
+          "frame": 27.0
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.0037029096856713295,
+          "frame": 23.5
+        },
+        "front panel / RightArm": {
+          "min_signed_dist": -0.005931864492595196,
+          "frame": 9.0
+        },
+        "sleeve / cuff / RightShoulder": {
+          "min_signed_dist": -0.0037029096856713295,
+          "frame": 23.5
+        },
+        "hem / RightHandThumb3": {
+          "min_signed_dist": -0.004748998675495386,
+          "frame": 2.0
+        },
+        "hem / RightHandThumb4": {
+          "min_signed_dist": -0.005842383485287428,
+          "frame": 2.0
+        },
+        "front panel / RightHandThumb3": {
+          "min_signed_dist": -0.006120345089584589,
+          "frame": 19.5
+        },
+        "front panel / RightHandThumb4": {
+          "min_signed_dist": -0.0060862405225634575,
+          "frame": 19.5
+        },
+        "hem / LeftUpLeg": {
+          "min_signed_dist": -0.002393052913248539,
+          "frame": 23.0
+        },
+        "hem / RightHandIndex1": {
+          "min_signed_dist": -0.007794840261340141,
+          "frame": 3.0
+        },
+        "hem / RightHandIndex2": {
+          "min_signed_dist": -0.007304247468709946,
+          "frame": 3.0
+        },
+        "front panel / RightHandThumb2": {
+          "min_signed_dist": -0.005392067600041628,
+          "frame": 3.5
+        },
+        "front panel / RightHandIndex1": {
+          "min_signed_dist": -0.005355346016585827,
+          "frame": 3.5
+        },
+        "front panel / RightHand": {
+          "min_signed_dist": -0.005388208664953709,
+          "frame": 4.5
+        },
+        "back panel / Spine1": {
+          "min_signed_dist": -0.0016223844140768051,
+          "frame": 24.0
+        },
+        "hem / RightHandMiddle1": {
+          "min_signed_dist": -0.005032069981098175,
+          "frame": 5.0
+        },
+        "hem / RightHand": {
+          "min_signed_dist": -0.007159702479839325,
+          "frame": 5.0
+        },
+        "front panel / RightHandThumb1": {
+          "min_signed_dist": -0.0016287396429106593,
+          "frame": 5.0
+        },
+        "back panel / LeftUpLeg": {
+          "min_signed_dist": -0.002062274608761072,
+          "frame": 23.0
+        },
+        "sleeve / cuff / Spine2": {
+          "min_signed_dist": -0.004481027834117413,
+          "frame": 7.5
+        },
+        "hem / RightHandThumb1": {
+          "min_signed_dist": -0.0035958311054855585,
+          "frame": 6.0
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -0.0027750935405492783,
+          "frame": 8.0
+        },
+        "back panel / RightArm": {
+          "min_signed_dist": -0.006152590271085501,
+          "frame": 9.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.008648348040878773,
+          "frame": 15.0
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.007714610546827316,
+          "frame": 23.0
+        },
+        "hem / RightForeArm": {
+          "min_signed_dist": -0.007556157652288675,
+          "frame": 8.5
+        },
+        "front panel / RightForeArm": {
+          "min_signed_dist": -0.007388997357338667,
+          "frame": 8.5
+        },
+        "shoulder / armpit / LeftShoulder": {
+          "min_signed_dist": -0.00365627883002162,
+          "frame": 24.5
+        },
+        "back panel / RightForeArm": {
+          "min_signed_dist": -0.002936036791652441,
+          "frame": 9.5
+        },
+        "sleeve / cuff / LeftShoulder": {
+          "min_signed_dist": -0.00365627883002162,
+          "frame": 24.5
+        },
+        "hem / RightHandThumb2": {
+          "min_signed_dist": -0.002684393897652626,
+          "frame": 28.5
+        },
+        "hem / RightHandIndex3": {
+          "min_signed_dist": -0.00016539749049115926,
+          "frame": 20.0
+        },
+        "hem / LeftArm": {
+          "min_signed_dist": -0.000847164134029299,
+          "frame": 24.0
+        }
+      }
+    },
+    "wave": {
+      "vertex": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.0033513365779072046,
+          "frame": 49.5
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -0.0005874317139387131,
+          "frame": 1.5
+        },
+        "sleeve / cuff / RightShoulder": {
+          "min_signed_dist": -0.0016302778385579586,
+          "frame": 0.0
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.0014566921163350344,
+          "frame": 0.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.0011519432300701737,
+          "frame": 2.5
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.0023577262181788683,
+          "frame": 2.5
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.002103427890688181,
+          "frame": 0.0
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.003749743802472949,
+          "frame": 55.5
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.0012176940217614174,
+          "frame": 0.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.00024390238104388118,
+          "frame": 0.0
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.009171191602945328,
+          "frame": 9.0
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.00877378135919571,
+          "frame": 17.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.005757883191108704,
+          "frame": 4.5
+        }
+      },
+      "triangle witness": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.002929510548710823,
+          "frame": 0.0
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -0.0011786677641794086,
+          "frame": 1.0
+        },
+        "sleeve / cuff / RightShoulder": {
+          "min_signed_dist": -0.0016302778385579586,
+          "frame": 0.0
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.0021709909196943045,
+          "frame": 0.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.0018240369390696287,
+          "frame": 0.5
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.0029396479949355125,
+          "frame": 1.0
+        },
+        "front panel / RightArm": {
+          "min_signed_dist": -0.00046805950114503503,
+          "frame": 0.0
+        },
+        "back panel / RightArm": {
+          "min_signed_dist": -0.00046805950114503503,
+          "frame": 0.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.003753653494641185,
+          "frame": 37.0
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.006281254813075066,
+          "frame": 10.5
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.0025287580210715532,
+          "frame": 19.0
+        },
+        "back panel / Spine1": {
+          "min_signed_dist": -0.00013880223559681326,
+          "frame": 19.0
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.009400050155818462,
+          "frame": 19.0
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.008429459296166897,
+          "frame": 40.5
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.002691887319087982,
+          "frame": 54.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.002640306483954191,
+          "frame": 52.0
+        }
+      }
+    },
+    "jump": {
+      "vertex": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.00411213468760252,
+          "frame": 10.5
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -0.001777480822056532,
+          "frame": 9.0
+        },
+        "sleeve / cuff / RightShoulder": {
+          "min_signed_dist": -0.0018934884574264288,
+          "frame": 3.5
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.0015284596011042595,
+          "frame": 2.5
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.001491993316449225,
+          "frame": 35.0
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.003527972614392638,
+          "frame": 5.5
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.0031551499851047993,
+          "frame": 34.5
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.003903682343661785,
+          "frame": 38.0
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.0037837084382772446,
+          "frame": 38.5
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.0031133098527789116,
+          "frame": 35.0
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.008623797446489334,
+          "frame": 1.0
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.009739110246300697,
+          "frame": 8.5
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.010377617552876472,
+          "frame": 9.0
+        },
+        "back panel / Spine1": {
+          "min_signed_dist": 0.0004498434718698263,
+          "frame": 5.5
+        },
+        "front panel / RightArm": {
+          "min_signed_dist": 0.0002714564325287938,
+          "frame": 8.0
+        }
+      },
+      "triangle witness": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.0042615062557160854,
+          "frame": 9.0
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -0.0024926334153860807,
+          "frame": 9.0
+        },
+        "sleeve / cuff / RightShoulder": {
+          "min_signed_dist": -0.0022336740512400866,
+          "frame": 6.0
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.00231076218187809,
+          "frame": 3.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.002595784841105342,
+          "frame": 6.0
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.003958947025239468,
+          "frame": 9.0
+        },
+        "front panel / RightArm": {
+          "min_signed_dist": -0.0032431434374302626,
+          "frame": 9.0
+        },
+        "back panel / RightArm": {
+          "min_signed_dist": -0.0023853955790400505,
+          "frame": 9.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.004270224366337061,
+          "frame": 9.0
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.0061862473376095295,
+          "frame": 4.0
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.005037970840930939,
+          "frame": 9.0
+        },
+        "back panel / Spine1": {
+          "min_signed_dist": -0.0005945450393483043,
+          "frame": 4.5
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.008623797446489334,
+          "frame": 1.0
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.008853835053741932,
+          "frame": 9.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.009269585832953453,
+          "frame": 7.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.003117667743936181,
+          "frame": 35.0
+        }
+      }
+    },
+    "idle": {
+      "vertex": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.0033509545028209686,
+          "frame": 3.5
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -0.0003628548001870513,
+          "frame": 66.0
+        },
+        "sleeve / cuff / RightShoulder": {
+          "min_signed_dist": -0.0022785800974816084,
+          "frame": 67.5
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.001985331531614065,
+          "frame": 66.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.00028926064260303974,
+          "frame": 66.0
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.002030221978202462,
+          "frame": 66.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.002129407599568367,
+          "frame": 85.0
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.004425362683832645,
+          "frame": 40.5
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.0018784835701808333,
+          "frame": 66.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.0009734254563227296,
+          "frame": 66.0
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.00849186722189188,
+          "frame": 66.0
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.005458322819322348,
+          "frame": 22.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.005774972960352898,
+          "frame": 39.0
+        },
+        "front panel / Spine1": {
+          "min_signed_dist": 0.00046810650383122265,
+          "frame": 22.0
+        }
+      },
+      "triangle witness": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.003235264215618372,
+          "frame": 67.0
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -0.0014174373354762793,
+          "frame": 66.0
+        },
+        "sleeve / cuff / RightShoulder": {
+          "min_signed_dist": -0.0023340899497270584,
+          "frame": 60.5
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.002381977392360568,
+          "frame": 66.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.0024219071492552757,
+          "frame": 70.0
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.0031926643569022417,
+          "frame": 43.5
+        },
+        "front panel / RightArm": {
+          "min_signed_dist": -0.0015570868272334337,
+          "frame": 66.0
+        },
+        "back panel / RightArm": {
+          "min_signed_dist": -0.0015570868272334337,
+          "frame": 66.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.003769479924812913,
+          "frame": 74.0
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.005254372488707304,
+          "frame": 47.5
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.0020505832508206367,
+          "frame": 13.0
+        },
+        "back panel / Spine1": {
+          "min_signed_dist": -0.0001671088393777609,
+          "frame": 66.0
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.00849186722189188,
+          "frame": 66.0
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.00744707603007555,
+          "frame": 33.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.0031367263291031122,
+          "frame": 22.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.0026484248228371143,
+          "frame": 84.0
+        }
+      }
+    },
+    "nod": {
+      "vertex": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.0033520048018544912,
+          "frame": 43.0
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": 0.00024356337962672114,
+          "frame": 17.0
+        },
+        "sleeve / cuff / RightShoulder": {
+          "min_signed_dist": -0.0016302778385579586,
+          "frame": 0.0
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.0014566921163350344,
+          "frame": 0.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.00023012436577118933,
+          "frame": 0.0
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.001467749010771513,
+          "frame": 17.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.002137040486559272,
+          "frame": 14.0
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.0037501566112041473,
+          "frame": 8.5
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.0012176940217614174,
+          "frame": 0.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.00028904923237860203,
+          "frame": 17.0
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.0088916951790452,
+          "frame": 17.0
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.005266206339001656,
+          "frame": 17.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.005521709099411964,
+          "frame": 0.0
+        }
+      },
+      "triangle witness": {
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.002929510548710823,
+          "frame": 0.0
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -0.00102717662230134,
+          "frame": 17.0
+        },
+        "sleeve / cuff / RightShoulder": {
+          "min_signed_dist": -0.0016302778385579586,
+          "frame": 0.0
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.0021709909196943045,
+          "frame": 0.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.0019466858357191086,
+          "frame": 17.0
+        },
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.0030595012940466404,
+          "frame": 19.5
+        },
+        "front panel / RightArm": {
+          "min_signed_dist": -0.0008057781960815191,
+          "frame": 17.0
+        },
+        "back panel / RightArm": {
+          "min_signed_dist": -0.0008057781960815191,
+          "frame": 17.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.003762225154787302,
+          "frame": 10.5
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.0053337737917900085,
+          "frame": 17.0
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.0012594282161444426,
+          "frame": 0.0
+        },
+        "back panel / Spine1": {
+          "min_signed_dist": -0.00012104194320272654,
+          "frame": 15.5
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.0088916951790452,
+          "frame": 17.0
+        },
+        "hem / LeftForeArm": {
+          "min_signed_dist": -0.007451655343174934,
+          "frame": 36.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.004524029791355133,
+          "frame": 37.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.0026895119808614254,
+          "frame": 34.0
+        }
+      }
+    },
+    "dance": {
+      "vertex": {
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.0015466127078980207,
+          "frame": 8.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.004343737848103046,
+          "frame": 41.5
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.0014696503058075905,
+          "frame": 19.5
+        },
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.004330499097704887,
+          "frame": 53.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.0024410150945186615,
+          "frame": 36.5
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.003798924619331956,
+          "frame": 50.5
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.0029706829227507114,
+          "frame": 40.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.004796633031219244,
+          "frame": 48.0
+        }
+      },
+      "triangle witness": {
+        "shoulder / armpit / RightArm": {
+          "min_signed_dist": -0.002188330516219139,
+          "frame": 8.0
+        },
+        "shoulder / armpit / LeftArm": {
+          "min_signed_dist": -0.0035976336803287268,
+          "frame": 38.0
+        },
+        "shoulder / armpit / Spine1": {
+          "min_signed_dist": -0.001548873377032578,
+          "frame": 48.0
+        },
+        "sleeve / cuff / RightArm": {
+          "min_signed_dist": -1.1802625543566592e-09,
+          "frame": 21.0
+        },
+        "sleeve / cuff / Spine1": {
+          "min_signed_dist": -0.004330499097704887,
+          "frame": 53.0
+        },
+        "shoulder / armpit / RightShoulder": {
+          "min_signed_dist": -0.0008341693901456892,
+          "frame": 8.5
+        },
+        "back panel / LeftArm": {
+          "min_signed_dist": -0.005302428267896175,
+          "frame": 48.0
+        },
+        "sleeve / cuff / LeftArm": {
+          "min_signed_dist": -0.003052677493542433,
+          "frame": 36.5
+        },
+        "front panel / LeftArm": {
+          "min_signed_dist": -0.00326852616854012,
+          "frame": 52.0
+        },
+        "back panel / LeftForeArm": {
+          "min_signed_dist": -0.004796633031219244,
+          "frame": 48.0
+        },
+        "front panel / LeftForeArm": {
+          "min_signed_dist": -0.004796633031219244,
+          "frame": 48.0
+        }
+      }
+    }
+  }
+}

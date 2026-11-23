@@ -1,0 +1,1548 @@
+{
+  "source_glb_sha256": "6d21284ee87de7cd95c6ce498ff8a7a1e27e5cb8e609f819764e91e12095e4ee",
+  "motion_sha256": "3484f5978e94f3e714b320357397d107dd490d56f2eeb64770be292322f9aa2c",
+  "actions_sha256": "0d3a57ae8906edeebee590b67d0e84333640389340bfbfbe0af041ccf8f871c9",
+  "glb_sha256": "0601a38193299f543fd25f95b491da05d8b653cfd4c18155308527f15cdfc689",
+  "selected_stage": "exact-6 with passing clips preserved and jump cuff adjusted",
+  "target_m": 0.0005,
+  "rest_limit_m": 0.03,
+  "local_solve_margin_m": 0.0013,
+  "rest_displacement_m": {
+    "min": 0.0,
+    "p10": 0.0,
+    "median": 0.0,
+    "p90": 0.005222283769398928,
+    "p95": 0.010227784980088472,
+    "max": 0.022885749116539955
+  },
+  "edited_weights": 530,
+  "stages": [
+    {
+      "stage": "preserve passing clips",
+      "passes": [
+        {
+          "pass": 0,
+          "vertices_below_floor": 1,
+          "triangle_pair_occurrences": 376
+        },
+        {
+          "pass": 1,
+          "vertices_below_floor": 0,
+          "triangle_pair_occurrences": 0
+        }
+      ]
+    },
+    {
+      "stage": "jump cuff",
+      "move_m": 0.00015
+    },
+    {
+      "stage": "patch-0",
+      "score": 381757.75634765625,
+      "triangle_pair_occurrences": 84928,
+      "vertex_occurrences_inside": 17517,
+      "vertex_occurrences_below_0_5_mm": 28597,
+      "min_mm": -4.0206,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 0.999
+        },
+        "walk": {
+          "pair_peak": 68,
+          "min_mm": -0.734
+        },
+        "run": {
+          "pair_peak": 51,
+          "min_mm": -0.741
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.742
+        },
+        "jump": {
+          "pair_peak": 0,
+          "min_mm": 0.319
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.65
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.742
+        },
+        "dance": {
+          "pair_peak": 39,
+          "min_mm": -0.26
+        },
+        "sit_down": {
+          "pair_peak": 243,
+          "min_mm": -3.564
+        },
+        "sit_idle": {
+          "pair_peak": 247,
+          "min_mm": -4.021
+        },
+        "stand_up": {
+          "pair_peak": 240,
+          "min_mm": -3.54
+        },
+        "hold_item": {
+          "pair_peak": 154,
+          "min_mm": -1.447
+        }
+      }
+    },
+    {
+      "stage": "patch-1",
+      "score": 331239.6875,
+      "triangle_pair_occurrences": 79494,
+      "vertex_occurrences_inside": 14318,
+      "vertex_occurrences_below_0_5_mm": 25476,
+      "min_mm": -2.8211,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 0.801
+        },
+        "walk": {
+          "pair_peak": 149,
+          "min_mm": -2.424
+        },
+        "run": {
+          "pair_peak": 44,
+          "min_mm": -0.657
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.249
+        },
+        "jump": {
+          "pair_peak": 35,
+          "min_mm": -0.077
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.21
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.249
+        },
+        "dance": {
+          "pair_peak": 40,
+          "min_mm": -0.898
+        },
+        "sit_down": {
+          "pair_peak": 198,
+          "min_mm": -2.632
+        },
+        "sit_idle": {
+          "pair_peak": 210,
+          "min_mm": -2.821
+        },
+        "stand_up": {
+          "pair_peak": 196,
+          "min_mm": -2.632
+        },
+        "hold_item": {
+          "pair_peak": 150,
+          "min_mm": -1.102
+        }
+      }
+    },
+    {
+      "stage": "patch-2",
+      "score": 312967.00341796875,
+      "triangle_pair_occurrences": 78136,
+      "vertex_occurrences_inside": 12433,
+      "vertex_occurrences_below_0_5_mm": 24171,
+      "min_mm": -2.8082,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 0.801
+        },
+        "walk": {
+          "pair_peak": 172,
+          "min_mm": -2.773
+        },
+        "run": {
+          "pair_peak": 44,
+          "min_mm": -0.845
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "jump": {
+          "pair_peak": 4,
+          "min_mm": 0.071
+        },
+        "idle": {
+          "pair_peak": 4,
+          "min_mm": 0.187
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "dance": {
+          "pair_peak": 42,
+          "min_mm": -0.935
+        },
+        "sit_down": {
+          "pair_peak": 199,
+          "min_mm": -2.624
+        },
+        "sit_idle": {
+          "pair_peak": 214,
+          "min_mm": -2.808
+        },
+        "stand_up": {
+          "pair_peak": 187,
+          "min_mm": -2.624
+        },
+        "hold_item": {
+          "pair_peak": 108,
+          "min_mm": -1.041
+        }
+      }
+    },
+    {
+      "stage": "patch-3",
+      "score": 272136.5124511719,
+      "triangle_pair_occurrences": 68139,
+      "vertex_occurrences_inside": 10195,
+      "vertex_occurrences_below_0_5_mm": 21175,
+      "min_mm": -2.8969,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 0.801
+        },
+        "walk": {
+          "pair_peak": 143,
+          "min_mm": -1.001
+        },
+        "run": {
+          "pair_peak": 44,
+          "min_mm": -0.845
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "jump": {
+          "pair_peak": 43,
+          "min_mm": -0.705
+        },
+        "idle": {
+          "pair_peak": 6,
+          "min_mm": 0.187
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "dance": {
+          "pair_peak": 42,
+          "min_mm": -0.935
+        },
+        "sit_down": {
+          "pair_peak": 173,
+          "min_mm": -2.897
+        },
+        "sit_idle": {
+          "pair_peak": 175,
+          "min_mm": -2.808
+        },
+        "stand_up": {
+          "pair_peak": 152,
+          "min_mm": -2.624
+        },
+        "hold_item": {
+          "pair_peak": 128,
+          "min_mm": -1.041
+        }
+      }
+    },
+    {
+      "stage": "exact-0",
+      "score": 272136.5124511719,
+      "triangle_pair_occurrences": 68139,
+      "vertex_occurrences_inside": 10195,
+      "vertex_occurrences_below_0_5_mm": 21175,
+      "min_mm": -2.8969,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 0.801
+        },
+        "walk": {
+          "pair_peak": 143,
+          "min_mm": -1.001
+        },
+        "run": {
+          "pair_peak": 44,
+          "min_mm": -0.845
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "jump": {
+          "pair_peak": 43,
+          "min_mm": -0.705
+        },
+        "idle": {
+          "pair_peak": 6,
+          "min_mm": 0.187
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "dance": {
+          "pair_peak": 42,
+          "min_mm": -0.935
+        },
+        "sit_down": {
+          "pair_peak": 173,
+          "min_mm": -2.897
+        },
+        "sit_idle": {
+          "pair_peak": 175,
+          "min_mm": -2.808
+        },
+        "stand_up": {
+          "pair_peak": 152,
+          "min_mm": -2.624
+        },
+        "hold_item": {
+          "pair_peak": 128,
+          "min_mm": -1.041
+        }
+      }
+    },
+    {
+      "stage": "exact-1",
+      "score": 257878.59509277344,
+      "triangle_pair_occurrences": 77042,
+      "vertex_occurrences_inside": 4808,
+      "vertex_occurrences_below_0_5_mm": 16156,
+      "min_mm": -1.3513,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.206
+        },
+        "walk": {
+          "pair_peak": 102,
+          "min_mm": -1.28
+        },
+        "run": {
+          "pair_peak": 86,
+          "min_mm": -0.724
+        },
+        "wave": {
+          "pair_peak": 26,
+          "min_mm": 0.212
+        },
+        "jump": {
+          "pair_peak": 28,
+          "min_mm": 0.129
+        },
+        "idle": {
+          "pair_peak": 26,
+          "min_mm": 0.182
+        },
+        "nod": {
+          "pair_peak": 26,
+          "min_mm": 0.212
+        },
+        "dance": {
+          "pair_peak": 32,
+          "min_mm": 0.22
+        },
+        "sit_down": {
+          "pair_peak": 154,
+          "min_mm": -1.115
+        },
+        "sit_idle": {
+          "pair_peak": 163,
+          "min_mm": -0.932
+        },
+        "stand_up": {
+          "pair_peak": 152,
+          "min_mm": -1.351
+        },
+        "hold_item": {
+          "pair_peak": 98,
+          "min_mm": -0.263
+        }
+      }
+    },
+    {
+      "stage": "exact-2",
+      "score": 149578.80029296875,
+      "triangle_pair_occurrences": 43630,
+      "vertex_occurrences_inside": 3307,
+      "vertex_occurrences_below_0_5_mm": 10193,
+      "min_mm": -1.3527,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.62
+        },
+        "walk": {
+          "pair_peak": 131,
+          "min_mm": -1.353
+        },
+        "run": {
+          "pair_peak": 65,
+          "min_mm": -0.663
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.519
+        },
+        "jump": {
+          "pair_peak": 0,
+          "min_mm": 0.317
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.497
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.519
+        },
+        "dance": {
+          "pair_peak": 8,
+          "min_mm": -0.002
+        },
+        "sit_down": {
+          "pair_peak": 122,
+          "min_mm": -1.073
+        },
+        "sit_idle": {
+          "pair_peak": 122,
+          "min_mm": -1.118
+        },
+        "stand_up": {
+          "pair_peak": 120,
+          "min_mm": -1.189
+        },
+        "hold_item": {
+          "pair_peak": 48,
+          "min_mm": -0.297
+        }
+      }
+    },
+    {
+      "stage": "exact-3",
+      "score": 129561.07305908203,
+      "triangle_pair_occurrences": 38082,
+      "vertex_occurrences_inside": 2387,
+      "vertex_occurrences_below_0_5_mm": 9956,
+      "min_mm": -1.3202,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 2.12
+        },
+        "walk": {
+          "pair_peak": 93,
+          "min_mm": -1.32
+        },
+        "run": {
+          "pair_peak": 58,
+          "min_mm": -0.741
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.459
+        },
+        "jump": {
+          "pair_peak": 6,
+          "min_mm": 0.274
+        },
+        "idle": {
+          "pair_peak": 4,
+          "min_mm": 0.431
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.459
+        },
+        "dance": {
+          "pair_peak": 28,
+          "min_mm": -0.105
+        },
+        "sit_down": {
+          "pair_peak": 106,
+          "min_mm": -1.117
+        },
+        "sit_idle": {
+          "pair_peak": 88,
+          "min_mm": -1.165
+        },
+        "stand_up": {
+          "pair_peak": 116,
+          "min_mm": -1.233
+        },
+        "hold_item": {
+          "pair_peak": 48,
+          "min_mm": -0.7
+        }
+      }
+    },
+    {
+      "stage": "exact-4",
+      "score": 114542.27014160156,
+      "triangle_pair_occurrences": 33364,
+      "vertex_occurrences_inside": 2447,
+      "vertex_occurrences_below_0_5_mm": 9498,
+      "min_mm": -1.6152,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.973
+        },
+        "walk": {
+          "pair_peak": 103,
+          "min_mm": -1.615
+        },
+        "run": {
+          "pair_peak": 59,
+          "min_mm": -0.73
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.472
+        },
+        "jump": {
+          "pair_peak": 0,
+          "min_mm": 0.407
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.463
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.472
+        },
+        "dance": {
+          "pair_peak": 30,
+          "min_mm": 0.057
+        },
+        "sit_down": {
+          "pair_peak": 95,
+          "min_mm": -0.719
+        },
+        "sit_idle": {
+          "pair_peak": 70,
+          "min_mm": -0.735
+        },
+        "stand_up": {
+          "pair_peak": 96,
+          "min_mm": -0.981
+        },
+        "hold_item": {
+          "pair_peak": 52,
+          "min_mm": -0.432
+        }
+      }
+    },
+    {
+      "stage": "exact-5",
+      "score": 114654.64440917969,
+      "triangle_pair_occurrences": 33586,
+      "vertex_occurrences_inside": 2361,
+      "vertex_occurrences_below_0_5_mm": 8051,
+      "min_mm": -1.4724,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 2.161
+        },
+        "walk": {
+          "pair_peak": 100,
+          "min_mm": -1.472
+        },
+        "run": {
+          "pair_peak": 65,
+          "min_mm": -0.382
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.526
+        },
+        "jump": {
+          "pair_peak": 14,
+          "min_mm": 0.327
+        },
+        "idle": {
+          "pair_peak": 4,
+          "min_mm": 0.519
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.526
+        },
+        "dance": {
+          "pair_peak": 44,
+          "min_mm": 0.102
+        },
+        "sit_down": {
+          "pair_peak": 82,
+          "min_mm": -0.892
+        },
+        "sit_idle": {
+          "pair_peak": 72,
+          "min_mm": -0.943
+        },
+        "stand_up": {
+          "pair_peak": 90,
+          "min_mm": -1.068
+        },
+        "hold_item": {
+          "pair_peak": 48,
+          "min_mm": -0.574
+        }
+      }
+    },
+    {
+      "stage": "exact-6",
+      "score": 114176.65734863281,
+      "triangle_pair_occurrences": 33924,
+      "vertex_occurrences_inside": 1983,
+      "vertex_occurrences_below_0_5_mm": 9318,
+      "min_mm": -1.5882,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.413
+        },
+        "walk": {
+          "pair_peak": 85,
+          "min_mm": -1.588
+        },
+        "run": {
+          "pair_peak": 67,
+          "min_mm": -0.256
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.397
+        },
+        "jump": {
+          "pair_peak": 12,
+          "min_mm": 0.333
+        },
+        "idle": {
+          "pair_peak": 4,
+          "min_mm": 0.375
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.397
+        },
+        "dance": {
+          "pair_peak": 32,
+          "min_mm": 0.096
+        },
+        "sit_down": {
+          "pair_peak": 75,
+          "min_mm": -0.661
+        },
+        "sit_idle": {
+          "pair_peak": 81,
+          "min_mm": -0.752
+        },
+        "stand_up": {
+          "pair_peak": 91,
+          "min_mm": -0.955
+        },
+        "hold_item": {
+          "pair_peak": 56,
+          "min_mm": -0.133
+        }
+      }
+    },
+    {
+      "stage": "split-0",
+      "score": 334839.9346923828,
+      "triangle_pair_occurrences": 93787,
+      "vertex_occurrences_inside": 9537,
+      "vertex_occurrences_below_0_5_mm": 29595,
+      "min_mm": -1.752,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.206
+        },
+        "walk": {
+          "pair_peak": 140,
+          "min_mm": -1.381
+        },
+        "run": {
+          "pair_peak": 106,
+          "min_mm": -0.724
+        },
+        "wave": {
+          "pair_peak": 28,
+          "min_mm": -0.018
+        },
+        "jump": {
+          "pair_peak": 34,
+          "min_mm": -0.087
+        },
+        "idle": {
+          "pair_peak": 28,
+          "min_mm": -0.028
+        },
+        "nod": {
+          "pair_peak": 28,
+          "min_mm": -0.018
+        },
+        "dance": {
+          "pair_peak": 38,
+          "min_mm": -0.19
+        },
+        "sit_down": {
+          "pair_peak": 192,
+          "min_mm": -1.272
+        },
+        "sit_idle": {
+          "pair_peak": 202,
+          "min_mm": -1.752
+        },
+        "stand_up": {
+          "pair_peak": 188,
+          "min_mm": -1.351
+        },
+        "hold_item": {
+          "pair_peak": 125,
+          "min_mm": -0.573
+        }
+      }
+    },
+    {
+      "stage": "split-1",
+      "score": 216720.35498046875,
+      "triangle_pair_occurrences": 59250,
+      "vertex_occurrences_inside": 6622,
+      "vertex_occurrences_below_0_5_mm": 18230,
+      "min_mm": -2.5242,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.176
+        },
+        "walk": {
+          "pair_peak": 120,
+          "min_mm": -2.524
+        },
+        "run": {
+          "pair_peak": 67,
+          "min_mm": -0.698
+        },
+        "wave": {
+          "pair_peak": 4,
+          "min_mm": 0.305
+        },
+        "jump": {
+          "pair_peak": 4,
+          "min_mm": 0.218
+        },
+        "idle": {
+          "pair_peak": 4,
+          "min_mm": 0.289
+        },
+        "nod": {
+          "pair_peak": 4,
+          "min_mm": 0.305
+        },
+        "dance": {
+          "pair_peak": 24,
+          "min_mm": -0.066
+        },
+        "sit_down": {
+          "pair_peak": 151,
+          "min_mm": -1.231
+        },
+        "sit_idle": {
+          "pair_peak": 164,
+          "min_mm": -1.317
+        },
+        "stand_up": {
+          "pair_peak": 139,
+          "min_mm": -1.298
+        },
+        "hold_item": {
+          "pair_peak": 79,
+          "min_mm": -0.811
+        }
+      }
+    },
+    {
+      "stage": "split-2",
+      "score": 159934.61083984375,
+      "triangle_pair_occurrences": 44606,
+      "vertex_occurrences_inside": 4170,
+      "vertex_occurrences_below_0_5_mm": 15389,
+      "min_mm": -2.5242,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.377
+        },
+        "walk": {
+          "pair_peak": 119,
+          "min_mm": -2.524
+        },
+        "run": {
+          "pair_peak": 61,
+          "min_mm": -0.506
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.219
+        },
+        "jump": {
+          "pair_peak": 0,
+          "min_mm": 0.191
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.218
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.219
+        },
+        "dance": {
+          "pair_peak": 18,
+          "min_mm": -0.029
+        },
+        "sit_down": {
+          "pair_peak": 113,
+          "min_mm": -1.098
+        },
+        "sit_idle": {
+          "pair_peak": 121,
+          "min_mm": -1.21
+        },
+        "stand_up": {
+          "pair_peak": 129,
+          "min_mm": -1.236
+        },
+        "hold_item": {
+          "pair_peak": 70,
+          "min_mm": -0.67
+        }
+      }
+    },
+    {
+      "stage": "split-3",
+      "score": 142320.84130859375,
+      "triangle_pair_occurrences": 40634,
+      "vertex_occurrences_inside": 2922,
+      "vertex_occurrences_below_0_5_mm": 13432,
+      "min_mm": -2.5242,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.178
+        },
+        "walk": {
+          "pair_peak": 121,
+          "min_mm": -2.524
+        },
+        "run": {
+          "pair_peak": 72,
+          "min_mm": -0.493
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.295
+        },
+        "jump": {
+          "pair_peak": 8,
+          "min_mm": 0.245
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.269
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.295
+        },
+        "dance": {
+          "pair_peak": 40,
+          "min_mm": -0.146
+        },
+        "sit_down": {
+          "pair_peak": 102,
+          "min_mm": -1.238
+        },
+        "sit_idle": {
+          "pair_peak": 97,
+          "min_mm": -1.476
+        },
+        "stand_up": {
+          "pair_peak": 108,
+          "min_mm": -1.343
+        },
+        "hold_item": {
+          "pair_peak": 80,
+          "min_mm": -0.606
+        }
+      }
+    },
+    {
+      "stage": "wide-0",
+      "score": 272136.5124511719,
+      "triangle_pair_occurrences": 68139,
+      "vertex_occurrences_inside": 10195,
+      "vertex_occurrences_below_0_5_mm": 21175,
+      "min_mm": -2.8969,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 0.801
+        },
+        "walk": {
+          "pair_peak": 143,
+          "min_mm": -1.001
+        },
+        "run": {
+          "pair_peak": 44,
+          "min_mm": -0.845
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "jump": {
+          "pair_peak": 43,
+          "min_mm": -0.705
+        },
+        "idle": {
+          "pair_peak": 6,
+          "min_mm": 0.187
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "dance": {
+          "pair_peak": 42,
+          "min_mm": -0.935
+        },
+        "sit_down": {
+          "pair_peak": 173,
+          "min_mm": -2.897
+        },
+        "sit_idle": {
+          "pair_peak": 175,
+          "min_mm": -2.808
+        },
+        "stand_up": {
+          "pair_peak": 152,
+          "min_mm": -2.624
+        },
+        "hold_item": {
+          "pair_peak": 128,
+          "min_mm": -1.041
+        }
+      }
+    },
+    {
+      "stage": "wide-1",
+      "score": 248832.90234375,
+      "triangle_pair_occurrences": 63434,
+      "vertex_occurrences_inside": 9167,
+      "vertex_occurrences_below_0_5_mm": 18430,
+      "min_mm": -3.1387,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 0.801
+        },
+        "walk": {
+          "pair_peak": 143,
+          "min_mm": -3.139
+        },
+        "run": {
+          "pair_peak": 44,
+          "min_mm": -0.845
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "jump": {
+          "pair_peak": 38,
+          "min_mm": -0.632
+        },
+        "idle": {
+          "pair_peak": 4,
+          "min_mm": 0.187
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "dance": {
+          "pair_peak": 42,
+          "min_mm": -0.935
+        },
+        "sit_down": {
+          "pair_peak": 162,
+          "min_mm": -2.624
+        },
+        "sit_idle": {
+          "pair_peak": 176,
+          "min_mm": -2.808
+        },
+        "stand_up": {
+          "pair_peak": 154,
+          "min_mm": -2.624
+        },
+        "hold_item": {
+          "pair_peak": 102,
+          "min_mm": -1.041
+        }
+      }
+    },
+    {
+      "stage": "wide-2",
+      "score": 255866.57177734375,
+      "triangle_pair_occurrences": 65934,
+      "vertex_occurrences_inside": 9304,
+      "vertex_occurrences_below_0_5_mm": 18793,
+      "min_mm": -2.8082,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 0.801
+        },
+        "walk": {
+          "pair_peak": 141,
+          "min_mm": -1.516
+        },
+        "run": {
+          "pair_peak": 44,
+          "min_mm": -1.617
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "jump": {
+          "pair_peak": 39,
+          "min_mm": -0.447
+        },
+        "idle": {
+          "pair_peak": 4,
+          "min_mm": 0.187
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.227
+        },
+        "dance": {
+          "pair_peak": 42,
+          "min_mm": -0.935
+        },
+        "sit_down": {
+          "pair_peak": 166,
+          "min_mm": -2.624
+        },
+        "sit_idle": {
+          "pair_peak": 186,
+          "min_mm": -2.808
+        },
+        "stand_up": {
+          "pair_peak": 156,
+          "min_mm": -2.624
+        },
+        "hold_item": {
+          "pair_peak": 106,
+          "min_mm": -1.041
+        }
+      }
+    },
+    {
+      "stage": "sat-0",
+      "score": 331239.6875,
+      "triangle_pair_occurrences": 79494,
+      "vertex_occurrences_inside": 14318,
+      "vertex_occurrences_below_0_5_mm": 25476,
+      "min_mm": -2.8211,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 0.801
+        },
+        "walk": {
+          "pair_peak": 149,
+          "min_mm": -2.424
+        },
+        "run": {
+          "pair_peak": 44,
+          "min_mm": -0.657
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.249
+        },
+        "jump": {
+          "pair_peak": 35,
+          "min_mm": -0.077
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.21
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.249
+        },
+        "dance": {
+          "pair_peak": 40,
+          "min_mm": -0.898
+        },
+        "sit_down": {
+          "pair_peak": 198,
+          "min_mm": -2.632
+        },
+        "sit_idle": {
+          "pair_peak": 210,
+          "min_mm": -2.821
+        },
+        "stand_up": {
+          "pair_peak": 196,
+          "min_mm": -2.632
+        },
+        "hold_item": {
+          "pair_peak": 150,
+          "min_mm": -1.102
+        }
+      }
+    },
+    {
+      "stage": "pairs-0",
+      "score": 114542.27014160156,
+      "triangle_pair_occurrences": 33364,
+      "vertex_occurrences_inside": 2447,
+      "vertex_occurrences_below_0_5_mm": 9498,
+      "min_mm": -1.6152,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.973
+        },
+        "walk": {
+          "pair_peak": 103,
+          "min_mm": -1.615
+        },
+        "run": {
+          "pair_peak": 59,
+          "min_mm": -0.73
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.472
+        },
+        "jump": {
+          "pair_peak": 0,
+          "min_mm": 0.407
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.463
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.472
+        },
+        "dance": {
+          "pair_peak": 30,
+          "min_mm": 0.057
+        },
+        "sit_down": {
+          "pair_peak": 95,
+          "min_mm": -0.719
+        },
+        "sit_idle": {
+          "pair_peak": 70,
+          "min_mm": -0.735
+        },
+        "stand_up": {
+          "pair_peak": 96,
+          "min_mm": -0.981
+        },
+        "hold_item": {
+          "pair_peak": 52,
+          "min_mm": -0.432
+        }
+      }
+    },
+    {
+      "stage": "pairs-1",
+      "score": 115909.54150390625,
+      "triangle_pair_occurrences": 33253,
+      "vertex_occurrences_inside": 2624,
+      "vertex_occurrences_below_0_5_mm": 10259,
+      "min_mm": -1.4908,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 2.161
+        },
+        "walk": {
+          "pair_peak": 94,
+          "min_mm": -1.491
+        },
+        "run": {
+          "pair_peak": 56,
+          "min_mm": -0.306
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.489
+        },
+        "jump": {
+          "pair_peak": 4,
+          "min_mm": 0.374
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.459
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.489
+        },
+        "dance": {
+          "pair_peak": 26,
+          "min_mm": -0.081
+        },
+        "sit_down": {
+          "pair_peak": 92,
+          "min_mm": -0.95
+        },
+        "sit_idle": {
+          "pair_peak": 72,
+          "min_mm": -0.991
+        },
+        "stand_up": {
+          "pair_peak": 95,
+          "min_mm": -1.089
+        },
+        "hold_item": {
+          "pair_peak": 52,
+          "min_mm": -0.676
+        }
+      }
+    },
+    {
+      "stage": "pairs-2",
+      "score": 110662.21813964844,
+      "triangle_pair_occurrences": 31351,
+      "vertex_occurrences_inside": 2330,
+      "vertex_occurrences_below_0_5_mm": 9737,
+      "min_mm": -1.4787,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 2.105
+        },
+        "walk": {
+          "pair_peak": 73,
+          "min_mm": -1.153
+        },
+        "run": {
+          "pair_peak": 50,
+          "min_mm": -0.635
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.573
+        },
+        "jump": {
+          "pair_peak": 4,
+          "min_mm": 0.419
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.544
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.573
+        },
+        "dance": {
+          "pair_peak": 28,
+          "min_mm": -0.002
+        },
+        "sit_down": {
+          "pair_peak": 85,
+          "min_mm": -1.418
+        },
+        "sit_idle": {
+          "pair_peak": 74,
+          "min_mm": -1.479
+        },
+        "stand_up": {
+          "pair_peak": 84,
+          "min_mm": -1.44
+        },
+        "hold_item": {
+          "pair_peak": 60,
+          "min_mm": -0.616
+        }
+      }
+    },
+    {
+      "stage": "pairs-3",
+      "score": 110502.58129882812,
+      "triangle_pair_occurrences": 31663,
+      "vertex_occurrences_inside": 2307,
+      "vertex_occurrences_below_0_5_mm": 8541,
+      "min_mm": -1.6081,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 2.133
+        },
+        "walk": {
+          "pair_peak": 77,
+          "min_mm": -1.608
+        },
+        "run": {
+          "pair_peak": 48,
+          "min_mm": -0.615
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.539
+        },
+        "jump": {
+          "pair_peak": 4,
+          "min_mm": 0.456
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.529
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.539
+        },
+        "dance": {
+          "pair_peak": 28,
+          "min_mm": 0.025
+        },
+        "sit_down": {
+          "pair_peak": 87,
+          "min_mm": -1.028
+        },
+        "sit_idle": {
+          "pair_peak": 65,
+          "min_mm": -1.041
+        },
+        "stand_up": {
+          "pair_peak": 90,
+          "min_mm": -1.223
+        },
+        "hold_item": {
+          "pair_peak": 60,
+          "min_mm": -0.66
+        }
+      }
+    },
+    {
+      "stage": "pairs-4",
+      "score": 108655.32092285156,
+      "triangle_pair_occurrences": 30101,
+      "vertex_occurrences_inside": 3011,
+      "vertex_occurrences_below_0_5_mm": 10898,
+      "min_mm": -1.644,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.189
+        },
+        "walk": {
+          "pair_peak": 84,
+          "min_mm": -1.644
+        },
+        "run": {
+          "pair_peak": 32,
+          "min_mm": -0.344
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.323
+        },
+        "jump": {
+          "pair_peak": 0,
+          "min_mm": 0.243
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.292
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.281
+        },
+        "dance": {
+          "pair_peak": 24,
+          "min_mm": 0.315
+        },
+        "sit_down": {
+          "pair_peak": 77,
+          "min_mm": -1.125
+        },
+        "sit_idle": {
+          "pair_peak": 66,
+          "min_mm": -1.124
+        },
+        "stand_up": {
+          "pair_peak": 82,
+          "min_mm": -1.224
+        },
+        "hold_item": {
+          "pair_peak": 56,
+          "min_mm": -0.353
+        }
+      }
+    },
+    {
+      "stage": "envelope-0",
+      "score": 114542.27014160156,
+      "triangle_pair_occurrences": 33364,
+      "vertex_occurrences_inside": 2447,
+      "vertex_occurrences_below_0_5_mm": 9498,
+      "min_mm": -1.6152,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.973
+        },
+        "walk": {
+          "pair_peak": 103,
+          "min_mm": -1.615
+        },
+        "run": {
+          "pair_peak": 59,
+          "min_mm": -0.73
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.472
+        },
+        "jump": {
+          "pair_peak": 0,
+          "min_mm": 0.407
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.463
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.472
+        },
+        "dance": {
+          "pair_peak": 30,
+          "min_mm": 0.057
+        },
+        "sit_down": {
+          "pair_peak": 95,
+          "min_mm": -0.719
+        },
+        "sit_idle": {
+          "pair_peak": 70,
+          "min_mm": -0.735
+        },
+        "stand_up": {
+          "pair_peak": 96,
+          "min_mm": -0.981
+        },
+        "hold_item": {
+          "pair_peak": 52,
+          "min_mm": -0.432
+        }
+      }
+    },
+    {
+      "stage": "envelope-1",
+      "score": 118205.97863769531,
+      "triangle_pair_occurrences": 34636,
+      "vertex_occurrences_inside": 2438,
+      "vertex_occurrences_below_0_5_mm": 8799,
+      "min_mm": -1.6152,
+      "clips": {
+        "rest": {
+          "pair_peak": 0,
+          "min_mm": 1.973
+        },
+        "walk": {
+          "pair_peak": 105,
+          "min_mm": -1.615
+        },
+        "run": {
+          "pair_peak": 59,
+          "min_mm": -0.73
+        },
+        "wave": {
+          "pair_peak": 0,
+          "min_mm": 0.472
+        },
+        "jump": {
+          "pair_peak": 0,
+          "min_mm": 0.407
+        },
+        "idle": {
+          "pair_peak": 0,
+          "min_mm": 0.463
+        },
+        "nod": {
+          "pair_peak": 0,
+          "min_mm": 0.472
+        },
+        "dance": {
+          "pair_peak": 30,
+          "min_mm": 0.057
+        },
+        "sit_down": {
+          "pair_peak": 89,
+          "min_mm": -0.719
+        },
+        "sit_idle": {
+          "pair_peak": 76,
+          "min_mm": -0.735
+        },
+        "stand_up": {
+          "pair_peak": 92,
+          "min_mm": -0.981
+        },
+        "hold_item": {
+          "pair_peak": 52,
+          "min_mm": -0.432
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "files": {
+    "body_male.glb": {
+      "bytes": 1196676,
+      "triangles": 9974,
+      "sha256": "176ab94b3a1c68c3862b75963a35105155d8b875384e718e065e48b39d293625",
+      "khronosWarnings": 0
+    },
+    "motion_male.glb": {
+      "bytes": 1778324,
+      "triangles": 0,
+      "sha256": "31c41ce9695e8448aaf5cd7820d8bcf44e6456ed8a4268f0d5e66f6e9c3c2059",
+      "khronosWarnings": 0
+    },
+    "hand_gestures_male.glb": {
+      "bytes": 95796,
+      "triangles": 0,
+      "sha256": "140e8d616494344c13f23f895e690588a05b671fb6ce72441e152741ff1ad310",
+      "khronosWarnings": 0
+    },
+    "male-hair-bob.glb": {
+      "bytes": 227028,
+      "triangles": 2994,
+      "sha256": "87b48c94f31e3a4306672b5a5761d262f8f19b1f8fb126300e6a3c255a3f4ef8",
+      "khronosWarnings": 1
+    },
+    "male-hair-spiky.glb": {
+      "bytes": 1060180,
+      "triangles": 2972,
+      "sha256": "3a7215ef4b66055329026654dab410ef3882bed24c6ff968a19adb784a197c44",
+      "khronosWarnings": 2
+    },
+    "male-hair-sidepart.glb": {
+      "bytes": 123952,
+      "triangles": 2982,
+      "sha256": "a659971572bbc36e4e7786cd3fc28f651030f2f944778dd5efb90b3f72eaf83c",
+      "khronosWarnings": 1
+    },
+    "male-tshirt.glb": {
+      "bytes": 1245816,
+      "triangles": 4699,
+      "sha256": "0cda28b40949a61fd8109db1d5e85732ef4011d5a7765884e32c99cc43fb61ce",
+      "khronosWarnings": 0
+    },
+    "male-dress.glb": {
+      "bytes": 965224,
+      "triangles": 4042,
+      "sha256": "1d19dea96b15e8bdd92ddd781605ec776f46e0a5e24b25e5b1495104db710071",
+      "khronosWarnings": 0
+    },
+    "male-jeans.glb": {
+      "bytes": 1197104,
+      "triangles": 4704,
+      "sha256": "dcd47b3af6cde7cff02df2f9c68e5cb5d09cc965e258c7fb9cac04b31969cd33",
+      "khronosWarnings": 0
+    },
+    "male-sneakers.glb": {
+      "bytes": 196800,
+      "triangles": 3492,
+      "sha256": "aae73ece7a72dbe30fd564efc6b22ea2c73f3184923cfe728c0007f1546a9244",
+      "khronosWarnings": 0
+    }
+  },
+  "poses": {
+    "hair-bob": {
+      "maxVerticesInside": 0,
+      "maxTrianglePairs": 0,
+      "minimumSignedM": 0.0005837079952470958,
+      "passed": true
+    },
+    "hair-spiky": {
+      "maxVerticesInside": 0,
+      "maxTrianglePairs": 0,
+      "minimumSignedM": 0.002609575865790248,
+      "passed": true
+    },
+    "hair-sidepart": {
+      "maxVerticesInside": 0,
+      "maxTrianglePairs": 0,
+      "minimumSignedM": 0.0008128553163260221,
+      "passed": true
+    },
+    "tshirt": {
+      "maxVerticesInside": 22,
+      "maxTrianglePairs": 71,
+      "minimumSignedM": -0.004601455759257078,
+      "passed": false
+    },
+    "dress": {
+      "maxVerticesInside": 45,
+      "maxTrianglePairs": 262,
+      "minimumSignedM": -0.006932321470230818,
+      "passed": false
+    },
+    "jeans": {
+      "maxVerticesInside": 66,
+      "maxTrianglePairs": 193,
+      "minimumSignedM": -0.00787938293069601,
+      "passed": false
+    },
+    "sneakers": {
+      "maxVerticesInside": 0,
+      "maxTrianglePairs": 0,
+      "minimumSignedM": 0.000517310225404799,
+      "passed": true
+    }
+  },
+  "verification": {
+    "bodyPassClips": [
+      "idle",
+      "wave",
+      "hold_bag"
+    ],
+    "bodyOverlapOccurrences": 63598,
+    "floorMaxErrorMm": 0.09023,
+    "outfitLayerTrianglePairs": {
+      "rest": {
+        "frame": 1,
+        "triangle_pairs": 6
+      },
+      "idle": {
+        "frame": 24,
+        "triangle_pairs": 0
+      }
+    },
+    "outfitContactSheetSha256": "5d5b749c0fb653089b4beac347bdba157d2d0aa8fdba71ebbd72b88d5f62610c",
+    "masterSha256": "6a08340476bd793435f4179d5d13a44d2a644177c2da65cbf58a396bba4a16a5"
+  },
+  "views": 42
+}

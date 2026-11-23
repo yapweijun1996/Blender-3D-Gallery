@@ -1,0 +1,94 @@
+{
+  "blender": "5.1.2",
+  "engine": "Cycles CPU",
+  "threads": 2,
+  "samples": 12,
+  "views": [
+    "FRONT",
+    "REAR",
+    "LEFT",
+    "RIGHT",
+    "TOP",
+    "THREE QUARTER"
+  ],
+  "models": {
+    "ambulance": {
+      "source": "models/ambulance/exports/optimized.glb",
+      "source_sha256": "354b7ecfc251cf4cc59bbefad32abb30937e74bc3dd43beac62f7c9b08c56e16",
+      "file": "ambulance_hd.glb",
+      "glb_sha256": "07c15d79402cee20fd543f82b5f831fce6aa2874a4ee361b6914eeddbd4f2de4",
+      "sheet": "ambulance_comparison.png",
+      "sheet_sha256": "686bd9cbf225637f084164a2b72eef268c7c487818f3aa2b007eeebf56f84c43",
+      "visual_review": {
+        "builder": "pass",
+        "independent": "pass",
+        "observation": "Retained cab and yellow stripe; front lenses and mounted beacon visible, with exposed rear glazing and tail lamps."
+      }
+    },
+    "school_bus": {
+      "source": "models/school-bus/exports/optimized.glb",
+      "source_sha256": "eb54f1ad890420f8bef646eea545480586a6e379fd6094fd25aa545712e02163",
+      "file": "school_bus_hd.glb",
+      "glb_sha256": "cd2687137ad2d3bf031d46f54725310d11f234930d60f4e731470d0c46a47fc4",
+      "sheet": "school_bus_comparison.png",
+      "sheet_sha256": "f0b130eaa523ab7e6cbb9eefd948b0da7df7e0f9c0094cf771758da1ec6d19a2",
+      "visual_review": {
+        "builder": "pass",
+        "independent": "pass",
+        "observation": "Retained yellow profile, glazing and seat rows; front lettering and rear-door seams read clearly."
+      }
+    },
+    "taxi": {
+      "source": "models/hatchback-car/exports/optimized.glb",
+      "source_sha256": "46ed01380f5ad863ab046c7379367c07fa523f5868331b5ffa931c8521f77991",
+      "file": "taxi_hd.glb",
+      "glb_sha256": "551c88487923e22a1755ac85fafc9494ac5283954fd95f3d2a4533d45cfc04b0",
+      "sheet": "taxi_comparison.png",
+      "sheet_sha256": "e5e3639aa8b01325999b0f2ecedbf235ef51309b9eb26bc37c090959f06d240b",
+      "visual_review": {
+        "builder": "pass",
+        "independent": "pass",
+        "observation": "Retained hatchback profile and glazing; roof lettering reads from both ends."
+      }
+    },
+    "police": {
+      "source": "models/hatchback-car/exports/optimized.glb",
+      "source_sha256": "46ed01380f5ad863ab046c7379367c07fa523f5868331b5ffa931c8521f77991",
+      "file": "police_hd.glb",
+      "glb_sha256": "e89091f538ff340d3092c6202a560c61981ac24a8a74cf4d37e2973b0e2275ff",
+      "sheet": "police_comparison.png",
+      "sheet_sha256": "17a4303a181788b9f13b0e58f8dceb238f8c7b90043adb6311ca9e8c9c4f7bb9",
+      "visual_review": {
+        "builder": "pass",
+        "independent": "pass",
+        "observation": "Retained hatchback profile and glazing; distinct roof modules and stripes on both sides."
+      }
+    },
+    "bus_double": {
+      "source": "models/singapore-public-bus/exports/singapore-public-bus.glb",
+      "source_sha256": "381f2a588a25387dbc7ab2065863e95024d3c34ac418fd54ef6fbab8818a4d69",
+      "file": "bus_double_hd.glb",
+      "glb_sha256": "017be42a127a6dc8cc323adc47e8dfb50e9932aab417bf3defac8c2d9f6a8bfa",
+      "sheet": "bus_double_comparison.png",
+      "sheet_sha256": "b354377f449f09555d5b917cbaba2c1989fc8474469b1021427cae4e30f1e5b8",
+      "visual_review": {
+        "builder": "pass",
+        "independent": "pass",
+        "observation": "Upper deck continues the green, white and teal palette and aligns with the retained lower doors and body."
+      }
+    },
+    "lorry": {
+      "source": "models/cargo-truck/exports/cargo-truck.glb",
+      "source_sha256": "11d7b8cacaa409b24800c9cdcd7eceb9fe2f6c903975223a4d16bccfb052ec6c",
+      "file": "lorry_hd.glb",
+      "glb_sha256": "2b6a60976aa6018e60f9034a99a85e304fe345679b245c52fb39a4f93e0ee9d1",
+      "sheet": "lorry_comparison.png",
+      "sheet_sha256": "e32292978730fb6b4554e0e6167665dff5de9b8b39a02f95189af142bec741cc",
+      "visual_review": {
+        "builder": "pass",
+        "independent": "pass",
+        "observation": "Retained teal cab, front fascia and mirrors; open bed, ribs, tailgate and rear lamps read in complementary views."
+      }
+    }
+  }
+}

@@ -1,0 +1,241 @@
+{
+  "assets": [
+    {
+      "file": "mrt_carriage.glb",
+      "candidateSha256": "76735d466f43f105597676a589e5d0d973c250100ff7de0ece609ddfbec6d8bd",
+      "comparisonRecord": "comparisons/mrt_carriage.json",
+      "visualReview": {
+        "result": "pass",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "observation": "Original car proportions and paired door divisions retained. Front lamps, teal stripe, glass, wheelsets, seats, grab poles and triangular handles are visible in exterior and aisle views."
+      },
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "result": "pass"
+      },
+      "geometryChecks": {
+        "doorCrossingRays": 64,
+        "walkableAisleMeters": 0.7,
+        "floorSamples": 231,
+        "doorSillSamples": 12,
+        "openChecks": "pass"
+      }
+    },
+    {
+      "file": "mrt_platform.glb",
+      "candidateSha256": "84eb6b46e7f7a709d0b3fcdbfa66b12c71bfaa71d8440926f2fc31d29ca73052",
+      "comparisonRecord": "comparisons/mrt_platform.json",
+      "visualReview": {
+        "result": "pass",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "observation": "The local edge view preserves the original structure, wall, canopy, posts and benches. Long views show the full extension. The raised tactile strip and separate edge line read in the detail view."
+      },
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "result": "pass"
+      },
+      "geometryChecks": {
+        "platformLengthMeters": 120,
+        "continuousDeckSamples": 120
+      }
+    },
+    {
+      "file": "platform_screen_door.glb",
+      "candidateSha256": "a443fd1b9d9db20bd5213f4f0b21c2191fe63770d67e7d7457342f23579c35b7",
+      "comparisonRecord": "comparisons/platform_screen_door.json",
+      "visualReview": {
+        "result": "pass",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "observation": "All four glazed panels, yellow stripes and header text read clearly. Both sash profiles match across the centre gap. The header and threshold joints are clear of black overlaps."
+      },
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "result": "pass"
+      },
+      "geometryChecks": {
+        "bayWidthMeters": 3,
+        "passageRays": 16,
+        "openChecks": "pass"
+      }
+    },
+    {
+      "file": "fare_gate.glb",
+      "candidateSha256": "52d45f5953a62b40a54c72a94da6c388b9d2ac227a9a23d16a36e9feb578a1d9",
+      "comparisonRecord": "comparisons/fare_gate.json",
+      "visualReview": {
+        "result": "pass",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "observation": "Rounded cabinet edges, reader pads and amber indicators match the source treatment. Two blue flaps meet over the passage."
+      },
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "result": "pass"
+      },
+      "geometryChecks": {
+        "passageRays": 12,
+        "openChecks": "pass"
+      }
+    },
+    {
+      "file": "station_sign.glb",
+      "candidateSha256": "2064bf2257b9ef86d445a545a25cf7028b71c94f2eaae4664ff13b010fecff67",
+      "comparisonRecord": "comparisons/station_sign.json",
+      "visualReview": {
+        "result": "pass",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "observation": "Both text lines, blue enclosure, original outer bevels and rear brackets are visible."
+      },
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "result": "pass"
+      },
+      "geometryChecks": {}
+    },
+    {
+      "file": "route_map.glb",
+      "candidateSha256": "79476367efca4552bc86c0467360dd4ea337e414bf20a5542974f2866a61a29b",
+      "comparisonRecord": "comparisons/route_map.json",
+      "visualReview": {
+        "result": "pass",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "observation": "The complete original title, two coloured lines, twelve square stops and numbered rows are visible. Labels sit flush with the inlay."
+      },
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "result": "pass"
+      },
+      "geometryChecks": {}
+    },
+    {
+      "file": "train_seat.glb",
+      "candidateSha256": "c22a30871761f15094b64c00e73a63b4076773e3ae3e647960150852f04162b3",
+      "comparisonRecord": "comparisons/train_seat.json",
+      "visualReview": {
+        "result": "pass",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "observation": "Three blue seat sections, original gaps and pedestal layout are preserved. The cushion leading edge and backrest bevels show in profile and oblique views."
+      },
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "result": "pass"
+      },
+      "geometryChecks": {}
+    },
+    {
+      "file": "train_door.glb",
+      "candidateSha256": "4a929bde2d165425823bafd03562b0504e34c5d8f635a9c61b4c257555d52c7c",
+      "comparisonRecord": "comparisons/train_door.json",
+      "visualReview": {
+        "result": "pass",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "observation": "Two windows, the centre seal and safety stripe remain visible, with no black blocks at the frame joints."
+      },
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "result": "pass"
+      },
+      "geometryChecks": {}
+    },
+    {
+      "file": "grab_handle.glb",
+      "candidateSha256": "65958cb5b5011c04aa8b251aa3bf54e0245919ef309838473c379b318cf683bb",
+      "comparisonRecord": "comparisons/grab_handle.json",
+      "visualReview": {
+        "result": "pass",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "observation": "The rail and dark hanger support a white, open triangular grip. The rail end is rounded within the allotted mesh."
+      },
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "result": "pass"
+      },
+      "geometryChecks": {}
+    },
+    {
+      "file": "card_reader.glb",
+      "candidateSha256": "c8fdbe2a8d12d8591780d1d50e1bb03a62c0218b881ffbb439e743c1fe7eaf77",
+      "comparisonRecord": "comparisons/card_reader.json",
+      "visualReview": {
+        "result": "pass",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "observation": "The green status light, blue pad, four speaker slots, backplate and cable entry are visible. The enclosure retains bevel highlights."
+      },
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "result": "pass"
+      },
+      "geometryChecks": {}
+    },
+    {
+      "file": "arrival_display.glb",
+      "candidateSha256": "f437be9f9860fccb3cd46f955ce1197c8a4650f9262bde09be2c7e60de70881e",
+      "comparisonRecord": "comparisons/arrival_display.json",
+      "visualReview": {
+        "result": "pass",
+        "reviewers": [
+          "primary agent",
+          "independent visual review agent"
+        ],
+        "observation": "The original heading, route numbers and times are readable. The panel sits against the bezel and the rear mounting blocks remain visible."
+      },
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "result": "pass"
+      },
+      "geometryChecks": {}
+    }
+  ],
+  "runtimeScope": "Mesh and displacement checks; game-engine integration and renderer-specific sorting remain untested."
+}

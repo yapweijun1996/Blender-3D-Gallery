@@ -1,0 +1,1624 @@
+{
+  "source_sha256": "ffccda1ba2a50eb10948853e03d17f0d095cd9b953d644c03c4fb9cb95529410",
+  "body_sha256": "31e16b400988b18c18ee30e988ee28a42b0b968073b0f12c5afda2dc678143f6",
+  "blender": "5.1.2",
+  "mesh_vertices": 8639,
+  "coincident_pairs": 4650,
+  "edge_probe_min_rest_length_mm": 1,
+  "rest_seam_quantization_m": 1e-06,
+  "joint_edge_count": {
+    "shoulder": 986,
+    "knee": 725,
+    "hip": 1598,
+    "elbow": 571
+  },
+  "rest_axis_change_degrees": {
+    "mixamorig:Hips": 0.0,
+    "mixamorig:LeftUpLeg": 2.4202913126538412,
+    "mixamorig:LeftLeg": 1.4622982974271654,
+    "mixamorig:LeftFoot": 1.7236928349932528,
+    "mixamorig:LeftToeBase": 0.0,
+    "mixamorig:LeftToe_End": 0.0,
+    "mixamorig:RightUpLeg": 2.49231005539255,
+    "mixamorig:RightLeg": 1.4622982974271654,
+    "mixamorig:RightFoot": 1.7236928349932528,
+    "mixamorig:RightToeBase": 0.0,
+    "mixamorig:RightToe_End": 0.0,
+    "mixamorig:Spine": 0.0,
+    "mixamorig:Spine1": 5.017945136666531,
+    "mixamorig:Spine2": 11.36054266852184,
+    "mixamorig:LeftShoulder": 1.218186806580939,
+    "mixamorig:LeftArm": 2.780877186995855,
+    "mixamorig:LeftForeArm": 11.126057413643899,
+    "mixamorig:LeftHand": 54.770702269913684,
+    "mixamorig:LeftHandIndex1": 178.93595809721617,
+    "mixamorig:LeftHandIndex2": 178.53956249974567,
+    "mixamorig:LeftHandIndex3": 178.54071593481984,
+    "mixamorig:LeftHandIndex4": 178.53963347544388,
+    "mixamorig:LeftHandMiddle1": 179.98105305515605,
+    "mixamorig:LeftHandMiddle2": 179.91908604388183,
+    "mixamorig:LeftHandMiddle3": 179.91869304110185,
+    "mixamorig:LeftHandMiddle4": 179.9188990740767,
+    "mixamorig:LeftHandPinky1": 177.29139507301534,
+    "mixamorig:LeftHandPinky2": 177.11776993409043,
+    "mixamorig:LeftHandPinky3": 177.11849202804942,
+    "mixamorig:LeftHandPinky4": 177.11760360906118,
+    "mixamorig:LeftHandRing1": 179.68200764862533,
+    "mixamorig:LeftHandRing2": 179.65276849939542,
+    "mixamorig:LeftHandRing3": 179.6528284772694,
+    "mixamorig:LeftHandRing4": 179.65325520596596,
+    "mixamorig:LeftHandThumb1": 161.2694197946746,
+    "mixamorig:LeftHandThumb2": 153.25042731416653,
+    "mixamorig:LeftHandThumb3": 153.25064846312966,
+    "mixamorig:LeftHandThumb4": 153.25095385915003,
+    "mixamorig:Neck": 5.606331443868791,
+    "mixamorig:Head": 5.606331443868791,
+    "mixamorig:HeadTop_End": 5.60619177961522,
+    "mixamorig:RightShoulder": 1.218186806580939,
+    "mixamorig:RightArm": 36.96170399030706,
+    "mixamorig:RightForeArm": 48.68985882495584,
+    "mixamorig:RightHand": 12.201443912897034,
+    "mixamorig:RightHandIndex1": 33.51309296371485,
+    "mixamorig:RightHandIndex2": 57.25076111107974,
+    "mixamorig:RightHandIndex3": 57.25096070686569,
+    "mixamorig:RightHandIndex4": 57.24952075155987,
+    "mixamorig:RightHandMiddle1": 179.97901189578025,
+    "mixamorig:RightHandMiddle2": 179.9298700744939,
+    "mixamorig:RightHandMiddle3": 179.92946809377312,
+    "mixamorig:RightHandMiddle4": 179.930090181383,
+    "mixamorig:RightHandPinky1": 39.8491537859207,
+    "mixamorig:RightHandPinky2": 43.21257668301055,
+    "mixamorig:RightHandPinky3": 43.212279900036805,
+    "mixamorig:RightHandPinky4": 43.212020213342726,
+    "mixamorig:RightHandRing1": 38.148659846761866,
+    "mixamorig:RightHandRing2": 90.31979245480484,
+    "mixamorig:RightHandRing3": 90.31915670791068,
+    "mixamorig:RightHandRing4": 90.31916634046554,
+    "mixamorig:RightHandThumb1": 81.85395910415023,
+    "mixamorig:RightHandThumb2": 86.7567508925113,
+    "mixamorig:RightHandThumb3": 86.7566713344446,
+    "mixamorig:RightHandThumb4": 86.75706912419363
+  },
+  "rotation_mode": "unchanged QUATERNION on all source and target bones",
+  "sample_method": "Every integer Blender frame, inclusive at 24 fps. Direct playback assigns the source action and slot to the target. Rest-adjusted playback conjugates the source local quaternion delta through source/target world bind axes, maps local translation into the target bind axes and preserves scale. Both use the original clip's selected action slot.",
+  "direct": {
+    "walk": {
+      "frames": 57,
+      "first_frame": 1,
+      "last_frame": 57,
+      "max_edge_details": {
+        "frame": 32,
+        "vertex_indices": [
+          1681,
+          6604
+        ],
+        "rest_endpoints_m": [
+          [
+            -0.03919485583901405,
+            0.01625150255858898,
+            0.458865225315094
+          ],
+          [
+            -0.03919486328959465,
+            0.01625150628387928,
+            0.4646011292934418
+          ]
+        ],
+        "rest_length_mm": 5.735903739929199,
+        "posed_length_mm": 13.775165557861328,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:Spine2",
+            "mixamorig:RightUpLeg"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:Spine2",
+            "mixamorig:RightArm"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.4322365522384644,
+      "worst_frame_p999_edge_ratio": 1.8771365880966187,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 2.4015684127807617,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.6166503429412842,
+        "knee": 1.8239272832870483,
+        "hip": 2.3262341022491455,
+        "elbow": 1.3166067600250244
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.09059936553239822,
+        "knee": 0.08984848111867905,
+        "hip": 0.33228591084480286,
+        "elbow": 0.6674352884292603
+      },
+      "max_vertex_displacement_mm": 1157.24072265625,
+      "floor_z_range_mm": [
+        -17.86135482788086,
+        0.005167650058865547
+      ]
+    },
+    "run": {
+      "frames": 31,
+      "first_frame": 0,
+      "last_frame": 30,
+      "max_edge_details": {
+        "frame": 11,
+        "vertex_indices": [
+          1784,
+          1812
+        ],
+        "rest_endpoints_m": [
+          [
+            -0.06405003368854523,
+            -0.02198725752532482,
+            0.4665129780769348
+          ],
+          [
+            -0.06596197187900543,
+            -0.02198726125061512,
+            0.4646011292934418
+          ]
+        ],
+        "rest_length_mm": 2.7038257122039795,
+        "posed_length_mm": 14.320341110229492,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:RightArm",
+            "mixamorig:Spine2"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:RightArm",
+            "mixamorig:RightUpLeg"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.5735926628112793,
+      "worst_frame_p999_edge_ratio": 2.0321691036224365,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 5.29632568359375,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.786309003829956,
+        "knee": 2.071227788925171,
+        "hip": 2.9584591388702393,
+        "elbow": 2.070056438446045
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.047803379595279694,
+        "knee": 0.05293327942490578,
+        "hip": 0.2935926616191864,
+        "elbow": 0.10955013334751129
+      },
+      "max_vertex_displacement_mm": 551.7034301757812,
+      "floor_z_range_mm": [
+        -1.8271760940551758,
+        16.265317916870117
+      ]
+    },
+    "wave": {
+      "frames": 65,
+      "first_frame": 0,
+      "last_frame": 64,
+      "max_edge_details": {
+        "frame": 0,
+        "vertex_indices": [
+          824,
+          1580
+        ],
+        "rest_endpoints_m": [
+          [
+            0.06787370890378952,
+            -0.04684242606163025,
+            0.4646011292934418
+          ],
+          [
+            0.06787367910146713,
+            -0.04684242606163025,
+            0.4588651955127716
+          ]
+        ],
+        "rest_length_mm": 5.735933780670166,
+        "posed_length_mm": 11.652435302734375,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftArm",
+            "mixamorig:Spine2"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftUpLeg",
+            "mixamorig:Hips"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.1111522912979126,
+      "worst_frame_p999_edge_ratio": 1.4230321645736694,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 2.031480073928833,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.6334766149520874,
+        "knee": 1.0000019073486328,
+        "hip": 2.031480073928833,
+        "elbow": 1.703506350517273
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.056555796414613724,
+        "knee": 0.9999988675117493,
+        "hip": 0.9026517271995544,
+        "elbow": 0.21829137206077576
+      },
+      "max_vertex_displacement_mm": 391.99566650390625,
+      "floor_z_range_mm": [
+        -0.0002035325887845829,
+        -0.0002035325887845829
+      ]
+    },
+    "jump": {
+      "frames": 51,
+      "first_frame": 0,
+      "last_frame": 50,
+      "max_edge_details": {
+        "frame": 9,
+        "vertex_indices": [
+          1784,
+          1812
+        ],
+        "rest_endpoints_m": [
+          [
+            -0.06405003368854523,
+            -0.02198725752532482,
+            0.4665129780769348
+          ],
+          [
+            -0.06596197187900543,
+            -0.02198726125061512,
+            0.4646011292934418
+          ]
+        ],
+        "rest_length_mm": 2.7038257122039795,
+        "posed_length_mm": 7.154938697814941,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:RightArm",
+            "mixamorig:Spine2"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:RightArm",
+            "mixamorig:RightUpLeg"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.2225534915924072,
+      "worst_frame_p999_edge_ratio": 1.657749056816101,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 2.6462278366088867,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.6766047477722168,
+        "knee": 1.7074360847473145,
+        "hip": 2.2799501419067383,
+        "elbow": 1.2816689014434814
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.056555796414613724,
+        "knee": 0.11743386089801788,
+        "hip": 0.557906448841095,
+        "elbow": 0.677274227142334
+      },
+      "max_vertex_displacement_mm": 438.3157653808594,
+      "floor_z_range_mm": [
+        -18.826200485229492,
+        217.30955505371094
+      ]
+    },
+    "idle": {
+      "frames": 89,
+      "first_frame": 0,
+      "last_frame": 88,
+      "max_edge_details": {
+        "frame": 66,
+        "vertex_indices": [
+          824,
+          1580
+        ],
+        "rest_endpoints_m": [
+          [
+            0.06787370890378952,
+            -0.04684242606163025,
+            0.4646011292934418
+          ],
+          [
+            0.06787367910146713,
+            -0.04684242606163025,
+            0.4588651955127716
+          ]
+        ],
+        "rest_length_mm": 5.735933780670166,
+        "posed_length_mm": 12.049396514892578,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftArm",
+            "mixamorig:Spine2"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftUpLeg",
+            "mixamorig:Hips"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.1108442544937134,
+      "worst_frame_p999_edge_ratio": 1.4175478219985962,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 2.1006860733032227,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.64078950881958,
+        "knee": 1.0000019073486328,
+        "hip": 2.1006860733032227,
+        "elbow": 1.2214127779006958
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.051273781806230545,
+        "knee": 0.9999988675117493,
+        "hip": 0.9056662321090698,
+        "elbow": 0.7502560019493103
+      },
+      "max_vertex_displacement_mm": 402.88787841796875,
+      "floor_z_range_mm": [
+        -0.0002035325887845829,
+        -0.0002035325887845829
+      ]
+    },
+    "nod": {
+      "frames": 57,
+      "first_frame": 0,
+      "last_frame": 56,
+      "max_edge_details": {
+        "frame": 0,
+        "vertex_indices": [
+          824,
+          1580
+        ],
+        "rest_endpoints_m": [
+          [
+            0.06787370890378952,
+            -0.04684242606163025,
+            0.4646011292934418
+          ],
+          [
+            0.06787367910146713,
+            -0.04684242606163025,
+            0.4588651955127716
+          ]
+        ],
+        "rest_length_mm": 5.735933780670166,
+        "posed_length_mm": 11.652435302734375,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftArm",
+            "mixamorig:Spine2"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftUpLeg",
+            "mixamorig:Hips"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.1197654008865356,
+      "worst_frame_p999_edge_ratio": 1.410153865814209,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 2.031480073928833,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.6342449188232422,
+        "knee": 1.0000019073486328,
+        "hip": 2.031480073928833,
+        "elbow": 1.1907565593719482
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.056555796414613724,
+        "knee": 0.9999988675117493,
+        "hip": 0.9179507493972778,
+        "elbow": 0.7865365147590637
+      },
+      "max_vertex_displacement_mm": 391.07867431640625,
+      "floor_z_range_mm": [
+        -0.0002035325887845829,
+        -0.0002035325887845829
+      ]
+    },
+    "dance": {
+      "frames": 65,
+      "first_frame": 0,
+      "last_frame": 64,
+      "max_edge_details": {
+        "frame": 48,
+        "vertex_indices": [
+          105,
+          1224
+        ],
+        "rest_endpoints_m": [
+          [
+            0.03919460251927376,
+            0.016251523047685623,
+            0.45886531472206116
+          ],
+          [
+            0.03919459879398346,
+            0.016251524910330772,
+            0.4646011292934418
+          ]
+        ],
+        "rest_length_mm": 5.735814571380615,
+        "posed_length_mm": 9.946636199951172,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:Spine2",
+            "mixamorig:LeftUpLeg"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:Spine2",
+            "mixamorig:LeftArm"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.1512216329574585,
+      "worst_frame_p999_edge_ratio": 1.42839777469635,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 1.7341279983520508,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.5914849042892456,
+        "knee": 1.3421940803527832,
+        "hip": 1.5571370124816895,
+        "elbow": 1.6730960607528687
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.10386750847101212,
+        "knee": 0.5948773622512817,
+        "hip": 0.7457458972930908,
+        "elbow": 0.1835756152868271
+      },
+      "max_vertex_displacement_mm": 280.1261291503906,
+      "floor_z_range_mm": [
+        -1.3568660020828247,
+        1.3876644372940063
+      ]
+    }
+  },
+  "rest_adjusted": {
+    "walk": {
+      "frames": 57,
+      "first_frame": 1,
+      "last_frame": 57,
+      "max_edge_details": {
+        "frame": 32,
+        "vertex_indices": [
+          1681,
+          6604
+        ],
+        "rest_endpoints_m": [
+          [
+            -0.03919485583901405,
+            0.01625150255858898,
+            0.458865225315094
+          ],
+          [
+            -0.03919486328959465,
+            0.01625150628387928,
+            0.4646011292934418
+          ]
+        ],
+        "rest_length_mm": 5.735903739929199,
+        "posed_length_mm": 13.869585990905762,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:Spine2",
+            "mixamorig:RightUpLeg"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:Spine2",
+            "mixamorig:RightArm"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.4386006593704224,
+      "worst_frame_p999_edge_ratio": 1.9190385341644287,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 2.41802978515625,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.5925006866455078,
+        "knee": 1.8237385749816895,
+        "hip": 2.3202176094055176,
+        "elbow": 1.3200446367263794
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.03822702169418335,
+        "knee": 0.09274550527334213,
+        "hip": 0.333948016166687,
+        "elbow": 0.6697221994400024
+      },
+      "max_vertex_displacement_mm": 1197.1839599609375,
+      "floor_z_range_mm": [
+        -17.579824447631836,
+        -0.02247285284101963
+      ]
+    },
+    "run": {
+      "frames": 31,
+      "first_frame": 0,
+      "last_frame": 30,
+      "max_edge_details": {
+        "frame": 11,
+        "vertex_indices": [
+          1784,
+          1812
+        ],
+        "rest_endpoints_m": [
+          [
+            -0.06405003368854523,
+            -0.02198725752532482,
+            0.4665129780769348
+          ],
+          [
+            -0.06596197187900543,
+            -0.02198726125061512,
+            0.4646011292934418
+          ]
+        ],
+        "rest_length_mm": 2.7038257122039795,
+        "posed_length_mm": 14.463569641113281,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:RightArm",
+            "mixamorig:Spine2"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:RightArm",
+            "mixamorig:RightUpLeg"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.587171196937561,
+      "worst_frame_p999_edge_ratio": 2.128169059753418,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 5.349298000335693,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.782668113708496,
+        "knee": 2.0707297325134277,
+        "hip": 3.004112482070923,
+        "elbow": 2.0682332515716553
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.07712680101394653,
+        "knee": 0.046972353011369705,
+        "hip": 0.29595625400543213,
+        "elbow": 0.12633007764816284
+      },
+      "max_vertex_displacement_mm": 560.060791015625,
+      "floor_z_range_mm": [
+        -2.2281501293182373,
+        16.44481086730957
+      ]
+    },
+    "wave": {
+      "frames": 65,
+      "first_frame": 0,
+      "last_frame": 64,
+      "max_edge_details": {
+        "frame": 0,
+        "vertex_indices": [
+          824,
+          1580
+        ],
+        "rest_endpoints_m": [
+          [
+            0.06787370890378952,
+            -0.04684242606163025,
+            0.4646011292934418
+          ],
+          [
+            0.06787367910146713,
+            -0.04684242606163025,
+            0.4588651955127716
+          ]
+        ],
+        "rest_length_mm": 5.735933780670166,
+        "posed_length_mm": 11.643795013427734,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftArm",
+            "mixamorig:Spine2"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftUpLeg",
+            "mixamorig:Hips"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.1158705949783325,
+      "worst_frame_p999_edge_ratio": 1.4477782249450684,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 2.0299737453460693,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.6284410953521729,
+        "knee": 1.0000019073486328,
+        "hip": 2.0299737453460693,
+        "elbow": 1.8883136510849
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.13648450374603271,
+        "knee": 0.999998927116394,
+        "hip": 0.8993797302246094,
+        "elbow": 0.290984183549881
+      },
+      "max_vertex_displacement_mm": 392.4281921386719,
+      "floor_z_range_mm": [
+        -0.0002035325887845829,
+        -0.0002035325887845829
+      ]
+    },
+    "jump": {
+      "frames": 51,
+      "first_frame": 0,
+      "last_frame": 50,
+      "max_edge_details": {
+        "frame": 9,
+        "vertex_indices": [
+          1784,
+          1812
+        ],
+        "rest_endpoints_m": [
+          [
+            -0.06405003368854523,
+            -0.02198725752532482,
+            0.4665129780769348
+          ],
+          [
+            -0.06596197187900543,
+            -0.02198726125061512,
+            0.4646011292934418
+          ]
+        ],
+        "rest_length_mm": 2.7038257122039795,
+        "posed_length_mm": 7.1805925369262695,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:RightArm",
+            "mixamorig:Spine2"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:RightArm",
+            "mixamorig:RightUpLeg"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.21284019947052,
+      "worst_frame_p999_edge_ratio": 1.6614034175872803,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 2.6557157039642334,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.6543257236480713,
+        "knee": 1.7065701484680176,
+        "hip": 2.297030448913574,
+        "elbow": 1.2809444665908813
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.13648450374603271,
+        "knee": 0.12172772735357285,
+        "hip": 0.5576969981193542,
+        "elbow": 0.693892776966095
+      },
+      "max_vertex_displacement_mm": 438.9883728027344,
+      "floor_z_range_mm": [
+        -18.52593994140625,
+        217.4048614501953
+      ]
+    },
+    "idle": {
+      "frames": 89,
+      "first_frame": 0,
+      "last_frame": 88,
+      "max_edge_details": {
+        "frame": 66,
+        "vertex_indices": [
+          824,
+          1580
+        ],
+        "rest_endpoints_m": [
+          [
+            0.06787370890378952,
+            -0.04684242606163025,
+            0.4646011292934418
+          ],
+          [
+            0.06787367910146713,
+            -0.04684242606163025,
+            0.4588651955127716
+          ]
+        ],
+        "rest_length_mm": 5.735933780670166,
+        "posed_length_mm": 12.024909973144531,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftArm",
+            "mixamorig:Spine2"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftUpLeg",
+            "mixamorig:Hips"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.1137313842773438,
+      "worst_frame_p999_edge_ratio": 1.4556562900543213,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 2.096417188644409,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.6356043815612793,
+        "knee": 1.0000019073486328,
+        "hip": 2.096417188644409,
+        "elbow": 1.2208020687103271
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.13353776931762695,
+        "knee": 0.999998927116394,
+        "hip": 0.902285099029541,
+        "elbow": 0.7627653479576111
+      },
+      "max_vertex_displacement_mm": 399.8446960449219,
+      "floor_z_range_mm": [
+        -0.0002035325887845829,
+        -0.0002035325887845829
+      ]
+    },
+    "nod": {
+      "frames": 57,
+      "first_frame": 0,
+      "last_frame": 56,
+      "max_edge_details": {
+        "frame": 0,
+        "vertex_indices": [
+          824,
+          1580
+        ],
+        "rest_endpoints_m": [
+          [
+            0.06787370890378952,
+            -0.04684242606163025,
+            0.4646011292934418
+          ],
+          [
+            0.06787367910146713,
+            -0.04684242606163025,
+            0.4588651955127716
+          ]
+        ],
+        "rest_length_mm": 5.735933780670166,
+        "posed_length_mm": 11.643795013427734,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftArm",
+            "mixamorig:Spine2"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:LeftUpLeg",
+            "mixamorig:Hips"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.123809814453125,
+      "worst_frame_p999_edge_ratio": 1.4506486654281616,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 2.0299737453460693,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.6286059617996216,
+        "knee": 1.0000019073486328,
+        "hip": 2.0299737453460693,
+        "elbow": 1.1902151107788086
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.13648450374603271,
+        "knee": 0.999998927116394,
+        "hip": 0.9119107723236084,
+        "elbow": 0.797095537185669
+      },
+      "max_vertex_displacement_mm": 382.12066650390625,
+      "floor_z_range_mm": [
+        -0.0002035325887845829,
+        -0.0002035325887845829
+      ]
+    },
+    "dance": {
+      "frames": 65,
+      "first_frame": 0,
+      "last_frame": 64,
+      "max_edge_details": {
+        "frame": 16,
+        "vertex_indices": [
+          1681,
+          6604
+        ],
+        "rest_endpoints_m": [
+          [
+            -0.03919485583901405,
+            0.01625150255858898,
+            0.458865225315094
+          ],
+          [
+            -0.03919486328959465,
+            0.01625150628387928,
+            0.4646011292934418
+          ]
+        ],
+        "rest_length_mm": 5.735903739929199,
+        "posed_length_mm": 9.975631713867188,
+        "groups": [
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:Spine2",
+            "mixamorig:RightUpLeg"
+          ],
+          [
+            "mixamorig:Spine1",
+            "mixamorig:Spine",
+            "mixamorig:Spine2",
+            "mixamorig:RightArm"
+          ]
+        ]
+      },
+      "worst_frame_p99_edge_ratio": 1.1488358974456787,
+      "worst_frame_p999_edge_ratio": 1.4593993425369263,
+      "finite_unchanged_vertex_count": true,
+      "max_paired_seam_separation_mm": 0.0,
+      "max_edge_stretch_ratio": 1.7391561269760132,
+      "max_joint_edge_stretch_ratio": {
+        "shoulder": 1.584465503692627,
+        "knee": 1.3415387868881226,
+        "hip": 1.5890893936157227,
+        "elbow": 1.673970341682434
+      },
+      "min_joint_edge_length_ratio": {
+        "shoulder": 0.21855157613754272,
+        "knee": 0.5951629281044006,
+        "hip": 0.7449047565460205,
+        "elbow": 0.24935156106948853
+      },
+      "max_vertex_displacement_mm": 270.86029052734375,
+      "floor_z_range_mm": [
+        -1.289062738418579,
+        1.3738691806793213
+      ]
+    }
+  },
+  "frames": {
+    "walk": {
+      "frame": 15,
+      "mode": "rest_adjusted",
+      "measurement": {
+        "max_paired_seam_separation_mm": 0.0,
+        "max_edge_stretch_ratio": 2.2303338050842285,
+        "max_edge_details": {
+          "vertex_indices": [
+            7034,
+            7602
+          ],
+          "rest_endpoints_m": [
+            [
+              0.31577566266059875,
+              -0.0475999191403389,
+              0.5314161777496338
+            ],
+            [
+              0.31531184911727905,
+              -0.05793597921729088,
+              0.5325301885604858
+            ]
+          ],
+          "rest_length_mm": 10.406261444091797,
+          "posed_length_mm": 23.209436416625977,
+          "groups": [
+            [
+              "mixamorig:LeftHand"
+            ],
+            [
+              "mixamorig:LeftHandThumb1",
+              "mixamorig:LeftHandThumb2",
+              "mixamorig:LeftHand"
+            ]
+          ]
+        },
+        "p99_edge_ratio": 1.416744589805603,
+        "p999_edge_ratio": 1.8933273553848267,
+        "max_joint_edge_stretch_ratio": {
+          "shoulder": 1.5606341361999512,
+          "knee": 1.722503900527954,
+          "hip": 1.9712790250778198,
+          "elbow": 1.0696485042572021
+        },
+        "min_joint_edge_length_ratio": {
+          "shoulder": 0.09359749406576157,
+          "knee": 0.12382808327674866,
+          "hip": 0.6618019342422485,
+          "elbow": 0.922109842300415
+        },
+        "max_vertex_displacement_mm": 542.0551147460938,
+        "lowest_vertex_mm": -2.689260244369507
+      },
+      "file": "motion_walk_015.png",
+      "sha256": "7612e26b7959473d813f04809dbd3c32c8893289e66476df0114c9dccdab25c0",
+      "camera_direction": [
+        0.7,
+        -1.0,
+        0.1
+      ],
+      "ortho_scale": 1.1066114902496338,
+      "center_m": [
+        -0.016058064997196198,
+        -0.25438034534454346,
+        0.4862402379512787
+      ]
+    },
+    "run": {
+      "frame": 8,
+      "mode": "rest_adjusted",
+      "measurement": {
+        "max_paired_seam_separation_mm": 0.0,
+        "max_edge_stretch_ratio": 3.0957863330841064,
+        "max_edge_details": {
+          "vertex_indices": [
+            1784,
+            1812
+          ],
+          "rest_endpoints_m": [
+            [
+              -0.06405003368854523,
+              -0.02198725752532482,
+              0.4665129780769348
+            ],
+            [
+              -0.06596197187900543,
+              -0.02198726125061512,
+              0.4646011292934418
+            ]
+          ],
+          "rest_length_mm": 2.7038257122039795,
+          "posed_length_mm": 8.370466232299805,
+          "groups": [
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:RightArm",
+              "mixamorig:Spine2"
+            ],
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:RightArm",
+              "mixamorig:RightUpLeg"
+            ]
+          ]
+        },
+        "p99_edge_ratio": 1.5399653911590576,
+        "p999_edge_ratio": 2.128169059753418,
+        "max_joint_edge_stretch_ratio": {
+          "shoulder": 1.6742944717407227,
+          "knee": 2.044905185699463,
+          "hip": 2.8515961170196533,
+          "elbow": 1.5873569250106812
+        },
+        "min_joint_edge_length_ratio": {
+          "shoulder": 0.20221681892871857,
+          "knee": 0.12794917821884155,
+          "hip": 0.4043219983577728,
+          "elbow": 0.35221067070961
+        },
+        "max_vertex_displacement_mm": 488.32952880859375,
+        "lowest_vertex_mm": 3.2890686988830566
+      },
+      "file": "motion_run_008.png",
+      "sha256": "efc2834e7a37702413a2198e5052e28faefd13b20396ee49baf18f083cb49bb6",
+      "camera_direction": [
+        0.85,
+        -1.0,
+        0.12
+      ],
+      "ortho_scale": 0.9823314547538757,
+      "center_m": [
+        0.01741325855255127,
+        -0.108790323138237,
+        0.4445367455482483
+      ]
+    },
+    "wave": {
+      "frame": 19,
+      "mode": "rest_adjusted",
+      "measurement": {
+        "max_paired_seam_separation_mm": 0.0,
+        "max_edge_stretch_ratio": 1.929612398147583,
+        "max_edge_details": {
+          "vertex_indices": [
+            824,
+            1580
+          ],
+          "rest_endpoints_m": [
+            [
+              0.06787370890378952,
+              -0.04684242606163025,
+              0.4646011292934418
+            ],
+            [
+              0.06787367910146713,
+              -0.04684242606163025,
+              0.4588651955127716
+            ]
+          ],
+          "rest_length_mm": 5.735933780670166,
+          "posed_length_mm": 11.06812858581543,
+          "groups": [
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:LeftArm",
+              "mixamorig:Spine2"
+            ],
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:LeftUpLeg",
+              "mixamorig:Hips"
+            ]
+          ]
+        },
+        "p99_edge_ratio": 1.115597128868103,
+        "p999_edge_ratio": 1.4190179109573364,
+        "max_joint_edge_stretch_ratio": {
+          "shoulder": 1.622507929801941,
+          "knee": 1.0000019073486328,
+          "hip": 1.929612398147583,
+          "elbow": 1.8883136510849
+        },
+        "min_joint_edge_length_ratio": {
+          "shoulder": 0.18960408866405487,
+          "knee": 0.999998927116394,
+          "hip": 0.9072533845901489,
+          "elbow": 0.29302388429641724
+        },
+        "max_vertex_displacement_mm": 392.4281921386719,
+        "lowest_vertex_mm": -0.0002035325887845829
+      },
+      "file": "motion_wave_019.png",
+      "sha256": "bb470da2dcd6e0dcfd86f1eab5669e709f06edd282f78929f0069d40d36fccb4",
+      "camera_direction": [
+        0.18,
+        -1.0,
+        0.06
+      ],
+      "ortho_scale": 1.1097885370254517,
+      "center_m": [
+        -0.014898553490638733,
+        0.00033364444971084595,
+        0.48835140466690063
+      ]
+    },
+    "jump": {
+      "frame": 9,
+      "mode": "rest_adjusted",
+      "measurement": {
+        "max_paired_seam_separation_mm": 0.0,
+        "max_edge_stretch_ratio": 2.6557157039642334,
+        "max_edge_details": {
+          "vertex_indices": [
+            1784,
+            1812
+          ],
+          "rest_endpoints_m": [
+            [
+              -0.06405003368854523,
+              -0.02198725752532482,
+              0.4665129780769348
+            ],
+            [
+              -0.06596197187900543,
+              -0.02198726125061512,
+              0.4646011292934418
+            ]
+          ],
+          "rest_length_mm": 2.7038257122039795,
+          "posed_length_mm": 7.1805925369262695,
+          "groups": [
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:RightArm",
+              "mixamorig:Spine2"
+            ],
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:RightArm",
+              "mixamorig:RightUpLeg"
+            ]
+          ]
+        },
+        "p99_edge_ratio": 1.21284019947052,
+        "p999_edge_ratio": 1.6614034175872803,
+        "max_joint_edge_stretch_ratio": {
+          "shoulder": 1.652796983718872,
+          "knee": 1.7065701484680176,
+          "hip": 2.297030448913574,
+          "elbow": 1.280935525894165
+        },
+        "min_joint_edge_length_ratio": {
+          "shoulder": 0.21629685163497925,
+          "knee": 0.12172772735357285,
+          "hip": 0.5576969981193542,
+          "elbow": 0.6938971877098083
+        },
+        "max_vertex_displacement_mm": 438.9883728027344,
+        "lowest_vertex_mm": -4.389686107635498
+      },
+      "file": "motion_jump_009.png",
+      "sha256": "9c3d0179ada00dbcb6831b2760e5a75aea5edcb388394fb87a794c00c47d9cb1",
+      "camera_direction": [
+        0.73,
+        -1.0,
+        0.12
+      ],
+      "ortho_scale": 1.0739376544952393,
+      "center_m": [
+        -0.0024492740631103516,
+        -0.06249111890792847,
+        0.47005441784858704
+      ]
+    }
+  },
+  "combined_stress": {
+    "world_rest_axis_degrees": {
+      "LeftArm": [
+        [
+          0,
+          1,
+          0
+        ],
+        75
+      ],
+      "LeftForeArm": [
+        [
+          0,
+          0,
+          1
+        ],
+        -95
+      ],
+      "RightUpLeg": [
+        [
+          1,
+          0,
+          0
+        ],
+        -65
+      ],
+      "RightLeg": [
+        [
+          1,
+          0,
+          0
+        ],
+        100
+      ]
+    },
+    "max_paired_seam_separation_mm": 0.0,
+    "max_edge_stretch_ratio": 4.243507385253906,
+    "max_edge_details": {
+      "vertex_indices": [
+        1784,
+        1812
+      ],
+      "rest_endpoints_m": [
+        [
+          -0.06405003368854523,
+          -0.02198725752532482,
+          0.4665129780769348
+        ],
+        [
+          -0.06596197187900543,
+          -0.02198726125061512,
+          0.4646011292934418
+        ]
+      ],
+      "rest_length_mm": 2.7038257122039795,
+      "posed_length_mm": 11.47370433807373,
+      "groups": [
+        [
+          "mixamorig:Spine1",
+          "mixamorig:Spine",
+          "mixamorig:RightArm",
+          "mixamorig:Spine2"
+        ],
+        [
+          "mixamorig:Spine1",
+          "mixamorig:Spine",
+          "mixamorig:RightArm",
+          "mixamorig:RightUpLeg"
+        ]
+      ]
+    },
+    "p99_edge_ratio": 1.286190390586853,
+    "p999_edge_ratio": 1.9549812078475952,
+    "max_joint_edge_stretch_ratio": {
+      "shoulder": 1.6834709644317627,
+      "knee": 2.033132791519165,
+      "hip": 2.274477481842041,
+      "elbow": 2.0701048374176025
+    },
+    "min_joint_edge_length_ratio": {
+      "shoulder": 0.15687419474124908,
+      "knee": 0.13663652539253235,
+      "hip": 0.3601542115211487,
+      "elbow": 0.21446111798286438
+    },
+    "max_vertex_displacement_mm": 426.39349365234375,
+    "lowest_vertex_mm": 7.337585702771321e-05,
+    "render": {
+      "file": "motion_joint_stress.png",
+      "sha256": "02d44bbeec9635805b637a9d1b7b55a2dd9a85a97bf0e5498593bca63863353a",
+      "camera_direction": [
+        0.65,
+        -1,
+        0.09
+      ],
+      "ortho_scale": 1.1120364665985107,
+      "center_m": [
+        -0.11116504669189453,
+        -0.029856331646442413,
+        0.48850035667419434
+      ]
+    }
+  },
+  "review_limits": "Vertex coincidence and edge length detect UV splits, detached seams and stretching at sampled frames. They do not classify every smooth fold, interpart contact or subframe event.",
+  "native_comparison": {
+    "body_sha256": "a4e3df41cb970ec52fdc5b21c4ba3093171af1caa5161b817d2eb4c00b9ac916",
+    "rest_adjusted_peak_edge_stretch": {
+      "walk": {
+        "ratio": 2.5946524143218994,
+        "location": {
+          "frame": 55,
+          "vertex_indices": [
+            12266,
+            12269
+          ],
+          "rest_endpoints_m": [
+            [
+              -0.31833773851394653,
+              -0.04684248939156532,
+              0.51048743724823
+            ],
+            [
+              -0.3259854316711426,
+              -0.04493055120110512,
+              0.5123993158340454
+            ]
+          ],
+          "rest_length_mm": 8.11159610748291,
+          "posed_length_mm": 21.046772003173828,
+          "groups": [
+            [
+              "mixamorig:RightHandThumb1",
+              "mixamorig:RightHandThumb2",
+              "mixamorig:RightHandIndex1"
+            ],
+            [
+              "mixamorig:RightHandIndex1",
+              "mixamorig:RightHandThumb1",
+              "mixamorig:RightHandThumb2"
+            ]
+          ]
+        }
+      },
+      "run": {
+        "ratio": 5.349232196807861,
+        "location": {
+          "frame": 11,
+          "vertex_indices": [
+            1707,
+            1710
+          ],
+          "rest_endpoints_m": [
+            [
+              -0.06596197187900543,
+              -0.02198725938796997,
+              0.4646010398864746
+            ],
+            [
+              -0.06405003368854523,
+              -0.02198725752532482,
+              0.4665129482746124
+            ]
+          ],
+          "rest_length_mm": 2.7038679122924805,
+          "posed_length_mm": 14.463617324829102,
+          "groups": [
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:RightArm",
+              "mixamorig:RightUpLeg"
+            ],
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:RightArm",
+              "mixamorig:Spine2"
+            ]
+          ]
+        }
+      },
+      "wave": {
+        "ratio": 2.029987096786499,
+        "location": {
+          "frame": 0,
+          "vertex_indices": [
+            1458,
+            1459
+          ],
+          "rest_endpoints_m": [
+            [
+              0.06787367910146713,
+              -0.04684242978692055,
+              0.4588651657104492
+            ],
+            [
+              0.06787370145320892,
+              -0.04684242978692055,
+              0.4646010398864746
+            ]
+          ],
+          "rest_length_mm": 5.735874176025391,
+          "posed_length_mm": 11.643750190734863,
+          "groups": [
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:LeftUpLeg",
+              "mixamorig:Hips"
+            ],
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:LeftArm",
+              "mixamorig:Spine2"
+            ]
+          ]
+        }
+      },
+      "jump": {
+        "ratio": 2.655684232711792,
+        "location": {
+          "frame": 9,
+          "vertex_indices": [
+            1707,
+            1710
+          ],
+          "rest_endpoints_m": [
+            [
+              -0.06596197187900543,
+              -0.02198725938796997,
+              0.4646010398864746
+            ],
+            [
+              -0.06405003368854523,
+              -0.02198725752532482,
+              0.4665129482746124
+            ]
+          ],
+          "rest_length_mm": 2.7038679122924805,
+          "posed_length_mm": 7.180619239807129,
+          "groups": [
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:RightArm",
+              "mixamorig:RightUpLeg"
+            ],
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:RightArm",
+              "mixamorig:Spine2"
+            ]
+          ]
+        }
+      },
+      "idle": {
+        "ratio": 2.096435308456421,
+        "location": {
+          "frame": 66,
+          "vertex_indices": [
+            1458,
+            1459
+          ],
+          "rest_endpoints_m": [
+            [
+              0.06787367910146713,
+              -0.04684242978692055,
+              0.4588651657104492
+            ],
+            [
+              0.06787370145320892,
+              -0.04684242978692055,
+              0.4646010398864746
+            ]
+          ],
+          "rest_length_mm": 5.735874176025391,
+          "posed_length_mm": 12.02488899230957,
+          "groups": [
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:LeftUpLeg",
+              "mixamorig:Hips"
+            ],
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:LeftArm",
+              "mixamorig:Spine2"
+            ]
+          ]
+        }
+      },
+      "nod": {
+        "ratio": 2.029987096786499,
+        "location": {
+          "frame": 0,
+          "vertex_indices": [
+            1458,
+            1459
+          ],
+          "rest_endpoints_m": [
+            [
+              0.06787367910146713,
+              -0.04684242978692055,
+              0.4588651657104492
+            ],
+            [
+              0.06787370145320892,
+              -0.04684242978692055,
+              0.4646010398864746
+            ]
+          ],
+          "rest_length_mm": 5.735874176025391,
+          "posed_length_mm": 11.643750190734863,
+          "groups": [
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:LeftUpLeg",
+              "mixamorig:Hips"
+            ],
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:LeftArm",
+              "mixamorig:Spine2"
+            ]
+          ]
+        }
+      },
+      "dance": {
+        "ratio": 1.739164113998413,
+        "location": {
+          "frame": 16,
+          "vertex_indices": [
+            16513,
+            16514
+          ],
+          "rest_endpoints_m": [
+            [
+              -0.03919485583901405,
+              0.01625150628387928,
+              0.4588651955127716
+            ],
+            [
+              -0.03919486328959465,
+              0.01625150628387928,
+              0.4646010398864746
+            ]
+          ],
+          "rest_length_mm": 5.735844612121582,
+          "posed_length_mm": 9.97557544708252,
+          "groups": [
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:Spine2",
+              "mixamorig:RightUpLeg"
+            ],
+            [
+              "mixamorig:Spine1",
+              "mixamorig:Spine",
+              "mixamorig:Spine2",
+              "mixamorig:RightArm"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "visual_inspection": {
+    "reviewer": "Independent motion reviewer",
+    "renders_reviewed": [
+      "motion_walk_015.png",
+      "motion_run_008.png",
+      "motion_wave_019.png",
+      "motion_jump_009.png",
+      "motion_joint_stress.png"
+    ],
+    "shoulder_elbow_hip_knee": "No visible tearing or detached surface in any of the four clip frames or combined stress frame. The raised knee has a tight crease and slightly faceted outline at 100 degrees.",
+    "wrist": "Walk frame 15 has a continuous wrist silhouette. The raised palm in wave frame 19 retains a small shaded heel-of-palm crease; it is softer than the early candidate. Neither the crease nor the near-wrist highlight in run frame 8 shows a surface opening.",
+    "limits": "Four of the 415 clip frames were rendered. Every integer frame was measured for direct and rest-adjusted playback, without subframe sampling. Source motion was used without floor correction or foot locking."
+  }
+}

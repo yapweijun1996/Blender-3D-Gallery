@@ -1,0 +1,655 @@
+{
+  "rear_waistband": [
+    {
+      "input_sha256": "01e0759abcb42a50aaa3fb49467f0c3a2b2d4c9c65bbbfe020aa8baed1181fcc",
+      "before": [
+        0,
+        158,
+        32,
+        0.1053410992026329
+      ],
+      "after": [
+        0,
+        8,
+        2,
+        0.006555809173732996
+      ],
+      "support_parameters": [
+        0.006,
+        0.0,
+        1.0,
+        [
+          0.0,
+          -0.001,
+          0.0
+        ]
+      ],
+      "vertices": 102
+    }
+  ],
+  "source_sha256": "e363de92c007a02faf7db3d9c9590f837fad54c0051f51a5fc3cdd8a4c7e5d9e",
+  "motion_sha256": "3484f5978e94f3e714b320357397d107dd490d56f2eeb64770be292322f9aa2c",
+  "additional_actions_sha256": "0d3a57ae8906edeebee590b67d0e84333640389340bfbfbe0af041ccf8f871c9",
+  "baseline": {
+    "rest": {
+      "poses": 1,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0015903911553323269,
+      "minimum_frame": 1.0,
+      "minimum_vertex": 1056,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 1.0,
+      "total_garment_pairs": 0,
+      "zone": "front hips",
+      "location_m": [
+        0.11889388412237167,
+        -0.0501764714717865,
+        0.3671658933162689
+      ],
+      "body_joint": "mixamorig:LeftUpLeg"
+    },
+    "walk": {
+      "poses": 113,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0006559086032211781,
+      "minimum_frame": 50.0,
+      "minimum_vertex": 1325,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 1.0,
+      "total_garment_pairs": 0,
+      "zone": "waistband",
+      "location_m": [
+        -0.002913708332926035,
+        0.0630691796541214,
+        0.4258326292037964
+      ],
+      "body_joint": "mixamorig:Hips"
+    },
+    "run": {
+      "poses": 61,
+      "max_vertices_inside": 1,
+      "minimum_m": -0.0020822102669626474,
+      "minimum_frame": 9.5,
+      "minimum_vertex": 2336,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "knee",
+      "location_m": [
+        -0.13204047083854675,
+        0.028293436393141747,
+        0.21846282482147217
+      ],
+      "body_joint": "mixamorig:RightLeg"
+    },
+    "wave": {
+      "poses": 129,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.001570802298374474,
+      "minimum_frame": 19.0,
+      "minimum_vertex": 1027,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "front hips",
+      "location_m": [
+        0.11500493437051773,
+        -0.05528934672474861,
+        0.3739354610443115
+      ],
+      "body_joint": "mixamorig:LeftUpLeg"
+    },
+    "jump": {
+      "poses": 101,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0011000744998455048,
+      "minimum_frame": 8.5,
+      "minimum_vertex": 1062,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "front hips",
+      "location_m": [
+        0.11972404271364212,
+        -0.054033055901527405,
+        0.36798813939094543
+      ],
+      "body_joint": "mixamorig:LeftForeArm"
+    },
+    "idle": {
+      "poses": 177,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0015795666258782148,
+      "minimum_frame": 0.0,
+      "minimum_vertex": 2221,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "upper thigh",
+      "location_m": [
+        -0.11715977638959885,
+        -0.04600751772522926,
+        0.29325583577156067
+      ],
+      "body_joint": "mixamorig:RightUpLeg"
+    },
+    "nod": {
+      "poses": 113,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0015795666258782148,
+      "minimum_frame": 0.0,
+      "minimum_vertex": 2221,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "upper thigh",
+      "location_m": [
+        -0.11715977638959885,
+        -0.04600751772522926,
+        0.29325583577156067
+      ],
+      "body_joint": "mixamorig:RightUpLeg"
+    },
+    "dance": {
+      "poses": 129,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0012910114601254463,
+      "minimum_frame": 46.5,
+      "minimum_vertex": 973,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "waistband",
+      "location_m": [
+        0.10525090247392654,
+        -0.05441462621092796,
+        0.41215628385543823
+      ],
+      "body_joint": "mixamorig:LeftUpLeg"
+    },
+    "sit_down": {
+      "poses": 73,
+      "max_vertices_inside": 45,
+      "minimum_m": -0.002413190435618162,
+      "minimum_frame": 36.0,
+      "minimum_vertex": 498,
+      "max_garment_pairs": 295,
+      "max_pair_frame": 35.0,
+      "total_garment_pairs": 3337,
+      "zone": "crotch",
+      "location_m": [
+        0.03469078242778778,
+        -0.10263852030038834,
+        0.33819350600242615
+      ],
+      "body_joint": "mixamorig:Hips"
+    },
+    "sit_idle": {
+      "poses": 181,
+      "max_vertices_inside": 47,
+      "minimum_m": -0.002413654001429677,
+      "minimum_frame": 24.0,
+      "minimum_vertex": 498,
+      "max_garment_pairs": 300,
+      "max_pair_frame": 14.0,
+      "total_garment_pairs": 53091,
+      "zone": "crotch",
+      "location_m": [
+        0.03469078242778778,
+        -0.10263852030038834,
+        0.33819350600242615
+      ],
+      "body_joint": "mixamorig:Hips"
+    },
+    "stand_up": {
+      "poses": 61,
+      "max_vertices_inside": 46,
+      "minimum_m": -0.002413214882835746,
+      "minimum_frame": 0.0,
+      "minimum_vertex": 498,
+      "max_garment_pairs": 295,
+      "max_pair_frame": 0.5,
+      "total_garment_pairs": 2829,
+      "zone": "crotch",
+      "location_m": [
+        0.03469078242778778,
+        -0.10263852030038834,
+        0.33819350600242615
+      ],
+      "body_joint": "mixamorig:Hips"
+    },
+    "hold_item": {
+      "poses": 121,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.001579566509462893,
+      "minimum_frame": 0.0,
+      "minimum_vertex": 2221,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "upper thigh",
+      "location_m": [
+        -0.11715977638959885,
+        -0.04600751772522926,
+        0.29325583577156067
+      ],
+      "body_joint": "mixamorig:RightUpLeg"
+    }
+  },
+  "iterations": [
+    {
+      "stage": 0,
+      "scale": 1.0,
+      "score": [
+        0,
+        26384.564697265625,
+        3608
+      ],
+      "minimum_m": -0.005264114588499069,
+      "overlap_pairs": 17037
+    },
+    {
+      "stage": 1,
+      "scale": 1.0,
+      "score": [
+        0,
+        5230.318878173828,
+        211
+      ],
+      "minimum_m": -0.009062889032065868,
+      "overlap_pairs": 5040
+    },
+    {
+      "stage": 2,
+      "scale": 1.0,
+      "score": [
+        0,
+        3944.3952026367188,
+        239
+      ],
+      "minimum_m": -0.010432986542582512,
+      "overlap_pairs": 3138
+    },
+    {
+      "stage": 3,
+      "scale": 1.0,
+      "score": [
+        0,
+        942.3673095703125,
+        56
+      ],
+      "minimum_m": -0.01028147991746664,
+      "overlap_pairs": 56
+    },
+    {
+      "stage": 4,
+      "scale": 1.0,
+      "score": [
+        0,
+        789.1487121582031,
+        259
+      ],
+      "minimum_m": -0.005409535951912403,
+      "overlap_pairs": 90
+    },
+    {
+      "stage": 5,
+      "scale": 0.45,
+      "score": [
+        0,
+        593.793701171875,
+        60
+      ],
+      "minimum_m": -0.004727522376924753,
+      "overlap_pairs": 66
+    },
+    {
+      "stage": 6,
+      "scale": 0.45,
+      "score": [
+        0,
+        585.2666015625,
+        59
+      ],
+      "minimum_m": -0.009910802356898785,
+      "overlap_pairs": 68
+    },
+    {
+      "stage": 7,
+      "scale": 0.45,
+      "score": [
+        0,
+        533.5187377929688,
+        56
+      ],
+      "minimum_m": -0.00990038737654686,
+      "overlap_pairs": 50
+    }
+  ],
+  "result": {
+    "rest": {
+      "poses": 1,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0015917024575173855,
+      "minimum_frame": 1.0,
+      "minimum_vertex": 1056,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 1.0,
+      "total_garment_pairs": 0,
+      "zone": "front hips",
+      "location_m": [
+        0.11889509700685093,
+        -0.050176879696671416,
+        0.3671661766371055
+      ],
+      "body_joint": "mixamorig:LeftUpLeg"
+    },
+    "walk": {
+      "poses": 113,
+      "max_vertices_inside": 3,
+      "minimum_m": -0.00990038737654686,
+      "minimum_frame": 11.0,
+      "minimum_vertex": 1436,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 1.0,
+      "total_garment_pairs": 0,
+      "zone": "waistband",
+      "location_m": [
+        -0.009470788260678093,
+        0.0634537011651426,
+        0.425619702017625
+      ],
+      "body_joint": "mixamorig:Hips"
+    },
+    "run": {
+      "poses": 61,
+      "max_vertices_inside": 2,
+      "minimum_m": -0.0009243353852070868,
+      "minimum_frame": 26.0,
+      "minimum_vertex": 1493,
+      "max_garment_pairs": 8,
+      "max_pair_frame": 10.5,
+      "total_garment_pairs": 50,
+      "zone": "waistband",
+      "location_m": [
+        -0.01579875036908114,
+        0.0633407114822406,
+        0.4259845924669328
+      ],
+      "body_joint": "mixamorig:Hips"
+    },
+    "wave": {
+      "poses": 129,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0013076963368803263,
+      "minimum_frame": 19.0,
+      "minimum_vertex": 927,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "waistband",
+      "location_m": [
+        0.09879249951188784,
+        0.014995538044860151,
+        0.4205467607797465
+      ],
+      "body_joint": "mixamorig:LeftUpLeg"
+    },
+    "jump": {
+      "poses": 101,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0011000657686963677,
+      "minimum_frame": 8.5,
+      "minimum_vertex": 1062,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "front hips",
+      "location_m": [
+        0.11972404271364212,
+        -0.054033055901527405,
+        0.36798813939094543
+      ],
+      "body_joint": "mixamorig:LeftForeArm"
+    },
+    "idle": {
+      "poses": 177,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0013119876384735107,
+      "minimum_frame": 21.0,
+      "minimum_vertex": 927,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "waistband",
+      "location_m": [
+        0.09879249951188784,
+        0.014995538044860151,
+        0.4205467607797465
+      ],
+      "body_joint": "mixamorig:LeftUpLeg"
+    },
+    "nod": {
+      "poses": 113,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0013270211638882756,
+      "minimum_frame": 0.0,
+      "minimum_vertex": 927,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "waistband",
+      "location_m": [
+        0.09879249951188784,
+        0.014995538044860151,
+        0.4205467607797465
+      ],
+      "body_joint": "mixamorig:LeftUpLeg"
+    },
+    "dance": {
+      "poses": 129,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.001177662517875433,
+      "minimum_frame": 35.0,
+      "minimum_vertex": 927,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "waistband",
+      "location_m": [
+        0.09879249951188784,
+        0.014995538044860151,
+        0.4205467607797465
+      ],
+      "body_joint": "mixamorig:LeftUpLeg"
+    },
+    "sit_down": {
+      "poses": 73,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0010488431435078382,
+      "minimum_frame": 36.0,
+      "minimum_vertex": 788,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "front hips",
+      "location_m": [
+        0.07367556881591392,
+        -0.08607099378728315,
+        0.3637003858199609
+      ],
+      "body_joint": "mixamorig:Hips"
+    },
+    "sit_idle": {
+      "poses": 181,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0010343152098357677,
+      "minimum_frame": 21.5,
+      "minimum_vertex": 788,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "front hips",
+      "location_m": [
+        0.07367556881591392,
+        -0.08607099378728315,
+        0.3637003858199609
+      ],
+      "body_joint": "mixamorig:Hips"
+    },
+    "stand_up": {
+      "poses": 61,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0010345102054998279,
+      "minimum_frame": 5.5,
+      "minimum_vertex": 1788,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "upper thigh",
+      "location_m": [
+        -0.0462275230865032,
+        -0.10473214253163121,
+        0.3169112338241121
+      ],
+      "body_joint": "mixamorig:Hips"
+    },
+    "hold_item": {
+      "poses": 121,
+      "max_vertices_inside": 0,
+      "minimum_m": 0.0013239514082670212,
+      "minimum_frame": 14.5,
+      "minimum_vertex": 927,
+      "max_garment_pairs": 0,
+      "max_pair_frame": 0.0,
+      "total_garment_pairs": 0,
+      "zone": "waistband",
+      "location_m": [
+        0.09879249951188784,
+        0.014995538044860151,
+        0.4205467607797465
+      ],
+      "body_joint": "mixamorig:LeftUpLeg"
+    }
+  },
+  "discarded_early_refit": [
+    [
+      {
+        "vertex_ids": [
+          2476,
+          2477,
+          2478,
+          2479
+        ],
+        "zone": "waistband",
+        "offset_m": [
+          0.0004255480016581714,
+          -9.355553629575297e-05,
+          0.00011249999806750566
+        ],
+        "before": [
+          16,
+          1,
+          0.010520395822823048
+        ],
+        "after": [
+          12,
+          0,
+          0.0
+        ]
+      },
+      {
+        "vertex_ids": [
+          3253
+        ],
+        "zone": "knee",
+        "offset_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "before": [
+          8,
+          0,
+          0.0
+        ],
+        "after": [
+          0,
+          0,
+          0.0
+        ]
+      }
+    ]
+  ],
+  "exact_local_refit": [
+    [
+      {
+        "vertex_ids": [
+          3253
+        ],
+        "zone": "knee",
+        "offset_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "before": [
+          8,
+          0,
+          0.0
+        ],
+        "after": [
+          0,
+          0,
+          0.0
+        ]
+      },
+      {
+        "vertex_ids": [
+          2567,
+          2568
+        ],
+        "zone": "waistband",
+        "offset_m": [
+          0.0004255480016581714,
+          -9.355553629575297e-05,
+          0.00011249999806750566
+        ],
+        "before": [
+          4,
+          1,
+          0.0059484438970685005
+        ],
+        "after": [
+          0,
+          0,
+          0.0
+        ]
+      },
+      {
+        "vertex_ids": [
+          2640,
+          2641,
+          2642,
+          2643
+        ],
+        "zone": "waistband",
+        "offset_m": [
+          -8.98709986358881e-05,
+          0.00033431564224883914,
+          0.00028750000637955964
+        ],
+        "before": [
+          4,
+          1,
+          0.0007176848594099283
+        ],
+        "after": [
+          0,
+          0,
+          0.0
+        ]
+      }
+    ]
+  ]
+}

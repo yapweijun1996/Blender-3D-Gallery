@@ -1,0 +1,38 @@
+{
+  "source_sha256": "6bdceb1bf381678860f1f55dd0c23beafc4aff02cb0e83a6398fea62a56f80e9",
+  "candidate_sha256": "09d5e03d5da489e350432bb521e59255393a167a2847ae602b7d92a6a102e387",
+  "source_capture_sha256": "37a961c0dccec401591cb2ec826ede3e64a25bea0f35e7a6b640fa6e2dbf1b3d",
+  "candidate_capture_sha256": "d63065d34242de7070079657a02d5edef9b66ab48dba0526d63b58f9e928a839",
+  "orthographic_width_m": [
+    1.1147530021748062,
+    1.114752943438814
+  ],
+  "target_shift_world_m": [
+    -2.384185791015625e-07,
+    2.2351741790771484e-08,
+    -8.940696716308594e-08
+  ],
+  "renderer": "Cycles CPU",
+  "samples": 8,
+  "measure": "Absolute display-referred RGB channel difference on source foreground in the indicated frontal crops. Includes denoiser and rasterization differences.",
+  "regions": {
+    "head": {
+      "pixels": 39206,
+      "mean_absolute_8bit_channel_error": 0.47083779693584316,
+      "p95_absolute_8bit_channel_error": 2.0,
+      "max_absolute_8bit_channel_error": 153.0
+    },
+    "eyes": {
+      "pixels": 12987,
+      "mean_absolute_8bit_channel_error": 0.8297784964451631,
+      "p95_absolute_8bit_channel_error": 4.0,
+      "max_absolute_8bit_channel_error": 47.0
+    },
+    "torso_shorts_legs_feet": {
+      "pixels": 44214,
+      "mean_absolute_8bit_channel_error": 0.2318496403853983,
+      "p95_absolute_8bit_channel_error": 1.0,
+      "max_absolute_8bit_channel_error": 50.0
+    }
+  }
+}

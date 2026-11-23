@@ -1,0 +1,296 @@
+{
+  "source_glb_sha256": "6d21284ee87de7cd95c6ce498ff8a7a1e27e5cb8e609f819764e91e12095e4ee",
+  "motion_sha256": "3484f5978e94f3e714b320357397d107dd490d56f2eeb64770be292322f9aa2c",
+  "actions_sha256": "e0b71ba549ed60f15a23b925be39cdf0eeef1ba9185fef35572cef8117b984d9",
+  "glb_sha256": "51c03dabd6845642f4b29a809484a95635617bc172a77680eeb2a53b596343e8",
+  "method": "local alternate offsets and weights with legacy clearance guard",
+  "selected_pass": 2,
+  "target_m": 0.0005,
+  "margin_m": 0.002,
+  "legacy_guard": [
+    {
+      "pass": 0,
+      "vertices_over_legacy_limit": 70,
+      "new_overlapping_faces": 210,
+      "pair_occurrences_on_edited_faces": 13244
+    },
+    {
+      "pass": 1,
+      "vertices_over_legacy_limit": 54,
+      "new_overlapping_faces": 96,
+      "pair_occurrences_on_edited_faces": 3645
+    },
+    {
+      "pass": 2,
+      "vertices_over_legacy_limit": 45,
+      "new_overlapping_faces": 38,
+      "pair_occurrences_on_edited_faces": 3388
+    },
+    {
+      "pass": 3,
+      "vertices_over_legacy_limit": 1,
+      "new_overlapping_faces": 3,
+      "pair_occurrences_on_edited_faces": 3406
+    },
+    {
+      "pass": 4,
+      "vertices_over_legacy_limit": 0,
+      "new_overlapping_faces": 0,
+      "pair_occurrences_on_edited_faces": 3479
+    }
+  ],
+  "before_legacy_guard": {
+    "rest": {
+      "samples": 1,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.0007781442836858332,
+      "minimum_vertex_frame": 1.0,
+      "vertex": 2172,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 1.0,
+      "sum_triangle_pairs": 0
+    },
+    "walk": {
+      "samples": 113,
+      "max_verts_inside": 7,
+      "min_signed_dist": -0.0007500868523493409,
+      "minimum_vertex_frame": 33.0,
+      "vertex": 2374,
+      "max_triangle_pairs": 120,
+      "max_pair_frame": 35.0,
+      "sum_triangle_pairs": 6670
+    },
+    "run": {
+      "samples": 61,
+      "max_verts_inside": 5,
+      "min_signed_dist": -0.0005746582173742354,
+      "minimum_vertex_frame": 9.0,
+      "vertex": 1586,
+      "max_triangle_pairs": 85,
+      "max_pair_frame": 9.0,
+      "sum_triangle_pairs": 2140
+    },
+    "wave": {
+      "samples": 129,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.0003456197737250477,
+      "minimum_vertex_frame": 0.0,
+      "vertex": 1648,
+      "max_triangle_pairs": 4,
+      "max_pair_frame": 0.0,
+      "sum_triangle_pairs": 516
+    },
+    "jump": {
+      "samples": 101,
+      "max_verts_inside": 0,
+      "min_signed_dist": 9.00303348316811e-05,
+      "minimum_vertex_frame": 8.0,
+      "vertex": 338,
+      "max_triangle_pairs": 42,
+      "max_pair_frame": 8.0,
+      "sum_triangle_pairs": 648
+    },
+    "idle": {
+      "samples": 177,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.00030382073600776494,
+      "minimum_vertex_frame": 80.0,
+      "vertex": 1648,
+      "max_triangle_pairs": 10,
+      "max_pair_frame": 15.0,
+      "sum_triangle_pairs": 774
+    },
+    "nod": {
+      "samples": 113,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.0003456197737250477,
+      "minimum_vertex_frame": 0.0,
+      "vertex": 1648,
+      "max_triangle_pairs": 4,
+      "max_pair_frame": 0.0,
+      "sum_triangle_pairs": 452
+    },
+    "dance": {
+      "samples": 129,
+      "max_verts_inside": 2,
+      "min_signed_dist": -0.00030287736444734037,
+      "minimum_vertex_frame": 49.0,
+      "vertex": 2290,
+      "max_triangle_pairs": 53,
+      "max_pair_frame": 49.0,
+      "sum_triangle_pairs": 2044
+    },
+    "sit_down": {
+      "samples": 73,
+      "max_verts_inside": 97,
+      "min_signed_dist": -0.007335191126912832,
+      "minimum_vertex_frame": 4.0,
+      "vertex": 220,
+      "max_triangle_pairs": 590,
+      "max_pair_frame": 4.0,
+      "sum_triangle_pairs": 34717
+    },
+    "sit_idle": {
+      "samples": 181,
+      "max_verts_inside": 62,
+      "min_signed_dist": -0.005047212820500135,
+      "minimum_vertex_frame": 29.0,
+      "vertex": 18,
+      "max_triangle_pairs": 534,
+      "max_pair_frame": 65.5,
+      "sum_triangle_pairs": 91032
+    },
+    "stand_up": {
+      "samples": 61,
+      "max_verts_inside": 97,
+      "min_signed_dist": -0.007388786878436804,
+      "minimum_vertex_frame": 27.0,
+      "vertex": 2104,
+      "max_triangle_pairs": 593,
+      "max_pair_frame": 27.0,
+      "sum_triangle_pairs": 28621
+    },
+    "hold_item": {
+      "samples": 121,
+      "max_verts_inside": 60,
+      "min_signed_dist": -0.0064086224883794785,
+      "minimum_vertex_frame": 13.0,
+      "vertex": 2104,
+      "max_triangle_pairs": 440,
+      "max_pair_frame": 9.5,
+      "sum_triangle_pairs": 52773
+    }
+  },
+  "selected_clips": {
+    "rest": {
+      "samples": 1,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.000999128445982933,
+      "minimum_vertex_frame": 1.0,
+      "vertex": 2379,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 1.0,
+      "sum_triangle_pairs": 0
+    },
+    "walk": {
+      "samples": 113,
+      "max_verts_inside": 12,
+      "min_signed_dist": -0.000733810942620039,
+      "minimum_vertex_frame": 16.0,
+      "vertex": 2406,
+      "max_triangle_pairs": 68,
+      "max_pair_frame": 13.5,
+      "sum_triangle_pairs": 2658
+    },
+    "run": {
+      "samples": 61,
+      "max_verts_inside": 8,
+      "min_signed_dist": -0.0007408122182823718,
+      "minimum_vertex_frame": 10.0,
+      "vertex": 2435,
+      "max_triangle_pairs": 51,
+      "max_pair_frame": 9.0,
+      "sum_triangle_pairs": 459
+    },
+    "wave": {
+      "samples": 129,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.0007423750357702374,
+      "minimum_vertex_frame": 0.0,
+      "vertex": 2401,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 0.0,
+      "sum_triangle_pairs": 0
+    },
+    "jump": {
+      "samples": 101,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.00034635834163054824,
+      "minimum_vertex_frame": 8.0,
+      "vertex": 411,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 0.0,
+      "sum_triangle_pairs": 0
+    },
+    "idle": {
+      "samples": 177,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.0006498493603430688,
+      "minimum_vertex_frame": 80.0,
+      "vertex": 2401,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 0.0,
+      "sum_triangle_pairs": 0
+    },
+    "nod": {
+      "samples": 113,
+      "max_verts_inside": 0,
+      "min_signed_dist": 0.0007423750357702374,
+      "minimum_vertex_frame": 0.0,
+      "vertex": 2401,
+      "max_triangle_pairs": 0,
+      "max_pair_frame": 0.0,
+      "sum_triangle_pairs": 0
+    },
+    "dance": {
+      "samples": 129,
+      "max_verts_inside": 4,
+      "min_signed_dist": -0.0002598871651571244,
+      "minimum_vertex_frame": 49.0,
+      "vertex": 2379,
+      "max_triangle_pairs": 39,
+      "max_pair_frame": 48.0,
+      "sum_triangle_pairs": 362
+    },
+    "sit_down": {
+      "samples": 73,
+      "max_verts_inside": 142,
+      "min_signed_dist": -0.010539219714701176,
+      "minimum_vertex_frame": 0.0,
+      "vertex": 2125,
+      "max_triangle_pairs": 530,
+      "max_pair_frame": 4.5,
+      "sum_triangle_pairs": 33029
+    },
+    "sit_idle": {
+      "samples": 181,
+      "max_verts_inside": 101,
+      "min_signed_dist": -0.006749284919351339,
+      "minimum_vertex_frame": 47.0,
+      "vertex": 2132,
+      "max_triangle_pairs": 495,
+      "max_pair_frame": 69.5,
+      "sum_triangle_pairs": 84000
+    },
+    "stand_up": {
+      "samples": 61,
+      "max_verts_inside": 140,
+      "min_signed_dist": -0.010539215989410877,
+      "minimum_vertex_frame": 30.0,
+      "vertex": 2125,
+      "max_triangle_pairs": 533,
+      "max_pair_frame": 23.5,
+      "sum_triangle_pairs": 27313
+    },
+    "hold_item": {
+      "samples": 121,
+      "max_verts_inside": 83,
+      "min_signed_dist": -0.011942114681005478,
+      "minimum_vertex_frame": 44.0,
+      "vertex": 2125,
+      "max_triangle_pairs": 410,
+      "max_pair_frame": 22.0,
+      "sum_triangle_pairs": 48756
+    }
+  },
+  "rest_displacement_m": {
+    "min": 0.0,
+    "p10": 0.0,
+    "median": 0.0,
+    "p90": 0.0012086945353075862,
+    "p95": 0.0026534399949014187,
+    "max": 0.013367784209549427
+  },
+  "vertices_moved_over_0_1mm": 473,
+  "edited_binding_vertices": 218
+}

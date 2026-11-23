@@ -1,0 +1,1264 @@
+{
+  "status": "PASS",
+  "createdUTC": "2026-11-17T13:52:12.878Z",
+  "manifest": {
+    "file": "exports/modules/manifest.json",
+    "sha256": "10b191ab021b3b70327907834afe2263be6b50fb611374114c5216c6e253f853",
+    "manifestUnchanged": true,
+    "entries": 38,
+    "diskGLBCount": 38,
+    "missingFiles": [],
+    "unlistedFiles": []
+  },
+  "coverage": {
+    "mandatory": 36,
+    "missingFromCharacter": [],
+    "moduleSlotsMissingOwnTag": [],
+    "characterSlots": [
+      "Arm.L",
+      "Arm.R",
+      "Backpack",
+      "Body",
+      "Brow.L",
+      "Brow.R",
+      "Ear.L",
+      "Ear.R",
+      "Eye.L",
+      "Eye.R",
+      "Finger_Index_L",
+      "Finger_Index_R",
+      "Finger_Middle_L",
+      "Finger_Middle_R",
+      "Finger_Pinky_L",
+      "Finger_Pinky_R",
+      "Finger_Ring_L",
+      "Finger_Ring_R",
+      "Finger_Thumb_L",
+      "Finger_Thumb_R",
+      "Hair",
+      "Head",
+      "Hoodie",
+      "Leg.L",
+      "Leg.R",
+      "Mouth",
+      "Nose",
+      "Palm_L",
+      "Palm_R",
+      "Shoe.L",
+      "Shoe.R",
+      "Shorts",
+      "Sock.L",
+      "Sock.R",
+      "Wrist_L",
+      "Wrist_R"
+    ]
+  },
+  "totals": {
+    "files": 40,
+    "errors": 0,
+    "warnings": 0,
+    "infos": 67,
+    "badFiles": []
+  },
+  "results": [
+    {
+      "kind": "character",
+      "slot": null,
+      "optional": null,
+      "file": "exports/gjh-reference-visitor-rigged.glb",
+      "sha256": "d95a4d7060361974f03c5f1e788c902f9a037b2a57208ba8f36ec799195fc026",
+      "bytes": 2564792,
+      "inputUnchanged": true,
+      "triangles": 51543,
+      "meshes": 54,
+      "primitives": 60,
+      "materials": 24,
+      "skinJoints": [
+        19
+      ],
+      "animations": [
+        "idle",
+        "walk",
+        "run",
+        "sit",
+        "stand_up"
+      ],
+      "slots": [
+        "Arm.L",
+        "Arm.R",
+        "Backpack",
+        "Body",
+        "Brow.L",
+        "Brow.R",
+        "Ear.L",
+        "Ear.R",
+        "Eye.L",
+        "Eye.R",
+        "Finger_Index_L",
+        "Finger_Index_R",
+        "Finger_Middle_L",
+        "Finger_Middle_R",
+        "Finger_Pinky_L",
+        "Finger_Pinky_R",
+        "Finger_Ring_L",
+        "Finger_Ring_R",
+        "Finger_Thumb_L",
+        "Finger_Thumb_R",
+        "Hair",
+        "Head",
+        "Hoodie",
+        "Leg.L",
+        "Leg.R",
+        "Mouth",
+        "Nose",
+        "Palm_L",
+        "Palm_R",
+        "Shoe.L",
+        "Shoe.R",
+        "Shorts",
+        "Sock.L",
+        "Sock.R",
+        "Wrist_L",
+        "Wrist_R"
+      ],
+      "hasExpectedSlot": null,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 33,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "hair",
+      "slot": null,
+      "optional": null,
+      "file": "exports/gjh-visitor-hair.glb",
+      "sha256": "193f17f1e4dbfaf4690086e0144e029cb5050dd7103b3a9c73785aa90eff3434",
+      "bytes": 215836,
+      "inputUnchanged": true,
+      "triangles": 8876,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [],
+      "animations": [],
+      "slots": [
+        "Hair"
+      ],
+      "hasExpectedSlot": null,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Arm.L",
+      "optional": false,
+      "file": "exports/modules/arm-l.glb",
+      "sha256": "3831e3669f4ed381871f248a2fb1917e39ca996941d6b2e1078ef22444eacc6f",
+      "bytes": 17272,
+      "inputUnchanged": true,
+      "triangles": 416,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Arm.L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Arm.R",
+      "optional": false,
+      "file": "exports/modules/arm-r.glb",
+      "sha256": "e9067f0d5e4ec3d23f813f7a9766c34efc086867ab0f3f82435a858bab75bcdc",
+      "bytes": 17276,
+      "inputUnchanged": true,
+      "triangles": 416,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Arm.R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Backpack",
+      "optional": false,
+      "file": "exports/modules/backpack.glb",
+      "sha256": "e4c0e87da9dbbb869ca8ac54782103b93d58fee9f6dbdad02663b22198b610cc",
+      "bytes": 58728,
+      "inputUnchanged": true,
+      "triangles": 760,
+      "meshes": 6,
+      "primitives": 6,
+      "materials": 3,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Backpack"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 6,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Body",
+      "optional": false,
+      "file": "exports/modules/body.glb",
+      "sha256": "c572ffa49dcba78fb2b5a6654450921c0b4256ed64cfb1b403921eafa0ac5ce7",
+      "bytes": 14884,
+      "inputUnchanged": true,
+      "triangles": 332,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Body"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Brow.L",
+      "optional": false,
+      "file": "exports/modules/brow-l.glb",
+      "sha256": "6b25dee2f46709d96d634aba03271e3f713c89181fd6451bf50528e61bbf0712",
+      "bytes": 130208,
+      "inputUnchanged": true,
+      "triangles": 190,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Brow.L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Brow.R",
+      "optional": false,
+      "file": "exports/modules/brow-r.glb",
+      "sha256": "fd609c985b0c8de3cb31a01c12780b7a3171820ef5f4929dbc16de4d49338335",
+      "bytes": 130280,
+      "inputUnchanged": true,
+      "triangles": 192,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Brow.R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Ear.L",
+      "optional": false,
+      "file": "exports/modules/ear-l.glb",
+      "sha256": "1f5d02b5cf548799423b8e134c9c057d4c0127ceb2322b9d5f67f0f04177c8e9",
+      "bytes": 131192,
+      "inputUnchanged": true,
+      "triangles": 628,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Ear.L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Ear.R",
+      "optional": false,
+      "file": "exports/modules/ear-r.glb",
+      "sha256": "619dcb1d9478b90c3cd64cc046eb1753ce1f53f97fb10a4fa4b82bd7e71bf824",
+      "bytes": 132076,
+      "inputUnchanged": true,
+      "triangles": 654,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Ear.R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Eye.L",
+      "optional": false,
+      "file": "exports/modules/eye-l.glb",
+      "sha256": "d5f7c00cacf6db862cf510e00a9ad82c8af6a17d915ec21d937fd874bcc09aa5",
+      "bytes": 154652,
+      "inputUnchanged": true,
+      "triangles": 590,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Eye.L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Eye.R",
+      "optional": false,
+      "file": "exports/modules/eye-r.glb",
+      "sha256": "a3e63acb085ef77d8b1bc257baf654b30b1eb096277b638a1b4b148fd1d13ab5",
+      "bytes": 154308,
+      "inputUnchanged": true,
+      "triangles": 594,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Eye.R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Finger_Index_L",
+      "optional": false,
+      "file": "exports/modules/finger-index-l.glb",
+      "sha256": "0fe1c205c9a9b083031eed7b5ef139c4f294a1fb4c168cf770a84d1efa1c2155",
+      "bytes": 17028,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Finger_Index_L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Finger_Index_R",
+      "optional": false,
+      "file": "exports/modules/finger-index-r.glb",
+      "sha256": "047fb1039edafccc8272dac8b3803088ffe19cf3810da65427e72288f868ac08",
+      "bytes": 17032,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Finger_Index_R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Finger_Middle_L",
+      "optional": false,
+      "file": "exports/modules/finger-middle-l.glb",
+      "sha256": "9289f93877e25471abd124d25593a5614727fd2a31c3496237e2942e2c3578e6",
+      "bytes": 17032,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Finger_Middle_L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Finger_Middle_R",
+      "optional": false,
+      "file": "exports/modules/finger-middle-r.glb",
+      "sha256": "fb58ccdddd5ce93597ae2a19064abf8b2baca44d1419c73d08db3e288d4de700",
+      "bytes": 17036,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Finger_Middle_R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Finger_Pinky_L",
+      "optional": false,
+      "file": "exports/modules/finger-pinky-l.glb",
+      "sha256": "676a44cccdc3c4e6f0dda47d986bc419d87c739433d421bfec0a52d755a4d930",
+      "bytes": 17028,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Finger_Pinky_L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Finger_Pinky_R",
+      "optional": false,
+      "file": "exports/modules/finger-pinky-r.glb",
+      "sha256": "7d572e50edeae160680ad16997a7cbbb40d196945bb31bd12a6b43b6effe8922",
+      "bytes": 17032,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Finger_Pinky_R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Finger_Ring_L",
+      "optional": false,
+      "file": "exports/modules/finger-ring-l.glb",
+      "sha256": "df494f3b46182b2659d44e8c3c993c85a5e831b644aeafd05dafe760b7d917be",
+      "bytes": 17024,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Finger_Ring_L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Finger_Ring_R",
+      "optional": false,
+      "file": "exports/modules/finger-ring-r.glb",
+      "sha256": "5319dad5cacfe31c984d5b646a84479df25d1b2c2a96670f41b8fed4614c5547",
+      "bytes": 17024,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Finger_Ring_R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Finger_Thumb_L",
+      "optional": false,
+      "file": "exports/modules/finger-thumb-l.glb",
+      "sha256": "8e33d25ffc6b29130eafb20a34801699af8be32c632455b9457d17b37779fca4",
+      "bytes": 17028,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Finger_Thumb_L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Finger_Thumb_R",
+      "optional": false,
+      "file": "exports/modules/finger-thumb-r.glb",
+      "sha256": "42935e81f498b04094da4b9f46a3e9cb196bfc17d45c7ee140fd33cebe2729d1",
+      "bytes": 17028,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Finger_Thumb_R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Hair",
+      "optional": false,
+      "file": "exports/modules/hair.glb",
+      "sha256": "047c2f3587d09063a18e36eef54e43f4f2a90a1ed82f3519841586579ef0d9bc",
+      "bytes": 309748,
+      "inputUnchanged": true,
+      "triangles": 8876,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Hair"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Hat",
+      "optional": true,
+      "file": "exports/modules/hat.glb",
+      "sha256": "fbcdd0cf74d05825626553a00c68afe8c454c16fac38f1de9261660b47d21d2f",
+      "bytes": 45024,
+      "inputUnchanged": true,
+      "triangles": 1072,
+      "meshes": 2,
+      "primitives": 3,
+      "materials": 3,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Hat"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Head",
+      "optional": false,
+      "file": "exports/modules/head.glb",
+      "sha256": "820d5e45383927025863cb310a10bb0f6b2307e8c041851feeed9ccc57e53c31",
+      "bytes": 438188,
+      "inputUnchanged": true,
+      "triangles": 11100,
+      "meshes": 3,
+      "primitives": 3,
+      "materials": 2,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Head"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 2,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Hoodie",
+      "optional": false,
+      "file": "exports/modules/hoodie.glb",
+      "sha256": "2cdaa177b3c65db9e8ad977fee72e7a66ba3acc2e384f3b7c9e28a44fd9019cf",
+      "bytes": 428840,
+      "inputUnchanged": true,
+      "triangles": 13448,
+      "meshes": 10,
+      "primitives": 14,
+      "materials": 7,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Hoodie"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 9,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Jeans",
+      "optional": true,
+      "file": "exports/modules/jeans.glb",
+      "sha256": "9b9bdacf5791a6f6933d792e60058a9c609497c20f4ae358dec7a97ca47d39f6",
+      "bytes": 22888,
+      "inputUnchanged": true,
+      "triangles": 612,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Jeans"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Leg.L",
+      "optional": false,
+      "file": "exports/modules/leg-l.glb",
+      "sha256": "bf807aadbbcde38fed111f90f120b9524480a32341e20189ed34d5a9b9b9de73",
+      "bytes": 9616,
+      "inputUnchanged": true,
+      "triangles": 144,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Leg.L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Leg.R",
+      "optional": false,
+      "file": "exports/modules/leg-r.glb",
+      "sha256": "693cf8ab86d9445dd4e6b9adbc18059b324e1bd166cffbf9544fd87166d5fa3c",
+      "bytes": 9620,
+      "inputUnchanged": true,
+      "triangles": 144,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Leg.R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Mouth",
+      "optional": false,
+      "file": "exports/modules/mouth.glb",
+      "sha256": "9adaace6a7555345bbeb84b58103dd6628412e3facb72362c1cd4e36641818d0",
+      "bytes": 135860,
+      "inputUnchanged": true,
+      "triangles": 290,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Mouth"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Nose",
+      "optional": false,
+      "file": "exports/modules/nose.glb",
+      "sha256": "6bdf6792aa36496c1ecf6647ea33c2df7f5840c007032f8d4cd99526b4829f2e",
+      "bytes": 113452,
+      "inputUnchanged": true,
+      "triangles": 101,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Nose"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Palm_L",
+      "optional": false,
+      "file": "exports/modules/palm-l.glb",
+      "sha256": "2bf25585e0e4e2fab97e34b1353b7448bdb4094cd51ba836a44c751f930b1e66",
+      "bytes": 17000,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Palm_L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Palm_R",
+      "optional": false,
+      "file": "exports/modules/palm-r.glb",
+      "sha256": "4834b05b337ec22fb7c6e1ddf4fe36ddf510dab3fab65cac19533d01680ab36e",
+      "bytes": 17000,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Palm_R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Shoe.L",
+      "optional": false,
+      "file": "exports/modules/shoe-l.glb",
+      "sha256": "318a958679fc538ff28bf63077fdb64152d13e5609e0667b794ba78c9e345dd7",
+      "bytes": 112188,
+      "inputUnchanged": true,
+      "triangles": 3632,
+      "meshes": 1,
+      "primitives": 2,
+      "materials": 2,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Shoe.L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Shoe.R",
+      "optional": false,
+      "file": "exports/modules/shoe-r.glb",
+      "sha256": "59b2c5d52fa776ea94918d96855918693dd7efd3534390bd5b8e25cbb8efb11f",
+      "bytes": 112188,
+      "inputUnchanged": true,
+      "triangles": 3632,
+      "meshes": 1,
+      "primitives": 2,
+      "materials": 2,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Shoe.R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Shorts",
+      "optional": false,
+      "file": "exports/modules/shorts.glb",
+      "sha256": "38fc5d4afbc18a49af45cb7e5843999e683a03140789efd250738cbf1e021733",
+      "bytes": 52684,
+      "inputUnchanged": true,
+      "triangles": 892,
+      "meshes": 3,
+      "primitives": 3,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Shorts"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 2,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Sock.L",
+      "optional": false,
+      "file": "exports/modules/sock-l.glb",
+      "sha256": "e1639a5fa30f31b38e96c8565e69e575c9fe1447f28ff0cde673ae678840b52d",
+      "bytes": 12316,
+      "inputUnchanged": true,
+      "triangles": 240,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Sock.L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Sock.R",
+      "optional": false,
+      "file": "exports/modules/sock-r.glb",
+      "sha256": "85d1c48eda331005637e3733ffa2dc95f8a5c793a0d03a977bac66d0ba619057",
+      "bytes": 12316,
+      "inputUnchanged": true,
+      "triangles": 240,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Sock.R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Wrist_L",
+      "optional": false,
+      "file": "exports/modules/wrist-l.glb",
+      "sha256": "e3518c7903c1c4a5d5abab438c92c2142b031d1e718beb13b5812bafdd7255b8",
+      "bytes": 17000,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Wrist_L"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    },
+    {
+      "kind": "module",
+      "slot": "Wrist_R",
+      "optional": false,
+      "file": "exports/modules/wrist-r.glb",
+      "sha256": "df9acf2f4d6af3ad1489b8353a5ca7dd4552488e80cc11cf54142282983988a9",
+      "bytes": 17004,
+      "inputUnchanged": true,
+      "triangles": 288,
+      "meshes": 1,
+      "primitives": 1,
+      "materials": 1,
+      "skinJoints": [
+        19
+      ],
+      "animations": [],
+      "slots": [
+        "Wrist_R"
+      ],
+      "hasExpectedSlot": true,
+      "validator": {
+        "version": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 1,
+        "hints": 0,
+        "messages": []
+      }
+    }
+  ]
+}

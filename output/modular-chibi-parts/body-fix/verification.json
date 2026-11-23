@@ -1,0 +1,417 @@
+{
+  "gates": {
+    "integer_target_pairs": 0,
+    "half_frame_target_pairs": 0,
+    "foot_height_max_delta_mm_all_samples": 0.11211776733398438,
+    "all_body_integer_pairs": 148758,
+    "whole_body_zero": false
+  },
+  "container": {
+    "source_binary_prefix_identical": true,
+    "source_mesh_skin_hierarchy_materials_images_identical": true,
+    "source_hand_and_finger_samplers_identical": true,
+    "clips": {
+      "idle": {
+        "joints": 65,
+        "channels": 195,
+        "unchanged_channel_samplers": 189
+      },
+      "wave": {
+        "joints": 65,
+        "channels": 195,
+        "unchanged_channel_samplers": 189
+      },
+      "nod": {
+        "joints": 65,
+        "channels": 195,
+        "unchanged_channel_samplers": 189
+      },
+      "jump": {
+        "joints": 65,
+        "channels": 195,
+        "unchanged_channel_samplers": 171
+      },
+      "dance": {
+        "joints": 65,
+        "channels": 195,
+        "unchanged_channel_samplers": 189
+      },
+      "run": {
+        "joints": 65,
+        "channels": 195,
+        "unchanged_channel_samplers": 171
+      },
+      "walk": {
+        "joints": 65,
+        "channels": 195,
+        "unchanged_channel_samplers": 171
+      }
+    }
+  },
+  "rest_topology": {
+    "component_triangle_counts": {
+      "4": 6434,
+      "0": 652,
+      "1709": 134,
+      "2": 652,
+      "1710": 134
+    },
+    "pairs_in_neutral_pose": {
+      "Head / Head | component 4 + 1709": 81,
+      "Head / Head | component 4 + 1710": 82,
+      "LeftFoot / LeftFoot | component 2 + 2": 12,
+      "LeftFoot / LeftToeBase | component 2 + 2": 8,
+      "LeftToeBase / LeftToeBase | component 2 + 2": 27,
+      "LeftUpLeg / LeftUpLeg | component 2 + 4": 30,
+      "RightFoot / RightFoot | component 0 + 0": 12,
+      "RightFoot / RightToeBase | component 0 + 0": 11,
+      "RightToeBase / RightToeBase | component 0 + 0": 25,
+      "RightUpLeg / RightUpLeg | component 0 + 4": 30
+    }
+  },
+  "clips": {
+    "walk": {
+      "before": {
+        "groups": {
+          "head_internal": 9359,
+          "arm_vs_lower_body": 7137,
+          "other_local_folds": 451,
+          "arm_vs_torso_or_head": 2565,
+          "foot_or_ankle": 4409,
+          "hand_internal": 10944,
+          "thigh_or_pelvis": 3948,
+          "shin_vs_thigh": 145
+        },
+        "deepest": [
+          12.916809,
+          [
+            42,
+            "LeftArm / Spine1"
+          ]
+        ]
+      },
+      "after": {
+        "groups": {
+          "head_internal": 9359,
+          "foot_or_ankle": 4409,
+          "hand_internal": 10944,
+          "thigh_or_pelvis": 3939
+        },
+        "deepest": [
+          6.255094,
+          [
+            52,
+            "RightUpLeg / RightUpLeg"
+          ]
+        ]
+      },
+      "max_foot_delta_mm_frame_side": [
+        0.00010824203491210938,
+        2,
+        "Right"
+      ],
+      "half_frame_max_foot_delta_mm_frame_side": [
+        0.11211776733398438,
+        25.5,
+        "Right"
+      ],
+      "half_frame_after_target_counts": {
+        "arm_vs_lower_body": 0,
+        "arm_vs_torso_or_head": 0,
+        "shin_vs_thigh": 0
+      }
+    },
+    "run": {
+      "before": {
+        "groups": {
+          "head_internal": 5053,
+          "other_local_folds": 719,
+          "arm_vs_torso_or_head": 568,
+          "foot_or_ankle": 2838,
+          "hand_internal": 7099,
+          "shin_vs_thigh": 615,
+          "thigh_or_pelvis": 2082,
+          "arm_vs_lower_body": 1538
+        },
+        "deepest": [
+          12.189103,
+          [
+            8,
+            "RightLeg / RightUpLeg"
+          ]
+        ]
+      },
+      "after": {
+        "groups": {
+          "head_internal": 5053,
+          "foot_or_ankle": 2865,
+          "hand_internal": 7099,
+          "thigh_or_pelvis": 1927,
+          "other_local_folds": 222
+        },
+        "deepest": [
+          7.011538,
+          [
+            24,
+            "LeftUpLeg / LeftUpLeg"
+          ]
+        ]
+      },
+      "max_foot_delta_mm_frame_side": [
+        0.004275798797607422,
+        23,
+        "Left"
+      ],
+      "half_frame_max_foot_delta_mm_frame_side": [
+        0.008309364318847656,
+        16.5,
+        "Right"
+      ],
+      "half_frame_after_target_counts": {
+        "arm_vs_lower_body": 0,
+        "arm_vs_torso_or_head": 0,
+        "shin_vs_thigh": 0
+      }
+    },
+    "wave": {
+      "before": {
+        "groups": {
+          "head_internal": 10595,
+          "other_local_folds": 429,
+          "arm_vs_torso_or_head": 1779,
+          "foot_or_ankle": 6045,
+          "arm_vs_lower_body": 3129,
+          "thigh_or_pelvis": 3900
+        },
+        "deepest": [
+          8.030442,
+          [
+            48,
+            "LeftForeArm / LeftUpLeg"
+          ]
+        ]
+      },
+      "after": {
+        "groups": {
+          "head_internal": 10595,
+          "foot_or_ankle": 6045,
+          "thigh_or_pelvis": 3900
+        },
+        "deepest": [
+          5.753652,
+          [
+            58,
+            "Head / Head"
+          ]
+        ]
+      },
+      "max_foot_delta_mm_frame_side": [
+        0.0,
+        64,
+        "Right"
+      ],
+      "half_frame_max_foot_delta_mm_frame_side": [
+        0.0,
+        63.5,
+        "Right"
+      ],
+      "half_frame_after_target_counts": {
+        "arm_vs_lower_body": 0,
+        "arm_vs_torso_or_head": 0,
+        "shin_vs_thigh": 0
+      }
+    },
+    "jump": {
+      "before": {
+        "groups": {
+          "head_internal": 8324,
+          "other_local_folds": 357,
+          "arm_vs_torso_or_head": 909,
+          "foot_or_ankle": 4743,
+          "arm_vs_lower_body": 1266,
+          "thigh_or_pelvis": 3124,
+          "shin_vs_thigh": 4
+        },
+        "deepest": [
+          9.389208,
+          [
+            4,
+            "LeftForeArm / LeftUpLeg"
+          ]
+        ]
+      },
+      "after": {
+        "groups": {
+          "head_internal": 8324,
+          "foot_or_ankle": 4753,
+          "thigh_or_pelvis": 3124
+        },
+        "deepest": [
+          6.033794,
+          [
+            9,
+            "LeftUpLeg / LeftUpLeg"
+          ]
+        ]
+      },
+      "max_foot_delta_mm_frame_side": [
+        9.560585021972656e-05,
+        7,
+        "Right"
+      ],
+      "half_frame_max_foot_delta_mm_frame_side": [
+        0.0034873485565185547,
+        9.5,
+        "Right"
+      ],
+      "half_frame_after_target_counts": {
+        "arm_vs_lower_body": 0,
+        "arm_vs_torso_or_head": 0,
+        "shin_vs_thigh": 0
+      }
+    },
+    "idle": {
+      "before": {
+        "groups": {
+          "head_internal": 14514,
+          "other_local_folds": 1235,
+          "arm_vs_torso_or_head": 2927,
+          "foot_or_ankle": 8277,
+          "arm_vs_lower_body": 3786,
+          "thigh_or_pelvis": 5340
+        },
+        "deepest": [
+          7.95671,
+          [
+            7,
+            "LeftForeArm / LeftUpLeg"
+          ]
+        ]
+      },
+      "after": {
+        "groups": {
+          "head_internal": 14514,
+          "foot_or_ankle": 8277,
+          "thigh_or_pelvis": 5340
+        },
+        "deepest": [
+          5.753972,
+          [
+            82,
+            "Head / Head"
+          ]
+        ]
+      },
+      "max_foot_delta_mm_frame_side": [
+        0.0,
+        88,
+        "Right"
+      ],
+      "half_frame_max_foot_delta_mm_frame_side": [
+        0.0,
+        87.5,
+        "Right"
+      ],
+      "half_frame_after_target_counts": {
+        "arm_vs_lower_body": 0,
+        "arm_vs_torso_or_head": 0,
+        "shin_vs_thigh": 0
+      }
+    },
+    "nod": {
+      "before": {
+        "groups": {
+          "head_internal": 9273,
+          "other_local_folds": 750,
+          "arm_vs_torso_or_head": 1929,
+          "foot_or_ankle": 5301,
+          "arm_vs_lower_body": 2390,
+          "thigh_or_pelvis": 3420
+        },
+        "deepest": [
+          7.428867,
+          [
+            56,
+            "LeftForeArm / LeftUpLeg"
+          ]
+        ]
+      },
+      "after": {
+        "groups": {
+          "head_internal": 9273,
+          "foot_or_ankle": 5301,
+          "thigh_or_pelvis": 3420
+        },
+        "deepest": [
+          5.75809,
+          [
+            43,
+            "Head / Head"
+          ]
+        ]
+      },
+      "max_foot_delta_mm_frame_side": [
+        0.0,
+        56,
+        "Right"
+      ],
+      "half_frame_max_foot_delta_mm_frame_side": [
+        0.0,
+        55.5,
+        "Right"
+      ],
+      "half_frame_after_target_counts": {
+        "arm_vs_lower_body": 0,
+        "arm_vs_torso_or_head": 0,
+        "shin_vs_thigh": 0
+      }
+    },
+    "dance": {
+      "before": {
+        "groups": {
+          "head_internal": 10600,
+          "foot_or_ankle": 5915,
+          "thigh_or_pelvis": 3560,
+          "other_local_folds": 159,
+          "arm_vs_torso_or_head": 212
+        },
+        "deepest": [
+          5.755444,
+          [
+            1,
+            "Head / Head"
+          ]
+        ]
+      },
+      "after": {
+        "groups": {
+          "head_internal": 10600,
+          "foot_or_ankle": 5915,
+          "thigh_or_pelvis": 3560
+        },
+        "deepest": [
+          5.755444,
+          [
+            1,
+            "Head / Head"
+          ]
+        ]
+      },
+      "max_foot_delta_mm_frame_side": [
+        0.0,
+        64,
+        "Right"
+      ],
+      "half_frame_max_foot_delta_mm_frame_side": [
+        0.0,
+        63.5,
+        "Right"
+      ],
+      "half_frame_after_target_counts": {
+        "arm_vs_lower_body": 0,
+        "arm_vs_torso_or_head": 0,
+        "shin_vs_thigh": 0
+      }
+    }
+  }
+}

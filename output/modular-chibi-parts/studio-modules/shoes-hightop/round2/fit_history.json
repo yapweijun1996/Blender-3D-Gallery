@@ -1,0 +1,105 @@
+{
+  "source_sha256": "4724bfd192cc5dbd7e72b19c3bd6fd36b3ba4f26ec8fc6498333fbb535339434",
+  "master_sha256": "0339318b375836ab8891e49bda178da7e6f115e012e83385d9f8850949a7bd6f",
+  "bank_sha256": {
+    "motion_fixed.glb": "3484f5978e94f3e714b320357397d107dd490d56f2eeb64770be292322f9aa2c",
+    "actions_fixed.glb": "0d3a57ae8906edeebee590b67d0e84333640389340bfbfbe0af041ccf8f871c9",
+    "hold_actions.glb": "89dec8e79e08b69f5679eb1342a18ae4bd4640b17ca9bc3b4db15e0308ee90ca"
+  },
+  "reproduced_run": {
+    "samples": 76,
+    "max_vertices_inside": 16,
+    "max_triangle_pairs": 96,
+    "minimum_m": -0.0013504058078979142,
+    "minimum_frame": 0,
+    "minimum_vertex": 413,
+    "world": [
+      -0.064416125191815,
+      -0.004011718068966441,
+      0.0736140456881906
+    ]
+  },
+  "unique_vertices": 1669,
+  "moved_vertices": 96,
+  "weight_vertices": 208,
+  "iterations": [
+    {
+      "iteration": 0,
+      "constraints": 900,
+      "max_shift_m": 0,
+      "run": {
+        "samples": 76,
+        "max_vertices_inside": 13,
+        "max_triangle_pairs": 102,
+        "minimum_m": -0.001584409454380875,
+        "minimum_frame": 0,
+        "minimum_vertex": 324,
+        "world": [
+          -0.08430583190501595,
+          0.0038516097023040263,
+          0.07755006728034744
+        ]
+      },
+      "closest": [
+        -0.001584409454380875,
+        "run"
+      ]
+    },
+    {
+      "iteration": 1,
+      "constraints": 24,
+      "max_shift_m": 0.005894635141179044,
+      "run": {
+        "samples": 76,
+        "max_vertices_inside": 0,
+        "max_triangle_pairs": 8,
+        "minimum_m": 0.00022348678567141178,
+        "minimum_frame": 0,
+        "minimum_vertex": 305,
+        "world": [
+          -0.08541866307283695,
+          0.018380550783722804,
+          0.08335712062155151
+        ]
+      },
+      "closest": [
+        0.00022348678567141178,
+        "run"
+      ]
+    },
+    {
+      "iteration": 2,
+      "constraints": 0,
+      "max_shift_m": 0.005894635141179044,
+      "run": {
+        "samples": 76,
+        "max_vertices_inside": 0,
+        "max_triangle_pairs": 0,
+        "minimum_m": 0.000607478606980294,
+        "minimum_frame": 0,
+        "minimum_vertex": 383,
+        "world": [
+          -0.06599624822338794,
+          -0.006236797158910304,
+          0.08569601171542744
+        ]
+      },
+      "closest": [
+        0.000607478606980294,
+        "run"
+      ]
+    }
+  ],
+  "collar": {
+    "lining": {
+      "ray_constraints": 854,
+      "vertices_adjusted": 9,
+      "max_trim_offset_m": 0.002222701920989238
+    },
+    "ivory_trim": {
+      "ray_constraints": 361,
+      "vertices_adjusted": 3,
+      "max_trim_offset_m": 0.0007829162029703239
+    }
+  }
+}

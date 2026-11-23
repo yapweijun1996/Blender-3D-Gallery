@@ -1,0 +1,4756 @@
+{
+  "source_sha256": "c7688fac3e84f4cd29b8d6c423695a4bacaf509c6a0d7299cf84831328431cbf",
+  "master_sha256": "0339318b375836ab8891e49bda178da7e6f115e012e83385d9f8850949a7bd6f",
+  "action_banks": {
+    "motion_fixed.glb": "3484f5978e94f3e714b320357397d107dd490d56f2eeb64770be292322f9aa2c",
+    "actions_fixed.glb": "0d3a57ae8906edeebee590b67d0e84333640389340bfbfbe0af041ccf8f871c9",
+    "hold_actions.glb": "89dec8e79e08b69f5679eb1342a18ae4bd4640b17ca9bc3b4db15e0308ee90ca"
+  },
+  "baseline": {
+    "rest": {
+      "samples": 1,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020692443940788507,
+      "minimum_frame": 1.0,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 3061,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 1.0,
+      "frames_with_overlap": 0
+    },
+    "walk": {
+      "samples": 113,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0006178222829475999,
+      "minimum_frame": 28.0,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 3078,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 1.0,
+      "frames_with_overlap": 0
+    },
+    "run": {
+      "samples": 61,
+      "max_verts_inside": 2,
+      "min_signed_distance_m": -0.0012963659828528762,
+      "minimum_frame": 9.0,
+      "minimum_zone": "right knee",
+      "minimum_vertex": 3071,
+      "max_triangle_pairs": 38,
+      "max_pairs_frame": 8.0,
+      "frames_with_overlap": 11,
+      "deepest_triangle_sample": {
+        "frame": 8.0,
+        "zone": "left thigh",
+        "signed_distance_m": -0.004962945822626352
+      }
+    },
+    "wave": {
+      "samples": 129,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020692634861916304,
+      "minimum_frame": 0.0,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 3061,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "jump": {
+      "samples": 101,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0016272971406579018,
+      "minimum_frame": 9.0,
+      "minimum_zone": "waistband",
+      "minimum_vertex": 2812,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "idle": {
+      "samples": 177,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020692634861916304,
+      "minimum_frame": 0.0,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 3061,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "nod": {
+      "samples": 113,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020692634861916304,
+      "minimum_frame": 0.0,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 3061,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "dance": {
+      "samples": 129,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0019217157969251275,
+      "minimum_frame": 14.0,
+      "minimum_zone": "waistband",
+      "minimum_vertex": 2767,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "sit_down": {
+      "samples": 73,
+      "max_verts_inside": 129,
+      "min_signed_distance_m": -0.023308150470256805,
+      "minimum_frame": 36.0,
+      "minimum_zone": "left thigh",
+      "minimum_vertex": 1263,
+      "max_triangle_pairs": 768,
+      "max_pairs_frame": 36.0,
+      "frames_with_overlap": 36,
+      "deepest_triangle_sample": {
+        "frame": 36.0,
+        "zone": "left thigh",
+        "signed_distance_m": -0.02425927296280861
+      }
+    },
+    "sit_idle": {
+      "samples": 181,
+      "max_verts_inside": 132,
+      "min_signed_distance_m": -0.023669976741075516,
+      "minimum_frame": 11.0,
+      "minimum_zone": "left thigh",
+      "minimum_vertex": 1263,
+      "max_triangle_pairs": 786,
+      "max_pairs_frame": 74.5,
+      "frames_with_overlap": 181,
+      "deepest_triangle_sample": {
+        "frame": 21.0,
+        "zone": "left thigh",
+        "signed_distance_m": -0.025634679943323135
+      }
+    },
+    "stand_up": {
+      "samples": 61,
+      "max_verts_inside": 129,
+      "min_signed_distance_m": -0.02330811507999897,
+      "minimum_frame": 0.0,
+      "minimum_zone": "left thigh",
+      "minimum_vertex": 1263,
+      "max_triangle_pairs": 768,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 30,
+      "deepest_triangle_sample": {
+        "frame": 0.0,
+        "zone": "left thigh",
+        "signed_distance_m": -0.0242592953145504
+      }
+    },
+    "hold_item": {
+      "samples": 121,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020692634861916304,
+      "minimum_frame": 0.0,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 3061,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "hold_box": {
+      "samples": 121,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020692634861916304,
+      "minimum_frame": 0.0,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 3061,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "hold_bag": {
+      "samples": 121,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020692634861916304,
+      "minimum_frame": 0.0,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 3061,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "take_item": {
+      "samples": 121,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020692634861916304,
+      "minimum_frame": 0.0,
+      "minimum_zone": "right thigh",
+      "minimum_vertex": 3061,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    }
+  },
+  "steps": [
+    {
+      "iteration": 0,
+      "triangles": 5469,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017575970850884914,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2464,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 1,
+          "deepest_triangle_sample": {
+            "frame": 1.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0006076509598642588
+          }
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 1,
+          "min_signed_distance_m": -0.0005791789153590798,
+          "minimum_frame": 22.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1624,
+          "max_triangle_pairs": 29,
+          "max_pairs_frame": 21.5,
+          "frames_with_overlap": 113,
+          "deepest_triangle_sample": {
+            "frame": 23.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0007889310945756733
+          }
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 16,
+          "min_signed_distance_m": -0.0044896239414811134,
+          "minimum_frame": 9.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 2764,
+          "max_triangle_pairs": 111,
+          "max_pairs_frame": 26.0,
+          "frames_with_overlap": 61,
+          "deepest_triangle_sample": {
+            "frame": 8.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.005882930010557175
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017575917299836874,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2464,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 129,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0006076509598642588
+          }
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013005629880353808,
+          "minimum_frame": 15.5,
+          "minimum_zone": "right lower leg",
+          "minimum_vertex": 1543,
+          "max_triangle_pairs": 8,
+          "max_pairs_frame": 5.5,
+          "frames_with_overlap": 101,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0006076509598642588
+          }
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017568916082382202,
+          "minimum_frame": 64.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2464,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 177,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0006076509598642588
+          }
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017575917299836874,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2464,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 113,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0006076509598642588
+          }
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014322074130177498,
+          "minimum_frame": 52.5,
+          "minimum_zone": "right lower leg",
+          "minimum_vertex": 1543,
+          "max_triangle_pairs": 8,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 129,
+          "deepest_triangle_sample": {
+            "frame": 8.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0006321617984212935
+          }
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 63,
+          "min_signed_distance_m": -0.012567336671054363,
+          "minimum_frame": 36.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 417,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 73,
+          "deepest_triangle_sample": {
+            "frame": 36.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.01201228704303503
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 64,
+          "min_signed_distance_m": -0.013134653680026531,
+          "minimum_frame": 21.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 419,
+          "max_pairs_frame": 55.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 21.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.012567954137921333
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 63,
+          "min_signed_distance_m": -0.012567361816763878,
+          "minimum_frame": 0.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 417,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 61,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.012012283317744732
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017568565672263503,
+          "minimum_frame": 45.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2464,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 121,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0006076508434489369
+          }
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017564601730555296,
+          "minimum_frame": 43.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2464,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 121,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0006076512509025633
+          }
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017572871875017881,
+          "minimum_frame": 45.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2464,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 121,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0006076512509025633
+          }
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017575115198269486,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2464,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 121,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0006076512509025633
+          }
+        }
+      }
+    },
+    {
+      "iteration": 1,
+      "triangles": 5469,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800031284801662,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 1,
+          "min_signed_distance_m": -0.0005784246604889631,
+          "minimum_frame": 22.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1624,
+          "max_triangle_pairs": 21,
+          "max_pairs_frame": 22.0,
+          "frames_with_overlap": 70,
+          "deepest_triangle_sample": {
+            "frame": 22.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0005988093907944858
+          }
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.004318778403103352,
+          "minimum_frame": 8.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 1036,
+          "max_triangle_pairs": 94,
+          "max_pairs_frame": 25.0,
+          "frames_with_overlap": 57,
+          "deepest_triangle_sample": {
+            "frame": 8.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.006365624256432056
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000288400799036,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0011723993811756372,
+          "minimum_frame": 8.5,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 5.5,
+          "frames_with_overlap": 19,
+          "deepest_triangle_sample": {
+            "frame": 5.5,
+            "zone": "hips",
+            "signed_distance_m": -7.71850316994005e-09
+          }
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000288400799036,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000288400799036,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001640373608097434,
+          "minimum_frame": 56.0,
+          "minimum_zone": "right lower leg",
+          "minimum_vertex": 1543,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 65,
+          "deepest_triangle_sample": {
+            "frame": 17.5,
+            "zone": "hips",
+            "signed_distance_m": -8.145180530050311e-09
+          }
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 50,
+          "min_signed_distance_m": -0.010610692203044891,
+          "minimum_frame": 36.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 363,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 36,
+          "deepest_triangle_sample": {
+            "frame": 36.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.008918000385165215
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 52,
+          "min_signed_distance_m": -0.01117864903062582,
+          "minimum_frame": 21.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 366,
+          "max_pairs_frame": 55.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 21.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.009476236067712307
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 50,
+          "min_signed_distance_m": -0.010610660538077354,
+          "minimum_frame": 0.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 363,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 30,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.008918027393519878
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800031284801662,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 2,
+      "triangles": 5469,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800031284801662,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 1,
+          "min_signed_distance_m": -0.0005780517822131515,
+          "minimum_frame": 22.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1624,
+          "max_triangle_pairs": 21,
+          "max_pairs_frame": 22.0,
+          "frames_with_overlap": 70,
+          "deepest_triangle_sample": {
+            "frame": 22.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0005984979216009378
+          }
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 9,
+          "min_signed_distance_m": -0.00543223088607192,
+          "minimum_frame": 8.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 1030,
+          "max_triangle_pairs": 93,
+          "max_pairs_frame": 9.0,
+          "frames_with_overlap": 56,
+          "deepest_triangle_sample": {
+            "frame": 23.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.005884131416678429
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000288400799036,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0011768650729209185,
+          "minimum_frame": 9.0,
+          "minimum_zone": "waistband",
+          "minimum_vertex": 423,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 5.5,
+          "frames_with_overlap": 19,
+          "deepest_triangle_sample": {
+            "frame": 39.5,
+            "zone": "hips",
+            "signed_distance_m": -7.683587099904798e-09
+          }
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000288400799036,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000288400799036,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001672388636507094,
+          "minimum_frame": 56.0,
+          "minimum_zone": "right lower leg",
+          "minimum_vertex": 1543,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 61,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -8.220017555515824e-09
+          }
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 39,
+          "min_signed_distance_m": -0.009813747368752956,
+          "minimum_frame": 36.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 329,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 36,
+          "deepest_triangle_sample": {
+            "frame": 36.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.007653133478015661
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 39,
+          "min_signed_distance_m": -0.010374963283538818,
+          "minimum_frame": 21.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 334,
+          "max_pairs_frame": 5.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 21.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.008204306475818157
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 38,
+          "min_signed_distance_m": -0.009813744574785233,
+          "minimum_frame": 0.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 329,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 30,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.007653130684047937
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800031284801662,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000294221565127,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000294221565127,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000294221565127,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 3,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0008682509651407599,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2892,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 3,
+          "min_signed_distance_m": -0.0005780514911748469,
+          "minimum_frame": 22.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1624,
+          "max_triangle_pairs": 29,
+          "max_pairs_frame": 22.5,
+          "frames_with_overlap": 78,
+          "deepest_triangle_sample": {
+            "frame": 22.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0007871277630329132
+          }
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 11,
+          "min_signed_distance_m": -0.00543221877887845,
+          "minimum_frame": 8.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 1030,
+          "max_triangle_pairs": 107,
+          "max_pairs_frame": 27.0,
+          "frames_with_overlap": 56,
+          "deepest_triangle_sample": {
+            "frame": 23.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.005872385576367378
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0008682591724209487,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2892,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0007620445103384554,
+          "minimum_frame": 9.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2892,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 6.0,
+          "frames_with_overlap": 18,
+          "deepest_triangle_sample": {
+            "frame": 37.5,
+            "zone": "hips",
+            "signed_distance_m": -8.9989304896676e-09
+          }
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0008682591724209487,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2892,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0008682591724209487,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2892,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0007743868045508862,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2892,
+          "max_triangle_pairs": 4,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 61,
+          "deepest_triangle_sample": {
+            "frame": 3.5,
+            "zone": "hips",
+            "signed_distance_m": -1.0483304002661953e-08
+          }
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 70,
+          "min_signed_distance_m": -0.009813684970140457,
+          "minimum_frame": 36.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 420,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 36,
+          "deepest_triangle_sample": {
+            "frame": 36.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.008659560233354568
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 71,
+          "min_signed_distance_m": -0.01037493534386158,
+          "minimum_frame": 21.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 428,
+          "max_pairs_frame": 37.5,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 39.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.008843793533742428
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 70,
+          "min_signed_distance_m": -0.009813712909817696,
+          "minimum_frame": 0.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 749,
+          "max_triangle_pairs": 420,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 30,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.008659586310386658
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0008682496263645589,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2892,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.000868249568156898,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2892,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.000868249568156898,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2892,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.000868249568156898,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2892,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 4,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800031284801662,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0008987702312879264,
+          "minimum_frame": 22.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1624,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 5,
+          "min_signed_distance_m": -0.004571427125483751,
+          "minimum_frame": 8.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 1030,
+          "max_triangle_pairs": 50,
+          "max_pairs_frame": 8.0,
+          "frames_with_overlap": 16,
+          "deepest_triangle_sample": {
+            "frame": 8.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.006001743953675032
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000290729105473,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0012083646142855287,
+          "minimum_frame": 7.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000290729105473,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000290729105473,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017526446608826518,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 26,
+          "min_signed_distance_m": -0.005162011831998825,
+          "minimum_frame": 33.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1750,
+          "max_triangle_pairs": 241,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 33.0,
+            "zone": "hips",
+            "signed_distance_m": -0.004967324435710907
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 28,
+          "min_signed_distance_m": -0.0043629007413983345,
+          "minimum_frame": 67.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1750,
+          "max_triangle_pairs": 246,
+          "max_pairs_frame": 18.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 22.0,
+            "zone": "hips",
+            "signed_distance_m": -0.004696774296462536
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 26,
+          "min_signed_distance_m": -0.005086771212518215,
+          "minimum_frame": 2.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1750,
+          "max_triangle_pairs": 241,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 13,
+          "deepest_triangle_sample": {
+            "frame": 2.5,
+            "zone": "hips",
+            "signed_distance_m": -0.004940819926559925
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800031284801662,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 5,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800031284801662,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0010092667071148753,
+          "minimum_frame": 22.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 1548,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 5,
+          "min_signed_distance_m": -0.003650218015536666,
+          "minimum_frame": 8.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 1030,
+          "max_triangle_pairs": 52,
+          "max_pairs_frame": 8.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 23.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.005442590452730656
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000290729105473,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0011830739676952362,
+          "minimum_frame": 10.5,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000290729105473,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000290729105473,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017526395386084914,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 24,
+          "min_signed_distance_m": -0.0050673456862568855,
+          "minimum_frame": 33.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1750,
+          "max_triangle_pairs": 218,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 36.0,
+            "zone": "hips",
+            "signed_distance_m": -0.004624823108315468
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 25,
+          "min_signed_distance_m": -0.004262145608663559,
+          "minimum_frame": 67.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1750,
+          "max_triangle_pairs": 229,
+          "max_pairs_frame": 11.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 22.5,
+            "zone": "hips",
+            "signed_distance_m": -0.004635044373571873
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 24,
+          "min_signed_distance_m": -0.0049528139643371105,
+          "minimum_frame": 2.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1750,
+          "max_triangle_pairs": 218,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 13,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.004624851513653994
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800031284801662,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 6,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800031284801662,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0007197294617071748,
+          "minimum_frame": 28.0,
+          "minimum_zone": "right thigh",
+          "minimum_vertex": 2102,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.0038924640975892544,
+          "minimum_frame": 8.0,
+          "minimum_zone": "left thigh",
+          "minimum_vertex": 1030,
+          "max_triangle_pairs": 47,
+          "max_pairs_frame": 8.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 8.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.005460343789309263
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000290729105473,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013702623546123505,
+          "minimum_frame": 10.5,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000290729105473,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0018000290729105473,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017526401206851006,
+          "minimum_frame": 1.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 25,
+          "min_signed_distance_m": -0.005039808340370655,
+          "minimum_frame": 33.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1750,
+          "max_triangle_pairs": 211,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 18,
+          "deepest_triangle_sample": {
+            "frame": 36.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0045293704606592655
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 24,
+          "min_signed_distance_m": -0.0043120370246469975,
+          "minimum_frame": 67.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1750,
+          "max_triangle_pairs": 217,
+          "max_pairs_frame": 10.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 67.0,
+            "zone": "hips",
+            "signed_distance_m": -0.004573924466967583
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 24,
+          "min_signed_distance_m": -0.005004442296922207,
+          "minimum_frame": 2.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1750,
+          "max_triangle_pairs": 211,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 0.5,
+            "zone": "hips",
+            "signed_distance_m": -0.004542236216366291
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800031284801662,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001800030586309731,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1304,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 7,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013572016032412648,
+          "minimum_frame": 43.5,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 3,
+          "min_signed_distance_m": -0.0021114698611199856,
+          "minimum_frame": 9.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 2102,
+          "max_triangle_pairs": 42,
+          "max_pairs_frame": 23.0,
+          "frames_with_overlap": 20,
+          "deepest_triangle_sample": {
+            "frame": 23.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.00481840968132019
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001323830452747643,
+          "minimum_frame": 7.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017526401206851006,
+          "minimum_frame": 1.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 18,
+          "min_signed_distance_m": -0.0056977649219334126,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 165,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 45,
+          "deepest_triangle_sample": {
+            "frame": 35.0,
+            "zone": "hips",
+            "signed_distance_m": -0.004350550472736359
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 20,
+          "min_signed_distance_m": -0.004727059975266457,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 188,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 2.5,
+            "zone": "hips",
+            "signed_distance_m": -0.004034571815282106
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 19,
+          "min_signed_distance_m": -0.0056977649219334126,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 165,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 39,
+          "deepest_triangle_sample": {
+            "frame": 1.0,
+            "zone": "hips",
+            "signed_distance_m": -0.004337344318628311
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 8,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014701371546834707,
+          "minimum_frame": 15.5,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 3,
+          "min_signed_distance_m": -0.0021766626741737127,
+          "minimum_frame": 9.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 2102,
+          "max_triangle_pairs": 43,
+          "max_pairs_frame": 25.0,
+          "frames_with_overlap": 20,
+          "deepest_triangle_sample": {
+            "frame": 23.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.004898924846202135
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0012994703138247132,
+          "minimum_frame": 6.5,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017526401206851006,
+          "minimum_frame": 1.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 18,
+          "min_signed_distance_m": -0.005636134184896946,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 167,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 36,
+          "deepest_triangle_sample": {
+            "frame": 35.0,
+            "zone": "hips",
+            "signed_distance_m": -0.004308935254812241
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 18,
+          "min_signed_distance_m": -0.004680367186665535,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 175,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 2.5,
+            "zone": "hips",
+            "signed_distance_m": -0.003998402040451765
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 18,
+          "min_signed_distance_m": -0.005636134184896946,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 167,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 30,
+          "deepest_triangle_sample": {
+            "frame": 0.5,
+            "zone": "hips",
+            "signed_distance_m": -0.0043175723403692245
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 9,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0015102479374036193,
+          "minimum_frame": 16.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.0021809698082506657,
+          "minimum_frame": 9.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 2102,
+          "max_triangle_pairs": 38,
+          "max_pairs_frame": 10.0,
+          "frames_with_overlap": 20,
+          "deepest_triangle_sample": {
+            "frame": 23.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.003856874071061611
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0012914295075461268,
+          "minimum_frame": 9.5,
+          "minimum_zone": "waistband",
+          "minimum_vertex": 441,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0017258002189919353,
+          "minimum_frame": 17.0,
+          "minimum_zone": "waistband",
+          "minimum_vertex": 1846,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 16,
+          "min_signed_distance_m": -0.005529709625989199,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 155,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 36,
+          "deepest_triangle_sample": {
+            "frame": 35.0,
+            "zone": "hips",
+            "signed_distance_m": -0.004322330933064222
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 16,
+          "min_signed_distance_m": -0.004689139313995838,
+          "minimum_frame": 4.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 167,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.00401649484410882
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 16,
+          "min_signed_distance_m": -0.005529709625989199,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 155,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 30,
+          "deepest_triangle_sample": {
+            "frame": 0.5,
+            "zone": "hips",
+            "signed_distance_m": -0.0043309652246534824
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 10,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.002141436329111457,
+          "minimum_frame": 9.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 2102,
+          "max_triangle_pairs": 38,
+          "max_pairs_frame": 10.0,
+          "frames_with_overlap": 19,
+          "deepest_triangle_sample": {
+            "frame": 23.0,
+            "zone": "left thigh",
+            "signed_distance_m": -0.003069885540753603
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 14,
+          "min_signed_distance_m": -0.005461909808218479,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 145,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 36,
+          "deepest_triangle_sample": {
+            "frame": 35.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0043114544823765755
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 13,
+          "min_signed_distance_m": -0.004675537813454866,
+          "minimum_frame": 11.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 155,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 1.0,
+            "zone": "hips",
+            "signed_distance_m": -0.004008587449789047
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 13,
+          "min_signed_distance_m": -0.005461909808218479,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 145,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 30,
+          "deepest_triangle_sample": {
+            "frame": 0.5,
+            "zone": "hips",
+            "signed_distance_m": -0.0043201264925301075
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 11,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.002132448134943843,
+          "minimum_frame": 9.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 2102,
+          "max_triangle_pairs": 32,
+          "max_pairs_frame": 10.0,
+          "frames_with_overlap": 18,
+          "deepest_triangle_sample": {
+            "frame": 9.0,
+            "zone": "right knee",
+            "signed_distance_m": -0.001608674880117178
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 14,
+          "min_signed_distance_m": -0.0054067401215434074,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 139,
+          "max_pairs_frame": 35.0,
+          "frames_with_overlap": 31,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0036795339547097683
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 13,
+          "min_signed_distance_m": -0.003063951851800084,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 298,
+          "max_triangle_pairs": 151,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 3.0,
+            "zone": "hips",
+            "signed_distance_m": -0.002826659008860588
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 14,
+          "min_signed_distance_m": -0.0054067401215434074,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 139,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 26,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0036795339547097683
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 12,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.0011467544827610254,
+          "minimum_frame": 12.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 26,
+          "max_pairs_frame": 23.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 12.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0008361765067093074
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 11,
+          "min_signed_distance_m": -0.005344666074961424,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 131,
+          "max_pairs_frame": 35.0,
+          "frames_with_overlap": 31,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.003608942497521639
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 11,
+          "min_signed_distance_m": -0.002921710954979062,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 298,
+          "max_triangle_pairs": 143,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 3.0,
+            "zone": "hips",
+            "signed_distance_m": -0.002375958953052759
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 12,
+          "min_signed_distance_m": -0.005344666074961424,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 131,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 26,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -0.003608942497521639
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 13,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.0011643074685707688,
+          "minimum_frame": 12.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 26,
+          "max_pairs_frame": 23.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 12.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0008409456349909306
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005273357965052128,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 128,
+          "max_pairs_frame": 36.0,
+          "frames_with_overlap": 31,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034793235827237368
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.0029345322400331497,
+          "minimum_frame": 2.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 298,
+          "max_triangle_pairs": 136,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 3.5,
+            "zone": "hips",
+            "signed_distance_m": -0.002432632027193904
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005273357965052128,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 128,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 26,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034793235827237368
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 14,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.0011236151913180947,
+          "minimum_frame": 12.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 26,
+          "max_pairs_frame": 23.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 12.0,
+            "zone": "hips",
+            "signed_distance_m": -0.000800105684902519
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 35.5,
+          "frames_with_overlap": 31,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034180607181042433
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.0029255030676722527,
+          "minimum_frame": 11.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 298,
+          "max_triangle_pairs": 130,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0023842030204832554
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 26,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034180607181042433
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 15,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.001124320668168366,
+          "minimum_frame": 12.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 26,
+          "max_pairs_frame": 23.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 12.0,
+            "zone": "hips",
+            "signed_distance_m": -0.00080315419472754
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 35.5,
+          "frames_with_overlap": 31,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.0029257594142109156,
+          "minimum_frame": 2.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 298,
+          "max_triangle_pairs": 130,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.002384576015174389
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 26,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 16,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.001124320668168366,
+          "minimum_frame": 12.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 26,
+          "max_pairs_frame": 23.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 12.0,
+            "zone": "hips",
+            "signed_distance_m": -0.00080315419472754
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 35.5,
+          "frames_with_overlap": 31,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.0029257594142109156,
+          "minimum_frame": 2.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 298,
+          "max_triangle_pairs": 130,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.002384576015174389
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 26,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 17,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.001124320668168366,
+          "minimum_frame": 12.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 26,
+          "max_pairs_frame": 23.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 12.0,
+            "zone": "hips",
+            "signed_distance_m": -0.00080315419472754
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 35.5,
+          "frames_with_overlap": 31,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.0029257594142109156,
+          "minimum_frame": 2.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 298,
+          "max_triangle_pairs": 130,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.002384576015174389
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 26,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 18,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.001124320668168366,
+          "minimum_frame": 12.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 26,
+          "max_pairs_frame": 23.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 12.0,
+            "zone": "hips",
+            "signed_distance_m": -0.00080315419472754
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 35.5,
+          "frames_with_overlap": 31,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.0029257594142109156,
+          "minimum_frame": 2.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 298,
+          "max_triangle_pairs": 130,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.002384576015174389
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 26,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 19,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.001124320668168366,
+          "minimum_frame": 12.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 26,
+          "max_pairs_frame": 23.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 12.0,
+            "zone": "hips",
+            "signed_distance_m": -0.00080315419472754
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 35.5,
+          "frames_with_overlap": 31,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.0029257594142109156,
+          "minimum_frame": 2.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 298,
+          "max_triangle_pairs": 130,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.002384576015174389
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 26,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 20,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.001124320668168366,
+          "minimum_frame": 12.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 26,
+          "max_pairs_frame": 23.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 12.0,
+            "zone": "hips",
+            "signed_distance_m": -0.00080315419472754
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 35.5,
+          "frames_with_overlap": 31,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.0029257594142109156,
+          "minimum_frame": 2.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 298,
+          "max_triangle_pairs": 130,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.002384576015174389
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 26,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    },
+    {
+      "iteration": 21,
+      "triangles": 6000,
+      "clips": {
+        "rest": {
+          "samples": 1,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020875432528555393,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2704,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "walk": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0014167791232466698,
+          "minimum_frame": 44.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 239,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 1.0,
+          "frames_with_overlap": 0
+        },
+        "run": {
+          "samples": 61,
+          "max_verts_inside": 2,
+          "min_signed_distance_m": -0.001124320668168366,
+          "minimum_frame": 12.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 2883,
+          "max_triangle_pairs": 26,
+          "max_pairs_frame": 23.0,
+          "frames_with_overlap": 15,
+          "deepest_triangle_sample": {
+            "frame": 12.0,
+            "zone": "hips",
+            "signed_distance_m": -0.00080315419472754
+          }
+        },
+        "wave": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754251163452864,
+          "minimum_frame": 0.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "jump": {
+          "samples": 101,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0013949386775493622,
+          "minimum_frame": 6.0,
+          "minimum_zone": "crotch / inner thigh",
+          "minimum_vertex": 69,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "idle": {
+          "samples": 177,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075198804959655,
+          "minimum_frame": 64.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "nod": {
+          "samples": 113,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020754069555550814,
+          "minimum_frame": 13.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "dance": {
+          "samples": 129,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.001752635114826262,
+          "minimum_frame": 31.0,
+          "minimum_zone": "right knee",
+          "minimum_vertex": 1691,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "sit_down": {
+          "samples": 73,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 0.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 35.5,
+          "frames_with_overlap": 31,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "sit_idle": {
+          "samples": 181,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.0029257594142109156,
+          "minimum_frame": 2.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 298,
+          "max_triangle_pairs": 130,
+          "max_pairs_frame": 17.0,
+          "frames_with_overlap": 181,
+          "deepest_triangle_sample": {
+            "frame": 0.0,
+            "zone": "hips",
+            "signed_distance_m": -0.002384576015174389
+          }
+        },
+        "stand_up": {
+          "samples": 61,
+          "max_verts_inside": 10,
+          "min_signed_distance_m": -0.005219603423029184,
+          "minimum_frame": 30.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1621,
+          "max_triangle_pairs": 122,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 26,
+          "deepest_triangle_sample": {
+            "frame": 30.0,
+            "zone": "hips",
+            "signed_distance_m": -0.0034178909845650196
+          }
+        },
+        "hold_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020740157924592495,
+          "minimum_frame": 47.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_box": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002073603216558695,
+          "minimum_frame": 44.5,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "hold_bag": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.002075463067740202,
+          "minimum_frame": 1.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        },
+        "take_item": {
+          "samples": 121,
+          "max_verts_inside": 0,
+          "min_signed_distance_m": 0.0020752944983541965,
+          "minimum_frame": 55.0,
+          "minimum_zone": "hips",
+          "minimum_vertex": 1114,
+          "max_triangle_pairs": 0,
+          "max_pairs_frame": 0.0,
+          "frames_with_overlap": 0
+        }
+      }
+    }
+  ],
+  "topology": {
+    "welded_vertices": 8,
+    "boundary_loops": [
+      {
+        "edges": 110,
+        "center_m": [
+          -0.07864143580875614,
+          0.01883905201261355,
+          0.0734888955950737
+        ],
+        "opening": true
+      },
+      {
+        "edges": 107,
+        "center_m": [
+          0.08167173917118077,
+          0.019323841187228213,
+          0.07349908149966569
+        ],
+        "opening": true
+      },
+      {
+        "edges": 66,
+        "center_m": [
+          0.01230145456087705,
+          -0.03952256258167891,
+          0.40577228864034015
+        ],
+        "opening": true
+      },
+      {
+        "edges": 9,
+        "center_m": [
+          -0.00950768970263501,
+          -0.10702376647128,
+          0.38864626155959237
+        ],
+        "opening": false
+      },
+      {
+        "edges": 3,
+        "center_m": [
+          -0.05166612317164739,
+          -0.09535000224908192,
+          0.37617411216100055
+        ],
+        "opening": false
+      },
+      {
+        "edges": 3,
+        "center_m": [
+          0.057128949711720146,
+          -0.097320057451725,
+          0.40324504176775616
+        ],
+        "opening": false
+      },
+      {
+        "edges": 3,
+        "center_m": [
+          -0.05423004925251007,
+          -0.09777535994847615,
+          0.40355948607126874
+        ],
+        "opening": false
+      }
+    ]
+  },
+  "final_fit": {
+    "rest": {
+      "samples": 1,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020875432528555393,
+      "minimum_frame": 1.0,
+      "minimum_zone": "hips",
+      "minimum_vertex": 2704,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 1.0,
+      "frames_with_overlap": 0
+    },
+    "walk": {
+      "samples": 113,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0014167791232466698,
+      "minimum_frame": 44.0,
+      "minimum_zone": "crotch / inner thigh",
+      "minimum_vertex": 239,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 1.0,
+      "frames_with_overlap": 0
+    },
+    "run": {
+      "samples": 61,
+      "max_verts_inside": 2,
+      "min_signed_distance_m": -0.001124320668168366,
+      "minimum_frame": 12.0,
+      "minimum_zone": "hips",
+      "minimum_vertex": 2883,
+      "max_triangle_pairs": 26,
+      "max_pairs_frame": 23.0,
+      "frames_with_overlap": 15,
+      "deepest_triangle_sample": {
+        "frame": 12.0,
+        "zone": "hips",
+        "signed_distance_m": -0.00080315419472754
+      }
+    },
+    "wave": {
+      "samples": 129,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020754251163452864,
+      "minimum_frame": 0.5,
+      "minimum_zone": "hips",
+      "minimum_vertex": 1114,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "jump": {
+      "samples": 101,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0013949386775493622,
+      "minimum_frame": 6.0,
+      "minimum_zone": "crotch / inner thigh",
+      "minimum_vertex": 69,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "idle": {
+      "samples": 177,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.002075198804959655,
+      "minimum_frame": 64.0,
+      "minimum_zone": "hips",
+      "minimum_vertex": 1114,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "nod": {
+      "samples": 113,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020754069555550814,
+      "minimum_frame": 13.0,
+      "minimum_zone": "hips",
+      "minimum_vertex": 1114,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "dance": {
+      "samples": 129,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.001752635114826262,
+      "minimum_frame": 31.0,
+      "minimum_zone": "right knee",
+      "minimum_vertex": 1691,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "sit_down": {
+      "samples": 73,
+      "max_verts_inside": 10,
+      "min_signed_distance_m": -0.005219603423029184,
+      "minimum_frame": 0.0,
+      "minimum_zone": "hips",
+      "minimum_vertex": 1621,
+      "max_triangle_pairs": 122,
+      "max_pairs_frame": 35.5,
+      "frames_with_overlap": 31,
+      "deepest_triangle_sample": {
+        "frame": 0.0,
+        "zone": "hips",
+        "signed_distance_m": -0.0034178909845650196
+      }
+    },
+    "sit_idle": {
+      "samples": 181,
+      "max_verts_inside": 10,
+      "min_signed_distance_m": -0.0029257594142109156,
+      "minimum_frame": 2.5,
+      "minimum_zone": "hips",
+      "minimum_vertex": 298,
+      "max_triangle_pairs": 130,
+      "max_pairs_frame": 17.0,
+      "frames_with_overlap": 181,
+      "deepest_triangle_sample": {
+        "frame": 0.0,
+        "zone": "hips",
+        "signed_distance_m": -0.002384576015174389
+      }
+    },
+    "stand_up": {
+      "samples": 61,
+      "max_verts_inside": 10,
+      "min_signed_distance_m": -0.005219603423029184,
+      "minimum_frame": 30.0,
+      "minimum_zone": "hips",
+      "minimum_vertex": 1621,
+      "max_triangle_pairs": 122,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 26,
+      "deepest_triangle_sample": {
+        "frame": 30.0,
+        "zone": "hips",
+        "signed_distance_m": -0.0034178909845650196
+      }
+    },
+    "hold_item": {
+      "samples": 121,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020740157924592495,
+      "minimum_frame": 47.0,
+      "minimum_zone": "hips",
+      "minimum_vertex": 1114,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "hold_box": {
+      "samples": 121,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.002073603216558695,
+      "minimum_frame": 44.5,
+      "minimum_zone": "hips",
+      "minimum_vertex": 1114,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "hold_bag": {
+      "samples": 121,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.002075463067740202,
+      "minimum_frame": 1.0,
+      "minimum_zone": "hips",
+      "minimum_vertex": 1114,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    },
+    "take_item": {
+      "samples": 121,
+      "max_verts_inside": 0,
+      "min_signed_distance_m": 0.0020752944983541965,
+      "minimum_frame": 55.0,
+      "minimum_zone": "hips",
+      "minimum_vertex": 1114,
+      "max_triangle_pairs": 0,
+      "max_pairs_frame": 0.0,
+      "frames_with_overlap": 0
+    }
+  },
+  "fitter_pass": false
+}

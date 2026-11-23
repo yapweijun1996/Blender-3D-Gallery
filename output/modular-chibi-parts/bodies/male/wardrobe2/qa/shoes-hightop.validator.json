@@ -1,0 +1,115 @@
+{
+  "sha256": "bb2982f1c84337af4bf20ceb0436a61bdc069431331f468319b43e19551311dd",
+  "bytes": 1256944,
+  "triangles": 3383,
+  "textures": [
+    [
+      384,
+      384
+    ],
+    [
+      1024,
+      1024
+    ],
+    [
+      384,
+      384
+    ]
+  ],
+  "joints": 65,
+  "sameHierarchy": true,
+  "bindError": 0.0000017900019884109497,
+  "errors": 0,
+  "warnings": 0,
+  "report": {
+    "uri": "shoes-hightop-r3.glb",
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "validatedAt": "2026-11-19T16:55:23.450Z",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 2,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "IMAGE_NPOT_DIMENSIONS",
+          "message": "Image has non-power-of-two dimensions: 384x384.",
+          "severity": 2,
+          "pointer": "/images/0"
+        },
+        {
+          "code": "IMAGE_NPOT_DIMENSIONS",
+          "message": "Image has non-power-of-two dimensions: 384x384.",
+          "severity": 2,
+          "pointer": "/images/2"
+        }
+      ],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "Khronos glTF Blender I/O v5.1.20",
+      "extensionsUsed": [
+        "KHR_materials_specular"
+      ],
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 1237632
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 384,
+            "height": 384,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/1",
+          "mimeType": "image/jpeg",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/2",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 384,
+            "height": 384,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 0,
+      "materialCount": 1,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 1,
+      "totalVertexCount": 4592,
+      "totalTriangleCount": 3383,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 6
+    }
+  }
+}

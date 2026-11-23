@@ -1,0 +1,88 @@
+{
+  "status": "Loaded",
+  "meshCount": 60,
+  "animations": [
+    "idle",
+    "walk",
+    "run",
+    "sit",
+    "stand_up"
+  ],
+  "three": "187",
+  "webgl": "WebGL2",
+  "faceMats": [
+    {
+      "name": "Head_Skin002",
+      "materials": [
+        {
+          "name": "Visitor skin under face",
+          "transparent": false,
+          "opacity": 1,
+          "alphaTest": 0,
+          "depthWrite": true,
+          "side": 2
+        }
+      ]
+    },
+    {
+      "name": "EyeL002",
+      "materials": [
+        {
+          "name": "Visitor Eye.L",
+          "transparent": true,
+          "opacity": 1,
+          "alphaTest": 0,
+          "depthWrite": false,
+          "side": 2
+        }
+      ]
+    },
+    {
+      "name": "EyeR002",
+      "materials": [
+        {
+          "name": "Visitor Eye.R",
+          "transparent": true,
+          "opacity": 1,
+          "alphaTest": 0,
+          "depthWrite": false,
+          "side": 2
+        }
+      ]
+    }
+  ],
+  "drawCalls": 65,
+  "triangles": 53399,
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "canvas": [
+    750,
+    900
+  ],
+  "messages": [],
+  "source": "/Users/yapweijun/Documents/GitHub/Blender-3D-Gallery/models/gjh-reference-visitor/exports/gjh-reference-visitor-rigged.glb",
+  "source_sha256_at_start": "d95a4d7060361974f03c5f1e788c902f9a037b2a57208ba8f36ec799195fc026",
+  "source_sha256_at_finish": "d95a4d7060361974f03c5f1e788c902f9a037b2a57208ba8f36ec799195fc026",
+  "snapshot_sha256": "d95a4d7060361974f03c5f1e788c902f9a037b2a57208ba8f36ec799195fc026",
+  "timestamp_utc": "2026-11-17T13:52:30.120005+00:00",
+  "capture_method": "WebGL canvas PNG from actual Chrome",
+  "visual_review": {
+    "reviewer": "independent /root/hair_rebuild",
+    "status": "PASS for static WebGL smoke only",
+    "observations": [
+      "Front and 32-degree views show both eyes, eyebrows, mouth and cheeks without obvious opaque rectangular alpha patches or blocked facial features.",
+      "Hair appears attached in both captured views; this does not verify animation.",
+      "Lighting and tone mapping are this isolated Three.js harness, not necessarily the target application."
+    ]
+  },
+  "limitations": [
+    "Static default pose at two angles; no animation or material parity assurance.",
+    "Canvas capture in the browser; no physical-device testing."
+  ],
+  "front_sha256": "708acbc38be6c5d1fb39a37c8c24323b0eff1779327e3f416eb2b81cd253cea5",
+  "quarter_sha256": "a834fda990bc48bca8ddf7505f8b23eeb8f190a53cd37145d79d1fa469566d19",
+  "console_inspection": {
+    "error_count": 0,
+    "warning_count": 0,
+    "source": "Chrome DevTools MCP after navigation"
+  }
+}

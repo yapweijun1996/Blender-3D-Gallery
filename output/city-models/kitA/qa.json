@@ -1,0 +1,356 @@
+{
+  "result": "PASS",
+  "models": [
+    {
+      "reference": "models/hdb-block/exports/optimized.glb",
+      "reference_sha256": "e24f78bab50bf89697e68608d3369192b70625d765a78abd7716eceb5f964a98",
+      "candidate": "hdb_block.glb",
+      "candidate_sha256": "3d312eb3d61f18f0c80312540d881ca0cea8d6f4a346db0c6d8a69cfcbc68c69",
+      "comparison": "comparisons/hdb_block.png",
+      "comparison_sha256": "f8ae8691f84d546adedf25c8d3083f81c0e306b0dd88864e382f9f5799ffd4ea",
+      "views": [
+        "front",
+        "street_oblique",
+        "right",
+        "rear",
+        "left",
+        "elevated"
+      ],
+      "renderer": "Blender 5.1.2 Cycles CPU",
+      "samples": 10,
+      "threads": 2,
+      "tile_pixels": [
+        400,
+        400
+      ],
+      "visual_review": {
+        "author": "PASS",
+        "independent": "PASS",
+        "observation": "The six rows of blue balcony panels and timber doors, rear glazing, ground-level columns and rooftop service room agree with the original."
+      }
+    },
+    {
+      "reference": "models/hdb-void-deck/exports/optimized.glb",
+      "reference_sha256": "d01416ca2d9ca2d644da14546f1b45ea659b08cd13e4eb7739bd7c04459fb391",
+      "candidate": "hdb_void_deck.glb",
+      "candidate_sha256": "8f0c2e0f74eaf7375f4742416b290954945eb4e205db3ff6a74c60b8a551cf87",
+      "comparison": "comparisons/hdb_void_deck.png",
+      "comparison_sha256": "d1636fe5b41ad8a5968bd7bf197182e98ceeb9211bab13bf7c64ee20f806e257",
+      "views": [
+        "front",
+        "street_oblique",
+        "right",
+        "rear",
+        "left",
+        "elevated"
+      ],
+      "renderer": "Blender 5.1.2 Cycles CPU",
+      "samples": 10,
+      "threads": 2,
+      "tile_pixels": [
+        400,
+        400
+      ],
+      "visual_review": {
+        "author": "PASS",
+        "independent": "PASS",
+        "observation": "The original columns, stair silhouette, stairwell cutout and core doors carry through. Mailboxes and a notice board sit against the core. The approach supports meet the floor."
+      },
+      "walkability": {
+        "sha256": "8f0c2e0f74eaf7375f4742416b290954945eb4e205db3ff6a74c60b8a551cf87",
+        "result": "PASS",
+        "vertical_clearance_metres": 1.55,
+        "floor_approach_slope": "1:8",
+        "routes": [
+          {
+            "name": "front-to-rear between pillars and stairs",
+            "tested_clear_width_metres": 2.4,
+            "authored_footprint_metres": {
+              "x": [
+                0.45,
+                2.85
+              ],
+              "back": [
+                -4.3,
+                4.3
+              ]
+            }
+          },
+          {
+            "name": "lobby cross-route past mailboxes and notice board",
+            "tested_clear_width_metres": 1.5,
+            "authored_footprint_metres": {
+              "x": [
+                -4.5,
+                2.85
+              ],
+              "back": [
+                0.15,
+                1.65
+              ]
+            }
+          }
+        ],
+        "approach_support_contact": {
+          "supports": 6,
+          "minimum_corner_embed_metres": 0.0119
+        }
+      }
+    },
+    {
+      "reference": "models/hdb-coffee-shop-frontage/exports/hdb-coffee-shop-frontage.glb",
+      "reference_sha256": "3ffeae6ef9e4d2805978f973ac2117c6c43557468b3b8f11d1e819d3ecd87d33",
+      "candidate": "hdb_coffee_shop.glb",
+      "candidate_sha256": "4dad628797ed6a8f8a7120c5c2cc2b9122b6b7bda3fdc1401240c7d68e7a773e",
+      "comparison": "comparisons/hdb_coffee_shop.png",
+      "comparison_sha256": "93c7d3e2bb51533a1ab6658e29e722c5920a746ad0b6e7c346bbf7fbb866fce7",
+      "views": [
+        "front",
+        "street_oblique",
+        "right",
+        "rear",
+        "left",
+        "elevated"
+      ],
+      "renderer": "Blender 5.1.2 Cycles CPU",
+      "samples": 10,
+      "threads": 2,
+      "tile_pixels": [
+        400,
+        400
+      ],
+      "visual_review": {
+        "author": "PASS",
+        "independent": "PASS",
+        "observation": "The cream and green frontage, cup pictogram, awning pitch and counter agree. Two tables and four stools sit behind the frontage. The entrance stays open, and the counter and piers meet the floor."
+      },
+      "walkability": {
+        "sha256": "4dad628797ed6a8f8a7120c5c2cc2b9122b6b7bda3fdc1401240c7d68e7a773e",
+        "result": "PASS",
+        "vertical_clearance_metres": 1.55,
+        "floor_approach_slope": "1:8",
+        "routes": [
+          {
+            "name": "open frontage to seating bay",
+            "tested_clear_width_metres": 1.7,
+            "authored_footprint_metres": {
+              "x": [
+                1.05,
+                2.75
+              ],
+              "back": [
+                -1.85,
+                2.95
+              ]
+            }
+          }
+        ],
+        "approach_support_contact": {
+          "supports": 6,
+          "minimum_corner_embed_metres": 0.004
+        }
+      }
+    },
+    {
+      "reference": "models/hdb-neighbourhood-shopfront/exports/hdb-neighbourhood-shopfront.glb",
+      "reference_sha256": "3d9134761dfee19994b3e8e528f5aaf7298d70495cc627d55927b922423b1b6b",
+      "candidate": "provision_shop.glb",
+      "candidate_sha256": "5b1aee282e3eacf128cb3844c7602fff5504b6fe2c4664d57a931bda27d9bdba",
+      "comparison": "comparisons/provision_shop.png",
+      "comparison_sha256": "5cf0aa33a3eecc1584fa2f72f98f9c5d010ee29cb3974437bdb5b00d539a5c25",
+      "views": [
+        "front",
+        "street_oblique",
+        "right",
+        "rear",
+        "left",
+        "elevated"
+      ],
+      "renderer": "Blender 5.1.2 Cycles CPU",
+      "samples": 10,
+      "threads": 2,
+      "tile_pixels": [
+        400,
+        400
+      ],
+      "visual_review": {
+        "author": "PASS",
+        "independent": "PASS",
+        "observation": "The teal canopy, brackets, signage, cream piers, glazing and door hardware carry through. The open leaf and added counter are visible, and the jambs meet the floor."
+      },
+      "walkability": {
+        "sha256": "5b1aee282e3eacf128cb3844c7602fff5504b6fe2c4664d57a931bda27d9bdba",
+        "result": "PASS",
+        "vertical_clearance_metres": 1.55,
+        "floor_approach_slope": "1:8",
+        "routes": [
+          {
+            "name": "between door hinge and display to shop interior",
+            "tested_clear_width_metres": 1.42,
+            "authored_footprint_metres": {
+              "x": [
+                0.16,
+                1.58
+              ],
+              "back": [
+                -1.5,
+                2.1
+              ]
+            }
+          }
+        ],
+        "approach_support_contact": {
+          "supports": 5,
+          "minimum_corner_embed_metres": 0.0032
+        }
+      }
+    },
+    {
+      "reference": "models/shoplot-building/exports/shoplot-building.glb",
+      "reference_sha256": "131a09d3cde5204f07ac8830045b4be8785163588ef3e0868dba4d06b88b6bd1",
+      "candidate": "shoplot.glb",
+      "candidate_sha256": "b7a70345d6fb0a771291d7835d2b852fe46fa52f4c8fe5e83c5d8c1aae15157b",
+      "comparison": "comparisons/shoplot.png",
+      "comparison_sha256": "4ce9deb4de88598818ccc3bf463e7b4bffdd2c9647cda918df2de1f15314a2e7",
+      "views": [
+        "front",
+        "street_oblique",
+        "right",
+        "rear",
+        "left",
+        "elevated"
+      ],
+      "renderer": "Blender 5.1.2 Cycles CPU",
+      "samples": 10,
+      "threads": 2,
+      "tile_pixels": [
+        400,
+        400
+      ],
+      "visual_review": {
+        "author": "PASS",
+        "independent": "PASS",
+        "observation": "The facade bands, paired shutters, teal windows and awning, and parapet and roof profile agree."
+      }
+    },
+    {
+      "reference": "models/public-market/exports/public-market.glb",
+      "reference_sha256": "bad9f195cc6d4b5fe8460c91a021426b8f53f681a38106c3e5ea8d10dde65b7c",
+      "candidate": "public_market.glb",
+      "candidate_sha256": "9ecef2c7fdf601f7b2da456fec5406984a655b2f0c0f061ad52ac5dd57799dac",
+      "comparison": "comparisons/public_market.png",
+      "comparison_sha256": "5eec697a7ea7acfad7e4b8aab06e780260958454cd5b5f4bc38712ed68488898",
+      "views": [
+        "front",
+        "street_oblique",
+        "right",
+        "rear",
+        "left",
+        "elevated"
+      ],
+      "renderer": "Blender 5.1.2 Cycles CPU",
+      "samples": 10,
+      "threads": 2,
+      "tile_pixels": [
+        400,
+        400
+      ],
+      "visual_review": {
+        "author": "PASS",
+        "independent": "PASS",
+        "observation": "The pitched terracotta roof, suspended sign and lettering, column grid and six stalls agree. Both side elevations confirm contact at the end columns."
+      },
+      "walkability": {
+        "sha256": "9ecef2c7fdf601f7b2da456fec5406984a655b2f0c0f061ad52ac5dd57799dac",
+        "result": "PASS",
+        "vertical_clearance_metres": 1.55,
+        "floor_approach_slope": "1:8",
+        "routes": [
+          {
+            "name": "front-to-rear main aisle between the six stalls",
+            "tested_clear_width_metres": 5.8,
+            "authored_footprint_metres": {
+              "x": [
+                -2.9,
+                2.9
+              ],
+              "back": [
+                -9.5,
+                9.5
+              ]
+            }
+          },
+          {
+            "name": "cross-aisle between front and middle stalls",
+            "tested_clear_width_metres": 1.65,
+            "authored_footprint_metres": {
+              "x": [
+                -5.4,
+                5.4
+              ],
+              "back": [
+                -3.575,
+                -1.925
+              ]
+            }
+          },
+          {
+            "name": "cross-aisle between middle and rear stalls",
+            "tested_clear_width_metres": 1.65,
+            "authored_footprint_metres": {
+              "x": [
+                -5.4,
+                5.4
+              ],
+              "back": [
+                1.925,
+                3.575
+              ]
+            }
+          }
+        ],
+        "approach_support_contact": {
+          "supports": 4,
+          "minimum_corner_embed_metres": 0.0119
+        }
+      }
+    },
+    {
+      "reference": "models/mrt-station-entrance/exports/mrt-station-entrance.glb",
+      "reference_sha256": "d74f75aaa3cef37aeabf5e05f0962af9e8b343b6a9387795728f4a80d4502a25",
+      "candidate": "mrt_entrance.glb",
+      "candidate_sha256": "d86a7950316c7e24e3ff6bea31ea864cc47142994ecbf2b32432b6755bb0f489",
+      "comparison": "comparisons/mrt_entrance.png",
+      "comparison_sha256": "9eaed8831282f7c37676a79c173efe64134344a0873ce0ac3261fd43b98aa057",
+      "views": [
+        "front",
+        "street_oblique",
+        "right",
+        "rear",
+        "left",
+        "elevated"
+      ],
+      "renderer": "Blender 5.1.2 Cycles CPU",
+      "samples": 10,
+      "threads": 2,
+      "tile_pixels": [
+        400,
+        400
+      ],
+      "visual_review": {
+        "author": "PASS",
+        "independent": "PASS",
+        "observation": "The six steps, elevated landing, canopy columns, teal balustrades and fascia, and blank station label agree."
+      }
+    }
+  ],
+  "repair": {
+    "finding": "Cutting the approach slopes initially exposed gaps under outside supports.",
+    "action": "Embedded affected piers, column feet, counter bases and glazing jambs into the revised floor grade.",
+    "before": "comparisons/market-approach-before.png",
+    "before_image_sha256": "98f9ac4c948cc3c273673708a1c949cea44e2f1f5330fcb7298e862d3af78976",
+    "before_candidate_sha256": "6b2d715bfe82d8ce0112708d3e6b528a0ffdb86ddf45a3bf1d878c0dd125979a",
+    "after": "comparisons/public_market.png"
+  },
+  "limits": "Walkability was tested against GLB triangles at the intended scale. An in-game controller and physics session were not run."
+}

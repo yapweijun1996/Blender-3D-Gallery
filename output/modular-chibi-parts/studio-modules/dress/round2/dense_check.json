@@ -1,0 +1,1155 @@
+{
+  "glb_sha256": "2ea41897d291e6a99a6b071345b42de5e950325ad9af6f6a637991954987d8d1",
+  "blend_sha256": "31543375834442b5f0359536d9ed80a3707b1e217657901f36099a88642047e3",
+  "blender": "5.1.2",
+  "bytes": 2487720,
+  "blend_bytes": 3399598,
+  "joints": 65,
+  "meshes": 1,
+  "animations": 0,
+  "textures": [
+    {
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "d0c0852747ee3c58d9fc1f4c8b0432f0489f06c7bf41294200ed3f35bccea233"
+    },
+    {
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "a50e06b19e617b2254e587d8a41c0e70f1c6e09e1622bbbb50998571e05b5ecf"
+    },
+    {
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "c2aba2c6bd5ebd9c5b931da6d499b41e01b3ae76b1ce9a70b90f7d435232ac64"
+    }
+  ],
+  "round_one_texture_bytes_identical": true,
+  "round_one_material_identical": true,
+  "vertices": 2596,
+  "triangles": 3544,
+  "poses": 824,
+  "influences_max": 4,
+  "max_weight_sum_error": 1.1920928955078125e-07,
+  "overlap_faces": 1511,
+  "rest_over_30mm": 0,
+  "rest_clearance": {
+    "all": {
+      "count": 2596,
+      "min": 0.0011999773560091853,
+      "p10": 0.005489618983119726,
+      "median": 0.014413775876164436,
+      "p90": 0.024196092039346695,
+      "p95": 0.025231495033949614,
+      "max": 0.028754208236932755
+    },
+    "bodice": {
+      "count": 508,
+      "min": 0.0011999773560091853,
+      "p10": 0.004919999744743109,
+      "median": 0.014352286234498024,
+      "p90": 0.02110292762517929,
+      "p95": 0.02303193574771285,
+      "max": 0.024672940373420715
+    },
+    "hem": {
+      "count": 554,
+      "min": 0.006812316831201315,
+      "p10": 0.016101847402751446,
+      "median": 0.023202385753393173,
+      "p90": 0.026312487758696077,
+      "p95": 0.02713000401854515,
+      "max": 0.028429660946130753
+    },
+    "neck": {
+      "count": 398,
+      "min": 0.004582951311022043,
+      "p10": 0.005228970618918538,
+      "median": 0.008870434947311878,
+      "p90": 0.01647018250077963,
+      "p95": 0.017895937245339152,
+      "max": 0.02059517800807953
+    },
+    "shoulder and armpit": {
+      "count": 184,
+      "min": 0.003565085120499134,
+      "p10": 0.006014043558388949,
+      "median": 0.014055536594241858,
+      "p90": 0.023964886926114558,
+      "p95": 0.024490170180797577,
+      "max": 0.02636396698653698
+    },
+    "skirt": {
+      "count": 590,
+      "min": 0.0017587532056495547,
+      "p10": 0.005619016196578741,
+      "median": 0.013033931143581867,
+      "p90": 0.02319540120661259,
+      "p95": 0.02490349421277642,
+      "max": 0.028754208236932755
+    },
+    "sleeve": {
+      "count": 362,
+      "min": 0.0012000901624560356,
+      "p10": 0.00387891314458102,
+      "median": 0.01097714900970459,
+      "p90": 0.01861771401017905,
+      "p95": 0.019712109118700027,
+      "max": 0.0230873953551054
+    }
+  },
+  "boundaries": [
+    {
+      "zone": "hem",
+      "vertices": 62,
+      "center_m": [
+        0.0015523237056068837,
+        -0.009421647293493152,
+        0.24766732896527938
+      ],
+      "min_m": [
+        -0.143589049577713,
+        -0.08322319388389587,
+        0.241930291056633
+      ],
+      "max_m": [
+        0.14547941088676453,
+        0.06310239434242249,
+        0.25163838267326355
+      ]
+    },
+    {
+      "zone": "left cuff",
+      "vertices": 24,
+      "center_m": [
+        0.12088750985761483,
+        -0.009022173811293518,
+        0.5718397597471873
+      ],
+      "min_m": [
+        0.12000294774770737,
+        -0.05616610497236252,
+        0.5242177248001099
+      ],
+      "max_m": [
+        0.12403455376625061,
+        0.047101784497499466,
+        0.6100884079933167
+      ]
+    },
+    {
+      "zone": "neck",
+      "vertices": 36,
+      "center_m": [
+        0.0019003960187546909,
+        -0.02359514949946768,
+        0.6009421563810773
+      ],
+      "min_m": [
+        -0.055082861334085464,
+        -0.07434234023094177,
+        0.5866348147392273
+      ],
+      "max_m": [
+        0.0571831576526165,
+        0.03645266219973564,
+        0.6112203001976013
+      ]
+    },
+    {
+      "zone": "right cuff",
+      "vertices": 22,
+      "center_m": [
+        -0.11865207891572606,
+        -0.008689378091896122,
+        0.5640423622998324
+      ],
+      "min_m": [
+        -0.1208290085196495,
+        -0.05641452223062515,
+        0.5241487622261047
+      ],
+      "max_m": [
+        -0.11774874478578568,
+        0.047015175223350525,
+        0.6086074113845825
+      ]
+    }
+  ],
+  "non_manifold_cross_edges": 0,
+  "knee_joint_z_m": {
+    "LeftLeg": 0.2088824063539505,
+    "RightLeg": 0.20888255536556244
+  },
+  "rest_triangle_sample_clearance": {
+    "count": 14176,
+    "min": 0.000951233902014792,
+    "p10": 0.005393548170104623,
+    "median": 0.01404345827177167,
+    "p90": 0.02386694960296154,
+    "p95": 0.02484628325328231,
+    "max": 0.028425192460417747
+  },
+  "rest_triangle_samples_under_0_5mm": 0,
+  "rest_triangle_samples_over_30mm": 0,
+  "results": {
+    "rest": {
+      "samples": 1,
+      "inside": 0,
+      "pairs": 0,
+      "min_m": 0.0011999773560091853,
+      "total_pairs": 0,
+      "failing_frames": 0,
+      "contact_zones": {},
+      "pair_frame": 1.0,
+      "min_frame": 1.0,
+      "min_zone": "bodice",
+      "min_vertex": 538,
+      "min_body_zone": "Spine1",
+      "min_rest_xyz": [
+        -0.06520578265190125,
+        -0.07692403346300125,
+        0.4621140956878662
+      ]
+    },
+    "walk": {
+      "samples": 113,
+      "inside": 96,
+      "pairs": 834,
+      "min_m": -0.014257778413593769,
+      "total_pairs": 67278,
+      "failing_frames": 113,
+      "contact_zones": {
+        "bodice / Spine1": {
+          "depth_m": -0.0033020442351698875,
+          "frame": 37.0
+        },
+        "bodice / RightForeArm": {
+          "depth_m": -0.0097708310931921,
+          "frame": 35.0
+        },
+        "bodice / RightArm": {
+          "depth_m": -0.012451461516320705,
+          "frame": 11.0
+        },
+        "sleeve / Spine1": {
+          "depth_m": -0.005884324666112661,
+          "frame": 39.0
+        },
+        "shoulder and armpit / Spine1": {
+          "depth_m": -0.008451001718640327,
+          "frame": 34.0
+        },
+        "bodice / LeftArm": {
+          "depth_m": -0.008622282184660435,
+          "frame": 51.5
+        },
+        "bodice / LeftForeArm": {
+          "depth_m": -0.012068052776157856,
+          "frame": 46.0
+        },
+        "hem / LeftHandIndex3": {
+          "depth_m": -0.0075610545463860035,
+          "frame": 29.5
+        },
+        "sleeve / RightArm": {
+          "depth_m": -0.0034056573640555143,
+          "frame": 35.0
+        },
+        "shoulder and armpit / RightArm": {
+          "depth_m": -0.0057848235592246056,
+          "frame": 12.5
+        },
+        "shoulder and armpit / RightShoulder": {
+          "depth_m": -0.002012695884332061,
+          "frame": 37.0
+        },
+        "sleeve / RightShoulder": {
+          "depth_m": -1.2076431232799223e-07,
+          "frame": 57.0
+        },
+        "bodice / Spine2": {
+          "depth_m": -0.002357953228056431,
+          "frame": 37.0
+        },
+        "skirt / LeftUpLeg": {
+          "depth_m": -0.0025019801687449217,
+          "frame": 35.0
+        },
+        "sleeve / LeftArm": {
+          "depth_m": -0.00403381884098053,
+          "frame": 14.5
+        },
+        "shoulder and armpit / LeftArm": {
+          "depth_m": -0.00699198292568326,
+          "frame": 52.0
+        },
+        "skirt / LeftForeArm": {
+          "depth_m": -0.007455830462276936,
+          "frame": 51.0
+        },
+        "skirt / LeftHand": {
+          "depth_m": -0.013902531005442142,
+          "frame": 13.0
+        },
+        "skirt / LeftHandIndex1": {
+          "depth_m": -0.00995569583028555,
+          "frame": 30.0
+        },
+        "bodice / RightShoulder": {
+          "depth_m": -0.002103873062878847,
+          "frame": 37.0
+        },
+        "skirt / Hips": {
+          "depth_m": -0.0023158486001193523,
+          "frame": 22.0
+        },
+        "hem / LeftHandIndex2": {
+          "depth_m": -0.00790840107947588,
+          "frame": 29.5
+        },
+        "skirt / LeftHandMiddle1": {
+          "depth_m": -0.00914877187460661,
+          "frame": 40.5
+        },
+        "skirt / LeftHandIndex2": {
+          "depth_m": -0.00790840107947588,
+          "frame": 29.5
+        },
+        "hem / LeftHandIndex4": {
+          "depth_m": -0.004197496920824051,
+          "frame": 2.0
+        },
+        "skirt / LeftHandIndex3": {
+          "depth_m": -0.007763571105897427,
+          "frame": 44.0
+        },
+        "skirt / RightForeArm": {
+          "depth_m": -0.007261474616825581,
+          "frame": 6.0
+        },
+        "bodice / Hips": {
+          "depth_m": -0.0023158486001193523,
+          "frame": 22.0
+        },
+        "bodice / RightUpLeg": {
+          "depth_m": -0.0001819501630961895,
+          "frame": 36.0
+        },
+        "skirt / LeftHandThumb2": {
+          "depth_m": -0.005885472521185875,
+          "frame": 33.5
+        },
+        "skirt / LeftHandThumb1": {
+          "depth_m": -0.005636291578412056,
+          "frame": 25.0
+        },
+        "skirt / RightUpLeg": {
+          "depth_m": -0.0013565343106165528,
+          "frame": 22.0
+        },
+        "skirt / LeftHandRing1": {
+          "depth_m": -0.008313958533108234,
+          "frame": 15.0
+        },
+        "skirt / LeftHandMiddle2": {
+          "depth_m": -0.007291024550795555,
+          "frame": 55.0
+        },
+        "hem / LeftHandMiddle3": {
+          "depth_m": -0.007527658250182867,
+          "frame": 40.5
+        },
+        "hem / LeftHandMiddle2": {
+          "depth_m": -0.00777844013646245,
+          "frame": 14.0
+        },
+        "hem / LeftHandRing3": {
+          "depth_m": -0.0067204018123447895,
+          "frame": 54.0
+        },
+        "hem / LeftHandMiddle1": {
+          "depth_m": -0.006811234168708324,
+          "frame": 41.5
+        },
+        "hem / LeftHandRing4": {
+          "depth_m": -0.004613187164068222,
+          "frame": 42.5
+        },
+        "hem / LeftHandRing2": {
+          "depth_m": -7.444395578204421e-06,
+          "frame": 16.0
+        },
+        "hem / LeftHandMiddle4": {
+          "depth_m": -0.0017580665880814195,
+          "frame": 53.5
+        },
+        "skirt / LeftHandThumb4": {
+          "depth_m": -0.004752811044454575,
+          "frame": 25.5
+        },
+        "skirt / LeftHandThumb3": {
+          "depth_m": -0.006349707953631878,
+          "frame": 45.0
+        },
+        "hem / RightUpLeg": {
+          "depth_m": -0.003031787695363164,
+          "frame": 22.0
+        },
+        "bodice / LeftUpLeg": {
+          "depth_m": -6.066762381351509e-08,
+          "frame": 49.5
+        },
+        "skirt / RightHandThumb4": {
+          "depth_m": -0.00219314219430089,
+          "frame": 35.0
+        },
+        "skirt / RightHandThumb3": {
+          "depth_m": -0.0035836210008710623,
+          "frame": 35.0
+        },
+        "skirt / RightHandThumb2": {
+          "depth_m": -0.0031182433012872934,
+          "frame": 35.0
+        },
+        "skirt / RightHandThumb1": {
+          "depth_m": -0.0006536673754453659,
+          "frame": 35.0
+        },
+        "skirt / RightHand": {
+          "depth_m": -0.00017193990061059594,
+          "frame": 35.0
+        },
+        "bodice / LeftShoulder": {
+          "depth_m": -0.0006382966530509293,
+          "frame": 54.0
+        },
+        "skirt / LeftHandRing2": {
+          "depth_m": -0.0004918071208521724,
+          "frame": 54.0
+        },
+        "skirt / LeftHandRing3": {
+          "depth_m": -0.000899186939932406,
+          "frame": 43.0
+        },
+        "skirt / LeftHandMiddle3": {
+          "depth_m": -0.0014782301150262356,
+          "frame": 44.0
+        },
+        "skirt / LeftHandIndex4": {
+          "depth_m": -0.0002826401323545724,
+          "frame": 44.0
+        },
+        "shoulder and armpit / LeftShoulder": {
+          "depth_m": -1.7433114507525715e-08,
+          "frame": 54.0
+        }
+      },
+      "pair_frame": 53.5,
+      "min_frame": 14.5,
+      "min_zone": "skirt",
+      "min_vertex": 374,
+      "min_body_zone": "LeftHand",
+      "min_rest_xyz": [
+        0.14421701431274414,
+        -0.0358540415763855,
+        0.33142077922821045
+      ]
+    },
+    "run": {
+      "samples": 61,
+      "inside": 136,
+      "pairs": 766,
+      "min_m": -0.01875840686261654,
+      "total_pairs": 32723,
+      "failing_frames": 61,
+      "contact_zones": {
+        "shoulder and armpit / Spine1": {
+          "depth_m": -0.010417984798550606,
+          "frame": 24.0
+        },
+        "skirt / RightHand": {
+          "depth_m": -0.012119158171117306,
+          "frame": 29.5
+        },
+        "bodice / Hips": {
+          "depth_m": -0.0015350794419646263,
+          "frame": 25.0
+        },
+        "bodice / Spine1": {
+          "depth_m": -0.0030599290039390326,
+          "frame": 9.0
+        },
+        "skirt / RightHandMiddle1": {
+          "depth_m": -0.007537673227488995,
+          "frame": 29.5
+        },
+        "skirt / RightHandThumb1": {
+          "depth_m": -0.006601675879210234,
+          "frame": 8.0
+        },
+        "sleeve / RightArm": {
+          "depth_m": -0.00356915476731956,
+          "frame": 9.0
+        },
+        "shoulder and armpit / RightArm": {
+          "depth_m": -0.0038685475010424852,
+          "frame": 9.0
+        },
+        "skirt / LeftUpLeg": {
+          "depth_m": -0.009301521815359592,
+          "frame": 4.0
+        },
+        "sleeve / Spine1": {
+          "depth_m": -0.010351217351853848,
+          "frame": 9.5
+        },
+        "shoulder and armpit / LeftArm": {
+          "depth_m": -0.0070679159834980965,
+          "frame": 29.5
+        },
+        "sleeve / LeftArm": {
+          "depth_m": -0.0038447745610028505,
+          "frame": 24.0
+        },
+        "bodice / LeftArm": {
+          "depth_m": -0.007440651301294565,
+          "frame": 10.5
+        },
+        "hem / LeftLeg": {
+          "depth_m": -0.010596712119877338,
+          "frame": 2.0
+        },
+        "skirt / LeftLeg": {
+          "depth_m": -0.004287797957658768,
+          "frame": 1.0
+        },
+        "skirt / RightHandIndex1": {
+          "depth_m": -0.007406898308545351,
+          "frame": 14.5
+        },
+        "skirt / RightHandThumb2": {
+          "depth_m": -0.004277695436030626,
+          "frame": 8.5
+        },
+        "bodice / RightArm": {
+          "depth_m": -0.005604867823421955,
+          "frame": 7.5
+        },
+        "bodice / LeftUpLeg": {
+          "depth_m": -0.002241358859464526,
+          "frame": 4.0
+        },
+        "skirt / RightHandThumb4": {
+          "depth_m": -0.005544330459088087,
+          "frame": 1.0
+        },
+        "skirt / RightHandThumb3": {
+          "depth_m": -0.003386835101991892,
+          "frame": 1.0
+        },
+        "shoulder and armpit / RightShoulder": {
+          "depth_m": -0.0029174627270549536,
+          "frame": 7.0
+        },
+        "skirt / RightHandIndex2": {
+          "depth_m": -0.007526724133640528,
+          "frame": 15.5
+        },
+        "skirt / RightHandIndex3": {
+          "depth_m": -0.007519711274653673,
+          "frame": 1.5
+        },
+        "skirt / Hips": {
+          "depth_m": -0.0015350794419646263,
+          "frame": 25.0
+        },
+        "hem / LeftUpLeg": {
+          "depth_m": -0.0059768990613520145,
+          "frame": 4.0
+        },
+        "bodice / RightHandThumb4": {
+          "depth_m": -0.004188178572803736,
+          "frame": 13.5
+        },
+        "bodice / RightHandThumb3": {
+          "depth_m": -0.005257215350866318,
+          "frame": 13.5
+        },
+        "bodice / RightUpLeg": {
+          "depth_m": -2.8595833256872538e-08,
+          "frame": 20.0
+        },
+        "bodice / RightHandIndex1": {
+          "depth_m": -0.004424342419952154,
+          "frame": 4.5
+        },
+        "bodice / RightHandThumb2": {
+          "depth_m": -0.0035742283798754215,
+          "frame": 3.5
+        },
+        "neck / RightArm": {
+          "depth_m": -0.0003377081884536892,
+          "frame": 18.0
+        },
+        "bodice / RightHandIndex2": {
+          "depth_m": -1.4690106908687994e-08,
+          "frame": 3.5
+        },
+        "hem / RightUpLeg": {
+          "depth_m": -0.00515068368986249,
+          "frame": 12.5
+        },
+        "bodice / RightHand": {
+          "depth_m": -0.005105297081172466,
+          "frame": 5.0
+        },
+        "skirt / RightUpLeg": {
+          "depth_m": -0.01217254251241684,
+          "frame": 12.0
+        },
+        "skirt / RightHandMiddle2": {
+          "depth_m": -0.005015736445784569,
+          "frame": 5.0
+        },
+        "bodice / RightHandThumb1": {
+          "depth_m": -0.0018777491059154272,
+          "frame": 5.0
+        },
+        "sleeve / Spine2": {
+          "depth_m": -0.003010825952515006,
+          "frame": 26.0
+        },
+        "sleeve / RightShoulder": {
+          "depth_m": -0.0014641238376498222,
+          "frame": 8.5
+        },
+        "skirt / LeftHandThumb4": {
+          "depth_m": -0.0034479352179914713,
+          "frame": 16.0
+        },
+        "skirt / LeftHandThumb3": {
+          "depth_m": -0.00552069628611207,
+          "frame": 29.0
+        },
+        "hem / RightLeg": {
+          "depth_m": -0.016138821840286255,
+          "frame": 9.5
+        },
+        "bodice / RightShoulder": {
+          "depth_m": -0.0007480966160073876,
+          "frame": 9.0
+        },
+        "skirt / LeftHandThumb2": {
+          "depth_m": -0.0059089963324368,
+          "frame": 7.0
+        },
+        "skirt / RightLeg": {
+          "depth_m": -0.011564521118998528,
+          "frame": 9.0
+        },
+        "skirt / LeftHand": {
+          "depth_m": -0.005591280292719603,
+          "frame": 22.5
+        },
+        "bodice / LeftForeArm": {
+          "depth_m": -0.004123959224671125,
+          "frame": 23.5
+        },
+        "skirt / RightForeArm": {
+          "depth_m": -0.008021547459065914,
+          "frame": 28.5
+        },
+        "hem / LeftHandThumb4": {
+          "depth_m": -0.0009095623972825706,
+          "frame": 8.0
+        },
+        "shoulder and armpit / LeftShoulder": {
+          "depth_m": -0.002303891582414508,
+          "frame": 25.0
+        },
+        "sleeve / LeftShoulder": {
+          "depth_m": -0.0027278654742985964,
+          "frame": 25.5
+        },
+        "bodice / Spine2": {
+          "depth_m": -1.3992213609981263e-08,
+          "frame": 10.0
+        },
+        "hem / RightHandIndex3": {
+          "depth_m": -1.6020729631804898e-08,
+          "frame": 15.5
+        },
+        "hem / RightHandIndex2": {
+          "depth_m": -0.003042613621801138,
+          "frame": 15.5
+        },
+        "skirt / LeftHandThumb1": {
+          "depth_m": -0.0037414978723973036,
+          "frame": 15.5
+        },
+        "skirt / LeftHandIndex3": {
+          "depth_m": -0.007223551627248526,
+          "frame": 15.5
+        },
+        "skirt / LeftHandIndex2": {
+          "depth_m": -0.005178655963391066,
+          "frame": 16.0
+        },
+        "hem / LeftHandIndex3": {
+          "depth_m": -0.00294649344868958,
+          "frame": 22.5
+        },
+        "skirt / LeftHandMiddle3": {
+          "depth_m": -0.00652771070599556,
+          "frame": 16.0
+        },
+        "skirt / LeftHandIndex1": {
+          "depth_m": -0.007634831126779318,
+          "frame": 16.0
+        },
+        "skirt / LeftHandMiddle4": {
+          "depth_m": -0.0026336589362472296,
+          "frame": 16.0
+        },
+        "skirt / LeftHandIndex4": {
+          "depth_m": -6.185858492102625e-10,
+          "frame": 22.0
+        },
+        "skirt / LeftForeArm": {
+          "depth_m": -0.003828341607004404,
+          "frame": 23.0
+        },
+        "hem / LeftHandIndex2": {
+          "depth_m": -0.008024693466722965,
+          "frame": 22.5
+        },
+        "bodice / LeftShoulder": {
+          "depth_m": -8.560726564610377e-05,
+          "frame": 25.0
+        },
+        "bodice / RightForeArm": {
+          "depth_m": -0.007367292884737253,
+          "frame": 28.0
+        },
+        "skirt / RightHandRing1": {
+          "depth_m": -0.00612533139064908,
+          "frame": 29.5
+        }
+      },
+      "pair_frame": 8.0,
+      "min_frame": 16.5,
+      "min_zone": "hem",
+      "min_vertex": 2205,
+      "min_body_zone": "LeftLeg",
+      "min_rest_xyz": [
+        0.06516417860984802,
+        0.0666956976056099,
+        0.2462211400270462
+      ]
+    },
+    "wave": {
+      "samples": 129,
+      "inside": 39,
+      "pairs": 360,
+      "min_m": -0.005112000275403261,
+      "total_pairs": 30065,
+      "failing_frames": 129,
+      "contact_zones": {
+        "sleeve / Spine1": {
+          "depth_m": -0.005686456803232431,
+          "frame": 0.0
+        },
+        "shoulder and armpit / Spine1": {
+          "depth_m": -0.0070683895610272884,
+          "frame": 0.0
+        },
+        "sleeve / RightArm": {
+          "depth_m": -0.0023632366210222244,
+          "frame": 57.5
+        },
+        "bodice / RightArm": {
+          "depth_m": -0.0002446459839120507,
+          "frame": 0.0
+        },
+        "shoulder and armpit / RightArm": {
+          "depth_m": -0.0023632366210222244,
+          "frame": 57.5
+        },
+        "shoulder and armpit / RightShoulder": {
+          "depth_m": -0.00037919176975265145,
+          "frame": 0.0
+        },
+        "bodice / Spine1": {
+          "depth_m": -0.001021328498609364,
+          "frame": 19.0
+        },
+        "shoulder and armpit / LeftArm": {
+          "depth_m": -0.0032803991343826056,
+          "frame": 0.0
+        },
+        "sleeve / LeftArm": {
+          "depth_m": -0.0016962643712759018,
+          "frame": 0.0
+        },
+        "bodice / LeftArm": {
+          "depth_m": -0.003204591339454055,
+          "frame": 53.5
+        },
+        "bodice / LeftForeArm": {
+          "depth_m": -0.007886598818004131,
+          "frame": 11.0
+        },
+        "skirt / LeftForeArm": {
+          "depth_m": -0.005565367639064789,
+          "frame": 36.0
+        },
+        "skirt / LeftHand": {
+          "depth_m": -0.004887143149971962,
+          "frame": 36.0
+        }
+      },
+      "pair_frame": 0.0,
+      "min_frame": 6.5,
+      "min_zone": "skirt",
+      "min_vertex": 1761,
+      "min_body_zone": "LeftForeArm",
+      "min_rest_xyz": [
+        0.12271453440189362,
+        -0.026382213458418846,
+        0.3911266326904297
+      ]
+    },
+    "jump": {
+      "samples": 101,
+      "inside": 63,
+      "pairs": 497,
+      "min_m": -0.01074917707592249,
+      "total_pairs": 22378,
+      "failing_frames": 89,
+      "contact_zones": {
+        "sleeve / Spine1": {
+          "depth_m": -0.005788504611700773,
+          "frame": 3.0
+        },
+        "shoulder and armpit / Spine1": {
+          "depth_m": -0.008860601112246513,
+          "frame": 10.0
+        },
+        "sleeve / RightArm": {
+          "depth_m": -0.0025673480704426765,
+          "frame": 35.5
+        },
+        "bodice / RightArm": {
+          "depth_m": -0.001567856757901609,
+          "frame": 8.0
+        },
+        "shoulder and armpit / RightArm": {
+          "depth_m": -0.0025278013199567795,
+          "frame": 36.0
+        },
+        "shoulder and armpit / RightShoulder": {
+          "depth_m": -0.0004326864436734468,
+          "frame": 2.0
+        },
+        "bodice / Spine1": {
+          "depth_m": -0.0014589900383725762,
+          "frame": 5.5
+        },
+        "shoulder and armpit / LeftArm": {
+          "depth_m": -0.0038664424791932106,
+          "frame": 7.5
+        },
+        "sleeve / LeftArm": {
+          "depth_m": -0.004009372089058161,
+          "frame": 11.0
+        },
+        "bodice / LeftArm": {
+          "depth_m": -0.004066136199980974,
+          "frame": 6.0
+        },
+        "bodice / LeftForeArm": {
+          "depth_m": -0.00780224334448576,
+          "frame": 3.0
+        },
+        "skirt / LeftForeArm": {
+          "depth_m": -0.006069365888834,
+          "frame": 37.0
+        },
+        "skirt / LeftHand": {
+          "depth_m": -0.006560735870152712,
+          "frame": 6.0
+        },
+        "skirt / LeftHandThumb1": {
+          "depth_m": -0.001172126387245953,
+          "frame": 9.0
+        },
+        "skirt / LeftHandRing1": {
+          "depth_m": -0.0031627295538783073,
+          "frame": 9.0
+        },
+        "skirt / LeftHandMiddle1": {
+          "depth_m": -0.0030169847887009382,
+          "frame": 9.0
+        },
+        "skirt / LeftHandIndex1": {
+          "depth_m": -0.001525895670056343,
+          "frame": 9.0
+        }
+      },
+      "pair_frame": 9.0,
+      "min_frame": 36.5,
+      "min_zone": "shoulder and armpit",
+      "min_vertex": 2007,
+      "min_body_zone": "Spine1",
+      "min_rest_xyz": [
+        0.12086505442857742,
+        -0.002877061488106847,
+        0.5113706588745117
+      ]
+    },
+    "idle": {
+      "samples": 177,
+      "inside": 41,
+      "pairs": 363,
+      "min_m": -0.005090066697448492,
+      "total_pairs": 62142,
+      "failing_frames": 177,
+      "contact_zones": {
+        "sleeve / Spine1": {
+          "depth_m": -0.006408073008060455,
+          "frame": 66.0
+        },
+        "shoulder and armpit / Spine1": {
+          "depth_m": -0.007457795552909374,
+          "frame": 66.0
+        },
+        "sleeve / RightArm": {
+          "depth_m": -0.0021520317532122135,
+          "frame": 13.0
+        },
+        "bodice / RightArm": {
+          "depth_m": -0.0012566744117066264,
+          "frame": 66.0
+        },
+        "shoulder and armpit / RightArm": {
+          "depth_m": -0.0020472633186727762,
+          "frame": 53.5
+        },
+        "shoulder and armpit / RightShoulder": {
+          "depth_m": -0.0004885457456111908,
+          "frame": 79.5
+        },
+        "bodice / Spine1": {
+          "depth_m": -0.0009869271889328957,
+          "frame": 23.5
+        },
+        "shoulder and armpit / LeftArm": {
+          "depth_m": -0.003506243461742997,
+          "frame": 66.0
+        },
+        "sleeve / LeftArm": {
+          "depth_m": -0.002193352673202753,
+          "frame": 66.0
+        },
+        "bodice / LeftArm": {
+          "depth_m": -0.0032360334880650043,
+          "frame": 16.5
+        },
+        "bodice / LeftForeArm": {
+          "depth_m": -0.006473277695477009,
+          "frame": 22.0
+        },
+        "skirt / LeftForeArm": {
+          "depth_m": -0.005565376486629248,
+          "frame": 19.5
+        },
+        "skirt / LeftHand": {
+          "depth_m": -0.0023631001822650433,
+          "frame": 84.0
+        }
+      },
+      "pair_frame": 59.5,
+      "min_frame": 66.0,
+      "min_zone": "shoulder and armpit",
+      "min_vertex": 2371,
+      "min_body_zone": "Spine1",
+      "min_rest_xyz": [
+        0.12261313945055008,
+        0.012056452222168446,
+        0.5168671011924744
+      ]
+    },
+    "nod": {
+      "samples": 113,
+      "inside": 39,
+      "pairs": 362,
+      "min_m": -0.004412682726979256,
+      "total_pairs": 40660,
+      "failing_frames": 113,
+      "contact_zones": {
+        "sleeve / Spine1": {
+          "depth_m": -0.005686456803232431,
+          "frame": 0.0
+        },
+        "shoulder and armpit / Spine1": {
+          "depth_m": -0.0070683895610272884,
+          "frame": 0.0
+        },
+        "sleeve / RightArm": {
+          "depth_m": -0.00197140546515584,
+          "frame": 17.0
+        },
+        "bodice / RightArm": {
+          "depth_m": -0.0006726018618792295,
+          "frame": 17.0
+        },
+        "shoulder and armpit / RightArm": {
+          "depth_m": -0.0018677994376048446,
+          "frame": 17.0
+        },
+        "shoulder and armpit / RightShoulder": {
+          "depth_m": -0.00037919176975265145,
+          "frame": 0.0
+        },
+        "bodice / Spine1": {
+          "depth_m": -0.0009991038823500276,
+          "frame": 17.0
+        },
+        "shoulder and armpit / LeftArm": {
+          "depth_m": -0.0033116659615188837,
+          "frame": 15.0
+        },
+        "sleeve / LeftArm": {
+          "depth_m": -0.0017043401021510363,
+          "frame": 17.0
+        },
+        "bodice / LeftArm": {
+          "depth_m": -0.0033116659615188837,
+          "frame": 15.0
+        },
+        "bodice / LeftForeArm": {
+          "depth_m": -0.0067680892534554005,
+          "frame": 36.0
+        },
+        "skirt / LeftForeArm": {
+          "depth_m": -0.0038639537524431944,
+          "frame": 0.0
+        },
+        "skirt / LeftHand": {
+          "depth_m": -0.0009411509381607175,
+          "frame": 11.0
+        }
+      },
+      "pair_frame": 15.0,
+      "min_frame": 0.0,
+      "min_zone": "shoulder and armpit",
+      "min_vertex": 2371,
+      "min_body_zone": "Spine1",
+      "min_rest_xyz": [
+        0.12261313945055008,
+        0.012056452222168446,
+        0.5168671011924744
+      ]
+    },
+    "dance": {
+      "samples": 129,
+      "inside": 31,
+      "pairs": 151,
+      "min_m": -0.009564841166138649,
+      "total_pairs": 15866,
+      "failing_frames": 129,
+      "contact_zones": {
+        "bodice / Spine1": {
+          "depth_m": -0.0012304692063480616,
+          "frame": 51.0
+        },
+        "sleeve / RightArm": {
+          "depth_m": -0.0025297077372670174,
+          "frame": 8.0
+        },
+        "shoulder and armpit / Spine1": {
+          "depth_m": -0.007670387625694275,
+          "frame": 48.0
+        },
+        "sleeve / LeftArm": {
+          "depth_m": -0.001513254945166409,
+          "frame": 53.0
+        },
+        "shoulder and armpit / RightArm": {
+          "depth_m": -0.0024443354923278093,
+          "frame": 8.0
+        },
+        "shoulder and armpit / LeftArm": {
+          "depth_m": -0.0014983487781137228,
+          "frame": 56.5
+        },
+        "bodice / RightArm": {
+          "depth_m": -4.4366647244942214e-08,
+          "frame": 8.5
+        },
+        "sleeve / Spine1": {
+          "depth_m": -0.004709011409431696,
+          "frame": 40.0
+        }
+      },
+      "pair_frame": 49.0,
+      "min_frame": 48.0,
+      "min_zone": "shoulder and armpit",
+      "min_vertex": 2007,
+      "min_body_zone": "Spine1",
+      "min_rest_xyz": [
+        0.12086505442857742,
+        -0.002877061488106847,
+        0.5113706588745117
+      ]
+    }
+  },
+  "render": {
+    "engine": "Cycles CPU",
+    "samples": 12,
+    "six_view_order": [
+      "front",
+      "back",
+      "left",
+      "right",
+      "three-quarter",
+      "dress only"
+    ],
+    "frames": {
+      "walk": 14.5,
+      "run": 16.5,
+      "wave": 6.5,
+      "jump": 36.5
+    },
+    "sha256": {
+      "six_view.png": "96992f3fcdbdb6e00cf29da395f1937bdbfc34b3f76537d35d0784c4fddb191f",
+      "walk.png": "6e92544b7993e18d4579b9c97ea8ba0088e9caf680bc3d3ba2487f5b9d639726",
+      "run.png": "028ee7e6cce0598152e0a2eb6b2eb321e6e98bd234af16bcd4efdcf00c7ea6c4",
+      "wave.png": "c2660dc2b28591f5b99afd12c2dcae4f7367a222b30b6ec9f36c1596a94cf632",
+      "jump.png": "6afadf5619b471ee0c9989dab87a5d7a6239c1c37afafd67de17d07d85ba8bcc"
+    }
+  },
+  "khronos": {
+    "sha256": "2ea41897d291e6a99a6b071345b42de5e950325ad9af6f6a637991954987d8d1",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "triangles": 3544,
+    "maxInfluences": 4,
+    "drawCalls": 1
+  },
+  "max_editable_vertex_displacement_from_round_one_m": 0.019593445014407174
+}

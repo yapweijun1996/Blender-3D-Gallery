@@ -1,0 +1,125 @@
+{
+  "clip": "take_item",
+  "prop": "props/shelf_item.glb",
+  "bone": "mixamorig:RightHand",
+  "fps": 24,
+  "cycle_frames": 48,
+  "apply_transform": "replace node TRS",
+  "node": "Jam jar",
+  "composition": "world_matrix_of_joint @ local_matrix_of_prop",
+  "blender_pose_bone_head_local": {
+    "translation_m": [
+      0.025930896401405334,
+      0.028876811265945435,
+      0.03611920401453972
+    ],
+    "quaternion_xyzw": [
+      -0.8077772259712219,
+      0.3256872892379761,
+      -0.308023065328598,
+      0.3828126788139343
+    ]
+  },
+  "gltf_joint_local": {
+    "translation_m": [
+      0.02593103051185608,
+      0.028876665979623795,
+      0.036119382828474045
+    ],
+    "quaternion_xyzw": [
+      -0.30049535632133484,
+      0.012490445747971535,
+      -0.44810083508491516,
+      0.8418742418289185
+    ]
+  },
+  "attach_frame": 29,
+  "release_frame": 0,
+  "shelf_node": "Display rail",
+  "shelf_world_blender": {
+    "translation_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "quaternion_xyzw": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "shelf_world_gltf": {
+    "translation_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "quaternion_xyzw": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "return_stop_blender": {
+    "translation_m": [
+      -0.1459999978542328,
+      -0.12999999523162842,
+      0.5230000019073486
+    ],
+    "quaternion_xyzw": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "pickup_stop_blender": {
+    "translation_m": [
+      -0.14499999582767487,
+      -0.2280000001192093,
+      0.5230000019073486
+    ],
+    "quaternion_xyzw": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "return_stop_gltf": {
+    "translation_m": [
+      -0.1459999978542328,
+      0.5229999423027039,
+      0.12999999523162842
+    ],
+    "quaternion_xyzw": [
+      1.7763568394002505e-15,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "pickup_stop_gltf": {
+    "translation_m": [
+      -0.14499999582767487,
+      0.5229999423027039,
+      0.2280000001192093
+    ],
+    "quaternion_xyzw": [
+      1.7763568394002505e-15,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "return_frames": [
+    3,
+    16
+  ],
+  "return_interpolation": "smoothstep",
+  "item_default": "pickup_stop",
+  "first_play": "hold at pickup_stop until attach_frame",
+  "repeat_play": "release at return_stop, slide to pickup_stop over return_frames, hold until attach_frame"
+}

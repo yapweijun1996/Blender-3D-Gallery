@@ -1,0 +1,429 @@
+{
+  "coordinates": "glTF +Y up, +Z forward; character sole-midpoint origin",
+  "skeleton": "Visitor Humanoid",
+  "modules": {
+    "Arm.L": {
+      "file": "arm-l.glb",
+      "objects": [
+        "Arm tube.L"
+      ],
+      "bones": [
+        "UpperArm.L"
+      ],
+      "optional": false
+    },
+    "Arm.R": {
+      "file": "arm-r.glb",
+      "objects": [
+        "Arm tube.R"
+      ],
+      "bones": [
+        "UpperArm.R"
+      ],
+      "optional": false
+    },
+    "Backpack": {
+      "file": "backpack.glb",
+      "objects": [
+        "Backpack shoulder strap",
+        "Backpack shoulder strap.001",
+        "Backpack",
+        "Backpack front pocket",
+        "Backpack bag logo outline",
+        "Backpack bag logo handle"
+      ],
+      "bones": [
+        "Spine"
+      ],
+      "optional": false
+    },
+    "Body": {
+      "file": "body.glb",
+      "objects": [
+        "Body"
+      ],
+      "bones": [
+        "Spine"
+      ],
+      "optional": false
+    },
+    "Brow.L": {
+      "file": "brow-l.glb",
+      "objects": [
+        "Brow.L"
+      ],
+      "bones": [
+        "Head"
+      ],
+      "optional": false
+    },
+    "Brow.R": {
+      "file": "brow-r.glb",
+      "objects": [
+        "Brow.R"
+      ],
+      "bones": [
+        "Head"
+      ],
+      "optional": false
+    },
+    "Ear.L": {
+      "file": "ear-l.glb",
+      "objects": [
+        "Ear.L"
+      ],
+      "bones": [
+        "Head"
+      ],
+      "optional": false
+    },
+    "Ear.R": {
+      "file": "ear-r.glb",
+      "objects": [
+        "Ear.R"
+      ],
+      "bones": [
+        "Head"
+      ],
+      "optional": false
+    },
+    "Eye.L": {
+      "file": "eye-l.glb",
+      "objects": [
+        "Eye.L"
+      ],
+      "bones": [
+        "Head"
+      ],
+      "optional": false
+    },
+    "Eye.R": {
+      "file": "eye-r.glb",
+      "objects": [
+        "Eye.R"
+      ],
+      "bones": [
+        "Head"
+      ],
+      "optional": false
+    },
+    "Finger_Index_L": {
+      "file": "finger-index-l.glb",
+      "objects": [
+        "Finger.Index.L"
+      ],
+      "bones": [
+        "Finger.Index.L"
+      ],
+      "optional": false
+    },
+    "Finger_Index_R": {
+      "file": "finger-index-r.glb",
+      "objects": [
+        "Finger.Index.R"
+      ],
+      "bones": [
+        "Finger.Index.R"
+      ],
+      "optional": false
+    },
+    "Finger_Middle_L": {
+      "file": "finger-middle-l.glb",
+      "objects": [
+        "Finger.Middle.L"
+      ],
+      "bones": [
+        "Finger.Middle.L"
+      ],
+      "optional": false
+    },
+    "Finger_Middle_R": {
+      "file": "finger-middle-r.glb",
+      "objects": [
+        "Finger.Middle.R"
+      ],
+      "bones": [
+        "Finger.Middle.R"
+      ],
+      "optional": false
+    },
+    "Finger_Pinky_L": {
+      "file": "finger-pinky-l.glb",
+      "objects": [
+        "Finger.Pinky.L"
+      ],
+      "bones": [
+        "Finger.Pinky.L"
+      ],
+      "optional": false
+    },
+    "Finger_Pinky_R": {
+      "file": "finger-pinky-r.glb",
+      "objects": [
+        "Finger.Pinky.R"
+      ],
+      "bones": [
+        "Finger.Pinky.R"
+      ],
+      "optional": false
+    },
+    "Finger_Ring_L": {
+      "file": "finger-ring-l.glb",
+      "objects": [
+        "Finger.Ring.L"
+      ],
+      "bones": [
+        "Finger.Ring.L"
+      ],
+      "optional": false
+    },
+    "Finger_Ring_R": {
+      "file": "finger-ring-r.glb",
+      "objects": [
+        "Finger.Ring.R"
+      ],
+      "bones": [
+        "Finger.Ring.R"
+      ],
+      "optional": false
+    },
+    "Finger_Thumb_L": {
+      "file": "finger-thumb-l.glb",
+      "objects": [
+        "Finger.Thumb.L"
+      ],
+      "bones": [
+        "Finger.Thumb.L"
+      ],
+      "optional": false
+    },
+    "Finger_Thumb_R": {
+      "file": "finger-thumb-r.glb",
+      "objects": [
+        "Finger.Thumb.R"
+      ],
+      "bones": [
+        "Finger.Thumb.R"
+      ],
+      "optional": false
+    },
+    "Hair": {
+      "file": "hair.glb",
+      "objects": [
+        "Hair_Module"
+      ],
+      "bones": [
+        "Head"
+      ],
+      "optional": false
+    },
+    "Hat": {
+      "file": "hat.glb",
+      "objects": [
+        "Hat_Crown",
+        "Hat_Bill"
+      ],
+      "bones": [
+        "Head"
+      ],
+      "optional": true
+    },
+    "Head": {
+      "file": "head.glb",
+      "objects": [
+        "Head_Skin",
+        "Ear_Underlay.R",
+        "Ear_Underlay.L"
+      ],
+      "bones": [
+        "Head"
+      ],
+      "optional": false
+    },
+    "Hoodie": {
+      "file": "hoodie.glb",
+      "objects": [
+        "Hoodie.001",
+        "Long sleeve",
+        "Purple cuff",
+        "Long sleeve.001",
+        "Purple cuff.001",
+        "Purple hood back",
+        "Purple collar",
+        "Purple collar.001",
+        "Chest bag logo outline",
+        "Chest bag logo handle"
+      ],
+      "bones": [
+        "Spine",
+        "UpperArm.L",
+        "UpperArm.R"
+      ],
+      "optional": false
+    },
+    "Jeans": {
+      "file": "jeans.glb",
+      "objects": [
+        "Jeans"
+      ],
+      "bones": [
+        "LowerLeg.L",
+        "LowerLeg.R",
+        "Root",
+        "UpperLeg.L",
+        "UpperLeg.R"
+      ],
+      "optional": true
+    },
+    "Leg.L": {
+      "file": "leg-l.glb",
+      "objects": [
+        "Leg.L.001"
+      ],
+      "bones": [
+        "LowerLeg.L",
+        "UpperLeg.L"
+      ],
+      "optional": false
+    },
+    "Leg.R": {
+      "file": "leg-r.glb",
+      "objects": [
+        "Leg.R.001"
+      ],
+      "bones": [
+        "LowerLeg.R",
+        "UpperLeg.R"
+      ],
+      "optional": false
+    },
+    "Mouth": {
+      "file": "mouth.glb",
+      "objects": [
+        "Mouth"
+      ],
+      "bones": [
+        "Head"
+      ],
+      "optional": false
+    },
+    "Nose": {
+      "file": "nose.glb",
+      "objects": [
+        "Nose"
+      ],
+      "bones": [
+        "Head"
+      ],
+      "optional": false
+    },
+    "Palm_L": {
+      "file": "palm-l.glb",
+      "objects": [
+        "Palm.L"
+      ],
+      "bones": [
+        "UpperArm.L"
+      ],
+      "optional": false
+    },
+    "Palm_R": {
+      "file": "palm-r.glb",
+      "objects": [
+        "Palm.R"
+      ],
+      "bones": [
+        "UpperArm.R"
+      ],
+      "optional": false
+    },
+    "Shoe.L": {
+      "file": "shoe-l.glb",
+      "objects": [
+        "Shoe.L.001"
+      ],
+      "bones": [
+        "LowerLeg.L"
+      ],
+      "optional": false
+    },
+    "Shoe.R": {
+      "file": "shoe-r.glb",
+      "objects": [
+        "Shoe.R.001"
+      ],
+      "bones": [
+        "LowerLeg.R"
+      ],
+      "optional": false
+    },
+    "Shorts": {
+      "file": "shorts.glb",
+      "objects": [
+        "Cargo side pocket",
+        "Cargo side pocket.001",
+        "Shorts tailored"
+      ],
+      "bones": [
+        "Root"
+      ],
+      "optional": false
+    },
+    "Sock.L": {
+      "file": "sock-l.glb",
+      "objects": [
+        "Sock.L"
+      ],
+      "bones": [
+        "LowerLeg.L",
+        "UpperLeg.L"
+      ],
+      "optional": false
+    },
+    "Sock.R": {
+      "file": "sock-r.glb",
+      "objects": [
+        "Sock.R"
+      ],
+      "bones": [
+        "LowerLeg.R",
+        "UpperLeg.R"
+      ],
+      "optional": false
+    },
+    "Wrist_L": {
+      "file": "wrist-l.glb",
+      "objects": [
+        "Wrist.L"
+      ],
+      "bones": [
+        "UpperArm.L"
+      ],
+      "optional": false
+    },
+    "Wrist_R": {
+      "file": "wrist-r.glb",
+      "objects": [
+        "Wrist.R"
+      ],
+      "bones": [
+        "UpperArm.R"
+      ],
+      "optional": false
+    }
+  },
+  "variants": {
+    "Jeans": {
+      "hide": [
+        "Shorts",
+        "Leg.L",
+        "Leg.R",
+        "Sock.L",
+        "Sock.R"
+      ]
+    },
+    "Hat": {
+      "hide": []
+    }
+  }
+}

@@ -1,0 +1,845 @@
+{
+  "authoring": "Blender 5.1.2",
+  "source_sha256": "1d2490a49bd1c848a1bd6a565a9ad3845a3627075ba0aa3ac8f355b9cd9136b9",
+  "units": "metres",
+  "up": "+Y",
+  "front": "+Z",
+  "road_axis": "+Z",
+  "origin": "center of the ground footprint",
+  "models": [
+    {
+      "file": "checkpoint_lane.glb",
+      "triangles": 2669,
+      "triangle_budget": 3500,
+      "bytes": 155712,
+      "size_m": {
+        "x": 4.8,
+        "y": 2.782,
+        "z": 9
+      },
+      "materials": [
+        "chrome",
+        "concrete",
+        "glass",
+        "lamp_emissive",
+        "light",
+        "metal",
+        "paint",
+        "plate",
+        "roof",
+        "rubber",
+        "stone",
+        "trim",
+        "wall",
+        "window"
+      ],
+      "parts": [
+        {
+          "name": "lane_deck",
+          "triangles": 12,
+          "min": [
+            -2.4,
+            0,
+            -4.5
+          ],
+          "max": [
+            2.4,
+            0.018,
+            4.5
+          ]
+        },
+        {
+          "name": "road_markings",
+          "triangles": 85,
+          "min": [
+            -2.4,
+            0.018,
+            -3.955
+          ],
+          "max": [
+            0.81,
+            0.02,
+            4.42
+          ]
+        },
+        {
+          "name": "booth_island",
+          "triangles": 260,
+          "min": [
+            0.9,
+            0.018,
+            -4.29
+          ],
+          "max": [
+            2.399,
+            0.191,
+            4.25
+          ]
+        },
+        {
+          "name": "booth_shell",
+          "triangles": 176,
+          "min": [
+            1.05,
+            0.182,
+            -1.48
+          ],
+          "max": [
+            2.25,
+            2.782,
+            0.52
+          ]
+        },
+        {
+          "name": "booth_frames",
+          "triangles": 276,
+          "min": [
+            0.914,
+            0.247,
+            -1.464
+          ],
+          "max": [
+            2.25,
+            2.572,
+            0.558
+          ]
+        },
+        {
+          "name": "booth_glazing",
+          "triangles": 120,
+          "min": [
+            1.073,
+            1.163,
+            -1.448
+          ],
+          "max": [
+            2.227,
+            2.337,
+            0.488
+          ]
+        },
+        {
+          "name": "booth_counter",
+          "triangles": 112,
+          "min": [
+            1.145,
+            0.232,
+            -1.16
+          ],
+          "max": [
+            2.043,
+            1.432,
+            0.045
+          ]
+        },
+        {
+          "name": "inspection_kiosk",
+          "triangles": 128,
+          "min": [
+            1.378,
+            0.183,
+            -2.355
+          ],
+          "max": [
+            1.895,
+            1.494,
+            -1.965
+          ]
+        },
+        {
+          "name": "bollards",
+          "triangles": 1260,
+          "min": [
+            1.255,
+            0.182,
+            -3.68
+          ],
+          "max": [
+            2.095,
+            1.042,
+            3.46
+          ]
+        },
+        {
+          "name": "boom_housing",
+          "triangles": 172,
+          "min": [
+            0.801,
+            0.182,
+            2.395
+          ],
+          "max": [
+            1.395,
+            1.275,
+            2.905
+          ]
+        },
+        {
+          "name": "boom_arm",
+          "triangles": 68,
+          "min": [
+            -2.34,
+            0.968,
+            2.621
+          ],
+          "max": [
+            0.86,
+            1.072,
+            2.679
+          ]
+        }
+      ],
+      "validator": {
+        "name": "gltf-validator",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0
+      },
+      "sha256": "350c58c1cf99cdb2dbc83c31896eff765b22f6bcddb7ee6063ba955af7bab9fd",
+      "contact_sheet": {
+        "file": "checkpoint_lane_six_views.png",
+        "sha256": "e02915fdac130582fff2aaa2081f1ef3ea623f891a5a242b11581ea4c3d4f821",
+        "glb_sha256": "350c58c1cf99cdb2dbc83c31896eff765b22f6bcddb7ee6063ba955af7bab9fd",
+        "views": [
+          "front",
+          "right",
+          "rear",
+          "front_three_quarter",
+          "rear_three_quarter",
+          "top"
+        ],
+        "renderer": "Blender 5.1.2 Cycles CPU",
+        "threads": 2,
+        "samples": 16
+      },
+      "driveable_width_m": 3.3,
+      "repeat_pitch_m": 4.8,
+      "boom": {
+        "node": "boom_arm",
+        "pivot_m": [
+          0.86,
+          1.02,
+          2.65
+        ],
+        "length_m": 3.2,
+        "hinge_axis_local": [
+          0,
+          0,
+          1
+        ],
+        "lift_rotation_degrees": -90
+      }
+    },
+    {
+      "file": "checkpoint_canopy.glb",
+      "triangles": 3920,
+      "triangle_budget": 4000,
+      "bytes": 257184,
+      "size_m": {
+        "x": 30,
+        "y": 8.015,
+        "z": 13.693
+      },
+      "materials": [
+        "concrete",
+        "lamp_emissive",
+        "light",
+        "metal",
+        "plate",
+        "roof",
+        "rubber",
+        "trim",
+        "wall",
+        "window"
+      ],
+      "parts": [
+        {
+          "name": "canopy_roof",
+          "triangles": 640,
+          "min": [
+            -15,
+            6.351,
+            -6.846
+          ],
+          "max": [
+            15,
+            8.015,
+            6.846
+          ]
+        },
+        {
+          "name": "portal_columns",
+          "triangles": 656,
+          "min": [
+            -15,
+            0,
+            -5.99
+          ],
+          "max": [
+            15,
+            5.71,
+            5.99
+          ]
+        },
+        {
+          "name": "portal_trusses",
+          "triangles": 1020,
+          "min": [
+            -14.785,
+            5.225,
+            -6.282
+          ],
+          "max": [
+            14.785,
+            7.856,
+            6.282
+          ]
+        },
+        {
+          "name": "lane_gantry",
+          "triangles": 48,
+          "min": [
+            -14.64,
+            4.98,
+            5.335
+          ],
+          "max": [
+            14.64,
+            5.4,
+            5.815
+          ]
+        },
+        {
+          "name": "soffit_fixtures",
+          "triangles": 288,
+          "min": [
+            -13.465,
+            7.175,
+            -3.395
+          ],
+          "max": [
+            11.965,
+            7.46,
+            2.795
+          ]
+        },
+        {
+          "name": "lane_01_number",
+          "triangles": 44,
+          "min": [
+            -13.365,
+            4.5,
+            5.602
+          ],
+          "max": [
+            -12.875,
+            5.12,
+            5.738
+          ]
+        },
+        {
+          "name": "lane_01_control",
+          "triangles": 70,
+          "min": [
+            -12.785,
+            4.495,
+            5.442
+          ],
+          "max": [
+            -11.995,
+            5.145,
+            5.898
+          ]
+        },
+        {
+          "name": "lane_01_traffic_light",
+          "triangles": 84,
+          "min": [
+            -11.685,
+            4.5,
+            5.557
+          ],
+          "max": [
+            -11.415,
+            5.08,
+            5.783
+          ]
+        },
+        {
+          "name": "lane_02_number",
+          "triangles": 56,
+          "min": [
+            -8.565,
+            4.5,
+            5.602
+          ],
+          "max": [
+            -8.075,
+            5.12,
+            5.738
+          ]
+        },
+        {
+          "name": "lane_02_control",
+          "triangles": 70,
+          "min": [
+            -7.985,
+            4.495,
+            5.442
+          ],
+          "max": [
+            -7.195,
+            5.145,
+            5.898
+          ]
+        },
+        {
+          "name": "lane_02_traffic_light",
+          "triangles": 84,
+          "min": [
+            -6.885,
+            4.5,
+            5.557
+          ],
+          "max": [
+            -6.615,
+            5.08,
+            5.783
+          ]
+        },
+        {
+          "name": "lane_03_number",
+          "triangles": 56,
+          "min": [
+            -3.765,
+            4.5,
+            5.602
+          ],
+          "max": [
+            -3.275,
+            5.12,
+            5.738
+          ]
+        },
+        {
+          "name": "lane_03_control",
+          "triangles": 80,
+          "min": [
+            -3.185,
+            4.495,
+            5.442
+          ],
+          "max": [
+            -2.395,
+            5.145,
+            5.898
+          ]
+        },
+        {
+          "name": "lane_03_traffic_light",
+          "triangles": 84,
+          "min": [
+            -2.085,
+            4.5,
+            5.557
+          ],
+          "max": [
+            -1.815,
+            5.08,
+            5.783
+          ]
+        },
+        {
+          "name": "lane_04_number",
+          "triangles": 52,
+          "min": [
+            1.035,
+            4.5,
+            5.602
+          ],
+          "max": [
+            1.525,
+            5.12,
+            5.738
+          ]
+        },
+        {
+          "name": "lane_04_control",
+          "triangles": 70,
+          "min": [
+            1.615,
+            4.495,
+            5.442
+          ],
+          "max": [
+            2.405,
+            5.145,
+            5.898
+          ]
+        },
+        {
+          "name": "lane_04_traffic_light",
+          "triangles": 84,
+          "min": [
+            2.715,
+            4.5,
+            5.557
+          ],
+          "max": [
+            2.985,
+            5.08,
+            5.783
+          ]
+        },
+        {
+          "name": "lane_05_number",
+          "triangles": 56,
+          "min": [
+            5.835,
+            4.5,
+            5.602
+          ],
+          "max": [
+            6.325,
+            5.12,
+            5.738
+          ]
+        },
+        {
+          "name": "lane_05_control",
+          "triangles": 70,
+          "min": [
+            6.415,
+            4.495,
+            5.442
+          ],
+          "max": [
+            7.205,
+            5.145,
+            5.898
+          ]
+        },
+        {
+          "name": "lane_05_traffic_light",
+          "triangles": 84,
+          "min": [
+            7.515,
+            4.5,
+            5.557
+          ],
+          "max": [
+            7.785,
+            5.08,
+            5.783
+          ]
+        },
+        {
+          "name": "lane_06_number",
+          "triangles": 60,
+          "min": [
+            10.635,
+            4.5,
+            5.602
+          ],
+          "max": [
+            11.125,
+            5.12,
+            5.738
+          ]
+        },
+        {
+          "name": "lane_06_control",
+          "triangles": 80,
+          "min": [
+            11.215,
+            4.495,
+            5.442
+          ],
+          "max": [
+            12.005,
+            5.145,
+            5.898
+          ]
+        },
+        {
+          "name": "lane_06_traffic_light",
+          "triangles": 84,
+          "min": [
+            12.315,
+            4.5,
+            5.557
+          ],
+          "max": [
+            12.585,
+            5.08,
+            5.783
+          ]
+        }
+      ],
+      "validator": {
+        "name": "gltf-validator",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0
+      },
+      "sha256": "1f360a3cbc1ac0c00d147b090fa8a9780a1c62b7fa9b014a9421ef5f37694a66",
+      "contact_sheet": {
+        "file": "checkpoint_canopy_six_views.png",
+        "sha256": "20aab4c726d02923f1d35b52de5f2b9bb031bb84a6d7f18141bd81369ae3ddd5",
+        "glb_sha256": "1f360a3cbc1ac0c00d147b090fa8a9780a1c62b7fa9b014a9421ef5f37694a66",
+        "views": [
+          "front",
+          "right",
+          "rear",
+          "front_three_quarter",
+          "rear_three_quarter",
+          "top"
+        ],
+        "renderer": "Blender 5.1.2 Cycles CPU",
+        "threads": 2,
+        "samples": 16
+      },
+      "lane_states": [
+        "open",
+        "open",
+        "closed",
+        "open",
+        "open",
+        "closed"
+      ]
+    },
+    {
+      "file": "checkpoint_building.glb",
+      "triangles": 5186,
+      "triangle_budget": 6000,
+      "bytes": 283092,
+      "size_m": {
+        "x": 60,
+        "y": 10.115,
+        "z": 24.8
+      },
+      "materials": [
+        "chrome",
+        "concrete",
+        "glass",
+        "leaf",
+        "metal",
+        "roof",
+        "stone",
+        "trim",
+        "wall",
+        "window"
+      ],
+      "parts": [
+        {
+          "name": "building_podium",
+          "triangles": 24,
+          "min": [
+            -30,
+            0,
+            -12.4
+          ],
+          "max": [
+            30,
+            0.43,
+            9.66
+          ]
+        },
+        {
+          "name": "entrance_paving",
+          "triangles": 752,
+          "min": [
+            -22.8,
+            0,
+            3.2
+          ],
+          "max": [
+            22.8,
+            4.71,
+            12.4
+          ]
+        },
+        {
+          "name": "west_wing",
+          "triangles": 262,
+          "min": [
+            -30,
+            0.43,
+            -10.61
+          ],
+          "max": [
+            -19.715,
+            5.835,
+            8.11
+          ]
+        },
+        {
+          "name": "east_wing",
+          "triangles": 262,
+          "min": [
+            19.715,
+            0.43,
+            -10.61
+          ],
+          "max": [
+            30,
+            5.835,
+            8.11
+          ]
+        },
+        {
+          "name": "rear_elevation",
+          "triangles": 472,
+          "min": [
+            -27,
+            0.43,
+            -11.66
+          ],
+          "max": [
+            27,
+            5.205,
+            -1.86
+          ]
+        },
+        {
+          "name": "curved_glass_facade",
+          "triangles": 160,
+          "min": [
+            -22.8,
+            0.43,
+            4.35
+          ],
+          "max": [
+            22.8,
+            4.63,
+            8.74
+          ]
+        },
+        {
+          "name": "curtainwall_mullions",
+          "triangles": 908,
+          "min": [
+            -22.84,
+            0.47,
+            4.957
+          ],
+          "max": [
+            22.84,
+            4.7,
+            8.812
+          ]
+        },
+        {
+          "name": "entrance_doors",
+          "triangles": 288,
+          "min": [
+            -4.56,
+            0.43,
+            8.421
+          ],
+          "max": [
+            4.56,
+            2.87,
+            8.88
+          ]
+        },
+        {
+          "name": "projecting_entrance_roof",
+          "triangles": 888,
+          "min": [
+            -22.8,
+            4.67,
+            3.08
+          ],
+          "max": [
+            22.8,
+            6.195,
+            10.68
+          ]
+        },
+        {
+          "name": "upper_hall",
+          "triangles": 320,
+          "min": [
+            -19.9,
+            4.26,
+            -8.77
+          ],
+          "max": [
+            19.9,
+            8.78,
+            6.47
+          ]
+        },
+        {
+          "name": "upper_hall_glazing",
+          "triangles": 484,
+          "min": [
+            -19.957,
+            6.225,
+            -8.669
+          ],
+          "max": [
+            19.957,
+            8.515,
+            6.477
+          ]
+        },
+        {
+          "name": "main_roof",
+          "triangles": 270,
+          "min": [
+            -19.9,
+            8.72,
+            -9.22
+          ],
+          "max": [
+            19.9,
+            9.255,
+            7.09
+          ]
+        },
+        {
+          "name": "roof_services",
+          "triangles": 96,
+          "min": [
+            -12.59,
+            9.25,
+            -6.61
+          ],
+          "max": [
+            10.79,
+            10.115,
+            -2.83
+          ]
+        }
+      ],
+      "validator": {
+        "name": "gltf-validator",
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "hints": 0
+      },
+      "sha256": "ea325edd75bb1f9f74dadb0a9a248992ec1345f81c0e384a348067b639de4a04",
+      "contact_sheet": {
+        "file": "checkpoint_building_six_views.png",
+        "sha256": "e46c61bee8f3830479d0e95ff152d6d1be5e0fcd7df49aa8198fb3086755ec5c",
+        "glb_sha256": "ea325edd75bb1f9f74dadb0a9a248992ec1345f81c0e384a348067b639de4a04",
+        "views": [
+          "front",
+          "right",
+          "rear",
+          "front_three_quarter",
+          "rear_three_quarter",
+          "top"
+        ],
+        "renderer": "Blender 5.1.2 Cycles CPU",
+        "threads": 2,
+        "samples": 16
+      }
+    }
+  ]
+}
