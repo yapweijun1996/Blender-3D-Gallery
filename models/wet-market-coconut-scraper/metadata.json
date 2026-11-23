@@ -1,0 +1,97 @@
+{
+  "id": "wet-market-coconut-scraper",
+  "name": "Wet-Market Coconut Scraper",
+  "summary": "Illustrative market workboard with a guarded coconut scraper and native mechanism demonstration.",
+  "description": "Original SG/MY-inspired hand-cranked coconut scraper with staged coconut halves, visible shielded gears, an empty bowl and a local demonstration of the crank and captive rotor. No actual food processing.",
+  "category": "Festivals & Local Life",
+  "tags": [
+    "Wet market",
+    "Coconut scraper",
+    "Kukur kelapa",
+    "Hand crank",
+    "Merchant equipment",
+    "Malaysia",
+    "Singapore"
+  ],
+  "status": "validated",
+  "created": "2026-11-23",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Original Blender mesh, real linked local native animation tracks and staged studio render; no external models or textures.",
+  "source": "wet-market-coconut-scraper.blend",
+  "generator": "generate.py",
+  "export": "exports/wet-market-coconut-scraper.glb",
+  "preview": "previews/studio.webp",
+  "rights": "Original project asset; redistribution terms for public downloads are not specified.",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.82,
+      0.51,
+      1
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        7,
+        5
+      ],
+      "hemisphereIntensity": 1.65,
+      "directionalIntensity": 1.9
+    }
+  },
+  "animation": {
+    "name": "KELAPA_CRANK_TURN",
+    "duration_seconds": 2,
+    "fps": 24,
+    "axis_gltf": "+X before signed rotation",
+    "crank": {
+      "node": "KELAPA_CRANK_HANDLE",
+      "anchor_m": [
+        0.214,
+        0.235,
+        -0.074
+      ],
+      "end_degrees": 270
+    },
+    "rotor": {
+      "node": "KELAPA_SCRAPER_ROTOR",
+      "anchor_m": [
+        0.097,
+        0.373,
+        -0.074
+      ],
+      "end_degrees": -540
+    }
+  },
+  "accuracy_notes": "Fictional SG/MY market-inspired prop; the shield and rounded rotor are illustrative, not an actual implement or safety system. No food processing, spillage, instructions, audio, payment or machinery certification.",
+  "attribution": [
+    {
+      "credit": "Original geometry, Blender bundled Bfont, materials and real Blender-rendered images."
+    },
+    {
+      "credit": "Department of Museums Malaysia exhibition, cultural object context only",
+      "url": "https://www.jmm.gov.my/en/coconut-grater-exhibition"
+    }
+  ],
+  "metrics": {
+    "glb_bytes": 232892,
+    "glb_sha256": "ab94d4595fa12a594b0f5c2d8ed5e101b8fd6d77c6df69cbd3ae3b1b9136b99d",
+    "source_sha256": "779d74c78ff6aab4c4661ac2bf4bd60eebf94d17e0554a746103a745e7c8f65c",
+    "preview_sha256": "3c0b316f1e92c0f9cf551c749a01df02d2976e8027355eabe426198fc4a73148",
+    "preview_bytes": 9310,
+    "triangles": 6766,
+    "vertices": 6844,
+    "meshes": 27,
+    "materials": 13,
+    "draw_calls": 27,
+    "animations": 1,
+    "maximum_texture_dimension_px": 0,
+    "dimensions_gltf_xyz_m": [
+      1.274,
+      0.50129,
+      0.796
+    ],
+    "illustrative_axle_centres_spacing_m": 0.138
+  }
+}
