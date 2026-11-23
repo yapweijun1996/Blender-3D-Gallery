@@ -12,6 +12,8 @@ Plan and per-milestone status: [sg-open-world-plan.md](sg-open-world-plan.md). O
 - Near an MRT entrance (red pillar with the station sign) a button or E goes down to the station page.
 - Damage: smoke from 40 percent, the engine stalls at 95 percent until you right the car.
 
+Ordinary AI traffic follows the mapped motor access. A destination-only, private or permit road can still appear on the minimap and support the player’s vehicle while ambient cars choose public routes. After building, run `npm run test:world-ambient-access` to watch the junction and drive the side road with keyboard controls. [Access rules and counts](verification/sg-world-remaining-passages.md#ambient-traffic-access).
+
 ### Raffles Boulevard underpass
 
 On the ordinary map, drive east on Raffles Boulevard through the covered section beside Millenia Walk. The five-lane road and the north footway share the simulated surface datum. The mapped soffit is 4.5 m above that datum and the roof top is 6 m. The connecting service drive leads toward destination-access roads and stays outside the through-traffic network. The AI reserves the left lane for buses throughout the simulation. The source records Monday–Saturday, 07:30–23:00.

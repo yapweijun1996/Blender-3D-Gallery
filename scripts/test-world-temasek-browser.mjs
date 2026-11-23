@@ -4,6 +4,7 @@ import { runWorldPassageBrowser } from "./world-passage-browser-utils.mjs";
 const common = {
   env: "TEMASEK_PASSAGE",
   tile,
+  fixedDriveClock: true,
   requiredLaneCount: 2,
   requiredWidth: 6.8,
   neighbors: ["753843011:0"],

@@ -8,7 +8,7 @@ import { nearestTunnelSection } from "../src/world/tunnel-prototype/geometry.js"
 import { serveBuild } from "./browser-test-utils.mjs";
 
 export async function runWorldPassageBrowser({ env, tile, approach, covered, departure, neighbors, excludedServices, roof,
-  direction, approachLead, requiredLaneCount, requiredWidth = 17, liveTraffic }) {
+  direction, approachLead, requiredLaneCount, requiredWidth = 17, liveTraffic, fixedDriveClock = false }) {
   const ids = [...approach, ...covered, ...departure];
   const roads = new Map(tile.roads.map(road => [road.id, road]));
   const tileKey = `${tile.x}_${tile.z}`;
@@ -206,11 +206,16 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
 
   async function drive(page, stage, before, expectWall) {
     let farthest = 0, minimumWheels = 4, floorMin = before.y, floorMax = before.y;
-    let under = 0, maxLateral = 0;
+    let under = 0, maxLateral = 0, elapsed = 0, clockPaused = false;
+    const unsupported = [];
     const input = await driveControls(page, stage);
-    const started = performance.now();
     try {
-      while (performance.now() - started < 25_000) {
+      if (fixedDriveClock) {
+        await page.clock.pauseAt(await stage.evaluate(() => Date.now() + 3000));
+        clockPaused = true;
+      }
+      const started = performance.now();
+      while ((clockPaused ? elapsed : performance.now() - started) < 25_000) {
         const state = await inspect(stage);
         const on = nearestTunnelSection(path, state);
         farthest = Math.max(farthest, on.s);
@@ -223,12 +228,16 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
         if (on.s >= entry && on.s <= exit) {
           under++;
           minimumWheels = Math.min(minimumWheels, state.groundedWheels);
+          if (state.groundedWheels < 4 && unsupported.length < 4) {
+            unsupported.push({ station: on.s, wheels: state.groundedWheels, y: state.y, speed: state.speed, damage: state.damage });
+          }
           floorMin = Math.min(floorMin, state.y);
           floorMax = Math.max(floorMax, state.y);
         }
         if (on.s > exit + 7) {
           assert.ok(!expectWall, "the baseline should block the same center lane");
-          assert.ok(under >= 8 && minimumWheels === 4, "all wheels remain on the floor between the two portals");
+          assert.ok(under >= 8 && minimumWheels === 4,
+            `all wheels remain on the floor between the two portals: ${JSON.stringify({ under, minimumWheels, unsupported })}`);
           assert.ok(Math.abs(state.y - before.y) < .12 && state.damage < .015 && maxLateral < 1.4,
             `the car exits on the same grade without damage: ${JSON.stringify({ state, maxLateral })}`);
           return { farthest, minimumWheels, floorMin, floorMax, under, maxLateral, damage: state.damage };
@@ -240,11 +249,20 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
         if (angle > .05) controls.push("left");
         else if (angle < -.05) controls.push("right");
         await input.set(controls);
-        await page.waitForTimeout(60);
+        if (clockPaused) {
+          // Advance the ordinary animation loop while the actual input events remain held.
+          await page.clock.runFor(60);
+          elapsed += 60;
+        } else await page.waitForTimeout(60);
       }
-      assert.fail(`vehicle failed to ${expectWall ? "reach the old wall" : "pass both portals"} near ${farthest.toFixed(2)}m: ${JSON.stringify(await inspect(stage))}`);
+      assert.fail(`vehicle failed to ${expectWall ? "reach the old wall" : "pass both portals"} near ${farthest.toFixed(2)}m: ${
+        JSON.stringify({ under, minimumWheels, unsupported, maxLateral, state: await inspect(stage) })}`);
     } finally {
-      await input.close();
+      try {
+        await input.close();
+      } finally {
+        if (clockPaused) await page.clock.resume();
+      }
     }
   }
 
@@ -316,6 +334,7 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
       const errors = [];
       page.on("pageerror", error => errors.push(error.message));
       page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
+      if (fixedDriveClock) await page.clock.install();
       await page.goto(`${url}?page=sg-world`, { waitUntil: "domcontentloaded" });
       const stage = page.locator("#sg-world-page .world-stage[data-state=ready]");
       await stage.waitFor({ timeout: 120_000 });

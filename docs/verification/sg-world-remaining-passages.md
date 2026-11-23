@@ -52,9 +52,25 @@ The two outside walks use a 0.55 m outward shift that tapers to zero over the fi
 
 Across both carriageways, 1,988 sampled positions matched the visible asphalt, physical road support and 5 m soffit. Two buses and two sedans passed in opposite directions with zero damage. All four vehicles had four wheels supported under the roof simultaneously for 276 simulation frames. Keyboard controls and emulated phone touch controls each cleared both exits with zero damage. Browser observations followed individual ambient vehicles from the passages onto their expected exits without changing lanes. [Previous northeast entrance](temasek-boulevard/previous-northeast-entry.webp) · [Open northeast entrance](temasek-boulevard/northeast-entry.webp) · [Open southwest entrance](temasek-boulevard/southwest-entry.webp).
 
+## Ambient traffic access
+
+Ordinary simulated vehicles use roads whose effective motor access is unspecified, `yes`, `designated` or `permissive`. They apply the same rule when spawning and choosing a turn, including reverse travel on a two-way road. A tile reload also invalidates a cached turn when the destination becomes restricted. Mapped geometry still supplies the player’s road surface, minimap, signals, street furniture and mission distance calculations. This simulation uses the access value stored on each road. It does not interpret conditional schedules or grant real-world travel permission.
+
+Across all 830 tiles, the shared road graph contains 11,662 edges. The ambient rule excludes 958 of them, including 57 that otherwise meet the spawn length and road class requirements. Of the 450 passage ways with private, destination or permit access, 24 have segments in the shared graph (27 edges). All 27 previously allowed ambient traffic. All 27 are now excluded from ambient route selection. A deterministic game test also checks an approach with both a public exit and a destination-access driveway, where the old vehicle turned into the driveway.
+
+| Effective access outside the ambient policy | Edges in the shared graph | Otherwise meet the spawn criteria |
+| --- | ---: | ---: |
+| Private | 855 | 47 |
+| Destination | 82 | 2 |
+| Permit | 19 | 7 |
+| Customers | 1 | 0 |
+| Restricted | 1 | 1 |
+
 ## Next assessments
 
-Of the 450 passage ways with explicit restrictions, the ordinary ambient traffic graph currently includes 24 ways on 27 edges (22 private ways and two destination-access ways). One of those ways qualifies for spawning by road class and length. This provides a reproducible routing issue independent of the unknown road elevations. The source counts below use the full extract and the traffic graph over all tracked tiles.
+Raffles Link `532351088:0` is a 6.46 m one-way building passage in tile `-3_-4`. Its exit connects to a 2.41 m section of the same street. Building `620812487` has no mapped height or soffit. Indoor pedestrian bridge `460302684:0` crosses above the road on mapped level 1, also without a metric elevation. The ordinary map still has a solid wall. In a local prototype, a 4.0 m wide opening and an assumed 4.5 m soffit let a sedan, bus and lorry pass without damage. Keeping the sides solid and supporting the upper pedestrian bridge remain acceptance criteria for a release.
+
+Kirk Terrace `1343676204:0` straddles two tiles and connects to a mapped private road at one end. These two cases need separate geometry and access decisions.
 
 Defer Kheam Hock Road `659688751:0`. Its two-way 40.32 m tunnel links `97408974:0` and `659688752:0` in tile `-19_-21`, and its source also carries `maxheight=4.5`. The current game meshes for the two Pan-Island Expressway crossings, `159090940:0` and `627656467:0`, put the rendered underside at about Y = −0.90 m at both centerline intersections. Their two-vertex profiles sample the bridge ramps at the ends of the 26.60 m and 27.13 m edges. A verified or explicitly simulated pair of upper-deck and lower-road profiles is needed before using this corridor.
 
@@ -68,7 +84,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { buildTileFiles } from './scripts/world/build-tiles.mjs';
-import { buildTrafficGraph } from './src/world/traffic.js';
+import { allowsAmbientTraffic, buildTrafficGraph } from './src/world/traffic.js';
 
 const bytes = readFileSync(process.argv[2]);
 assert.equal(createHash('sha256').update(bytes).digest('hex'),
@@ -114,10 +130,14 @@ for (const [id, road] of ways) {
 }
 console.table(Object.fromEntries(counts));
 const graph = buildTrafficGraph(tiles);
-const edges = [...graph.edges.values()].filter(edge => restricted.has(edgeWays.get(edge.id)));
+const allEdges = [...graph.edges.values()];
+const passageEdges = allEdges.filter(edge => restricted.has(edgeWays.get(edge.id)));
+const excluded = allEdges.filter(edge => !allowsAmbientTraffic(edge));
+const spawnClassAndLength = edge => edge.length > 25 && edge.class !== 'service' && edge.class !== 'footway';
 const wayCount = list => new Set(list.map(edge => edgeWays.get(edge.id))).size;
-console.log({ restricted: restricted.size, service, other,
-  restrictedRoutableWays: wayCount(edges), restrictedRoutableEdges: edges.length,
-  restrictedSpawnWays: wayCount(edges.filter(edge => edge.length > 25 && edge.class !== 'service' && edge.class !== 'footway')) });
+console.log({ restricted: restricted.size, service, other, sharedEdges: allEdges.length,
+  excluded: excluded.length, otherwiseSpawnEligible: excluded.filter(spawnClassAndLength).length,
+  restrictedPassageWaysInGraph: wayCount(passageEdges), restrictedPassageEdgesInGraph: passageEdges.length,
+  ambientEligibleRestrictedPassageEdges: passageEdges.filter(allowsAmbientTraffic).length });
 NODE
 ```
