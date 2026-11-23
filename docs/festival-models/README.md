@@ -1,8 +1,8 @@
 # Singapore and Malaysia Festival Models
 
-Status: F01–F05 (Christmas tree, gift boxes, New Year clock, lion dance head
-and kumquat tree) are implemented and locally verified; the remaining backlog
-is proposed.
+Status: F01–F06 (Christmas tree, gift boxes, New Year clock, lion dance head,
+kumquat tree and rabbit lantern) are implemented and locally verified. The
+remaining backlog is proposed.
 A local result alone does not establish publication. The execution checklist
 and order live in
 [task.md](../../task.md#singapore-and-malaysia-festival-models--2026-11-15).
@@ -40,7 +40,7 @@ on 2026-11-15. Catalog presence is not a fresh visual or quality assessment.
 | Chinese New Year | `chinese-new-year-kumquat-tree` (F05), `chinese-new-year-lion-dance-head` (F04), `chinese-new-year-lantern-arch`, `chinese-new-year-mandarin-orange-basket`, `chinese-new-year-red-packet-display` |
 | Hari Raya | `hari-raya-ketupat-decoration`, `hari-raya-pelita-lamp`, `hari-raya-bazaar-stall` |
 | Deepavali | `deepavali-oil-lamp`, `deepavali-kolam-floor-pattern`, `deepavali-festive-arch` |
-| Mid-Autumn | `mid-autumn-lantern-display`, `mooncake-gift-box` |
+| Mid-Autumn | `mid-autumn-lantern-display`, `mooncake-gift-box`, `mid-autumn-rabbit-lantern` (F06) |
 | National Day | `national-day-flag-pole`, `singapore-flag-banner`, `malaysia-flag-banner` |
 
 At the initial catalog inspection, no Christmas or Gregorian New Year model was
@@ -51,7 +51,7 @@ duplicates; the inventory may change.
 ## Proposed model backlog
 
 Except for the implemented Christmas tree, gift boxes, countdown clock, lion
-dance head and kumquat tree, the rows below are ideas. Work sequentially from
+dance head, kumquat tree and rabbit lantern, the rows below are ideas. Work sequentially from
 the task tracker; later items and exact designs may be reprioritized.
 
 | Theme | Proposed models | Design notes |
@@ -61,7 +61,7 @@ the task tracker; later items and exact designs may be reprioritized.
 | Chinese New Year | Lion dance head; kumquat tree; lion dance drum; reunion dinner table | Use existing lantern, orange and red-packet assets where appropriate instead of recreating them. |
 | Hari Raya Aidilfitri | Traditional festive snack tray; open-house table setting; festive light display | Complement the existing ketupat, pelita and bazaar models. |
 | Deepavali | Sweet box; flower garland; festive street-light display | Complement the existing lamp, kolam and arch models. |
-| Mid-Autumn Festival | Rabbit lantern; tea set; mooncake-making tools | Complement the existing lantern display and mooncake box. |
+| Mid-Autumn Festival | Tea set; mooncake-making tools | Complement the lantern display, mooncake box and rabbit lantern. |
 | Singapore and Malaysia National Day | Community celebration stage; decorative bunting; festive light display | Treat country-specific designs separately and verify any national-symbol requirements before use. |
 | Sabah Kaamatan | Harvest-themed display informed by Sabah references | Research the specific community, objects and context before design; do not treat a generic basket as an authentic artifact. |
 | Sarawak Gawai | Harvest-themed display informed by Sarawak references | Research separately from Kaamatan and consult relevant sources or community input where feasible. |
@@ -88,5 +88,5 @@ Complete and verify one model before starting the next:
 
 Use existing gallery behavior: lightweight static cards and lazy 3D loading. Do
 not claim an asset is interactive or production-ready until its actual export
-and browser behavior have been verified. F01–F05 are locally verified;
+and browser behavior have been verified. F01–F06 are locally verified;
 publication requires separate confirmation.
