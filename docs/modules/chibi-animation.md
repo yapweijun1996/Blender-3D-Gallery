@@ -229,23 +229,16 @@ clamp, and (cached per clip) samples the model at 9 times to build a `Box3` enve
 0.05 s) and returns whether still running. `reset()` and `dispose()` clear state / mixer / toolbar. No test.
 
 ### 4.3 `src/visitor-v2/demo.js` and `src/visitor-v3/demo.js` - `createVisitorDemo({ model, clips, container, invalidate })`
-Near-identical files (v3 imports `../visitor-v2/style.css` and its own `customization.js`). Each builds a `<section class="visitor-v2-controls">`
-with selects for appearance (via `createVisitorCustomization(model)` from `models/gjh-mall-visitor-v2/customization.js` or
-`models/gjh-visitor-v3/customization.js`) and an animation select. v2 clips: idle, walk, sprint, sit, stand, pickup, place, push, elevator;
-v3 clips: idle, walk, run, turn_left, turn_right, sit_down, stand_up, pick_up, carry, wave, point, push_cart. `play(name)` throws
-`Visitor animation missing` for an absent clip; looping set (idle/walk/run|sprint/carry|push) is `LoopRepeat`, the rest `LoopOnce` + clamp;
-`playing` is false under reduced motion (a single frame is shown via `mixer.update(0)`). `update(dt)` advances (clamped 0.05 s) and
-turns off when the action pauses. `reset()` restores defaults and plays idle. `dispose()` stops mixer, `uncacheRoot`, restores materials via
-`custom.dispose()`, removes the toolbar. Customization (`apply`) validates enums and throws `TypeError` for invalid values; it clones hair/brow/skin
-materials per instance and toggles mesh visibility by `V3_` name prefix. The file header comment states these controls demonstrate authored clips and
-cosmetics only, not mall item/cart/seat/elevator logic. Storage: none.
-Known gap: the two demo files share the same scaffold (mount, toolbar, mixer, loop and dispose logic) but differ in option lists, clip names and loop sets (about 35 diff lines of ~77); a scaffold fix must be applied twice. `demo.js` itself is untested.
+Both lazy adapters configure `src/visitor-demo.js` with their own model customization module, ordered appearance and accessory choices, and clips. The shared controller owns the toolbar, mixer, reset and disposal. v2 loops idle, walk, sprint and push. v3 loops idle, walk, run, carry and push_cart. The other actions play once and clamp. Under reduced motion, selecting an action shows its starting pose without playback.
+
+Reset uses the initial appearance from the model's customization module and plays idle. Initialization finishes before the toolbar is attached. If initialization fails, the controller releases its mixer and restores original materials. These controls demonstrate authored clips and cosmetics. They have no persistent state.
+
+After building, run `node scripts/test-visitor-browser.mjs` for both actual GLBs, including option order and defaults, rendered appearance, looping and one-shot actions, reset, cleanup, and retry after an injected missing idle clip.
 
 ### 4.4 `src/fish-motion.js` - `createFishMotion({ model, clips, container, invalidate })`
 Plays `Swim_Loop` (or first clip; throws if none) as `LoopRepeat`. Owns a pause/play button (inline-styled, `data-fish-playback`) and a
 reduced-motion `matchMedia` listener. `update()` self-times with `performance.now()` (delta clamped 0.05 s; `suspend()` zeroes the clock
-after the tab is hidden); returns `playing`. `dispose()` removes listener, mixer, skeletons, toolbar. Imported statically by `viewer.js` (every
-viewer pays for it), dispatched by `collectionId`. No dedicated test.
+after the tab is hidden); returns `playing`. `dispose()` removes listener, mixer, skeletons, toolbar. The viewer loads it on demand for Singapore Fish. The viewer context cleanup suite covers opening and closing fish models.
 
 ### 4.5 `src/building-loop.js` + `src/sands-water.js` - Marina Bay Sands loop
 `createBuildingLoop({ model, clip, container, invalidate })`: requires `gltf.animations[0]` (the viewer passes it); builds
@@ -283,10 +276,6 @@ Rig contract the bodies and modules must satisfy (enforced by thrown errors): Mi
    against synthetic manifests only, not against real GLBs. If the fallback `buildCharacter(previous.body)` inside `switchBody`'s catch also fails, the
    error propagates out of an event handler with no user message.
 5. Default prop sockets and jar timings are constants copied from untracked `output/modular-chibi-parts/*/attachment.json` files.
-6. `chibi-motion/page.js`, `chibi-rig-controls.js`, `tripo-animation-preview.js`, `fish-motion.js`, `building-loop.js`, `sands-water.js` and both visitor
-   `demo.js` files have no tests; `tests/gjh-visitor-v2|v3.test.mjs` test only the exported GLB (validator, draw calls, triangles, bones, clip names,
-   shoe-floor contact for locomotion clips, finite transforms) and `customization.js` (independent, reversible, rejects invalid values). `scripts/check-i18n.mjs` lists
-   these files only for i18n key scanning.
-7. Duplication: visitor v2/v3 demos; the three mixer-based add-ons each reimplement reduced-motion handling; `chibi-motion` and `chibi-dressup` each have their own
-   renderer/dispose boilerplate.
+6. The Node tests for visitor v2 and v3 check their GLBs and customization modules. The browser test covers the shared visitor controls. Other add-ons still have uneven direct test coverage.
+7. The remaining mixer-based add-ons each implement reduced-motion handling. `chibi-motion` and `chibi-dressup` each own their renderer and disposal code.
 8. Resolved. `fish-motion.js` loads on demand when a fish viewer opens.

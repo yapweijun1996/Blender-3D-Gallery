@@ -20,6 +20,10 @@ glTF +Y up, metres, floor Y=0, front +Z, 1.78 m. MPFB `game_engine` skeleton (53
 
 Call `createVisitorCustomization(scene)` from `customization.js` before display (hair wavy/short, hair colour, hoodie on/off, skin tone, backpack, badge, watch; `dispose()` when discarded).
 
+The gallery uses a shared preview controller with separate v2 and v3 choices and
+clip lists. After building the gallery, run `node scripts/test-visitor-browser.mjs`
+to check both previews with their exported GLBs.
+
 ## Layout
 
 `generate.py` (body, clothing, hair, accessories), `materials.py`, `animations.py`, `export.py`, `validate.py` (re-imports the GLB in Blender). Node tests: `tests/gjh-visitor-v3.test.mjs`. Evidence images in `previews/` and `previews/poses/`.

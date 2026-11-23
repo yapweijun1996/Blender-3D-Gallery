@@ -19,6 +19,11 @@ Run the asset and customization checks from the gallery repository:
 ```sh
 node --test tests/gjh-visitor-v2.test.mjs
 npm run build
+node scripts/test-visitor-browser.mjs
 ```
 
-The test samples shoe height during locomotion and checks the exported container, skeleton, clips and customization state; it does not prove animation quality, interaction correctness or device performance. Rights and provenance are in `metadata.json`.
+The asset test checks shoe height, the skeleton, clips and customization state.
+The browser test exercises the shared v2 and v3 preview controls with the actual
+exports, including resets and recovery from a missing idle clip. These checks
+cover gallery previews; mall interaction and physical device performance have
+separate acceptance criteria. Rights and provenance are in `metadata.json`.
