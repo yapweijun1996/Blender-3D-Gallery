@@ -392,7 +392,7 @@ This is the detailed planning checklist requested for building a complete virtua
 - [x] [电脑店](../../mall-modules-preview/README.md#computer-shop)（含实物演示台与陈列柜）
 - [ ] 手机店
 - [ ] 电子产品店
-- [ ] 面包店
+- [x] [面包店](../../mall-modules-preview/README.md#bakery-shop)（取餐区与后方服务通道）
 - [ ] 蛋糕店
 - [ ] 咖啡店
 - [ ] 餐厅
@@ -483,7 +483,7 @@ This is the detailed planning checklist requested for building a complete virtua
 - [ ] 玻璃面包展示柜
 - [ ] 面包展示架
 - [ ] 面包托盘
-- [ ] 夹子
+- [x] [面包夹](../../models/mall-bakery-serving-tongs/README.md)
 - [ ] 面包纸袋
 - [ ] 面包篮
 - [ ] 蛋糕冷藏柜

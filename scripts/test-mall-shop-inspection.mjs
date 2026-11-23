@@ -1,13 +1,15 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
+import { bakeryPaths } from '../mall-modules-preview/bakery-shop.js';
 import { computerPaths } from '../mall-modules-preview/computer-shop.js';
 import { beautyPaths } from '../mall-modules-preview/pharmacy-beauty.js';
 import { roomAssetPaths } from '../mall-modules-preview/room-layout.js';
 import { launchOptions, recordConsumedGlbHashes } from './browser-test-utils.mjs';
 
 const shops = {
+  'bakery-shop': { paths: bakeryPaths, label: 'Inspect serving tongs', dependency: bakeryPaths.servingTongs },
   'pharmacy-beauty': { paths: beautyPaths, label: 'Inspect tester bar', dependency: beautyPaths.testerBar },
   'computer-shop': { paths: computerPaths, label: 'Inspect demo laptop', dependency: computerPaths.securityTether },
 };
@@ -51,10 +53,20 @@ try {
     const canvas = page.locator('#canvas-wrap canvas');
     const layouts = page.getByRole('combobox', { name: 'Assembly' });
     const reset = page.getByRole('button', { name: 'Reset camera view' });
+    const protocol = await page.context().newCDPSession(page);
     async function shot(name) {
+      await canvas.evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }));
       await rendered(page);
-      const path = process.env.MALL_GRID_SHOTS && process.env.MALL_GRID_SHOTS + '/' + id + '-' + name + '-' + width + '.png';
-      const image = await canvas.screenshot({ path: path || undefined, timeout: 90000 });
+      const clip = await canvas.evaluate(element => {
+        const rect = element.getBoundingClientRect();
+        return { x: Math.round(rect.x + scrollX), y: Math.round(rect.y + scrollY),
+          width: Math.floor(rect.width), height: Math.floor(rect.height), scale: 1 };
+      });
+      const { data } = await protocol.send('Page.captureScreenshot', { format: 'png', clip, captureBeyondViewport: true });
+      if (process.env.MALL_GRID_SHOTS) {
+        const path = process.env.MALL_GRID_SHOTS + '/' + id + '-' + name + '-' + width + '.png';
+        await writeFile(path, Buffer.from(data, 'base64'));
+      }
       // Scroll position can change the outermost antialiased border pixel.
       // Compare the rendered interior directly, including the inspected display.
       return page.evaluate(async encoded => {
@@ -66,7 +78,7 @@ try {
         surface.height = image.height - 4;
         surface.getContext('2d').drawImage(image, -2, -2);
         return surface.toDataURL();
-      }, image.toString('base64'));
+      }, data);
     }
     const overview = await shot('overview');
     if (touch) await inspect.tap();

@@ -80,6 +80,14 @@ The 19.24 m visitor loop includes 775 checked positions. Both ends of the tether
 
 Run `node --test tests/mall-computer-shop.test.mjs` to check the mounted fixtures, lid motion, display sightlines and both aisles. With the local server running, `MALL_PREVIEW_SITE=http://127.0.0.1:5173/ node scripts/test-mall-shop-inspection.mjs computer-shop` verifies ten exact GLBs, keyboard and touch inspection, reset, the roof toggle and recovery from a failed tether download.
 
+### Bakery shop
+
+Choose **Bakery shop** or open `/mall-modules-preview/?view=bakery-shop`. The [toast rack](../models/kopitiam-toast-display/README.md) stands on the [service counter](../models/mall-coffee-counter/README.md). **Inspect serving tongs** shows the [tongs](../models/mall-bakery-serving-tongs/README.md) resting across the front strip of the upper tray. The spring bend and both jaws touch the tray, with 19.35 mm to the nearest slice and 20.35 mm to the front edge. [Shop cutaway](bakery-shop.png) · [Pickup tray close-up](bakery-shop-tongs.png)
+
+The 11.08 m customer route visits the bread and the glazed [display cabinet](../models/food-display-cabinet/README.md). A separate 16.30 m round trip takes staff behind the counter to its left rear service opening. The preview holds the moving glass pane at the open position from its original 2.5 s clip. The customer-facing glass and the fixed rear pane stay in their original positions.
+
+Run `node --test tests/mall-bakery-shop.test.mjs` to check both routes, verify the tray contacts and compare the opening with the native cabinet animation. With the local server running, `MALL_PREVIEW_SITE=http://127.0.0.1:5173/ node scripts/test-mall-shop-inspection.mjs bakery-shop` checks all ten loaded GLBs and the close-up controls.
+
 ## Furnished corridor
 
 The wall selection is the new 1.2 m solid wall; the corridor also retains the existing glass partitions for the shopfronts. The ceiling is intentionally a partial cutaway for visibility. This visual arrangement is not a construction or safety specification; see the individual asset READMEs and `docs/verification/p0-assembly/README.md` for actual dimensions, interfaces, prior checks, and rights. The preview does not change or export source assets, and it is not part of the production Gallery build.

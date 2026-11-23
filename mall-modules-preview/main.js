@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { assembleBakeryShop, bakeryPaths } from './bakery-shop.js';
 import { assembleComputerShop, computerPaths } from './computer-shop.js';
 import { assemblePharmacyBeauty, beautyPaths } from './pharmacy-beauty.js';
 import { assembleHomeFurnishings, furnishingPaths } from './home-furnishings.js';
@@ -117,6 +118,9 @@ if (renderer) {
       inputs: Object.entries(roomAssetPaths).map(([id, path]) => ({ id, path })),
       build: sources => shopScene(sources, 'enclosed-shop', assembleRoom),
     },
+    'bakery-shop': furnishedShop('bakery-shop', 'Bakery shop',
+      'Inspect the serving tongs and toast trays, or walk around the glazed pastry cabinet.',
+      bakeryPaths, assembleBakeryShop),
     'computer-shop': furnishedShop('computer-shop', 'Computer shop',
       'Walk around the demo table, inspect the tethered laptop or browse the electronics shelf.',
       computerPaths, assembleComputerShop),
