@@ -16,7 +16,7 @@ Plan and per-milestone status: [sg-open-world-plan.md](sg-open-world-plan.md). O
 
 On the ordinary map, drive east on Raffles Boulevard through the covered section beside Millenia Walk. The five-lane road and the north footway share the simulated surface datum. The mapped soffit is 4.5 m above that datum and the roof top is 6 m. The connecting service drive leads toward destination-access roads and stays outside the through-traffic network. The AI reserves the left lane for buses throughout the simulation. The source records Monday–Saturday, 07:30–23:00.
 
-Run `npm run test:world` for the source and tile checks, and `npm run build:deploy && npm run test:raffles-passage` for the ordinary-map browser drive. The [passage assessment](verification/sg-world-remaining-passages.md#raffles-boulevard) records the footprint, vehicle clearance and limits of the elevation data.
+Run `npm run test:world` for the source and tile checks, and `npm run build:deploy && npm run test:raffles-passage` for the desktop drive. Use `RAFFLES_PASSAGE_PROFILE=mobile npm run test:raffles-passage` to repeat the drive with the touch controls. The [passage assessment](verification/sg-world-remaining-passages.md#raffles-boulevard) records the footprint, vehicle clearance and limits of the elevation data.
 
 ### Fort Canning Link tunnel prototype
 
