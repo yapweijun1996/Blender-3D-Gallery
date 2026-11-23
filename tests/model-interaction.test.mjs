@@ -16,6 +16,8 @@ test("only allowlisted models and the authored Singapore fish receive interactiv
     "interactive-shopping-cart": "cart",
     ...(collections.some(({ assets }) => assets.some(({ id }) => id === "mall-ride-hail-pickup-bay"))
       ? { "mall-ride-hail-pickup-bay": "pickup-bay" } : {}),
+    ...(collections.some(({ assets }) => assets.some(({ id }) => id === "loh-hei-yee-sang-platter"))
+      ? { "loh-hei-yee-sang-platter": "loh-hei" } : {}),
     "gjh-mall-visitor-v2": "visitor-v2",
     "gjh-visitor-v3": "visitor-v3",
     ...Object.fromEntries(species.map(([slug]) => [`fish-${slug}`, "fish"])),

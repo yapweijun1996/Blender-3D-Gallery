@@ -23,6 +23,7 @@ export default async function createViewer(
   let fishMotion;
   let cartDemo;
   let pickupDemo;
+  let lohHeiDemo;
   let visitorDemo;
   let animationPreview;
   let buildingLoop;
@@ -161,6 +162,7 @@ export default async function createViewer(
     fishMotion?.dispose();
     cartDemo?.dispose();
     pickupDemo?.dispose();
+    lohHeiDemo?.dispose();
     visitorDemo?.dispose();
     animationPreview?.dispose();
     buildingLoop?.dispose();
@@ -305,12 +307,30 @@ export default async function createViewer(
         },
       });
     }
+    if (interaction === "loh-hei") {
+      try {
+        const { default: createLohHeiDemo } = await import("./loh-hei/demo.js");
+        if (!disposed && !signal.aborted) {
+          lohHeiDemo = createLohHeiDemo({
+            model, clips: gltf.animations, container, invalidate,
+            onPlay(bounds) {
+              lastDraw = 0;
+              const viewDirection = camera.position.clone().sub(controls.target).normalize();
+              frameObject(model, viewDirection, bounds);
+            },
+          });
+        }
+      } catch {
+        // Optional animation must not take down the ordinary model viewer.
+      }
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+    }
     frameForResize = () => {
       if (!model) return;
       const viewDirection = camera.position.clone().sub(controls.target);
       if (viewDirection.lengthSq() === 0) viewDirection.copy(direction);
       else viewDirection.normalize();
-      frameObject(cartDemo?.group ?? model, viewDirection, animationPreview?.bounds ?? (buildingLoop && bounds));
+      frameObject(cartDemo?.group ?? model, viewDirection, animationPreview?.bounds ?? lohHeiDemo?.bounds ?? (buildingLoop && bounds));
     };
     const frameVehicle = (viewDirection, target = model) => {
       // Include open doors in the bounds so a preset never cuts them off.
@@ -320,6 +340,7 @@ export default async function createViewer(
       clearPreset();
       cartDemo?.reset();
       pickupDemo?.reset();
+      lohHeiDemo?.reset();
       visitorDemo?.reset();
       animationPreview?.reset();
       chibiRig?.reset();
@@ -429,6 +450,7 @@ export default async function createViewer(
       const active = cartDemo?.update(lastDraw ? (now - lastDraw) / 1000 : 0);
       const elapsed = lastDraw ? (now - lastDraw) / 1000 : 0;
       const pickupActive = pickupDemo?.update(elapsed);
+      const lohHeiActive = lohHeiDemo?.update(elapsed);
       const visitorActive = visitorDemo?.update(elapsed);
       const animationActive = animationPreview?.update(elapsed);
       const buildingActive = buildingLoop?.update(elapsed);
@@ -436,7 +458,7 @@ export default async function createViewer(
       const fishActive = fishMotion?.update();
       const changed = controls.update();
       renderer.render(scene, camera);
-      if (changed || active || pickupActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
+      if (changed || active || pickupActive || lohHeiActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
     };
     invalidate();
     return { reset, dispose, setView };
