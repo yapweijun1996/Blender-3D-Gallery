@@ -233,6 +233,8 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   }
 
   // Streaming: tiles near the car are fetched and built one per frame; colliders only exist for the nearest ring.
+  const startTile = [0, 0];
+  let carTile = [...startTile];
   let graphDirty = true;
   const tiles = new Map(); // key -> { x, z, group, solids, colliders, instances }
   const pending = new Set();
@@ -307,12 +309,17 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
     physics, signal, scene, flatGround, tiles, fetchTile, makeEntry, setColliders, disposeEntry,
   });
   let loadChain = Promise.resolve();
+  const inLoadRadius = (x, z) => Math.max(Math.abs(x - carTile[0]), Math.abs(z - carTile[1])) <= LOAD_RADIUS;
   function request(x, z) {
     const key = tileKey(x, z);
     if (tiles.has(key) || pending.has(key) || failed.has(key) || !tileUrls[`../../models/world/tiles/${key}.json`]) return;
     pending.add(key);
     // A tile stays "pending" from the request until it is built or dropped, so it is never fetched twice while it waits in `ready`.
-    loadChain = loadChain.then(() => fetchTile(key, signal)).then(data => { if (data && !signal.aborted) ready.push({ x, z, data }); else pending.delete(key); })
+    loadChain = loadChain.then(() => {
+      // Recheck at dispatch because earlier requests can outlast the player's visit.
+      if (signal.aborted || !inLoadRadius(x, z)) return null;
+      return fetchTile(key, signal);
+    }).then(data => { if (data && !signal.aborted) ready.push({ x, z, data }); else pending.delete(key); })
       .catch(error => { pending.delete(key); if (!signal.aborted) { failed.add(key); console.error("World: tile failed", key, error); } });
   }
   const ready = [];
@@ -320,7 +327,7 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
     for (let dz = -LOAD_RADIUS; dz <= LOAD_RADIUS; dz++) for (let dx = -LOAD_RADIUS; dx <= LOAD_RADIUS; dx++) request(cx + dx, cz + dz);
     // Build one waiting tile per frame, skipping tiles the car has already left behind.
     let next = ready.shift();
-    while (next && Math.max(Math.abs(next.x - cx), Math.abs(next.z - cz)) > LOAD_RADIUS) { pending.delete(tileKey(next.x, next.z)); next = ready.shift(); }
+    while (next && !inLoadRadius(next.x, next.z)) { pending.delete(tileKey(next.x, next.z)); next = ready.shift(); }
     if (next) {
       pending.delete(tileKey(next.x, next.z));
       if (!tiles.has(tileKey(next.x, next.z))) buildEntry(next.x, next.z, next.data);
@@ -342,7 +349,6 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   }
 
   // Load the tiles around the start before the first frame, so the car does not spawn in the void.
-  const startTile = [0, 0];
   const startData = new Map();
   for (let dz = -1; dz <= 1; dz++) for (let dx = -1; dx <= 1; dx++) {
     const x = startTile[0] + dx, z = startTile[1] + dz;
@@ -785,7 +791,7 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
     onChange: ratio => { renderer.setPixelRatio(ratio); resize(); },
   });
   let fixedView = null;
-  let frame = 0, last = performance.now(), running = true, carTile = [startTile[0], startTile[1]], distanceDriven = 0, previousPosition = null;
+  let frame = 0, last = performance.now(), running = true, distanceDriven = 0, previousPosition = null;
   function affectedOccupants() {
     const result = [];
     for (const car of traffic.vehicles) {
