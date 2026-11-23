@@ -2,18 +2,22 @@ import { Vector3 } from 'three';
 import { createEscalatorPassenger } from './escalator-passenger.js';
 import { createEscalatorRoute } from './escalator-passenger-route.js';
 
-const phaseText = {
-  approach: 'Walking from the lower floor to the escalator',
-  board: 'Stepping onto the moving tread',
-  ride: 'Riding the tread to the upper floor',
-  alight: 'Stepping onto the upper landing',
-  depart: 'Walking across the upper floor joint',
-};
+function journeyPhases(from, to) {
+  return {
+    approach: `Walking from the ${from} floor to the escalator`,
+    board: `Stepping from the ${from} landing onto the moving tread`,
+    ride: `Riding the tread to the ${to} floor`,
+    alight: `Stepping onto the ${to} landing`,
+    depart: `Walking across the ${to} floor joint`,
+    arrived: `Arrived on the ${to} floor`,
+  };
+}
+
+const phaseText = { up: journeyPhases('lower', 'upper'), down: journeyPhases('upper', 'lower') };
 
 export function setupEscalatorRide({ loadAvatar, getMachine, focusPassenger, moveCamera }) {
-  const stepButton = document.querySelector('#ride-start');
-  const journeyButton = document.querySelector('#journey-start');
-  const starts = [stepButton, journeyButton];
+  const starts = document.querySelectorAll('#terminal-tools button[aria-controls="ride-controls"]');
+  const labels = new Map(Array.from(starts, button => [button, button.textContent]));
   const phase = document.querySelector('#ride-phase');
   const panel = document.querySelector('#ride-controls');
   const toggle = document.querySelector('#ride-toggle');
@@ -24,19 +28,19 @@ export function setupEscalatorRide({ loadAvatar, getMachine, focusPassenger, mov
   const lastPosition = new Vector3();
   const position = new Vector3();
   const movement = new Vector3();
-  let ride, journey = false, request = 0;
+  let ride, direction, request = 0;
 
   function refresh() {
     const verb = ride.playing ? 'Pause' : ride.time >= ride.duration ? 'Replay' : 'Play';
-    const label = verb + (journey ? ' journey' : ' ride');
+    const label = verb + (direction ? ' journey' : ' ride');
     if (toggle.textContent !== label) toggle.textContent = label;
-    const precision = journey ? 2 : 1;
+    const precision = direction ? 2 : 1;
     const time = ride.time.toFixed(precision);
     if (scrubber.valueAsNumber !== Number(time)) scrubber.value = time;
     const text = time + ' / ' + ride.duration.toFixed(precision) + ' s';
     if (readout.value !== text) readout.value = text;
     let description = 'Follow the passenger from the lower flat steps to the upper flat steps.';
-    if (journey) description = ride.time >= ride.duration ? 'Arrived on the upper floor' : phaseText[ride.phase];
+    if (direction) description = phaseText[direction][ride.time >= ride.duration ? 'arrived' : ride.phase];
     if (phase.textContent !== description) phase.textContent = description;
     ride.visual.getWorldPosition(position);
     moveCamera(movement.subVectors(position, lastPosition));
@@ -47,20 +51,20 @@ export function setupEscalatorRide({ loadAvatar, getMachine, focusPassenger, mov
     request++;
     ride?.dispose();
     ride = null;
+    direction = undefined;
     panel.hidden = true;
     for (const button of starts) {
       button.hidden = false;
       button.disabled = false;
+      button.textContent = labels.get(button);
     }
-    stepButton.textContent = 'Ride a step';
-    journeyButton.textContent = 'Travel between floors';
     message.textContent = '';
   }
   async function start(event) {
     const machine = getMachine();
     if (!machine || ride) return;
     const button = event.currentTarget;
-    journey = button === journeyButton;
+    direction = button.dataset.direction;
     const id = ++request;
     for (const option of starts) option.disabled = true;
     button.textContent = 'Loading passenger…';
@@ -68,13 +72,13 @@ export function setupEscalatorRide({ loadAvatar, getMachine, focusPassenger, mov
     try {
       const avatar = await loadAvatar();
       if (id !== request) return;
-      const create = journey ? createEscalatorRoute : createEscalatorPassenger;
-      ride = create({ machine, clips: machine.animations, avatar, avatarClips: avatar.animations });
+      const options = { machine, clips: machine.animations, avatar, avatarClips: avatar.animations };
+      ride = direction ? createEscalatorRoute(options, direction) : createEscalatorPassenger(options);
       ride.visual.getWorldPosition(lastPosition);
-      focusPassenger(ride.visual, journey);
+      focusPassenger(ride.visual, direction);
       // Hundredths expose the brief interval with one foot on each surface.
-      scrubber.step = journey ? '.01' : '.1';
-      scrubber.max = ride.duration.toFixed(journey ? 2 : 1);
+      scrubber.step = direction ? '.01' : '.1';
+      scrubber.max = ride.duration.toFixed(direction ? 2 : 1);
       panel.hidden = false;
       for (const option of starts) option.hidden = true;
       message.textContent = '';
@@ -84,8 +88,7 @@ export function setupEscalatorRide({ loadAvatar, getMachine, focusPassenger, mov
     } catch (error) {
       if (id !== request) return;
       close();
-      message.textContent = journey ? 'Unable to load the passenger. Select Travel between floors to retry.'
-        : 'Unable to load the passenger. Select Ride a step to retry.';
+      message.textContent = `Unable to load the passenger. Select ${labels.get(button)} to retry.`;
       console.error('Escalator passenger failed to load', error);
     }
   }

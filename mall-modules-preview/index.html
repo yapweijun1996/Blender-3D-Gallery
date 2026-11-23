@@ -35,18 +35,19 @@
         <div class="canvas-wrap" id="canvas-wrap"><div class="canvas-status" id="canvas-status" role="status" aria-live="polite">Preparing the 3D view…</div><div class="canvas-caption"><span>DRAG TO ORBIT</span><span class="caption-dot">·</span><span>SCROLL TO ZOOM</span></div>
           <button id="joystick" type="button" aria-label="Drag to move the visitor or use arrow keys" hidden><span></span></button>
         </div>
-        <div id="terminal-tools" hidden role="group" aria-label="Inspect an escalator landing">
+        <div id="terminal-tools" hidden role="group" aria-label="Escalator controls">
           <div class="walk-buttons">
             <button type="button" data-terminal="lower" aria-pressed="false">Inspect lower terminal</button>
             <button type="button" data-terminal="upper" aria-pressed="false">Inspect upper terminal</button>
-            <button type="button" id="journey-start">Travel between floors</button>
-            <button type="button" id="ride-start">Ride a step</button>
+            <button type="button" id="journey-start" data-direction="up" aria-controls="ride-controls">Travel up</button>
+            <button type="button" id="journey-down" data-direction="down" aria-controls="ride-controls">Travel down</button>
+            <button type="button" id="ride-start" aria-controls="ride-controls">Ride a step</button>
           </div>
           <div id="ride-controls" hidden>
             <p id="ride-phase" aria-live="polite"></p>
             <div class="walk-buttons">
               <button type="button" id="ride-toggle">Play ride</button>
-              <label for="ride-time">Ride position</label>
+              <label for="ride-time">Playback position (seconds)</label>
               <input type="range" id="ride-time" min="0" step="0.1" value="0">
               <output id="ride-readout" for="ride-time" aria-live="off"></output>
             </div>

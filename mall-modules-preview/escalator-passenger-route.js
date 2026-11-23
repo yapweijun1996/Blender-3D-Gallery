@@ -5,10 +5,19 @@ import { lowerBoarding, lowerDeckPoleZ, sampleLowerBoarding } from './escalator-
 import { sampleUpperExit, upperExit } from './escalator-upper-exit.js';
 import { createTerminalWalks } from './escalator-terminal-walks.js';
 
-export function createEscalatorRoute(options) {
-  return createPassengerTimeline(options, ({ visual, machine, step }) => {
+export function createEscalatorRoute(options, direction = 'up') {
+  if (direction !== 'up' && direction !== 'down')
+    throw new RangeError('Unknown escalator direction: ' + direction);
+  const descending = direction === 'down';
+  function createPath({ visual, machine, step }) {
     const rig = createContactRig(visual, machine);
-    const polesOnTread = rig.feet.map((foot) => foot.poleFromRoot.clone().add(treadStance));
+    const stance = treadStance.clone();
+    if (descending) {
+      // Turning the original avatar moves each sole pole across the root. Keep
+      // the poles on the same steel crests, preserving the neighbouring tread clearance.
+      stance.z -= 2 * rig.feet[0].poleFromRoot.z;
+    }
+    const polesOnTread = rig.feet.map((foot) => foot.poleFromRoot.clone().add(stance));
     const walk = createTerminalWalks(rig, machine, lowerDeckPoleZ, lowerBoarding.prepare);
     const stepInMachine = new Matrix4();
     const localStep = { localToWorld: (p) => p.applyMatrix4(stepInMachine) };
@@ -16,27 +25,32 @@ export function createEscalatorRoute(options) {
     function sample(nativeTime, carry) {
       if (nativeTime < lowerBoarding.prepare) {
         rig.pose(walk.lower.sample(nativeTime));
-        return 'approach';
+        return descending ? 'depart' : 'approach';
       }
       if (nativeTime > upperExit.finish) {
         rig.pose(walk.upper.sample(nativeTime));
-        return 'depart';
+        return descending ? 'approach' : 'depart';
       }
       if (nativeTime > lowerBoarding.finish && nativeTime < upperExit.prepare) {
         // AnimationMixer may skip rewriting a constant channel. Restore the
         // six native idle joints after an IK sample, including backwards seeks.
         rig.restoreLegs();
-        carry();
+        carry(stance);
         return 'ride';
       }
       stepInMachine.copy(machine.matrixWorld).invert().multiply(step.matrixWorld);
       if (nativeTime <= lowerBoarding.finish) {
         rig.pose(sampleLowerBoarding(nativeTime, localStep, polesOnTread));
-        return 'board';
+        return descending ? 'alight' : 'board';
       }
       rig.pose(sampleUpperExit(nativeTime, localStep, polesOnTread));
-      return 'alight';
+      return descending ? 'board' : 'alight';
     }
-    return { start: walk.lower.start, end: walk.upper.end, sample };
-  });
+    return {
+      start: descending ? walk.upper.end : walk.lower.start,
+      end: descending ? walk.lower.start : walk.upper.end,
+      sample,
+    };
+  }
+  return createPassengerTimeline(options, createPath, descending ? 0 : Math.PI);
 }

@@ -48,7 +48,7 @@ With the local Vite server running, `node scripts/test-mall-escalator-terminals.
 
 #### Ride a step
 
-Select **Ride a step** to load the GJH visitor on a lower flat step. The camera follows the passenger for 17.8 seconds while the 58 native steps and both handrail seams move. Use **Pause ride** or drag **Ride position** to inspect either shoe. With reduced motion enabled, the ride opens paused. Selecting a terminal or **Reset view** returns to the empty escalator in its original pose. [Passenger on the incline](escalator-passenger.webp)
+Select **Ride a step** to load the GJH visitor on a lower flat step. The camera follows the passenger for 17.8 seconds while the 58 native steps and both handrail seams move. Use **Pause ride** or drag the **Playback position (seconds)** slider to inspect either shoe. With reduced motion enabled, the ride opens paused. Selecting a terminal or **Reset view** returns to the empty escalator in its original pose. [Passenger on the incline](escalator-passenger.webp)
 
 The passenger faces uphill and stays on the same tread until it reaches the upper flat. The normal corridor visitor has a 1.12 m turning diameter. The narrowest measured opening between the handrail seams is 1.015 m. The fixed-facing pose keeps the original visitor and both shoes within the measured space. [Clearance and shoe support](../docs/verification/mall-escalator-passenger/README.md)
 
@@ -58,9 +58,12 @@ With the local preview running, `node scripts/test-mall-escalator-passenger.mjs`
 
 #### Travel between floors
 
-Select **Travel between floors** to follow the visitor from the lower terrazzo tile to the upper one. The 26.24-second journey crosses both metal floor joints. The passenger places one shoe on the moving tread while the other stays on the lower landing, then reverses that handoff on the upper landing. The viewer names each phase as it plays. Pause or use **Ride position** to inspect either transfer. The last position places both shoes on the upper floor. [Route measurements and reproduction](../docs/verification/mall-escalator-passenger/journey.md)
+Choose **Travel up** to start on the lower terrazzo tile or **Travel down** to start on the upper one. The visitor faces the direction of travel and crosses both metal floor joints. Each trip takes 26.24 seconds. Pause and use the slider’s arrow keys to move by 0.01 s. [Route measurements and reproduction](../docs/verification/mall-escalator-passenger/journey.md)
 
-The slider's arrow keys move by 0.01 s. Both support surfaces are visible at 3.73 s below and 21.80 s above. [Boarding](escalator-boarding.webp) · [Stepping off](escalator-alighting.webp)
+| Journey | One shoe on the landing and one on the moving tread |
+| --- | --- |
+| Travel up | Board at 3.73 s on the lower landing. Step off at 21.80 s on the upper landing. [Boarding](escalator-boarding.webp) · [Stepping off](escalator-alighting.webp) |
+| Travel down | Board at 4.28 s on the upper landing. Step off at 22.34 s on the lower landing. [Boarding](escalator-down-boarding.webp) · [Stepping off](escalator-down-alighting.webp) |
 
 ### Full-depth floor edging
 

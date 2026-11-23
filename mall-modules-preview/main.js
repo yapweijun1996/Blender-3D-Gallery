@@ -13,7 +13,7 @@ import { arrival, assembleCorridor, corridorAssetPaths } from './corridor-layout
 import { shellLayout } from './shell-layout.js';
 import { assembleCornerTileFloor, assembleFinishedFloorEdge, cornerFloorPath, floorEdgePaths } from './floor-edge.js';
 import { assembleFloorTransition, floorTransitionPaths } from './floor-transition.js';
-import { assembleEscalatorTerminals, escalatorTerminalPaths, journeyView, passengerView } from './escalator-terminal.js';
+import { assembleEscalatorTerminals, descendingJourneyView, escalatorTerminalPaths, journeyView, passengerView } from './escalator-terminal.js';
 import { setupEscalatorRide } from './escalator-ride-controls.js';
 import { assembleCornerFloor, assembleWallCeiling, assembleWalledFloor, wallCornerPath, wallRunPath } from './wall-run.js';
 
@@ -212,11 +212,12 @@ if (renderer) {
   let inspection = null;
   const terminalTools = $('#terminal-tools');
   const terminalButtons = terminalTools.querySelectorAll('[data-terminal]');
+  const journeyViews = { up: journeyView, down: descendingJourneyView };
   const ride = setupEscalatorRide({
     loadAvatar: () => load({ id: 'mallVisitor', path: 'models/gjh-mall-visitor/exports/gjh-mall-visitor.glb', withAnimations: true }),
     getMachine: () => current === escalatorTerminals?.group ? escalatorTerminals.machine : null,
-    focusPassenger(object, fullJourney) {
-      inspection = { object, ...(fullJourney ? journeyView : passengerView) };
+    focusPassenger(object, direction) {
+      inspection = { object, ...(journeyViews[direction] ?? passengerView) };
       updateTerminalButtons();
       frame(object, selected, inspection);
     },

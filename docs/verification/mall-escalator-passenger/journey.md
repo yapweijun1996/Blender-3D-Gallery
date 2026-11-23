@@ -1,6 +1,8 @@
 # Escalator passenger journey
 
-The original GJH mall visitor travels between two 2 m floor slabs in **26.2392574 s**, rising 3 m on the original escalator. In the mall module preview, select **Escalator landings**, then **Travel between floors**. Pause or drag the position slider to inspect a handoff. **Ride a step** plays the separate 17.8 s study, starting and ending with both feet on the same moving tread. [Module preview](../../../mall-modules-preview/) · [Standing ride measurements](README.md)
+The original GJH mall visitor travels between two 2 m floor slabs on an escalator with a 3 m rise. In the mall module preview, select **Escalator landings**, then **Travel up** or **Travel down**. Pause or drag the position slider to inspect a handoff. **Ride a step** plays the separate 17.8 s study, starting and ending with both feet on the same moving tread. [Module preview](../../../mall-modules-preview/) · [Standing ride measurements](README.md)
+
+## Upward journey
 
 | Preview time (s) | Native machine time (s) | Shoe support |
 | --- | --- | --- |
@@ -18,8 +20,20 @@ An independent check followed both shoe meshes through 1,576 poses. At each term
 
 Pause at **3.73 s** to see the leading shoe on the moving tread and the trailing shoe on the lower landing. At **21.80 s** the leading shoe is on the upper landing and the other is still on the tread. With the position slider focused, the arrow keys move by 0.01 s. These visual and geometric checks cover one guided ascent of the unscaled visitor.
 
-Run both checks from the repository root with the project dependencies installed.
+## Downward journey
+
+**Travel down** starts on the upper tile and ends on the lower tile after 26.24 s. The unscaled visitor faces +Z. All 58 native step clips and both handrail clips run toward the lower floor. Each clip uses its own loop period when the journey crosses native time zero.
+
+At **4.28 s** one shoe is on the upper landing and one is on the descending tread. At **22.34 s** one is on the lower landing and the other is still on the tread. Turning the visitor around changes the shoe position relative to the character root. Keeping the uphill root offset would put part of the shoe more than 90 mm beyond the supported tread. The downhill stance places the soles back on the tread ribs.
+
+At 120 Hz plus the transfer boundaries, all **3,162 downward poses** retained support. The check measured 5,365 planted contacts, a change in planted position below **9.32 nm** per sample and a maximum numerical sole penetration of **0.088 µm**. The visitor advanced toward the lower tile throughout the journey.
+
+An independent check sampled 2,363 downward poses. The near-sole vertices cleared the upper comb teeth by at least 46.69 mm during boarding and the lower comb teeth by at least 27.25 mm while stepping off. On the incline, the heels retained 21.03 mm of clearance to the next higher tread and the toes retained 22.81 mm at the downhill edge. During the lower transfer a planted toe came within 6.99 mm of the moving tread edge. Across 45 sampled intervals on the exposed incline, each handrail seam and the tread moved downhill at about 0.500 m/s.
+
+## Reproduce
+
+Run the checks from the repository root with the project dependencies installed.
 
 ```sh
-node --test tests/mall-escalator-passenger*.test.mjs tests/mall-escalator-route-contact.test.mjs
+node --test tests/mall-escalator-passenger*.test.mjs tests/mall-escalator-route-contact.test.mjs tests/mall-escalator-descent-contact.test.mjs
 ```

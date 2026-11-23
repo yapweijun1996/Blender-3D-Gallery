@@ -11,6 +11,8 @@ export const escalatorTerminalPaths = {
 export const passengerView = { target: [0, .83, 0], radius: 1.45, direction: [.3, 2.35, 1.6] };
 export const journeyView = { target: [0, .8, 0], radius: 1.35, direction: [.84, .469, .273] };
 
+export const descendingJourneyView = { ...journeyView, direction: [-.195, .342, .919] };
+
 export function assembleEscalatorTerminals(sources) {
   const group = new Group();
   group.name = 'Escalator and two finished floor terminals';

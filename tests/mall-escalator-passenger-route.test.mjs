@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
-import { AnimationMixer, Group, MathUtils, Raycaster, Vector3 } from 'three';
+import { AnimationMixer, Box3, Group, MathUtils, Raycaster, Vector3 } from 'three';
 import { readGlb } from '../models/mall-floor-tile/glb.mjs';
 import {
   assembleEscalatorTerminals,
@@ -18,7 +18,8 @@ const assets = Object.fromEntries(
 const sources = Object.fromEntries(Object.entries(assets).map(([name, gltf]) => [name, gltf.scene]));
 const visitor = await load('models/gjh-mall-visitor/exports/gjh-mall-visitor.glb');
 const p = (x = 0, y = 0, z = 0) => new Vector3(x, y, z);
-const nativeStart = -3.5339295944;
+const upStart = -3.5339295944;
+const downStart = 22.5426721993;
 const boundaries = [-0.8, 1.2, 17.37, 19.16];
 const options = (machine) => ({
   machine,
@@ -27,7 +28,7 @@ const options = (machine) => ({
   avatarClips: visitor.animations,
 });
 
-function install(transformed = false) {
+function install(transformed = false, direction) {
   const { group } = assembleEscalatorTerminals(sources);
   const outer = new Group();
   if (transformed) {
@@ -37,7 +38,7 @@ function install(transformed = false) {
   outer.add(group);
   outer.updateMatrixWorld(true);
   const machine = group.children.find((o) => o.userData.moduleId === 'escalator');
-  const route = createEscalatorRoute(options(machine));
+  const route = createEscalatorRoute(options(machine), direction);
   const floors = [];
   for (const terminal of group.children.filter((o) => o.userData.terminal)) {
     floors.push(
@@ -88,8 +89,9 @@ function owner(mesh) {
   }
 }
 
-test('real shoes stay in contact across both terminals, both transfers and native STEP_00', (t) => {
-  const { route, floors } = install();
+function checkContacts(t, direction) {
+  const descending = direction === 'down';
+  const { route, floors } = install(false, direction);
   t.after(() => route.dispose());
   const readFeet = poles(route.visual),
     owners = new Set(),
@@ -106,10 +108,18 @@ test('real shoes stay in contact across both terminals, both transfers and nativ
   for (let n = 0; n <= Math.floor(route.duration * 120); n++) times.push(n / 120);
   times.push(
     route.duration,
-    ...boundaries.flatMap((native) => [-1e-6, 0, 1e-6].map((e) => native - nativeStart + e)),
+    ...boundaries.flatMap((native) =>
+      [-1e-6, 0, 1e-6].map((e) => (descending ? downStart - native : native - upStart) + e),
+    ),
   );
+  let previousZ = route.visual.position.z;
+  let maximumBacktrack = 0;
   for (const elapsed of times.sort((a, b) => a - b)) {
     route.seek(elapsed);
+    const forward = descending ? 1 : -1;
+    assert.ok(forward * route.visual.getWorldDirection(p()).z > 0.99999);
+    maximumBacktrack = Math.max(maximumBacktrack, -forward * (route.visual.position.z - previousZ));
+    previousZ = route.visual.position.z;
     phases.add(route.phase);
     samples++;
     let planted = 0;
@@ -146,21 +156,36 @@ test('real shoes stay in contact across both terminals, both transfers and nativ
     }
   }
   assert.equal(unsupported, 0);
+  assert.ok(maximumBacktrack < 1e-5, 'backward root motion ' + maximumBacktrack);
   assert.ok(maxPenetration < 1e-6 && maxSlip < 0.000001, `penetration ${maxPenetration}, slip ${maxSlip}`);
   assert.deepEqual([...phases], ['approach', 'board', 'ride', 'alight', 'depart']);
   assert.deepEqual(
     [...owners].sort(),
     ['floor2m', 'escalatorTransition2m', 'LANDING_Lower', 'LANDING_Upper', 'STEP_BODY_00'].sort(),
   );
-  assert.ok(
-    Math.abs(route.visual.position.z + 6) < 0.00001 && Math.abs(route.visual.position.y - 3) < 0.00001,
-  );
+  const lower = p(0, 0, 6),
+    upper = p(0, 3, -6);
+  assert.ok(route.visual.position.distanceTo(descending ? lower : upper) < 1e-5);
   route.restart();
-  assert.ok(Math.abs(route.visual.position.z - 6) < 0.00001 && Math.abs(route.visual.position.y) < 0.00001);
+  assert.ok(route.visual.position.distanceTo(descending ? upper : lower) < 1e-5);
   t.diagnostic(
-    JSON.stringify({ samples, contacts, unsupported, maxSlip, maxPenetration, duration: route.duration }),
+    JSON.stringify({
+      direction: direction ?? 'up',
+      samples,
+      contacts,
+      unsupported,
+      maxSlip,
+      maxPenetration,
+      maximumBacktrack,
+      duration: route.duration,
+    }),
   );
-});
+}
+
+test('real shoes stay in contact across both terminals, both transfers and native STEP_00', (t) =>
+  checkContacts(t));
+test('the descending rider walks forward with at least one shoe planted from the upper slab to the lower slab', (t) =>
+  checkContacts(t, 'down'));
 
 function poseSignature(machine, visual) {
   const nodes = [visual];
@@ -175,19 +200,21 @@ function poseSignature(machine, visual) {
   });
 }
 
-test('all sewn boundaries and the native zero wrap preserve actual skeleton and machine motion', (t) => {
-  const { route, machine } = install();
+function checkSeams(t, direction) {
+  const descending = direction === 'down';
+  const { route, machine } = install(false, direction);
   t.after(() => route.dispose());
   for (const time of [0, ...boundaries]) {
     const delta = 1e-5;
-    route.seek(time - nativeStart - delta);
+    const elapsed = descending ? downStart - time : time - upStart;
+    route.seek(elapsed - delta);
     const before = poseSignature(machine, route.visual);
-    route.seek(time - nativeStart + delta);
+    route.seek(elapsed + delta);
     const after = poseSignature(machine, route.visual);
     const maxChange = Math.max(...after.map((v, i) => Math.abs(v - before[i])));
     assert.ok(maxChange < 0.0001, `pose jump ${maxChange} at ${time}`);
     const reference = assets.escalator.scene.clone(true),
-      mixer = nativeClock(reference, time + delta);
+      mixer = nativeClock(reference, time + (descending ? -delta : delta));
     for (const clip of assets.escalator.animations) {
       const name = clip.tracks[0].name.split('.')[0];
       const a = machine.getObjectByName(name),
@@ -202,11 +229,16 @@ test('all sewn boundaries and the native zero wrap preserve actual skeleton and 
     mixer.stopAllAction();
     mixer.uncacheRoot(reference);
   }
-});
+}
 
-test('seeking in either direction yields the same poses under a translated and rotated parent', (t) => {
-  const a = install(),
-    b = install(true);
+test('all sewn boundaries and the native zero wrap preserve actual skeleton and machine motion', (t) =>
+  checkSeams(t));
+test('all 58 treads and both handrails follow their own reversed native clocks through the descender’s transfers', (t) =>
+  checkSeams(t, 'down'));
+
+function checkScrub(t, direction) {
+  const a = install(false, direction),
+    b = install(true, direction);
   t.after(() => {
     a.route.dispose();
     b.route.dispose();
@@ -237,7 +269,12 @@ test('seeking in either direction yields the same poses under a translated and r
   b.route.restart();
   assert.equal(b.route.time, 0);
   assert.equal(b.route.playing, false);
-});
+}
+
+test('seeking in either direction yields the same poses under a translated and rotated parent', (t) =>
+  checkScrub(t));
+test('the descending route preserves seek, pause and restart under a rotated parent', (t) =>
+  checkScrub(t, 'down'));
 
 test('a missing native landing leaves the installed machine in its original state', () => {
   const machine = assets.escalator.scene.clone(true);
@@ -248,4 +285,45 @@ test('a missing native landing leaves the installed machine in its original stat
   assert.throws(() => createEscalatorRoute(options(machine)), /LANDING_Lower/);
   assert.deepEqual(machine.children, children);
   assert.deepEqual(step.matrix.toArray(), initialPose);
+});
+
+test('the reversed shoe footprint fits the exposed native tread and both swing knees flex forward', (t) => {
+  const { machine, route } = install(false, 'down');
+  t.after(() => route.dispose());
+  const step = machine.getObjectByName('STEP_00');
+  const body = machine.getObjectByName('STEP_BODY_00');
+  const ahead = machine.getObjectByName('STEP_BODY_01');
+  const shoes = ['LeftFoot', 'RightFoot'].map((name) => route.visual.getObjectByName(name));
+  let front = Infinity,
+    rear = Infinity;
+  for (const native of [4, 6, 8, 10, 12, 14]) {
+    route.seek(downStart - native);
+    const footprint = new Box3();
+    for (const shoe of shoes) footprint.union(new Box3().setFromObject(shoe, true));
+    const tread = new Box3().setFromObject(body, true),
+      neighbour = new Box3().setFromObject(ahead, true);
+    assert.ok(neighbour.max.y > tread.max.y + 0.01);
+    const exposedFront = Math.max(tread.min.z, neighbour.max.z);
+    front = Math.min(front, footprint.min.z - exposedFront);
+    rear = Math.min(rear, tread.max.z - footprint.max.z);
+    const offset = step.worldToLocal(route.visual.getWorldPosition(p()));
+    assert.ok(Math.abs(offset.z - 0.123817428) < 1e-6);
+    // Rotating in place at the ascending stance would leave the back of this tread.
+    assert.ok(footprint.max.z + 0.24 - offset.z > tread.max.z + 0.09);
+  }
+  assert.ok(front > 0.02 && rear > 0.022);
+  for (const [native, name] of [
+    [18.62, 'Right'],
+    [-0.21, 'Left'],
+  ]) {
+    route.seek(downStart - native);
+    const pos = (suffix) => route.visual.getObjectByName(name + suffix).getWorldPosition(p());
+    const hip = pos('Hip'),
+      knee = pos('Knee'),
+      ankle = pos('Foot');
+    const where = (knee.y - hip.y) / (ankle.y - hip.y);
+    const forward = knee.z - MathUtils.lerp(hip.z, ankle.z, where);
+    assert.ok(forward > 0.035, 'swing knee bent away from the direction of walking: ' + forward);
+  }
+  t.diagnostic(JSON.stringify({ front, rear }));
 });

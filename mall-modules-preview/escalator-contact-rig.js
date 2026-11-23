@@ -81,8 +81,8 @@ function solveLeg(leg, target, bendSide, frame) {
   direction.divideScalar(distance);
   const along = (thighLength * thighLength - shinLength * shinLength + distance * distance) / (2 * distance);
   const altitude = Math.sqrt(Math.max(0, thighLength * thighLength - along * along));
-  // A centred visitor faces -Z. This sagittal perpendicular puts a flexed
-  // kneecap forward; the tiny opposite rest branch matches the native ankle offset.
+  // Choose the sagittal solution that flexes toward the direction of walking.
+  // The tiny opposite branch at rest matches the native ankle offset.
   const normal = point(0, -direction.z, direction.y);
   const kneePosition = hipPosition
     .clone()
@@ -101,6 +101,7 @@ export function createContactRig(avatar, reference) {
   const frame = nativeFrame(reference);
   avatar.updateWorldMatrix(true, true);
   const feet = [makeLeg(avatar, 'Left', frame), makeLeg(avatar, 'Right', frame)];
+  const forwardBend = -Math.sign(point(0, 0, 1).applyQuaternion(avatar.quaternion).z);
   function pose({ left, right, stretch = 1 }) {
     frame.refresh();
     const targets = [left, right];
@@ -128,7 +129,8 @@ export function createContactRig(avatar, reference) {
     }
     avatar.position.set(0, rootY, rootZ);
     avatar.updateWorldMatrix(true, true);
-    for (let i = 0; i < 2; i++) solveLeg(feet[i], targets[i], stretch < 0 ? -1 : 1, frame);
+    for (let i = 0; i < 2; i++)
+      solveLeg(feet[i], targets[i], stretch < 0 ? -forwardBend : forwardBend, frame);
   }
   function restoreLegs() {
     for (const leg of feet) {

@@ -15,11 +15,15 @@ function validateSources(machine, clips, avatar, avatarClips) {
   return { step, idle, nativeClips: [...steps, ...handrails] };
 }
 
-export function createPassengerTimeline({ machine, clips, avatar, avatarClips }, createPath) {
+export function createPassengerTimeline(
+  { machine, clips, avatar, avatarClips },
+  createPath,
+  heading = Math.PI,
+) {
   const { step, idle, nativeClips } = validateSources(machine, clips, avatar, avatarClips);
   const visual = new Group();
   visual.name = 'Guided escalator passenger';
-  visual.rotation.y = Math.PI;
+  visual.rotation.y = heading;
   const passenger = avatar.clone(true);
   visual.add(passenger);
   machine.add(visual);
@@ -32,19 +36,20 @@ export function createPassengerTimeline({ machine, clips, avatar, avatarClips },
   machine.updateWorldMatrix(true, true);
   let path;
   let duration;
+  let clockDirection;
   let elapsed = 0;
   let playing = false;
   let disposed = false;
   let phase;
 
-  function carry() {
-    visual.position.copy(treadStance);
+  function carry(stance = treadStance) {
+    visual.position.copy(stance);
     step.localToWorld(visual.position);
     machine.worldToLocal(visual.position);
   }
   function sample(seconds) {
     elapsed = MathUtils.clamp(seconds, 0, duration);
-    const nativeTime = path.start + elapsed;
+    const nativeTime = path.start + clockDirection * elapsed;
     // Negative approach time crosses each clip's own loop boundary. Handrail
     // and step periods differ, so wrapping the entire mixer breaks continuity.
     for (const action of actions) {
@@ -92,7 +97,8 @@ export function createPassengerTimeline({ machine, clips, avatar, avatarClips },
   }
   try {
     path = createPath({ machine, step, visual, passenger });
-    duration = path.end - path.start;
+    clockDirection = Math.sign(path.end - path.start);
+    duration = Math.abs(path.end - path.start);
     sample(0);
   } catch (error) {
     dispose();

@@ -47,6 +47,8 @@ async function checkViewport(width, height, reduced) {
     const ready = view => page.locator('#canvas-wrap[data-view="'+view+'"] #canvas-status[data-state="ready"]').waitFor({state:'attached'});
     const panel = page.locator('#ride-controls');
     const start = page.locator('#ride-start');
+    const travelUp = page.getByRole('button', { name: 'Travel up', exact: true });
+    const travelDown = page.getByRole('button', { name: 'Travel down', exact: true });
     const toggle = page.locator('#ride-toggle');
     const time = page.locator('#ride-time');
     const message = page.locator('#ride-message');
@@ -68,6 +70,13 @@ async function checkViewport(width, height, reduced) {
     assert.equal(requests,0,'terminal overview loads without the visitor');
     assert.equal(await page.evaluate(hash=>window.consumedModelHashes.includes(hash),avatarHash),false);
     assert.equal(await start.textContent(),'Ride a step');
+    assert.ok(await travelUp.isEnabled() && await travelDown.isEnabled());
+    const targets = await page.locator('#terminal-tools > .walk-buttons button').evaluateAll(buttons =>
+      buttons.map(button => {
+        const rect = button.getBoundingClientRect();
+        return rect.height >= 44 && rect.left >= 0 && rect.right <= document.documentElement.clientWidth;
+      }));
+    assert.ok(targets.every(Boolean), 'all five actions fit the viewport and retain touch-sized targets');
     assert.equal(await panel.isHidden(),true);
     assert.equal(await message.innerText(),'');
     const live = await message.evaluate(el=>el.getAttribute('aria-live') || (el.getAttribute('role')==='status'?'polite':null));
@@ -77,19 +86,22 @@ async function checkViewport(width, height, reduced) {
     trace('native machine ready, passenger still lazy');
 
     if (reduced) {
-      await start.tap();
-      await page.waitForFunction(()=>/retry/i.test(document.getElementById('ride-message').textContent));
+      await travelDown.tap();
+      await page.waitForFunction(()=>document.getElementById('ride-message').textContent.includes('Select Travel down to retry.'));
+      assert.ok(await travelDown.isEnabled());
       assert.equal(await panel.isHidden(),true);
       assert.ok(await start.isEnabled());
       assert.equal(await start.innerText(),'Ride a step');
     }
-    await start.focus();
+    const pendingStart = reduced ? travelDown : travelUp;
+    await pendingStart.focus();
     const requested = page.waitForRequest(req => new URL(req.url()).pathname.endsWith('/'+avatar));
-    await start.press('Enter');
+    await pendingStart.press('Enter');
     await requested;
     await pending.promise;
     trace('avatar request held for cancellation');
-    assert.ok(await start.isDisabled(),'duplicate activation blocked during pending load');
+    assert.equal(await page.locator('#terminal-tools button[aria-controls="ride-controls"]:disabled').count(),3,
+      'loading one action disables all three passenger starts');
     assert.equal(await message.textContent(),'','normal pending download leaves the live error region empty');
     if (reduced) await switchView('floor-transition');
     else await reset.click();
@@ -170,36 +182,52 @@ async function checkViewport(width, height, reduced) {
     assert.equal(await start.innerText(),'Ride a step');
     assert.equal(await message.textContent(),'');
     assert.ok((await visibleImage('returned')).equals(overview),'leaving an active ride restores native overview on return');
-    await page.getByRole('button', { name: 'Travel between floors' }).click();
-    await panel.waitFor();
     const phase = page.locator('#ride-phase');
-    await waitForLabel(reduced ? 'Play journey' : 'Pause journey');
-    if (!reduced) await toggle.click();
-    assert.equal(await time.getAttribute('max'), '26.24');
-    await time.press('Home');
-    assert.equal(await phase.innerText(), 'Walking from the lower floor to the escalator');
-    const journeyTrack = await time.boundingBox();
-    for (const [seconds, text, image] of [
-      [3.73, 'Stepping onto the moving tread', 'boarding'],
-      [12, 'Riding the tread to the upper floor', 'between-floors'],
-      [21.80, 'Stepping onto the upper landing', 'alighting'],
-      [24.5, 'Walking across the upper floor joint', 'upper-floor'],
+    let lowerFloorAtStart;
+    for (const journey of [
+      { button: travelUp, from: 'lower', to: 'upper', board: 3.73, alight: 21.80, prefix: '' },
+      { button: travelDown, from: 'upper', to: 'lower', board: 4.28, alight: 22.34, prefix: 'down-' },
     ]) {
-      const x = 8 + seconds / 26.24 * (journeyTrack.width - 16);
-      await time.click({ position: { x, y: journeyTrack.height / 2 } });
-      const ticks = Math.round((seconds - await position()) * 100);
-      for (let i = 0; i < Math.abs(ticks); i++) await time.press(ticks > 0 ? 'ArrowRight' : 'ArrowLeft');
-      assert.equal(await position(), seconds, 'the slider can stop at the measured handoff');
-      assert.equal(await phase.innerText(), text);
-      if (output) await visibleImage(image);
+      if (reduced) await journey.button.tap();
+      else await journey.button.press('Enter');
+      await panel.waitFor();
+      await waitForLabel(reduced ? 'Play journey' : 'Pause journey');
+      assert.ok(await toggle.evaluate(el => el === document.activeElement), 'keyboard focus moves to playback');
+      if (!reduced) await toggle.click();
+      assert.equal(await time.getAttribute('max'), '26.24');
+      assert.equal(Number(await time.getAttribute('step')), .01);
+      await time.press('Home');
+      assert.equal(await phase.innerText(), 'Walking from the ' + journey.from + ' floor to the escalator');
+      const atStart = await visibleImage(journey.prefix + 'start-floor');
+      if (journey.from === 'lower') lowerFloorAtStart = atStart;
+      else assert.ok(!atStart.equals(lowerFloorAtStart), 'the downward route starts at a different rendered floor');
+
+      const track = await time.boundingBox();
+      for (const [seconds, text, image] of [
+        [journey.board, 'Stepping from the ' + journey.from + ' landing onto the moving tread', 'boarding'],
+        [12, 'Riding the tread to the ' + journey.to + ' floor', 'between-floors'],
+        [journey.alight, 'Stepping onto the ' + journey.to + ' landing', 'alighting'],
+        [24.5, 'Walking across the ' + journey.to + ' floor joint', journey.to + '-floor'],
+      ]) {
+        const x = 8 + seconds / 26.24 * (track.width - 16);
+        await time.click({ position: { x, y: track.height / 2 } });
+        const ticks = Math.round((seconds - await position()) * 100);
+        for (let tick = 0; tick < Math.abs(ticks); tick++) await time.press(ticks > 0 ? 'ArrowRight' : 'ArrowLeft');
+        assert.equal(await position(), seconds, 'the slider reaches the selected transfer to the hundredth');
+        assert.equal(await phase.innerText(), text);
+        if (output) await visibleImage(journey.prefix + image);
+      }
+      await time.press('End');
+      await waitForLabel('Replay journey');
+      assert.equal(await phase.innerText(), 'Arrived on the ' + journey.to + ' floor');
+      await toggle.click();
+      await waitForLabel('Pause journey');
+      assert.ok(await position() < 13, 'replay starts a new trip');
+      await reset.click();
+      assert.equal(await panel.isHidden(), true);
+      assert.ok(await travelUp.isEnabled() && await travelDown.isEnabled() && await start.isEnabled());
+      assert.ok((await visibleImage(journey.prefix + 'journey-reset')).equals(overview), 'reset restores the native escalator');
     }
-    await time.press('End');
-    await waitForLabel('Replay journey');
-    assert.equal(await phase.innerText(), 'Arrived on the upper floor');
-    await toggle.click();
-    await waitForLabel('Pause journey');
-    await reset.click();
-    assert.ok((await visibleImage('journey-reset')).equals(overview), 'journey restores the same empty escalator');
     if (!reduced) {
       // Navigating a real document out of the foreground delivers Chromium's
       // trusted hidden event even in headless builds which keep both tabs visible.
@@ -219,7 +247,7 @@ async function checkViewport(width, height, reduced) {
     }
     assert.deepEqual(errors,[]);
     console.log(JSON.stringify({width,height,reducedMotion:reduced,avatarRequests:requests,consumedStaticGlbs:staticHashes.length,avatarHash,
-      pausedSeconds:paused,seekSeconds:middle,endSeconds:end,background:reduced?'desktop coverage':'native hidden event',result:'passed'}));
+      pausedSeconds:paused,seekSeconds:middle,endSeconds:end,journeys:['up','down'],background:reduced?'desktop coverage':'native hidden event',result:'passed'}));
   } finally {
     release.resolve();
     await context.close();
