@@ -54,6 +54,16 @@ The ceiling starts hidden. Select **Show ceiling** to see the 25 cassettes, or *
 
 Run `node --test tests/mall-enclosed-shop.test.mjs` for the geometry and visitor checks. The original door leaves retain 100 mm of vertical clearance through their 90° swing. Across 72 headings, all 144 cylinder and capsule sweeps struck a closed door or wall. The open-door route covers 6.614 m each way with 13,375 floor probes across both directions. The controller restores both hinges when closing would hit the visitor. The roof check covers 100 recessed panels and 244 paired contacts along the wall tops and door header. The ceiling ends on the wall centrelines, leaving the outer 75 mm of wall top visible. Removing a rear wall exposes a second walkable exit across the outside apron. With Vite running, `node scripts/test-mall-enclosed-shop.mjs` exercises the ceiling control, door, movement and a switch between scenes during visitor loading.
 
+### Home furnishings shop
+
+Choose **Home furnishings shop** or open `/mall-modules-preview/?view=home-furnishings`. This 6 m shop presents a living-room display on the left and a dining display on the right. It reuses six catalogued models, including two instances of the dining chair. All six metadata records allow reuse in the owner's projects. Their GLBs total 868,152 bytes. The preview loads them when this shop is selected.
+
+| Living-room display | Dining display |
+| --- | --- |
+| [Sofa](../models/living-room-sofa/README.md), [side cabinet](../models/bedside-table/README.md) and [brass oil lamp](../models/deepavali-oil-lamp/README.md) | [Round dining table](../models/round-dining-table/README.md), two [chairs](../models/plastic-dining-chair/README.md) and an [orchid](../models/orchid-planter/README.md) |
+
+Open the doors and enter from the apron. The two viewing points connect along a 13.5 m loop. Run `node --test tests/mall-home-furnishings.test.mjs` to verify the furnished route in both directions. The check samples 27,225 points under the visitor's footprint and 126 triangles at furniture supports, including the lamp on the 622.5 mm cabinet top. The controller stops within one 25 mm movement step of independent mesh sweeps against the sofa and dining table. Moving the sofa into the doorway blocks the route. The furniture is displayed in its static pose. [Showroom cutaway](home-furnishings.png)
+
 ## Furnished corridor
 
 The wall selection is the new 1.2 m solid wall; the corridor also retains the existing glass partitions for the shopfronts. The ceiling is intentionally a partial cutaway for visibility. This visual arrangement is not a construction or safety specification; see the individual asset READMEs and `docs/verification/p0-assembly/README.md` for actual dimensions, interfaces, prior checks, and rights. The preview does not change or export source assets, and it is not part of the production Gallery build.

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { assembleHomeFurnishings, furnishingPaths } from './home-furnishings.js';
 import { assembleRoom, roomArrival, roomAssetPaths } from './room-layout.js';
 import { shopfrontBays } from './shopfront-layout.js';
 import { batchStaticMeshes } from './batch-static.js';
@@ -105,7 +106,12 @@ if (renderer) {
     'enclosed-shop': {
       name: 'Enclosed shop', subtitle: 'Open the doors to walk inside the six-metre shop. Show the ceiling to inspect the closed shell.',
       inputs: Object.entries(roomAssetPaths).map(([id, path]) => ({ id, path })),
-      build: enclosedShop,
+      build: sources => shopScene(sources, 'enclosed-shop', assembleRoom),
+    },
+    'home-furnishings': {
+      name: 'Home furnishings shop', subtitle: 'Walk through the furnished displays or inspect the room from above.',
+      inputs: Object.entries({ ...roomAssetPaths, ...furnishingPaths }).map(([id, path]) => ({ id, path })),
+      build: sources => shopScene(sources, 'home-furnishings', assembleHomeFurnishings),
     },
     'wall-corner': {
       name: 'Right-angle wall corner', subtitle: 'The inside finishes turn from the rear wall onto the return along the right edge.',
@@ -159,12 +165,12 @@ if (renderer) {
     return group;
   }
 
-  function enclosedShop(sources) {
-    if (walkableScenes.has('enclosed-shop')) return walkableScenes.get('enclosed-shop').group;
-    const room = assembleRoom(sources);
+  function shopScene(sources, id, assemble) {
+    if (walkableScenes.has(id)) return walkableScenes.get(id).group;
+    const room = assemble(sources);
     const world = createCollisionWorld(room.group);
     room.batchStatic();
-    walkableScenes.set('enclosed-shop', { ...room, world, spawn: roomArrival, doorAngle: 0 });
+    walkableScenes.set(id, { ...room, world, spawn: roomArrival, doorAngle: 0 });
     return room.group;
   }
 
@@ -250,10 +256,13 @@ if (renderer) {
     const vertical = THREE.MathUtils.degToRad(camera.fov/2); const horizontal = Math.atan(Math.tan(vertical)*camera.aspect);
     let margin = 1.2;
     if (assemblies[id]) margin = id === 'assembly' ? (camera.aspect < 1.35 ? 1.08 : .8) : .94;
+    // Bring the display furniture forward while keeping the entrance in frame.
+    if (id === 'home-furnishings') margin = .67;
     const distance = Math.max(sphere.radius, .25) / Math.sin(Math.min(vertical,horizontal)) * margin;
     const direction = new THREE.Vector3(6,4,7);
     if (id === 'ceiling') direction.set(4,-3,5);
     if (id === 'assembly') direction.set(6,3.5,10);
+    if (id === 'home-furnishings') direction.set(1.2,7.6,5.2);
     if (id === 'enclosed-shop') direction.set(2.3,4.8,7);
     if (id === 'finished-edge') direction.set(3.7,2.6,5.1);
     if (id === 'corner-floor') direction.set(3.5,5.3,5.2);

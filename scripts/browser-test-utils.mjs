@@ -58,6 +58,23 @@ export async function serveBuild(initialRoot = "dist") {
     close: () => new Promise((resolve) => server.close(resolve)),
   };
 }
+// Passed to Playwright's addInitScript. Three.js may consume a URL-less Response
+// it constructed from the download stream, so identify GLBs by their file header.
+export function recordConsumedGlbHashes() {
+  window.consumedModelHashes = [];
+  const original = Response.prototype.arrayBuffer;
+  Response.prototype.arrayBuffer = async function (...args) {
+    const buffer = await original.apply(this, args);
+    if (buffer.byteLength >= 4 && new DataView(buffer).getUint32(0) === 0x676c5446) {
+      const hash = await crypto.subtle.digest("SHA-256", buffer);
+      window.consumedModelHashes.push(
+        Array.from(new Uint8Array(hash), byte => byte.toString(16).padStart(2, "0")).join(""),
+      );
+    }
+    return buffer;
+  };
+}
+
 export const launchOptions = {
   headless: true,
   args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],

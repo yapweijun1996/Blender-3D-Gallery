@@ -438,18 +438,18 @@ This is the detailed planning checklist requested for building a complete virtua
 
 - [ ] 家居店展示架
 - [ ] 家具展示平台
-- [ ] 客厅沙发
+- [x] [客厅沙发](../../models/living-room-sofa/README.md) · [家居店实装](../../mall-modules-preview/README.md#home-furnishings-shop)
 - [ ] 客厅茶几
 - [ ] 电视柜
-- [ ] 家居店餐桌
-- [ ] 家居店餐椅
+- [x] [家居店餐桌](../../models/round-dining-table/README.md) · [家居店实装](../../mall-modules-preview/README.md#home-furnishings-shop)
+- [x] [家居店餐椅](../../models/plastic-dining-chair/README.md) · [家居店实装](../../mall-modules-preview/README.md#home-furnishings-shop)
 - [ ] 办公桌
 - [ ] 办公椅
 - [ ] 床架
 - [ ] 床垫
 - [ ] 枕头
 - [ ] 被子
-- [ ] 床头柜
+- [x] [床头柜](../../models/bedside-table/README.md) · [家居店实装](../../mall-modules-preview/README.md#home-furnishings-shop)
 - [ ] 衣柜
 - [ ] 梳妆台
 - [ ] 台灯

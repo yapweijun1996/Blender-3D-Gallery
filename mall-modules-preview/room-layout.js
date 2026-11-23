@@ -36,8 +36,8 @@ const bodyPlacements = [
   { id: 'doorHeader2m', x: 0, y: 2.4, z: 3 },
 ];
 
-export function assembleRoom(sources) {
-  const { group: body, poseDoors } = assembleCorridor(sources, bodyPlacements);
+export function assembleRoom(sources, furnishings = []) {
+  const { group: body, poseDoors } = assembleCorridor(sources, bodyPlacements.concat(furnishings));
   body.name = 'Shop floor, walls and entrance';
   body.children.forEach((module, index) => {
     if (module.userData.moduleId === 'floor2m') module.name = 'Floor_' + index;
