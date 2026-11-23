@@ -17,9 +17,27 @@ const gltf = await new GLTFLoader().loadAsync(q.get('glb')); scene.add(gltf.scen
 const box = new THREE.Box3().setFromObject(gltf.scene); const c = box.getCenter(new THREE.Vector3()); const size = box.getSize(new THREE.Vector3());
 window.__info = { size: size.toArray().map((v) => +v.toFixed(3)), centre: c.toArray().map((v) => +v.toFixed(3)) };
 const cam = new THREE.PerspectiveCamera(22, 1, 0.01, 50); const dist = (size.y * 0.62) / Math.tan(THREE.MathUtils.degToRad(11));
-[0, 35, 90, 180].forEach((az, i) => {
+const angles = [0, 35, 90, 180];
+angles.forEach((az, i) => {
   const a = THREE.MathUtils.degToRad(az); cam.position.set(c.x + Math.sin(a) * dist, c.y + size.y * 0.05, c.z + Math.cos(a) * dist); cam.lookAt(c);
   r.setViewport(i * S, 0, S, S); r.setScissor(i * S, 0, S, S); r.render(scene, cam);
 });
+// Read the preserved WebGL drawing buffer directly. A headless compositor
+// screenshot can be blank even when the renderer has loaded the model.
+window.captureTurnaround = () => {
+  const gl = r.getContext();
+  if (gl.isContextLost()) throw Error('WebGL context lost before capture');
+  const pixels = new Uint8Array(S * S * 4);
+  for (const [i, angle] of angles.entries()) {
+    gl.readPixels(i * S, 0, S, S, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+    let visible = 0;
+    for (let p = 0; p < pixels.length; p += 4) {
+      if (Math.max(Math.abs(pixels[p] - pixels[0]), Math.abs(pixels[p + 1] - pixels[1]),
+        Math.abs(pixels[p + 2] - pixels[2])) > 10) visible++;
+    }
+    if (visible < S * S * .005) throw Error('Empty turnaround view at ' + angle + ' degrees');
+  }
+  return r.domElement.toDataURL('image/png');
+};
 window.__ready = true;
 </script></body></html>

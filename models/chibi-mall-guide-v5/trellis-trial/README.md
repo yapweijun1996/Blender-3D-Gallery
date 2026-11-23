@@ -7,7 +7,7 @@ An experiment: reconstruct the Mall Guide from the four views of reference sheet
 - Pod: Runpod secure cloud RTX 4090 (price shown by the create call: $0.89/hour), image `runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04`. Two earlier community-cloud pods were terminated within minutes because the host's `/dev/nvidia-uvm` returned an I/O error and CUDA would not initialise. The final pod was terminated after the run; `list-pods` read back empty.
 - Input: the four cells of `reference/turnaround-b.png` (front, three-quarter, side, back) padded to squares, passed to `pipeline.run_multi_image`; seeds 1 to 4; sampler steps 12 (sparse structure cfg 7.5, slat cfg 3); GLB via `postprocessing_utils.to_glb(simplify=0.95, texture_size=1024)`.
 - Setup fixes needed on the pod (for reproducibility): `nvdiffrast` installed with `--no-build-isolation`; `xformers==0.0.28.post1` with `--no-deps` (the setup script had no build for torch 2.4.1 + CUDA 12.4); `xops.fmha.BlockDiagonalMask` replaced by `xops.fmha.attn_bias.BlockDiagonalMask` in three TRELLIS files; a stub `kaolin.utils.testing.check_tensor`; apt packages libegl1, libgl1, libgles2, libusb-1.0-0 and X11 libraries for open3d; `ATTN_BACKEND=xformers`, `SPCONV_ALGO=native`.
-- Viewing: `shoot-glb.mjs` renders four views in headless Chromium with the repository's Three.js.
+- Viewing: `shoot-glb.mjs` renders four views in headless Chromium with the repository's Three.js. It reads the WebGL drawing buffer and checks for visible content in each view before saving the PNG.
 
 ## Results (my reading, not independent)
 
