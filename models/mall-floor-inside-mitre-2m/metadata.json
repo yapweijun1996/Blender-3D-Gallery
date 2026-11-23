@@ -1,0 +1,127 @@
+{
+  "id": "mall-floor-inside-mitre-2m",
+  "name": "2 m Mall Floor Inside Mitre",
+  "summary": "A full-depth, inward-facing metal turn for the concave edge of the 2 m mall floor.",
+  "description": "Two bronze fascia arms face into a missing floor quadrant. Their champagne nosings and narrow bronze inlays meet flush on a 45-degree diagonal. Both square ends connect to the existing 2 m straight trim.",
+  "category": "Shopping Mall",
+  "tags": [
+    "mall",
+    "floor",
+    "inside corner",
+    "mitre",
+    "edge trim",
+    "2 m"
+  ],
+  "status": "validated",
+  "created": "2026-11-24",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "The generator appends the original editable straight-edge sections, fasteners and materials, cuts both arms to the inner diagonal, and shares the seventeen seam vertices in one closed body.",
+  "source": "sources/mall-floor-inside-mitre-2m.blend",
+  "generator": "generate.py",
+  "export": "exports/mall-floor-inside-mitre-2m.glb",
+  "preview": "previews/mall-floor-inside-mitre-2m.jpg",
+  "root": "ASSET_MallFloorInsideMitre2m",
+  "display": {
+    "studioEnvironment": true,
+    "environmentIntensity": 0.7,
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.75,
+      0.62,
+      1
+    ]
+  },
+  "dimensions": {
+    "axis_order": "glTF X, Y, Z in metres",
+    "bounds": [
+      [
+        0,
+        -0.1,
+        0
+      ],
+      [
+        2,
+        0,
+        2
+      ]
+    ],
+    "origin": "Re-entrant structural slab corner at finished floor height. The missing quadrant is +X and +Z.",
+    "cap_width_m": 0.06,
+    "depth_m": 0.1,
+    "inlay_radial_m": [
+      0.044,
+      0.0455
+    ]
+  },
+  "connectors": {
+    "East": [
+      2,
+      0,
+      0.03
+    ],
+    "PositiveZ": [
+      0.03,
+      0,
+      2
+    ],
+    "node_pattern": "CONNECTOR_InsideMitre_{East|PositiveZ}_LOD{0|1|2}",
+    "diagonal_top_endpoints_m": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0.06,
+        0,
+        0.06
+      ]
+    ]
+  },
+  "rights": "Owner-project reuse of the original geometry, materials and renders is authorized. Public download and redistribution terms are unspecified.",
+  "accuracy_notes": "Measured decorative floor edge for the 2 m structural kit. The supporting floor remains the native tile footprint. Measurements cover this 90-degree return at unit scale.",
+  "levels": [
+    {
+      "level": "LOD0",
+      "file": "exports/mall-floor-inside-mitre-2m.glb",
+      "triangles": 562,
+      "draws": 4,
+      "bytes": 28400,
+      "sha256": "16903d5150327cef609bca9f0fb0340dbb0c4979a8f6e100f5b3294c63f9c0c6"
+    },
+    {
+      "level": "LOD1",
+      "file": "exports/mall-floor-inside-mitre-2m-lod1.glb",
+      "triangles": 226,
+      "draws": 4,
+      "bytes": 14672,
+      "sha256": "55bd73d6930ac90a05810977379884eca8a1474b885541512c459557b930f215"
+    },
+    {
+      "level": "LOD2",
+      "file": "exports/mall-floor-inside-mitre-2m-lod2.glb",
+      "triangles": 98,
+      "draws": 1,
+      "bytes": 7788,
+      "sha256": "e27df56651ac5c85d2956ec373f6d082f7d624bc64696ea3da970ec78f3053a1"
+    }
+  ],
+  "sha256": {
+    "source": "90b9031c9c1d83ae3906cb3dc9642b3c7a70e3597b342bde502a1f615b1cb541",
+    "glb": "16903d5150327cef609bca9f0fb0340dbb0c4979a8f6e100f5b3294c63f9c0c6",
+    "preview": "a491295a601712162215498ceca3fc83b27f8de86fed9e88c4752e665931773e"
+  },
+  "attribution": [
+    {
+      "credit": "Blender-3D-Gallery authored the original straight floor-edge section, materials and fastener geometry, the fitted inside turn, the editable assembly and the studio render.",
+      "upstream_source": "../mall-floor-edge-2m/sources/mall-floor-edge-2m.blend",
+      "upstream_source_sha256": "a7af80c9f730d83db05412070b864e93d539dbc7cdf87c9d4b7dd41f256eb644"
+    }
+  ],
+  "verification": [
+    "reports/source-reimport.json",
+    "reports/glb-validation.json",
+    "reports/rebuild.json"
+  ]
+}

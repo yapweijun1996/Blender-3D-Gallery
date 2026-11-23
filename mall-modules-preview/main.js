@@ -11,7 +11,7 @@ import { shopfrontBays } from './shopfront-layout.js';
 import { batchStaticMeshes } from './batch-static.js';
 import { arrival, assembleCorridor, corridorAssetPaths } from './corridor-layout.js';
 import { shellLayout } from './shell-layout.js';
-import { assembleCornerTileFloor, assembleFinishedFloorEdge, cornerFloorPath, floorEdgePaths } from './floor-edge.js';
+import { assembleCornerTileFloor, assembleFinishedFloorEdge, assembleInsideFloorEdge, cornerFloorPath, floorEdgePaths, insideMitrePath } from './floor-edge.js';
 import { assembleCrossJunction, assembleTJunction } from './floor-junctions.js';
 import { assembleFloorTransition, floorTransitionPaths } from './floor-transition.js';
 import { assembleEscalatorTerminals, descendingJourneyView, escalatorTerminalPaths, journeyView, passengerView } from './escalator-terminal.js';
@@ -128,6 +128,11 @@ if (renderer) {
       inputs: [...cornerFloorAssets, ...Object.entries(floorEdgePaths).map(([id, path]) => ({ id, path }))],
       build: assembleFinishedFloorEdge,
     },
+    'inside-floor-edge': {
+      name: 'Inside floor edge', subtitle: 'A 45° mitre joins the two exposed metal faces inside an L-shaped floor.',
+      inputs: [squareFloor, { id: 'edge2m', path: floorEdgePaths.edge2m }, { id: 'insideMitre2m', path: insideMitrePath }],
+      build: assembleInsideFloorEdge,
+    },
     'wall-run': {
       name: 'Straight wall run', subtitle: 'Three 2 m walls stand on the finished floor, with their stone faces toward the aisle.',
       inputs: wallAssets,
@@ -220,6 +225,19 @@ if (renderer) {
   }
 
   let inspection = null;
+  const floorEdgeTools = $('#floor-edge-tools');
+  const inspectMitreButton = $('#inspect-mitre');
+  inspectMitreButton.addEventListener('click', () => {
+    const object = current?.children.find(part => part.userData.moduleId === 'insideMitre2m');
+    if (!object) return;
+    if (inspection?.object === object) {
+      inspectAssembly();
+      return;
+    }
+    inspection = { object, target: [.05, -.035, .05], direction: [1.2, .85, 1], radius: .21 };
+    frame(object, selected, inspection);
+    inspectMitreButton.setAttribute('aria-pressed', 'true');
+  });
   const terminalTools = $('#terminal-tools');
   const terminalButtons = terminalTools.querySelectorAll('[data-terminal]');
   const journeyViews = { up: journeyView, down: descendingJourneyView };
@@ -289,6 +307,7 @@ if (renderer) {
     ride.close();
     inspection = null;
     updateTerminalButtons();
+    inspectMitreButton.setAttribute('aria-pressed', 'false');
     camera.fov = 34;
     camera.updateProjectionMatrix();
     if (current) frame(current, selected);
@@ -357,7 +376,7 @@ if (renderer) {
     if (id === 'assembly') direction.set(6,3.5,10);
     if (assemblies[id]?.showroom) direction.set(1.2,7.6,5.2);
     if (id === 'enclosed-shop') direction.set(2.3,4.8,7);
-    if (id === 'finished-edge') direction.set(3.7,2.6,5.1);
+    if (id === 'finished-edge' || id === 'inside-floor-edge') direction.set(3.7,2.6,5.1);
     if (id === 'corner-floor') direction.set(3.5,5.3,5.2);
     if (id === 'floor-transition') direction.set(1.2,5.5,5.1);
     if (id === 't-junction' || id === 'cross-junction') direction.set(.6,7,-4);
@@ -375,6 +394,8 @@ if (renderer) {
     ride.close();
     inspection = null;
     terminalTools.hidden = true;
+    floorEdgeTools.hidden = true;
+    inspectMitreButton.setAttribute('aria-pressed', 'false');
     if (visitor?.state.walking) visitor.setWalking(false);
     walkTools.hidden = true;
     message.textContent = '';
@@ -398,6 +419,7 @@ if (renderer) {
       const sources = Object.fromEntries(loaded);
       current = item ? sources[id].clone(true) : view.build(sources);
       scene.add(current); frame(current,id);
+      floorEdgeTools.hidden = id !== 'inside-floor-edge';
       if (id === 'escalator-terminals') {
         updateTerminalButtons();
         terminalTools.hidden = false;

@@ -34,7 +34,7 @@ Profiles repeat at the same pitch and keep the same outer face, cap, keyline and
 - Chromium rendered all six files with matching hashes and counted their actual WebGL draws. At the checked fixed views, each reduced level retained the close model's silhouette. [Browser results](reports/browser.json)
 - A fresh procedural build and an export of the saved Blender source reproduced all six GLBs byte for byte. [Rebuild report](reports/rebuild.json)
 
-The measured assembly covers straight continuations and this 90° outside turn. Other angles, inside turns, physical-device performance and installation require separate assessment. The geometry, materials and studio renders are original work for Blender-3D-Gallery. Public redistribution and download terms are unspecified.
+The measured assembly covers straight continuations and this 90° outside turn. The [companion inside mitre](../mall-floor-inside-mitre-2m/README.md) fits the same straight profiles at a re-entrant right angle. Other angles, physical-device performance and installation require separate assessment. The geometry, materials and studio renders are original work for Blender-3D-Gallery. Public redistribution and download terms are unspecified.
 
 ## Reproduce
 

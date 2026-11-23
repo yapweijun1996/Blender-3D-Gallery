@@ -81,6 +81,14 @@ Run `node --test tests/mall-floor-edge-kit-2m.test.mjs`. Both straight-to-return
 
 The visible cap extends beyond the four walkable cells. At each outer edge the visitor stops with its footprint on the slab. A ray cast exactly on the triangle boundary can miss in Rapier. The verifier checks the point against the actual GLB triangles and the closest point on the physics mesh within 1 μm, and verifies that probing 10 μm farther out finds no floor support.
 
+### Inside floor edge
+
+Choose **Inside floor edge** to see the [inside mitre](../models/mall-floor-inside-mitre-2m/README.md) installed on five original square floor tiles. **Inspect inside mitre** centres the camera on the diagonal joint and recessed fascia. Select it again or use **Reset view** to see how both arms meet the straight edging. [Installed corner](inside-floor-edge.webp) · [Joint detail](inside-mitre-detail.webp)
+
+The two tile edges meet at a re-entrant corner. The 60 mm cap fits into the open quadrant and the 100 mm fascia faces that opening. Ordinary uncut strips occupy the same 60 × 60 mm square at this turn. Rotating the existing outside mitre places both of its connectors 60 mm beyond the intended grid lines.
+
+Run `node --test tests/mall-floor-inside-mitre-2m.test.mjs` to check the two square connections across all nine inside/straight LOD pairings. The test also covers the metal inlay at the diagonal, full-depth slab contact, a 16 m return walk in each matched LOD and the exposed edge after removal.
+
 ### Enclosed shop on the 2 m grid
 
 Choose **Enclosed shop** or open `/mall-modules-preview/?view=enclosed-shop`. The shop measures 6 × 6 m between wall centrelines. Nine 2 m tiles form the interior floor and 16 more support the wall perimeter and entrance apron. Four corner pieces and three straight walls leave a 2.00 m entrance. The original double-door frame is 2.10 m wide. Its back rests against the outside wall face with 50 mm of bearing on either side. A new [400 mm door header](../models/mall-shop-door-header-2m/README.md) closes the gap between the 2.40 m frame and the 2.80 m wall top. The legacy 600 mm fascia at this position would project 200 mm above the wall.

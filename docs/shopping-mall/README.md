@@ -75,6 +75,10 @@ At public `main` commit `bcc52e77`, all eleven fixtures below had a catalog entr
 
 At the audited commit, the Gallery offered the TV demo table for download. Its asset-specific license expressly authorizes owner-project reuse and leaves public redistribution terms unspecified. [Asset license](../../models/tv-demo-table/LICENSE.md)
 
+### Concave floor edge on the 2 m grid
+
+Two square-ended 60 mm trims overlap at a re-entrant corner. The [inside mitre](../../models/mall-floor-inside-mitre-2m/README.md) carries both arms through one welded diagonal. Its exposed face follows the bronze fascia of the original straight section, including the recessed channel. In the five-tile L, both connections to the straight trims fall on the next 2 m grid lines. [Assembly and verified contacts](../../mall-modules-preview/README.md#inside-floor-edge)
+
 ### T-junction and cross-junction on the 2 m grid
 
 | Planned ID | Assembly | Existing asset and fit |

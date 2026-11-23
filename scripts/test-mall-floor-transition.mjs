@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-import { cornerFloorPath, floorEdgePaths } from '../mall-modules-preview/floor-edge.js';
+import { cornerFloorPath, floorEdgePaths, insideMitrePath } from '../mall-modules-preview/floor-edge.js';
 import { floorTransitionPaths } from '../mall-modules-preview/floor-transition.js';
 import { shellAssetPaths } from '../mall-modules-preview/shell-layout.js';
 import { wallCornerPath, wallRunPath } from '../mall-modules-preview/wall-run.js';
@@ -16,6 +16,7 @@ const shellViews = [
   ['cross-junction'],
   ['corner-floor', cornerFloorPath],
   ['finished-edge', ...Object.values(floorEdgePaths)],
+  ['inside-floor-edge', insideMitrePath],
   ['wall-run', wallRunPath],
   ['wall-ceiling', shellAssetPaths.ceiling],
   ['wall-corner', wallCornerPath],
@@ -52,6 +53,27 @@ try {
     for (const [view, ...files] of shellViews) {
       await layouts.selectOption(view);
       await ready(view);
+      const inspectMitre = page.getByRole('button', { name: 'Inspect inside mitre' });
+      if (view === 'inside-floor-edge') {
+        const canvas = page.locator('#canvas-wrap canvas');
+        const overview = await canvas.screenshot();
+        await inspectMitre.focus();
+        await inspectMitre.press('Enter');
+        assert.equal(await inspectMitre.getAttribute('aria-pressed'), 'true');
+        const closeup = await canvas.screenshot();
+        assert.ok(!closeup.equals(overview), 'inspection enlarges the installed mitre');
+        if (process.env.MALL_GRID_SHOTS) await page.locator('#canvas-wrap').screenshot({
+          path: process.env.MALL_GRID_SHOTS + '/inside-mitre-detail-' + width + '.png',
+        });
+        await inspectMitre.click();
+        assert.equal(await inspectMitre.getAttribute('aria-pressed'), 'false');
+        assert.ok((await canvas.screenshot()).equals(overview), 'the second activation restores the overview');
+        await inspectMitre.click();
+        await page.getByRole('button', { name: 'Reset camera view' }).click();
+        assert.equal(await inspectMitre.getAttribute('aria-pressed'), 'false');
+      } else {
+        assert.ok(await inspectMitre.isHidden());
+      }
       if (view === 't-junction') threeWayImage = await page.locator('canvas').first().screenshot();
       if (view === 'cross-junction') {
         const fourWayImage = await page.locator('canvas').first().screenshot();
