@@ -35,7 +35,7 @@ Models are registered in the gallery with `node scripts/register-gallery-model.m
 
 ```sh
 npm test                    # all unit tests (800+)
-npm run test:world          # road network tiles (needs output/osm/marina_bay.json)
+npm run test:world          # road network tiles against the pinned OSM test fixture
 npm run test:openworld      # real Chrome: loads, drives, missions, bridges' tiles, streaming, vehicles, checkpoint
 npm run test:mrt
 ```

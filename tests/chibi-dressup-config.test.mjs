@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { messages } from "../src/i18n/index.js";
-import { CLIPS, EXPRESSIONS, GESTURES, HANDS, STORAGE_KEY, fitsBody, loadConfig, modulesForBody, saveConfig, validateManifest } from "../src/chibi-dressup/config.js";
+import { CLIPS, EXPRESSIONS, GESTURES, HANDS, STORAGE_KEY, fitsBody, loadConfig, modulesForBody, saveConfig, selectableModulesForBody, validateManifest } from "../src/chibi-dressup/config.js";
 
 const directory = new URL("../models/chibi-dressup/", import.meta.url);
 const manifest = JSON.parse(readFileSync(new URL("manifest.json", directory), "utf8"));
@@ -87,6 +87,30 @@ test("stale config preserves valid choices and blocked storage leaves a usable d
   const blocked = () => { throw new Error("Storage blocked"); };
   assert.equal(loadConfig(manifest, { getItem: blocked }).animation, "idle");
   assert.doesNotThrow(() => saveConfig(old, manifest, { setItem: blocked }));
+});
+
+test("pending modules are unavailable in the wardrobe, saved choices, defaults and body switches", () => {
+  const example = structuredClone(manifest);
+  const hair = example.modules.find(module => module.id === "hair-bob");
+  const otherBody = example.bodies.find(body => body.id !== "neutral");
+  const sibling = { ...hair, id: "pending-hair-sibling", family: "hair-bob", bodyIds: [otherBody.id],
+    file: "modules/pending-hair-sibling.glb", status: "pending" };
+  example.modules.push(sibling);
+  assert.equal(validateManifest(example), example);
+  assert.ok(!selectableModulesForBody(otherBody.id, example).some(module => module.id === sibling.id));
+  assert.notEqual(modulesForBody({ hair: hair.id }, otherBody.id, example).hair, sibling.id);
+  const pendingTop = example.modules.find(module => module.id === "top-tshirt");
+  pendingTop.status = "pending";
+  example.defaults.top = example.modules.find(module => module.slot === "top" && module.id !== pendingTop.id &&
+    module.status === "verified" && fitsBody(module, "neutral", example)).id;
+  assert.equal(loadConfig(example, { getItem: () => JSON.stringify({ modules: { top: pendingTop.id } }) }).modules.top,
+    example.defaults.top, "a verified default replaces a stale pending selection");
+
+  hair.status = "pending";
+  assert.ok(!selectableModulesForBody("neutral", example).some(module => module.id === hair.id));
+  assert.equal(loadConfig(example, { getItem: () => JSON.stringify({ modules: { hair: hair.id } }) }).modules.hair, null);
+  assert.equal(loadConfig(example, { getItem: () => null }).modules.hair, null);
+  assert.equal(modulesForBody({ hair: hair.id }, otherBody.id, example).hair, null);
 });
 
 test("bodies decide which modules fit and families carry choices across bodies", () => {

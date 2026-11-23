@@ -72,7 +72,12 @@ try {
   const hand = side => page.locator(`[data-hand="${side}"]`);
   const clip = name => page.locator(`[data-clip="${name}"]`);
   const module = id => page.locator(`[data-module="${id}"]`);
-  const neutralModules = manifest.modules.filter(({ bodyIds }) => !bodyIds);
+  const verifiedModules = manifest.modules.filter(({ status }) => status === "verified");
+  const pendingModules = manifest.modules.filter(({ status }) => status === "pending");
+  const neutralModules = verifiedModules.filter(({ bodyIds }) => !bodyIds || bodyIds.includes(manifest.defaults.body));
+  const checkPendingModulesHidden = async () => {
+    for (const { id } of pendingModules) assert.equal(await module(id).count(), 0, `${id} remains hidden`);
+  };
   const snapshot = () => stage.evaluate(element => element.inspectDressup());
   const ready = () => page.waitForFunction(() =>
     document.querySelector(".dressup-stage[data-state=ready]")?.inspectDressup().triangles > 0);
@@ -90,6 +95,7 @@ try {
   releaseBody();
   bodyDelay = null;
   await ready();
+  await checkPendingModulesHidden();
   const routeDownloads = requests.filter(url => /\.glb(?:\?|$)/.test(url)).length;
   // Only the worn modules download with the character; the rest wait until they are chosen.
   assert.equal(routeDownloads, 10 + 1);
@@ -223,8 +229,9 @@ try {
     }, id);
   };
   for (const bodyId of manifest.bodies.map(({ id }) => id).filter(id => id !== manifest.defaults.body)) {
-    const ownModules = manifest.modules.filter(({ bodyIds }) => bodyIds?.includes(bodyId));
+    const ownModules = verifiedModules.filter(({ bodyIds }) => bodyIds?.includes(bodyId));
     await switchTo(bodyId);
+    await checkPendingModulesHidden();
     assert.equal((await snapshot()).joints.length, 65);
     assert.equal(await page.locator(`[data-body="${bodyId}"]`).getAttribute("aria-pressed"), "true");
     assert.equal(await module(selectedTop).count(), 0, "modules of another body are not offered");
@@ -294,14 +301,16 @@ try {
   await page.goto(routeUrl);
   const retry = page.locator('#chibi-dressup-page [data-i18n="common.retryExperience"]');
   await retry.waitFor();
+  assert.equal(errors.length, 1, "only the injected corrupt GLB should log an error");
+  assert.match(errors[0], /^Experience chibi-dressup failed to start SyntaxError:.*not a GLB/);
   await retry.click();
   await ready();
-  assert.deepEqual(errors, []);
+  assert.equal(errors.length, 1, "retry should recover without new errors");
 
   console.log(JSON.stringify({
     chromium: browser.version(), glbRequests: { demos: 0, dressup: routeDownloads },
     moduleTriangles, clipResults, bodyResults, gestureResults, restored: saved, widths,
-    consoleErrors: errors.length, reducedMotion: "paused", errorRecovery: "retry recovered",
+    unexpectedErrors: 0, reducedMotion: "paused", errorRecovery: "retry recovered after one injected corrupt GLB",
     screenshots: [path.join(out, "desktop.png"), path.join(out, "mobile.png")],
   }, null, 2));
 } finally {

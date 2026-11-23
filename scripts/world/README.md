@@ -1,8 +1,10 @@
 # Singapore world tiles
 
 The offline builder uses Node.js and reads the Overpass `out geom` extract at
-`output/osm/marina_bay.json`. OpenStreetMap contributors provide the source data
-under the ODbL. The tile index carries the attribution for downstream display.
+`output/osm/marina_bay.json` by default. OpenStreetMap contributors provide the
+source data under the ODbL. The tile index carries the attribution for downstream
+display. The network test instead uses the pinned, compressed extract described in
+[`fixtures/README.md`](fixtures/README.md), so it does not require local scratch data.
 
 ```sh
 node --test scripts/world/world-network.test.mjs

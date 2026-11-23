@@ -1,16 +1,18 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtemp, readdir, readFile, rm, stat } from 'node:fs/promises';
+import { mkdtemp, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
+import { gunzipSync } from 'node:zlib';
 import { project as driveProject } from '../../src/drive/route.js';
 import { buildRoadGraph, buildLaneCenterlines, simplifyPolyline } from '../../src/world/network/graph.js';
 import { ORIGIN, project, projectOsm } from '../../src/world/network/project.js';
 import { buildingHeight, buildTileFiles } from './build-tiles.mjs';
 
-const osm = JSON.parse(await readFile(new URL('../../output/osm/marina_bay.json', import.meta.url), 'utf8'));
+const fixture = gunzipSync(await readFile(new URL('./fixtures/marina-bay-2026-11-20.json.gz', import.meta.url)));
+const osm = JSON.parse(fixture);
 const graph = buildRoadGraph(osm);
 const cli = fileURLToPath(new URL('./build-tiles.mjs', import.meta.url));
 const wayEdge = id => graph.edges.find(edge => edge.wayId === id);
@@ -159,9 +161,11 @@ test('height uses explicit metres, levels, then a building class default', () =>
 test('CLI generates deterministic 250 m tiles under 120 KB and preserves mapped features', async () => {
   const directory = await mkdtemp(join(tmpdir(), 'world-network-test-'));
   try {
+    const input = join(directory, 'marina-bay.json');
+    await writeFile(input, fixture);
     const first = join(directory, 'first');
     const second = join(directory, 'second');
-    for (const output of [first, second]) execFileSync(process.execPath, [cli, '--output', output]);
+    for (const output of [first, second]) execFileSync(process.execPath, [cli, '--input', input, '--output', output]);
     const listing = (await readdir(first)).sort();
     assert.deepEqual((await readdir(second)).sort(), listing);
 

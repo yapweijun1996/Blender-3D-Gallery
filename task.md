@@ -280,14 +280,14 @@ Documentation added: [FEATURES_MAP.md](FEATURES_MAP.md) (refreshed to `fb9d5070`
 
 - [x] `scripts/sync-chibi-dressup-modules.mjs` now preserves hand-authored `bodyIds` and `family` across syncs (verified by injecting `family` and re-running the sync; manifest then restored; `tests/chibi-dressup-config.test.mjs` 5/5 pass).
 - [x] `models/chibi-dressup/README.md` no longer says "four" modules.
-- [ ] `status` (`verified`/`pending`) is schema-checked in `config.js` but never changes runtime behavior, so a `pending` module is shown to visitors.
-- [ ] (deferred: the workflow's sparse checkout excludes `tests/` and `models/`, so adding `npm test` needs a CI design change) `.github/workflows/deploy.yml` push path runs only `npm run build:deploy`: no `npm test`, no `validate:assets` (manual dispatch with the input can run it).
+- [x] Dress-up offers only verified modules. Saved selections, defaults and body switches also exclude pending modules.
+- [x] GitHub Pages requires `npm test`, `npm run test:world` and `npm run validate:assets` to pass, including when the deployment job restores a cached build.
 - [x] Added `npm run test:dressup` for `scripts/test-chibi-dressup-browser.mjs` (script entry only; the browser test itself was not run here and it needs a production build).
 - [ ] `scripts/pwa-build.mjs:63` hard-codes the Game version string and `src/pwa/sw-template.js:57` hard-codes 18 pack files.
 - [ ] Demo route and interactive-asset lists are duplicated by hand across `src/main.js`, `scripts/demo-registry.mjs`, `src/viewer.js` and `data/demos.json`.
 - [ ] `src/visitor-v2/demo.js` and `src/visitor-v3/demo.js` share a scaffold; untested. `src/fish-motion.js` is the only viewer add-on imported statically.
 - Superseded: the manifest now has two bodies (`neutral`, `female`) and seven `female-*` modules carrying `bodyIds` and `family`; the sync script candidates define those fields directly and fall back to the previous manifest values. No `hat` module is listed. Default prop sockets still come from untracked `output/modular-chibi-parts/*/attachment.json` (not re-verified).
-- [ ] `npm run test:dressup` result on 2026-11-19 (not a pass): at commit `be28ea15` the committed test loops over every manifest module, including `female-*` ones that the default neutral body does not render, so it fails at `[data-module="female-hair-bob"]` (after a 20 s timeout on the first click under software rendering, which passes with a 90 s timeout). With another session's uncommitted edits to the test, `src/chibi-dressup/props.js` and `config.js` it advances and times out at `[data-clip="take_item"]`. Re-run once those edits are committed.
+- [x] Dress-up browser retest on 2026-11-23 passed on a clean Node 24 production build. The test covered all three bodies, verified modules, mobile layout, locale switching and retry after an injected invalid GLB. A separate local browser probe confirmed that a pending default was hidden and did not download. This supersedes the 2026-11-19 failures at `[data-module="female-hair-bob"]` and `[data-clip="take_item"]`.
 - Corrected during review: `game-mounted` is dispatched by `src/main.js` (`${page}-mounted`); the earlier doc claim that nothing dispatches it was wrong and was fixed.
 
 
@@ -319,4 +319,4 @@ Open:
 - [x] MRT passengers: six chibis (three on phones) at three doorways, one boards and one gets off at each, swapping every cycle (`src/mrt/passengers.js`, 3 tests; screenshot checked).
 - [x] MRT: the station page has a Station button: the generic platform, or the Bayfront Circle line and Downtown line island platforms (Codex-made, loaded on demand; their track-side screen doors are hidden and replaced by the opening doors, passengers and the train follow the platform height). Not modelled: the real two-level layout, the concourse view, Promenade.
 - [x] The player car is capped at 100 km/h (28 m/s); the fastest mapped limit is 90 km/h.
-- Note: `npm run test:world` needs the untracked `output/osm/marina_bay.json`, so it is not part of `npm test`.
+- Note: `npm run test:world` uses a pinned OSM fixture under `scripts/world/fixtures/` and is not part of `npm test`. Regenerating the production map still needs the separate local source extract.

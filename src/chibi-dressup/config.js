@@ -81,13 +81,16 @@ export function validateManifest(manifest) {
 /** A module fits the bodies it lists; without a list it belongs to the first body. */
 export const fitsBody = (module, bodyId, manifest) => (module.bodyIds ?? [manifest.bodies[0].id]).includes(bodyId);
 export const moduleFamily = module => module.family ?? module.id;
+export const selectableModulesForBody = (bodyId, manifest) => manifest.modules.filter(module =>
+  module.status === "verified" && fitsBody(module, bodyId, manifest));
 
 /** Carry the chosen modules over to another body by family (hair-bob, top-tshirt ...). */
 export function modulesForBody(modules, bodyId, manifest) {
+  const selectable = selectableModulesForBody(bodyId, manifest);
   return Object.fromEntries(manifest.slots.map(slot => {
-    const current = manifest.modules.find(module => module.id === modules[slot]);
-    const match = current && manifest.modules.find(module => module.slot === slot &&
-      moduleFamily(module) === moduleFamily(current) && fitsBody(module, bodyId, manifest));
+    const current = manifest.modules.find(module => module.status === "verified" && module.id === modules[slot]);
+    const match = current && selectable.find(module => module.slot === slot &&
+      moduleFamily(module) === moduleFamily(current));
     return [slot, match?.id ?? null];
   }));
 }
@@ -95,13 +98,14 @@ export function modulesForBody(modules, bodyId, manifest) {
 export function normalizeConfig(value, manifest) {
   const defaultBody = manifest.defaults.body ?? manifest.bodies[0].id;
   const body = manifest.bodies.some(item => item.id === value?.body) ? value.body : defaultBody;
+  const selectable = selectableModulesForBody(body, manifest);
   const modules = Object.fromEntries(manifest.slots.map(slot => {
     const fallbackId = Object.hasOwn(manifest.defaults, slot) ? manifest.defaults[slot] : null;
-    const fallback = manifest.modules.some(module => module.id === fallbackId && fitsBody(module, body, manifest))
+    const fallback = selectable.some(module => module.id === fallbackId && module.slot === slot)
       ? fallbackId : null;
     if (!isRecord(value?.modules) || !Object.hasOwn(value.modules, slot)) return [slot, fallback];
     const id = value.modules[slot];
-    const valid = manifest.modules.some(module => module.id === id && module.slot === slot && fitsBody(module, body, manifest));
+    const valid = selectable.some(module => module.id === id && module.slot === slot);
     return [slot, id === null || valid ? id : fallback];
   }));
   const hands = Object.fromEntries(HANDS.map(side => {

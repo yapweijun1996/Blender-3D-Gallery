@@ -60,6 +60,8 @@ Manifest schema (`models/chibi-dressup/manifest.json`, `version: 1`) as enforced
   The sync script also writes a `source` field; the validator ignores unknown keys.
 - `defaults`: `body` must be a body id; other keys must be a slot whose value is `null` or an existing module id of that slot.
 
+Only `verified` modules are selectable. A pending saved selection falls back to a verified default for the same slot, or to an empty slot. Body switches carry verified choices between compatible bodies by family.
+
 Current committed manifest: one body (`neutral`: `base_body.glb`, `hand_gestures.glb`, motion `motion-clips.glb` +
 `actions.glb` + `hold_actions.glb`, no per-body `sockets`), 14 modules, all `verified`, defaults `{hair:"hair-bob", body:"neutral"}`.
 No `hat` module exists yet. `top-dress` carries `excludesSlots:["bottom"]`.
@@ -273,8 +275,7 @@ Rig contract the bodies and modules must satisfy (enforced by thrown errors): Mi
 
 1. `rig.js`, `props.js`, `expression.js`, `view.js`, `page.js` have no Node unit tests; their behaviour is only covered by the Playwright script, which is not in
    `package.json` scripts or `npm test`, so it only runs when invoked by hand.
-2. Module `status` (`verified`/`pending`) is validated but never read at runtime: a `pending` module would be shown to visitors (`page.js` filters by
-   `fitsBody` only). Publication gating relies on process, not code.
+2. Resolved: the wardrobe and saved settings now skip pending modules.
 3. `sync-chibi-dressup-modules.mjs` rebuilds each synced module object from `{id, slot, excludesSlots, label, file, status, source, bytes, sha256}`;
    it would drop `bodyIds`/`family` on a module that has them (none do today). Its `candidates` list is hardcoded and not in `package.json`;
    `models/chibi-dressup/README.md` still says "the four listed modules" while the script lists 14.

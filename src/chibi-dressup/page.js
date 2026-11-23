@@ -1,7 +1,7 @@
 import { getLanguage, localize, mountMarkup, onLanguageChange } from "../i18n/index.js";
 import manifestData from "../../models/chibi-dressup/manifest.json";
 import {
-  CLIPS, EXPRESSIONS, GESTURES, HANDS, fitsBody, loadConfig, modulesForBody, saveConfig, validateManifest,
+  CLIPS, EXPRESSIONS, GESTURES, HANDS, loadConfig, modulesForBody, saveConfig, selectableModulesForBody, validateManifest,
 } from "./config.js";
 import { createExpressionController } from "./expression.js";
 import { createProps } from "./props.js";
@@ -215,7 +215,7 @@ export async function mountDressup(root, thumbnail, signal) {
 
   async function buildCharacter(bodyId) {
     const spec = manifest.bodies.find(item => item.id === bodyId);
-    const fitting = manifest.modules.filter(module => fitsBody(module, bodyId, manifest));
+    const fitting = selectableModulesForBody(bodyId, manifest);
     const incoming = new Set();
     const worn = fitting.filter(({ id, slot }) => config.modules[slot] === id);
     let loaded;

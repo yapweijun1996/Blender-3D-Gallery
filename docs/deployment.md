@@ -1,6 +1,6 @@
 # Fast GitHub Pages deployment
 
-The implemented pipeline is [deploy.yml](../.github/workflows/deploy.yml). It runs on main pushes and manual dispatch. New pushes cancel superseded runs. The site is built and published in one job. Node.js 24 and the lockfile define its JavaScript toolchain.
+The implemented pipeline is [deploy.yml](../.github/workflows/deploy.yml). It runs on main pushes and manual dispatch. New pushes cancel superseded runs. A verification job checks out the complete repository, installs the locked dependencies, and runs `npm test`, `npm run test:world`, and `npm run validate:assets`. The site build and publication job requires that job to pass, including on a site cache hit. Node.js 24 and the lockfile define its JavaScript toolchain.
 
 ## Inputs and cache
 
@@ -8,7 +8,7 @@ The initial checkout contains the app, scripts and catalog while excluding model
 
 The selector's cache key hashes the selected paths and indexed Git blob IDs. It is a committed-input identity. Stage intended changes before local key checks. The selector rejects tracked symbolic links and references to missing catalog files. Its literal dependency scan is bounded. A production build remains the check for completeness when code starts using a new dependency pattern.
 
-An exact `dist/` cache hit skips model downloads, npm installation and Vite. A miss downloads selected model files, runs `npm ci --no-audit --no-fund`, then `npm run build:deploy`. A manual run with `validate_assets=true` expands the checkout and runs full asset validation. Local `npm run build` also retains full validation.
+In the deployment job, an exact `dist/` cache hit skips model downloads, npm installation and Vite. A miss downloads selected model files, runs `npm ci --no-audit --no-fund`, then `npm run build:deploy`. The separate verification job always downloads the complete tracked repository and runs all three gates; this increases deployment time and transfer even when the site cache hits. The existing manual `validate_assets=true` input still forces a fresh deployment build, while asset validation now runs for every deployment. Local `npm run build` also retains full validation.
 
 ## Observed evidence
 
@@ -18,7 +18,7 @@ The minimal input selection reduced the measured uncompressed tracked checkout f
 - [Identical-input deployment 44117134618](https://github.com/yapweijun1996/Blender-3D-Gallery/actions/runs/44117134618) succeeded in 35 seconds and skipped model downloads, npm installation and build.
 - [Compression batch 02 deployment 44121744672](https://github.com/yapweijun1996/Blender-3D-Gallery/actions/runs/44121744672) succeeded and its public build and nine GLB hashes matched the tested artifacts.
 
-These timings vary with runner availability, payload and hosting. The later compression batches further reduced the selected model bytes.
+These historical timings predate the required full-checkout verification job; they do not measure the current workflow. Timings vary with runner availability, payload and hosting. The later compression batches further reduced the selected model bytes.
 
 ## Diagnose and verify
 
