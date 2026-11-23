@@ -1,6 +1,6 @@
 # Fast GitHub Pages deployment
 
-The implemented pipeline is [deploy.yml](../.github/workflows/deploy.yml). It runs on main pushes and manual dispatch. New pushes cancel superseded runs. A verification job checks out the complete repository, installs the locked dependencies, and runs `npm test`, `npm run test:world`, and `npm run validate:assets`. The site build and publication job requires that job to pass, including on a site cache hit. Node.js 24 and the lockfile define its JavaScript toolchain.
+The implemented pipeline is [deploy.yml](../.github/workflows/deploy.yml). It runs on main pushes and manual dispatch. New pushes cancel superseded runs. A verification job checks out the complete repository, installs the locked dependencies, and runs `npm test`, `npm run test:world`, and `npm run validate:assets`. The build job requires verification to pass, including on a site cache hit. A separate job publishes the uploaded build to Pages. Node.js 24 and the lockfile define its JavaScript toolchain.
 
 ## Inputs and cache
 
@@ -8,7 +8,7 @@ The initial checkout contains the app, scripts and catalog while excluding model
 
 The selector's cache key hashes the selected paths and indexed Git blob IDs. It is a committed-input identity. Stage intended changes before local key checks. The selector rejects tracked symbolic links and references to missing catalog files. Its literal dependency scan is bounded. A production build remains the check for completeness when code starts using a new dependency pattern.
 
-In the deployment job, an exact `dist/` cache hit skips model downloads, npm installation and Vite. A miss downloads selected model files, runs `npm ci --no-audit --no-fund`, then `npm run build:deploy`. The separate verification job always downloads the complete tracked repository and runs all three gates; this increases deployment time and transfer even when the site cache hits. The existing manual `validate_assets=true` input still forces a fresh deployment build, while asset validation now runs for every deployment. Local `npm run build` also retains full validation.
+In the build job, an exact `dist/` cache hit skips model downloads, npm installation and Vite. A miss downloads selected model files, runs `npm ci --no-audit --no-fund`, then `npm run build:deploy`. The separate verification job always downloads the complete tracked repository and runs all three gates; this increases deployment time and transfer even when the site cache hits. The existing manual `validate_assets=true` input still forces a fresh deployment build, while asset validation now runs for every deployment. Local `npm run build` also retains full validation.
 
 ## Observed evidence
 
@@ -24,6 +24,6 @@ These historical timings predate the required full-checkout verification job; th
 
 Check the actual main SHA, Actions steps and `build-info.json`. For an asset change, compare public GLB hashes with the tested files. Site publication and asset validation are separate observations. Use the [project Skill](../.agents/skills/gallery-fast-deploy/SKILL.md) when modifying the selector or cache.
 
-One earlier run successfully finalized an uploaded Pages artifact, then the deployment metadata lookup returned zero artifacts. A later run succeeded. That observation does not establish a source-build defect. Inspect upload and deployment evidence before choosing a retry or a code change.
+The build job names the upload with its run ID and attempt number and passes the artifact name and ID to the publication job. Before publishing, the job checks the public Actions artifact list for one live artifact of that name with the expected ID. A failed publication can be retried on the same upload. If the upload has expired after its one-day retention period, rerun the whole workflow to produce a fresh, separately named upload. In [run 45210822388](https://github.com/yapweijun1996/Blender-3D-Gallery/actions/runs/45210822388), the earlier single-job workflow found zero artifacts immediately after upload. Its retry found two artifacts with the same name.
 
 An installed PWA can still show an older cached index after a release. In the observed check, an old asset URL returned 404. Using the visible Update now action loaded the new index and the hash-matched model. Use that update flow before judging the latest public artifact.
