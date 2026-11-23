@@ -38,6 +38,14 @@ Choose **Outside floor corner** or open `/mall-modules-preview/?view=corner-floo
 
 Run `node --test tests/mall-floor-corner-tile-2m.test.mjs`. The check inspects both sides of all four internal joins with 2,424 surface rays. It distinguishes the two champagne arms and samples both sides of their boundaries to 10 μm. Each direction of the 6.025 m visitor route has 6,075 footprint probes. A reversed tile still fills the square but places its bands on the wrong edges. Removing it leaves an unsupported quarter of the floor.
 
+### Escalator landings
+
+Choose **Escalator landings** or open `/mall-modules-preview/?view=escalator-terminals`. **Inspect lower terminal** and **Inspect upper terminal** bring the tread edge, both metal shoulders and the neighbouring tiles into view. **Reset view** shows the complete escalator and its 3 m rise. [Both levels](escalator-landings.webp) · [Lower joint](escalator-lower-joint.webp) · [Upper joint](escalator-upper-joint.webp)
+
+Each landing uses the original escalator, one [2 m transition](../models/mall-escalator-floor-transition-2m/README.md) and three terrazzo slabs. The narrow metal skin covers the end crossbeam. The gold-coloured returns close the exposed faces on either side of the tread. [Profile dimensions and contact checks](../docs/verification/mall-escalator-floor-joint/README.md#installed-blender-part)
+
+With the local Vite server running, `node scripts/test-mall-escalator-terminals.mjs` checks the two detail controls, overview reset, layout switching and the three loaded GLBs on desktop and phone-sized Chromium views. Set `MALL_PREVIEW_SITE` to the server's base URL if it uses another port.
+
 ### Full-depth floor edging
 
 Choose **Finished floor edge** or open `/mall-modules-preview/?view=finished-edge`. Two [2 m straight profiles and their mitred return](../models/mall-floor-edge-2m/README.md) finish the outside edges of the same four slabs. The 60 mm cap sits flush and its bronze fascia covers the 100 mm slab depth. The straight profiles use a top-centre pivot. The paired return uses the corner tile centre at finished-floor elevation. [Installed straight and mitred edges](finished-floor-edge.png)

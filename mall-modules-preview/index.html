@@ -18,6 +18,7 @@
           <label id="grid-option" hidden>Assembly
             <select id="grid-layout">
               <option value="floor-transition">Floor grids</option>
+              <option value="escalator-terminals">Escalator landings</option>
               <option value="corner-floor">Outside floor corner</option>
               <option value="finished-edge">Finished floor edge</option>
               <option value="wall-run">Straight wall</option>
@@ -33,6 +34,12 @@
           </label></div><span class="live-badge"><span></span> 3D VIEW</span></div>
         <div class="canvas-wrap" id="canvas-wrap"><div class="canvas-status" id="canvas-status" role="status" aria-live="polite">Preparing the 3D view…</div><div class="canvas-caption"><span>DRAG TO ORBIT</span><span class="caption-dot">·</span><span>SCROLL TO ZOOM</span></div>
           <button id="joystick" type="button" aria-label="Drag to move the visitor or use arrow keys" hidden><span></span></button>
+        </div>
+        <div id="terminal-tools" hidden role="group" aria-label="Inspect an escalator landing">
+          <div class="walk-buttons">
+            <button type="button" data-terminal="lower" aria-pressed="false">Inspect lower terminal</button>
+            <button type="button" data-terminal="upper" aria-pressed="false">Inspect upper terminal</button>
+          </div>
         </div>
         <div id="walk-tools" hidden>
           <div class="walk-buttons">

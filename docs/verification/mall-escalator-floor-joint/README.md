@@ -19,4 +19,12 @@ Run `node docs/verification/mall-escalator-floor-joint/check.mjs` from the repos
 
 At each terminal, 341 surface probes crossed the deck, profile and floor. The largest sampled depression was 0.52 mm at the original deck bevel. The occupied profile cells cleared the transformed bounds of the escalator meshes and the floor slab. Separate probes found that the 1.20 m-wide floor-facing edge on [landing 429](../../../models/mall-escalator-landing/README.md) can sit flush with a centred 2 m slab.
 
-These measurements describe a static gallery model. An editable production part, treatment of the side shoulders and an end-to-end passenger route remain open.
+## Installed Blender part
+
+The [editable terminal part](../../../models/mall-escalator-floor-transition-2m/README.md) uses the profile above. The [local assembly](../../../mall-modules-preview/README.md#escalator-landings) installs one at each end of the original escalator. A centre slab meets the back of each profile. Two flank slabs reach the tread-edge plane and meet the profile along its full 120 mm sides.
+
+On each side, the shoulder extends 225 mm past the tread. The first 5 mm continue the 15 mm top skin over the beam recess. The outer 220 mm have a closed, 100 mm-deep front face. The front terminates at the open escalator well. The side meets the flanking slab.
+
+On all three detail levels, 341 surface probes per end cross the deck, transition and centre tile. The deepest sampled depression was 0.52 mm at the original tread bevel. The 48 paired side-face probes per end also distinguish the flush vertical faces from the flank slab's 2 mm underside bevel. One millimetre above the underside, that bevel leaves a 1 mm horizontal gap.
+
+Run `node --test tests/mall-escalator-floor-transition.test.mjs` to check the three exported detail levels on both landings, including the exposed fronts, the slab contacts and the beam clearances. The tests also displace a flank slab to reproduce a broken side joint. The static installation and a passenger's journey between storeys have separate acceptance criteria. The passenger route remains open.

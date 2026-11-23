@@ -77,4 +77,4 @@ At the audited commit, the Gallery offered the TV demo table for download. Its a
 
 ### Escalator terminal on the 2 m grid
 
-The existing escalator’s upper and lower crossbeams project 20 mm past the finished deck. An ordinary slab placed flush there intersects the beam. A [measured transition profile](../verification/mall-escalator-floor-joint/README.md) joins the original deck and slab with 5 mm of model clearance. The profile is a geometry study for the next editable part.
+The existing escalator’s upper and lower crossbeams project 20 mm past the finished deck. An ordinary slab placed flush there intersects the beam. The [editable 2 m transition](../../models/mall-escalator-floor-transition-2m/README.md) has a recess that clears the beam by 5 mm above, behind and on either side. The [assembled landings](../../mall-modules-preview/README.md#escalator-landings) show how both finished shoulders meet adjacent slabs. [Measured joints and reproduction](../verification/mall-escalator-floor-joint/README.md#installed-blender-part)

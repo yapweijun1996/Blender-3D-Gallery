@@ -13,6 +13,7 @@ import { arrival, assembleCorridor, corridorAssetPaths } from './corridor-layout
 import { shellLayout } from './shell-layout.js';
 import { assembleCornerTileFloor, assembleFinishedFloorEdge, cornerFloorPath, floorEdgePaths } from './floor-edge.js';
 import { assembleFloorTransition, floorTransitionPaths } from './floor-transition.js';
+import { assembleEscalatorTerminals, escalatorTerminalPaths } from './escalator-terminal.js';
 import { assembleCornerFloor, assembleWallCeiling, assembleWalledFloor, wallCornerPath, wallRunPath } from './wall-run.js';
 
 import { createCollisionWorld } from '../docs/verification/mall-corridor/collision.js';
@@ -86,6 +87,7 @@ if (renderer) {
       build: sources => shopScene(sources, id, assemble),
     };
   }
+  let escalatorTerminals;
   const assemblies = {
     assembly: {
       name: 'The corridor', subtitle: 'A cutaway with shopfronts, lighting and corner modules.',
@@ -94,6 +96,14 @@ if (renderer) {
     'floor-transition': {
       name: 'Floor grid transition', subtitle: 'Five 1.2 m bays meet three 2 m bays along a six-metre joint.',
       inputs: transitionAssets, build: assembleFloorTransition,
+    },
+    'escalator-terminals': {
+      name: 'Escalator landings', subtitle: 'Inspect the metal transition where each landing meets the terrazzo floor.',
+      inputs: Object.entries(escalatorTerminalPaths).map(([id, path]) => ({ id, path })),
+      build(sources) {
+        escalatorTerminals ??= assembleEscalatorTerminals(sources);
+        return escalatorTerminals.group;
+      },
     },
     'corner-floor': {
       name: 'Outside floor corner', subtitle: 'Champagne and terrazzo bands follow the two outside edges of a four-tile floor.',
@@ -196,6 +206,22 @@ if (renderer) {
   }
 
   let inspection = null;
+  const terminalTools = $('#terminal-tools');
+  const terminalButtons = terminalTools.querySelectorAll('[data-terminal]');
+  function updateTerminalButtons() {
+    for (const button of terminalButtons) {
+      const focus = escalatorTerminals?.inspections[button.dataset.terminal];
+      button.setAttribute('aria-pressed', String(Boolean(focus) && focus === inspection));
+    }
+  }
+  for (const button of terminalButtons) {
+    button.addEventListener('click', () => {
+      const focus = escalatorTerminals.inspections[button.dataset.terminal];
+      inspection = focus;
+      frame(focus.object, selected, focus);
+      updateTerminalButtons();
+    });
+  }
   const inspectButton = $('#inspect-fixture');
   inspectButton.addEventListener('click', () => {
     const focus = activeWalkScene()?.inspection;
@@ -232,6 +258,7 @@ if (renderer) {
 
   function inspectAssembly() {
     inspection = null;
+    updateTerminalButtons();
     camera.fov = 34;
     camera.updateProjectionMatrix();
     if (current) frame(current, selected);
@@ -292,6 +319,7 @@ if (renderer) {
     if (assemblies[id]) margin = id === 'assembly' ? (camera.aspect < 1.35 ? 1.08 : .8) : .94;
     // Bring the display furniture forward while keeping the entrance in frame.
     if (assemblies[id]?.showroom) margin = .67;
+    if (id === 'escalator-terminals') margin = camera.aspect >= 1.35 ? .82 : .98;
     const radius = focus ? focus.radius : Math.max(sphere.radius, .25) * margin;
     const distance = radius / Math.sin(Math.min(vertical,horizontal));
     const direction = new THREE.Vector3(6,4,7);
@@ -302,6 +330,7 @@ if (renderer) {
     if (id === 'finished-edge') direction.set(3.7,2.6,5.1);
     if (id === 'corner-floor') direction.set(3.5,5.3,5.2);
     if (id === 'floor-transition') direction.set(1.2,5.5,5.1);
+    if (id === 'escalator-terminals') direction.set(1, .8, 1.1);
     if (id === 'wall-run' || id === 'wall-ceiling') direction.set(2.3,2.6,6);
     if (id === 'wall-corner') direction.set(-3.1,2.8,5.4);
     if (focus) direction.fromArray(focus.direction).transformDirection(object.matrixWorld);
@@ -313,6 +342,7 @@ if (renderer) {
   new ResizeObserver(resize).observe(wrap); resize();
   async function select(id) {
     inspection = null;
+    terminalTools.hidden = true;
     if (visitor?.state.walking) visitor.setWalking(false);
     walkTools.hidden = true;
     message.textContent = '';
@@ -336,6 +366,10 @@ if (renderer) {
       const sources = Object.fromEntries(loaded);
       current = item ? sources[id].clone(true) : view.build(sources);
       scene.add(current); frame(current,id);
+      if (id === 'escalator-terminals') {
+        updateTerminalButtons();
+        terminalTools.hidden = false;
+      }
       status.textContent = ''; status.dataset.state = 'ready'; wrap.dataset.view = id; showWalkControls();
     } catch (error) {
       if (request !== requestId) return;
