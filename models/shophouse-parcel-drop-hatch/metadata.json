@@ -1,0 +1,81 @@
+{
+  "id": "shophouse-parcel-drop-hatch",
+  "name": "Shophouse Parcel Drop Hatch",
+  "summary": "Bilingual neighbourhood shopfront hatch with a native outward-opening panel and a stationary sample parcel.",
+  "description": "Original SG/MY-inspired shopfront parcel hatch set in a limewashed bay with green tiled skirting. A local-only 3D demonstration opens the hinged flap to reveal a stationary fictional SAMPLE parcel. No parcel is accepted or sent.",
+  "category": "Retail",
+  "tags": [
+    "Shophouse",
+    "Parcel drop",
+    "Retail logistics",
+    "Fictional demonstration",
+    "Singapore",
+    "Malaysia"
+  ],
+  "status": "validated",
+  "created": "2026-11-23",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Hand-authored original Blender stage with independently editable native parts, one sampled hinge animation and studio render. Material batches joined only for the GLB.",
+  "rights": "Original project asset; redistribution terms for public downloads are not specified.",
+  "source": "shophouse-parcel-drop-hatch.blend",
+  "generator": "generate.py",
+  "export": "exports/shophouse-parcel-drop-hatch.glb",
+  "preview": "previews/studio.webp",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.53,
+      0.43,
+      1
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        6.4,
+        6.5
+      ],
+      "hemisphereIntensity": 1.71,
+      "directionalIntensity": 2.05
+    }
+  },
+  "accuracy_notes": "Original generic scene; not a real parcel drop, carrier, security device, vendor replica or certified infrastructure. Positive hinge motion is shown outward around local X. No communication, storage, data, payments, locking or actual logistics behavior.",
+  "attribution": [
+    {
+      "credit": "All model geometry, fictional signage, local animation and studio render authored for Blender-3D-Gallery. Blender bundled lettering converted to mesh; no outside textures, graphics or model assets."
+    }
+  ],
+  "interaction": {
+    "clip": "PARCEL_HATCH_OPEN",
+    "moving_node": "PARCEL_DROP_FLAP",
+    "stationary_sample_node": "PARCEL_DROP_SAMPLE",
+    "seconds": 1.8,
+    "final_angle_degrees": 70,
+    "fully_open_by_seconds": 1.2,
+    "hinge_gltf_xyz_m": [
+      0,
+      0.853,
+      0.175
+    ],
+    "sample_anchor_gltf_xyz_m": [
+      0.011,
+      0.942,
+      -0.116
+    ],
+    "note": "Closed at start, opened in the poster. Parent shell and sample are stationary."
+  },
+  "metrics": {
+    "glb_bytes": 791272,
+    "glb_sha256": "2b98e9714fe2f11e78f780bfa5e29d773e7bdf0a1e0cc8430e251f51852366ab",
+    "source_sha256": "075fd512739b8fa02ca7327fcc0d659fca995b1ccfbda5ff4bca5897091bef4e",
+    "preview_sha256": "17cc1698f4dea11ef923c12541c48963b4d770aa6542bb9dfa4a71f2d1c05f3b",
+    "preview_bytes": 22358,
+    "triangles": 16036,
+    "vertices": 28256,
+    "draw_calls": 29,
+    "meshes": 29,
+    "materials": 21,
+    "animations": 1,
+    "maximum_texture_dimension_px": 0
+  }
+}
