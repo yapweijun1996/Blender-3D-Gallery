@@ -72,8 +72,11 @@ async function buildWorld(t) {
     for (const deck of built.bridgeSolids) physics.addStaticTrimesh(deck);
   }
   physics.step(FIXED_DT);
-  assert.deepEqual(passages.map(({ solid }) => solid.id), [buildingId]);
-  return { physics, floor, meshes, shell: passages[0].collider };
+  const expected = tiles.flatMap(source => source.buildings.filter(building => building.passages?.length).map(building => building.id));
+  assert.deepEqual(passages.map(({ solid }) => solid.id).sort((a, b) => a - b), expected.sort((a, b) => a - b));
+  const marinaShells = passages.filter(({ solid }) => solid.id === buildingId);
+  assert.equal(marinaShells.length, 1, 'Marina Square has a single passage collider across its tile fragments');
+  return { physics, floor, meshes, shell: marinaShells[0].collider };
 }
 
 function roofArea(geometry, roofHeight) {
