@@ -22,4 +22,12 @@ The front and right floor edges use `mall-floor-edge-trim` in straight 1.2 m seg
 
 - On GitHub main baseline `17a0ed6f`, the nine-view browser check, exact hashes for the two new Gallery assets, asset validation, 6 catalog tests and the standard `npm run build` passed again. A custom-output build was not supported on that baseline because its PWA hook reads `dist`; it failed before the successful standard build.
 
-This is browser emulation on the local machine, not physical mobile-device testing. The visual composition has not been measured as a new connector-fit or collision test. Run `npm run dev -- --port 4178` and open `http://127.0.0.1:4178/mall-modules-preview/` while the server is running.
+## Shopfront seam verification — 2026-11-23
+
+The outer glazing bays and their fascia panels now sit at X = ±3.30 m. This aligns the 1.20 m bays with the adjacent 2.10 m door bays and removes the 30 mm overlap at each outer join.
+
+Run `node mall-modules-preview/verify-shopfront.mjs` from the repository root. The command loads the four actual GLBs, applies the preview placements and reports signed gaps and positive-volume intersections between adjacent mesh bounding boxes. All four joins in each row and all five fascia base joins measured 0 mm within 1 μm, with no positive-volume intersections at the horizontal joins. The four GLBs passed Khronos validation with zero errors and warnings. The check failed at the outer joins with the previous placements.
+
+Local Chromium rendered the corridor, opened all nine modules, returned to the corridor and used Reset at 1440 × 900 and emulated 390 × 844. All 20 GLBs loaded without browser errors or horizontal overflow. Scope is limited to static shopfront fit and preview browsing. Physical devices, door movement, corridor collision and the 2 m planning grid remain unverified.
+
+Run `npm run dev -- --port 4178` and open `http://127.0.0.1:4178/mall-modules-preview/` to browse the preview locally.

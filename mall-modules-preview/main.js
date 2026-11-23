@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { fasciaBaseY, shopfrontAssets, shopfrontBays, shopfrontZ } from './shopfront-layout.js';
 
 const root = new URL('../', import.meta.url);
 const asset = (path) => new URL(path, root).href;
@@ -17,11 +18,8 @@ const modules = [
 ];
 // Extra scene context is loaded only for the corridor, not individual views.
 const furnishings = [
-  { id:'glazing', path:'models/mall-glass-partition/exports/mall-glass-partition.glb' },
+  ...shopfrontAssets,
   { id:'floorEdge', path:'models/mall-floor-edge-trim/exports/mall-floor-edge-trim.glb' },
-  { id:'door', path:'models/mall-shopfront-door/exports/mall-shopfront-door.glb' },
-  { id:'fasciaWide', path:'models/mall-fit-finishes/exports/mall-shopfront-fascia-210.glb' },
-  { id:'fasciaNarrow', path:'models/mall-fit-finishes/exports/mall-shopfront-fascia-120.glb' },
   { id:'light', path:'models/mall-ceiling-light/exports/mall-ceiling-light-module.glb' },
   { id:'bench', path:'models/gjh-mall-furniture/exports/gjh-lounge-bench.glb' },
   { id:'planter', path:'models/gjh-mall-furniture/exports/gjh-areca-planter.glb' },
@@ -84,15 +82,10 @@ if (renderer) {
     }
     group.add(instance(sources.mitredTrim,3.6,0,2.4));
 
-    // Two glazed shopfronts and three partition bays share a 2.4 m top line.
-    for (const x of [-3.27,0,3.27]) {
-      group.add(instance(sources.glazing,x,0,-1.2));
-      group.add(instance(sources.fasciaNarrow,x,2.4,-1.2));
-    }
-    for (const x of [-1.65,1.65]) {
-      group.add(instance(sources.door,x,0,-1.2));
-      group.add(instance(sources.fasciaWide,x,2.4,-1.2));
-      group.add(facingCorridor(instance(sources.shelf,x,0,-2.42)));
+    for (const { x, opening, fascia } of shopfrontBays) {
+      group.add(instance(sources[opening], x, 0, shopfrontZ));
+      group.add(instance(sources[fascia], x, fasciaBaseY, shopfrontZ));
+      if (opening === 'door') group.add(facingCorridor(instance(sources.shelf, x, 0, -2.42)));
     }
     // The solid wall stays behind the transparent storefronts as a reusable back wall.
     for (const x of [-3.6,-2.4,-1.2,0,1.2,2.4]) group.add(instance(sources.wall,x,0,-2.94));
@@ -113,7 +106,8 @@ if (renderer) {
         return new THREE.Mesh(new THREE.PlaneGeometry(1.65,.4),new THREE.MeshBasicMaterial({map:texture}));
       });
     }
-    for (const [index,x] of [-1.65,1.65].entries()) {
+    const doors = shopfrontBays.filter(({ opening }) => opening === 'door');
+    for (const [index, { x }] of doors.entries()) {
       const sign = shopSigns[index].clone(); sign.position.set(x,2.69,-1.155); group.add(sign);
     }
 
