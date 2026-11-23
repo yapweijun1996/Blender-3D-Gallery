@@ -15,7 +15,7 @@ Each OSM `wayId` counts once across all edges and tiles. A true tile `tunnel` fl
 | Negative layer only | 60 | 51 | 0 | 0 | 9 | 0 | 0 | 0 |
 | **Total** | **971** | **339** | **351** | **179** | **91** | **8** | **2** | **1** |
 
-Eight ways in this inventory have verified through routes on the ordinary map. Fort Canning Link accounts for two, Raffles Boulevard for three, Temasek Boulevard for two and Raffles Link for one. The remaining 963 ways include 450 with explicit private, destination or permit access, 236 other service roads and 277 other roads. Access tags and road class alone do not establish a driveable passage.
+Eight ways in this inventory have verified through routes on the ordinary map. Fort Canning Link accounts for two, Raffles Boulevard for three, Temasek Boulevard for two and Raffles Link for one. The 963 ways without a verified through route include 450 with explicit private, destination or permit access, 236 other service roads and 277 other roads. Kirk Terrace is one of those 277. Its assessment found a private exit, leaving 962 other ways without a verified through route.
 
 ## Raffles Boulevard
 
@@ -76,9 +76,65 @@ The indoor pedestrian bridge `460302684:0` crosses the road and connects to mapp
 
 The old game build blocked the car at the far wall on both keyboard and touch. With the opening, each drive cleared the wall with zero damage, continued over both tile boundaries and reached the far side on four wheels. A sedan, bus and lorry also passed in the physics test. The pedestrian capsule crossed the 14.21 m deck in both directions. The service-loop kerb is clipped only where its final 0.39 m overlaps the lane. The adjacent building façades remain solid. Each browser profile also followed one ambient car through the short connector and onto the next road in its original lane. [Previous wall](raffles-link/baseline-wall.webp) · [Open entrance](raffles-link/entry-portal.webp) · [Far side](raffles-link/far-side.webp).
 
-## Next assessments
+## Kirk Terrace at One Sophia
 
-Kirk Terrace `1343676204:0` straddles two tiles and connects to a mapped private road at one end. It still needs an assessment of the building geometry and a usable exit before it could serve through traffic.
+**Assessment closed for the pinned map.** The southern portal's only onward road is tagged `access=private`. The ordinary map keeps this passage closed to through traffic. The source gives no explicit motor-access tag on the passage itself.
+
+| Pinned OSM nodes | Motor-road connections |
+| --- | --- |
+| Northern portal `12432754334` | Kirk Terrace way `661683059` connects Sophia Road `120106012` at node `3570841452` to passage `1343676204`. The approach crosses a marked footway at `7888665065`. |
+| Interior nodes `12432754332` and `12432754327` | A one-way driveway under construction, `1343676202`, leaves the first node and rejoins the passage at the second. No other source highway meets its four intervening nodes. |
+| Southern portal `12432754333` | Only private Kirk Terrace `1343676203` continues. It runs 24.49 m to node `6194624321`, where `751462769` continues with unspecified access. Reaching that road requires crossing the private segment. |
+
+Both portals share boundary nodes with the commercial building One Sophia, way `1343676217`. The two tile fragments total 37.305 m along the road centerline. Of this, 37.298 m lies inside the rounded building footprint. The source provides no measured road grade, soffit clearance or building height. The generated 6.8 m carriageway meets a 16 m building shell extending from game height zero. At 1 m above ground, horizontal Rapier rays starting 2 m outside the northern and southern portals hit their respective façade colliders after 2.000 m and 2.006 m. These measurements describe the shipped game geometry. [Northern tile](../../models/world/tiles/-6_-9.json) · [Southern tile](../../models/world/tiles/-6_-8.json) · [Game building mesh](../../src/world/tile-mesh.js).
+
+The ordinary traffic graph omits the tunnel and the 3.40 m northern approach edge `661683059:1`, which falls below its 4 m minimum. The private southern edge exists in the graph and the ambient motor-traffic rule excludes it. Current on-street access would require independent confirmation. [Traffic graph and access rule](../../src/world/traffic.js).
+
+### Reproduce the Kirk Terrace geometry check
+
+Run from the repository root after `npm ci`. This reads the tracked tiles and uses the same collision mesh as the ordinary map. The inventory command below also prints the original highway contacts when the pinned local extract is available.
+
+```sh
+node --input-type=module <<'NODE'
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import RAPIER from '@dimforge/rapier3d-compat';
+import { splitByRing } from './src/world/network/polygon.js';
+import { createPhysicsWorld } from './src/world/physics/world.js';
+import { buildTile, buildingMesh, TILE_SIZE } from './src/world/tile-mesh.js';
+import { allowsAmbientTraffic, buildTrafficGraph } from './src/world/traffic.js';
+
+const load = file => JSON.parse(readFileSync(`models/world/tiles/${file}`, 'utf8'));
+const tiles = load('index.json').tiles.map(({ file }) => load(file));
+const { edges } = buildTrafficGraph(tiles);
+const passage = '1343676204:0', privateExit = edges.get('1343676203:0');
+assert.ok(!edges.has(passage) && !edges.has('661683059:1'));
+assert.equal(privateExit.access, 'private');
+assert.equal(allowsAmbientTraffic(privateExit), false);
+console.log('Private exit length (m)', privateExit.length.toFixed(2));
+
+const physics = await createPhysicsWorld();
+for (const [file, portalIndex] of [['-6_-9.json', 0], ['-6_-8.json', 1]]) {
+  const tile = load(file);
+  const { geometry } = tile.roads.find(road => road.id === passage);
+  const shell = buildTile(tile).solids.find(solid => solid.id === 1343676217);
+  const collider = physics.addStaticTrimesh(shell.mesh ?? buildingMesh(shell.ring, shell.height, shell.base));
+  const [a, b] = [geometry[portalIndex], geometry[1 - portalIndex]].map(([x, z]) =>
+    [x + tile.x * TILE_SIZE, z + tile.z * TILE_SIZE]);
+  const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+  const inside = splitByRing(a, b, shell.ring).filter(span => span.inside)
+    .reduce((sum, span) => sum + (span.end - span.start) * length, 0);
+  const x = (b[0] - a[0]) / length, z = (b[1] - a[1]) / length;
+  const ray = new RAPIER.Ray({ x: a[0] - 2 * x, y: 1, z: a[1] - 2 * z }, { x, y: 0, z });
+  const wallHit = collider.castRay(ray, 4, true);
+  assert.ok(Math.abs(wallHit - 2) < 0.01);
+  console.log(file, { length, inside, base: shell.base ?? 0, height: shell.height, wallHit });
+}
+physics.dispose();
+NODE
+```
+
+## Next assessments
 
 Defer Kheam Hock Road `659688751:0`. Its two-way 40.32 m tunnel links `97408974:0` and `659688752:0` in tile `-19_-21`, and its source also carries `maxheight=4.5`. The current game meshes for the two Pan-Island Expressway crossings, `159090940:0` and `627656467:0`, put the rendered underside at about Y = −0.90 m at both centerline intersections. Their two-vertex profiles sample the bridge ramps at the ends of the 26.60 m and 27.13 m edges. A verified or explicitly simulated pair of upper-deck and lower-road profiles is needed before using this corridor.
 
@@ -147,5 +203,17 @@ console.log({ restricted: restricted.size, service, other, sharedEdges: allEdges
   excluded: excluded.length, otherwiseSpawnEligible: excluded.filter(spawnClassAndLength).length,
   restrictedPassageWaysInGraph: wayCount(passageEdges), restrictedPassageEdgesInGraph: passageEdges.length,
   ambientEligibleRestrictedPassageEdges: passageEdges.filter(allowsAmbientTraffic).length });
+
+const sourceWays = source.elements.filter(element => element.type === 'way');
+const sourceWay = id => sourceWays.find(way => way.id === id);
+const highwaysAt = node => sourceWays.filter(way => way.tags?.highway && way.nodes.includes(node)).map(way => way.id);
+for (const id of [661683059, 1343676204, 1343676202, 1343676203, 751462769, 1343676217]) {
+  const way = sourceWay(id);
+  console.log(id, way.tags, way.nodes);
+}
+const kirkNodes = [661683059, 1343676204, 1343676202, 1343676203].flatMap(id => sourceWay(id).nodes);
+for (const node of new Set(kirkNodes)) {
+  console.log(node, highwaysAt(node));
+}
 NODE
 ```
