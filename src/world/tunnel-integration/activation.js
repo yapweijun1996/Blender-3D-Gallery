@@ -159,8 +159,12 @@ export function createFortCanningActivation({ physics, signal, safetyBounds, req
     return available;
   }
 
+  function canRetry() {
+    return status === 'failed' && attempts < 2;
+  }
+
   function retry(frame) {
-    if (status !== 'failed' || attempts >= 2 || !validBounds(safetyBounds) || !clearForFrame(safetyBounds, frame)) return Promise.resolve(false);
+    if (!canRetry() || !validBounds(safetyBounds) || !clearForFrame(safetyBounds, frame)) return Promise.resolve(false);
     failure = null;
     status = 'idle';
     return preload();
@@ -185,6 +189,7 @@ export function createFortCanningActivation({ physics, signal, safetyBounds, req
   return {
     preload, beginFrame, afterPhysics, retry, dispose,
     get status() { return status; },
+    get canRetry() { return canRetry(); },
     get available() { return available; },
     get failure() { return failure; },
   };

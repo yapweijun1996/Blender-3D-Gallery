@@ -13,6 +13,7 @@ export function lampPlacements(graph) {
     let flip = false;
     for (let s = 24; s <= edge.length - 24; s += LIGHT_SPACING) {
       const at = sampleEdge(edge, s, 1);
+      if (at.y < -.1) continue; // The tunnel has its own fixtures.
       // Left of travel is (dz, -dx); one-way carriageways get lamps on the left verge, two-way roads alternate sides.
       const side = edge.oneway ? 1 : flip ? -1 : 1;
       flip = !flip;

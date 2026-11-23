@@ -7,6 +7,7 @@ import { createDriveAudio } from "../drive/audio.js";
 import { dayAt } from "../drive/daylight.js";
 import { cloneModel, instanceModel, loadKitFrom } from "../drive/kit.js";
 import { createQualityGovernor } from "../drive/quality.js";
+import { createWorldFortCanning } from "./tunnel-integration/session.js";
 import { createPhysicsWorld } from "./physics/world.js";
 import { createSmoke, damageEffects } from "./damage.js";
 import { STAMP_ZONE, createStamp } from "./stamp.js";
@@ -191,7 +192,6 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   const landmarkKit = await loadKitFrom(LANDMARKS.flatMap(landmark => landmark.models).map(name => [name, landmarkUrls[`../../models/${name}/${name}.glb`]]), signal, kitScenes)
     .catch(error => { if (signal.aborted) throw error; console.error("World: landmarks failed to load", error); return new Map(); });
   const physics = await createPhysicsWorld();
-  physics.addGround({ halfWidth: 60000, halfDepth: 60000 }); // the whole route: about 30 km to the north
   signal.throwIfAborted();
 
   const scene = new Scene();
@@ -236,7 +236,6 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   let graphDirty = true;
   const tiles = new Map(); // key -> { x, z, group, solids, colliders, instances }
   const pending = new Set();
-  let tileCount = 0;
   const failed = new Set();
   function addInstances(entry, built) {
     const lists = new Map();
@@ -251,45 +250,59 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
       for (const mesh of set.meshes) { entry.group.add(mesh); entry.instances.push(mesh); }
     }
   }
-  function buildEntry(x, z, data) {
-    const built = buildTile(data, { hide: hiddenOutline });
+  function makeEntry(data, options) {
+    const { x, z } = data;
+    const built = buildTile(data, { hide: hiddenOutline, ...options });
     const group = new Group();
     const entry = { x, z, data, bridgeSolids: built.bridgeSolids, busStops: built.busStops, entrances: built.entrances, group, solids: built.solids, colliders: null, instances: [], geometries: [] };
     if (built.ground) { const mesh = new Mesh(built.ground, groundMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.ground); }
     if (built.towers) { const mesh = new Mesh(built.towers, towerMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.towers); }
     if (built.buildings) { const mesh = new Mesh(built.buildings, buildingMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.buildings); }
     addInstances(entry, built);
-    scene.add(group);
+    return entry;
+  }
+  function buildEntry(x, z, data) {
+    const entry = makeEntry(data);
+    scene.add(entry.group);
     tiles.set(tileKey(x, z), entry);
-    tileCount++;
     graphDirty = true;
     return entry;
   }
   function setColliders(entry, wanted) {
     if (wanted && !entry.colliders) {
-      entry.colliders = [
-        ...entry.solids.map(solid => {
-          const { vertices, indices } = buildingMesh(solid.ring, solid.height);
-          return physics.addStaticTrimesh({ vertices, indices });
-        }),
-        // Raised road decks: the drivable top and the parapets.
-        ...entry.bridgeSolids.map(deck => physics.addStaticTrimesh({ vertices: deck.vertices, indices: deck.indices, friction: 1 })),
-      ];
+      entry.colliders = [];
+      try {
+        for (const solid of entry.solids) {
+          const { vertices, indices } = buildingMesh(solid.ring, solid.height, solid.base);
+          entry.colliders.push(physics.addStaticTrimesh({ vertices, indices }));
+        }
+        for (const deck of entry.bridgeSolids) {
+          entry.colliders.push(physics.addStaticTrimesh({ vertices: deck.vertices, indices: deck.indices, friction: 1 }));
+        }
+      } catch (error) {
+        setColliders(entry, false);
+        throw error;
+      }
     } else if (!wanted && entry.colliders) {
       for (const collider of entry.colliders) physics.removeStatic(collider);
       entry.colliders = null;
     }
   }
-  function unload(key) {
-    const entry = tiles.get(key);
-    if (!entry) return;
+  function disposeEntry(entry) {
     setColliders(entry, false);
     scene.remove(entry.group);
     for (const geometry of entry.geometries) geometry.dispose();
     for (const mesh of entry.instances) mesh.dispose?.();
-    tiles.delete(key);
     graphDirty = true;
   }
+  function unload(key) {
+    const entry = tiles.get(key);
+    if (entry) disposeEntry(entry);
+    tiles.delete(key);
+  }
+  const { activation, beforePhysics } = createWorldFortCanning({
+    physics, signal, scene, flatGround, tiles, fetchTile, makeEntry, setColliders, disposeEntry,
+  });
   let loadChain = Promise.resolve();
   function request(x, z) {
     const key = tileKey(x, z);
@@ -311,6 +324,15 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
     }
     for (const [key, entry] of tiles) {
       const distance = Math.max(Math.abs(entry.x - cx), Math.abs(entry.z - cz));
+      if (activation.available?.tiles.has(key)) {
+        const visible = distance <= LOAD_RADIUS + 1;
+        if (entry.group.visible !== visible) {
+          entry.group.visible = visible;
+          graphDirty = true;
+        }
+        setColliders(entry, distance <= SOLID_RADIUS);
+        continue;
+      }
       if (distance > LOAD_RADIUS + 1) unload(key);
       else setColliders(entry, distance <= SOLID_RADIUS);
     }
@@ -356,13 +378,17 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   let vehicle = null, restHeight = 0, playerChoice = 0, car = null;
   const carHolder = new Group();
   scene.add(carHolder);
+  let playerHalfLength;
   function chooseVehicle(index, at = null) {
     const choice = PLAYER_VEHICLES[((index % PLAYER_VEHICLES.length) + PLAYER_VEHICLES.length) % PLAYER_VEHICLES.length];
     const place = at ?? { x: start.x, z: start.z, heading: start.heading };
     if (vehicle) physics.removeVehicle(vehicle);
-    vehicle = physics.addVehicle({ type: choice.type, topSpeed: Math.min(PLAYER_TOP_SPEED, 47), position: { x: place.x, y: 1.4, z: place.z }, heading: place.heading });
+    const supportY = place.supportY ?? 0;
+    vehicle = physics.addVehicle({ type: choice.type, topSpeed: Math.min(PLAYER_TOP_SPEED, 47), position: { x: place.x, y: supportY + 1.4, z: place.z }, heading: place.heading });
+    playerHalfLength = vehicle.collider.halfExtents().z;
     for (let i = 0; i < 90; i++) physics.step(1 / 60);
-    restHeight = vehicle.getState().position.y; // the chassis centre height when standing on the road
+    const settled = vehicle.getState().position;
+    restHeight = settled.y - (physics.supportHeight(settled) ?? supportY);
     if (car) carHolder.remove(car);
     car = kit.has(choice.model) ? cloneModel(kit.get(choice.model)) : new Group();
     carHolder.add(car);
@@ -385,7 +411,7 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   chooseVehicle(Math.max(0, PLAYER_VEHICLES.findIndex(item => item.id === savedVehicle)));
   vehicleButton.addEventListener("click", () => {
     const state = vehicle.getState();
-    chooseVehicle(playerChoice + 1, { x: state.position.x, z: state.position.z, heading: state.heading });
+    chooseVehicle(playerChoice + 1, { x: state.position.x, z: state.position.z, heading: state.heading, supportY: physics.supportHeight(state.position) ?? state.position.y - restHeight });
   });
 
   // Traffic: simulated on the road graph of the loaded tiles, drawn with one instanced set per vehicle model and
@@ -403,13 +429,13 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   // Street furniture follows the road graph: lamps along the main roads and shelters at the mapped bus stops.
   let furnitureMeshes = [], stationEntrances = [];
   const pillarGeometry = new BoxGeometry(0.9, 3.4, 0.9), pillarMaterial = new MeshLambertMaterial({ color: 0xc9252c });
-  function placeFurniture(graph) {
+  function placeFurniture(graph, localEntries) {
     for (const mesh of furnitureMeshes) { scene.remove(mesh); mesh.dispose?.(); }
     furnitureMeshes = [];
-    const stops = [...tiles.values()].flatMap(entry => entry.busStops);
+    const stops = localEntries.flatMap(entry => entry.busStops);
     const { shelters, flags } = busStopPlacements(graph, stops);
     // MRT entrances: a red pillar with the station sign on top, facing the nearest road.
-    const entrances = [...tiles.values()].flatMap(entry => entry.entrances).map(entrance => {
+    const entrances = localEntries.flatMap(entry => entry.entrances).map(entrance => {
       const road = nearestRoad(graph, entrance.x, entrance.z);
       return { ...entrance, yaw: road ? Math.atan2(road.x - entrance.x, road.z - entrance.z) : 0 };
     });
@@ -441,26 +467,31 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   let headlightPoses = [];
   function updateTraffic(dt, state) {
     if (graphDirty) {
-      signalGraph = buildTrafficGraph([...tiles.values()].map(entry => entry.data));
+      const localEntries = [...tiles.values()].filter(entry => entry.group.visible);
+      const localTiles = localEntries.map(entry => entry.data);
+      const bundle = activation.available;
+      const nearTunnel = bundle && localEntries.some(entry => bundle.tiles.has(tileKey(entry.x, entry.z)));
+      signalGraph = buildTrafficGraph(localTiles, nearTunnel ? bundle.trafficOptions : undefined);
       traffic.setGraph(signalGraph);
       signalList = signalApproaches(signalGraph);
-      placeFurniture(signalGraph);
-      pedestrians?.setPaths(pedestrianPaths([...tiles.values()].map(entry => entry.data)));
+      placeFurniture(signalGraph, localEntries);
+      pedestrians?.setPaths(pedestrianPaths(localTiles));
       signalLights.setApproaches(signalList, state.position);
       graphDirty = false;
     }
     signalLights.update(traffic.signalState);
     pedestrians?.update(dt, state.position);
-    const walkers = pedestrians ? pedestrians.people.filter(person => person.root.visible).map(person => ({ id: person, x: person.root.position.x, z: person.root.position.z })) : [];
-    traffic.update(dt, state.position, walkers);
+    const walkers = pedestrians ? pedestrians.people.filter(person => person.root.visible).map(person => ({ id: person, x: person.root.position.x, y: person.root.position.y, z: person.root.position.z })) : [];
+    const player = { x: state.position.x, y: state.position.y - restHeight, z: state.position.z, halfLength: playerHalfLength };
+    traffic.update(dt, state.position, [player, ...walkers]);
     // Pedestrians near the player's car are solid too (a small box), so the car cannot drive through them.
     const aliveWalkers = new Set();
     for (const walker of walkers) {
       const near = Math.hypot(walker.x - state.position.x, walker.z - state.position.z) < 40;
       let solid = solidWalkers.get(walker.id);
-      if (near && !solid) { solid = physics.addKinematicBox({ halfExtents: { x: 0.3, y: 0.9, z: 0.3 }, position: { x: walker.x, y: 0.9, z: walker.z } }); solidWalkers.set(walker.id, solid); }
+      if (near && !solid) { solid = physics.addKinematicBox({ halfExtents: { x: 0.3, y: 0.9, z: 0.3 }, position: { x: walker.x, y: walker.y + 0.9, z: walker.z } }); solidWalkers.set(walker.id, solid); }
       else if (!near && solid) { solid.remove(); solidWalkers.delete(walker.id); solid = null; }
-      if (solid) { aliveWalkers.add(walker.id); solid.setPose(walker.x, 0.9, walker.z, 0); }
+      if (solid) { aliveWalkers.add(walker.id); solid.setPose(walker.x, walker.y + 0.9, walker.z, 0); }
     }
     for (const [id, solid] of solidWalkers) if (!aliveWalkers.has(id)) { solid.remove(); solidWalkers.delete(id); }
     const lists = new Map([...trafficSets.keys()].map(name => [name, []]));
@@ -482,7 +513,7 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
     }
     for (const [id, solid] of solidVehicles) if (!alive.has(id)) { solid.remove(); solidVehicles.delete(id); }
     for (const [name, set] of trafficSets) set.write(lists.get(name));
-    headlightPoses = [{ x: state.position.x, z: state.position.z, heading: state.heading }, ...traffic.vehicles.map(vehicle => traffic.pose(vehicle)).filter(Boolean).map(pose => ({ x: pose.x, z: pose.z, heading: pose.heading }))];
+    headlightPoses = [{ x: state.position.x, y: state.position.y - restHeight, z: state.position.z, heading: state.heading }, ...traffic.vehicles.map(vehicle => traffic.pose(vehicle)).filter(Boolean).map(pose => ({ x: pose.x, y: pose.y, z: pose.z, heading: pose.heading }))];
   }
 
   const smoke = createSmoke(scene);
@@ -575,7 +606,8 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
     delta = Math.atan2(Math.sin(delta), Math.cos(delta));
     camHeading += delta * (camReady ? Math.min(1, dt * 2.5) : 1);
     camReady = true;
-    const back = cameraBack + clamp(state.speed * 0.12, 0, 4), up = 3.4 + clamp(state.speed * 0.04, 0, 1.4);
+    const below = activation.available && state.position.y < -0.35;
+    const back = below ? 5.3 : cameraBack + clamp(state.speed * 0.12, 0, 4), up = below ? 1.8 : 3.4 + clamp(state.speed * 0.04, 0, 1.4);
     camPosition.set(state.position.x - Math.sin(camHeading) * back, state.position.y + up, state.position.z - Math.cos(camHeading) * back);
     camTarget.set(state.position.x + Math.sin(camHeading) * 6, state.position.y + 1.2, state.position.z + Math.cos(camHeading) * 6);
     camera.position.copy(camPosition);
@@ -606,7 +638,7 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
     const list = poses.slice(0, POOL_CAPACITY);
     list.forEach((pose, index) => {
       poolQuaternion.setFromAxisAngle(poolUp, pose.heading);
-      poolPosition.set(pose.x + Math.sin(pose.heading) * 6.5, 0.09, pose.z + Math.cos(pose.heading) * 6.5);
+      poolPosition.set(pose.x + Math.sin(pose.heading) * 6.5, pose.y + 0.09, pose.z + Math.cos(pose.heading) * 6.5);
       poolMatrix.compose(poolPosition, poolQuaternion, poolScale);
       headlightPools.setMatrixAt(index, poolMatrix);
     });
@@ -746,17 +778,35 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   });
   let fixedView = null;
   let frame = 0, last = performance.now(), running = true, carTile = [startTile[0], startTile[1]], distanceDriven = 0, previousPosition = null;
+  function affectedOccupants() {
+    const result = [];
+    for (const car of traffic.vehicles) {
+      if (!solidVehicles.has(car.id)) continue;
+      const position = traffic.pose(car);
+      if (position) result.push({ position, speed: car.speed, radius: car.type.length / 2 });
+    }
+    for (const person of solidWalkers.keys()) result.push({ position: person.root.position, speed: 2, radius: .5 });
+    return result;
+  }
+  function advance(dt, input) {
+    const state = vehicle.getState();
+    beforePhysics(state, dt, affectedOccupants);
+    vehicle.setControls(input);
+    updateTraffic(dt, state);
+    const previous = activation.available;
+    const active = activation.afterPhysics(physics.step(dt));
+    if (active && !previous) {
+      graphDirty = true;
+      updateTraffic(0, vehicle.getState());
+    }
+  }
   function step(now) {
     if (!running) return;
     frame = requestAnimationFrame(step);
     governor.update(now);
     const dt = clamp((now - last) / 1000, 0, 0.1);
     last = now;
-    if (!paused) {
-      vehicle.setControls(controlsNow());
-      updateTraffic(dt, vehicle.getState());
-      physics.step(dt);
-    }
+    if (!paused) advance(dt, controlsNow());
     const state = placeCar(paused ? 0 : dt);
     flatGround.position.x = state.position.x; flatGround.position.z = state.position.z; // the green plane under everything follows the car
     updateEntrance(state.position);
@@ -800,9 +850,10 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
   stage.inspectWorld = () => {
     const state = vehicle.getState();
-    return { y: state.position.y, loading: { pending: pending.size, ready: ready.length, failed: failed.size }, tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, vehicleId: PLAYER_VEHICLES[playerChoice].id, wheels: wheelNodes.length, wheelSpin: wheelNodes[0]?.angle ?? 0, checkpoint: stamp ? stamp.state.phase : null, booms: booms.length, boomOpen, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
+    const nearbyTraffic = headlightPoses.slice(1).filter(pose => Math.hypot(pose.x - state.position.x, pose.z - state.position.z) <= 180).length;
+    return { fortCanning: activation.status, nearbyTraffic, heading: state.heading, groundedWheels: state.wheels.filter(wheel => wheel.grounded).length, y: state.position.y, loading: { pending: pending.size, ready: ready.length, failed: failed.size }, tiles: tiles.size, calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, x: state.position.x, z: state.position.z, speed: state.speed, damage: state.damage, flipped: state.flipped, carTile, start, traffic: traffic.vehicles.length, signals: signalLights.count, mission: MISSIONS[missionIndex].id, vehicleId: PLAYER_VEHICLES[playerChoice].id, wheels: wheelNodes.length, wheelSpin: wheelNodes[0]?.angle ?? 0, checkpoint: stamp ? stamp.state.phase : null, booms: booms.length, boomOpen, missionsDone, score, bestRecord: record.best, smoking: smoke.points.visible, hour, supertrees: grove.length, entrances: stationEntrances.length, entranceList: stationEntrances.slice(0, 3).map(item => ({ x: item.x, z: item.z })), nearEntrance: nearEntrance ? stationName(nearEntrance) : null, people: pedestrians?.people.filter(person => person.root.visible).length ?? 0, trafficTypes: [...new Set(traffic.vehicles.map(item => item.type.id))] };
   };
-  stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) { vehicle.setControls(input); updateTraffic(1 / 60, vehicle.getState()); physics.step(1 / 60); } return stage.inspectWorld(); };
+  stage.simulate = (seconds, input) => { for (let i = 0; i < seconds * 60; i++) advance(1 / 60, input); return stage.inspectWorld(); };
   stage.hurt = amount => vehicle.crash.addImpact((4 + amount * 40) * 1300); // test hook: damage the car by about `amount`
   // Test hook: apply a steering input for a few physics steps and read the angle the front wheel nodes are given.
   stage.steerCheck = input => {
@@ -837,6 +888,7 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
       for (const mesh of furnitureMeshes) mesh.dispose?.();
       for (const solid of solidVehicles.values()) solid.remove();
       for (const solid of solidWalkers.values()) solid.remove();
+      activation.dispose();
       for (const key of [...tiles.keys()]) unload(key);
       physics.dispose();
       scene.traverse(node => { node.geometry?.dispose(); for (const m of [node.material].flat().filter(Boolean)) { m.map?.dispose(); m.dispose(); } });

@@ -62,6 +62,14 @@ export async function createPhysicsWorld({ gravity = { x: 0, y: -9.81, z: 0 } } 
       return { substeps, alpha: accumulator / FIXED_DT };
     },
 
+    /** Elevation of the nearest static support below this point, including an underground deck. */
+    supportHeight(position) {
+      assertActive();
+      const ray = new RAPIER.Ray(position, { x: 0, y: -1, z: 0 });
+      const hit = world.castRay(ray, 100, true, RAPIER.QueryFilterFlags.ONLY_FIXED);
+      return hit ? position.y - hit.timeOfImpact : null;
+    },
+
     addStaticBox({ halfExtents, ...options }) {
       assertActive();
       return addStatic(RAPIER.ColliderDesc.cuboid(halfExtents.x, halfExtents.y, halfExtents.z), options);

@@ -5,6 +5,7 @@ import profile from '../scripts/world/fort-canning-integration.json' with { type
 import { createPhysicsWorld, FIXED_DT } from '../src/world/physics/world.js';
 import { createFortCanningActivation } from '../src/world/tunnel-integration/activation.js';
 import { createFortCanningMergeGeometry } from '../src/world/tunnel-integration/merge-geometry.js';
+import { createWorldFortCanning } from '../src/world/tunnel-integration/session.js';
 
 const geometry = createFortCanningMergeGeometry(profile);
 const { minX, maxX, minZ, maxZ } = geometry.bounds;
@@ -244,4 +245,34 @@ test('abort releases in-flight and staged resources exactly once', async () => {
   assert.equal(staged.afterPhysics({ substeps: 1 }), null);
   assert.equal(physics.installed.size, 0);
   assert.deepEqual(events, ['dispose', 'dispose']);
+});
+
+test('a failed tile can retry after driving clear of the apron while still inside the preload area', async () => {
+  const physics = await createPhysicsWorld();
+  const requested = [];
+  const { activation, beforePhysics } = createWorldFortCanning({
+    physics, signal: new AbortController().signal,
+    fetchTile(key) { requested.push(key); throw new Error('unavailable'); },
+  });
+  const approach = { position: { x: -1080, z: -1450 }, speed: 0 };
+  const onApron = { position: { x: -1500, z: -1450 }, speed: 0 };
+  try {
+    beforePhysics(approach, FIXED_DT, () => []);
+    await activation.preload();
+    assert.equal(activation.status, 'failed');
+    const first = requested.slice();
+    assert.equal(new Set(first).size, 6);
+
+    beforePhysics(approach, FIXED_DT, () => []);
+    beforePhysics(onApron, FIXED_DT, () => []);
+    beforePhysics(approach, FIXED_DT, () => [inside]);
+    assert.deepEqual(requested, first);
+    beforePhysics(approach, FIXED_DT, () => []);
+    await activation.preload();
+    assert.deepEqual(requested, [...first, ...first]);
+    assert.equal(activation.canRetry, false);
+  } finally {
+    activation.dispose();
+    physics.dispose();
+  }
 });

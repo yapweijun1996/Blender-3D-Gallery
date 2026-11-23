@@ -184,6 +184,27 @@ test("a vehicle stops for a pedestrian standing in its lane and moves on when th
   assert.ok(vehicle.s > 130 || traffic.vehicles.indexOf(vehicle) < 0, "drove on after the pedestrian left");
 });
 
+test("traffic keeps its nose behind a slow player vehicle on the same deck and ignores it on another deck", () => {
+  const road = { id: "lower", from: 1, to: 2, oneway: true, lanes: 1, maxspeed: 50, class: "primary" };
+  const sections = [0, 300].map(z => ({ x: 0, y: -5.5, z, rx: -1, rz: 0 }));
+  const graph = buildTrafficGraph([], { authoredRoads: new Map([[road.id, { road, sections }]]) });
+  const near = { x: 0, z: 95 };
+  for (const y of [-4.8, 0.7]) {
+    const traffic = createTraffic({ graph, maxVehicles: 0 });
+    const type = VEHICLE_TYPES[0];
+    const follower = { id: 1, type, edge: road.id, s: 60, lane: 0, direction: 1, speed: 12 };
+    traffic.vehicles.push(follower);
+    const player = { x: 0, y, z: 71, halfLength: 3 };
+    for (let step = 0; step < 6 * 60; step++) {
+      player.z += 2 / 60;
+      traffic.update(1 / 60, near, [player]);
+      if (y < 0) assert.ok(player.z - player.halfLength - (follower.s + type.length / 2) >= .99, "the cars keep a bumper gap");
+    }
+    if (y > 0) assert.ok(follower.s > player.z + 30, "another deck is not a driving obstacle");
+    else assert.ok(follower.s > 70, "the follower continues behind the slower player");
+  }
+});
+
 test("at an unsignalised junction vehicles from two roads take turns and never share the junction", () => {
   // Two roads meeting at node 3 and one exit road: a T-junction.
   const make = (id, from, to, points) => {
