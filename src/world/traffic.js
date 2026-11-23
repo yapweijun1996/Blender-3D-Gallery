@@ -189,7 +189,7 @@ export function buildTrafficGraph(tiles, { forwardConnectors, signalApproachChai
   for (const tile of tiles) {
     for (const junction of tile.junctions ?? []) if (junction.signalised) signalised.add(junction.nodeId);
     for (const road of tile.roads ?? []) {
-      if (authoredRoads?.has(road.id) || road.tunnel || road.geometry.length < 2) continue;
+      if (authoredRoads?.has(road.id) || (road.tunnel && !road.passageRoof) || road.geometry.length < 2) continue;
       const shifted = road.geometry.map(([x, z]) => [x + tile.x * 250, z + tile.z * 250]);
       const entry = fragments.get(road.id) ?? { road, pieces: [] };
       entry.pieces.push({ points: shifted, start: road.edgeStart ?? 0 });
@@ -208,11 +208,12 @@ export function buildTrafficGraph(tiles, { forwardConnectors, signalApproachChai
       points, length, width: road.width ?? Math.max(3.4, (road.lanes ?? 2) * LANE), name: road.name, class: road.class,
       complete,
       // A raised bridge: its deck height follows bridgeHeight() along the whole edge (see bridges.js).
-      raised: isBridge(road), layer: road.layer ?? 0, bridgeStart: start, bridgeLength: road.edgeLength ?? length,
+      raised: isBridge(road), layer: road.passageRoof ? 0 : road.layer ?? 0, bridgeStart: start, bridgeLength: road.edgeLength ?? length,
     };
     // Cumulative distance of each point, for sampling.
     edge.cumulative = [0];
     for (let i = 1; i < points.length; i++) edge.cumulative.push(edge.cumulative[i - 1] + distance(points[i - 1], points[i]));
+    if (road.leftBusLane) edge.leftBusLane = true;
     if (sections) edge.sections = sections;
     edges.set(id, edge);
     node(road.from).forward.push(id);
@@ -331,6 +332,7 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
       const lane = Math.floor(random() * lanesOf(edge, direction));
       if (direction > 0 && edge.forwardMovements && !edge.forwardMovements[lane]?.length) continue;
       const type = pickType(random);
+      if (lane < firstAllowedLane(edge, type)) continue;
       // Do not spawn inside another vehicle.
       if (vehicles.some(other => other.edge === edge.id && other.direction === direction && other.lane === lane && Math.abs(other.s - s) < 14)) continue;
       const vehicle = { id: nextId++, type, edge: edge.id, direction, s, lane, speed: Math.min(edge.speed * 0.8, 12), wait: 0 };
@@ -338,6 +340,10 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
       return vehicle;
     }
     return null;
+  }
+
+  function firstAllowedLane(edge, type) {
+    return edge.leftBusLane && type.id !== "bus" && type.id !== "school-bus" ? 1 : 0;
   }
 
   function nextEdge(vehicle, edge) {
@@ -389,7 +395,7 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
     if (vehicle.nextFor !== edge.id + ":" + vehicle.direction) { vehicle.next = nextEdge(vehicle, edge); vehicle.nextFor = edge.id + ":" + vehicle.direction; }
     const option = vehicle.next;
     const ahead = option && current.edges.get(option.id);
-    return ahead ? { ...option, lane: Math.min(vehicle.lane, lanesOf(ahead, option.direction) - 1) } : null;
+    return ahead ? { ...option, lane: Math.max(firstAllowedLane(ahead, vehicle.type), Math.min(vehicle.lane, lanesOf(ahead, option.direction) - 1)) } : null;
   }
 
   // Unsignalised junctions: a vehicle gives way to one on another road that is already in the junction or reaches it first.

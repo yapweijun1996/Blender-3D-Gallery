@@ -38,6 +38,13 @@ export async function createPhysicsWorld({ gravity = { x: 0, y: -9.81, z: 0 } } 
     return collider;
   }
 
+  function staticSurfaceHeight(position, direction) {
+    assertActive();
+    const ray = new RAPIER.Ray(position, { x: 0, y: direction, z: 0 });
+    const hit = world.castRay(ray, 100, true, RAPIER.QueryFilterFlags.ONLY_FIXED);
+    return hit ? position.y + direction * hit.timeOfImpact : null;
+  }
+
   return {
     /** Raw Rapier world for scene queries. Advance the simulation through this wrapper's step(). */
     world,
@@ -64,10 +71,11 @@ export async function createPhysicsWorld({ gravity = { x: 0, y: -9.81, z: 0 } } 
 
     /** Elevation of the nearest static support below this point, including an underground deck. */
     supportHeight(position) {
-      assertActive();
-      const ray = new RAPIER.Ray(position, { x: 0, y: -1, z: 0 });
-      const hit = world.castRay(ray, 100, true, RAPIER.QueryFilterFlags.ONLY_FIXED);
-      return hit ? position.y - hit.timeOfImpact : null;
+      return staticSurfaceHeight(position, -1);
+    },
+
+    overheadHeight(position) {
+      return staticSurfaceHeight(position, 1);
     },
 
     addStaticBox({ halfExtents, ...options }) {

@@ -254,7 +254,7 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
     const { x, z } = data;
     const built = buildTile(data, { hide: hiddenOutline, ...options });
     const group = new Group();
-    const entry = { x, z, data, bridgeSolids: built.bridgeSolids, busStops: built.busStops, entrances: built.entrances, group, solids: built.solids, colliders: null, instances: [], geometries: [] };
+    const entry = { x, z, data, bridgeSolids: built.bridgeSolids, walkwaySolids: built.walkwaySolids, busStops: built.busStops, entrances: built.entrances, group, solids: built.solids, colliders: null, instances: [], geometries: [] };
     if (built.ground) { const mesh = new Mesh(built.ground, groundMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.ground); }
     if (built.towers) { const mesh = new Mesh(built.towers, towerMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.towers); }
     if (built.buildings) { const mesh = new Mesh(built.buildings, buildingMaterial); mesh.matrixAutoUpdate = false; group.add(mesh); entry.geometries.push(built.buildings); }
@@ -275,6 +275,9 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
         for (const solid of entry.solids) {
           const { vertices, indices } = buildingMesh(solid.ring, solid.height, solid.base);
           entry.colliders.push(physics.addStaticTrimesh({ vertices, indices }));
+        }
+        for (const panel of entry.walkwaySolids) {
+          entry.colliders.push(physics.addStaticConvexHull({ vertices: panel.position, friction: 1 }));
         }
         for (const deck of entry.bridgeSolids) {
           entry.colliders.push(physics.addStaticTrimesh({ vertices: deck.vertices, indices: deck.indices, friction: 1 }));
@@ -610,6 +613,11 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
     const back = below ? 5.3 : cameraBack + clamp(state.speed * 0.12, 0, 4), up = below ? 1.8 : 3.4 + clamp(state.speed * 0.04, 0, 1.4);
     camPosition.set(state.position.x - Math.sin(camHeading) * back, state.position.y + up, state.position.z - Math.cos(camHeading) * back);
     camTarget.set(state.position.x + Math.sin(camHeading) * 6, state.position.y + 1.2, state.position.z + Math.cos(camHeading) * 6);
+    const cameraTile = tileKey(Math.floor(camPosition.x / TILE_SIZE), Math.floor(camPosition.z / TILE_SIZE));
+    if (tiles.get(cameraTile)?.data.roadSurfaces) {
+      const ceiling = physics.overheadHeight({ x: camPosition.x, y: state.position.y, z: camPosition.z });
+      if (ceiling != null) camPosition.y = Math.min(camPosition.y, ceiling - .25);
+    }
     camera.position.copy(camPosition);
     camera.lookAt(camTarget);
   }
@@ -848,6 +856,11 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   frame = requestAnimationFrame(step);
 
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
+  stage.inspectRoad = (x, z) => {
+    const position = { x, y: 1, z };
+    return { groundY: physics.supportHeight(position), overheadY: physics.overheadHeight(position),
+      edgeId: signalGraph && nearestRoad(signalGraph, x, z)?.edge.id };
+  };
   stage.inspectWorld = () => {
     const state = vehicle.getState();
     const nearbyTraffic = headlightPoses.slice(1).filter(pose => Math.hypot(pose.x - state.position.x, pose.z - state.position.z) <= 180).length;

@@ -12,6 +12,12 @@ Plan and per-milestone status: [sg-open-world-plan.md](sg-open-world-plan.md). O
 - Near an MRT entrance (red pillar with the station sign) a button or E goes down to the station page.
 - Damage: smoke from 40 percent, the engine stalls at 95 percent until you right the car.
 
+### Raffles Boulevard underpass
+
+On the ordinary map, drive east on Raffles Boulevard through the covered section beside Millenia Walk. The five-lane road and the north footway share the simulated surface datum. The mapped soffit is 4.5 m above that datum and the roof top is 6 m. The connecting service drive leads toward destination-access roads and stays outside the through-traffic network. The AI reserves the left lane for buses throughout the simulation. The source records Monday–Saturday, 07:30–23:00.
+
+Run `npm run test:world` for the source and tile checks, and `npm run build:deploy && npm run test:raffles-passage` for the ordinary-map browser drive. The [passage assessment](verification/sg-world-remaining-passages.md#raffles-boulevard) records the footprint, vehicle clearance and limits of the elevation data.
+
 ### Fort Canning Link tunnel prototype
 
 Open [the Fort Canning Link tunnel prototype](https://yapweijun1996.github.io/Blender-3D-Gallery/?page=sg-world&tunnel=fort-canning) from Singapore Open World. Drive from the surface approach through the descent, covered tunnel and exit. Use the arrow keys or W A S D, or the four touch controls. Pause and Restart drive apply to this session. The Open World link returns to the normal map.

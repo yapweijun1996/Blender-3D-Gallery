@@ -1,3 +1,4 @@
+import { pavementPanel } from "./pavement.js";
 import { DECK_THICKNESS, fragmentHeights, isBridge } from "./bridges.js";
 import { BufferAttribute, BufferGeometry, Color, ShapeUtils, Vector2 } from "three";
 
@@ -39,7 +40,7 @@ const origin = tile => [tile.x * TILE_SIZE, tile.z * TILE_SIZE];
 const world = (tile, [x, z]) => [x + tile.x * TILE_SIZE, z + tile.z * TILE_SIZE];
 
 /** A flat strip along a polyline. */
-function ribbon(batch, points, width, y, color) {
+function ribbon(batch, points, width, y, color, panels, walkFrom = 0) {
   if (points.length < 2) return;
   const half = width / 2, left = [], right = [];
   for (let i = 0; i < points.length; i++) {
@@ -50,7 +51,15 @@ function ribbon(batch, points, width, y, color) {
     left.push([points[i][0] - dz * half, y, points[i][1] + dx * half]);
     right.push([points[i][0] + dz * half, y, points[i][1] - dx * half]);
   }
-  for (let i = 0; i < points.length - 1; i++) batch.quad(left[i], right[i], right[i + 1], left[i + 1], color);
+  for (let i = 0; i < points.length - 1; i++) {
+    const a = left[i], b = right[i], c = right[i + 1], d = left[i + 1];
+    batch.quad(a, b, c, d, color);
+    if (panels && i >= walkFrom) {
+      // Road and sidewalk share the level floor. Their drawn heights only order the paint at the shoulder.
+      const [pa, pb, pc, pd] = [a, b, c, d].map(([x, , z]) => [x, 0, z]);
+      panels.push(pavementPanel(pa, pb, pc), pavementPanel(pa, pc, pd));
+    }
+  }
 }
 
 /**
@@ -202,17 +211,25 @@ export function buildTile(tile, { hide = () => false, buildingBase, paint, visua
 
   for (const park of tile.parks ?? []) fillPolygon(ground, shift(park.geometry), PARK_Y, PARK);
   for (const water of tile.water ?? []) fillPolygon(ground, shift(water.geometry), WATER_Y, WATER);
+  const walkwaySolids = [];
   const maskedPaths = paint?.pedestrian && new Set(paint.pedestrian);
   for (const path of tile.pedestrian ?? []) {
-    if (!maskedPaths?.has(path.id)) ribbon(ground, shift(path.geometry), 2.2, PATH_Y, PATH);
+    if (maskedPaths?.has(path.id)) continue;
+    const alongside = path.besideCarriageway;
+    ribbon(ground, shift(path.geometry), 2.2, alongside ? ROAD_Y - .01 : PATH_Y, PATH,
+      alongside ? walkwaySolids : undefined, path.walkFrom);
   }
 
   const bridgeSolids = [];
-  const maskedRoads = paint?.roads && new Set(paint.roads);
+  const maskedRoads = new Set(paint?.roads);
+  for (const surface of tile.roadSurfaces ?? []) {
+    fillPolygon(ground, shift(surface.geometry), ROAD_Y, ASPHALT);
+    for (const id of surface.edges) maskedRoads.add(id);
+  }
   function drawRoads(roads, solids) {
     for (const road of roads ?? []) {
       if (road.tunnel) continue;
-      const visible = !maskedRoads?.has(road.id);
+      const visible = !maskedRoads.has(road.id);
       const width = road.width ?? Math.max(3.4, (road.lanes ?? 2) * 3.4);
       if (isBridge(road)) deck(visible ? ground : null, shift(road.geometry), fragmentHeights(road), width, solids);
       else if (visible) ribbon(ground, shift(road.geometry), width, ROAD_Y, ASPHALT);
@@ -245,8 +262,10 @@ export function buildTile(tile, { hide = () => false, buildingBase, paint, visua
   for (const building of tile.buildings ?? []) {
     const ring = shift(building.geometry);
     if (ring.length < 4) continue;
-    const height = Math.max(3, building.height ?? 9);
-    const base = buildingBase?.(building) ?? 0;
+    const mappedBase = building.minHeight;
+    const base = buildingBase?.(building) ?? mappedBase ?? 0;
+    const height = mappedBase == null ? Math.max(3, building.height ?? 9) : building.height - base;
+    if (!(height > 0) || !Number.isFinite(height)) throw new RangeError(`Invalid height for building ${building.id}`);
     if (!Number.isFinite(base) || base < 0) throw new RangeError(`Invalid base height for building ${building.id}`);
     const seed = hash(building.id);
     if (!hide(building.name)) {
@@ -262,7 +281,7 @@ export function buildTile(tile, { hide = () => false, buildingBase, paint, visua
     buildings: buildings.empty ? null : buildings.build(),
     towers: towers.empty ? null : towers.build(),
     solids,
-    bridgeSolids,
+    bridgeSolids, walkwaySolids,
     trees: shift((tile.trees ?? []).map(tree => tree.point)),
     lamps: shift((tile.streetLamps ?? []).map(lamp => lamp.point)),
     busStops: shift((tile.busStops ?? []).map(stop => stop.point)),

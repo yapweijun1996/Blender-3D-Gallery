@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { resolve, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
+import { applyRafflesPassage } from './raffles-boulevard.mjs';
 import { buildRoadGraph, junctionArmDepth, offsetPolyline, simplifyPolyline } from '../../src/world/network/graph.js';
 import { distinctPoints, samePoint } from '../../src/world/network/geometry.js';
 import { ORIGIN, projectOsm } from '../../src/world/network/project.js';
@@ -168,6 +169,7 @@ export function buildTileFiles(input) {
     }
   }
 
+  applyRafflesPassage(tiles, elements);
   const files = new Map();
   const entries = [];
   for (const tile of [...tiles.values()].sort((a, b) => a.x - b.x || a.z - b.z)) {

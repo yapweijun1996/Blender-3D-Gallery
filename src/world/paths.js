@@ -7,7 +7,9 @@ export function pedestrianPaths(tiles) {
   for (const tile of tiles) {
     for (const way of tile.pedestrian ?? []) {
       if (!WALKING.has(way.class) || way.geometry.length < 2) continue;
-      const points = way.geometry.map(([x, z]) => [x + tile.x * 250, z + tile.z * 250]);
+      const geometry = way.walkFrom ? way.geometry.slice(way.walkFrom) : way.geometry;
+      if (geometry.length < 2) continue;
+      const points = geometry.map(([x, z]) => [x + tile.x * 250, z + tile.z * 250]);
       const cumulative = [0];
       for (let i = 1; i < points.length; i++) cumulative.push(cumulative[i - 1] + Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]));
       const length = cumulative.at(-1);
