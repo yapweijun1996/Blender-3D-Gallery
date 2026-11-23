@@ -45,4 +45,14 @@ Run `node mall-modules-preview/verify-shell.mjs` from the repository root. The c
 
 Local Chrome loaded all 20 exact GLBs and opened all nine module views at 1440 × 900 and emulated 390 × 844. Mouse orbit and wheel, touch orbit and pinch, Reset and backing-canvas resize passed without browser errors or horizontal overflow.
 
-This evidence covers fixed samples in the current static cutaway. Other corner layouts, exhaustive triangle intersection, collision and navigation, physical devices and the provisional 2 m production grid still need verification. [Backlog and asset crosswalk](../docs/shopping-mall/README.md#12-m-corridor-shell-crosswalk).
+This evidence covers fixed samples in the current static cutaway. The visitor tests below cover movement near the rear-right corner. Other corner layouts, assembly-wide intersections, furnished navigation, physical devices and the provisional 2 m production grid remain open. [Backlog and asset crosswalk](../docs/shopping-mall/README.md#12-m-corridor-shell-crosswalk).
+
+## Visitor collision at the rear-right corner
+
+Run `node --test tests/mall-corner-walk.test.mjs` from the repository root. The test builds the preview's 35 floor tiles and ten wall modules from their actual GLBs and places the [mall visitor controller](../docs/verification/mall-corridor/VISITOR.md) in that shell. Its upright cylinder is 1.80 m high with a 0.56 m radius and a maximum 25 mm movement substep. The test prints the four GLB SHA-256 hashes and compares the controller's movement with independent Rapier sweeps against the transformed wall triangles.
+
+- The visitor walked 10.36 m around the inside corner and back. At 417 positions, 10,425 downward rays checked the centre and footprint perimeter against the floor triangles, including the 1 mm grout recess.
+- Six approaches tested the straight walls, both L-wall arms and their mating planes. The controller stopped 5–20 mm before cylinder contact with the mesh. Under sustained outward input it slid 0.95 m along the rear join and 1.02 m along the right join. A diagonal approach stopped against both walls and the visitor could back away.
+- Removing the L-wall let the visitor reach the floor edge and failed the wall contact check. Lowering one floor tile by 300 mm left the controller's flat floor map traversable and failed the triangle support check.
+
+The shell path crosses space occupied by shopfronts in the furnished arrangement. It verifies the structural modules in isolation. The preview's interface is still orbit-only. Door operation, furnishings and end-to-end walking through the assembled shops need separate checks.

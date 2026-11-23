@@ -276,6 +276,7 @@ Framework proposal (no code yet): [docs/chibi-framework-design.md](docs/chibi-fr
 - [ ] Compare the solid wall with `MALL-STR-010`'s provisional 2 m specification and validate a representative complete assembly, corner/transition interfaces and target-device performance before accepting the checklist item. Unreconciled P0 shell work still includes other corner configurations and edge transitions.
 - [x] Corrected the 30 mm overlap at the outer shopfront joints in the local corridor preview. Verified all eight horizontal seams and five fascia base joints against the actual GLBs. See the [shopfront evidence](mall-modules-preview/README.md#shopfront-seam-verification--2026-11-23).
 - [x] Corrected the 10 mm inside-face step by rotating the three right straight walls to face inward. The [1.2 m shell verifier](mall-modules-preview/README.md#12-m-shell-verification--2026-11-23) checks 58 floor joins, nine wall joins, both mitred trim ends and four cutaway ceiling contacts against the actual GLBs. The [backlog crosswalk](docs/shopping-mall/README.md#12-m-corridor-shell-crosswalk) records candidate reuse and the unresolved 2 m specification.
+- [x] Verified [visitor collision in the rear-right 1.2 m shell](mall-modules-preview/README.md#visitor-collision-at-the-rear-right-corner) across both wall joins, including travel, sliding, corner contact and recovery. The run rejects an omitted wall corner and a dropped floor tile. Furnished routes and the production grid remain open.
 
 ## 12. Documentation refresh and verified gap backlog — 2026-11-19
 
