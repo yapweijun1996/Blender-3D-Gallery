@@ -26,6 +26,7 @@ export default async function createViewer(
   let lohHeiDemo;
   let railReloadDemo;
   let carparkHelpDemo;
+  let airBalangDemo;
   let visitorDemo;
   let animationPreview;
   let buildingLoop;
@@ -167,6 +168,7 @@ export default async function createViewer(
     lohHeiDemo?.dispose();
     railReloadDemo?.dispose();
     carparkHelpDemo?.dispose();
+    airBalangDemo?.dispose();
     visitorDemo?.dispose();
     animationPreview?.dispose();
     buildingLoop?.dispose();
@@ -363,6 +365,23 @@ export default async function createViewer(
       }
       if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
     }
+    if (interaction === "air-balang") {
+      try {
+        const { default: createAirBalangDemo } = await import("./air-balang/demo.js");
+        if (!disposed && !signal.aborted) {
+          airBalangDemo = createAirBalangDemo({
+            model, clips: gltf.animations, container,
+            invalidate() {
+              lastDraw = 0;
+              invalidate();
+            },
+          });
+        }
+      } catch {
+        // The stall remains available as an ordinary model if the add-on fails.
+      }
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+    }
     frameForResize = () => {
       if (!model) return;
       const viewDirection = camera.position.clone().sub(controls.target);
@@ -381,6 +400,7 @@ export default async function createViewer(
       lohHeiDemo?.reset();
       railReloadDemo?.reset();
       carparkHelpDemo?.reset();
+      airBalangDemo?.reset();
       visitorDemo?.reset();
       animationPreview?.reset();
       chibiRig?.reset();
@@ -493,6 +513,7 @@ export default async function createViewer(
       const lohHeiActive = lohHeiDemo?.update(elapsed);
       const railReloadActive = railReloadDemo?.update(elapsed);
       const carparkHelpActive = carparkHelpDemo?.update(elapsed);
+      const airBalangActive = airBalangDemo?.update(elapsed);
       const visitorActive = visitorDemo?.update(elapsed);
       const animationActive = animationPreview?.update(elapsed);
       const buildingActive = buildingLoop?.update(elapsed);
@@ -500,7 +521,7 @@ export default async function createViewer(
       const fishActive = fishMotion?.update();
       const changed = controls.update();
       renderer.render(scene, camera);
-      if (changed || active || pickupActive || lohHeiActive || railReloadActive || carparkHelpActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
+      if (changed || active || pickupActive || lohHeiActive || railReloadActive || carparkHelpActive || airBalangActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
     };
     invalidate();
     return { reset, dispose, setView };
