@@ -9,9 +9,11 @@ import { bindModule, createRig } from "./rig.js";
 import { createView, disposeModels, getBounds, loadModels } from "./view.js";
 import "./style.css";
 
-const expressionUrls = Object.fromEntries(["happy", "surprised", "sad"].map(name => [
-  name, new URL(`../../models/chibi-dressup/expressions/${name}.png`, import.meta.url).href,
-]));
+const expressionUrls = {
+  happy: new URL("../../models/chibi-dressup/expressions/happy.png", import.meta.url).href,
+  surprised: new URL("../../models/chibi-dressup/expressions/surprised.png", import.meta.url).href,
+  sad: new URL("../../models/chibi-dressup/expressions/sad.png", import.meta.url).href,
+};
 // Every model file by path under models/chibi-dressup: bodies, motion, gestures, modules and props.
 const assetUrls = import.meta.glob("../../models/chibi-dressup/**/*.glb", {
   eager: true, query: "?url", import: "default",

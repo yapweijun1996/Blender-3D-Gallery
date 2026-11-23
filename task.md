@@ -288,6 +288,7 @@ Documentation added: [FEATURES_MAP.md](FEATURES_MAP.md) (refreshed to `fb9d5070`
 - [ ] `src/visitor-v2/demo.js` and `src/visitor-v3/demo.js` share a scaffold; untested. `src/fish-motion.js` is the only viewer add-on imported statically.
 - Superseded: the manifest now has two bodies (`neutral`, `female`) and seven `female-*` modules carrying `bodyIds` and `family`; the sync script candidates define those fields directly and fall back to the previous manifest values. No `hat` module is listed. Default prop sockets still come from untracked `output/modular-chibi-parts/*/attachment.json` (not re-verified).
 - [x] Dress-up browser retest on 2026-11-23 passed on a clean Node 24 production build. The test covered all three bodies, verified modules, mobile layout, locale switching and retry after an injected invalid GLB. A separate local browser probe confirmed that a pending default was hidden and did not download. This supersedes the 2026-11-19 failures at `[data-module="female-hair-bob"]` and `[data-clip="take_item"]`.
+- [x] Dress-up expression textures now use literal paths that the sparse deployment selector can include. After the fix, the full and sparse Node 24 builds matched across all 2,529 file paths and SHA-256 hashes.
 - Corrected during review: `game-mounted` is dispatched by `src/main.js` (`${page}-mounted`); the earlier doc claim that nothing dispatches it was wrong and was fixed.
 
 
