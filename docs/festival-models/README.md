@@ -55,14 +55,12 @@ Four existing models cover parts of the later concept list. On this date, Chromi
 | Concept | Existing geometry |
 | --- | --- |
 | Mid-Autumn mould tools | The [wooden mooncake mould workboard](../../models/wooden-mooncake-mould-workboard/README.md) contains a carved hand mould and a separate cake with the matching raised impression. |
-| Christmas mall display | The [seasonal Christmas set](../../models/seasonal-christmas-decor/README.md) combines a decorated tree, four wrapped presents and two hanging snowflakes. A standalone wreath remains a separate idea. |
+| Christmas mall display | The [seasonal Christmas set](../../models/seasonal-christmas-decor/README.md) combines a decorated tree, four wrapped presents and two hanging snowflakes. The [Woodland Christmas Wreath](../../models/christmas-wreath/README.md) now supplies the separate hanging decoration. |
 | Floral garlands | The [Deepavali lamps and rangoli set](../../models/deepavali-lamps-rangoli/README.md) includes two hanging marigold garlands. The [flower-garland stall](../../models/festival-flower-garland-stall/README.md) has additional retail stock and wrapping supplies. |
 
 ## Proposed model backlog
 
-Except for the implemented Christmas tree, gift boxes, countdown clock, lion
-dance head, kumquat tree and rabbit lantern, the rows below are ideas. Work sequentially from
-the task tracker; later items and exact designs may be reprioritized.
+The rows below preserve the original proposals. The task tracker records delivery of F01–F06 and the standalone Christmas wreath. The reuse table above identifies portions covered by existing models.
 
 | Theme | Proposed models | Design notes |
 | --- | --- | --- |

@@ -178,7 +178,7 @@ Acceptance coverage E001–E100 must be tracked against deterministic assertions
 
 # Singapore and Malaysia Festival Models — 2026-11-15
 
-**Status:** F01–F06 are implemented and locally verified. Four [existing gallery models](docs/festival-models/README.md#reuse-check-on-2026-11-24) cover several later concepts, including the mooncake mould tools and Christmas mall display.
+**Status:** F01–F06 and the standalone [Christmas wreath](models/christmas-wreath/README.md) are implemented. Four [existing gallery models](docs/festival-models/README.md#reuse-check-on-2026-11-24) cover several later concepts, including the mooncake mould tools and Christmas mall display.
 Work through one model at a time. See the [festival model
 brief](docs/festival-models/README.md) for concept images, existing inventory,
 design ideas and per-model acceptance criteria. Recheck the catalog before
@@ -207,6 +207,8 @@ starting each item. Preserve the historical task records above.
 - [x] **F06 — Mid-Autumn rabbit lantern:** original standalone paper rabbit,
   editable Blender source, GLB, preview and catalog entry. Independent visual
   review and local gallery checks passed. See the [acceptance evidence](models/mid-autumn-rabbit-lantern/verification.md).
+
+- [x] **Christmas wreath** (later concept) — original standalone evergreen ring with a velvet bow, pine cones and a rear hanging loop. [Editable source, exported model and checks](models/christmas-wreath/README.md).
 
 Additional Hari Raya, Deepavali, national celebration, Sabah Kaamatan and
 Sarawak Gawai ideas are listed in the brief; decide their order after the initial
