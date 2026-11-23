@@ -1,0 +1,207 @@
+{
+  "units": "metres",
+  "axes": "glTF +Y up. Profile local +Z points away from the escalator.",
+  "scope": "Static default-pose geometry, fit and clearances. No passenger, structural or hardware claim.",
+  "inputs": [
+    {
+      "root": "ASSET_EscalatorV1_ID004",
+      "sha256": "b14375e54f366d3238fb32141bb9d25ca87add72664770e9a8541db9266bd501",
+      "localBox": {
+        "min": [
+          -0.77749997,
+          -2.33999991,
+          -5.46105577
+        ],
+        "max": [
+          0.796,
+          3.94000006,
+          5.46105577
+        ]
+      }
+    },
+    {
+      "root": "MODULE_StraightFloor_L0",
+      "sha256": "ee20ed28ff37b505b005ed9a6426c22b66972c663e2c896a304b4e6fbfe4b750",
+      "localBox": {
+        "min": [
+          -1,
+          0,
+          -1
+        ],
+        "max": [
+          1,
+          0.1,
+          1
+        ]
+      }
+    },
+    {
+      "root": "ASSET_MallEscalatorLanding",
+      "sha256": "aa2632a479f3e474b38413667f01c308d0a542325e451660f0e67be5384bc63d",
+      "localBox": {
+        "min": [
+          -0.59999999,
+          0,
+          -0.60000002
+        ],
+        "max": [
+          0.59999999,
+          0.03,
+          0.60000002
+        ]
+      }
+    }
+  ],
+  "section": {
+    "width": 2,
+    "length": 0.12,
+    "depth": 0.1,
+    "reliefWidth": 1.56,
+    "reliefLength": 0.025,
+    "cap": 0.015
+  },
+  "chosenMargins": "5 mm each side, behind and above the exposed 004 terminal beam.",
+  "independent429Threshold": {
+    "legacyRoot": [
+      0,
+      -0.03,
+      0
+    ],
+    "nativeSlabRoot": [
+      0,
+      -0.1,
+      1.6
+    ],
+    "pairs": 6,
+    "centredWidthDifferencePerSide": 0.4,
+    "scope": "429 public-floor threshold only. Its separate comb has not been substituted for the built-in comb of 004."
+  },
+  "terminals": [
+    {
+      "terminal": "Lower",
+      "nativeDeck": {
+        "min": [
+          -0.77499998,
+          -0.02,
+          4.74105588
+        ],
+        "max": [
+          0.77499998,
+          0,
+          5.44105586
+        ]
+      },
+      "nativeBeam": {
+        "min": [
+          -0.77499998,
+          -2.29999995,
+          5.42105578
+        ],
+        "max": [
+          0.77499998,
+          -0.01999998,
+          5.46105577
+        ]
+      },
+      "deckOuterEdgeZ": 5.44105586,
+      "deckHeight": 0,
+      "outwardZSign": 1,
+      "connector": [
+        0,
+        0,
+        5.09105587
+      ],
+      "connectorInsetFromOuterEdge": 0.34999999,
+      "profileRoot": [
+        0,
+        0,
+        5.44105586
+      ],
+      "profileYawDegrees": 0,
+      "originalSlabRoot": [
+        0,
+        -0.1,
+        6.56105586
+      ],
+      "returnedSurfaces": 341,
+      "maxOriginalFinishRelief": 0.00051721,
+      "positiveVolumePairsBeyondTolerance": 0,
+      "testedNativeBoundingBoxPairs": 1529,
+      "sampledSideClearance": 0.005,
+      "sampledBackClearance": 0.00500009,
+      "sampledVerticalClearance": 0.00499998,
+      "flushOrdinarySlab": {
+        "insideBeamWitnesses": 12,
+        "minVerticalOverlap": 0.08000002
+      },
+      "offsetOrdinarySlab": {
+        "shift": 0.01999991,
+        "depressedSurfaceWitnesses": 12,
+        "depression": 0.01999998
+      }
+    },
+    {
+      "terminal": "Upper",
+      "nativeDeck": {
+        "min": [
+          -0.77499998,
+          2.98000001,
+          -5.44105586
+        ],
+        "max": [
+          0.77499998,
+          3.00000001,
+          -4.49105588
+        ]
+      },
+      "nativeBeam": {
+        "min": [
+          -0.77499998,
+          0.70000005,
+          -5.46105577
+        ],
+        "max": [
+          0.77499998,
+          2.98000002,
+          -5.42105578
+        ]
+      },
+      "deckOuterEdgeZ": -5.44105586,
+      "deckHeight": 3.00000001,
+      "outwardZSign": -1,
+      "connector": [
+        0,
+        3,
+        -4.96605587
+      ],
+      "connectorInsetFromOuterEdge": 0.47499999,
+      "profileRoot": [
+        0,
+        3.00000001,
+        -5.44105586
+      ],
+      "profileYawDegrees": 180,
+      "originalSlabRoot": [
+        0,
+        2.90000001,
+        -6.56105586
+      ],
+      "returnedSurfaces": 341,
+      "maxOriginalFinishRelief": 0.00051721,
+      "positiveVolumePairsBeyondTolerance": 0,
+      "testedNativeBoundingBoxPairs": 1529,
+      "sampledSideClearance": 0.005,
+      "sampledBackClearance": 0.00500009,
+      "sampledVerticalClearance": 0.00499999,
+      "flushOrdinarySlab": {
+        "insideBeamWitnesses": 12,
+        "minVerticalOverlap": 0.08000001
+      },
+      "offsetOrdinarySlab": {
+        "shift": 0.01999991,
+        "depressedSurfaceWitnesses": 12,
+        "depression": 0.01999999
+      }
+    }
+  ]
+}

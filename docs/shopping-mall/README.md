@@ -74,3 +74,7 @@ At public `main` commit `bcc52e77`, all eleven fixtures below had a catalog entr
 | Supermarket | [Stocked gondola](../../models/shelf-food-aisle/README.md), 1.20 × 0.50 × 1.80. [Checkout counter](../../models/checkout-counter/README.md), 1.95 × 0.755 × 1.38. [Security pedestals](../../models/store-security-gate/README.md), 1.48 × 0.50 × 1.518. | The [supermarket](../../mall-modules-preview/README.md#supermarket) parks two [original carts](../../models/shopping-cart/README.md) side by side in the [return bay](../../models/mall-cart-return-bay/README.md). Each passes a 1.15 m independent withdrawal check. The visitor route reaches the cart handles, stocked gondola and checkout through the refitted security pedestals. |
 
 At the audited commit, the Gallery offered the TV demo table for download. Its asset-specific license expressly authorizes owner-project reuse and leaves public redistribution terms unspecified. [Asset license](../../models/tv-demo-table/LICENSE.md)
+
+### Escalator terminal on the 2 m grid
+
+The existing escalator’s upper and lower crossbeams project 20 mm past the finished deck. An ordinary slab placed flush there intersects the beam. A [measured transition profile](../verification/mall-escalator-floor-joint/README.md) joins the original deck and slab with 5 mm of model clearance. The profile is a geometry study for the next editable part.
