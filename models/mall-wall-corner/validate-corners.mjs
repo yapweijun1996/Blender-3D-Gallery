@@ -31,15 +31,32 @@ for(const [x,z] of [[.599,.63],[.601,.63],[.63,.599],[.63,.601],[.63,.63]]){
  const hit=new Raycaster(new Vector3(x,1,z),new Vector3(0,-1,0)).intersectObjects(floorParts,true)[0];assert.ok(hit,`missing top surface at ${x},${z}`);near(hit.point.y,0);floorHits++;
 }
 // Corner's centreline ends connect to two actual 1.2 m straight-wall GLBs.
-const corner=placed(inputs.corner.scene,0,0,0),wallX=placed(inputs.wall.scene,-1.8,0,0),wallZ=placed(inputs.wall.scene,0,0,1.8,Math.PI/2);
+const corner=placed(inputs.corner.scene,0,0,0),wallX=placed(inputs.wall.scene,-1.8,0,0),wallZ=placed(inputs.wall.scene,0,0,1.8,-Math.PI/2);
 const armX=corner.getObjectByName('ARM_X_Core'),armY=corner.getObjectByName('ARM_Y_Core');assert.ok(armX&&armY);
 const [cx,cz,wx,wz]=[armX,armY,wallX,wallZ].map(box);
 near(cx.min.x,wx.max.x);near(cz.max.z,wz.min.z);near(cx.min.y,0);near(cz.min.y,0);near(cx.max.y,3);near(cz.max.y,3);
 const conX=corner.getObjectByName('CONNECTOR_X').getWorldPosition(new Vector3()),conY=corner.getObjectByName('CONNECTOR_Y').getWorldPosition(new Vector3());near(conX.x,-1.2);near(conY.z,1.2);
-// Confirm both inside faces expose the light decorative panel, not the bare core.
-for(const [origin,direction] of [[new Vector3(-.63,1.5,.4),new Vector3(0,0,-1)],[new Vector3(-.4,1.5,.63),new Vector3(1,0,0)]]){
- const hit=new Raycaster(origin,direction).intersectObject(corner,true)[0];assert.ok(hit&&hit.object.name.includes('Panel'),`wrong inside surface: ${hit?.object.name}`);
+// Compare matching inside surfaces on either side of each connector, including the panel reveal.
+const samples = [
+  { offset: .001, height: 1.5, surface: /core/i },
+  { offset: .006, height: 1.5, surface: /panel/i },
+  { offset: .006, height: .06, surface: /base/i },
+  { offset: .006, height: 2.96, surface: /top/i },
+];
+const wallFinishStepsMm = [];
+for (const { offset, height, surface } of samples) {
+  for (const [straightWall, cornerOrigin, wallOrigin, direction] of [
+    [wallX, new Vector3(conX.x + offset, height, .4), new Vector3(conX.x - offset, height, .4), new Vector3(0, 0, -1)],
+    [wallZ, new Vector3(-.4, height, conY.z - offset), new Vector3(-.4, height, conY.z + offset), new Vector3(1, 0, 0)],
+  ]) {
+    const cornerHit = new Raycaster(cornerOrigin, direction).intersectObject(corner, true)[0];
+    const wallHit = new Raycaster(wallOrigin, direction).intersectObject(straightWall, true)[0];
+    assert.match(cornerHit?.object.name ?? '', surface, 'corner inside surface');
+    assert.match(wallHit?.object.name ?? '', surface, 'straight wall inside surface');
+    near(cornerHit.distance, wallHit.distance);
+    wallFinishStepsMm.push(Math.abs(cornerHit.distance - wallHit.distance) * 1000);
+  }
 }
-const report={result:'PASS',inputs:Object.fromEntries(Object.entries(inputs).map(([id,v])=>[id,{path:refs[id],sha256:sha(v.bytes)}])),models:reports,floor:{tile:[0,-.03,0],stripX:[0,0,.63],stripZ:[.63,0,0],corner:[.63,0,.63],topSurfaceRayHits:floorHits},wall:{corner:[0,0,0],straightX:[-1.8,0,0],straightZ:[0,0,1.8],straightZRotationRadians:Math.PI/2,connectors:[conX.toArray(),conY.toArray()],insideFinishedFaces:2},limits:'Specific 90-degree case, bounding boxes and sample rays only. Does not establish arbitrary layouts, triangle intersection, materials under all renderers, physical safety, or building certification.'};
+const report={result:'PASS',inputs:Object.fromEntries(Object.entries(inputs).map(([id,v])=>[id,{path:refs[id],sha256:sha(v.bytes)}])),models:reports,floor:{tile:[0,-.03,0],stripX:[0,0,.63],stripZ:[.63,0,0],corner:[.63,0,.63],topSurfaceRayHits:floorHits},wall:{corner:[0,0,0],straightX:[-1.8,0,0],straightZ:[0,0,1.8],straightZRotationRadians:wallZ.rotation.y,connectors:[conX.toArray(),conY.toArray()],insideFinishedFaces:2,finishSamplePairs:wallFinishStepsMm.length,maxFinishStepMm:Math.max(...wallFinishStepsMm)},limits:'Specific 90-degree case, bounding boxes and sample rays only. Does not establish arbitrary layouts, triangle intersection, materials under all renderers, physical safety, or building certification.'};
 for(const id of ['mall-floor-corner-trim','mall-wall-corner'])fs.writeFileSync(new URL(`models/${id}/reports/corner-validation.json`,root),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify(report));

@@ -31,3 +31,18 @@ Run `node mall-modules-preview/verify-shopfront.mjs` from the repository root. T
 Local Chromium rendered the corridor, opened all nine modules, returned to the corridor and used Reset at 1440 × 900 and emulated 390 × 844. All 20 GLBs loaded without browser errors or horizontal overflow. Scope is limited to static shopfront fit and preview browsing. Physical devices, door movement, corridor collision and the 2 m planning grid remain unverified.
 
 Run `npm run dev -- --port 4178` and open `http://127.0.0.1:4178/mall-modules-preview/` to browse the preview locally.
+
+## 1.2 m shell verification — 2026-11-23
+
+The three straight walls on the right now face the corridor. Their −90° rotation about GLB Y aligns the interior panels and skirting at the rear corner. The previous +90° pose aligned the joint plane but produced a 10 mm step in the interior profile. The corrected position leaves a maximum measured step of 0.21 μm at the sampled corner profiles.
+
+Run `node mall-modules-preview/verify-shell.mjs` from the repository root. The command uses the same placements as the preview and prints a JSON report with the seven actual GLB hashes, Khronos validation, signed gaps and surface samples. All seven GLBs passed with zero errors and warnings. At a 1 μm tolerance the following checks passed.
+
+- The 7 × 5 floor has 58 internal joins. The largest absolute gap was 0.048 μm. All 348 surface rays sampled matching heights across those joins, including the authored grout and bevel recesses. Nominal finished-floor Y is 0.
+- Both straight-to-mitre joins and both adjacent corner-tile contacts align. The four diagonal probes hit the expected profile, and the corner inlay and trim samples meet finished-floor Y.
+- All nine rear and right wall joins meet. Interior surface samples at both ends of the corner agree within tolerance. The verifier detects the previous outward orientation and a deliberately shifted floor module.
+- Four ceiling grid contacts meet the wall top at Y = 3.00 m. The three fixture-panel openings and a sample through the cutaway remain open in the ceiling cassette meshes.
+
+Local Chrome loaded all 20 exact GLBs and opened all nine module views at 1440 × 900 and emulated 390 × 844. Mouse orbit and wheel, touch orbit and pinch, Reset and backing-canvas resize passed without browser errors or horizontal overflow.
+
+This evidence covers fixed samples in the current static cutaway. Other corner layouts, exhaustive triangle intersection, collision and navigation, physical devices and the provisional 2 m production grid still need verification. [Backlog and asset crosswalk](../docs/shopping-mall/README.md#12-m-corridor-shell-crosswalk).

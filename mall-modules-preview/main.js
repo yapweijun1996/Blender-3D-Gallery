@@ -2,24 +2,25 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { fasciaBaseY, shopfrontAssets, shopfrontBays, shopfrontZ } from './shopfront-layout.js';
+import { instance, placeShellModule, shellAssetPaths, shellLayout } from './shell-layout.js';
 
 const root = new URL('../', import.meta.url);
 const asset = (path) => new URL(path, root).href;
 const modules = [
-  { id:'floor', number:'001', name:'Floor tile', detail:'1.2 m repeat module', kicker:'001 / THE FOUNDATION', subtitle:'Warm terrazzo floor, made to repeat.', path:'models/mall-floor-tile/exports/mall-floor-tile-module.glb', thumb:'models/mall-floor-tile/previews/mall-floor-tile-module.webp' },
-  { id:'cornerTile', number:'C3', name:'Corner floor tile', detail:'1.2 m outside corner', kicker:'CORNER / THE FOUNDATION', subtitle:'A terrazzo corner tile with two inset border strips.', path:'models/mall-floor-corner-tile/exports/mall-floor-corner-tile.glb', thumb:'models/mall-floor-corner-tile/previews/mall-floor-corner-tile.jpg' },
-  { id:'mitredTrim', number:'C4', name:'Mitred floor trim', detail:'90° outside corner pair', kicker:'CORNER / THE MITRE', subtitle:'Two edge strips meeting in a 45° joint.', path:'models/mall-floor-mitred-trim/exports/mall-floor-mitred-trim.glb', thumb:'models/mall-floor-mitred-trim/previews/mall-floor-mitred-trim.jpg' },
+  { id:'floor', number:'001', name:'Floor tile', detail:'1.2 m repeat module', kicker:'001 / THE FOUNDATION', subtitle:'Warm terrazzo floor, made to repeat.', path:shellAssetPaths.floor, thumb:'models/mall-floor-tile/previews/mall-floor-tile-module.webp' },
+  { id:'cornerTile', number:'C3', name:'Corner floor tile', detail:'1.2 m outside corner', kicker:'CORNER / THE FOUNDATION', subtitle:'A terrazzo corner tile with two inset border strips.', path:shellAssetPaths.cornerTile, thumb:'models/mall-floor-corner-tile/previews/mall-floor-corner-tile.jpg' },
+  { id:'mitredTrim', number:'C4', name:'Mitred floor trim', detail:'90° outside corner pair', kicker:'CORNER / THE MITRE', subtitle:'Two edge strips meeting in a 45° joint.', path:shellAssetPaths.mitredTrim, thumb:'models/mall-floor-mitred-trim/previews/mall-floor-mitred-trim.jpg' },
   { id:'floorCorner', number:'C1', name:'Floor corner trim', detail:'60 mm outside corner cap', kicker:'CORNER / THE FLOOR EDGE', subtitle:'A square cap joining two straight edge strips.', path:'models/mall-floor-corner-trim/exports/mall-floor-corner-trim.glb', thumb:'models/mall-floor-corner-trim/previews/mall-floor-corner-trim.jpg' },
-  { id:'wall', number:'003', name:'Solid wall', detail:'1.2 m repeat module', kicker:'003 / THE ENCLOSURE', subtitle:'A solid wall with warm panels and dark skirting.', path:'models/mall-solid-wall/exports/mall-solid-wall.glb', thumb:'models/mall-solid-wall/previews/mall-solid-wall.jpg' },
-  { id:'wallCorner', number:'C2', name:'Wall corner', detail:'90° · 1.2 m arms', kicker:'CORNER / THE WALL', subtitle:'A right-angle corner connecting the solid wall modules.', path:'models/mall-wall-corner/exports/mall-wall-corner.glb', thumb:'models/mall-wall-corner/previews/mall-wall-corner.jpg' },
+  { id:'wall', number:'003', name:'Solid wall', detail:'1.2 m repeat module', kicker:'003 / THE ENCLOSURE', subtitle:'A solid wall with warm panels and dark skirting.', path:shellAssetPaths.wall, thumb:'models/mall-solid-wall/previews/mall-solid-wall.jpg' },
+  { id:'wallCorner', number:'C2', name:'Wall corner', detail:'90° · 1.2 m arms', kicker:'CORNER / THE WALL', subtitle:'A right-angle corner connecting the solid wall modules.', path:shellAssetPaths.wallCorner, thumb:'models/mall-wall-corner/previews/mall-wall-corner.jpg' },
   { id:'railing', number:'004', name:'Glass railing', detail:'2 m post-centred bay', kicker:'004 / THE EDGE', subtitle:'A glazed bay with posts, infill and handrail.', path:'models/mall-glass-railing/exports/mall-glass-railing-2m.glb', thumb:'models/mall-glass-railing/previews/mall-glass-railing-2m.webp' },
-  { id:'ceiling', number:'005', name:'Ceiling panel', detail:'1.2 m suspended cassette', kicker:'005 / ABOVE', subtitle:'A repeating ceiling cassette with recessed panels.', path:'models/mall-ceiling-panel/exports/mall-ceiling-panel-module.glb', thumb:'models/mall-ceiling-panel/previews/mall-ceiling-panel-module.webp' },
+  { id:'ceiling', number:'005', name:'Ceiling panel', detail:'1.2 m suspended cassette', kicker:'005 / ABOVE', subtitle:'A repeating ceiling cassette with recessed panels.', path:shellAssetPaths.ceiling, thumb:'models/mall-ceiling-panel/previews/mall-ceiling-panel-module.webp' },
   { id:'column', number:'006', name:'Structural column', detail:'0.6 m × 3 m', kicker:'006 / THE SUPPORT', subtitle:'An ivory-clad square column, grounded at floor level.', path:'models/mall-structural-column/exports/mall-structural-column.glb', thumb:'models/mall-structural-column/previews/mall-structural-column.webp' },
 ];
 // Extra scene context is loaded only for the corridor, not individual views.
 const furnishings = [
   ...shopfrontAssets,
-  { id:'floorEdge', path:'models/mall-floor-edge-trim/exports/mall-floor-edge-trim.glb' },
+  { id:'floorEdge', path:shellAssetPaths.floorEdge },
   { id:'light', path:'models/mall-ceiling-light/exports/mall-ceiling-light-module.glb' },
   { id:'bench', path:'models/gjh-mall-furniture/exports/gjh-lounge-bench.glb' },
   { id:'planter', path:'models/gjh-mall-furniture/exports/gjh-areca-planter.glb' },
@@ -66,21 +67,12 @@ if (renderer) {
   const byId = Object.fromEntries(modules.map(item => [item.id, item]));
   let current = null; let requestId = 0; let selected = 'assembly';
   let shopSigns;
-  const instance = (source, x, y, z, omit) => {
-    const obj = source.clone(true); obj.position.set(x,y,z);
-    if (omit) obj.getObjectByName(omit)?.removeFromParent();
-    return obj;
-  };
   function corridor(sources) {
     const group = new THREE.Group(); group.name = 'Mall corridor assembly';
     const facingCorridor = (object) => { object.rotation.y = Math.PI; return object; };
-    const columns = [-3.6,-2.4,-1.2,0,1.2,2.4,3.6];
-    for (const x of columns) for (const z of [-2.4,-1.2,0,1.2,2.4]) group.add(instance(x === 3.6 && z === 2.4 ? sources.cornerTile : sources.floor,x,-.03,z));
-    for (const x of columns.filter(x => x !== 3.6)) group.add(instance(sources.floorEdge,x,0,3.03));
-    for (const z of [-2.4,-1.2,0,1.2]) {
-      const side = instance(sources.floorEdge,4.23,0,z); side.rotation.y = Math.PI/2; group.add(side);
+    for (const placement of [...shellLayout.floor, ...shellLayout.trim]) {
+      group.add(placeShellModule(sources, placement));
     }
-    group.add(instance(sources.mitredTrim,3.6,0,2.4));
 
     for (const { x, opening, fascia } of shopfrontBays) {
       group.add(instance(sources[opening], x, 0, shopfrontZ));
@@ -88,11 +80,7 @@ if (renderer) {
       if (opening === 'door') group.add(facingCorridor(instance(sources.shelf, x, 0, -2.42)));
     }
     // The solid wall stays behind the transparent storefronts as a reusable back wall.
-    for (const x of [-3.6,-2.4,-1.2,0,1.2,2.4]) group.add(instance(sources.wall,x,0,-2.94));
-    group.add(instance(sources.wallCorner,4.2,0,-2.94));
-    for (const z of [-1.14,.06,1.26]) {
-      const side = instance(sources.wall,4.2,0,z); side.rotation.y = Math.PI/2; group.add(side);
-    }
+    for (const placement of shellLayout.walls) group.add(placeShellModule(sources, placement));
 
     // Fictional, replaceable shop labels; they are scene context, not model metadata.
     if (!shopSigns) {
@@ -112,10 +100,10 @@ if (renderer) {
     }
 
     // Retain a cutaway in front. A light replaces one panel in each chosen cassette.
-    for (const x of columns) for (const z of [-2.4,-1.2]) {
-      const hasLight = z === -1.2 && [-2.4,0,2.4].includes(x);
-      group.add(instance(sources.ceiling,x,3,z,hasLight ? 'PANEL_1' : null));
-      if (hasLight) {
+    for (const placement of shellLayout.ceiling) {
+      group.add(placeShellModule(sources, placement));
+      const { x, z, omit } = placement;
+      if (omit) {
         group.add(instance(sources.light,x-.3,3.008,z+.3));
         const glow = new THREE.PointLight(0xffe5bb, 1.2, 4, 2);
         glow.position.set(x-.3,2.82,z+.3); group.add(glow);

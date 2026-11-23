@@ -44,6 +44,20 @@ No batch PR, commit, publication, or new production model is implied by this pla
 
 The next local shell slice adds a [1.2 m corner floor tile](../../models/mall-floor-corner-tile/README.md) and [45° mitred trim pair](../../models/mall-floor-mitred-trim/README.md). Their outside-corner arrangement replaces the earlier square-cap example in the corridor preview. One actual-GLB arrangement has been checked; other corner types, the proposed 2 m grid and complete assembly acceptance remain open.
 
+### 1.2 m corridor shell crosswalk
+
+Dimensions and connector positions below use GLB metres with +Y up. The linked asset notes identify the editable Blender sources and exported GLBs.
+
+| Provisional backlog ID | Existing asset and fit in the local preview | Decision for the proposed 2 m grid |
+| --- | --- | --- |
+| `MALL-STR-001` | [Floor tile](../../models/mall-floor-tile/README.md) is 1.20 m square and 30 mm thick. The pivot is at the underside centre and the flat tile edges meet at X/Z = ±0.60 m. | Adapt or design a transition once floor thickness and pitch are approved. |
+| `MALL-STR-002` | [Outside corner tile](../../models/mall-floor-corner-tile/README.md) uses the same underside pivot and envelope. Its +X and +Z edges carry the inset decorative strips. The [straight edge trim](../../models/mall-floor-edge-trim/README.md) uses a finished-floor pivot and the [mitred pair](../../models/mall-floor-mitred-trim/README.md) follows the corner tile centre. | Define the target edge, trim and corner profiles together before adapting. |
+| `MALL-STR-010` | [Solid wall](../../models/mall-solid-wall/README.md) has a ground-centre pivot, 1.20 m width, 0.12 m depth, 3.00 m height and end connectors at X = ±0.60 m. | The provisional 2.00 × 0.15 × 2.80 m size needs its own interface decision. |
+| `MALL-STR-011` | [Right-angle wall](../../models/mall-wall-corner/README.md) has a pivot at the ground-level centreline intersection. Its 1.20 m arms connect at (−1.20, 0, 0) and (0, 0, +1.20) m. | Confirm both arms and the wall thickness with `MALL-STR-010` before adapting. |
+| `MALL-STR-018` / `MALL-STR-019` | [Suspended ceiling cassette](../../models/mall-ceiling-panel/README.md) combines the grid and panel within a 1.20 m square and is 0.36 m high including hangers. The pivot is at the underside grid base, and edge connectors sit 18 mm above it. | Decide whether the grid and panel need separate assets and define their pitches and dimensions. |
+
+These are original owner-project assets. The floor and ceiling READMEs explicitly allow owner-project reuse. All assets in the crosswalk have Gallery downloads disabled and unspecified public redistribution terms. The [measured 1.2 m assembly](../../mall-modules-preview/README.md#12-m-shell-verification--2026-11-23) covers this cutaway. The proposed 2 m dimensions and wider production scope remain open.
+
 ## Architectural lighting
 
 The [ten-fixture collection](../verification/mall-lighting-ten/README.md) supplies editable sources and close-up and mid-distance GLBs for P0 items `MALL-LGT-001`–`005` and `007`–`011`. The 1.8 m rail works with the separately catalogued [track spotlight](../../models/mall-track-spotlight/README.md), item `006`. The [two-rail assembly](../../models/mall-track-light-rail/README.md) shows how to place two existing lamp heads on a continuous run.
