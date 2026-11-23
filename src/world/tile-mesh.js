@@ -1,3 +1,4 @@
+import { createBuildingPassageMesh } from "./building-passage.js";
 import { pavementPanel } from "./pavement.js";
 import { DECK_THICKNESS, fragmentHeights, isBridge } from "./bridges.js";
 import { BufferAttribute, BufferGeometry, Color, ShapeUtils, Vector2 } from "three";
@@ -40,7 +41,7 @@ const origin = tile => [tile.x * TILE_SIZE, tile.z * TILE_SIZE];
 const world = (tile, [x, z]) => [x + tile.x * TILE_SIZE, z + tile.z * TILE_SIZE];
 
 /** A flat strip along a polyline. */
-function ribbon(batch, points, width, y, color, panels, walkFrom = 0) {
+function ribbon(batch, points, width, y, color, panels, walkFrom = 0, supportY = 0) {
   if (points.length < 2) return;
   const half = width / 2, left = [], right = [];
   for (let i = 0; i < points.length; i++) {
@@ -55,8 +56,7 @@ function ribbon(batch, points, width, y, color, panels, walkFrom = 0) {
     const a = left[i], b = right[i], c = right[i + 1], d = left[i + 1];
     batch.quad(a, b, c, d, color);
     if (panels && i >= walkFrom) {
-      // Road and sidewalk share the level floor. Their drawn heights only order the paint at the shoulder.
-      const [pa, pb, pc, pd] = [a, b, c, d].map(([x, , z]) => [x, 0, z]);
+      const [pa, pb, pc, pd] = [a, b, c, d].map(([x, , z]) => [x, supportY, z]);
       panels.push(pavementPanel(pa, pb, pc), pavementPanel(pa, pc, pd));
     }
   }
@@ -154,6 +154,17 @@ function extrude(batch, ring, height, wall, roof, { bay = BAY, floor = FLOOR, ba
   }
 }
 
+function drawBuildingPassage(batch, mesh, wall, roof) {
+  const { vertices, indices, facadeUV } = mesh;
+  for (let i = 0; i < indices.length; i += 3) {
+    const [a, b, c] = [indices[i], indices[i + 1], indices[i + 2]].map(index => vertices.subarray(3 * index, 3 * index + 3));
+    if (2 * i < facadeUV.length) {
+      batch.triangle(a, b, c, wall, facadeUV.slice(2 * i, 2 * i + 2),
+        facadeUV.slice(2 * i + 2, 2 * i + 4), facadeUV.slice(2 * i + 4, 2 * i + 6));
+    } else batch.triangle(a, b, c, roof, PLAIN, PLAIN, PLAIN);
+  }
+}
+
 const hash = value => { let h = Number(value) % 2147483647 || 1; h = (h * 48271) % 2147483647; return h; };
 
 /** White bars across the carriageway at a mapped crossing: the bars run along the road, repeated across it. */
@@ -215,6 +226,12 @@ export function buildTile(tile, { hide = () => false, buildingBase, paint, visua
   const maskedPaths = paint?.pedestrian && new Set(paint.pedestrian);
   for (const path of tile.pedestrian ?? []) {
     if (maskedPaths?.has(path.id)) continue;
+    if (path.indoorLevel > 0) {
+      if (Number.isFinite(path.floorHeight) && path.floorHeight > 0) {
+        ribbon(ground, shift(path.geometry), 2.2, path.floorHeight, PATH, walkwaySolids, 0, path.floorHeight);
+      }
+      continue;
+    }
     const alongside = path.besideCarriageway;
     ribbon(ground, shift(path.geometry), 2.2, alongside ? ROAD_Y - .01 : PATH_Y, PATH,
       alongside ? walkwaySolids : undefined, path.walkFrom);
@@ -222,9 +239,11 @@ export function buildTile(tile, { hide = () => false, buildingBase, paint, visua
 
   const bridgeSolids = [];
   const maskedRoads = new Set(paint?.roads);
+  const maskedKerbs = new Set(paint?.kerbs);
   for (const surface of tile.roadSurfaces ?? []) {
     fillPolygon(ground, shift(surface.geometry), ROAD_Y, ASPHALT);
     for (const id of surface.edges) maskedRoads.add(id);
+    for (const id of surface.subsurfaceKerbs ?? []) maskedKerbs.add(id);
   }
   function drawRoads(roads, solids) {
     for (const road of roads ?? []) {
@@ -241,10 +260,10 @@ export function buildTile(tile, { hide = () => false, buildingBase, paint, visua
     if (junction.geometry?.length > 3) fillPolygon(ground, shift(junction.geometry), ROAD_Y + 0.002, ASPHALT);
   }
 
-  const maskedKerbs = paint?.kerbs && new Set(paint.kerbs);
   function drawKerbs(kerbs) {
     for (const kerb of kerbs ?? []) {
-      if (!(kerb.layer > 0) && !maskedKerbs?.has(kerb.road)) ribbon(ground, shift(kerb.geometry), 0.3, KERB_Y, KERB);
+      if (kerb.layer > 0 || maskedKerbs.has(kerb.road)) continue;
+      for (const line of kerb.surfaceGeometry ?? [kerb.geometry]) ribbon(ground, shift(line), 0.3, KERB_Y, KERB);
     }
   }
   drawKerbs(tile.kerbs);
@@ -268,12 +287,23 @@ export function buildTile(tile, { hide = () => false, buildingBase, paint, visua
     if (!(height > 0) || !Number.isFinite(height)) throw new RangeError(`Invalid height for building ${building.id}`);
     if (!Number.isFinite(base) || base < 0) throw new RangeError(`Invalid base height for building ${building.id}`);
     const seed = hash(building.id);
-    if (!hide(building.name)) {
-      if (height >= TOWER_HEIGHT) extrude(towers, ring, height, GLASS[seed % GLASS.length], ROOFS[(seed >> 3) % ROOFS.length], { bay: 2.4, floor: 4, base });
-      else extrude(buildings, ring, height, WALLS[seed % WALLS.length], ROOFS[(seed >> 3) % ROOFS.length], { base });
-    }
     const solid = { id: building.id, name: building.name, ring, height };
     if (base > 0) solid.base = base;
+    const tower = height >= TOWER_HEIGHT;
+    if (building.passages?.length) {
+      if (base !== 0 || building.passages.length !== 1) throw new RangeError("Expected one ground-level building passage");
+      const passage = building.passages[0];
+      solid.mesh = createBuildingPassageMesh(ring, height, { ...passage, geometry: shift(passage.geometry) },
+        tower ? { bay: 2.4, storey: 4 } : { bay: BAY, storey: FLOOR });
+    }
+    if (!hide(building.name)) {
+      const roof = ROOFS[(seed >> 3) % ROOFS.length];
+      if (solid.mesh) {
+        const walls = tower ? GLASS : WALLS;
+        drawBuildingPassage(tower ? towers : buildings, solid.mesh, walls[seed % walls.length], roof);
+      } else if (tower) extrude(towers, ring, height, GLASS[seed % GLASS.length], roof, { bay: 2.4, floor: 4, base });
+      else extrude(buildings, ring, height, WALLS[seed % WALLS.length], roof, { base });
+    }
     solids.push(solid);
   }
   return {

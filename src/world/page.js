@@ -273,7 +273,7 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
       entry.colliders = [];
       try {
         for (const solid of entry.solids) {
-          const { vertices, indices } = buildingMesh(solid.ring, solid.height, solid.base);
+          const { vertices, indices } = solid.mesh ?? buildingMesh(solid.ring, solid.height, solid.base);
           entry.colliders.push(physics.addStaticTrimesh({ vertices, indices }));
         }
         for (const panel of entry.walkwaySolids) {

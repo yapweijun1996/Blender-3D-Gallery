@@ -18,6 +18,10 @@ On the ordinary map, drive east on Raffles Boulevard through the covered section
 
 Run `npm run test:world` for the source and tile checks, and `npm run build:deploy && npm run test:raffles-passage` for the desktop drive. Use `RAFFLES_PASSAGE_PROFILE=mobile npm run test:raffles-passage` to repeat the drive with the touch controls. The [passage assessment](verification/sg-world-remaining-passages.md#raffles-boulevard) records the footprint, vehicle clearance and limits of the elevation data.
 
+Further west on the same road, the five lanes run beneath Marina Square for 47.39 m. Drive east through both portals and past the two garage mouths. The through lane stays level. The game models the underside at 4.5 m and the indoor customer walkway at 4.8 m. These heights use the mapped height limit and an assumed floor thickness. [Marina Square map evidence and tests](verification/sg-world-remaining-passages.md#marina-square).
+
+After a build, run `npm run test:marina-square-passage` for the keyboard drive or `MARINA_SQUARE_PASSAGE_PROFILE=mobile npm run test:marina-square-passage` for touch controls.
+
 ### Fort Canning Link tunnel prototype
 
 Open [the Fort Canning Link tunnel prototype](https://yapweijun1996.github.io/Blender-3D-Gallery/?page=sg-world&tunnel=fort-canning) from Singapore Open World. Drive from the surface approach through the descent, covered tunnel and exit. Use the arrow keys or W A S D, or the four touch controls. Pause and Restart drive apply to this session. The Open World link returns to the normal map.

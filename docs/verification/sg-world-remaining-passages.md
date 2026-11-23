@@ -15,7 +15,7 @@ Each OSM `wayId` counts once across all edges and tiles. A true tile `tunnel` fl
 | Negative layer only | 60 | 51 | 0 | 0 | 9 | 0 | 0 | 0 |
 | **Total** | **971** | **339** | **351** | **179** | **91** | **8** | **2** | **1** |
 
-The `tunnel=yes` count includes the two tagged Fort Canning Link ways already integrated, `719635729` and `159677768`. The first inventory left 969 ways after Fort Canning Link. The Raffles Boulevard passage below accounts for one more, leaving 968 ways for assessment. These rows identify map records for review. Each road still needs its own access and geometry assessment.
+Five ways in this inventory now have verified through routes on the ordinary map. Fort Canning Link accounts for `719635729` and `159677768`. Raffles Boulevard accounts for the Millenia Walk way and two Marina Square ways below. The remaining 966 map records still need individual access and geometry assessment.
 
 ## Raffles Boulevard
 
@@ -27,7 +27,19 @@ On the default map, the previous build stopped the sedan at the east portal. The
 
 Service road `429052425:0` joins between the two covered through edges and leads to a destination-access drive. It stays outside the simulated through route. The mapped left bus lane carries the condition `Mo-Sa 07:30-23:00`. The game conservatively reserves it for simulated buses at all hours. The local extract does not contain turn-restriction relations for establishing legal access.
 
-A separate Raffles Boulevard section `545362402` and `545362403` spans 47.39 m in plan, overlaps Marina Square `303311927`, and runs past destination-access driveways `1314801325:0` and `1314801304:0`. Its overlapping structure has no `min_height` tag.
+## Marina Square
+
+Raffles Boulevard ways `545362402` and `545362403` form a 47.39 m, five-lane through route in tile `-2_-4`. Both carry `tunnel=building_passage` and `maxheight=4.5`. They have no measured road elevations, physical clearance or grade in the pinned extract. The Marina Square building `303311927` has `height=0` and no usable height or level count. Its existing retail roof height in the game is 9.6 m.
+
+The simulation uses a level road at Y=0 and a soffit at Y=4.5. The building mesh cuts a 17 m carriageway with a 0.30 m margin on each side. Only its intersection with the mall footprint gets a ceiling and interior walls. The bulk of the mall keeps its existing shell. Customer corridor `474174793` crosses the road 21.71 m from the western tagged portal. Its source specifies level 1 and gives no metric elevation. Both mapped corridor segments share a simulated floor at Y=4.8, 0.30 m above the soffit. A Rapier walker crosses above moving traffic on this floor. Street pedestrians continue to use the outdoor path network.
+
+At the two garage mouths, `1314801325:0` leaves the main road and `1314801304:0` rejoins it. Both are one-way destination-access drives with unknown ramp profiles. Their map records remain available and the simulated through route bypasses both garages. Three connecting edges of 1.57 m, 3.48 m and 2.17 m use their original nodes to carry traffic through the portals. The usual 4 m minimum still applies to other short edges. Six underground garage kerbs project into the through lanes on plan. The renderer suppresses these kerbs where their source and tile records agree on the lower level. As beside Millenia Walk, the game reserves the left lane for buses throughout the day.
+
+At the entrance and exit junctions, three surface side roads meet the carriageway. Their kerbs end at the edge of the through lanes. One bus and four sedans passed together with zero damage. All 1,749 covered probes matched the visible pavement and the collision soffit across the road width. An indoor pedestrian capsule passed over a moving vehicle during the same physics run. The previous build stopped the sedan against the east wall. [Previous east portal](marina-square/previous-east-portal.webp) · [Open west portal](marina-square/west-portal.webp) · [Open east portal](marina-square/east-portal.webp).
+
+## Next assessments
+
+Two opposite-direction Temasek Boulevard ways, `395443687` and `395443688`, cover 39.81 m and 39.72 m under Suntec City structure `393210509`. The pinned building records `min_height=5` and `height=20`. The first road carries a mapper's warning about its estimated position. Indoor corridor `460300678:6` crosses both road centerlines and carries both `level=1` and `layer=-1`. Both roads and their shared roof fit in tile `-1_-6`. The northbound outdoor sidewalk intersects the modeled carriageway for about 16.5 m. The outer-lane bus envelope and a pedestrian capsule currently overlap on that alignment. Verify a supported walking line, the indoor corridor and the two exits before opening these roads.
 
 Defer Kheam Hock Road `659688751:0`. Its two-way 40.32 m tunnel links `97408974:0` and `659688752:0` in tile `-19_-21`, and its source also carries `maxheight=4.5`. The current game meshes for the two Pan-Island Expressway crossings, `159090940:0` and `627656467:0`, put the rendered underside at about Y = −0.90 m at both centerline intersections. Their two-vertex profiles sample the bridge ramps at the ends of the 26.60 m and 27.13 m edges. A verified or explicitly simulated pair of upper-deck and lower-road profiles is needed before using this corridor.
 

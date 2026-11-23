@@ -202,7 +202,8 @@ export function buildTrafficGraph(tiles, { forwardConnectors, signalApproachChai
     if ((controlled?.has(road.from) || controlled?.has(road.to)) && !PUBLIC_ACCESS.has(road.access)) return;
     const { id } = road;
     const length = polylineLength(points);
-    if (length < 4) return;
+    const retainShortTraffic = road.retainShortTraffic === true && road.oneway && complete;
+    if (!(length > 0) || (length < 4 && !retainShortTraffic)) return;
     const edge = {
       id, from: road.from, to: road.to, oneway: road.oneway, lanes: Math.max(1, road.lanes ?? 2), speed: (road.maxspeed ?? 50) / 3.6,
       points, length, width: road.width ?? Math.max(3.4, (road.lanes ?? 2) * LANE), name: road.name, class: road.class,
@@ -214,6 +215,7 @@ export function buildTrafficGraph(tiles, { forwardConnectors, signalApproachChai
     edge.cumulative = [0];
     for (let i = 1; i < points.length; i++) edge.cumulative.push(edge.cumulative[i - 1] + distance(points[i - 1], points[i]));
     if (road.leftBusLane) edge.leftBusLane = true;
+    if (retainShortTraffic) edge.retainShortTraffic = true;
     if (sections) edge.sections = sections;
     edges.set(id, edge);
     node(road.from).forward.push(id);
@@ -346,6 +348,19 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
     return edge.leftBusLane && type.id !== "bus" && type.id !== "school-bus" ? 1 : 0;
   }
 
+  function travelLane(edge, direction, lane, type) {
+    return Math.max(firstAllowedLane(edge, type), Math.min(lane, lanesOf(edge, direction) - 1));
+  }
+
+  // Retained short edges are stitches on the reviewed one-way through route.
+  function shortContinuation(edge, lane, type) {
+    const node = current.nodes.get(edge.to);
+    if (node?.forward.length !== 1 || !node.backward.every(id => current.edges.get(id)?.oneway)) return null;
+    const ahead = current.edges.get(node.forward[0]);
+    if (!ahead?.oneway || ahead.id === edge.id) return null;
+    return { id: ahead.id, direction: 1, lane: travelLane(ahead, 1, lane, type) };
+  }
+
   function nextEdge(vehicle, edge) {
     const nodeId = vehicle.direction > 0 ? edge.to : edge.from;
     const node = current.nodes.get(nodeId);
@@ -392,10 +407,11 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
       const lane = connector?.lanes[vehicle.lane];
       return lane === undefined ? null : { id: connector.id, direction: 1, lane };
     }
+    if (vehicle.direction > 0 && edge.retainShortTraffic) return shortContinuation(edge, vehicle.lane, vehicle.type);
     if (vehicle.nextFor !== edge.id + ":" + vehicle.direction) { vehicle.next = nextEdge(vehicle, edge); vehicle.nextFor = edge.id + ":" + vehicle.direction; }
     const option = vehicle.next;
     const ahead = option && current.edges.get(option.id);
-    return ahead ? { ...option, lane: Math.max(firstAllowedLane(ahead, vehicle.type), Math.min(vehicle.lane, lanesOf(ahead, option.direction) - 1)) } : null;
+    return ahead ? { ...option, lane: travelLane(ahead, option.direction, vehicle.lane, vehicle.type) } : null;
   }
 
   // Unsignalised junctions: a vehicle gives way to one on another road that is already in the junction or reaches it first.
@@ -465,19 +481,28 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
       const gap = other.s - vehicle.s - (other.type.length + vehicle.type.length) / 2;
       if (gap < best) best = gap;
     }
+    let crossesShortLink = Boolean(edge.retainShortTraffic);
+    let shortGap = crossesShortLink ? best : Infinity;
     // Near the end of the edge, a vehicle at the start of the road ahead is the leader too.
     if ((best === Infinity || edge.forwardConnector || edge.forwardMovements) && edge.length - vehicle.s < 40) {
-      const option = chosenNext(vehicle, edge);
-      if (option) {
-        const routeDistance = option.turn ? option.turn.enter - vehicle.s + option.turn.length - option.turn.exit : edge.length - vehicle.s;
+      let option = chosenNext(vehicle, edge);
+      let routeDistance = option?.turn ? option.turn.enter - vehicle.s + option.turn.length - option.turn.exit : edge.length - vehicle.s;
+      while (option) {
+        const ahead = current.edges.get(option.id);
+        crossesShortLink ||= Boolean(ahead.retainShortTraffic);
         for (const other of vehicles) {
           if (other === vehicle || other.edge !== option.id || other.direction !== option.direction || other.lane !== option.lane) continue;
           const gap = routeDistance + other.s - (other.type.length + vehicle.type.length) / 2;
           if (gap < best) best = gap;
+          if (crossesShortLink && gap < shortGap) shortGap = gap;
         }
+        if (!ahead.retainShortTraffic || option.direction < 0) break;
+        routeDistance += ahead.length;
+        if (routeDistance >= 40) break;
+        option = shortContinuation(ahead, option.lane, vehicle.type);
       }
     }
-    return best;
+    return { best, shortStop: Math.max(0, shortGap - 2) };
   }
 
   /** Distance to the nearest obstacle (a pedestrian, say) in the path of a vehicle, else Infinity. */
@@ -544,15 +569,17 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
       if (vehicle.movement && !current.edges.has(vehicle.movement.id)) { vehicles.splice(i, 1); continue; }
       if (vehicle.movement || (move && move.turn.enter - vehicle.s < 12)) desired = Math.min(desired, 6);
       const obstacle = here && obstacles.length ? obstacleGap(vehicle, here, obstacles) : null;
+      const leader = vehicle.movement ? null : leaderGap(vehicle, edge);
       const stop = Math.min(connectorStop, reservationStop, stopAtSignal, vehicle.movement ? turnGap(vehicle) : giveWayStop(vehicle, edge),
-        vehicle.movement ? Infinity : leaderGap(vehicle, edge) - 2, obstacle?.best ?? Infinity);
+        (leader?.best ?? Infinity) - 2, obstacle?.best ?? Infinity);
       if (stop < 60) desired = Math.min(desired, Math.max(0, Math.sqrt(2 * 3.5 * Math.max(0, stop))));
       const rate = desired > vehicle.speed ? 2.2 : 5.5; // m/s^2: gentle acceleration, firmer braking
       vehicle.wait = vehicle.speed < 0.3 ? (vehicle.wait ?? 0) + dt : 0;
       vehicle.speed += Math.sign(desired - vehicle.speed) * Math.min(Math.abs(desired - vehicle.speed), rate * dt);
       const enforcedStop = Math.min(connectorStop, reservationStop, obstacle?.vehicleStop ?? Infinity,
         vehicle.direction > 0 && edge.forwardSignal ? stopAtSignal : Infinity);
-      const advance = vehicle.speed * dt;
+      const advance = Math.min(vehicle.speed * dt, leader?.shortStop ?? Infinity);
+      if (advance < vehicle.speed * dt) vehicle.speed = 0;
       if (advance >= enforcedStop) {
         if (vehicle.movement) {
           vehicle.turnS += enforcedStop;
@@ -575,15 +602,18 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
         finishMovement(vehicle);
         continue;
       }
-      if (vehicle.s >= edge.length) {
-        const option = chosenNext(vehicle, edge);
-        if (!option) { vehicles.splice(i, 1); continue; }
+      let crossed = edge;
+      while (vehicle.s >= crossed.length) {
+        const option = chosenNext(vehicle, crossed);
+        if (!option) { vehicles.splice(i, 1); break; }
         const nextEdgeData = current.edges.get(option.id);
-        vehicle.s = Math.max(0, vehicle.s - edge.length);
+        vehicle.s = Math.max(0, vehicle.s - crossed.length);
         vehicle.edge = option.id;
         vehicle.direction = option.direction;
         vehicle.lane = option.lane;
-        if (!usable(nextEdgeData, option.direction)) vehicles.splice(i, 1);
+        if (!usable(nextEdgeData, option.direction)) { vehicles.splice(i, 1); break; }
+        if (!nextEdgeData.retainShortTraffic) break;
+        crossed = nextEdgeData;
       }
     }
     while (vehicles.length < maxVehicles && spawn(near)) { /* fill up to the limit */ }
