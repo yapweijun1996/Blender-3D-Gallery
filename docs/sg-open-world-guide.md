@@ -22,6 +22,12 @@ Further west on the same road, the five lanes run beneath Marina Square for 47.3
 
 After a build, run `npm run test:marina-square-passage` for the keyboard drive or `MARINA_SQUARE_PASSAGE_PROFILE=mobile npm run test:marina-square-passage` for touch controls.
 
+### Temasek Boulevard at Suntec City
+
+Drive northeast or southwest on Temasek Boulevard through the covered section at Suntec City. Both carriageways have two lanes and a level road with 5 m of simulated headroom. Pedestrians have a supported sidewalk on each outer side and a separate indoor crossing above the traffic. [Map evidence and clearance tests](verification/sg-world-remaining-passages.md#temasek-boulevard-at-suntec-city).
+
+After building, run `npm run test:temasek-passages` to drive both directions with keyboard controls. Use `TEMASEK_PASSAGE_PROFILE=mobile npm run test:temasek-passages` to repeat with emulated touch controls.
+
 ### Fort Canning Link tunnel prototype
 
 Open [the Fort Canning Link tunnel prototype](https://yapweijun1996.github.io/Blender-3D-Gallery/?page=sg-world&tunnel=fort-canning) from Singapore Open World. Drive from the surface approach through the descent, covered tunnel and exit. Use the arrow keys or W A S D, or the four touch controls. Pause and Restart drive apply to this session. The Open World link returns to the normal map.

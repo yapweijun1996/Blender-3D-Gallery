@@ -228,7 +228,7 @@ export function buildTile(tile, { hide = () => false, buildingBase, paint, visua
     if (maskedPaths?.has(path.id)) continue;
     if (path.indoorLevel > 0) {
       if (Number.isFinite(path.floorHeight) && path.floorHeight > 0) {
-        ribbon(ground, shift(path.geometry), 2.2, path.floorHeight, PATH, walkwaySolids, 0, path.floorHeight);
+        ribbon(ground, shift(path.deckGeometry ?? path.geometry), 2.2, path.floorHeight, PATH, walkwaySolids, 0, path.floorHeight);
       }
       continue;
     }

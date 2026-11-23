@@ -179,12 +179,14 @@ function configureForwardMovements(edges, nodes, movements, controlled) {
  * Builds the traffic graph from loaded tiles: { edges, nodes, signalised }. Coordinates are world metres.
  * Mapped tunnels are excluded. A configured route stays closed while its destination is missing.
  * Optional forwardConnectors map an incoming edge ID to { id, lanes }, with destination lane indices in source lane order.
+ * A reviewed tile road may provide the same mapping as forwardConnector; caller-supplied mappings take precedence.
  * Each signalApproachChains item lists forward edge IDs and the stopOffset in metres back from its terminal signal.
  * Optional forwardMovements allow only the listed turns and source lane indices at their junction nodes.
  * Authored roads replace these IDs with complete, already validated world-space sections.
  */
 export function buildTrafficGraph(tiles, { forwardConnectors, signalApproachChains, forwardMovements, authoredRoads } = {}) {
   const fragments = new Map(), signalised = new Set();
+  const connectors = new Map(forwardConnectors);
   const controlled = forwardMovements && new Set(forwardMovements.map(({ via }) => via));
   for (const tile of tiles) {
     for (const junction of tile.junctions ?? []) if (junction.signalised) signalised.add(junction.nodeId);
@@ -217,6 +219,7 @@ export function buildTrafficGraph(tiles, { forwardConnectors, signalApproachChai
     if (road.leftBusLane) edge.leftBusLane = true;
     if (retainShortTraffic) edge.retainShortTraffic = true;
     if (sections) edge.sections = sections;
+    if (road.forwardConnector && !connectors.has(id)) connectors.set(id, road.forwardConnector);
     edges.set(id, edge);
     node(road.from).forward.push(id);
     node(road.to).backward.push(id);
@@ -228,7 +231,7 @@ export function buildTrafficGraph(tiles, { forwardConnectors, signalApproachChai
   for (const { road, sections } of authoredRoads?.values() ?? []) {
     register(road, sections.map(({ x, z }) => [x, z]), 0, true, sections);
   }
-  if (forwardConnectors) configureForwardConnectors(edges, nodes, forwardConnectors);
+  if (connectors.size) configureForwardConnectors(edges, nodes, connectors);
   if (signalApproachChains) configureSignalApproachChains(edges, nodes, signalised, signalApproachChains);
   if (controlled) configureForwardMovements(edges, nodes, forwardMovements, controlled);
   return { edges, nodes, signalised };

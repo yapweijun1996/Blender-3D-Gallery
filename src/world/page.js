@@ -856,6 +856,10 @@ export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {
   frame = requestAnimationFrame(step);
 
   // Hooks for the browser test: stepping the physics without rendering, and a read-out of the state.
+  stage.inspectTraffic = () => traffic.vehicles.flatMap(car => {
+    const pose = traffic.pose(car);
+    return pose ? [{ id: car.id, edgeId: car.edge, lane: car.lane, type: car.type.id, x: pose.x, y: pose.y, z: pose.z }] : [];
+  });
   stage.inspectRoad = (x, z) => {
     const position = { x, y: 1, z };
     return { groundY: physics.supportHeight(position), overheadY: physics.overheadHeight(position),

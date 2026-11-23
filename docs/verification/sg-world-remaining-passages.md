@@ -15,7 +15,7 @@ Each OSM `wayId` counts once across all edges and tiles. A true tile `tunnel` fl
 | Negative layer only | 60 | 51 | 0 | 0 | 9 | 0 | 0 | 0 |
 | **Total** | **971** | **339** | **351** | **179** | **91** | **8** | **2** | **1** |
 
-Five ways in this inventory now have verified through routes on the ordinary map. Fort Canning Link accounts for `719635729` and `159677768`. Raffles Boulevard accounts for the Millenia Walk way and two Marina Square ways below. The remaining 966 map records still need individual access and geometry assessment.
+Seven ways in this inventory have verified through routes on the ordinary map. Fort Canning Link accounts for two, Raffles Boulevard for three and Temasek Boulevard for two. The remaining 964 ways include 450 with explicit private, destination or permit access, 236 other service roads and 278 other roads. Access tags and road class alone do not establish a driveable passage.
 
 ## Raffles Boulevard
 
@@ -37,9 +37,24 @@ At the two garage mouths, `1314801325:0` leaves the main road and `1314801304:0`
 
 At the entrance and exit junctions, three surface side roads meet the carriageway. Their kerbs end at the edge of the through lanes. One bus and four sedans passed together with zero damage. All 1,749 covered probes matched the visible pavement and the collision soffit across the road width. An indoor pedestrian capsule passed over a moving vehicle during the same physics run. The previous build stopped the sedan against the east wall. [Previous east portal](marina-square/previous-east-portal.webp) · [Open west portal](marina-square/west-portal.webp) · [Open east portal](marina-square/east-portal.webp).
 
+## Temasek Boulevard at Suntec City
+
+The northeast and southwest carriageways under Suntec City span 39.81 m and 39.72 m. Each is a two-lane, 6.8 m one-way road. The pinned extract places both inside the same building footprint, `393210509`, with `min_height=5` and `height=20`. The game puts the asphalt at Y=0. The extract supplies no surveyed road elevation and flags the northeast alignment as estimated. The previous game build stopped the sedan against the wall at both entrances.
+
+| Travel direction | Approach → passage → exit | Mapped lane turns |
+| --- | --- | --- |
+| Northeast | `21702431:4` → `395443687:0` → `750875319:0` | `left;through\|through` |
+| Southwest | `21701084:0` → `395443688:0` → `750875316:0` | `left\|left` |
+
+The simulated through traffic stays in its lane to each mapped exit. The service driveway at the northeast exit remains in the map. Its kerbs and those of two adjoining roads stop at the through lanes. The southwest approach retains its mapped toll flag. The game has no toll collection here.
+
+The two outside walks use a 0.55 m outward shift that tapers to zero over the first and last 8 m. The shift clears the modeled buses while preserving the end connections. A character capsule traversed 89.72 m on the northeast side and 95.36 m on the southwest side. Minimum modeled bus clearance was 0.270 m and 0.261 m respectively. The upper customer corridor `460300678:6` crosses both roads. Its source says `indoor=yes`, `level=1` and `layer=-1`. Only the 45.91 m segment supported inside this footprint gets a simulated walking floor, at Y=5.30, using an assumed 0.30 m slab above the mapped soffit.
+
+Across both carriageways, 1,988 sampled positions matched the visible asphalt, physical road support and 5 m soffit. Two buses and two sedans passed in opposite directions with zero damage. All four vehicles had four wheels supported under the roof simultaneously for 276 simulation frames. Keyboard controls and emulated phone touch controls each cleared both exits with zero damage. Browser observations followed individual ambient vehicles from the passages onto their expected exits without changing lanes. [Previous northeast entrance](temasek-boulevard/previous-northeast-entry.webp) · [Open northeast entrance](temasek-boulevard/northeast-entry.webp) · [Open southwest entrance](temasek-boulevard/southwest-entry.webp).
+
 ## Next assessments
 
-Two opposite-direction Temasek Boulevard ways, `395443687` and `395443688`, cover 39.81 m and 39.72 m under Suntec City structure `393210509`. The pinned building records `min_height=5` and `height=20`. The first road carries a mapper's warning about its estimated position. Indoor corridor `460300678:6` crosses both road centerlines and carries both `level=1` and `layer=-1`. Both roads and their shared roof fit in tile `-1_-6`. The northbound outdoor sidewalk intersects the modeled carriageway for about 16.5 m. The outer-lane bus envelope and a pedestrian capsule currently overlap on that alignment. Verify a supported walking line, the indoor corridor and the two exits before opening these roads.
+Of the 450 passage ways with explicit restrictions, the ordinary ambient traffic graph currently includes 24 ways on 27 edges (22 private ways and two destination-access ways). One of those ways qualifies for spawning by road class and length. This provides a reproducible routing issue independent of the unknown road elevations. The source counts below use the full extract and the traffic graph over all tracked tiles.
 
 Defer Kheam Hock Road `659688751:0`. Its two-way 40.32 m tunnel links `97408974:0` and `659688752:0` in tile `-19_-21`, and its source also carries `maxheight=4.5`. The current game meshes for the two Pan-Island Expressway crossings, `159090940:0` and `627656467:0`, put the rendered underside at about Y = −0.90 m at both centerline intersections. Their two-vertex profiles sample the bridge ramps at the ends of the 26.60 m and 27.13 m edges. A verified or explicitly simulated pair of upper-deck and lower-road profiles is needed before using this corridor.
 
@@ -53,6 +68,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { buildTileFiles } from './scripts/world/build-tiles.mjs';
+import { buildTrafficGraph } from './src/world/traffic.js';
 
 const bytes = readFileSync(process.argv[2]);
 assert.equal(createHash('sha256').update(bytes).digest('hex'),
@@ -67,12 +83,17 @@ for (const [file, contents] of files) {
 }
 
 const ways = new Map();
-for (const { file } of index.tiles) {
-  const tile = JSON.parse(files.get(file));
+const tiles = index.tiles.map(({ file }) => JSON.parse(files.get(file)));
+const edgeWays = new Map();
+for (const tile of tiles) {
+  for (const road of tile.roads) edgeWays.set(road.id, road.wayId);
   for (const road of tile.roads) ways.set(road.wayId, road);
 }
 assert.equal(ways.size, 9762);
 const counts = new Map();
+const verified = new Set([719635729, 159677768, 479745478, 545362402, 545362403, 395443687, 395443688]);
+const restricted = new Set();
+let service = 0, other = 0;
 for (const [id, road] of ways) {
   const raw = tags.get(id);
   assert.ok(raw, `missing source tags for ${id}`);
@@ -86,7 +107,17 @@ for (const [id, road] of ways) {
   row.ways++;
   row[access] = (row[access] ?? 0) + 1;
   counts.set(type, row);
+  if (verified.has(id)) continue;
+  if (['private', 'destination', 'permit'].includes(access)) restricted.add(id);
+  else if (road.class === 'service') service++;
+  else other++;
 }
 console.table(Object.fromEntries(counts));
+const graph = buildTrafficGraph(tiles);
+const edges = [...graph.edges.values()].filter(edge => restricted.has(edgeWays.get(edge.id)));
+const wayCount = list => new Set(list.map(edge => edgeWays.get(edge.id))).size;
+console.log({ restricted: restricted.size, service, other,
+  restrictedRoutableWays: wayCount(edges), restrictedRoutableEdges: edges.length,
+  restrictedSpawnWays: wayCount(edges.filter(edge => edge.length > 25 && edge.class !== 'service' && edge.class !== 'footway')) });
 NODE
 ```
