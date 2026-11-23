@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { assembleBakeryShop, bakeryPaths } from './bakery-shop.js';
+import { assembleSupermarketShop, supermarketPaths } from './supermarket-shop.js';
 import { assembleComputerShop, computerPaths } from './computer-shop.js';
 import { assemblePharmacyBeauty, beautyPaths } from './pharmacy-beauty.js';
 import { assembleHomeFurnishings, furnishingPaths } from './home-furnishings.js';
@@ -121,6 +122,9 @@ if (renderer) {
     'bakery-shop': furnishedShop('bakery-shop', 'Bakery shop',
       'Inspect the serving tongs and toast trays, or walk around the glazed pastry cabinet.',
       bakeryPaths, assembleBakeryShop),
+    'supermarket': furnishedShop('supermarket', 'Supermarket',
+      'Inspect the cart return, browse the grocery aisle or walk up to the checkout.',
+      supermarketPaths, assembleSupermarketShop),
     'computer-shop': furnishedShop('computer-shop', 'Computer shop',
       'Walk around the demo table, inspect the tethered laptop or browse the electronics shelf.',
       computerPaths, assembleComputerShop),

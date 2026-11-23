@@ -88,6 +88,14 @@ The 11.08 m customer route visits the bread and the glazed [display cabinet](../
 
 Run `node --test tests/mall-bakery-shop.test.mjs` to check both routes, verify the tray contacts and compare the opening with the native cabinet animation. With the local server running, `MALL_PREVIEW_SITE=http://127.0.0.1:5173/ node scripts/test-mall-shop-inspection.mjs bakery-shop` checks all ten loaded GLBs and the close-up controls.
 
+### Supermarket
+
+Choose **Supermarket** or open `/mall-modules-preview/?view=supermarket`. A pair of [shopping carts](../models/shopping-cart/README.md) park side by side at the [return bay](../models/mall-cart-return-bay/README.md). **Inspect cart return** shows the rails, cart handles and raised signs with both bays occupied. The entrance [security pedestals](../models/store-security-gate/README.md) stand 1.36 m apart at their bases. A 15.79 m route leads through them to the cart handles, the [checkout](../models/checkout-counter/README.md) and the [stocked gondola](../models/shelf-food-aisle/README.md), then back outside. [Shop cutaway](supermarket.png) · [Occupied cart return](supermarket-cart-return.png)
+
+The viewer displays both carts parked. The geometry test pulls each one straight out by 1.15 m and returns it while its neighbour stays in place. The smaller measured clearances are 44 mm to the rails and 160 mm to the adjacent cart. The two signs sit above the cart baskets so shoppers can see the trolley symbols from the aisle.
+
+Run `node --test tests/mall-supermarket-shop.test.mjs` to check floor contact at the six pads and eight wheels, both cart paths, sign visibility and the visitor loop in each direction. With the local server running, `MALL_PREVIEW_SITE=http://127.0.0.1:5173/ node scripts/test-mall-shop-inspection.mjs supermarket` checks the eleven loaded GLBs, keyboard and touch inspection, reset, roof and failure recovery.
+
 ## Furnished corridor
 
 The wall selection is the new 1.2 m solid wall; the corridor also retains the existing glass partitions for the shopfronts. The ceiling is intentionally a partial cutaway for visibility. This visual arrangement is not a construction or safety specification; see the individual asset READMEs and `docs/verification/p0-assembly/README.md` for actual dimensions, interfaces, prior checks, and rights. The preview does not change or export source assets, and it is not part of the production Gallery build.

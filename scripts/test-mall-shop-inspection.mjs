@@ -3,12 +3,14 @@ import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 import { bakeryPaths } from '../mall-modules-preview/bakery-shop.js';
+import { supermarketPaths } from '../mall-modules-preview/supermarket-shop.js';
 import { computerPaths } from '../mall-modules-preview/computer-shop.js';
 import { beautyPaths } from '../mall-modules-preview/pharmacy-beauty.js';
 import { roomAssetPaths } from '../mall-modules-preview/room-layout.js';
 import { launchOptions, recordConsumedGlbHashes } from './browser-test-utils.mjs';
 
 const shops = {
+  'supermarket': { paths: supermarketPaths, label: 'Inspect cart return', dependency: supermarketPaths.cartReturn },
   'bakery-shop': { paths: bakeryPaths, label: 'Inspect serving tongs', dependency: bakeryPaths.servingTongs },
   'pharmacy-beauty': { paths: beautyPaths, label: 'Inspect tester bar', dependency: beautyPaths.testerBar },
   'computer-shop': { paths: computerPaths, label: 'Inspect demo laptop', dependency: computerPaths.securityTether },
@@ -30,6 +32,8 @@ try {
   for (const width of [1080, 390]) {
     const touch = width === 390;
     const page = await browser.newPage({ viewport: { width, height: 844 }, hasTouch: touch });
+    page.setDefaultTimeout(90000);
+    page.setDefaultNavigationTimeout(120000);
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.addInitScript(recordConsumedGlbHashes);

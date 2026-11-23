@@ -384,11 +384,11 @@ This is the detailed planning checklist requested for building a complete virtua
 - [ ] 美容院
 - [ ] Watsons 风格药妆店
 - [ ] Nitori 风格家居店
-- [ ] 家具店
+- [x] [家具店](../../mall-modules-preview/README.md#home-furnishings-shop)（客厅与用餐区）
 - [ ] 床垫店
 - [ ] 床品店
 - [ ] FairPrice 风格超市
-- [ ] 迷你超市
+- [x] [迷你超市](../../mall-modules-preview/README.md#supermarket)（双车位、食品货架、收银台）
 - [x] [电脑店](../../mall-modules-preview/README.md#computer-shop)（含实物演示台与陈列柜）
 - [ ] 手机店
 - [ ] 电子产品店
@@ -689,10 +689,10 @@ This is the detailed planning checklist requested for building a complete virtua
 1. Building shell: floor, wall, column, ceiling, glazing and entrance; reconcile the module grid first.
 2. First corridor: two shop units, doors, fascia and lighting, assembled with measured interfaces.
 3. Public area: seating, planters, directory, waste bins and wayfinding.
-4. First five assembled shops: pharmacy/beauty, computer, bakery, home furnishings and supermarket; use shared fixtures.
+4. First five assembled shops completed in the local preview using shared fixtures. [Home furnishings](../../mall-modules-preview/README.md#home-furnishings-shop) · [Pharmacy and beauty](../../mall-modules-preview/README.md#pharmacy-and-beauty-shop) · [Computer](../../mall-modules-preview/README.md#computer-shop) · [Bakery](../../mall-modules-preview/README.md#bakery-shop) · [Supermarket](../../mall-modules-preview/README.md#supermarket)
 5. Vertical transport: escalators, lift and stairs.
 6. Restrooms, accessible facilities and family rooms.
 7. Parking, outdoor access and loading.
 8. Merchandise, people, seasonal decoration and requested interactive features.
 
-Each phase is planned; existing preview or checklist coverage is not proof that a phase has passed. Review the source plan's provisional dimensions and behavior-specific QA for each item. No publication, commit, or deployment is authorized by this checklist alone.
+Phase 4 now links all five measured local shop layouts. Use each phase’s linked evidence and the source plan’s provisional dimensions to check individual items. No publication, commit, or deployment is authorized by this checklist alone.
