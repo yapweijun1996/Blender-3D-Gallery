@@ -29,7 +29,9 @@ npm run build:deploy && npm run test:tunnel
 
 ### Default-world tunnel integration checks
 
-The 531.274 m simulation extends the descent and ascent along the connected Fort Canning Link ways in the pinned snapshot. It spans four tiles and keeps the mapped upstream footways and SMU Connexion above the roof. The local ground owner keeps the exterior ground installed when it swaps the cut and restores the flat patch on unload. Rapier updates the new patch's query index on the next physics step, so the cut must load before a vehicle enters it.
+On the [ordinary Singapore Open World map](https://yapweijun1996.github.io/Blender-3D-Gallery/?page=sg-world), approach Fort Canning Link from Victoria Street to drive under Fort Canning Road and join the five-lane Penang Road exit. The world starts loading the six required tiles within 800 m of the tunnel area. It keeps the original road in place until the tiles are verified, nearby vehicles and pedestrians are clear of the cut, and Rapier has indexed the new collision surfaces. If a tile fails to load, the surface remains drivable. The map retries once when the player leaves the protected patch or returns after leaving the preload area.
+
+The 531.274 m simulation extends the descent and ascent along the connected Fort Canning Link ways in the pinned snapshot. It spans four tiles and keeps the mapped upstream footways and SMU Connexion above the roof. The accepted cut stays installed for the driving session, including trips away from Fort Canning and back.
 
 Run the offline checks from the repository root.
 
@@ -37,6 +39,7 @@ Run the offline checks from the repository root.
 node scripts/world/fort-canning-integration.mjs > scripts/world/fort-canning-integration.json
 npm run test:world
 node --test tests/world-fort-canning-crossings.test.mjs tests/world-tunnel-streaming.test.mjs tests/world-overhead-structures.test.mjs
+npm run build:deploy && npm run test:streamed-tunnel
 ```
 
 A Rapier sedan travels the extended approach, both portals and all three tile seams. At the parking aisle and Fort Canning Road, pairs of sedans drive across the same location at different heights in the same physics world. The chassis separation is 5.50 m and 5.45 m respectively at the closest points on plan.
@@ -44,12 +47,12 @@ A Rapier sedan travels the extended approach, both portals and all three tile se
 The original centered profile reports four overlaps in the fixed map data.
 
 - **Penang Road merge.** The full road width begins overlapping the exit 52.20 m after the last edge of the Fort Canning Road crossing. At the prototype's 8% grade limit this gives at most 4.18 m of depth against the model's 4.90 m roof clearance and thickness. Keeping the Penang Road merge at ground level requires an adjusted road profile or alignment. [LTA route map](https://onemotoring.lta.gov.sg/content/dam/onemotoring/Driving/Road_Closures/Temporary/FCT/FCTTT801TunnelClosureMapApr2025.pdf).
-- **Innovation Bridge.** The mapped two-storey bridge intersects the entrance cut. The tile renderer and Rapier support a closed elevated footprint when an underside height is supplied. Choosing the modeled height still needs an explicit integration decision. [SMU description](https://admissions.smu.edu.sg/our-community/news/smu-expands-city-campus-footprint-new-sustainable-development-named-tahir).
-- **Two exit footways.** The `774912614:0` and `1552288080:0` footprints intersect the open ascent in plan. Validate walkable continuity and the required clearance for both paths before enabling the cut.
+- **Innovation Bridge.** The mapped two-storey bridge intersects the entrance cut. The tile renderer and Rapier support a closed elevated footprint when an underside height is supplied. The accepted simulation height and clearance are recorded below. [SMU description](https://admissions.smu.edu.sg/our-community/news/smu-expands-city-campus-footprint-new-sustainable-development-named-tahir).
+- **Two exit footways.** The `774912614:0` and `1552288080:0` footprints intersect the open ascent in plan. The adjusted alignment and walkable supports are described below.
 
-The existing streamed tiles end where the three Fort Canning Link lanes and two Penang Road lanes merge. A separately pinned API sample verifies 168.71 m of five-lane, one-way Penang Road from the merge to a signal. The complete junction and turn data belong in the tile extraction before enabling the through route. [OpenStreetMap merge continuation](https://api.openstreetmap.org/api/0.6/way/888048852/full.json), [middle segment](https://api.openstreetmap.org/api/0.6/way/74559749/full.json), [signal approach](https://api.openstreetmap.org/api/0.6/way/888048851/full.json).
+The original streamed tiles ended where the three Fort Canning Link lanes and two Penang Road lanes merge. A separately pinned API sample verifies 168.71 m of five-lane, one-way Penang Road from the merge to a signal. The junction overlay adds the verified public-road movements to the streamed tiles. [OpenStreetMap merge continuation](https://api.openstreetmap.org/api/0.6/way/888048852/full.json), [middle segment](https://api.openstreetmap.org/api/0.6/way/74559749/full.json), [signal approach](https://api.openstreetmap.org/api/0.6/way/888048851/full.json).
 
-The extended alignment, depth, roof and grade checks use game dimensions. The fixed inputs give plan geometry and layer tags. Default-world activation also requires the affected tiles to be ready together and the traffic graph to use the accepted grades.
+The extended alignment, depth, roof and grade checks use game dimensions. The fixed inputs give plan geometry and layer tags.
 
 #### Three-plus-two-lane merge candidate
 
@@ -64,7 +67,7 @@ npm run test:world
 node --test tests/world-fort-canning-merge.test.mjs tests/world-fort-canning-clearance.test.mjs
 ```
 
-Default-map acceptance still needs the downstream junction and approach tiles, preloading and coordinated terrain replacement, traffic elevations and route continuity through the common exit. The local merge overlaps Dhoby Ghaut Green's surface polygon where its original roads run. Keep the road visible above the park fill and update the affected paint with the streamed geometry.
+At Dhoby Ghaut Green, the new road draws above the park fill. The six replacement tiles suppress the original road paint on the changed alignment and keep the upper crossing visible.
 
 #### Penang Road junction source checks
 
@@ -72,7 +75,7 @@ The pinned junction data extend the five-lane Penang Road exit through the signa
 
 The offline tile builder produces the public-road overlay across `-7_-7`, `-8_-7` and `-8_-8`. A route that spans two tiles requires both matching fragments. The terminal signal approach includes a mapped pedestrian crossing less than six metres before the junction. The simulated stop line is 15 m upstream of the junction, on the preceding graph edge. The traffic stop line and rendered signal use the same approach. A bus stops with its nose clear of the crossing on red and proceeds to the public exit on green.
 
-The traffic engine can accept explicit forward lane assignments for a one-way merge. The Link lanes continue into downstream lanes 1–3 and the Penang feeder into lanes 4–5, numbered from the left. The same assignments control following distance and the lane taken at the merge. All five vehicles continued into the pinned Penang Road lanes in the offline traffic test. The default map still needs to load the overlay, enable these rules and coordinate collision activation before it can use the tunnel.
+The traffic engine can accept explicit forward lane assignments for a one-way merge. The Link lanes continue into downstream lanes 1–3 and the Penang feeder into lanes 4–5, numbered from the left. The same assignments control following distance and the lane taken at the merge. All five vehicles continued into the pinned Penang Road lanes in the offline traffic test. On the default map, the grade-aware traffic graph takes effect with the new road surface. At the first fork, traffic uses only movements with a verified public destination.
 
 ## Data pipeline (only needed when the map changes)
 
