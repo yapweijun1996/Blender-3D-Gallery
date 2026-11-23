@@ -124,7 +124,12 @@ async function fetchTile(key, signal) {
   return response.json();
 }
 
-export async function mountWorld(root, thumbnail, signal) {
+export async function mountWorld(root, thumbnail, signal, { tunnel = false } = {}) {
+  if (tunnel) {
+    const { mountTunnelPrototype } = await import("./tunnel-prototype/page.js");
+    signal.throwIfAborted();
+    return mountTunnelPrototype(root, thumbnail, signal);
+  }
   const LOAD_RADIUS = matchMedia("(pointer: coarse)").matches ? 1 : 2;
   mountMarkup(root, `<section class="drive">
     <header class="drive-heading">
@@ -165,6 +170,7 @@ export async function mountWorld(root, thumbnail, signal) {
     </div>
     <p class="drive-hint" data-i18n="world.hint"></p>
     <p class="drive-credit" data-i18n="world.credit"></p>
+    <p class="drive-credit"><a href="?page=sg-world&amp;tunnel=fort-canning" data-i18n="world.tunnel.link"></a></p>
   </section>`);
   const stage = root.querySelector(".drive-stage");
   const enterButton = stage.querySelector(".world-enter");

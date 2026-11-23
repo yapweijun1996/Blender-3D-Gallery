@@ -52,6 +52,7 @@ const templateFiles = [
   "src/viewer.js", "src/chibi-rig-controls.js", "src/fish-motion.js",
   "src/tripo-animation-preview.js", "src/shopping-cart/demo.js",
   "src/visitor-demo.js", "src/visitor-v2/demo.js", "src/visitor-v3/demo.js", "src/scroll-to-top.js",
+  "src/world/tunnel-prototype/page.js",
 ];
 const authoredText = new Set(["Blender 3D Gallery", "BLENDER", "3D", "GALLERY", "BLENDER 3D GALLERY",
   "✳ BLENDER 3D GALLERY", "GitHub", "GitHub ↗"]);

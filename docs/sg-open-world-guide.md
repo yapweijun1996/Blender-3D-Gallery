@@ -12,6 +12,23 @@ Plan and per-milestone status: [sg-open-world-plan.md](sg-open-world-plan.md). O
 - Near an MRT entrance (red pillar with the station sign) a button or E goes down to the station page.
 - Damage: smoke from 40 percent, the engine stalls at 95 percent until you right the car.
 
+### Fort Canning Link tunnel prototype
+
+Open [the Fort Canning Link tunnel prototype](https://yapweijun1996.github.io/Blender-3D-Gallery/?page=sg-world&tunnel=fort-canning) from Singapore Open World. Drive from the surface approach through the descent, covered tunnel and exit. Use the arrow keys or W A S D, or the four touch controls. Pause and Restart drive apply to this session. The Open World link returns to the normal map.
+
+The prototype follows the 360.916 m three-lane, one-way OpenStreetMap way `159677768` and both connected surface ways from the [pinned Marina Bay snapshot](../scripts/world/fixtures/README.md). Road position is estimated in the source. The 5.5 m depth, 8% grade limit, level surface and 4.7 m covered clearance are simulation values. The profile spans three 250 m tiles with matching seam samples. The ramp opening, walls, ceiling and surrounding surface use the same geometry for rendering and Rapier collisions. The driven sedan uses the existing Blender car and vehicle physics.
+
+Regenerate the prototype path without a network connection. The check compares the output with the tracked artifact and exercises a deterministic drive across both actual OSM endpoints, both covered portals and both tile seams.
+
+```sh
+node scripts/world/fort-canning-tunnel.mjs > scripts/world/fort-canning-tunnel.json
+npm run test:world
+node --test tests/world-tunnel-prototype.test.mjs
+npm run build:deploy && npm run test:tunnel
+```
+
+Default-world integration still needs the actual surface and overhead layouts at the approaches, including the projected crossing with Fort Canning Road, plus streaming, AI route choice and target-device measurement. The opt-in prototype has its own scene and vehicle and uses the main site's route disposal and retry.
+
 ## Data pipeline (only needed when the map changes)
 
 ```sh
@@ -37,6 +54,7 @@ Models are registered in the gallery with `node scripts/register-gallery-model.m
 npm test                    # all unit tests (800+)
 npm run test:world          # road network tiles against the pinned OSM test fixture
 npm run test:openworld      # real Chrome: loads, drives, missions, bridges' tiles, streaming, vehicles, checkpoint
+npm run test:tunnel         # Chrome keyboard and emulated touch, both tunnel portals and route cleanup
 npm run test:mrt
 ```
 
@@ -44,5 +62,4 @@ The browser tests use software rendering (about 1 fps), so they use hooks on the
 
 ## Known limits
 
-Tunnels are not drawn; the Float is placed approximately; the Supertrees are scattered inside the mapped grove outline; ordinary buildings are extrusions with a texture;
-the world outside Marina Bay has only mapped roads, buildings, water and parks. A [physical phone performance procedure](verification/sg-world-physical-performance.md) is ready. Real-device frame rate remains unmeasured.
+The normal Open World map omits underground roads from road meshes and traffic. The Float is placed approximately, the Supertrees are scattered inside their mapped grove outline and ordinary buildings use textured extrusions. The world outside Marina Bay has mapped roads, buildings, water and parks. A [physical phone performance procedure](verification/sg-world-physical-performance.md) is ready. Real-device frame rate remains unmeasured.

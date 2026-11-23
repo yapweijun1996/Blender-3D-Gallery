@@ -1,0 +1,49 @@
+.tunnel-preview {
+  --drive-sky: var(--image-placeholder);
+  --drive-ink: var(--media-status-text);
+  --drive-shadow: var(--media-status-scrim);
+  --drive-panel-soft: var(--media-status-scrim);
+  --drive-line: var(--control-line);
+  --drive-gold: var(--accent);
+  --drive-on-gold: var(--accent-contrast);
+}
+
+.tunnel-stage .drive-readout {
+  padding: .2rem .65rem;
+  border-radius: .45rem;
+  background: var(--drive-panel-soft);
+}
+
+.tunnel-status {
+  position: absolute;
+  top: .85rem;
+  left: .85rem;
+  max-width: calc(100% - 1.7rem);
+  margin: 0;
+  padding: .35rem .65rem;
+  border-radius: .45rem;
+  background: var(--drive-panel-soft);
+  font-weight: 600;
+}
+
+.tunnel-progress {
+  position: absolute;
+  right: .85rem;
+  bottom: .35rem;
+  left: .85rem;
+  width: calc(100% - 1.7rem);
+  height: .38rem;
+  accent-color: var(--drive-gold);
+}
+
+.tunnel-preview .drive-credit { display: inline-block; }
+
+@media (pointer: coarse) {
+  .tunnel-stage .drive-pad { padding: 0 .55rem; }
+  .tunnel-stage .drive-pad button { width: clamp(2.75rem, 13vw, 4.2rem); height: clamp(2.75rem, 13vw, 4.2rem); }
+  .tunnel-stage .drive-steer, .tunnel-stage .drive-pedals { gap: .35rem; }
+  .tunnel-stage .drive-readout { inset: .85rem .85rem auto auto; transform: none; }
+  .tunnel-stage .drive-readout strong { font-size: 1.4rem; }
+  .tunnel-status { max-width: calc(100% - 7.5rem); }
+  .tunnel-keyboard-hint { display: none; }
+}

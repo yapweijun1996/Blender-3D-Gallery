@@ -66,7 +66,8 @@ let gamePage = null,
   productStudioPage = null,
   pageController = null,
   routeRun = 0,
-  mountedRoute = null;
+  mountedRoute = null,
+  mountedTunnel = false;
 let lastRouteUrl = location.href;
 let modelReturnUrl = null;
 const notice = $("#route-notice");
@@ -601,6 +602,8 @@ function route() {
 async function syncRoute() {
   const page = route(),
     previous = mountedRoute;
+  const tunnel = page === "sg-world" && new URLSearchParams(location.search).get("tunnel") === "fort-canning";
+  const worldDriveChanged = mountedTunnel !== tunnel;
   const isDemo = demoPages.includes(page);
   const motion = motionDemos[page];
   const dressup = page === "chibi-dressup";
@@ -639,8 +642,8 @@ async function syncRoute() {
   }
   if (page === "gallery") syncModelFilters();
   if (page === "demos") syncDemoFilters();
-  refreshTitle(page);
-  if (page === mountedRoute && (gamePage || solarPage || productStudioPage || shelfInspectorPage || motionPage || dressupPage || drivePage || cityPage || worldPage || mrtPage || pageController))
+  refreshTitle(page, tunnel);
+  if (page === mountedRoute && !worldDriveChanged && (gamePage || solarPage || productStudioPage || shelfInspectorPage || motionPage || dressupPage || drivePage || cityPage || worldPage || mrtPage || pageController))
     return;
   const run = ++routeRun;
   pageController?.abort();
@@ -658,6 +661,7 @@ async function syncRoute() {
   shelfInspectorPage?.dispose();
   gamePage = solarPage = productStudioPage = shelfInspectorPage = null;
   mountedRoute = page;
+  mountedTunnel = tunnel;
   if (isDemo) {
     if (dialog.open) closeViewer(false);
     const cleanUrl = new URL(location.href);
@@ -691,7 +695,7 @@ async function syncRoute() {
           : city
             ? await module.mountCity(root, demo.thumbnail, controller.signal)
           : world
-            ? await module.mountWorld(root, demo.thumbnail, controller.signal)
+            ? await module.mountWorld(root, demo.thumbnail, controller.signal, { tunnel })
           : mrt
             ? await module.mountMrt(root, demo.thumbnail, controller.signal)
           : await module.mountSolar(
@@ -735,7 +739,7 @@ async function syncRoute() {
     if (page === "gallery") syncModelUrl();
   }
   const libraryViewChanged = page === "gallery" && previousSearchMode !== isSearchMode();
-  if (previous && (previous !== page || libraryViewChanged)) {
+  if (previous && (previous !== page || worldDriveChanged || libraryViewChanged)) {
     const heading = getPageHeading($(`#${page}-page`));
     heading?.setAttribute("tabindex", "-1");
     heading?.focus({ preventScroll: true });
@@ -759,6 +763,7 @@ function navigate(page, alreadyConfirmed = false, hash = "", home = false) {
   const url = new URL(location.href);
   url.searchParams.delete("model");
   url.searchParams.delete("page");
+  url.searchParams.delete("tunnel");
   if (page !== "gallery") url.searchParams.set("page", page);
   else if (!home) url.searchParams.set("page", "models");
   if (home) for (const key of ["q", "theme", "category", "collection", "feature"]) url.searchParams.delete(key);
@@ -799,9 +804,10 @@ document.addEventListener("click", (event) => {
 });
 window.addEventListener("popstate", () => void syncRoute());
 window.addEventListener("hashchange", () => void syncRoute());
-function refreshTitle(page) {
+function refreshTitle(page, tunnel = mountedTunnel) {
   const demo = demosByRoute.get(`?page=${page}`);
-  const key = demo ? demoTitleKey(demo) : page === "gallery" ? "nav.models" : `nav.${page}`;
+  const key = page === "sg-world" && tunnel ? "world.tunnel.title"
+    : demo ? demoTitleKey(demo) : page === "gallery" ? "nav.models" : `nav.${page}`;
   document.title = t("shell.pageTitle", { title: t(key) });
 }
 
