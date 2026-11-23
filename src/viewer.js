@@ -27,6 +27,7 @@ export default async function createViewer(
   let railReloadDemo;
   let carparkHelpDemo;
   let airBalangDemo;
+  let coconutScraperDemo;
   let visitorDemo;
   let animationPreview;
   let buildingLoop;
@@ -169,6 +170,7 @@ export default async function createViewer(
     railReloadDemo?.dispose();
     carparkHelpDemo?.dispose();
     airBalangDemo?.dispose();
+    coconutScraperDemo?.dispose();
     visitorDemo?.dispose();
     animationPreview?.dispose();
     buildingLoop?.dispose();
@@ -382,6 +384,23 @@ export default async function createViewer(
       }
       if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
     }
+    if (interaction === "coconut-scraper") {
+      try {
+        const { default: createCoconutScraperDemo } = await import("./coconut-scraper/demo.js");
+        if (!disposed && !signal.aborted) {
+          coconutScraperDemo = createCoconutScraperDemo({
+            model, clips: gltf.animations, container,
+            invalidate() {
+              lastDraw = 0;
+              invalidate();
+            },
+          });
+        }
+      } catch {
+        // The scraper remains available as an ordinary model if the add-on fails.
+      }
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+    }
     frameForResize = () => {
       if (!model) return;
       const viewDirection = camera.position.clone().sub(controls.target);
@@ -401,6 +420,7 @@ export default async function createViewer(
       railReloadDemo?.reset();
       carparkHelpDemo?.reset();
       airBalangDemo?.reset();
+      coconutScraperDemo?.reset();
       visitorDemo?.reset();
       animationPreview?.reset();
       chibiRig?.reset();
@@ -514,6 +534,7 @@ export default async function createViewer(
       const railReloadActive = railReloadDemo?.update(elapsed);
       const carparkHelpActive = carparkHelpDemo?.update(elapsed);
       const airBalangActive = airBalangDemo?.update(elapsed);
+      const coconutScraperActive = coconutScraperDemo?.update(elapsed);
       const visitorActive = visitorDemo?.update(elapsed);
       const animationActive = animationPreview?.update(elapsed);
       const buildingActive = buildingLoop?.update(elapsed);
@@ -521,7 +542,7 @@ export default async function createViewer(
       const fishActive = fishMotion?.update();
       const changed = controls.update();
       renderer.render(scene, camera);
-      if (changed || active || pickupActive || lohHeiActive || railReloadActive || carparkHelpActive || airBalangActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
+      if (changed || active || pickupActive || lohHeiActive || railReloadActive || carparkHelpActive || airBalangActive || coconutScraperActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
     };
     invalidate();
     return { reset, dispose, setView };

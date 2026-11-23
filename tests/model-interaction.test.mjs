@@ -24,6 +24,8 @@ test("only allowlisted models and the authored Singapore fish receive interactiv
       ? { "mall-carpark-help-point": "carpark-help" } : {}),
     ...(collections.some(({ assets }) => assets.some(({ id }) => id === "ramadan-bazaar-air-balang-stall"))
       ? { "ramadan-bazaar-air-balang-stall": "air-balang" } : {}),
+    ...(collections.some(({ assets }) => assets.some(({ id }) => id === "wet-market-coconut-scraper"))
+      ? { "wet-market-coconut-scraper": "coconut-scraper" } : {}),
     "gjh-mall-visitor-v2": "visitor-v2",
     "gjh-visitor-v3": "visitor-v3",
     ...Object.fromEntries(species.map(([slug]) => [`fish-${slug}`, "fish"])),
