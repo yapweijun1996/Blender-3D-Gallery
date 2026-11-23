@@ -1,6 +1,6 @@
 # Escalator 004 passenger clearance and tread support
 
-The original GJH mall visitor rides the original escalator from machine time **0.30 to 18.10 seconds**, rising from 0 to 3 m. At both ends the visitor is already standing on a flat moving tread. The [boarding and exit study](transfers.md) records unsupported frames in the tested native walking transitions and the physical contact points for an authored transfer.
+The original GJH mall visitor rides the original escalator from machine time **0.30 to 18.10 seconds**, rising from 0 to 3 m. At both ends of this short inspection the visitor is standing on a flat moving tread. A [26.24 s floor-to-floor journey](journey.md) includes the approach, boarding, exit and departure. The [original gait study](transfers.md) records the unsupported frames that led to the authored transfers.
 
 ## How much room does the rider have?
 

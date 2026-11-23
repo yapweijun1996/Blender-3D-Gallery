@@ -56,6 +56,12 @@ The ride starts after boarding and ends before stepping off. The [boarding and e
 
 With the local preview running, `node scripts/test-mall-escalator-passenger.mjs` checks playback, keyboard seeking, reduced motion, a failed passenger load and a late load after leaving the view.
 
+#### Travel between floors
+
+Select **Travel between floors** to follow the visitor from the lower terrazzo tile to the upper one. The 26.24-second journey crosses both metal floor joints. The passenger places one shoe on the moving tread while the other stays on the lower landing, then reverses that handoff on the upper landing. The viewer names each phase as it plays. Pause or use **Ride position** to inspect either transfer. The last position places both shoes on the upper floor. [Route measurements and reproduction](../docs/verification/mall-escalator-passenger/journey.md)
+
+The slider's arrow keys move by 0.01 s. Both support surfaces are visible at 3.73 s below and 21.80 s above. [Boarding](escalator-boarding.webp) · [Stepping off](escalator-alighting.webp)
+
 ### Full-depth floor edging
 
 Choose **Finished floor edge** or open `/mall-modules-preview/?view=finished-edge`. Two [2 m straight profiles and their mitred return](../models/mall-floor-edge-2m/README.md) finish the outside edges of the same four slabs. The 60 mm cap sits flush and its bronze fascia covers the 100 mm slab depth. The straight profiles use a top-centre pivot. The paired return uses the corner tile centre at finished-floor elevation. [Installed straight and mitred edges](finished-floor-edge.png)

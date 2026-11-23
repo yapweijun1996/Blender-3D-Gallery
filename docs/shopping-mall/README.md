@@ -78,3 +78,5 @@ At the audited commit, the Gallery offered the TV demo table for download. Its a
 ### Escalator terminal on the 2 m grid
 
 The existing escalator’s upper and lower crossbeams project 20 mm past the finished deck. An ordinary slab placed flush there intersects the beam. The [editable 2 m transition](../../models/mall-escalator-floor-transition-2m/README.md) has a recess that clears the beam by 5 mm above, behind and on either side. The [assembled landings](../../mall-modules-preview/README.md#escalator-landings) show how both finished shoulders meet adjacent slabs. [Measured joints and reproduction](../verification/mall-escalator-floor-joint/README.md#installed-blender-part)
+
+**Travel between floors** follows the original GJH visitor across the lower joint, onto the moving escalator and across the upper joint. The complete trip starts and ends on the centre floor tiles. [Passenger controls](../../mall-modules-preview/README.md#travel-between-floors) · [Contact measurements](../verification/mall-escalator-passenger/journey.md)

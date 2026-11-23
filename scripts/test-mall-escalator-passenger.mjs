@@ -170,6 +170,36 @@ async function checkViewport(width, height, reduced) {
     assert.equal(await start.innerText(),'Ride a step');
     assert.equal(await message.textContent(),'');
     assert.ok((await visibleImage('returned')).equals(overview),'leaving an active ride restores native overview on return');
+    await page.getByRole('button', { name: 'Travel between floors' }).click();
+    await panel.waitFor();
+    const phase = page.locator('#ride-phase');
+    await waitForLabel(reduced ? 'Play journey' : 'Pause journey');
+    if (!reduced) await toggle.click();
+    assert.equal(await time.getAttribute('max'), '26.24');
+    await time.press('Home');
+    assert.equal(await phase.innerText(), 'Walking from the lower floor to the escalator');
+    const journeyTrack = await time.boundingBox();
+    for (const [seconds, text, image] of [
+      [3.73, 'Stepping onto the moving tread', 'boarding'],
+      [12, 'Riding the tread to the upper floor', 'between-floors'],
+      [21.80, 'Stepping onto the upper landing', 'alighting'],
+      [24.5, 'Walking across the upper floor joint', 'upper-floor'],
+    ]) {
+      const x = 8 + seconds / 26.24 * (journeyTrack.width - 16);
+      await time.click({ position: { x, y: journeyTrack.height / 2 } });
+      const ticks = Math.round((seconds - await position()) * 100);
+      for (let i = 0; i < Math.abs(ticks); i++) await time.press(ticks > 0 ? 'ArrowRight' : 'ArrowLeft');
+      assert.equal(await position(), seconds, 'the slider can stop at the measured handoff');
+      assert.equal(await phase.innerText(), text);
+      if (output) await visibleImage(image);
+    }
+    await time.press('End');
+    await waitForLabel('Replay journey');
+    assert.equal(await phase.innerText(), 'Arrived on the upper floor');
+    await toggle.click();
+    await waitForLabel('Pause journey');
+    await reset.click();
+    assert.ok((await visibleImage('journey-reset')).equals(overview), 'journey restores the same empty escalator');
     if (!reduced) {
       // Navigating a real document out of the foreground delivers Chromium's
       // trusted hidden event even in headless builds which keep both tabs visible.

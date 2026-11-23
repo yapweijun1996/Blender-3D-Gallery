@@ -39,10 +39,11 @@
           <div class="walk-buttons">
             <button type="button" data-terminal="lower" aria-pressed="false">Inspect lower terminal</button>
             <button type="button" data-terminal="upper" aria-pressed="false">Inspect upper terminal</button>
+            <button type="button" id="journey-start">Travel between floors</button>
             <button type="button" id="ride-start">Ride a step</button>
           </div>
           <div id="ride-controls" hidden>
-            <p>Follow the passenger from the lower flat steps to the upper flat steps.</p>
+            <p id="ride-phase" aria-live="polite"></p>
             <div class="walk-buttons">
               <button type="button" id="ride-toggle">Play ride</button>
               <label for="ride-time">Ride position</label>
