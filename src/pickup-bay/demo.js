@@ -36,6 +36,7 @@ export default function createPickupDemo({ model, container, signal, invalidate 
   const stop = model.worldToLocal(anchors[1].getWorldPosition(new Vector3()));
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let car, controller, disposed = false, phase = "ready", elapsed = 0;
+  let usingFallbackFocus = false;
   const toolbar = document.createElement("div");
   // Reuse the shared viewer interaction toolbar styling.
   toolbar.className = "cart-demo pickup-demo";
@@ -72,6 +73,10 @@ export default function createPickupDemo({ model, container, signal, invalidate 
   });
   toolbar.append(title, copy, status, buttons);
   container.insertAdjacentElement("afterend", toolbar);
+  function trackFocus(event) {
+    if (event.target !== resetButton) usingFallbackFocus = false;
+  }
+  document.addEventListener("focusin", trackFocus);
 
   function render() {
     toolbar.dataset.state = phase;
@@ -101,7 +106,10 @@ export default function createPickupDemo({ model, container, signal, invalidate 
     if (disposed || signal.aborted || (phase !== "ready" && phase !== "failed")) return;
     const moveFocus = document.activeElement === select;
     setPhase("select");
-    if (moveFocus) resetButton.focus();
+    if (moveFocus) {
+      usingFallbackFocus = true;
+      resetButton.focus();
+    }
     const active = new AbortController();
     controller = active;
     try {
@@ -131,8 +139,11 @@ export default function createPickupDemo({ model, container, signal, invalidate 
   }
 
   function arrive() {
+    const moveFocus = usingFallbackFocus && document.activeElement === resetButton;
+    usingFallbackFocus = false;
     place(0);
     setPhase("arrive");
+    if (moveFocus) board.focus();
   }
 
   function update(deltaSeconds) {
@@ -148,6 +159,7 @@ export default function createPickupDemo({ model, container, signal, invalidate 
   }
 
   function reset() {
+    usingFallbackFocus = false;
     controller?.abort();
     controller = undefined;
     elapsed = 0;
@@ -161,6 +173,7 @@ export default function createPickupDemo({ model, container, signal, invalidate 
     controller?.abort();
     release(car);
     car = undefined;
+    document.removeEventListener("focusin", trackFocus);
     toolbar.remove();
   }
 

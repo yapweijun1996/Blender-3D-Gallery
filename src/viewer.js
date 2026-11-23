@@ -235,6 +235,7 @@ export default async function createViewer(
       } catch {
         // The model remains available for viewing even if the demo module fails.
       }
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
     } else if (interaction === "visitor-v2") {
       const { default: createVisitorDemo } = await import('./visitor-v2/demo.js');
       if (disposed || signal.aborted) throw new DOMException('Viewer closed', 'AbortError');
