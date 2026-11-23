@@ -1,6 +1,6 @@
 import { createBuildingPassageMesh } from "./building-passage.js";
 import { pavementPanel } from "./pavement.js";
-import { DECK_THICKNESS, fragmentHeights, isBridge } from "./bridges.js";
+import { DECK_THICKNESS, bridgeRampSections, fragmentHeights, isBridge } from "./bridges.js";
 import { BufferAttribute, BufferGeometry, Color, ShapeUtils, Vector2 } from "three";
 
 // Turns one map tile (models/world/tiles/<x>_<z>.json) into flat-coloured geometry. Coordinates are metres: x east, z south, y up.
@@ -66,53 +66,87 @@ function ribbon(batch, points, width, y, color, panels, walkFrom = 0, supportY =
  * A raised road deck along a polyline: asphalt top, concrete slab and sides, parapets and columns to the ground.
  * Returns triangles (vertices XYZ and indices) of the drivable top and the parapet walls for the physics.
  */
-function deck(batch, points, heights, width, solids) {
+function deck(batch, points, road, width, solids) {
   if (points.length < 2) return;
-  const half = width / 2, left = [], right = [];
+  const half = width / 2, sourceLeft = [], sourceRight = [];
+  const sourceHeights = fragmentHeights(road);
   for (let i = 0; i < points.length; i++) {
     const a = points[Math.max(0, i - 1)], b = points[Math.min(points.length - 1, i + 1)];
     let dx = b[0] - a[0], dz = b[1] - a[1];
     const length = Math.hypot(dx, dz) || 1;
     dx /= length; dz /= length;
-    left.push([points[i][0] - dz * half, points[i][1] + dx * half]);
-    right.push([points[i][0] + dz * half, points[i][1] - dx * half]);
+    sourceLeft.push([points[i][0] - dz * half, points[i][1] + dx * half]);
+    sourceRight.push([points[i][0] + dz * half, points[i][1] - dx * half]);
+  }
+  // Interpolate the original strip borders. Recomputing tangents on added points would move bends and tile joins.
+  const left = [], right = [], heights = [];
+  const sections = bridgeRampSections(road);
+  let next = sections.next();
+  const mix = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+  for (let i = 0; i < points.length; i++) {
+    left.push(sourceLeft[i]); right.push(sourceRight[i]); heights.push(sourceHeights[i]);
+    while (!next.done && next.value.segment === i) {
+      const { fraction, height } = next.value;
+      left.push(mix(sourceLeft[i], sourceLeft[i + 1], fraction));
+      right.push(mix(sourceRight[i], sourceRight[i + 1], fraction));
+      heights.push(height);
+      next = sections.next();
+    }
   }
   const at = (point, y) => [point[0], y, point[1]];
-  if (batch) {
-    for (let i = 0; i < points.length - 1; i++) {
-      const h0 = heights[i], h1 = heights[i + 1], u0 = h0 - DECK_THICKNESS, u1 = h1 - DECK_THICKNESS;
-      batch.quad(at(left[i], h0 + ROAD_Y), at(right[i], h0 + ROAD_Y), at(right[i + 1], h1 + ROAD_Y), at(left[i + 1], h1 + ROAD_Y), ASPHALT);
-      batch.quad(at(left[i], u0), at(left[i + 1], u1), at(right[i + 1], u1), at(right[i], u0), CONCRETE);
-      batch.quad(at(left[i], u0), at(left[i + 1], u1), at(left[i + 1], h1), at(left[i], h0), CONCRETE);
-      batch.quad(at(right[i], u0), at(right[i + 1], u1), at(right[i + 1], h1), at(right[i], h0), CONCRETE);
-      // Parapets 0.9 m high on both edges.
-      for (const side of [left, right]) batch.quad(at(side[i], h0), at(side[i + 1], h1), at(side[i + 1], h1 + 0.9), at(side[i], h0 + 0.9), PARAPET);
+  const vertices = [], indices = [];
+  function colliderQuad(a, b, c, d) {
+    if (!solids) return;
+    const first = vertices.length / 3;
+    vertices.push(...a, ...b, ...c, ...d);
+    indices.push(first, first + 1, first + 2, first, first + 2, first + 3);
+  }
+  for (let i = 0; i < heights.length - 1; i++) {
+    const l0 = left[i], r0 = right[i], l1 = left[i + 1], r1 = right[i + 1];
+    const h0 = heights[i], h1 = heights[i + 1], u0 = h0 - DECK_THICKNESS, u1 = h1 - DECK_THICKNESS;
+    function surface(a, b, c, d) {
+      const top = [at(a, h0 + ROAD_Y), at(b, h0 + ROAD_Y), at(c, h1 + ROAD_Y), at(d, h1 + ROAD_Y)];
+      batch?.quad(...top, ASPHALT);
+      colliderQuad(...top);
+      batch?.quad(at(a, u0), at(d, u1), at(c, u1), at(b, u0), CONCRETE);
     }
+    // A twisted quad's centreline changes slope only where it crosses the l0–r1 diagonal.
+    // The intersection's fractions along that diagonal and the centreline differ by turn / twiceArea.
+    const vx = r0[0] - l0[0], vz = r0[1] - l0[1], wx = r1[0] - l1[0], wz = r1[1] - l1[1];
+    const dx = (l1[0] - l0[0] + r1[0] - r0[0]) / 2, dz = (l1[1] - l0[1] + r1[1] - r0[1]) / 2;
+    const turn = vx * wz - vz * wx, twiceArea = 2 * (dx * (vz + wz) - dz * (vx + wx));
+    const maxCentreError = 0.0005; // metres of additional height error from the panel diagonal
+    if (Math.abs((h1 - h0) * turn) > maxCentreError * Math.abs(twiceArea)) {
+      // Keep the centre inside the faces rather than on a longitudinal collider seam.
+      const halfBandMetres = 0.025;
+      const band = Math.min(halfBandMetres / width, 0.25);
+      const a0 = mix(l0, r0, 0.5 - band), a1 = mix(l1, r1, 0.5 - band);
+      const b0 = mix(l0, r0, 0.5 + band), b1 = mix(l1, r1, 0.5 + band);
+      surface(l0, a0, a1, l1);
+      surface(a0, b0, b1, a1);
+      surface(b0, r0, r1, b1);
+    } else {
+      surface(l0, r0, r1, l1);
+    }
+    for (const [a, b] of [[l0, l1], [r0, r1]]) {
+      batch?.quad(at(a, u0), at(b, u1), at(b, h1), at(a, h0), CONCRETE);
+      batch?.quad(at(a, h0), at(b, h1), at(b, h1 + 0.9), at(a, h0 + 0.9), PARAPET);
+      colliderQuad(at(a, h0 + ROAD_Y), at(b, h1 + ROAD_Y), at(b, h1 + ROAD_Y + 0.9), at(a, h0 + ROAD_Y + 0.9));
+    }
+  }
+  if (solids) solids.push({ vertices, indices });
+  if (batch) {
     // Columns every 30 m where the deck is well above the ground.
     let sinceColumn = 28;
     for (let i = 0; i < points.length; i++) {
       if (i) sinceColumn += Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]);
-      if (sinceColumn < 30 || heights[i] < 3) continue;
+      if (sinceColumn < 30 || sourceHeights[i] < 3) continue;
       sinceColumn = 0;
-      const [cx, cz] = points[i], size = 0.9, top = heights[i] - DECK_THICKNESS;
+      const [cx, cz] = points[i], size = 0.9, top = sourceHeights[i] - DECK_THICKNESS;
       const corners = [[cx - size, cz - size], [cx + size, cz - size], [cx + size, cz + size], [cx - size, cz + size]];
       for (let k = 0; k < 4; k++) batch.quad(at(corners[k], 0), at(corners[(k + 1) % 4], 0), at(corners[(k + 1) % 4], top), at(corners[k], top), CONCRETE);
     }
   }
-  if (!solids) return;
-  // Physics: the drivable top and the parapet walls.
-  const vertices = [], indices = [];
-  const push = point => { vertices.push(...point); return vertices.length / 3 - 1; };
-  for (let i = 0; i < points.length - 1; i++) {
-    const h0 = heights[i] + ROAD_Y, h1 = heights[i + 1] + ROAD_Y;
-    const a = push(at(left[i], h0)), b = push(at(right[i], h0)), c = push(at(right[i + 1], h1)), d = push(at(left[i + 1], h1));
-    indices.push(a, b, c, a, c, d);
-    for (const side of [left, right]) {
-      const w0 = push(at(side[i], h0)), w1 = push(at(side[i + 1], h1)), w2 = push(at(side[i + 1], h1 + 0.9)), w3 = push(at(side[i], h0 + 0.9));
-      indices.push(w0, w1, w2, w0, w2, w3);
-    }
-  }
-  solids.push({ vertices, indices });
 }
 
 /** Triangulate a closed ring (the last point repeats the first) lying on the ground. */
@@ -250,7 +284,7 @@ export function buildTile(tile, { hide = () => false, buildingBase, paint, visua
       if (road.tunnel) continue;
       const visible = !maskedRoads.has(road.id);
       const width = road.width ?? Math.max(3.4, (road.lanes ?? 2) * 3.4);
-      if (isBridge(road)) deck(visible ? ground : null, shift(road.geometry), fragmentHeights(road), width, solids);
+      if (isBridge(road)) deck(visible ? ground : null, shift(road.geometry), road, width, solids);
       else if (visible) ribbon(ground, shift(road.geometry), width, ROAD_Y, ASPHALT);
     }
   }
