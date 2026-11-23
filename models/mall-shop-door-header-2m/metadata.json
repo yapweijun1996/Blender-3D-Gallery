@@ -1,0 +1,114 @@
+{
+  "id": "mall-shop-door-header-2m",
+  "name": "Mall Shop Door Header · 2 m",
+  "summary": "A limestone fascia and stepped rear infill over the existing glazed mall door.",
+  "description": "A 400 mm high header for the 2 m wall opening. Its 2.10 m wide face rests on the original door frame. Honed limestone panels and slim bronze returns complete the opening.",
+  "category": "Shopping Mall",
+  "tags": [
+    "mall",
+    "shopfront",
+    "door header",
+    "architecture",
+    "limestone",
+    "modular"
+  ],
+  "status": "validated",
+  "created": "2026-11-24",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Original stepped Blender geometry and independently editable cladding. Reuses the original project wall limestone artwork.",
+  "source": "sources/mall-shop-door-header-2m.blend",
+  "generator": "generate.py",
+  "export": "exports/mall-shop-door-header-2m.glb",
+  "preview": "previews/mall-shop-door-header-2m.jpg",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.45,
+      0.25,
+      1
+    ]
+  },
+  "assembly": {
+    "opening_width_m": 2,
+    "height_m": 0.4,
+    "rear_gltf_bounds_m": [
+      [
+        -1,
+        0,
+        -0.075
+      ],
+      [
+        1,
+        0.4,
+        0.075
+      ]
+    ],
+    "front_gltf_envelope_m": [
+      [
+        -1.05,
+        0,
+        0.075
+      ],
+      [
+        1.05,
+        0.4,
+        0.195
+      ]
+    ],
+    "root": "door head at wall centreline, glTF +Z outward",
+    "door": "mall-shopfront-door",
+    "wall": "mall-wall-corner-2m",
+    "installation_roots_gltf_m": {
+      "door": [
+        0,
+        0,
+        3.135
+      ],
+      "header": [
+        0,
+        2.4,
+        3
+      ]
+    }
+  },
+  "rights": "Original owner-project geometry, materials and artwork. Public download and redistribution terms are unspecified.",
+  "attribution": [
+    {
+      "credit": "Original Blender-3D-Gallery geometry and renders. Honed limestone artwork from mall-wall-module-2m."
+    }
+  ],
+  "accuracy_notes": "Static visual header for this 2 m opening and original double door. The door is operated by its own assembly. Installation, structural and fire performance require separate assessment.",
+  "levels": [
+    {
+      "level": "LOD0",
+      "file": "exports/mall-shop-door-header-2m.glb",
+      "triangles": 396,
+      "draw_calls": 7,
+      "bytes": 151300,
+      "sha256": "a7d5ca92cff040a55aa757741007a5916b88a5c8ce3597e82da95fab3e13949f"
+    },
+    {
+      "level": "LOD1",
+      "file": "exports/mall-shop-door-header-2m-lod1.glb",
+      "triangles": 204,
+      "draw_calls": 4,
+      "bytes": 12808,
+      "sha256": "fd9504f2f1ee7e49f044ef8721ed3cedba4248a908887138f7959ce3c048ea9d"
+    },
+    {
+      "level": "LOD2",
+      "file": "exports/mall-shop-door-header-2m-lod2.glb",
+      "triangles": 92,
+      "draw_calls": 1,
+      "bytes": 7256,
+      "sha256": "39e60f0b298a06cdcdba8d3b67fd7569dff083f0f5466a495eea70e1c5d89b80"
+    }
+  ],
+  "sha256": {
+    "source": "733569847d0e7db5f3f59c18737eb3b4c8255863be07546f0cfa5461e2e3c812",
+    "glb": "a7d5ca92cff040a55aa757741007a5916b88a5c8ce3597e82da95fab3e13949f",
+    "preview": "84574457f4217abff00a077391807e01bc7b17187e3fccef41adba5311e60737",
+    "texture": "87952161fded4ff950248811a8db62aaf09b56d3e7a3fd17ac91c4e538882fc8"
+  }
+}

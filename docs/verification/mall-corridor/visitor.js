@@ -22,10 +22,23 @@ export async function createVisitor({scene,world,camera,controls,canvas,onInspec
  }
  const reduced=matchMedia('(prefers-reduced-motion: reduce)'),keys=new Set();let walking=false,state='idle',pointer=null,stick={x:0,z:0},lastBlocked=null;
  const pad=document.querySelector('#joystick'),thumb=pad.querySelector('span'),toggle=document.querySelector('#walk'),readout=document.querySelector('#walk-state');
- canvas.tabIndex=0;canvas.setAttribute('aria-label','3D corridor. In walking mode use W A S D or arrow keys. Escape returns to inspection.');
+ canvas.tabIndex=0;canvas.setAttribute('aria-label','3D mall. In walking mode use W A S D or arrow keys. Escape returns to inspection.');
  function clearInput(){keys.clear();state='idle';for(const [name,action] of Object.entries(actions))action.setEffectiveWeight(name==='idle'?1:0);stick={x:0,z:0};const id=pointer;pointer=null;thumb.style.transform='';if(id!==null&&pad.hasPointerCapture(id))pad.releasePointerCapture(id)}
  function setWalking(value){walking=value;clearInput();controls.enabled=!value;toggle.textContent=value?'Stop walking':'Walk visitor';toggle.setAttribute('aria-pressed',String(value));pad.hidden=!value;document.querySelector('#walk-help').hidden=!value;if(value){camera.fov=50;camera.updateProjectionMatrix();canvas.focus({preventScroll:true})}else{onInspect();readout.textContent='Inspection mode'} }
- function reset(){clearInput();visual.position.set(spawn.x,0,spawn.z);visual.rotation.y=Math.PI;onMessage('Visitor returned to arrival');if(walking)canvas.focus({preventScroll:true})}
+ function placeAtArrival() {
+  clearInput();
+  visual.position.set(spawn.x, 0, spawn.z);
+  visual.rotation.y = Math.PI;
+  lastBlocked = null;
+ }
+ function setEnvironment(nextScene, nextWorld, nextSpawn) {
+  if (nextWorld.obstruction(nextSpawn)) throw Error('Visitor spawn obstructed');
+  world = nextWorld;
+  spawn = nextSpawn;
+  nextScene.add(visual);
+  placeAtArrival();
+ }
+ function reset(){placeAtArrival();onMessage('Visitor returned to arrival');if(walking)canvas.focus({preventScroll:true})}
  function keydown(e){
   if(e.key==='Escape'&&walking){setWalking(false);toggle.focus();return}
   if(e.altKey||e.ctrlKey||e.metaKey){clearInput();return}
@@ -58,5 +71,5 @@ export async function createVisitor({scene,world,camera,controls,canvas,onInspec
    const text=lastBlocked&&Math.hypot(dx,dz)>.01?'Path blocked — choose another direction':state==='walk'?'Walking':'Ready · W A S D / arrows / touch pad';if(readout.textContent!==text)readout.textContent=text;
   }else avatar.visible=true;
  }
- return {visual,clearInput,reset,setWalking,update,get state(){return {footMinY,groundCorrection,walking,animation:state,position:visual.position.toArray(),blocked:lastBlocked,keys:[...keys],pointer,weights:Object.fromEntries(Object.entries(actions).map(([k,a])=>[k,a.getEffectiveWeight()])),times:Object.fromEntries(Object.entries(actions).map(([k,a])=>[k,a.time])),reducedMotion:reduced.matches,asset:ASSET,body:BODY}}};
+ return {visual,clearInput,reset,setWalking,setEnvironment,update,get state(){return {footMinY,groundCorrection,walking,animation:state,position:visual.position.toArray(),blocked:lastBlocked,keys:[...keys],pointer,weights:Object.fromEntries(Object.entries(actions).map(([k,a])=>[k,a.getEffectiveWeight()])),times:Object.fromEntries(Object.entries(actions).map(([k,a])=>[k,a.time])),reducedMotion:reduced.matches,asset:ASSET,body:BODY}}};
 }

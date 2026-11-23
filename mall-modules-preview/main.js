@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { assembleRoom, roomArrival, roomAssetPaths } from './room-layout.js';
 import { shopfrontBays } from './shopfront-layout.js';
 import { batchStaticMeshes } from './batch-static.js';
 import { arrival, assembleCorridor, corridorAssetPaths } from './corridor-layout.js';
@@ -101,6 +102,11 @@ if (renderer) {
       inputs: [...wallAssets, byId.ceiling],
       build: sources => assembleWalledFloor(sources).add(assembleWallCeiling(sources.ceiling)),
     },
+    'enclosed-shop': {
+      name: 'Enclosed shop', subtitle: 'Open the doors to walk inside the six-metre shop. Show the ceiling to inspect the closed shell.',
+      inputs: Object.entries(roomAssetPaths).map(([id, path]) => ({ id, path })),
+      build: enclosedShop,
+    },
     'wall-corner': {
       name: 'Right-angle wall corner', subtitle: 'The inside finishes turn from the rear wall onto the return along the right edge.',
       inputs: [...wallAssets, { id: 'wallCorner2m', path: wallCornerPath }],
@@ -108,14 +114,18 @@ if (renderer) {
     },
   };
   let current = null; let requestId = 0; let selected = 'assembly';
-  let shopSigns, assembly, visitor, visitorRequest;
-  let doorAngle = 0;
+  const walkableScenes = new Map();
+  let shopSigns, visitor, visitorRequest;
+  const activeWalkScene = () => {
+    const state = walkableScenes.get(selected);
+    return state && state.group === current ? state : null;
+  };
   const walkTools = $('#walk-tools');
   const doorButton = $('#doors');
   const walkButton = $('#walk');
   const message = $('#walk-message');
   function corridor(sources) {
-    if (assembly) return assembly.group;
+    if (walkableScenes.has('assembly')) return walkableScenes.get('assembly').group;
     const { group, poseDoors } = assembleCorridor(sources);
     const world = createCollisionWorld(group);
     batchStaticMeshes(group);
@@ -145,47 +155,84 @@ if (renderer) {
         glow.position.set(x-.3,2.82,z+.3); group.add(glow);
       }
     }
-    assembly = { group, poseDoors, world };
+    walkableScenes.set('assembly', { group, poseDoors, world, spawn: arrival, doorAngle: 0 });
     return group;
   }
+
+  function enclosedShop(sources) {
+    if (walkableScenes.has('enclosed-shop')) return walkableScenes.get('enclosed-shop').group;
+    const room = assembleRoom(sources);
+    const world = createCollisionWorld(room.group);
+    room.batchStatic();
+    walkableScenes.set('enclosed-shop', { ...room, world, spawn: roomArrival, doorAngle: 0 });
+    return room.group;
+  }
+
+  const roofButton = $('#shop-roof');
+  function showWalkControls() {
+    const active = activeWalkScene();
+    walkTools.hidden = !active;
+    if (!active) return;
+    doorButton.textContent = active.doorAngle ? 'Close doors' : 'Open doors';
+    doorButton.setAttribute('aria-pressed', String(Boolean(active.doorAngle)));
+    roofButton.hidden = !active.roof;
+    if (active.roof) {
+      roofButton.setAttribute('aria-pressed', String(active.roof.visible));
+      roofButton.textContent = active.roof.visible ? 'Hide ceiling' : 'Show ceiling';
+    }
+    if (visitor && visitor.visual.parent !== active.group) {
+      visitor.setEnvironment(active.group, active.world, active.spawn);
+    }
+  }
+  roofButton.addEventListener('click', () => {
+    const room = activeWalkScene();
+    if (!room?.roof) return;
+    room.setRoofVisible(!room.roof.visible);
+    showWalkControls();
+    if (visitor?.state.walking) renderer.domElement.focus({ preventScroll: true });
+  });
 
   function inspectAssembly() {
     camera.fov = 34;
     camera.updateProjectionMatrix();
-    if (current === assembly.group) frame(current, 'assembly');
+    if (current) frame(current, selected);
   }
   renderer.domElement.addEventListener('focus', () => {
     if (visitor?.state.walking) wrap.scrollIntoView({ block: 'nearest' });
   });
   doorButton.addEventListener('click', () => {
+    const active = activeWalkScene();
+    if (!active) return;
+    const { doorAngle, world, poseDoors } = active;
     const next = doorAngle === 0 ? 90 : 0;
     visitor?.clearInput();
     if (visitor?.state.walking) renderer.domElement.focus({ preventScroll: true });
-    if (visitor && !assembly.world.doorTransition(doorAngle, next, visitor.visual.position, assembly.poseDoors)) {
+    if (visitor && !world.doorTransition(doorAngle, next, visitor.visual.position, poseDoors)) {
       message.textContent = 'The doorway was occupied. Doors stayed ' + (doorAngle ? 'open.' : 'closed.');
       return;
     }
-    if (!visitor) { assembly.poseDoors(next); assembly.world.refresh(); }
-    doorAngle = next;
-    doorButton.textContent = next ? 'Close doors' : 'Open doors';
-    doorButton.setAttribute('aria-pressed', String(Boolean(next)));
+    if (!visitor) { poseDoors(next); world.refresh(); }
+    active.doorAngle = next;
+    showWalkControls();
     message.textContent = next ? 'Shop doors open.' : 'Shop doors closed.';
   });
   // Keep the visitor GLB off the initial orbit view and share one controller
-  // across returns to the assembly. Individual module views remain independent.
+  // across the corridor and shop, including an assembly change during loading.
   walkButton.onclick = async () => {
-    if (!assembly || visitorRequest) return;
+    const active = activeWalkScene();
+    if (!active || visitorRequest) return;
     const request = requestId;
     walkButton.disabled = true;
     message.textContent = 'Loading visitor…';
     try {
-      visitorRequest = createVisitor({ scene: assembly.group, world: assembly.world,
-        camera, controls, canvas: renderer.domElement, spawn: arrival, onInspect: inspectAssembly,
+      visitorRequest = createVisitor({ scene: active.group, world: active.world,
+        camera, controls, canvas: renderer.domElement, spawn: active.spawn, onInspect: inspectAssembly,
         onMessage: text => { message.textContent = text; } });
       visitor = await visitorRequest;
       $('#reset-visitor').hidden = false;
       message.textContent = '';
-      if (request === requestId && selected === 'assembly') visitor.setWalking(true);
+      showWalkControls();
+      if (request === requestId && active === activeWalkScene()) visitor.setWalking(true);
     } catch (error) {
       message.textContent = 'Unable to load the visitor. Select Walk visitor to retry.';
       console.error('Visitor loading failed', error);
@@ -194,7 +241,7 @@ if (renderer) {
       visitorRequest = null;
     }
   };
-  wrap.inspectVisitor = () => ({ angle: doorAngle, visitor: visitor?.state ?? null, drawCalls: renderer.info.render.calls });
+  wrap.inspectVisitor = () => ({ angle: activeWalkScene()?.doorAngle ?? 0, visitor: visitor?.state ?? null, drawCalls: renderer.info.render.calls });
 
   function frame(object, id) {
     object.updateMatrixWorld(true);
@@ -207,6 +254,7 @@ if (renderer) {
     const direction = new THREE.Vector3(6,4,7);
     if (id === 'ceiling') direction.set(4,-3,5);
     if (id === 'assembly') direction.set(6,3.5,10);
+    if (id === 'enclosed-shop') direction.set(2.3,4.8,7);
     if (id === 'finished-edge') direction.set(3.7,2.6,5.1);
     if (id === 'corner-floor') direction.set(3.5,5.3,5.2);
     if (id === 'floor-transition') direction.set(1.2,5.5,5.1);
@@ -242,7 +290,7 @@ if (renderer) {
       const sources = Object.fromEntries(loaded);
       current = item ? sources[id].clone(true) : view.build(sources);
       scene.add(current); frame(current,id);
-      status.textContent = ''; status.dataset.state = 'ready'; wrap.dataset.view = id; walkTools.hidden = id !== 'assembly';
+      status.textContent = ''; status.dataset.state = 'ready'; wrap.dataset.view = id; showWalkControls();
     } catch (error) {
       if (request !== requestId) return;
       if (current) { scene.remove(current); current = null; }
@@ -259,7 +307,7 @@ if (renderer) {
   renderer.setAnimationLoop(now => {
     const dt = lastFrame === undefined ? 0 : (now - lastFrame) / 1000;
     lastFrame = now;
-    if (visitor && current === assembly.group) visitor.update(dt);
+    if (visitor && current === visitor.visual.parent) visitor.update(dt);
     if (controls.enabled) controls.update();
     renderer.render(scene,camera);
   });

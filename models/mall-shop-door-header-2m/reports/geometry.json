@@ -1,0 +1,72 @@
+{
+  "toleranceM": 0.000001,
+  "doorSha256": "daf0d6aa4347a58c9b39f2b3e32f0a24e6d66b041a8669c6c1b225343864c402",
+  "wallCornerSha256": "95cba3ad11eb3ca8d76082615af895403e5b09c9f773dcd800b8d7271029b1f7",
+  "levels": {
+    "LOD0": {
+      "file": "mall-shop-door-header-2m.glb",
+      "bytes": 151300,
+      "sha256": "a7d5ca92cff040a55aa757741007a5916b88a5c8ce3597e82da95fab3e13949f",
+      "triangles": 396,
+      "draws": 7,
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "geometry": {
+        "fixedHeadAndSoffitHits": 90,
+        "wallInterfacesHits": 112,
+        "stepAndTopChecks": 12,
+        "maximumMatingPlaneGapM": 1.0579824438750052e-7,
+        "sampledHingeAngles": 91,
+        "minimumVerticalLeafClearanceM": 0.09999992847442618,
+        "fullOpenClearWidthM": 1.7339999862015243
+      }
+    },
+    "LOD1": {
+      "file": "mall-shop-door-header-2m-lod1.glb",
+      "bytes": 12808,
+      "sha256": "fd9504f2f1ee7e49f044ef8721ed3cedba4248a908887138f7959ce3c048ea9d",
+      "triangles": 204,
+      "draws": 4,
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "geometry": {
+        "fixedHeadAndSoffitHits": 90,
+        "wallInterfacesHits": 112,
+        "stepAndTopChecks": 12,
+        "maximumMatingPlaneGapM": 1.0579824438750052e-7,
+        "sampledHingeAngles": 91,
+        "minimumVerticalLeafClearanceM": 0.09999992847442618,
+        "fullOpenClearWidthM": 1.7339999862015243
+      }
+    },
+    "LOD2": {
+      "file": "mall-shop-door-header-2m-lod2.glb",
+      "bytes": 7256,
+      "sha256": "39e60f0b298a06cdcdba8d3b67fd7569dff083f0f5466a495eea70e1c5d89b80",
+      "triangles": 92,
+      "draws": 1,
+      "validator": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "geometry": {
+        "fixedHeadAndSoffitHits": 90,
+        "wallInterfacesHits": 112,
+        "stepAndTopChecks": 12,
+        "maximumMatingPlaneGapM": 1.0579824438750052e-7,
+        "sampledHingeAngles": 91,
+        "minimumVerticalLeafClearanceM": 0.09999992847442618,
+        "fullOpenClearWidthM": 1.7339999862015243
+      }
+    }
+  },
+  "negativeControls": [
+    "Raising the header by 5 mm opens the frame seat",
+    "Moving it inward 10 mm uncovers the outer frame seat"
+  ],
+  "result": "pass"
+}

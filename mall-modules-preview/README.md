@@ -46,6 +46,14 @@ Run `node --test tests/mall-floor-edge-kit-2m.test.mjs`. Both straight-to-return
 
 The visible cap extends beyond the four walkable cells. At each outer edge the visitor stops with its footprint on the slab. A ray cast exactly on the triangle boundary can miss in Rapier. The verifier checks the point against the actual GLB triangles and the closest point on the physics mesh within 1 μm, and verifies that probing 10 μm farther out finds no floor support.
 
+### Enclosed shop on the 2 m grid
+
+Choose **Enclosed shop** or open `/mall-modules-preview/?view=enclosed-shop`. The shop measures 6 × 6 m between wall centrelines. Nine 2 m tiles form the interior floor and 16 more support the wall perimeter and entrance apron. Four corner pieces and three straight walls leave a 2.00 m entrance. The original double-door frame is 2.10 m wide. Its back rests against the outside wall face with 50 mm of bearing on either side. A new [400 mm door header](../models/mall-shop-door-header-2m/README.md) closes the gap between the 2.40 m frame and the 2.80 m wall top. The legacy 600 mm fascia at this position would project 200 mm above the wall.
+
+The ceiling starts hidden. Select **Show ceiling** to see the 25 cassettes, or **Open doors** and **Walk visitor** to enter from the apron. Switching between the furnished corridor and this room returns the same visitor to the selected entrance. Each scene retains its own door position. [Shop cutaway](enclosed-shop.png) · [Closed ceiling](enclosed-shop-ceiling.png)
+
+Run `node --test tests/mall-enclosed-shop.test.mjs` for the geometry and visitor checks. The original door leaves retain 100 mm of vertical clearance through their 90° swing. Across 72 headings, all 144 cylinder and capsule sweeps struck a closed door or wall. The open-door route covers 6.614 m each way with 13,375 floor probes across both directions. The controller restores both hinges when closing would hit the visitor. The roof check covers 100 recessed panels and 244 paired contacts along the wall tops and door header. The ceiling ends on the wall centrelines, leaving the outer 75 mm of wall top visible. Removing a rear wall exposes a second walkable exit across the outside apron. With Vite running, `node scripts/test-mall-enclosed-shop.mjs` exercises the ceiling control, door, movement and a switch between scenes during visitor loading.
+
 ## Furnished corridor
 
 The wall selection is the new 1.2 m solid wall; the corridor also retains the existing glass partitions for the shopfronts. The ceiling is intentionally a partial cutaway for visibility. This visual arrangement is not a construction or safety specification; see the individual asset READMEs and `docs/verification/p0-assembly/README.md` for actual dimensions, interfaces, prior checks, and rights. The preview does not change or export source assets, and it is not part of the production Gallery build.
