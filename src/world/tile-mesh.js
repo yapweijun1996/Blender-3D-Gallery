@@ -69,25 +69,28 @@ function deck(batch, points, heights, width, solids) {
     right.push([points[i][0] + dz * half, points[i][1] - dx * half]);
   }
   const at = (point, y) => [point[0], y, point[1]];
-  for (let i = 0; i < points.length - 1; i++) {
-    const h0 = heights[i], h1 = heights[i + 1], u0 = h0 - DECK_THICKNESS, u1 = h1 - DECK_THICKNESS;
-    batch.quad(at(left[i], h0 + ROAD_Y), at(right[i], h0 + ROAD_Y), at(right[i + 1], h1 + ROAD_Y), at(left[i + 1], h1 + ROAD_Y), ASPHALT);
-    batch.quad(at(left[i], u0), at(left[i + 1], u1), at(right[i + 1], u1), at(right[i], u0), CONCRETE);
-    batch.quad(at(left[i], u0), at(left[i + 1], u1), at(left[i + 1], h1), at(left[i], h0), CONCRETE);
-    batch.quad(at(right[i], u0), at(right[i + 1], u1), at(right[i + 1], h1), at(right[i], h0), CONCRETE);
-    // Parapets 0.9 m high on both edges.
-    for (const side of [left, right]) batch.quad(at(side[i], h0), at(side[i + 1], h1), at(side[i + 1], h1 + 0.9), at(side[i], h0 + 0.9), PARAPET);
+  if (batch) {
+    for (let i = 0; i < points.length - 1; i++) {
+      const h0 = heights[i], h1 = heights[i + 1], u0 = h0 - DECK_THICKNESS, u1 = h1 - DECK_THICKNESS;
+      batch.quad(at(left[i], h0 + ROAD_Y), at(right[i], h0 + ROAD_Y), at(right[i + 1], h1 + ROAD_Y), at(left[i + 1], h1 + ROAD_Y), ASPHALT);
+      batch.quad(at(left[i], u0), at(left[i + 1], u1), at(right[i + 1], u1), at(right[i], u0), CONCRETE);
+      batch.quad(at(left[i], u0), at(left[i + 1], u1), at(left[i + 1], h1), at(left[i], h0), CONCRETE);
+      batch.quad(at(right[i], u0), at(right[i + 1], u1), at(right[i + 1], h1), at(right[i], h0), CONCRETE);
+      // Parapets 0.9 m high on both edges.
+      for (const side of [left, right]) batch.quad(at(side[i], h0), at(side[i + 1], h1), at(side[i + 1], h1 + 0.9), at(side[i], h0 + 0.9), PARAPET);
+    }
+    // Columns every 30 m where the deck is well above the ground.
+    let sinceColumn = 28;
+    for (let i = 0; i < points.length; i++) {
+      if (i) sinceColumn += Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]);
+      if (sinceColumn < 30 || heights[i] < 3) continue;
+      sinceColumn = 0;
+      const [cx, cz] = points[i], size = 0.9, top = heights[i] - DECK_THICKNESS;
+      const corners = [[cx - size, cz - size], [cx + size, cz - size], [cx + size, cz + size], [cx - size, cz + size]];
+      for (let k = 0; k < 4; k++) batch.quad(at(corners[k], 0), at(corners[(k + 1) % 4], 0), at(corners[(k + 1) % 4], top), at(corners[k], top), CONCRETE);
+    }
   }
-  // Columns every 30 m where the deck is well above the ground.
-  let sinceColumn = 28;
-  for (let i = 0; i < points.length; i++) {
-    if (i) sinceColumn += Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]);
-    if (sinceColumn < 30 || heights[i] < 3) continue;
-    sinceColumn = 0;
-    const [cx, cz] = points[i], size = 0.9, top = heights[i] - DECK_THICKNESS;
-    const corners = [[cx - size, cz - size], [cx + size, cz - size], [cx + size, cz + size], [cx - size, cz + size]];
-    for (let k = 0; k < 4; k++) batch.quad(at(corners[k], 0), at(corners[(k + 1) % 4], 0), at(corners[(k + 1) % 4], top), at(corners[k], top), CONCRETE);
-  }
+  if (!solids) return;
   // Physics: the drivable top and the parapet walls.
   const vertices = [], indices = [];
   const push = point => { vertices.push(...point); return vertices.length / 3 - 1; };
@@ -145,10 +148,10 @@ function extrude(batch, ring, height, wall, roof, { bay = BAY, floor = FLOOR, ba
 const hash = value => { let h = Number(value) % 2147483647 || 1; h = (h * 48271) % 2147483647; return h; };
 
 /** White bars across the carriageway at a mapped crossing: the bars run along the road, repeated across it. */
-function zebra(batch, tile, point, ox, oz) {
+function zebra(batch, roads, point, ox, oz, roadId) {
   let best = null;
-  for (const road of tile.roads ?? []) {
-    if (road.tunnel || (road.width ?? 0) < 5) continue;
+  for (const road of roads ?? []) {
+    if (road.tunnel || (road.width ?? 0) < 5 || (roadId != null && road.id !== roadId)) continue;
     for (let i = 1; i < road.geometry.length; i++) {
       const a = road.geometry[i - 1], b = road.geometry[i];
       const sx = b[0] - a[0], sz = b[1] - a[1], span = sx * sx + sz * sz || 1;
@@ -189,31 +192,53 @@ export function buildingMesh(ring, height, base = 0) {
  * Builds the meshes of one tile. Returns geometries in world coordinates (the tile origin is already added) plus
  * the point features and the buildings, which the page uses for colliders and instanced props.
  * An optional buildingBase callback declares an elevated underside in world metres.
+ * Paint masks suppress ribbons by ID while keeping their data available for crossings.
+ * Visual-only roads and kerbs contribute geometry without becoming crossing references or collision solids.
  */
-export function buildTile(tile, { hide = () => false, buildingBase } = {}) {
+export function buildTile(tile, { hide = () => false, buildingBase, paint, visualOnly } = {}) {
   const [ox, oz] = origin(tile);
   const shift = points => points.map(([x, z]) => [x + ox, z + oz]);
   const ground = createBatch(), buildings = createBatch({ uv: true }), towers = createBatch({ uv: true });
 
   for (const park of tile.parks ?? []) fillPolygon(ground, shift(park.geometry), PARK_Y, PARK);
   for (const water of tile.water ?? []) fillPolygon(ground, shift(water.geometry), WATER_Y, WATER);
-  for (const path of tile.pedestrian ?? []) ribbon(ground, shift(path.geometry), 2.2, PATH_Y, PATH);
-  const bridgeSolids = [];
-  for (const road of tile.roads ?? []) {
-    if (road.tunnel) continue;
-    if (isBridge(road)) { deck(ground, shift(road.geometry), fragmentHeights(road), road.width ?? Math.max(3.4, (road.lanes ?? 2) * 3.4), bridgeSolids); continue; }
-    ribbon(ground, shift(road.geometry), road.width ?? Math.max(3.4, (road.lanes ?? 2) * 3.4), ROAD_Y, ASPHALT);
+  const maskedPaths = paint?.pedestrian && new Set(paint.pedestrian);
+  for (const path of tile.pedestrian ?? []) {
+    if (!maskedPaths?.has(path.id)) ribbon(ground, shift(path.geometry), 2.2, PATH_Y, PATH);
   }
+
+  const bridgeSolids = [];
+  const maskedRoads = paint?.roads && new Set(paint.roads);
+  function drawRoads(roads, solids) {
+    for (const road of roads ?? []) {
+      if (road.tunnel) continue;
+      const visible = !maskedRoads?.has(road.id);
+      const width = road.width ?? Math.max(3.4, (road.lanes ?? 2) * 3.4);
+      if (isBridge(road)) deck(visible ? ground : null, shift(road.geometry), fragmentHeights(road), width, solids);
+      else if (visible) ribbon(ground, shift(road.geometry), width, ROAD_Y, ASPHALT);
+    }
+  }
+  drawRoads(tile.roads, bridgeSolids);
+  drawRoads(visualOnly?.roads);
   for (const junction of tile.junctions ?? []) {
     if (junction.geometry?.length > 3) fillPolygon(ground, shift(junction.geometry), ROAD_Y + 0.002, ASPHALT);
   }
-  for (const kerb of tile.kerbs ?? []) if (!(kerb.layer > 0)) ribbon(ground, shift(kerb.geometry), 0.3, KERB_Y, KERB);
+
+  const maskedKerbs = paint?.kerbs && new Set(paint.kerbs);
+  function drawKerbs(kerbs) {
+    for (const kerb of kerbs ?? []) {
+      if (!(kerb.layer > 0) && !maskedKerbs?.has(kerb.road)) ribbon(ground, shift(kerb.geometry), 0.3, KERB_Y, KERB);
+    }
+  }
+  drawKerbs(tile.kerbs);
+  drawKerbs(visualOnly?.kerbs);
 
   for (const crossing of tile.crossings ?? []) {
+    if (crossing.markings === false) continue;
     // A crossing is a point marker or a walkable line; a line is marked at its middle.
     const line = crossing.geometry;
     const point = crossing.point ?? (line?.length ? line[line.length >> 1] : null);
-    if (point) zebra(ground, tile, point, ox, oz);
+    if (point) zebra(ground, tile.roads, point, ox, oz, crossing.roadId);
   }
 
   const solids = [];

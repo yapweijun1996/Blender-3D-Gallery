@@ -51,14 +51,18 @@ function chain(fragments) {
   return chains.sort((a, b) => polylineLength(b.points) - polylineLength(a.points))[0];
 }
 
+function offsetLane(at, offset) {
+  return [at.x - (at.rx ?? -at.dz) * offset, at.z - (at.rz ?? at.dx) * offset];
+}
+
 function lanesMeet(source, destination, lanes) {
   const end = sampleEdge(source, source.length), start = sampleEdge(destination, 0);
   if (end.dx * start.dx + end.dz * start.dz < .999) return false;
-  return lanes.every((lane, index) => {
-    const offset = oneWayLaneOffset(source.lanes, index), nextOffset = oneWayLaneOffset(destination.lanes, lane);
-    return close([end.x + end.dz * offset, end.z - end.dx * offset],
-      [start.x + start.dz * nextOffset, start.z - start.dx * nextOffset]);
-  });
+  if (Math.abs((end.y ?? 0) - (start.y ?? 0)) > .06) return false;
+  return lanes.every((lane, index) => close(
+    offsetLane(end, oneWayLaneOffset(source.lanes, index)),
+    offsetLane(start, oneWayLaneOffset(destination.lanes, lane)),
+  ));
 }
 
 function configureForwardConnectors(edges, nodes, connectors) {
@@ -129,13 +133,14 @@ function configureSignalApproachChains(edges, nodes, signalised, chains) {
  * Mapped tunnels are excluded. A configured route stays closed while its destination is missing.
  * Optional forwardConnectors map an incoming edge ID to { id, lanes }, with destination lane indices in source lane order.
  * Each signalApproachChains item lists forward edge IDs and the stopOffset in metres back from its terminal signal.
+ * Authored roads replace these IDs with complete, already validated world-space sections.
  */
-export function buildTrafficGraph(tiles, { forwardConnectors, signalApproachChains } = {}) {
+export function buildTrafficGraph(tiles, { forwardConnectors, signalApproachChains, authoredRoads } = {}) {
   const fragments = new Map(), signalised = new Set();
   for (const tile of tiles) {
     for (const junction of tile.junctions ?? []) if (junction.signalised) signalised.add(junction.nodeId);
     for (const road of tile.roads ?? []) {
-      if (road.tunnel || road.geometry.length < 2) continue;
+      if (authoredRoads?.has(road.id) || road.tunnel || road.geometry.length < 2) continue;
       const shifted = road.geometry.map(([x, z]) => [x + tile.x * 250, z + tile.z * 250]);
       const entry = fragments.get(road.id) ?? { road, pieces: [] };
       entry.pieces.push({ points: shifted, start: road.edgeStart ?? 0 });
@@ -144,23 +149,31 @@ export function buildTrafficGraph(tiles, { forwardConnectors, signalApproachChai
   }
   const edges = new Map(), nodes = new Map();
   const node = id => nodes.get(id) ?? nodes.set(id, { id, forward: [], backward: [], signalised: signalised.has(id) }).get(id);
-  for (const [id, { road, pieces }] of fragments) {
-    const { points, start } = chain(pieces);
+  function register(road, points, start, complete, sections) {
+    const { id } = road;
     const length = polylineLength(points);
-    if (length < 4) continue;
+    if (length < 4) return;
     const edge = {
       id, from: road.from, to: road.to, oneway: road.oneway, lanes: Math.max(1, road.lanes ?? 2), speed: (road.maxspeed ?? 50) / 3.6,
       points, length, width: road.width ?? Math.max(3.4, (road.lanes ?? 2) * LANE), name: road.name, class: road.class,
-      complete: pieces.length === 1,
+      complete,
       // A raised bridge: its deck height follows bridgeHeight() along the whole edge (see bridges.js).
       raised: isBridge(road), layer: road.layer ?? 0, bridgeStart: start, bridgeLength: road.edgeLength ?? length,
     };
     // Cumulative distance of each point, for sampling.
     edge.cumulative = [0];
     for (let i = 1; i < points.length; i++) edge.cumulative.push(edge.cumulative[i - 1] + distance(points[i - 1], points[i]));
+    if (sections) edge.sections = sections;
     edges.set(id, edge);
     node(road.from).forward.push(id);
     node(road.to).backward.push(id);
+  }
+  for (const { road, pieces } of fragments.values()) {
+    const { points, start } = chain(pieces);
+    register(road, points, start, pieces.length === 1);
+  }
+  for (const { road, sections } of authoredRoads?.values() ?? []) {
+    register(road, sections.map(({ x, z }) => [x, z]), 0, true, sections);
   }
   if (forwardConnectors) configureForwardConnectors(edges, nodes, forwardConnectors);
   if (signalApproachChains) configureSignalApproachChains(edges, nodes, signalised, signalApproachChains);
@@ -169,6 +182,7 @@ export function buildTrafficGraph(tiles, { forwardConnectors, signalApproachChai
 
 /** Deck height of a vehicle at distance s of its travel along an edge (0 on the ground), for direction +1 or -1. */
 export function heightOnEdge(edge, s, direction = 1) {
+  if (edge.sections) return sampleEdge(edge, s, direction).y;
   if (!edge.raised) return 0;
   const along = direction > 0 ? s : edge.length - s;
   return bridgeHeight(edge.layer, edge.bridgeStart + Math.max(0, Math.min(edge.length, along)), edge.bridgeLength);
@@ -184,7 +198,15 @@ export function sampleEdge(edge, s, direction = 1) {
   const k = (clamped - edge.cumulative[i - 1]) / span;
   let dx = (b[0] - a[0]) / span, dz = (b[1] - a[1]) / span;
   if (direction < 0) { dx = -dx; dz = -dz; }
-  return { x: a[0] + (b[0] - a[0]) * k, z: a[1] + (b[1] - a[1]) * k, dx, dz };
+  const at = { x: a[0] + (b[0] - a[0]) * k, z: a[1] + (b[1] - a[1]) * k, dx, dz };
+  if (edge.sections) {
+    const before = edge.sections[i - 1], after = edge.sections[i];
+    const sign = direction > 0 ? 1 : -1;
+    at.y = before.y + (after.y - before.y) * k;
+    at.rx = sign * (before.rx + (after.rx - before.rx) * k);
+    at.rz = sign * (before.rz + (after.rz - before.rz) * k);
+  }
+  return at;
 }
 
 /** Which of the two signal phases (0 or 1) an approach belongs to, from its direction: roughly north-south or east-west. */
@@ -232,8 +254,8 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
     if (!edge) return null;
     const at = sampleEdge(edge, vehicle.s, vehicle.direction);
     const offset = laneOffset(edge, vehicle.lane);
-    // The left of travel (dx, dz) is (dz, -dx).
-    return { x: at.x + at.dz * offset, y: heightOnEdge(edge, vehicle.s, vehicle.direction), z: at.z - at.dx * offset, heading: Math.atan2(at.dx, at.dz), dx: at.dx, dz: at.dz };
+    const [x, z] = offsetLane(at, offset);
+    return { x, y: at.y ?? heightOnEdge(edge, vehicle.s, vehicle.direction), z, heading: Math.atan2(at.dx, at.dz), dx: at.dx, dz: at.dz };
   }
 
   function spawn(near) {
@@ -358,6 +380,7 @@ export function createTraffic({ graph, random = createRandom(), maxVehicles = 40
   function obstacleGap(vehicle, here, obstacles) {
     let best = Infinity;
     for (const obstacle of obstacles) {
+      if (Number.isFinite(obstacle.y) && Math.abs(obstacle.y - here.y) > 2) continue;
       const ox = obstacle.x - here.x, oz = obstacle.z - here.z;
       const ahead = ox * here.dx + oz * here.dz, side = Math.abs(ox * here.dz - oz * here.dx);
       if (ahead > 0 && ahead < 22 && side < 1.9) best = Math.min(best, ahead - vehicle.type.length / 2 - 1.5);
