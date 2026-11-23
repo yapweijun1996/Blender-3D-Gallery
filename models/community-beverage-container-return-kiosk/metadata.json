@@ -1,0 +1,91 @@
+{
+  "id": "community-beverage-container-return-kiosk",
+  "name": "Community Beverage Container Return Kiosk",
+  "summary": "Fictional community recycling-context cabinet with a staged moving SAMPLE and mechanical visual cue.",
+  "description": "Original fictional Singapore community return kiosk. Try a local-only 3D demonstration: a SAMPLE can travels inward, then an amber status tile turns to show a green check. No real scanner, account, payment, deposit, refund or waste service.",
+  "category": "Public Facilities",
+  "tags": [
+    "Community",
+    "Beverage container",
+    "Fictional demonstration",
+    "Recycling context",
+    "Singapore",
+    "Retail logistics"
+  ],
+  "status": "validated",
+  "created": "2026-11-23",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Original hand-designed cabinet, legitimately recessed annular inlet, editable original native sample can and two-sided status indicator with one authored local animation, real studio render.",
+  "rights": "Original project asset; redistribution terms for public downloads are not specified.",
+  "source": "community-beverage-container-return-kiosk.blend",
+  "generator": "generate.py",
+  "export": "exports/community-beverage-container-return-kiosk.glb",
+  "preview": "previews/studio.webp",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.4,
+      0.37,
+      1
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        4,
+        6.4,
+        6.2
+      ],
+      "hemisphereIntensity": 1.68,
+      "directionalIntensity": 2.02
+    }
+  },
+  "accuracy_notes": "Fictional demonstration only. Not a replica, official machine, venue, facility, waste operation, real scanner, account, payment, deposit, refund or safety certification. Blender +Z up / −Y outward; glTF +Y up / +Z outward, metres.",
+  "attribution": [
+    {
+      "credit": "Original geometry, signage, materials, animated parts and native render, with Blender bundled lettering converted to geometry. No external graphic, brand, font file or model asset."
+    },
+    {
+      "credit": "Singapore National Environment Agency consumer page provides regional theme context only; this is not a design reference, endorsement or operating instruction.",
+      "url": "https://www.nea.gov.sg/our-services/waste-management/beverage-container-return-scheme/for-consumers"
+    }
+  ],
+  "interaction": {
+    "clip": "BCR_SAMPLE_ACCEPT",
+    "seconds": 2,
+    "sample": "BCR_SAMPLE_CAN",
+    "flag": "BCR_ACCEPT_FLAG",
+    "sample_ready_gltf_xyz_m": [
+      0,
+      1.09,
+      0.26
+    ],
+    "sample_parked_gltf_xyz_m": [
+      0,
+      1.09,
+      -0.165
+    ],
+    "sample_parked_at_seconds": 1.3,
+    "amber_to_green_flag_ready_gltf_xyz_m": [
+      0.263,
+      1.154,
+      0.343
+    ],
+    "flag_final_y_degrees": 180,
+    "flag_final_at_seconds": 1.7,
+    "parked_sample_rear_clearance_m": 0.012
+  },
+  "metrics": {
+    "glb_bytes": 254132,
+    "glb_sha256": "e7a73e2cf2e6f19307047b2c8e6b0f9f93b5204b387c2d3b37877fde855b9ebc",
+    "source_sha256": "c3a93467488b80d8823f2316309d4f8ea7a7e048c88e107ba2c9dd41e3462e52",
+    "preview_sha256": "aa09450809d67e8c3e487dbae2af854c037a3a438feba7a034f7c752a98a9ce5",
+    "preview_bytes": 20944,
+    "triangles": 5508,
+    "vertices": 8172,
+    "draw_calls": 30,
+    "meshes": 26,
+    "materials": 15,
+    "animations": 1,
+    "maximum_texture_dimension_px": 0
+  }
+}

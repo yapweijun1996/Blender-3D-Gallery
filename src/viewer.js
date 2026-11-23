@@ -29,6 +29,7 @@ export default async function createViewer(
   let airBalangDemo;
   let coconutScraperDemo;
   let parcelHatchDemo;
+  let beverageReturnDemo;
   let visitorDemo;
   let animationPreview;
   let buildingLoop;
@@ -173,6 +174,7 @@ export default async function createViewer(
     airBalangDemo?.dispose();
     coconutScraperDemo?.dispose();
     parcelHatchDemo?.dispose();
+    beverageReturnDemo?.dispose();
     visitorDemo?.dispose();
     animationPreview?.dispose();
     buildingLoop?.dispose();
@@ -420,6 +422,23 @@ export default async function createViewer(
       }
       if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
     }
+    if (interaction === "beverage-return") {
+      try {
+        const { default: createBeverageReturnDemo } = await import("./beverage-return/demo.js");
+        if (!disposed && !signal.aborted) {
+          beverageReturnDemo = createBeverageReturnDemo({
+            model, clips: gltf.animations, container,
+            invalidate() {
+              lastDraw = 0;
+              invalidate();
+            },
+          });
+        }
+      } catch {
+        // The kiosk remains inspectable even if the optional demo cannot load.
+      }
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+    }
     frameForResize = () => {
       if (!model) return;
       const viewDirection = camera.position.clone().sub(controls.target);
@@ -441,6 +460,7 @@ export default async function createViewer(
       airBalangDemo?.reset();
       coconutScraperDemo?.reset();
       parcelHatchDemo?.reset();
+      beverageReturnDemo?.reset();
       visitorDemo?.reset();
       animationPreview?.reset();
       chibiRig?.reset();
@@ -556,6 +576,7 @@ export default async function createViewer(
       const airBalangActive = airBalangDemo?.update(elapsed);
       const coconutScraperActive = coconutScraperDemo?.update(elapsed);
       const parcelHatchActive = parcelHatchDemo?.update(elapsed);
+      const beverageReturnActive = beverageReturnDemo?.update(elapsed);
       const visitorActive = visitorDemo?.update(elapsed);
       const animationActive = animationPreview?.update(elapsed);
       const buildingActive = buildingLoop?.update(elapsed);
@@ -563,7 +584,7 @@ export default async function createViewer(
       const fishActive = fishMotion?.update();
       const changed = controls.update();
       renderer.render(scene, camera);
-      if (changed || active || pickupActive || lohHeiActive || railReloadActive || carparkHelpActive || airBalangActive || coconutScraperActive || parcelHatchActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
+      if (changed || active || pickupActive || lohHeiActive || railReloadActive || carparkHelpActive || airBalangActive || coconutScraperActive || parcelHatchActive || beverageReturnActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
     };
     invalidate();
     return { reset, dispose, setView };
