@@ -3,36 +3,36 @@ export const ROAD_DISTANCES = {
   "start": {
     "artscience": 474,
     "esplanade": 1092,
-    "merlion": 3177,
+    "merlion": 3157,
     "bayfront": 37,
     "gardens": 1826,
-    "woodlands": 24116,
+    "woodlands": 23979,
     "johor": 33193
   },
   "artscience": {
     "start": 1458,
     "esplanade": 835,
-    "merlion": 4635,
+    "merlion": 2683,
     "bayfront": 1493,
     "gardens": 3284,
-    "woodlands": 25573,
+    "woodlands": 23505,
     "johor": 32844
   },
   "esplanade": {
-    "start": 2425,
-    "artscience": 2899,
+    "start": 1980,
+    "artscience": 2453,
     "merlion": 666,
-    "bayfront": 2460,
-    "gardens": 4251,
+    "bayfront": 2015,
+    "gardens": 3806,
     "woodlands": 22437,
     "johor": 32130
   },
   "merlion": {
-    "start": 2872,
-    "artscience": 3346,
+    "start": 2427,
+    "artscience": 2901,
     "esplanade": 463,
-    "bayfront": 2908,
-    "gardens": 4699,
+    "bayfront": 2462,
+    "gardens": 4253,
     "woodlands": 22884,
     "johor": 32447
   },
@@ -40,9 +40,9 @@ export const ROAD_DISTANCES = {
     "start": 491,
     "artscience": 438,
     "esplanade": 1125,
-    "merlion": 3142,
+    "merlion": 3121,
     "gardens": 1791,
-    "woodlands": 24080,
+    "woodlands": 23943,
     "johor": 33232
   },
   "gardens": {

@@ -26,6 +26,8 @@ After a build, run `npm run test:marina-square-passage` for the keyboard drive o
 
 Drive northeast or southwest on Temasek Boulevard through the covered section at Suntec City. Both carriageways have two lanes and a level road with 5 m of simulated headroom. Pedestrians have a supported sidewalk on each outer side and a separate indoor crossing above the traffic. [Map evidence and clearance tests](verification/sg-world-remaining-passages.md#temasek-boulevard-at-suntec-city).
 
+Mission time limits use the mapped driving distances. When the road network changes, regenerate them with `node scripts/world/mission-distances.mjs`. The world test suite checks the stored table against the complete tile set.
+
 After building, run `npm run test:temasek-passages` to drive both directions with keyboard controls. Use `TEMASEK_PASSAGE_PROFILE=mobile npm run test:temasek-passages` to repeat with emulated touch controls.
 
 ### Fort Canning Link tunnel prototype
