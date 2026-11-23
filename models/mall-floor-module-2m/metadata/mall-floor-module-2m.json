@@ -1,0 +1,84 @@
+{
+  "id": "mall-floor-module-2m",
+  "name": "Mall Straight Floor Module 2 m",
+  "summary": "A 2 m square precast floor module with sixteen flush ivory terrazzo pavers, warm grey joints and three levels of detail.",
+  "description": "A 2 m square precast floor module with sixteen flush ivory terrazzo pavers, warm grey joints and three levels of detail.",
+  "category": "Shopping Mall",
+  "tags": [
+    "mall",
+    "structure",
+    "floor",
+    "terrazzo",
+    "modular",
+    "LOD",
+    "metres"
+  ],
+  "status": "validated",
+  "created": "2026-11-24",
+  "author": "Yap Wei Jun project / agent-assisted procedural modeling",
+  "blender_version": "5.1.2",
+  "creation_method": "Original parametric Blender geometry with rounded paver corners, a flush filled-joint mesh and a layered precast backing. The distant atlas samples the owner-project terrazzo artwork.",
+  "generator": "generate.py",
+  "paths": {
+    "source": "sources/mall-floor-module-2m.blend",
+    "glb": "exports/mall-floor-module-2m.glb",
+    "preview": "previews/mall-floor-module-2m.webp"
+  },
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.8,
+      0.71,
+      1
+    ],
+    "units": "metres",
+    "up_axis": "Blender +Z / glTF +Y",
+    "origin": "underside centre"
+  },
+  "registry_id": "MALL-STR-001",
+  "assembly": {
+    "pitch_m": 2,
+    "finished_height_m": 0.1,
+    "joint_width_m": 0.004,
+    "paver_pitch_m": 0.5,
+    "finish_height_from_world_floor_m": 0
+  },
+  "accuracy_notes": "Generic visual model for the modular mall. Dimensions and measured joins describe the digital geometry. Physical device performance and construction suitability have not been evaluated.",
+  "attribution": [
+    {
+      "credit": "Original model for Blender-3D-Gallery. The finish and baked atlas reuse the original project-owned terrazzo seed 421 texture from mall-floor-tile."
+    }
+  ],
+  "rights": "Original owner-project geometry and texture. Reuse in the owner’s projects is authorized. Public redistribution terms are unspecified.",
+  "sha256": {
+    "source": "fe397a7abd96c0e1ff2630bb924392ed0fcb71f45a58c74e6cb279593191533d",
+    "glb": "ee20ed28ff37b505b005ed9a6426c22b66972c663e2c896a304b4e6fbfe4b750",
+    "preview": "7897bc76159bbef6b38e29ce27e1da2dfc5947277c885eb52bf94a48f6ac7f9d"
+  },
+  "lods": [
+    {
+      "level": 0,
+      "file": "exports/mall-floor-module-2m.glb",
+      "bytes": 154572,
+      "triangles": 942,
+      "draws": 4,
+      "sha256": "ee20ed28ff37b505b005ed9a6426c22b66972c663e2c896a304b4e6fbfe4b750"
+    },
+    {
+      "level": 1,
+      "file": "exports/mall-floor-module-2m-lod1.glb",
+      "bytes": 135112,
+      "triangles": 430,
+      "draws": 4,
+      "sha256": "339fd5b007c07020c0c619a6f2f512dc5260e02cad0caa5e7d61c97e70f29293"
+    },
+    {
+      "level": 2,
+      "file": "exports/mall-floor-module-2m-lod2.glb",
+      "bytes": 48888,
+      "triangles": 36,
+      "draws": 1,
+      "sha256": "5cc54bdbd58d70e050c80f42f02a1323b3c303c660a21b2b5547c4e5c8adcc78"
+    }
+  ]
+}

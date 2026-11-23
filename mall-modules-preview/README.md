@@ -2,6 +2,16 @@
 
 A local interactive preview of nine Gallery assets and a corridor assembled from their exported GLBs. Start the project with `npm run dev`, then visit `/mall-modules-preview/` on the local Vite server. In the assembly, select **Open doors** and **Walk visitor** to explore the shops. The arrow keys, W A S D and touch pad move the visitor. Escape returns to orbit, and **Reset visitor** returns to the arrival point.
 
+## Six-metre floor transition
+
+Select **Floor grid transition** or open `/mall-modules-preview/?view=floor-transition`. Five bays of the [1.2 m tile](../models/mall-floor-tile/README.md) meet three of the [2 m straight module](../models/mall-floor-module-2m/README.md) along one 6 m edge. Each root retains its original scale. Set the 30 mm and 100 mm underside pivots to Y = −0.03 m and −0.10 m respectively to bring both walking surfaces to Y = 0. The second legacy row gives the visitor room to approach the joint. Quarter-turned copies exercise the same connectors in both directions. [Mixed floor preview](mixed-floor-grids.png)
+
+Run `node --test tests/mall-floor-transition.test.mjs`. The test measures seven overlapping edge intervals between the two grids and 15 joins inside them. It casts 6,396 rays against individual floor meshes, allowing the 1 mm recess in the original grout. The visitor follows a 15.76 m path in each direction, with 15,875 independent floor-triangle probes per direction. The negative controls reproduce an 800 mm gap from reusing the old tile at the new pitch and a 70 mm step from lining up the two undersides.
+
+With Vite running, `node scripts/test-mall-floor-transition.mjs` checks both actual GLB downloads, a failed load and retry, module selection and return to the furnished corridor. Set `MALL_PREVIEW_SITE` for a different Vite address. This sample covers a straight interior floor joint. Edge trim, corner details and the ceiling need their own measurements.
+
+## Furnished corridor
+
 The wall selection is the new 1.2 m solid wall; the corridor also retains the existing glass partitions for the shopfronts. The ceiling is intentionally a partial cutaway for visibility. This visual arrangement is not a construction or safety specification; see the individual asset READMEs and `docs/verification/p0-assembly/README.md` for actual dimensions, interfaces, prior checks, and rights. The preview does not change or export source assets, and it is not part of the production Gallery build.
 
 The corridor also loads existing shopfront doors and fascia, ceiling light fixtures, lounge bench, planters, display shelves, directory and advertising lightbox. Each light replaces one ceiling panel following the fixture's documented placement; separate Three.js lights provide scene illumination. The two store names are fictional preview labels. The earlier individual views remain available alongside the corner floor tile and mitred trim; C1–C4 are display labels, not backlog IDs. The furnished visitor checks below cover a route past the seating and through both shops.

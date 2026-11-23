@@ -5,6 +5,7 @@ import { shopfrontBays } from './shopfront-layout.js';
 import { batchStaticMeshes } from './batch-static.js';
 import { arrival, assembleCorridor, corridorAssetPaths } from './corridor-layout.js';
 import { shellLayout } from './shell-layout.js';
+import { assembleFloorTransition, floorTransitionPaths } from './floor-transition.js';
 
 import { createCollisionWorld } from '../docs/verification/mall-corridor/collision.js';
 import { createVisitor } from '../docs/verification/mall-corridor/visitor.js';
@@ -26,6 +27,7 @@ const modules = [
 const furnishings = Object.entries(corridorAssetPaths)
   .filter(([id]) => !modules.some(item => item.id === id))
   .map(([id, path]) => ({ id, path }));
+const transitionAssets = Object.entries(floorTransitionPaths).map(([id, path]) => ({ id, path }));
 const $ = (selector) => document.querySelector(selector);
 const list = $('#module-list');
 for (const item of modules) {
@@ -42,6 +44,7 @@ for (const item of modules) {
 }
 
 const wrap = $('#canvas-wrap'); const status = $('#canvas-status'); const assemblyButton = $('#assembly-button');
+const transitionButton = $('#transition-button');
 let renderer;
 try { renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true }); }
 catch { status.textContent = '3D view unavailable. Your browser may not support WebGL.'; }
@@ -63,6 +66,16 @@ if (renderer) {
     return cache.get(item.id);
   };
   const byId = Object.fromEntries(modules.map(item => [item.id, item]));
+  const assemblies = {
+    assembly: {
+      name: 'The corridor', subtitle: 'A cutaway with shopfronts, lighting and corner modules.',
+      inputs: [...modules, ...furnishings], build: corridor,
+    },
+    'floor-transition': {
+      name: 'Floor grid transition', subtitle: 'Five 1.2 m bays meet three 2 m bays along a six-metre joint.',
+      inputs: transitionAssets, build: assembleFloorTransition,
+    },
+  };
   let current = null; let requestId = 0; let selected = 'assembly';
   let shopSigns, assembly, visitor, visitorRequest;
   let doorAngle = 0;
@@ -157,9 +170,12 @@ if (renderer) {
     const box = new THREE.Box3().setFromObject(object); const sphere = box.getBoundingSphere(new THREE.Sphere());
     controls.target.copy(sphere.center);
     const vertical = THREE.MathUtils.degToRad(camera.fov/2); const horizontal = Math.atan(Math.tan(vertical)*camera.aspect);
-    const margin = id === 'assembly' ? (camera.aspect < 1.35 ? 1.08 : .8) : 1.2;
+    const margin = id === 'assembly' ? (camera.aspect < 1.35 ? 1.08 : .8) : id === 'floor-transition' ? .94 : 1.2;
     const distance = Math.max(sphere.radius, .25) / Math.sin(Math.min(vertical,horizontal)) * margin;
-    const direction = id === 'ceiling' ? new THREE.Vector3(4,-3,5) : id === 'assembly' ? new THREE.Vector3(6,3.5,10) : new THREE.Vector3(6,4,7);
+    const direction = new THREE.Vector3(6,4,7);
+    if (id === 'ceiling') direction.set(4,-3,5);
+    if (id === 'assembly') direction.set(6,3.5,10);
+    if (id === 'floor-transition') direction.set(1.2,5.5,5.1);
     camera.position.copy(sphere.center).add(direction.normalize().multiplyScalar(distance));
     controls.minDistance = Math.max(.2, sphere.radius * .65); controls.maxDistance = Math.max(10, sphere.radius * 12);
     camera.near = Math.max(.01, distance / 100); camera.far = distance * 20; camera.updateProjectionMatrix(); controls.update();
@@ -171,20 +187,22 @@ if (renderer) {
     walkTools.hidden = true;
     message.textContent = '';
     selected = id; const request = ++requestId;
-    const item = byId[id];
-    $('#view-kicker').textContent = item ? item.kicker : 'THE ASSEMBLY';
-    $('#view-title').textContent = item ? item.name : 'The corridor';
-    $('#view-subtitle').textContent = item ? item.subtitle : 'A cutaway with shopfronts, lighting and corner modules.';
+    const item = byId[id], view = item ?? assemblies[id];
+    $('#view-kicker').textContent = view.kicker ?? 'THE ASSEMBLY';
+    $('#view-title').textContent = view.name;
+    $('#view-subtitle').textContent = view.subtitle;
     assemblyButton.classList.toggle('active', id === 'assembly'); assemblyButton.setAttribute('aria-pressed', String(id === 'assembly'));
+    transitionButton.classList.toggle('active', id === 'floor-transition'); transitionButton.setAttribute('aria-pressed', String(id === 'floor-transition'));
     for (const button of list.querySelectorAll('button')) button.setAttribute('aria-pressed', String(button.dataset.module === id));
     status.textContent = 'Loading 3D model…'; status.dataset.state = 'loading';
     try {
-      const needed = item ? [item] : [...modules, ...furnishings];
+      const needed = item ? [item] : view.inputs;
       const loaded = await Promise.all(needed.map(async m => [m.id, await load(m)]));
       if (request !== requestId) return;
       if (current) scene.remove(current);
       const sources = Object.fromEntries(loaded);
-      current = item ? sources[id].clone(true) : corridor(sources); scene.add(current); frame(current,id);
+      current = item ? sources[id].clone(true) : view.build(sources);
+      scene.add(current); frame(current,id);
       status.textContent = ''; status.dataset.state = 'ready'; wrap.dataset.view = id; walkTools.hidden = id !== 'assembly';
     } catch (error) {
       if (request !== requestId) return;
@@ -194,6 +212,7 @@ if (renderer) {
     }
   }
   assemblyButton.addEventListener('click', () => select('assembly'));
+  transitionButton.addEventListener('click', () => select('floor-transition'));
   list.addEventListener('click', event => { const button = event.target.closest('button[data-module]'); if (button) select(button.dataset.module); });
   $('#reset-button').addEventListener('click', () => { if (visitor?.state.walking) visitor.setWalking(false); else if (current) frame(current, selected); });
   let lastFrame;
@@ -204,5 +223,5 @@ if (renderer) {
     if (controls.enabled) controls.update();
     renderer.render(scene,camera);
   });
-  select('assembly');
+  select(new URLSearchParams(location.search).get('view') === 'floor-transition' ? 'floor-transition' : 'assembly');
 }
