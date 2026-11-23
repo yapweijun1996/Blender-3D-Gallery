@@ -45,4 +45,4 @@ The browser tests use software rendering (about 1 fps), so they use hooks on the
 ## Known limits
 
 Tunnels are not drawn; the Float is placed approximately; the Supertrees are scattered inside the mapped grove outline; ordinary buildings are extrusions with a texture;
-the world outside Marina Bay has only mapped roads, buildings, water and parks; no real-device frame rate has been measured (Chrome software GL and an iPhone 15 WebKit emulation only).
+the world outside Marina Bay has only mapped roads, buildings, water and parks. A [physical phone performance procedure](verification/sg-world-physical-performance.md) is ready. Real-device frame rate remains unmeasured.

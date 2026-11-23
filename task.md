@@ -178,7 +178,7 @@ Acceptance coverage E001–E100 must be tracked against deterministic assertions
 
 # Singapore and Malaysia Festival Models — 2026-11-15
 
-**Status:** F01–F05 implemented and locally verified; later items remain planned.
+**Status:** F01–F06 implemented and locally verified; later items remain planned.
 Work through one model at a time. See the [festival model
 brief](docs/festival-models/README.md) for concept images, existing inventory,
 design ideas and per-model acceptance criteria. Recheck the catalog before
@@ -204,8 +204,9 @@ starting each item. Preserve the historical task records above.
   GLB, preview and catalog entry created; local validation and browser checks
   passed. See [model notes](models/chinese-new-year-kumquat-tree/README.md) for
   evidence and limits.
-- [ ] **F06 — Mid-Autumn rabbit lantern:** distinguish it from the existing
-  lantern display and complete the acceptance gate after F05.
+- [x] **F06 — Mid-Autumn rabbit lantern:** original standalone paper rabbit,
+  editable Blender source, GLB, preview and catalog entry. Independent visual
+  review and local gallery checks passed. See the [acceptance evidence](models/mid-autumn-rabbit-lantern/verification.md).
 
 Additional Hari Raya, Deepavali, national celebration, Sabah Kaamatan and
 Sarawak Gawai ideas are listed in the brief; decide their order after the initial
@@ -229,7 +230,7 @@ evidence before marking it complete. No deployment, commit or push is implied by
 
 # Chibi Character Standard and Mall Guide v5 — 2026-11-15
 
-**Status:** Planning and documentation only. No v5 Blender model, GLB or catalog entry exists; nothing below is implemented or verified. See the [chibi standard](docs/chibi-character-standard.md) and the [v5 plan](docs/chibi-mall-guide-v5/plan.md).
+**Status:** A rigged Blender source and GLB are catalogued as a development preview. The independent review on 2026-11-23 verified the exact current export and found remaining face, hair, sign and motion defects. Production acceptance and rights clearance remain open. See the [review](models/chibi-mall-guide-v5/final/REVIEW.md) and the [v5 plan](docs/chibi-mall-guide-v5/plan.md).
 
 - [x] Concept turnaround B generated and locked as the v5 reference (AI concept image; rights not cleared, internal reference only).
 - [x] Owner decisions recorded: 40,000 triangle / 20 draw-call budget; mandatory rig (20 bones or fewer) with three shape keys driving brows and cheeks; fresh-agent review then owner check; animations idle+blink, two walk styles, wave, hold-and-point, put-sign-down; swappable sign icons; boy look kept.
@@ -273,6 +274,7 @@ Framework proposal (no code yet): [docs/chibi-framework-design.md](docs/chibi-fr
 - [x] Rechecked this mall slice on GitHub main baseline `17a0ed6f`: asset validation, 6 catalog tests, standard `npm run build`, four shell GLB/assembly validators and Chromium desktop/emulated-mobile preview and Gallery flows passed. On this baseline, an alternative custom-output build failed because the PWA build hook still reads `dist`; the standard build passed. The standalone preview is not in the production build.
 - [ ] Check full mesh fit, other corner configurations and provisional 2 m planning dimensions before accepting the broader floor-corner/edge and wall-corner families.
 - [ ] Compare the solid wall with `MALL-STR-010`'s provisional 2 m specification and validate a representative complete assembly, corner/transition interfaces and target-device performance before accepting the checklist item. Unreconciled P0 shell work still includes other corner configurations and edge transitions.
+- [x] Corrected the 30 mm overlap at the outer shopfront joints in the local corridor preview. Verified all eight horizontal seams and five fascia base joints against the actual GLBs. See the [shopfront evidence](mall-modules-preview/README.md#shopfront-seam-verification--2026-11-23).
 
 ## 12. Documentation refresh and verified gap backlog — 2026-11-19
 
@@ -307,7 +309,7 @@ Verified (Chrome software GL, iPhone 15 WebKit emulation, Node; `npm test` 783 p
 - [x] Phone profile: 3 by 3 tile ring, shorter fog, speed readout at the top; touch pedals drive the car in WebKit emulation.
 
 Open:
-- [ ] No real-device frame rate measurement; the city centre draws about 400k triangles on desktop, about 270k on the phone profile.
+- [ ] No real-device frame rate measurement; a [physical phone procedure](docs/verification/sg-world-physical-performance.md) is ready. The city centre draws about 400k triangles on desktop, about 270k on the phone profile.
 - [x] Traffic stops for a pedestrian in its path (test in `tests/world-traffic.test.mjs`); pedestrians near the player's car are solid boxes.
 - [x] Cars give way at unsignalised junctions (stateless rule: the vehicle nearer the junction, or already in it, goes first; waiting over 6 s goes anyway; a vehicle stuck over 45 s out of sight is removed). Five-minute runs show under 1% of vehicle samples stuck over 30 s (tests).
 - [x] Day cycle in the world page (one hour per 30 s, a Time button jumps to 08:00, 13:00, 18:30 or 22:00): sky, fog, ground, sun, window glow and street lamps follow the hour; `src/drive/daylight.js` is shared with the heartland page. At night every vehicle casts a soft pool of light on the road ahead (one instanced additive quad each, no real light sources) and the ambient light drops.

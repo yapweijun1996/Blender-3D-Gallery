@@ -2,7 +2,7 @@
 
 A chibi shopping-mall concierge boy in a jade cap and vest holding an arrow sign, rigged and animated. The delivered model is `final/guide.glb`. It was **reconstructed from the reference sheet by an image-to-3D tool (TRELLIS) and then rigged and retouched**; it is not the procedurally built figure that earlier steps of this folder describe (that work is kept as history, see "Earlier approach").
 
-Status: **built and checked locally; not registered in `models/catalog.json`, not pushed, not deployed.** Rights are not cleared (see Rights).
+Status: **catalogued development preview with downloads disabled.** The [independent visual review](final/REVIEW.md) calls for rework before final acceptance. Rights clearance remains open (see Rights).
 
 ## What is delivered
 

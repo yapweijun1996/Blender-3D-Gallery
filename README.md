@@ -62,7 +62,7 @@ Two original, metre-scale models add a lounge bench and an areca-inspired plante
 
 ## Chibi character standard
 
-The [chibi character standard](docs/chibi-character-standard.md) (draft) defines the shared style, budgets, rig and quality gate for chibi characters; the [Mall Guide v5 plan](docs/chibi-mall-guide-v5/plan.md) is its first application. Both are proposals: no v5 model exists yet.
+The [chibi character standard](docs/chibi-character-standard.md) (draft) defines the shared style, budgets, rig and quality gate for chibi characters. Mall Guide v5 has an editable Blender source and a catalogued development preview. Its [independent review](models/chibi-mall-guide-v5/final/REVIEW.md) identifies appearance and motion work required before final acceptance.
 
 ## GJH mall visitor
 
