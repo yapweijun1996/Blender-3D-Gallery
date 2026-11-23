@@ -15,7 +15,7 @@ Each OSM `wayId` counts once across all edges and tiles. A true tile `tunnel` fl
 | Negative layer only | 60 | 51 | 0 | 0 | 9 | 0 | 0 | 0 |
 | **Total** | **971** | **339** | **351** | **179** | **91** | **8** | **2** | **1** |
 
-Seven ways in this inventory have verified through routes on the ordinary map. Fort Canning Link accounts for two, Raffles Boulevard for three and Temasek Boulevard for two. The remaining 964 ways include 450 with explicit private, destination or permit access, 236 other service roads and 278 other roads. Access tags and road class alone do not establish a driveable passage.
+Eight ways in this inventory have verified through routes on the ordinary map. Fort Canning Link accounts for two, Raffles Boulevard for three, Temasek Boulevard for two and Raffles Link for one. The remaining 963 ways include 450 with explicit private, destination or permit access, 236 other service roads and 277 other roads. Access tags and road class alone do not establish a driveable passage.
 
 ## Raffles Boulevard
 
@@ -56,7 +56,7 @@ Across both carriageways, 1,988 sampled positions matched the visible asphalt, p
 
 Ordinary simulated vehicles use roads whose effective motor access is unspecified, `yes`, `designated` or `permissive`. They apply the same rule when spawning and choosing a turn, including reverse travel on a two-way road. A tile reload also invalidates a cached turn when the destination becomes restricted. Mapped geometry still supplies the player’s road surface, minimap, signals, street furniture and mission distance calculations. This simulation uses the access value stored on each road. It does not interpret conditional schedules or grant real-world travel permission.
 
-Across all 830 tiles, the shared road graph contains 11,662 edges. The ambient rule excludes 958 of them, including 57 that otherwise meet the spawn length and road class requirements. Of the 450 passage ways with private, destination or permit access, 24 have segments in the shared graph (27 edges). All 27 previously allowed ambient traffic. All 27 are now excluded from ambient route selection. A deterministic game test also checks an approach with both a public exit and a destination-access driveway, where the old vehicle turned into the driveway.
+Across all 830 tiles, the shared road graph contains 11,664 edges. The ambient rule excludes 958 of them, including 57 that otherwise meet the spawn length and road class requirements. Of the 450 passage ways with private, destination or permit access, 24 have segments in the shared graph (27 edges). All 27 previously allowed ambient traffic. All 27 are now excluded from ambient route selection. A deterministic game test also checks an approach with both a public exit and a destination-access driveway, where the old vehicle turned into the driveway.
 
 | Effective access outside the ambient policy | Edges in the shared graph | Otherwise meet the spawn criteria |
 | --- | ---: | ---: |
@@ -66,11 +66,19 @@ Across all 830 tiles, the shared road graph contains 11,662 edges. The ambient r
 | Customers | 1 | 0 |
 | Restricted | 1 | 1 |
 
+## Raffles Link
+
+Raffles Link `532351088:0` is a 6.46 m, one-way residential street segment in tile `-3_-4`. Its endpoints share two nodes with the footprint of building `620812487`. The source records one lane, asphalt, a right sidewalk and `turn:lanes=left;through`. It gives no metric width, height limit, ground elevation, slope or roof height. The game uses a 3.4 m carriageway, a 4.0 m opening, a level floor and a 4.5 m soffit. The building keeps its existing generated height of 9.6 m.
+
+The route follows `684524081:0` → `532351088:0` → `159938518:0`. The final road piece measures only 2.41 m. Its mapped endpoints carry through traffic onto `684524082:0`, which spans three tiles. The upstream road stays two-way and 6.8 m wide. The neighboring covered service loop remains outside this through route.
+
+The indoor pedestrian bridge `460302684:0` crosses the road and connects to mapped level-one corridors in buildings on both sides. The source supplies a relative level and no metric floor elevation. The game models a 14.21 m walking deck at Y=4.8. It ends 1.6 m inward from each mapped endpoint so the walker can stay clear of both solid façade colliders. The two indoor corridors beyond those walls remain separate.
+
+The old game build blocked the car at the far wall on both keyboard and touch. With the opening, each drive cleared the wall with zero damage, continued over both tile boundaries and reached the far side on four wheels. A sedan, bus and lorry also passed in the physics test. The pedestrian capsule crossed the 14.21 m deck in both directions. The service-loop kerb is clipped only where its final 0.39 m overlaps the lane. The adjacent building façades remain solid. Each browser profile also followed one ambient car through the short connector and onto the next road in its original lane. [Previous wall](raffles-link/baseline-wall.webp) · [Open entrance](raffles-link/entry-portal.webp) · [Far side](raffles-link/far-side.webp).
+
 ## Next assessments
 
-Raffles Link `532351088:0` is a 6.46 m one-way building passage in tile `-3_-4`. Its exit connects to a 2.41 m section of the same street. Building `620812487` has no mapped height or soffit. Indoor pedestrian bridge `460302684:0` crosses above the road on mapped level 1, also without a metric elevation. The ordinary map still has a solid wall. In a local prototype, a 4.0 m wide opening and an assumed 4.5 m soffit let a sedan, bus and lorry pass without damage. Keeping the sides solid and supporting the upper pedestrian bridge remain acceptance criteria for a release.
-
-Kirk Terrace `1343676204:0` straddles two tiles and connects to a mapped private road at one end. These two cases need separate geometry and access decisions.
+Kirk Terrace `1343676204:0` straddles two tiles and connects to a mapped private road at one end. It still needs an assessment of the building geometry and a usable exit before it could serve through traffic.
 
 Defer Kheam Hock Road `659688751:0`. Its two-way 40.32 m tunnel links `97408974:0` and `659688752:0` in tile `-19_-21`, and its source also carries `maxheight=4.5`. The current game meshes for the two Pan-Island Expressway crossings, `159090940:0` and `627656467:0`, put the rendered underside at about Y = −0.90 m at both centerline intersections. Their two-vertex profiles sample the bridge ramps at the ends of the 26.60 m and 27.13 m edges. A verified or explicitly simulated pair of upper-deck and lower-road profiles is needed before using this corridor.
 
@@ -107,7 +115,7 @@ for (const tile of tiles) {
 }
 assert.equal(ways.size, 9762);
 const counts = new Map();
-const verified = new Set([719635729, 159677768, 479745478, 545362402, 545362403, 395443687, 395443688]);
+const verified = new Set([719635729, 159677768, 479745478, 545362402, 545362403, 395443687, 395443688, 532351088]);
 const restricted = new Set();
 let service = 0, other = 0;
 for (const [id, road] of ways) {

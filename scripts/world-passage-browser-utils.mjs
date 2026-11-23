@@ -4,19 +4,33 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { chromium } from "playwright";
 import { buildTile, TILE_SIZE } from "../src/world/tile-mesh.js";
+import fortCanning from "../src/world/tunnel-integration/fort-canning-runtime-overlay.json" with { type: "json" };
 import { nearestTunnelSection } from "../src/world/tunnel-prototype/geometry.js";
 import { serveBuild } from "./browser-test-utils.mjs";
 
 export async function runWorldPassageBrowser({ env, tile, approach, covered, departure, neighbors, excludedServices, roof,
-  direction, approachLead, requiredLaneCount, requiredWidth = 17, liveTraffic, fixedDriveClock = false }) {
+  direction, approachLead, requiredLaneCount, requiredWidth = 17, liveTraffic, fixedDriveClock = false,
+  continuationTiles = [], runoff = 7 }) {
   const ids = [...approach, ...covered, ...departure];
-  const roads = new Map(tile.roads.map(road => [road.id, road]));
+  const tiles = [tile, ...continuationTiles];
+  const roadIds = new Set([...ids, ...neighbors, ...excludedServices]);
+  const roads = new Map();
+  for (const source of tiles) {
+    for (const road of source.roads.filter(({ id }) => roadIds.has(id))) {
+      const fragment = road.geometry.map(([x, z]) => ({ x: x + source.x * TILE_SIZE, y: 0, z: z + source.z * TILE_SIZE }));
+      const previous = roads.get(road.id);
+      if (previous) {
+        assert.deepEqual(fragment.shift(), previous.geometry.at(-1), `${road.id} joins at the tile seam`);
+        previous.geometry.push(...fragment);
+      } else roads.set(road.id, { ...road, geometry: fragment });
+    }
+  }
   const tileKey = `${tile.x}_${tile.z}`;
-  const toWorld = ([x, z]) => ({ x: x + tile.x * TILE_SIZE, y: 0, z: z + tile.z * TILE_SIZE });
+  const continuationKeys = continuationTiles.map(({ x, z }) => `${x}_${z}`);
   const stations = new Map();
   const path = [];
   for (const id of ids) {
-    const points = roads.get(id).geometry.map(toWorld);
+    const points = roads.get(id).geometry.slice();
     const start = path.at(-1)?.s ?? 0;
     if (path.length) {
       const { x, y, z } = path.at(-1);
@@ -30,6 +44,9 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
   }
   const entry = stations.get(covered[0]).start, exit = stations.get(covered.at(-1)).end;
   const middle = (entry + exit) / 2;
+  const finish = exit + runoff;
+  const portalDistance = Math.min(4, (exit - entry) / 3);
+  assert.ok(path.at(-1).s > finish, "the mapped route covers the requested runoff beyond the second portal");
   const roadAtStation = station => roads.get(ids.find(id => station < stations.get(id).end) ?? ids.at(-1));
 
   const site = process.env[`${env}_SITE`];
@@ -52,7 +69,7 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
   function midpoint(roadId) {
     const geometry = roads.get(roadId).geometry;
     const a = geometry.at(-2), b = geometry.at(-1);
-    return toWorld([(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]);
+    return { x: (a.x + b.x) / 2, z: (a.z + b.z) / 2 };
   }
 
   function laneCenters(station) {
@@ -80,8 +97,9 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
   }
 
   function verifyRenderGeometry() {
-    const roadIds = [...ids, ...neighbors];
-    const { ground } = buildTile({ x: tile.x, z: tile.z, roadSurfaces: tile.roadSurfaces, roads: roadIds.map(id => roads.get(id)) });
+    const paintIds = new Set([...ids, ...neighbors]);
+    const grounds = tiles.map(source => buildTile({ x: source.x, z: source.z, roadSurfaces: source.roadSurfaces,
+      roads: source.roads.filter(({ id }) => paintIds.has(id)) }).ground);
     const { buildings } = buildTile({ x: tile.x, z: tile.z,
       buildings: tile.buildings.filter(building => building.id === roof.buildingId) });
     try {
@@ -95,18 +113,21 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
         assert.ok(includesXZ(roofTriangles, x, z, roof.soffit), `a modeled soffit covers the centre lane at ${station.toFixed(2)}m`);
         assert.ok(includesXZ(roofTriangles, x, z, roof.top), `a modeled roof covers the centre lane at ${station.toFixed(2)}m`);
       }
-      const triangles = ground.getAttribute("position").array;
-      for (const station of [entry - 3, ...coveredStations, exit + 3]) {
+      const asphalt = grounds.filter(Boolean).map(geometry => geometry.getAttribute("position").array);
+      const paved = (x, z) => asphalt.some(triangles => includesXZ(triangles, x, z));
+      const checks = [entry - 3, ...coveredStations, exit + 3];
+      if (continuationKeys.length) checks.push(finish);
+      for (const station of checks) {
         for (const [lane, { x, z }] of laneCenters(station).entries()) {
-          assert.ok(includesXZ(triangles, x, z), `asphalt is drawn in lane ${lane + 1} at ${station.toFixed(2)}m`);
+          assert.ok(paved(x, z), `asphalt is drawn in lane ${lane + 1} at ${station.toFixed(2)}m`);
         }
       }
       for (const id of neighbors) {
         const point = midpoint(id);
-        assert.ok(includesXZ(triangles, point.x, point.z), `the adjoining ${id} still draws its asphalt`);
+        assert.ok(paved(point.x, point.z), `the adjoining ${id} still draws its asphalt`);
       }
     } finally {
-      ground?.dispose();
+      for (const ground of grounds) ground?.dispose();
       buildings?.dispose();
     }
   }
@@ -182,32 +203,39 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
       }, undefined, { polling: 100 });
       page.on("request", recordTile);
     }
-    const response = page.waitForResponse(candidate => {
+    const responses = [tileKey, ...continuationKeys].map(key => page.waitForResponse(candidate => {
       const { pathname } = new URL(candidate.url());
-      return pathname.match(/\/(-?\d+_-?\d+)(?:-[\w-]+)?\.json$/)?.[1] === tileKey && candidate.ok();
-    });
+      return pathname.match(/\/(-?\d+_-?\d+)(?:-[\w-]+)?\.json$/)?.[1] === key && candidate.ok();
+    }));
     const spawn = sample(approachLead == null ? 2 : entry - approachLead);
     // Start the touch run a few degrees off heading so it must also steer.
     await teleport(stage, { ...spawn, heading: spawn.heading + (mobile ? .075 : 0) });
-    await response;
+    await Promise.all(responses);
     await page.waitForFunction(({ x, z }) => {
       const state = document.querySelector(".world-stage")?.inspectWorld?.();
       return state?.carTile?.[0] === x && state.carTile[1] === z && state.loading.pending === 0 && state.loading.ready === 0;
     }, { x: tile.x, z: tile.z }, { polling: 100 });
     const settled = await stage.evaluate(element => element.simulate(1, { brake: 1 }));
     assert.ok(settled.groundedWheels === 4 && Math.abs(settled.y - .684) < .15, "approach supports the ordinary-world car");
+    const preloadRequests = [];
     if (mobile) {
       page.off("request", recordTile);
-      assert.ok(requests.has(tileKey) && [...requests.values()].every(([x, z]) => Math.abs(x - tile.x) <= 1 && Math.abs(z - tile.z) <= 1),
+      for (const [key, [x, z]] of requests) {
+        if (Math.abs(x - tile.x) <= 1 && Math.abs(z - tile.z) <= 1) continue;
+        if (settled.fortCanning !== "idle" && fortCanning.requiredTiles.includes(key)) preloadRequests.push(key);
+      }
+      assert.ok(requests.has(tileKey) && [...requests].every(([key, [x, z]]) =>
+        preloadRequests.includes(key) || (Math.abs(x - tile.x) <= 1 && Math.abs(z - tile.z) <= 1)),
         `new approach requests stay within the mobile 3×3 ring: ${JSON.stringify([...requests.keys()])}`);
     }
-    return { ...settled, requestedTiles: [...requests.keys()] };
+    return { ...settled, requestedTiles: [...requests.keys()].filter(key => !preloadRequests.includes(key)), preloadRequests };
   }
 
   async function drive(page, stage, before, expectWall) {
     let farthest = 0, minimumWheels = 4, floorMin = before.y, floorMax = before.y;
     let under = 0, maxLateral = 0, elapsed = 0, clockPaused = false;
     const unsupported = [];
+    const visited = new Set();
     const input = await driveControls(page, stage);
     try {
       if (fixedDriveClock) {
@@ -218,6 +246,7 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
       while ((clockPaused ? elapsed : performance.now() - started) < 25_000) {
         const state = await inspect(stage);
         const on = nearestTunnelSection(path, state);
+        if (continuationKeys.length) visited.add(`${Math.floor(state.x / TILE_SIZE)}_${Math.floor(state.z / TILE_SIZE)}`);
         farthest = Math.max(farthest, on.s);
         maxLateral = Math.max(maxLateral, Math.abs(on.lateral));
         assert.ok(!state.flipped && Math.abs(state.y - before.y) < .25, `the drive stays on grade: ${JSON.stringify({ state, on })}`);
@@ -234,13 +263,18 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
           floorMin = Math.min(floorMin, state.y);
           floorMax = Math.max(floorMax, state.y);
         }
-        if (on.s > exit + 7) {
+        if (on.s > finish) {
           assert.ok(!expectWall, "the baseline should block the same center lane");
           assert.ok(under >= 8 && minimumWheels === 4,
             `all wheels remain on the floor between the two portals: ${JSON.stringify({ under, minimumWheels, unsupported })}`);
           assert.ok(Math.abs(state.y - before.y) < .12 && state.damage < .015 && maxLateral < 1.4,
             `the car exits on the same grade without damage: ${JSON.stringify({ state, maxLateral })}`);
-          return { farthest, minimumWheels, floorMin, floorMax, under, maxLateral, damage: state.damage };
+          if (continuationKeys.length) {
+            assert.ok(continuationKeys.every(key => visited.has(key)) && state.groundedWheels === 4,
+              `the car reaches the supported far-side road across all tile seams: ${JSON.stringify({ visited: [...visited], state })}`);
+          }
+          return { farthest, minimumWheels, floorMin, floorMax, under, maxLateral, damage: state.damage,
+            ...(continuationKeys.length ? { visitedTiles: [...visited], farSideWheels: state.groundedWheels } : {}) };
         }
         const aim = sample(on.s + 5);
         const delta = Math.atan2(aim.x - state.x, aim.z - state.z) - state.heading;
@@ -282,20 +316,23 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
 
   async function observeLiveTraffic(stage) {
     // Move the player clear of the road and boundedly vary the normal traffic spawn area if needed.
-    const lookouts = [[entry + .2, -85], [exit - .2, 95], [entry + .2, -115]].map(([station, distance]) => {
+    const offsets = liveTraffic.continuation ? [-115, 95, -140] : [-85, 95, -115];
+    const lookouts = offsets.map((distance, index) => {
+      const station = index === 1 ? exit - .2 : entry + .2;
       const point = sample(station);
       const dx = Math.sin(point.heading), dz = Math.cos(point.heading);
       return [point.x + dx * distance + dz * 12, point.z + dz * distance - dx * 12, point.heading];
     });
-    const observed = await stage.evaluate((element, { covered, departure, forbidden, laneCounts, lookouts }) => {
-      const coveredCars = new Set(), transitions = [];
+    const observed = await stage.evaluate((element, { covered, departure, forbidden, continuation, step, laneCounts, lookouts }) => {
+      const coveredCars = new Set(), transitions = [], continued = [];
       let maxActive = 0, coveredSamples = 0, windows = 0;
       for (const lookout of lookouts) {
         element.teleport(...lookout);
         windows++;
         let previous = new Map();
-        for (let tick = 0; tick < 360; tick++) {
-          element.simulate(.2, { brake: 1 });
+        const exited = new Set();
+        for (let tick = 0; tick < Math.round(72 / step); tick++) {
+          element.simulate(step, { brake: 1 });
           const cars = element.inspectTraffic();
           maxActive = Math.max(maxActive, cars.length);
           for (const car of cars) {
@@ -305,21 +342,29 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
               if (Math.abs(car.y) > .02 || car.lane < 0 || car.lane >= laneCounts[car.edgeId]) throw new Error(`An AI car is off the modeled carriageway: ${JSON.stringify(car)}`);
             }
             const prior = previous.get(car.id);
-            if (prior?.edgeId !== covered.at(-1) || prior.edgeId === car.edgeId) continue;
+            const leftRoof = prior?.edgeId === covered.at(-1);
+            const leftPortal = continuation && exited.has(car.id) && prior?.edgeId === departure[0];
+            if ((!leftRoof && !leftPortal) || prior.edgeId === car.edgeId) continue;
             if (forbidden.includes(car.edgeId)) throw new Error(`An AI car left the passage for an excluded driveway: ${JSON.stringify(car)}`);
-            if (car.edgeId === departure[0]) {
+            if (leftRoof && car.edgeId === departure[0]) {
               if (prior.lane !== car.lane) throw new Error(`An AI car changed lanes at the portal: ${JSON.stringify({ prior, car })}`);
               transitions.push({ id: car.id, lane: car.lane });
+              exited.add(car.id);
+            }
+            if (leftPortal && car.edgeId === continuation) {
+              if (prior.lane !== car.lane || Math.abs(car.y) > .02) throw new Error(`An AI car changed lanes or grade after the covered passage: ${JSON.stringify({ prior, car })}`);
+              continued.push({ id: car.id, lane: car.lane });
             }
           }
           previous = new Map(cars.map(car => [car.id, car]));
         }
-        if (transitions.length > 0) break;
+        if (transitions.length > 0 && (!continuation || continued.length > 0)) break;
       }
-      return { maxActive, coveredCars: coveredCars.size, coveredSamples, transitions, windows };
-    }, { covered, departure, forbidden: liveTraffic.forbidden, lookouts,
+      return { maxActive, coveredCars: coveredCars.size, coveredSamples, transitions, windows,
+        ...(continuation ? { continued } : {}) };
+    }, { covered, departure, forbidden: liveTraffic.forbidden, continuation: liveTraffic.continuation, step: liveTraffic.step ?? .2, lookouts,
       laneCounts: Object.fromEntries(covered.map(id => [id, roads.get(id).lanes])) });
-    assert.ok(observed.coveredCars > 0 && observed.transitions.length > 0,
+    assert.ok(observed.coveredCars > 0 && observed.transitions.length > 0 && (!liveTraffic.continuation || observed.continued.length > 0),
       `live AI must traverse the covered road and leave by the intended exit in its original lane: ${JSON.stringify(observed)}`);
     return observed;
   }
@@ -345,9 +390,9 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
       assert.equal(await page.evaluate(() => matchMedia("(pointer: coarse)").matches), mobile);
       const press = locator => mobile ? locator.tap() : locator.click();
       const before = await parkAtApproach(page, stage);
-      let surfaces, graphEdges, laneSurfaces;
+      let surfaces, graphEdges, laneSurfaces, farSide;
       if (!expectWall) {
-        const portalStations = [entry - 4, entry + 4, exit - 4, exit + 4];
+        const portalStations = [entry - portalDistance, entry + portalDistance, exit - portalDistance, exit + portalDistance];
         surfaces = await Promise.all(portalStations.map(station => roadAt(stage, sample(station))));
         assert.deepEqual(surfaces.map(({ edgeId }) => edgeId), portalStations.map(station => ids.find(id => station < stations.get(id).end)),
           "both portals connect the loaded surface and covered road edges");
@@ -355,10 +400,10 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
         graphEdges = graphProbes.map(({ edgeId }) => edgeId);
         assert.deepEqual(graphEdges, ids, "the loaded traffic graph contains the same continuous chain");
         for (const hit of surfaces) assert.ok(Number.isFinite(hit.groundY) && Math.abs(hit.groundY) < .02, "every portal has actual ground-level support");
-        const [approach, insideWest, insideEast, departure] = surfaces;
-        assert.equal(approach.overheadY, null);
-        assert.equal(departure.overheadY, null);
-        for (const hit of [insideWest, insideEast]) {
+        const [outsideEntry, insideEntry, insideExit, outsideExit] = surfaces;
+        assert.equal(outsideEntry.overheadY, null);
+        assert.equal(outsideExit.overheadY, null);
+        for (const hit of [insideEntry, insideExit]) {
           assert.ok(Number.isFinite(hit.overheadY) && Math.abs(hit.overheadY - roof.soffit) < .02, `both interior probes hit the simulated soffit at Y=${roof.soffit}`);
         }
         for (const hit of graphProbes.filter(({ edgeId }) => covered.includes(edgeId))) {
@@ -373,6 +418,11 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
         }
         for (const id of neighbors) assert.equal((await roadAt(stage, midpoint(id))).edgeId, id, `unchanged neighbor ${id} remains routable`);
         for (const id of excludedServices) assert.notEqual((await roadAt(stage, midpoint(id))).edgeId, id, `${id} stays outside the through traffic graph`);
+        if (continuationKeys.length) {
+          farSide = await roadAt(stage, sample(finish));
+          assert.ok(farSide.edgeId === departure.at(-1) && Number.isFinite(farSide.groundY) && Math.abs(farSide.groundY) < .02,
+            `the far-side continuation is present at grade: ${JSON.stringify(farSide)}`);
+        }
       }
       const physical = await drive(page, stage, before, expectWall);
       const touchControls = mobile ? await stage.evaluate(element => [...new Set(element.testTouches)]) : null;
@@ -385,15 +435,17 @@ export async function runWorldPassageBrowser({ env, tile, approach, covered, dep
         await photograph(stage, { eye: portal + side * 10, target: portal - side * 5, car: portal + side * 4, name: "baseline-wall.png" });
       } else {
         await photograph(stage, { eye: entry - 9, target: entry + 7, car: entry + 1, name: "entry-portal.png" });
-        await photograph(stage, { eye: middle - 7, target: exit + 4, car: middle + 3, name: "under-roof.png" });
+        const underRoofEye = exit - entry < 14 ? entry + .6 : middle - 7;
+        await photograph(stage, { eye: underRoofEye, target: exit + 4, car: middle + 3, name: "under-roof.png" });
         await photograph(stage, { eye: exit + 9, target: exit - 7, car: exit + 1, name: "exit-portal.png" });
+        if (continuationKeys.length) await photograph(stage, { eye: finish - 9, target: finish + 5, car: finish, name: "far-side.png" });
       }
       const traffic = liveTraffic && !expectWall ? await observeLiveTraffic(stage) : undefined;
       await press(page.locator("#demo-breadcrumb a"));
       await page.waitForFunction(() => !document.querySelector("#sg-world-page .world-stage > canvas"));
       assert.deepEqual(errors, []);
-      return { initial: { vehicle: initial.vehicleId, wheels: initial.groundedWheels }, physical, surfaces, graphEdges, laneSurfaces, traffic,
-        residentTiles: before.tiles, requestedTiles: before.requestedTiles, touchControls };
+      return { initial: { vehicle: initial.vehicleId, wheels: initial.groundedWheels }, physical, surfaces, graphEdges, laneSurfaces, traffic, farSide,
+        residentTiles: before.tiles, requestedTiles: before.requestedTiles, preloadRequests: before.preloadRequests, touchControls };
     } finally {
       await context.close();
     }

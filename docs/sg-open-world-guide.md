@@ -24,6 +24,12 @@ Further west on the same road, the five lanes run beneath Marina Square for 47.3
 
 After a build, run `npm run test:marina-square-passage` for the keyboard drive or `MARINA_SQUARE_PASSAGE_PROFILE=mobile npm run test:marina-square-passage` for touch controls.
 
+### Raffles Link
+
+Raffles Link is a separate, single-lane street west of the Raffles Boulevard passages. Follow it through the short building opening and onto the continuing street. The game models 4.5 m of road clearance and an upper pedestrian bridge. [Route and modeling assumptions](verification/sg-world-remaining-passages.md#raffles-link).
+
+After building, run `npm run test:raffles-link-passage` for the keyboard drive. For touch controls run `RAFFLES_LINK_PASSAGE_PROFILE=mobile npm run test:raffles-link-passage`.
+
 ### Temasek Boulevard at Suntec City
 
 Drive northeast or southwest on Temasek Boulevard through the covered section at Suntec City. Both carriageways have two lanes and a level road with 5 m of simulated headroom. Pedestrians have a supported sidewalk on each outer side and a separate indoor crossing above the traffic. [Map evidence and clearance tests](verification/sg-world-remaining-passages.md#temasek-boulevard-at-suntec-city).
