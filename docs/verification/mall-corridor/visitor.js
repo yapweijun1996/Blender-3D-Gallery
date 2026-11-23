@@ -2,16 +2,17 @@ import {AnimationMixer,Box3,Group,MathUtils,Vector3} from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {BODY} from './collision.js';
 const ASSET='/models/gjh-mall-visitor/exports/gjh-mall-visitor.glb';
-export async function createVisitor({scene,world,camera,controls,canvas,onInspect,onMessage}){
+export async function createVisitor({scene,world,camera,controls,canvas,onInspect,onMessage,spawn={x:0,z:3}}){
  const gltf=await new GLTFLoader().loadAsync(ASSET),avatar=gltf.scene,bounds=new Box3().setFromObject(avatar);
  if(Math.abs(bounds.min.y)>.01||Math.abs(bounds.max.y-1.72)>.02)throw Error('Visitor scale/floor contract mismatch');
- const visual=new Group();visual.name='ControlledVisitor';visual.add(avatar);scene.add(visual);visual.position.set(0,0,3);
+ const visual=new Group();visual.name='ControlledVisitor';visual.add(avatar);visual.position.set(spawn.x,0,spawn.z);
  if(world.obstruction(visual.position))throw Error('Visitor spawn obstructed');
  const mixer=new AnimationMixer(avatar),actions={};
  for(const name of ['idle','walk']){const clip=gltf.animations.find(c=>c.name===name);if(!clip?.tracks.length)throw Error('Missing visitor '+name);actions[name]=mixer.clipAction(clip).setEffectiveWeight(name==='idle'?1:0).play()}
  const footMeshes=[];
  for(const name of ['LeftFoot','RightFoot']){const foot=avatar.getObjectByName(name);if(!foot)throw Error('Visitor foot missing');foot.traverse(o=>{if(o.isMesh)footMeshes.push(o)})}
  if(!footMeshes.length)throw Error('No editable foot meshes in visitor');
+ scene.add(visual);
  let footMinY=0,groundCorrection=0;
  function ground(){
   avatar.position.y=0;visual.updateMatrixWorld(true);let min=Infinity;
@@ -24,7 +25,7 @@ export async function createVisitor({scene,world,camera,controls,canvas,onInspec
  canvas.tabIndex=0;canvas.setAttribute('aria-label','3D corridor. In walking mode use W A S D or arrow keys. Escape returns to inspection.');
  function clearInput(){keys.clear();state='idle';for(const [name,action] of Object.entries(actions))action.setEffectiveWeight(name==='idle'?1:0);stick={x:0,z:0};const id=pointer;pointer=null;thumb.style.transform='';if(id!==null&&pad.hasPointerCapture(id))pad.releasePointerCapture(id)}
  function setWalking(value){walking=value;clearInput();controls.enabled=!value;toggle.textContent=value?'Stop walking':'Walk visitor';toggle.setAttribute('aria-pressed',String(value));pad.hidden=!value;document.querySelector('#walk-help').hidden=!value;if(value){camera.fov=50;camera.updateProjectionMatrix();canvas.focus({preventScroll:true})}else{onInspect();readout.textContent='Inspection mode'} }
- function reset(){clearInput();visual.position.set(0,0,3);visual.rotation.y=Math.PI;onMessage('Visitor returned to arrival');if(walking)canvas.focus({preventScroll:true})}
+ function reset(){clearInput();visual.position.set(spawn.x,0,spawn.z);visual.rotation.y=Math.PI;onMessage('Visitor returned to arrival');if(walking)canvas.focus({preventScroll:true})}
  function keydown(e){
   if(e.key==='Escape'&&walking){setWalking(false);toggle.focus();return}
   if(e.altKey||e.ctrlKey||e.metaKey){clearInput();return}
@@ -47,7 +48,7 @@ export async function createVisitor({scene,world,camera,controls,canvas,onInspec
   if(pointer!==null&&!pad.hasPointerCapture(pointer))clearInput();
   dt=Math.min(Math.max(dt,0),.05);let dx=0,dz=0;
   if(walking&&!document.hidden){dx=stick.x+Number(keys.has('KeyD')||keys.has('ArrowRight'))-Number(keys.has('KeyA')||keys.has('ArrowLeft'));dz=stick.z+Number(keys.has('KeyS')||keys.has('ArrowDown'))-Number(keys.has('KeyW')||keys.has('ArrowUp'));const length=Math.hypot(dx,dz);if(length>1){dx/=length;dz/=length}}
-  const before=visual.position.clone();lastBlocked=world.move(visual.position,dx*BODY.speed*dt,dz*BODY.speed*dt);visual.position.y=0;
+  const before=visual.position.clone();lastBlocked=dx||dz?world.move(visual.position,dx*BODY.speed*dt,dz*BODY.speed*dt):null;visual.position.y=0;
   const moved=visual.position.clone().sub(before);state=moved.lengthSq()>1e-10?'walk':'idle';
   if(state==='walk'){const angle=Math.atan2(moved.x,moved.z);visual.rotation.y+=MathUtils.euclideanModulo(angle-visual.rotation.y+Math.PI,Math.PI*2)-Math.PI}
   for(const [name,action] of Object.entries(actions)){const target=name===state?1:0;action.setEffectiveWeight(reduced.matches?target:MathUtils.lerp(action.getEffectiveWeight(),target,1-Math.exp(-14*dt)));action.paused=reduced.matches}

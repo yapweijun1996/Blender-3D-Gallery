@@ -1,10 +1,10 @@
 # Mall module preview
 
-A local interactive preview of nine Gallery assets and a corridor assembled from their exported GLBs. Start the project with `npm run dev`, then visit `/mall-modules-preview/` on the local Vite server.
+A local interactive preview of nine Gallery assets and a corridor assembled from their exported GLBs. Start the project with `npm run dev`, then visit `/mall-modules-preview/` on the local Vite server. In the assembly, select **Open doors** and **Walk visitor** to explore the shops. The arrow keys, W A S D and touch pad move the visitor. Escape returns to orbit, and **Reset visitor** returns to the arrival point.
 
 The wall selection is the new 1.2 m solid wall; the corridor also retains the existing glass partitions for the shopfronts. The ceiling is intentionally a partial cutaway for visibility. This visual arrangement is not a construction or safety specification; see the individual asset READMEs and `docs/verification/p0-assembly/README.md` for actual dimensions, interfaces, prior checks, and rights. The preview does not change or export source assets, and it is not part of the production Gallery build.
 
-The corridor also loads existing shopfront doors and fascia, ceiling light fixtures, lounge bench, planters, display shelves, directory and advertising lightbox. Each light replaces one ceiling panel following the fixture's documented placement; separate Three.js lights provide scene illumination. The two store names are fictional preview labels. The earlier individual views remain available alongside the corner floor tile and mitred trim; C1–C4 are display labels, not backlog IDs. These additions are visual context; their placement has not been certified for collision, navigation or construction.
+The corridor also loads existing shopfront doors and fascia, ceiling light fixtures, lounge bench, planters, display shelves, directory and advertising lightbox. Each light replaces one ceiling panel following the fixture's documented placement; separate Three.js lights provide scene illumination. The two store names are fictional preview labels. The earlier individual views remain available alongside the corner floor tile and mitred trim; C1–C4 are display labels, not backlog IDs. The furnished visitor checks below cover a route past the seating and through both shops.
 
 The front and right floor edges use `mall-floor-edge-trim` in straight 1.2 m segments. At the front-right outside corner, `mall-floor-corner-tile` and the two-profile `mall-floor-mitred-trim` replace the terminal straight segments and square cap. The original square cap remains selectable as an alternative. `mall-wall-corner` forms the right rear wall corner. A separate 90° floor-edge and wall test is documented in the model reports; the entire corridor has not been accepted for fit or collision. The original floor cap is square; the new mitred pair and decorated corner tile are separate assets.
 
@@ -45,7 +45,7 @@ Run `node mall-modules-preview/verify-shell.mjs` from the repository root. The c
 
 Local Chrome loaded all 20 exact GLBs and opened all nine module views at 1440 × 900 and emulated 390 × 844. Mouse orbit and wheel, touch orbit and pinch, Reset and backing-canvas resize passed without browser errors or horizontal overflow.
 
-This evidence covers fixed samples in the current static cutaway. The visitor tests below cover movement near the rear-right corner. Other corner layouts, assembly-wide intersections, furnished navigation, physical devices and the provisional 2 m production grid remain open. [Backlog and asset crosswalk](../docs/shopping-mall/README.md#12-m-corridor-shell-crosswalk).
+This evidence covers fixed samples in the current static cutaway. The visitor tests below cover movement near the rear-right corner. Other corner layouts, exhaustive assembly intersections, physical devices and the provisional 2 m production grid remain open. [Backlog and asset crosswalk](../docs/shopping-mall/README.md#12-m-corridor-shell-crosswalk).
 
 ## Visitor collision at the rear-right corner
 
@@ -55,4 +55,16 @@ Run `node --test tests/mall-corner-walk.test.mjs` from the repository root. The 
 - Six approaches tested the straight walls, both L-wall arms and their mating planes. The controller stopped 5–20 mm before cylinder contact with the mesh. Under sustained outward input it slid 0.95 m along the rear join and 1.02 m along the right join. A diagonal approach stopped against both walls and the visitor could back away.
 - Removing the L-wall let the visitor reach the floor edge and failed the wall contact check. Lowering one floor tile by 300 mm left the controller's flat floor map traversable and failed the triangle support check.
 
-The shell path crosses space occupied by shopfronts in the furnished arrangement. It verifies the structural modules in isolation. The preview's interface is still orbit-only. Door operation, furnishings and end-to-end walking through the assembled shops need separate checks.
+The shell path crosses space occupied by shopfronts in the furnished arrangement. It verifies the structural modules in isolation. The furnished route below uses different waypoints and includes the doors, seating and displays.
+
+## Furnished walk through both shops
+
+The assembly opens in orbit with both shop doors closed. Opening the doors turns the four authored hinge nodes by 90°. The door control checks the visitor's footprint at each degree and restores the previous pose when a leaf would hit the visitor. The visitor loads on the first walk. Individual module selections return to orbit. [Inside the west shop](west-shop-walk.png) · [Touch controls at arrival](furnished-touch.png).
+
+The display shelves sit behind the two outer glazing bays. Their previous positions directly behind the doors stopped the 1.12 m wide visitor before its body could clear the frame. Moving the directory and advertising lightbox next to the columns clears both approach aisles. In the earlier layout the meshes of both signs actually intersected the columns.
+
+Run `node --test tests/mall-furnished-walk.test.mjs` to exercise the layout shared with the preview. The test loads the 19 placed GLB types. With both doors open, the visitor walks around the bench, through one shop door, across the shared retail interior, out of the other door and back to arrival. The 15.982 m loop passed in both directions with 16,125 floor-triangle samples per direction and independent cylinder sweeps against the installed obstacles. The default closed doors and the occupied bench stop the body. A visitor clear at both 0° and 90° can still obstruct an intermediate angle. The test checks all four hinge rotations and their collision state after rollback. Restoring the previous furniture placement reproduces the shelf blockage and both column intersections.
+
+The assembly batches fixed opaque meshes by compatible material and vertex attributes. The visible mesh count fell from 1,075 to 162 with the same triangle counts per material. Each moving door mesh and transparent object keeps its own draw geometry.
+
+With the local Vite server running, `node scripts/test-mall-furnished-walk.mjs` checks the regular preview controls. Set `MALL_PREVIEW_SITE` if the server uses a base URL other than `http://127.0.0.1:5173/`. This route covers the current flat assembly and one visitor size. Other furnished layouts, population flow, the 2 m production grid and physical-device performance remain open.

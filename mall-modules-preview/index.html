@@ -15,7 +15,19 @@
     <section class="workspace" aria-label="3D mall module preview">
       <div class="viewer-panel">
         <div class="viewer-top"><div><p class="label" id="view-kicker">THE ASSEMBLY</p><h2 id="view-title">The corridor</h2><p id="view-subtitle">A cutaway with shopfronts, lighting and corner modules.</p></div><span class="live-badge"><span></span> 3D VIEW</span></div>
-        <div class="canvas-wrap" id="canvas-wrap"><div class="canvas-status" id="canvas-status" role="status" aria-live="polite">Preparing the 3D view…</div><div class="canvas-caption"><span>DRAG TO ORBIT</span><span class="caption-dot">·</span><span>SCROLL TO ZOOM</span></div></div>
+        <div class="canvas-wrap" id="canvas-wrap"><div class="canvas-status" id="canvas-status" role="status" aria-live="polite">Preparing the 3D view…</div><div class="canvas-caption"><span>DRAG TO ORBIT</span><span class="caption-dot">·</span><span>SCROLL TO ZOOM</span></div>
+          <button id="joystick" type="button" aria-label="Drag to move the visitor or use arrow keys" hidden><span></span></button>
+        </div>
+        <div id="walk-tools" hidden>
+          <div class="walk-buttons">
+            <button id="doors" type="button" aria-pressed="false">Open doors</button>
+            <button id="walk" type="button" aria-pressed="false">Walk visitor</button>
+            <button id="reset-visitor" type="button" hidden>Reset visitor</button>
+          </div>
+          <p id="walk-help" hidden>Press Escape to return to orbit.</p>
+          <p id="walk-state"></p>
+          <p id="walk-message" role="status" aria-live="polite"></p>
+        </div>
         <div class="viewer-bottom"><div class="view-switch" aria-label="Select view"><button class="view-button active" id="assembly-button" type="button" aria-pressed="true">Corridor assembly</button><span class="switch-note">or select a module →</span></div><button class="reset-button" id="reset-button" type="button" aria-label="Reset camera view"><span aria-hidden="true">↻</span> Reset view</button></div>
       </div>
       <aside class="sidebar"><div class="sidebar-heading"><div><p class="label">THE MATERIAL LIBRARY</p><h2>Meet the modules<span>.</span></h2></div><span class="count">09</span></div><p class="sidebar-copy">Select a piece to see it on its own.</p><div class="module-list" id="module-list"></div><div class="sidebar-note"><span>✳</span><p><b>Designed to work together.</b><br>These pieces form the foundation of the corridor scene.</p></div></aside>

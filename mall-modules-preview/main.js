@@ -1,33 +1,31 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { fasciaBaseY, shopfrontAssets, shopfrontBays, shopfrontZ } from './shopfront-layout.js';
-import { instance, placeShellModule, shellAssetPaths, shellLayout } from './shell-layout.js';
+import { shopfrontBays } from './shopfront-layout.js';
+import { batchStaticMeshes } from './batch-static.js';
+import { arrival, assembleCorridor, corridorAssetPaths } from './corridor-layout.js';
+import { shellLayout } from './shell-layout.js';
+
+import { createCollisionWorld } from '../docs/verification/mall-corridor/collision.js';
+import { createVisitor } from '../docs/verification/mall-corridor/visitor.js';
 
 const root = new URL('../', import.meta.url);
 const asset = (path) => new URL(path, root).href;
 const modules = [
-  { id:'floor', number:'001', name:'Floor tile', detail:'1.2 m repeat module', kicker:'001 / THE FOUNDATION', subtitle:'Warm terrazzo floor, made to repeat.', path:shellAssetPaths.floor, thumb:'models/mall-floor-tile/previews/mall-floor-tile-module.webp' },
-  { id:'cornerTile', number:'C3', name:'Corner floor tile', detail:'1.2 m outside corner', kicker:'CORNER / THE FOUNDATION', subtitle:'A terrazzo corner tile with two inset border strips.', path:shellAssetPaths.cornerTile, thumb:'models/mall-floor-corner-tile/previews/mall-floor-corner-tile.jpg' },
-  { id:'mitredTrim', number:'C4', name:'Mitred floor trim', detail:'90° outside corner pair', kicker:'CORNER / THE MITRE', subtitle:'Two edge strips meeting in a 45° joint.', path:shellAssetPaths.mitredTrim, thumb:'models/mall-floor-mitred-trim/previews/mall-floor-mitred-trim.jpg' },
+  { id:'floor', number:'001', name:'Floor tile', detail:'1.2 m repeat module', kicker:'001 / THE FOUNDATION', subtitle:'Warm terrazzo floor, made to repeat.', path:corridorAssetPaths.floor, thumb:'models/mall-floor-tile/previews/mall-floor-tile-module.webp' },
+  { id:'cornerTile', number:'C3', name:'Corner floor tile', detail:'1.2 m outside corner', kicker:'CORNER / THE FOUNDATION', subtitle:'A terrazzo corner tile with two inset border strips.', path:corridorAssetPaths.cornerTile, thumb:'models/mall-floor-corner-tile/previews/mall-floor-corner-tile.jpg' },
+  { id:'mitredTrim', number:'C4', name:'Mitred floor trim', detail:'90° outside corner pair', kicker:'CORNER / THE MITRE', subtitle:'Two edge strips meeting in a 45° joint.', path:corridorAssetPaths.mitredTrim, thumb:'models/mall-floor-mitred-trim/previews/mall-floor-mitred-trim.jpg' },
   { id:'floorCorner', number:'C1', name:'Floor corner trim', detail:'60 mm outside corner cap', kicker:'CORNER / THE FLOOR EDGE', subtitle:'A square cap joining two straight edge strips.', path:'models/mall-floor-corner-trim/exports/mall-floor-corner-trim.glb', thumb:'models/mall-floor-corner-trim/previews/mall-floor-corner-trim.jpg' },
-  { id:'wall', number:'003', name:'Solid wall', detail:'1.2 m repeat module', kicker:'003 / THE ENCLOSURE', subtitle:'A solid wall with warm panels and dark skirting.', path:shellAssetPaths.wall, thumb:'models/mall-solid-wall/previews/mall-solid-wall.jpg' },
-  { id:'wallCorner', number:'C2', name:'Wall corner', detail:'90° · 1.2 m arms', kicker:'CORNER / THE WALL', subtitle:'A right-angle corner connecting the solid wall modules.', path:shellAssetPaths.wallCorner, thumb:'models/mall-wall-corner/previews/mall-wall-corner.jpg' },
-  { id:'railing', number:'004', name:'Glass railing', detail:'2 m post-centred bay', kicker:'004 / THE EDGE', subtitle:'A glazed bay with posts, infill and handrail.', path:'models/mall-glass-railing/exports/mall-glass-railing-2m.glb', thumb:'models/mall-glass-railing/previews/mall-glass-railing-2m.webp' },
-  { id:'ceiling', number:'005', name:'Ceiling panel', detail:'1.2 m suspended cassette', kicker:'005 / ABOVE', subtitle:'A repeating ceiling cassette with recessed panels.', path:shellAssetPaths.ceiling, thumb:'models/mall-ceiling-panel/previews/mall-ceiling-panel-module.webp' },
-  { id:'column', number:'006', name:'Structural column', detail:'0.6 m × 3 m', kicker:'006 / THE SUPPORT', subtitle:'An ivory-clad square column, grounded at floor level.', path:'models/mall-structural-column/exports/mall-structural-column.glb', thumb:'models/mall-structural-column/previews/mall-structural-column.webp' },
+  { id:'wall', number:'003', name:'Solid wall', detail:'1.2 m repeat module', kicker:'003 / THE ENCLOSURE', subtitle:'A solid wall with warm panels and dark skirting.', path:corridorAssetPaths.wall, thumb:'models/mall-solid-wall/previews/mall-solid-wall.jpg' },
+  { id:'wallCorner', number:'C2', name:'Wall corner', detail:'90° · 1.2 m arms', kicker:'CORNER / THE WALL', subtitle:'A right-angle corner connecting the solid wall modules.', path:corridorAssetPaths.wallCorner, thumb:'models/mall-wall-corner/previews/mall-wall-corner.jpg' },
+  { id:'railing', number:'004', name:'Glass railing', detail:'2 m post-centred bay', kicker:'004 / THE EDGE', subtitle:'A glazed bay with posts, infill and handrail.', path:corridorAssetPaths.railing, thumb:'models/mall-glass-railing/previews/mall-glass-railing-2m.webp' },
+  { id:'ceiling', number:'005', name:'Ceiling panel', detail:'1.2 m suspended cassette', kicker:'005 / ABOVE', subtitle:'A repeating ceiling cassette with recessed panels.', path:corridorAssetPaths.ceiling, thumb:'models/mall-ceiling-panel/previews/mall-ceiling-panel-module.webp' },
+  { id:'column', number:'006', name:'Structural column', detail:'0.6 m × 3 m', kicker:'006 / THE SUPPORT', subtitle:'An ivory-clad square column, grounded at floor level.', path:corridorAssetPaths.column, thumb:'models/mall-structural-column/previews/mall-structural-column.webp' },
 ];
 // Extra scene context is loaded only for the corridor, not individual views.
-const furnishings = [
-  ...shopfrontAssets,
-  { id:'floorEdge', path:shellAssetPaths.floorEdge },
-  { id:'light', path:'models/mall-ceiling-light/exports/mall-ceiling-light-module.glb' },
-  { id:'bench', path:'models/gjh-mall-furniture/exports/gjh-lounge-bench.glb' },
-  { id:'planter', path:'models/gjh-mall-furniture/exports/gjh-areca-planter.glb' },
-  { id:'shelf', path:'models/mall-essentials/exports/mall-display-shelf.glb' },
-  { id:'directory', path:'models/mall-essentials/exports/mall-directory-kiosk.glb' },
-  { id:'lightbox', path:'models/mall-essentials/exports/mall-advertising-lightbox.glb' },
-];
+const furnishings = Object.entries(corridorAssetPaths)
+  .filter(([id]) => !modules.some(item => item.id === id))
+  .map(([id, path]) => ({ id, path }));
 const $ = (selector) => document.querySelector(selector);
 const list = $('#module-list');
 for (const item of modules) {
@@ -66,21 +64,17 @@ if (renderer) {
   };
   const byId = Object.fromEntries(modules.map(item => [item.id, item]));
   let current = null; let requestId = 0; let selected = 'assembly';
-  let shopSigns;
+  let shopSigns, assembly, visitor, visitorRequest;
+  let doorAngle = 0;
+  const walkTools = $('#walk-tools');
+  const doorButton = $('#doors');
+  const walkButton = $('#walk');
+  const message = $('#walk-message');
   function corridor(sources) {
-    const group = new THREE.Group(); group.name = 'Mall corridor assembly';
-    const facingCorridor = (object) => { object.rotation.y = Math.PI; return object; };
-    for (const placement of [...shellLayout.floor, ...shellLayout.trim]) {
-      group.add(placeShellModule(sources, placement));
-    }
-
-    for (const { x, opening, fascia } of shopfrontBays) {
-      group.add(instance(sources[opening], x, 0, shopfrontZ));
-      group.add(instance(sources[fascia], x, fasciaBaseY, shopfrontZ));
-      if (opening === 'door') group.add(facingCorridor(instance(sources.shelf, x, 0, -2.42)));
-    }
-    // The solid wall stays behind the transparent storefronts as a reusable back wall.
-    for (const placement of shellLayout.walls) group.add(placeShellModule(sources, placement));
+    if (assembly) return assembly.group;
+    const { group, poseDoors } = assembleCorridor(sources);
+    const world = createCollisionWorld(group);
+    batchStaticMeshes(group);
 
     // Fictional, replaceable shop labels; they are scene context, not model metadata.
     if (!shopSigns) {
@@ -101,25 +95,63 @@ if (renderer) {
 
     // Retain a cutaway in front. A light replaces one panel in each chosen cassette.
     for (const placement of shellLayout.ceiling) {
-      group.add(placeShellModule(sources, placement));
       const { x, z, omit } = placement;
       if (omit) {
-        group.add(instance(sources.light,x-.3,3.008,z+.3));
         const glow = new THREE.PointLight(0xffe5bb, 1.2, 4, 2);
         glow.position.set(x-.3,2.82,z+.3); group.add(glow);
       }
     }
-    group.add(instance(sources.column,-3.6,0,0));
-    group.add(instance(sources.column,3.6,0,0));
-    group.add(instance(sources.railing,-1,0,2.95));
-    group.add(instance(sources.railing,1,0,2.95,'MODULE_Post_Left'));
-    group.add(facingCorridor(instance(sources.bench,0,0,.85)));
-    group.add(instance(sources.planter,-3.25,0,1.8));
-    group.add(instance(sources.planter,3.25,0,1.8));
-    group.add(facingCorridor(instance(sources.directory,-3.0,0,-.25)));
-    group.add(facingCorridor(instance(sources.lightbox,3.0,0,-.25)));
+    assembly = { group, poseDoors, world };
     return group;
   }
+
+  function inspectAssembly() {
+    camera.fov = 34;
+    camera.updateProjectionMatrix();
+    if (current === assembly.group) frame(current, 'assembly');
+  }
+  renderer.domElement.addEventListener('focus', () => {
+    if (visitor?.state.walking) wrap.scrollIntoView({ block: 'nearest' });
+  });
+  doorButton.addEventListener('click', () => {
+    const next = doorAngle === 0 ? 90 : 0;
+    visitor?.clearInput();
+    if (visitor?.state.walking) renderer.domElement.focus({ preventScroll: true });
+    if (visitor && !assembly.world.doorTransition(doorAngle, next, visitor.visual.position, assembly.poseDoors)) {
+      message.textContent = 'The doorway was occupied. Doors stayed ' + (doorAngle ? 'open.' : 'closed.');
+      return;
+    }
+    if (!visitor) { assembly.poseDoors(next); assembly.world.refresh(); }
+    doorAngle = next;
+    doorButton.textContent = next ? 'Close doors' : 'Open doors';
+    doorButton.setAttribute('aria-pressed', String(Boolean(next)));
+    message.textContent = next ? 'Shop doors open.' : 'Shop doors closed.';
+  });
+  // Keep the visitor GLB off the initial orbit view and share one controller
+  // across returns to the assembly. Individual module views remain independent.
+  walkButton.onclick = async () => {
+    if (!assembly || visitorRequest) return;
+    const request = requestId;
+    walkButton.disabled = true;
+    message.textContent = 'Loading visitor…';
+    try {
+      visitorRequest = createVisitor({ scene: assembly.group, world: assembly.world,
+        camera, controls, canvas: renderer.domElement, spawn: arrival, onInspect: inspectAssembly,
+        onMessage: text => { message.textContent = text; } });
+      visitor = await visitorRequest;
+      $('#reset-visitor').hidden = false;
+      message.textContent = '';
+      if (request === requestId && selected === 'assembly') visitor.setWalking(true);
+    } catch (error) {
+      message.textContent = 'Unable to load the visitor. Select Walk visitor to retry.';
+      console.error('Visitor loading failed', error);
+    } finally {
+      walkButton.disabled = false;
+      visitorRequest = null;
+    }
+  };
+  wrap.inspectVisitor = () => ({ angle: doorAngle, visitor: visitor?.state ?? null, drawCalls: renderer.info.render.calls });
+
   function frame(object, id) {
     object.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(object); const sphere = box.getBoundingSphere(new THREE.Sphere());
@@ -132,9 +164,12 @@ if (renderer) {
     controls.minDistance = Math.max(.2, sphere.radius * .65); controls.maxDistance = Math.max(10, sphere.radius * 12);
     camera.near = Math.max(.01, distance / 100); camera.far = distance * 20; camera.updateProjectionMatrix(); controls.update();
   }
-  function resize() { const {width,height} = wrap.getBoundingClientRect(); if (!width || !height) return; renderer.setSize(width,height,false); camera.aspect=width/height; camera.updateProjectionMatrix(); if (current) frame(current, selected); }
+  function resize() { const {width,height} = wrap.getBoundingClientRect(); if (!width || !height) return; renderer.setSize(width,height,false); camera.aspect=width/height; camera.updateProjectionMatrix(); if (current && !visitor?.state.walking) frame(current, selected); }
   new ResizeObserver(resize).observe(wrap); resize();
   async function select(id) {
+    if (visitor?.state.walking) visitor.setWalking(false);
+    walkTools.hidden = true;
+    message.textContent = '';
     selected = id; const request = ++requestId;
     const item = byId[id];
     $('#view-kicker').textContent = item ? item.kicker : 'THE ASSEMBLY';
@@ -150,7 +185,7 @@ if (renderer) {
       if (current) scene.remove(current);
       const sources = Object.fromEntries(loaded);
       current = item ? sources[id].clone(true) : corridor(sources); scene.add(current); frame(current,id);
-      status.textContent = ''; status.dataset.state = 'ready'; wrap.dataset.view = id;
+      status.textContent = ''; status.dataset.state = 'ready'; wrap.dataset.view = id; walkTools.hidden = id !== 'assembly';
     } catch (error) {
       if (request !== requestId) return;
       if (current) { scene.remove(current); current = null; }
@@ -160,7 +195,14 @@ if (renderer) {
   }
   assemblyButton.addEventListener('click', () => select('assembly'));
   list.addEventListener('click', event => { const button = event.target.closest('button[data-module]'); if (button) select(button.dataset.module); });
-  $('#reset-button').addEventListener('click', () => { if (current) frame(current, selected); });
-  renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene,camera); });
+  $('#reset-button').addEventListener('click', () => { if (visitor?.state.walking) visitor.setWalking(false); else if (current) frame(current, selected); });
+  let lastFrame;
+  renderer.setAnimationLoop(now => {
+    const dt = lastFrame === undefined ? 0 : (now - lastFrame) / 1000;
+    lastFrame = now;
+    if (visitor && current === assembly.group) visitor.update(dt);
+    if (controls.enabled) controls.update();
+    renderer.render(scene,camera);
+  });
   select('assembly');
 }
