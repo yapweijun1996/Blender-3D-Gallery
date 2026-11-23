@@ -22,6 +22,7 @@ export default async function createViewer(
   let vehicleToolbar;
   let fishMotion;
   let cartDemo;
+  let pickupDemo;
   let visitorDemo;
   let animationPreview;
   let buildingLoop;
@@ -159,6 +160,7 @@ export default async function createViewer(
     renderer.domElement.removeEventListener("webglcontextlost", onContextLost);
     fishMotion?.dispose();
     cartDemo?.dispose();
+    pickupDemo?.dispose();
     visitorDemo?.dispose();
     animationPreview?.dispose();
     buildingLoop?.dispose();
@@ -224,6 +226,14 @@ export default async function createViewer(
       if (disposed || signal.aborted) {
         cartDemo.dispose();
         throw new DOMException('Viewer closed', 'AbortError');
+      }
+    } else if (interaction === "pickup-bay") {
+      // A missing optional control must not make the ordinary viewer fail.
+      try {
+        const { default: createPickupDemo } = await import("./pickup-bay/demo.js");
+        if (!disposed && !signal.aborted) pickupDemo = createPickupDemo({ model, container, signal, invalidate });
+      } catch {
+        // The model remains available for viewing even if the demo module fails.
       }
     } else if (interaction === "visitor-v2") {
       const { default: createVisitorDemo } = await import('./visitor-v2/demo.js');
@@ -308,6 +318,7 @@ export default async function createViewer(
     const reset = () => {
       clearPreset();
       cartDemo?.reset();
+      pickupDemo?.reset();
       visitorDemo?.reset();
       animationPreview?.reset();
       chibiRig?.reset();
@@ -416,6 +427,7 @@ export default async function createViewer(
       const now = performance.now();
       const active = cartDemo?.update(lastDraw ? (now - lastDraw) / 1000 : 0);
       const elapsed = lastDraw ? (now - lastDraw) / 1000 : 0;
+      const pickupActive = pickupDemo?.update(elapsed);
       const visitorActive = visitorDemo?.update(elapsed);
       const animationActive = animationPreview?.update(elapsed);
       const buildingActive = buildingLoop?.update(elapsed);
@@ -423,7 +435,7 @@ export default async function createViewer(
       const fishActive = fishMotion?.update();
       const changed = controls.update();
       renderer.render(scene, camera);
-      if (changed || active || visitorActive || animationActive || buildingActive || fishActive) invalidate();
+      if (changed || active || pickupActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
     };
     invalidate();
     return { reset, dispose, setView };

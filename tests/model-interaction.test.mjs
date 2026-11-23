@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { interactionKind } from "../src/model-interaction.js";
 
-test("only the cart, both visitors, and the authored Singapore fish receive interactive badges", () => {
+test("only allowlisted models and the authored Singapore fish receive interactive badges", () => {
   const readModelData = file => JSON.parse(readFileSync(new URL(`../models/${file}`, import.meta.url), "utf8"));
   const { collections } = readModelData("catalog.json");
   const species = readModelData("singapore-fish/species.json");
@@ -14,6 +14,8 @@ test("only the cart, both visitors, and the authored Singapore fish receive inte
     .filter(([, kind]) => kind !== null)));
   assert.deepEqual(advertised, {
     "interactive-shopping-cart": "cart",
+    ...(collections.some(({ assets }) => assets.some(({ id }) => id === "mall-ride-hail-pickup-bay"))
+      ? { "mall-ride-hail-pickup-bay": "pickup-bay" } : {}),
     "gjh-mall-visitor-v2": "visitor-v2",
     "gjh-visitor-v3": "visitor-v3",
     ...Object.fromEntries(species.map(([slug]) => [`fish-${slug}`, "fish"])),
