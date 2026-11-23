@@ -14,6 +14,7 @@ test("only allowlisted models and the authored Singapore fish receive interactiv
     .filter(([, kind]) => kind !== null)));
   assert.deepEqual(advertised, {
     "interactive-shopping-cart": "cart",
+    "shophouse-parcel-drop-hatch": "parcel-hatch",
     ...(collections.some(({ assets }) => assets.some(({ id }) => id === "mall-ride-hail-pickup-bay"))
       ? { "mall-ride-hail-pickup-bay": "pickup-bay" } : {}),
     ...(collections.some(({ assets }) => assets.some(({ id }) => id === "loh-hei-yee-sang-platter"))
