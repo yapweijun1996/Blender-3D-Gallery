@@ -1,6 +1,6 @@
 # Fast GitHub Pages deployment
 
-The implemented pipeline is [deploy.yml](../.github/workflows/deploy.yml). It runs on main pushes and manual dispatch. New pushes cancel superseded runs. The site is built and published in one job. Node.js 24 and the lockfile define its JavaScript toolchain.
+The implemented pipeline is [deploy.yml](../.github/workflows/deploy.yml). It runs on `main` pushes and manual dispatches from `main`; branch and tag dispatches cannot enter the deployment job. Checkout is pinned to the triggering `main` commit SHA so the reviewed source and published artifact remain bound to the same revision. New pushes cancel superseded runs. The site is built and published in one job. Node.js 24 and the lockfile define its JavaScript toolchain.
 
 ## Inputs and cache
 
