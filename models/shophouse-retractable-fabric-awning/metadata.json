@@ -1,0 +1,87 @@
+{
+  "id": "shophouse-retractable-fabric-awning",
+  "name": "Shophouse Retractable Fabric Awning",
+  "summary": "Original retractable fabric overhang with a visible roller, fixed-width textile and two pairs of articulated rigid links.",
+  "description": "Original SG/MY-inspired shophouse awning module with a striped fabric, apparent roller take-up and four rigid links. Try one fictional local retraction and reset; no installation, weather, safety or load claim.",
+  "category": "Buildings & Architecture",
+  "tags": [
+    "Shophouse",
+    "Awning",
+    "Fabric",
+    "Cassette",
+    "Retail fixture",
+    "Singapore",
+    "Malaysia",
+    "Animated"
+  ],
+  "status": "validated",
+  "created": "2026-11-23",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Original model with baked two-link rigid articulation, fixed-width curved fabric, apparent roll take-up and native Cycles stills.",
+  "rights": "Original project asset; redistribution terms for public downloads are not specified.",
+  "source": "shophouse-retractable-fabric-awning.blend",
+  "generator": "generate.py",
+  "export": "exports/shophouse-retractable-fabric-awning.glb",
+  "preview": "previews/studio.webp",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.44,
+      0.32,
+      1
+    ],
+    "previewLighting": {
+      "directionalPosition": [
+        -4.1,
+        6.1,
+        7.2
+      ],
+      "hemisphereIntensity": 1.78,
+      "directionalIntensity": 2.02
+    }
+  },
+  "accuracy_notes": "Fictional local demonstration. No real installation, load, weather, operation or safety claim. Blender +Z up, -Y outward; glTF +Y up, +Z outward; metres.",
+  "attribution": [
+    {
+      "credit": "Original mesh geometry, appearance, animation and stills in Blender. No external assets or manufacturer references."
+    }
+  ],
+  "animation": {
+    "name": "AWNING_FOLD_IN",
+    "duration_seconds": 2.4,
+    "start": "extended",
+    "end": "parked",
+    "animated_nodes": [
+      "AWNING_FRONT_BAR",
+      "AWNING_FABRIC",
+      "AWNING_ROLLER",
+      "AWNING_L_PROXIMAL",
+      "AWNING_L_DISTAL",
+      "AWNING_R_PROXIMAL",
+      "AWNING_R_DISTAL"
+    ],
+    "behavior": "One authored display cycle, final pose held until reset; reduced motion directly shows parked."
+  },
+  "metrics": {
+    "glb_bytes": 172568,
+    "glb_sha256": "18138c07d92e20cd9f3ca22b09829e556cc3f6104e717e9596b01348f51cc20f",
+    "source_sha256": "fa827d95c7cddc3c6c4662b89fde99ae77a8571f6b1de8a9e9390ba8879cd60c",
+    "preview_sha256": "4e33d3b9333e6c4a16f909e877103086f2b379d2466cbe0fdcb5737d7f529a4d",
+    "preview_bytes": 17730,
+    "triangles": 2872,
+    "vertices": 4560,
+    "draw_calls": 58,
+    "meshes": 45,
+    "materials": 12,
+    "animations": 1,
+    "maximum_texture_dimension_px": 0,
+    "moving_bar_projection_extended_m": 0.777,
+    "moving_bar_projection_parked_m": 0.102,
+    "constant_fabric_width_m": 1.825,
+    "rigid_arm_link_length_m": 0.437,
+    "roller_angle_total_radians": 14.36166,
+    "native_glb_sampled_largest_hinge_seam_m": 3.21e-07,
+    "glb_regeneration_byte_identical": true
+  }
+}
