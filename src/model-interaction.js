@@ -11,6 +11,7 @@ export function interactionKind(asset) {
     case "shophouse-parcel-drop-hatch": return "parcel-hatch";
     case "community-beverage-container-return-kiosk": return "beverage-return";
     case "shophouse-retractable-fabric-awning": return "awning";
+    case "pasar-dacing-steelyard-scale": return "dacing";
     case "gjh-mall-visitor-v2": return "visitor-v2";
     case "gjh-visitor-v3": return "visitor-v3";
     default: return asset.collectionId === "singapore-fish" ? "fish" : null;
