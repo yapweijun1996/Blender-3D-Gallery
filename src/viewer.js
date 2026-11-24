@@ -34,6 +34,7 @@ export default async function createViewer(
   let dacingDemo;
   let changingStationDemo;
   let trayReturnCoverDemo;
+  let bicycleTrayDemo;
   let visitorDemo;
   let animationPreview;
   let buildingLoop;
@@ -183,6 +184,7 @@ export default async function createViewer(
     dacingDemo?.dispose();
     changingStationDemo?.dispose();
     trayReturnCoverDemo?.dispose();
+    bicycleTrayDemo?.dispose();
     visitorDemo?.dispose();
     animationPreview?.dispose();
     buildingLoop?.dispose();
@@ -515,6 +517,23 @@ export default async function createViewer(
       }
       if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
     }
+    if (interaction === "bicycle-tray") {
+      try {
+        const { default: createBicycleTrayDemo } = await import("./bicycle-tray/demo.js");
+        if (!disposed && !signal.aborted) {
+          bicycleTrayDemo = createBicycleTrayDemo({
+            model, clips: gltf.animations, container,
+            invalidate() {
+              lastDraw = 0;
+              invalidate();
+            },
+          });
+        }
+      } catch {
+        // The rack remains inspectable even if the optional demo cannot load.
+      }
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+    }
     frameForResize = () => {
       if (!model) return;
       const viewDirection = camera.position.clone().sub(controls.target);
@@ -541,6 +560,7 @@ export default async function createViewer(
       dacingDemo?.reset();
       changingStationDemo?.reset();
       trayReturnCoverDemo?.reset();
+      bicycleTrayDemo?.reset();
       visitorDemo?.reset();
       animationPreview?.reset();
       chibiRig?.reset();
@@ -661,6 +681,7 @@ export default async function createViewer(
       const dacingActive = dacingDemo?.update(elapsed);
       const changingStationActive = changingStationDemo?.update(elapsed);
       const trayReturnCoverActive = trayReturnCoverDemo?.update(elapsed);
+      const bicycleTrayActive = bicycleTrayDemo?.update(elapsed);
       const visitorActive = visitorDemo?.update(elapsed);
       const animationActive = animationPreview?.update(elapsed);
       const buildingActive = buildingLoop?.update(elapsed);
@@ -668,7 +689,7 @@ export default async function createViewer(
       const fishActive = fishMotion?.update();
       const changed = controls.update();
       renderer.render(scene, camera);
-      if (changed || active || pickupActive || lohHeiActive || railReloadActive || carparkHelpActive || airBalangActive || coconutScraperActive || parcelHatchActive || beverageReturnActive || awningActive || dacingActive || changingStationActive || trayReturnCoverActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
+      if (changed || active || pickupActive || lohHeiActive || railReloadActive || carparkHelpActive || airBalangActive || coconutScraperActive || parcelHatchActive || beverageReturnActive || awningActive || dacingActive || changingStationActive || trayReturnCoverActive || bicycleTrayActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
     };
     invalidate();
     return { reset, dispose, setView };

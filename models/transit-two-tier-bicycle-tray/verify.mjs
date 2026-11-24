@@ -1,0 +1,65 @@
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {readFile} from 'node:fs/promises';
+import {validateBytes} from 'gltf-validator';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {AnimationMixer,Box3,LoopOnce,Quaternion,QuaternionKeyframeTrack,Vector3,VectorKeyframeTrack} from 'three';
+const id='transit-two-tier-bicycle-tray';
+const bytes=await readFile(process.argv[2]??new URL('./exports/'+id+'.glb',import.meta.url));
+const raw=JSON.parse(bytes.subarray(20,20+bytes.readUInt32LE(12)));
+const k=await validateBytes(new Uint8Array(bytes),{uri:id+'.glb'});
+for(const key of ['numErrors','numWarnings','numInfos','numHints'])assert.equal(k.issues[key],0,JSON.stringify(k.issues));
+assert.deepEqual(raw.buffers.map(x=>x.uri),[undefined]);
+for(const key of ['images','cameras'])assert.equal(raw[key]?.length??0,0);
+assert.equal(raw.animations?.length,1);
+assert.ok(raw.animations[0].samplers.every(s=>Math.abs(raw.accessors[s.input].min[0])<1e-6&&Math.abs(raw.accessors[s.input].max[0]-2.4)<1e-5));
+const {scene:model,animations}=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');
+model.updateMatrixWorld(true);
+for(const n of ['TRANSIT_TWO_TIER_BICYCLE_TRAY_EXHIBIT','STATIONARY_LOWER_BAY_AND_FIXED_FRAME','CAPTURED_FIXED_LEFT_AND_RIGHT_GUIDES'])assert.ok(model.getObjectByName(n));
+const c=model.getObjectByName('BIKE_UPPER_CARRIAGE');
+const p=model.getObjectByName('BIKE_UPPER_TRAY_PIVOT');
+assert.equal(p.parent,c);
+const [clip]=animations;
+assert.equal(clip.name,'TWO_TIER_TRAY_SLIDE_TIP');
+assert.ok(Math.abs(clip.duration-2.4)<1e-6);
+assert.equal(clip.tracks.length,2);
+assert.ok(clip.tracks.find(t=>t.name===c.name+'.position') instanceof VectorKeyframeTrack);
+assert.ok(clip.tracks.find(t=>t.name===p.name+'.quaternion') instanceof QuaternionKeyframeTrack);
+const fixed=model.getObjectByName('STATIONARY_LOWER_BAY_AND_FIXED_FRAME');
+const fixedPose=[];
+fixed.traverse(o=>fixedPose.push([o,o.matrixWorld.toArray()]));
+const handle=model.getObjectByName('Clear_painted_upper_motion_handle');
+const rootBox=new Box3().setFromObject(model,true);
+function eq(a,b,tol){assert.ok(Math.abs(a-b)<tol,[a,b,tol]);}
+const mixer=new AnimationMixer(model);
+const playing=mixer.clipAction(clip).reset().setLoop(LoopOnce,1).play();
+playing.clampWhenFinished=true;
+playing.paused=true;
+const samples=[];
+for(let i=0;i<=144;i++){
+ const t=i/60;
+ playing.time=Math.min(t,clip.duration);
+ mixer.update(0);model.updateMatrixWorld(true);
+ const pos=c.getWorldPosition(new Vector3()),axis=p.getWorldQuaternion(new Quaternion());
+ const trans=pos.z+.24, degrees=Math.atan2(axis.x,axis.w)*360/Math.PI;
+ eq(pos.x,0,.00001);eq(pos.y,1.427,.00001);
+ assert.ok(Math.abs(axis.y)<1e-5&&Math.abs(axis.z)<1e-5);
+ if(i<=72)eq(degrees,0,1e-4);
+ if(i>=72)eq(trans,.64,1e-5);
+ if(i>=126)eq(degrees,38,1e-4);
+ if(i===36)eq(trans,.32,1e-5);
+ if(i===99)eq(degrees,19,1e-4);
+ const q=p.getWorldPosition(new Vector3());
+ eq(q.distanceTo(pos),0,1e-6);
+ for(const [child,mat] of fixedPose)assert.deepEqual(child.matrixWorld.toArray(),mat);
+ if(samples.length){
+  assert.ok(trans>=samples.at(-1).trans-1e-6);
+  assert.ok(degrees>=samples.at(-1).degrees-1e-5);
+ }
+ const box=new Box3().setFromObject(handle,true);
+ samples.push({t,trans,degrees,y:box.min.y,z:box.max.z});
+}
+assert.ok(samples[0].y-samples.at(-1).y>.72);
+eq(samples[126].y,samples[144].y,1e-6);
+const info=k.info;
+console.log(JSON.stringify({sha256:createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length,issues:k.issues,triangles:info.totalTriangleCount,vertices:info.totalVertexCount,drawCalls:info.drawCallCount,meshCount:raw.meshes.length,materials:raw.materials.length,animations:[clip.name],duration:clip.duration,tracks:clip.tracks.map(t=>[t.name,t.constructor.name]),verified:145,selected:[0,36,72,99,126,144].map(i=>samples[i]),bounds:[rootBox.min.toArray(),rootBox.max.toArray()]},null,2));

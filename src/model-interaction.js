@@ -14,6 +14,7 @@ export function interactionKind(asset) {
     case "pasar-dacing-steelyard-scale": return "dacing";
     case "mall-fold-down-changing-station": return "changing-station";
     case "hawker-tray-return-counterweight-cover": return "tray-return-cover";
+    case "transit-two-tier-bicycle-tray": return "bicycle-tray";
     case "gjh-mall-visitor-v2": return "visitor-v2";
     case "gjh-visitor-v3": return "visitor-v3";
     default: return asset.collectionId === "singapore-fish" ? "fish" : null;

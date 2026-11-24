@@ -20,6 +20,7 @@ test("only allowlisted models and the authored Singapore fish receive interactiv
     "pasar-dacing-steelyard-scale": "dacing",
     "mall-fold-down-changing-station": "changing-station",
     "hawker-tray-return-counterweight-cover": "tray-return-cover",
+    "transit-two-tier-bicycle-tray": "bicycle-tray",
     ...(collections.some(({ assets }) => assets.some(({ id }) => id === "mall-ride-hail-pickup-bay"))
       ? { "mall-ride-hail-pickup-bay": "pickup-bay" } : {}),
     ...(collections.some(({ assets }) => assets.some(({ id }) => id === "loh-hei-yee-sang-platter"))
