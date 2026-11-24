@@ -1,0 +1,9 @@
+# Sabah Sompoton Display
+
+An original static interpretation of the Kadazan-Dusun sompoton mouth organ from Sabah, Malaysia. The exhibit shows two tied four-tube bamboo groups and a hollow gourd wind chamber on its own modest padded stand. Visually compare four open short-row bores with the recessed or capped stylized long-row finishes. The long-row shapes intentionally do not assign playing roles, finger technique, pitch or fabrication details. This is not an acoustic simulation, instrument-making guide, replica or recording.
+
+- [JKKN Sabah cultural inventory](https://pemetaanbudaya.jkkn.gov.my/en/senibudaya/detail/1125) documents the two groups of four tubes, the dried gourd and the instrument's place in Kadazan-Dusun music including Kaamatan. [Jabatan Warisan Negara field journal](https://www.heritage.gov.my/en/koleksi-penerbitan.html?download=11%3Ajurnal-warisan-tidak-ketara) and [Hamdan et al., 2022](https://bioresources.cnr.ncsu.edu/resources/sompoton-sabah-bamboo-mouth-organ/) corroborate the general grouping, mouth chamber and variation of pipe ends and roles. Nothing copies the subject of a reference image.
+- Original procedure-built shell, natural vertex-coloured bamboo and organic shell tint, visible binding, all geometry and lettering. No external model, raster texture, audio, animation or standardized pitch.
+- Blender 4.3.2, native +Z up/−Y front, glTF +Y up/+Z front. Shape and measured clearances apply only to the exhibit.
+- Reproduce in a new directory: `blender -b --python-exit-code 9 --python generate.py -- --output /tmp/new-sompoton`. Use `--skip-render` for only native file/GLB, or `--review /tmp/sompoton-detail` for separate inspection cameras.
+- Verify the saved Blender source and exact GLB reimport with `blender -b --python-exit-code 9 --python verify_blender.py`; inspect Khronos and live Three.js ray coverage using `node verify.mjs`.
