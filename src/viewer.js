@@ -32,6 +32,7 @@ export default async function createViewer(
   let beverageReturnDemo;
   let awningDemo;
   let dacingDemo;
+  let changingStationDemo;
   let visitorDemo;
   let animationPreview;
   let buildingLoop;
@@ -179,6 +180,7 @@ export default async function createViewer(
     beverageReturnDemo?.dispose();
     awningDemo?.dispose();
     dacingDemo?.dispose();
+    changingStationDemo?.dispose();
     visitorDemo?.dispose();
     animationPreview?.dispose();
     buildingLoop?.dispose();
@@ -477,6 +479,23 @@ export default async function createViewer(
       }
       if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
     }
+    if (interaction === "changing-station") {
+      try {
+        const { default: createChangingStationDemo } = await import("./changing-station/demo.js");
+        if (!disposed && !signal.aborted) {
+          changingStationDemo = createChangingStationDemo({
+            model, clips: gltf.animations, container,
+            invalidate() {
+              lastDraw = 0;
+              invalidate();
+            },
+          });
+        }
+      } catch {
+        // The fixture remains inspectable even if the optional demo cannot load.
+      }
+      if (disposed || signal.aborted) throw new DOMException("Viewer closed", "AbortError");
+    }
     frameForResize = () => {
       if (!model) return;
       const viewDirection = camera.position.clone().sub(controls.target);
@@ -501,6 +520,7 @@ export default async function createViewer(
       beverageReturnDemo?.reset();
       awningDemo?.reset();
       dacingDemo?.reset();
+      changingStationDemo?.reset();
       visitorDemo?.reset();
       animationPreview?.reset();
       chibiRig?.reset();
@@ -619,6 +639,7 @@ export default async function createViewer(
       const beverageReturnActive = beverageReturnDemo?.update(elapsed);
       const awningActive = awningDemo?.update(elapsed);
       const dacingActive = dacingDemo?.update(elapsed);
+      const changingStationActive = changingStationDemo?.update(elapsed);
       const visitorActive = visitorDemo?.update(elapsed);
       const animationActive = animationPreview?.update(elapsed);
       const buildingActive = buildingLoop?.update(elapsed);
@@ -626,7 +647,7 @@ export default async function createViewer(
       const fishActive = fishMotion?.update();
       const changed = controls.update();
       renderer.render(scene, camera);
-      if (changed || active || pickupActive || lohHeiActive || railReloadActive || carparkHelpActive || airBalangActive || coconutScraperActive || parcelHatchActive || beverageReturnActive || awningActive || dacingActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
+      if (changed || active || pickupActive || lohHeiActive || railReloadActive || carparkHelpActive || airBalangActive || coconutScraperActive || parcelHatchActive || beverageReturnActive || awningActive || dacingActive || changingStationActive || visitorActive || animationActive || buildingActive || fishActive) invalidate();
     };
     invalidate();
     return { reset, dispose, setView };
