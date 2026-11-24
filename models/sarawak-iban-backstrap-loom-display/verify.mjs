@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {readFile} from 'node:fs/promises';
+import {validateBytes} from 'gltf-validator';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {Box3,Raycaster,Vector3} from 'three';
+const id='sarawak-iban-backstrap-loom-display';
+const bytes=await readFile(process.argv[2]??new URL('./exports/'+id+'.glb',import.meta.url));
+const gltf=JSON.parse(bytes.subarray(20,20+bytes.readUInt32LE(12)));
+const k=await validateBytes(new Uint8Array(bytes),{uri:id+'.glb'});
+for(const key of ['numErrors','numWarnings','numInfos','numHints'])assert.equal(k.issues[key],0,JSON.stringify(k.issues));
+assert.deepEqual(gltf.buffers.map(x=>x.uri),[undefined]);
+for(const key of ['images','animations','cameras'])assert.equal(gltf[key]?.length??0,0);
+const {scene:model}=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');
+model.updateMatrixWorld(true);
+for(const name of ['SARAWAK_IBAN_BACKSTRAP_LOOM_EXHIBIT','INDEPENDENT_CONTEMPORARY_EXHIBITION_SUPPORTS','TRADITIONAL_TYPE_WOODEN_BEAMS_AND_BARS','INDIVIDUALLY_MODELED_INTERLACED_WARP_AND_WEFT','HEDDLE_LOOPS_AND_BREAST_BEAM_BACKSTRAP_TIES','INDEPENDENT_RESTING_OPEN_BACKSTRAP'])assert.ok(model.getObjectByName(name),name);
+const matches=(prefix)=>{const a=[];model.traverse(n=>{if(n.isMesh&&n.name.startsWith(prefix))a.push(n)});return a.sort((a,b)=>a.name.localeCompare(b.name));};
+const cast=(at,vector,meshes,far=1.5)=>new Raycaster(at,vector,0,far).intersectObjects(meshes,false)[0];
+const warp=matches('Continuous_warp_thread');
+const weft=matches('Alternating_solid_weft_course');
+const loops=matches('Closed_cord_loop_wrapping');
+assert.equal(warp.length,36);assert.equal(weft.length,21);assert.equal(loops.length,18);
+assert.equal(matches('Continuous_bound_strap_tie').length,2);
+assert.equal(matches('Wide_curved_open_backstrap').length,1);
+assert.equal(matches('Independent_lower_padded_display_strap_rest').length,1);
+const a=new Vector3(0,-1,0),b=new Vector3(0,1,0);
+const gaps=[];
+for (const i of warp.keys())for(const j of weft.keys()){
+  const x=-.221+(i+.5)*(.442/36),y=-.321+j*.0105;
+  const even=(i+j)%2===0;const high=even?warp[i]:weft[j],low=even?weft[j]:warp[i];
+  const down=cast(new Vector3(x,.37,-y),a,[low],.085);
+  const up=cast(new Vector3(x,.32,-y),b,[high],.075);
+  assert.ok(down&&up&&up.point.y-down.point.y>.0016&&up.point.y-down.point.y<.0028,[i,j,down?.point.y,up?.point.y]);
+  gaps.push(up.point.y-down.point.y);
+}
+const bbox=new Box3().setFromObject(model,true),info=k.info;
+console.log(JSON.stringify({sha256:createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length,issues:k.issues,triangles:info.totalTriangleCount,vertices:info.totalVertexCount,drawCalls:info.drawCallCount,meshes:gltf.meshes.length,materials:gltf.materials.length,warps:warp.length,wefts:weft.length,heddleLoops:loops.length,wovenCrossings:gaps.length,wovenGapMm:[Math.min(...gaps)*1000,Math.max(...gaps)*1000],bounds:[bbox.min.toArray(),bbox.max.toArray()]},null,2));
