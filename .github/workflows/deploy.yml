@@ -18,17 +18,45 @@ jobs:
     timeout-minutes: 45
     runs-on: ubuntu-latest
     steps:
-      # Unit tests include source and asset checks, so the deployment's sparse
-      # checkout is insufficient for this gate.
+      # Start with catalog/code and two commits; hydrate all tracked files only for full verification.
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 2
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/models/
+            !/docs/
+            !/output/
+            !/tests/
+            !/.agents/
+            !/.tripo/
+            /models/catalog.json
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24'
           cache: npm
+      - name: Select verification lane
+        id: gate
+        run: node scripts/static-model-verification.mjs classify
+      - name: Hydrate full verification inputs
+        if: steps.gate.outputs.mode != 'fast'
+        run: git sparse-checkout disable
       - run: npm ci --no-audit --no-fund
+      - name: Verify one static model and catalog
+        if: steps.gate.outputs.mode == 'fast'
+        env:
+          BASE: ${{ steps.gate.outputs.base }}
+          MODEL: ${{ steps.gate.outputs.model }}
+        run: |
+          node scripts/check-i18n.mjs
+          node scripts/static-model-verification.mjs verify "$BASE" "$MODEL"
       - run: npm test
+        if: steps.gate.outputs.mode != 'fast'
       - run: npm run test:world
+        if: steps.gate.outputs.mode != 'fast'
       - run: npm run validate:assets
+        if: steps.gate.outputs.mode != 'fast'
   build:
     needs: verify
     timeout-minutes: 20

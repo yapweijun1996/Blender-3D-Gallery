@@ -1,6 +1,6 @@
 # Fast GitHub Pages deployment
 
-The implemented pipeline is [deploy.yml](../.github/workflows/deploy.yml). It runs on main pushes and manual dispatch. New pushes cancel superseded runs. A verification job checks out the complete repository, installs the locked dependencies, and runs `npm test`, `npm run test:world`, and `npm run validate:assets`. The build job requires verification to pass, including on a site cache hit. A separate job publishes the uploaded build to Pages. Node.js 24 and the lockfile define its JavaScript toolchain.
+The implemented pipeline is [deploy.yml](../.github/workflows/deploy.yml). It runs on main pushes and manual dispatch. New pushes cancel superseded runs. A required verification job installs locked dependencies and chooses the narrowly scoped static-model checks or the complete suite. The build job requires verification to pass, including on a site cache hit. A separate job publishes the uploaded build to Pages. Node.js 24 and the lockfile define its JavaScript toolchain.
 
 ## Inputs and cache
 
@@ -8,7 +8,15 @@ The initial checkout contains the app, scripts and catalog while excluding model
 
 The selector's cache key hashes the selected paths and indexed Git blob IDs. It is a committed-input identity. Stage intended changes before local key checks. The selector rejects tracked symbolic links and references to missing catalog files. Its literal dependency scan is bounded. A production build remains the check for completeness when code starts using a new dependency pattern.
 
-In the build job, an exact `dist/` cache hit skips model downloads, npm installation and Vite. A miss downloads selected model files, runs `npm ci --no-audit --no-fund`, then `npm run build:deploy`. The separate verification job always downloads the complete tracked repository and runs all three gates; this increases deployment time and transfer even when the site cache hits. The existing manual `validate_assets=true` input still forces a fresh deployment build, while asset validation now runs for every deployment. Local `npm run build` also retains full validation.
+In the build job, an exact `dist/` cache hit skips model downloads, npm installation and Vite. A miss downloads selected model files, runs `npm ci --no-audit --no-fund`, then `npm run build:deploy`. The existing manual `validate_assets=true` input still forces a fresh deployment build. All manual runs use the full verification suite. Local `npm run build` retains full validation.
+
+## Verification modes
+
+The initial verification checkout is sparse. Fast verification is possible only for a non-forced main push whose exact single parent is proved green by the repository's public Actions run record. The record is read anonymously with a short timeout; a missing or inaccessible record, failure, cancellation, rate limit or ambiguous commit falls back to full verification. No token permissions are added.
+
+The diff must be one append-only catalog collection with exactly one new static model, plus regular, non-executable files in its previously nonexistent folder. Existing catalog data and order must be unchanged. Interactive, animated, skinned, multi-model and shared code/workflow changes use the full path. The existing deployment input selector must see only the new catalog media/metadata from the new folder; authoring files are not executed.
+
+Fast mode checks catalog/schema/category consistency, exact source/GLB/thumbnail hashes and byte counts, a static WebP container, metadata/path sanity, and the new GLB's resource containment and Khronos validation. It does not replace a focused visual/model check. Full mode expands the checkout and retains `npm test`, `npm run test:world`, and `npm run validate:assets`. In both modes Pages still requires successful verification and the unchanged exact-input building, upload and deployment steps.
 
 ## Observed evidence
 
