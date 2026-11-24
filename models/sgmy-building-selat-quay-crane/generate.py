@@ -127,7 +127,7 @@ def finalize(scene):
     root['asset_id'] = SLUG
     root['units'] = 'metres'
     root['facing'] = 'Blender -Y / glTF +Z'
-    root['pivot'] = 'Ground centre'
+    root['origin_note' = 'Ground centre'
     root['revision'] = '1'
     root['role'] = ROLE
     for name,(verts,faces,assets,smooth) in PARTS.items():
