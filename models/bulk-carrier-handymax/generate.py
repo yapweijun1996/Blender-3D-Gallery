@@ -275,64 +275,93 @@ for name,(verts,faces) in geo.items():
     if not verts: continue
     data=bpy.data.meshes.new(name); data.from_pydata(verts,[],faces); data.update()
     obj=bpy.data.objects.new(name,data); scene.collection.objects.link(obj); data.materials.append(materials[name])
-# Bake a hull atlas from procedural Blender nodes. UV X follows ship length and
+# Generate a hull atlas procedurally. UV X follows ship length and
 # UV Y follows elevation, so the bands line up on both sides and across materials.
 def bake_hull_maps():
-    scene.render.engine='CYCLES'
-    scene.cycles.samples=1
-    bpy.ops.mesh.primitive_plane_add(size=2)
-    plane=bpy.context.object
-    mat=bpy.data.materials.new('Hull atlas bake source'); mat.use_nodes=True
-    plane.data.materials.append(mat)
-    nodes=mat.node_tree.nodes; nodes.clear(); links=mat.node_tree.links
-    uv=nodes.new('ShaderNodeTexCoord')
-    separate=nodes.new('ShaderNodeSeparateXYZ'); links.new(uv.outputs['UV'],separate.inputs[0])
-    noise=nodes.new('ShaderNodeTexNoise'); noise.inputs['Scale'].default_value=54
-    noise.inputs['Detail'].default_value=3; links.new(uv.outputs['UV'],noise.inputs['Vector'])
-    bands=nodes.new('ShaderNodeValToRGB'); links.new(separate.outputs['Y'],bands.inputs[0])
-    ramp=bands.color_ramp
-    ramp.interpolation='LINEAR'
-    # Values are linear RGB; the dark transition at the waterline is deliberate.
-    colors=[(0.0,(.23,.038,.023,1)),(.43,(.30,.055,.030,1)),(.465,(.10,.025,.014,1)),(.475,(.018,.022,.021,1)),(.535,(.018,.022,.021,1)),(.55,(.13,.053,.027,1)),(.57,(.07,.055,.043,1)),(.61,(.055,.073,.078,1)),(.91,(.055,.073,.078,1)),(1.0,(.025,.032,.030,1))]
-    ramp.elements.remove(ramp.elements[1]); ramp.elements[0].position=colors[0][0]; ramp.elements[0].color=colors[0][1]
-    for pos,color in colors[1:]: ramp.elements.new(pos).color=color
-    wave=nodes.new('ShaderNodeTexWave'); wave.wave_type='BANDS'; wave.bands_direction='X'; wave.inputs['Scale'].default_value=11; wave.inputs['Distortion'].default_value=0
-    links.new(uv.outputs['UV'],wave.inputs['Vector'])
-    seam=nodes.new('ShaderNodeValToRGB'); seam.color_ramp.elements[0].position=.015; seam.color_ramp.elements[0].color=(.32,.32,.32,1); seam.color_ramp.elements[1].position=.075; wave.inputs['Distortion'].default_value=.6; wave.inputs['Detail Scale'].default_value=2; links.new(wave.outputs['Fac'],seam.inputs[0])
-    horizontal=nodes.new('ShaderNodeTexWave'); horizontal.wave_type='BANDS'; horizontal.bands_direction='Y'; horizontal.inputs['Scale'].default_value=1.5
-    links.new(uv.outputs['UV'],horizontal.inputs['Vector'])
-    horizontal_ramp=nodes.new('ShaderNodeValToRGB'); horizontal_ramp.color_ramp.elements[0].position=.01; horizontal_ramp.color_ramp.elements[0].color=(.5,.5,.5,1); horizontal_ramp.color_ramp.elements[1].position=.04
-    links.new(horizontal.outputs['Fac'],horizontal_ramp.inputs[0])
-    multiply=nodes.new('ShaderNodeMixRGB'); multiply.blend_type='MULTIPLY'; multiply.inputs[0].default_value=.35; links.new(bands.outputs['Color'],multiply.inputs[1]); links.new(seam.outputs['Color'],multiply.inputs[2])
-    mottled=nodes.new('ShaderNodeMixRGB'); mottled.blend_type='MULTIPLY'; mottled.inputs[0].default_value=.22; links.new(multiply.outputs[0],mottled.inputs[1]); links.new(noise.outputs['Fac'],mottled.inputs[2])
-    plated=nodes.new('ShaderNodeMixRGB'); plated.blend_type='MULTIPLY'; plated.inputs[0].default_value=.35
-    links.new(mottled.outputs[0],plated.inputs[1]); links.new(horizontal_ramp.outputs[0],plated.inputs[2])
-    # Stretched noise forms irregular rust runs, restricted to the waterline.
-    stretched=nodes.new('ShaderNodeVectorMath'); stretched.operation='MULTIPLY'; stretched.inputs[1].default_value=(65,2.2,1)
-    links.new(uv.outputs['UV'],stretched.inputs[0])
-    streak=nodes.new('ShaderNodeTexNoise'); streak.inputs['Scale'].default_value=1; streak.inputs['Detail'].default_value=2
-    links.new(stretched.outputs['Vector'],streak.inputs['Vector'])
-    streak_mask=nodes.new('ShaderNodeValToRGB'); streak_mask.color_ramp.elements[0].position=.50; streak_mask.color_ramp.elements[1].position=.70
-    links.new(streak.outputs['Fac'],streak_mask.inputs[0])
-    water=nodes.new('ShaderNodeValToRGB'); wr=water.color_ramp
-    wr.elements[0].position=.48; wr.elements[0].color=(0,0,0,1); wr.elements[1].position=.74; wr.elements[1].color=(0,0,0,1)
-    wr.elements.new(.54).color=(.72,.72,.72,1); wr.elements.new(.59).color=(.65,.65,.65,1)
-    links.new(separate.outputs['Y'],water.inputs[0])
-    mask=nodes.new('ShaderNodeMath'); mask.operation='MULTIPLY'; links.new(water.outputs['Color'],mask.inputs[0]); links.new(streak_mask.outputs['Color'],mask.inputs[1])
-    weather=nodes.new('ShaderNodeMixRGB'); links.new(mask.outputs[0],weather.inputs[0]); links.new(plated.outputs[0],weather.inputs[1]); weather.inputs[2].default_value=(.20,.058,.022,1)
-    rough=nodes.new('ShaderNodeValToRGB'); links.new(separate.outputs['Y'],rough.inputs[0]); rr=rough.color_ramp
-    rr.elements[0].color=(.82,.82,.82,1); rr.elements[1].color=(.72,.72,.72,1)
-    for pos,val in ((.44,.83),(.48,.31),(.54,.31),(.58,.74),(.95,.8)):
-        rr.elements.new(pos).color=(val,val,val,1)
-    emission=nodes.new('ShaderNodeEmission'); output=nodes.new('ShaderNodeOutputMaterial'); links.new(emission.outputs[0],output.inputs['Surface'])
-    baked=[]
-    for name,source in [('Hull color atlas',weather.outputs[0]),('Hull roughness atlas',rough.outputs[0])]:
-        img=bpy.data.images.new(name,width=512,height=512,alpha=False)
-        tex=nodes.new('ShaderNodeTexImage'); tex.image=img; nodes.active=tex
-        links.new(source,emission.inputs['Color'])
-        bpy.ops.object.bake(type='EMIT',margin=2)
-        img.pack(); baked.append(img)
-    bpy.data.objects.remove(plane,do_unlink=True)
+    # Work in metres so the waterline and the weathering scale remain consistent
+    # across vessels with different draft and freeboard.
+    import numpy as np
+    size = 512
+    rng = np.random.default_rng(87421)
+    x = ((np.arange(size) + .5) / size - .5) * L
+    z = ((np.arange(size) + .5) / size) * (DRAFT + FREE) - DRAFT
+    xx, zz = np.meshgrid(x, z)
+
+    def noise_field(spacing_x, spacing_z, octaves=3):
+        result = np.zeros((size, size), dtype=np.float64)
+        total = 0.0
+        for octave in range(octaves):
+            nx = max(2, int(math.ceil(L / spacing_x * 2**octave)) + 2)
+            nz = max(2, int(math.ceil((DRAFT + FREE) / spacing_z * 2**octave)) + 2)
+            values = rng.random((nz, nx))
+            u = np.linspace(0, nx - 1.001, size)
+            v = np.linspace(0, nz - 1.001, size)
+            ix = u.astype(int); iz = v.astype(int)
+            fx = u - ix; fz = v - iz
+            fx = fx * fx * (3 - 2 * fx); fz = fz * fz * (3 - 2 * fz)
+            rows = values[:, ix] * (1 - fx) + values[:, ix + 1] * fx
+            field = rows[iz, :] * (1 - fz[:, None]) + rows[iz + 1, :] * fz[:, None]
+            weight = .5**octave
+            result += field * weight; total += weight
+        return result / total
+
+    fine = noise_field(2.4, 1.1, 4)
+    fading = noise_field(18, 7, 3)
+    fading = (fading - fading.min()) / (fading.max() - fading.min())
+    # Original paint colours are linear RGB. Fade varies by up to six percent.
+    stops = [(-DRAFT, (.23,.038,.023)), (-.55, (.30,.055,.030)),
+             (-.45, (.018,.022,.021)), (.65, (.018,.022,.021)),
+             (.9, (.055,.073,.078)), (FREE, (.055,.073,.078))]
+    color = np.stack([np.interp(z, [s[0] for s in stops], [s[1][c] for s in stops])
+                      for c in range(3)], axis=-1)[:, None, :] * np.ones((1, size, 1))
+    color *= (1 + .12 * (fading - .5))[:, :, None]
+
+    # Faint plate joins remain visible, while only a random subset sheds rust.
+    pitch = 7.5
+    seam_x = np.arange(-L / 2, L / 2, pitch)
+    distance = np.abs((xx + L / 2 + pitch / 2) % pitch - pitch / 2)
+    color *= (1 - .035 * np.exp(-.5 * (distance / .11)**2))[:, :, None]
+
+    # Random, independent run origins prevent rust repeating at plating pitch.
+    # Most start at the deck edge; smaller runs start at seams and the anchor pocket.
+    streaks = np.zeros((size, size), dtype=np.float64)
+    origins = [(rng.uniform(-L*.46, L*.46), FREE, rng.uniform(min(.8, FREE*.45), max(.81, FREE*.85)))
+               for _ in range(max(12, int(L / 4.5)))]
+    origins += [(sx, rng.uniform(FREE*.45, FREE*.85),
+                 rng.uniform(.6, max(.61, FREE*.65))) for sx in seam_x
+                if rng.random() < .38]
+    origins += [(L*.425, FREE*.46, max(.45, FREE*.30))]
+    for sx, top, length in origins:
+        width = rng.uniform(.10, .27) * max(1, L / 100)**.3
+        down = top - zz
+        run = np.exp(-.5 * ((xx - sx + (fine - .5) * .25) / width)**2)
+        run *= np.clip(down / .20, 0, 1) * np.clip(1 - down / length, 0, 1)**.65
+        streaks = np.maximum(streaks, run * rng.uniform(.22, .90))
+    streaks *= np.clip(.45 + fine, 0, 1)
+    rust = np.array((.092, .028, .013))  # linear RGB: approximately sRGB .335, .183, .118
+    color = color * (1 - streaks[:, :, None]) + rust * streaks[:, :, None]
+
+    # A continuous wet film fades smoothly over 1.5 m on either side of z=0.
+    wet = np.clip(1 - np.abs(zz) / 1.5, 0, 1)
+    wet = wet * wet * (3 - 2 * wet)
+    color *= (1 - .25 * wet)[:, :, None]
+    rough = .76 - .17 * wet
+
+    baked = []
+    for name, pixels, non_color in [('Hull color atlas', color, False),
+                                    ('Hull roughness atlas', np.repeat(rough[:, :, None], 3, axis=2), True)]:
+        img = bpy.data.images.new(name, width=size, height=size, alpha=False)
+        if non_color:
+            img.colorspace_settings.name = 'Non-Color'
+        # Generated image buffers are packed as raw PNG samples, so encode color
+        # to sRGB explicitly; roughness stays linear data.
+        if not non_color:
+            pixels = np.where(pixels <= .0031308, pixels * 12.92,
+                              1.055 * np.power(pixels, 1 / 2.4) - .055)
+        rgba = np.concatenate((pixels, np.ones((size, size, 1))), axis=2).astype(np.float32)
+        img.pixels.foreach_set(rgba.ravel())
+        img.pack()
+        baked.append(img)
     for name in ('red hull','boot top','upper hull'):
         obj=bpy.data.objects[name]
         uvmap=obj.data.uv_layers.new(name='Hull atlas')
