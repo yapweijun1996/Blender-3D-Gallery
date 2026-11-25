@@ -1,19 +1,21 @@
-# Handymax Bulk Carrier
+# Bulk Carrier Handymax
 
-A Handymax-size bulk carrier with five hatch covers and four deck cranes. This original generic vessel uses simplified, untextured geometry intended for aerial and game-scale views, not a detailed replica of a specific ship.
+A fictional 190 m bulk carrier with a 32 m beam, five hatch coamings and four cargo cranes. Procedural node-baked 512 × 512 colour and roughness maps add paint bands, hull seams and waterline staining. The vessel remains stylised and is not a replica or engineering model. The anchor, crane mechanisms, bridge fittings and bulb remain simplified at close range.
 
-The hull is 190 m long by 32 m beam. Blender units are metres, bow +X, up +Z; the origin is at the midships waterline Z=0. The GLB uses glTF +Y up with the bow along +X and waterline Y=0. Accessories may extend beyond the quoted hull beam.
+Blender units are metres, bow +X, up +Z; the origin is at the midships waterline Z=0. The GLB uses glTF +Y up with bow +X and waterline Y=0.
 
-From the repository root, Blender 5.3:
+From the repository root, using Blender 5.3:
 
 ```sh
 D=models/bulk-carrier-handymax
-blender -b -t 4 --python-exit-code 1 -P "$D/generate.py"
+blender -b --factory-startup -t 4 --python-exit-code 1 -P "$D/generate.py"
 cwebp -quiet -resize 640 0 -q 85 "$D/previews/hero.png" -o "$D/previews/hero.webp"
-blender -b -t 2 --python-exit-code 1 -P "$D/verify_blender.py"
+blender -b --factory-startup -t 2 --python-exit-code 1 -P "$D/verify_blender.py"
 node "$D/verify.mjs"
 ```
 
-The generator rebuilds the editable source, exports the GLB, then reimports it to render `hero.png`, `stern.png` and `top.png`. Geometry is batched by material; pieces can be edited as mesh components in the generated source. `verify_blender.py` checks container and binary accessors, reimports the GLB, checks hull dimensions, waterline and triangle degeneracy. `verify.mjs` uses the repository's pinned Khronos validator and requires installed npm dependencies. The Khronos and browser checks have not been run in the environment used for this candidate. The previews are studio renders, not screenshots from a target game.
+The generator bakes the hull maps, saves the editable source, exports the GLB and renders the imported GLB. The Blender check examines embedded PNGs, material references, orientation, bounds and degeneracy. The Node check enforces size and triangle limits and runs the pinned Khronos validator. Browser appearance has not been checked.
 
-Original project asset; redistribution terms for public downloads are not specified. No model, texture or brand was downloaded.
+Three review rounds found: (1) a rectangular lifeboat, block-like crane hooks and low-contrast hatch rims; (2) hatch rims using the wrong part of the hull texture and featureless crane bases; (3) ladder rungs without rails and bare hatch covers. The generator was revised after each review to address these issues. Remaining hull and superstructure details are intentionally simplified.
+
+Original project asset; redistribution terms for public downloads are not specified. No external model or texture was used.

@@ -7,4 +7,5 @@ const bytes = await readFile(new URL(`exports/${slug}.glb`, import.meta.url));
 assert.ok(bytes.length <= 2_000_000);
 const report = await validateBytes(bytes, {uri: `${slug}.glb`});
 console.log(JSON.stringify({slug, bytes: bytes.length, triangles: report.info.totalTriangleCount, issues: report.issues}));
+assert.ok(report.info.totalTriangleCount <= 40_000);
 assert.equal(report.issues.numErrors, 0); assert.equal(report.issues.numWarnings, 0);

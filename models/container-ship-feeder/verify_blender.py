@@ -12,7 +12,15 @@ jlen,jkind=struct.unpack_from('<I4s',b,12);assert jkind==b'JSON'
 g=json.loads(b[20:20+jlen]); assert g['asset']['version']=='2.0'
 offset=20+jlen; blen,bkind=struct.unpack_from('<I4s',b,offset); assert bkind==b'BIN\x00' and offset+8+blen==len(b)
 binbuf=b[offset+8:]; assert len(g['buffers'])==1 and not g['buffers'][0].get('uri') and g['buffers'][0]['byteLength']<=len(binbuf)
-assert not g.get('extensionsRequired') and not g.get('images')
+assert not g.get('extensionsRequired')
+assert g.get('images') and all(image.get('mimeType')=='image/png' and 'bufferView' in image and 'uri' not in image for image in g['images'])
+for image in g['images']:
+    view=g['bufferViews'][image['bufferView']]; start=view.get('byteOffset',0)
+    png=binbuf[start:start+view['byteLength']]
+    assert png[:8]==b'\x89PNG\r\n\x1a\n'
+    width,height=struct.unpack_from('>II',png,16)
+    assert 0<width<=1024 and 0<height<=1024
+assert any('baseColorTexture' in m.get('pbrMetallicRoughness',{}) and 'metallicRoughnessTexture' in m.get('pbrMetallicRoughness',{}) for m in g['materials'])
 formats={5121:('B',1),5123:('H',2),5125:('I',4),5126:('f',4)}
 components={'SCALAR':1,'VEC2':2,'VEC3':3,'VEC4':4}
 def values(index):
@@ -41,6 +49,7 @@ for m in g['meshes']:
         for key,accessor in prim['attributes'].items():
             v=values(accessor);assert len(v)==len(pos) and all(math.isfinite(x) for row in v for x in row),key
         triangles+=len(idx)//3
+assert triangles<=40000
 # The GLB is imported with Blender's glTF loader, and inspected in original Z-up space.
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=str(p))

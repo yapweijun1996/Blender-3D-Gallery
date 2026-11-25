@@ -51,7 +51,7 @@ def cylinder(mat,center,radius,height,axis='Z',segments=12):
     for s in (-1,1):
         for i in range(segments):
             a=2*math.pi*i/segments; p=radius*math.cos(a); q=radius*math.sin(a)
-            verts.append((x+p,y+q,z+s*height/2) if axis=='Z' else (x+p,y+s*height/2,z+q))
+            verts.append((x+p,y+q,z+s*height/2) if axis=='Z' else ((x+s*height/2,y+p,z+q) if axis=='X' else (x+p,y+s*height/2,z+q)))
     faces=[tuple(reversed(range(segments))),tuple(range(segments,2*segments))]
     faces += [(i,(i+1)%segments,(i+1)%segments+segments,i+segments) for i in range(segments)]
     mesh(mat,verts,faces)
@@ -59,7 +59,10 @@ def hull():
     # Section heights and offsets make a broad midbody, tapered stern and raked bow.
     stations=[(-.5,.23),(-.46,.69),(-.38,.96),(-.26,1),(.25,1),(.36,.95),(.43,.75),(.48,.43),(.5,.035)]
     def ring(z,scale):
-        return [(L*x, -B*w*scale/2,z) for x,w in stations]+[(L*x,B*w*scale/2,z) for x,w in reversed(stations)]
+        def pos(x,w,side):
+            rake=max(0.0,x-.36)*max(0.0,(FREE-z)/(FREE+DRAFT))*.34
+            return (L*(x-rake),side*B*w*scale/2,z)
+        return [pos(x,w,-1) for x,w in stations]+[pos(x,w,1) for x,w in reversed(stations)]
     # Separate bands keep the anti-fouling paint, boot-top and topsides legible.
     levels=[(-DRAFT,.72,'red hull'),(-.45,.98,'red hull'),(.65,1,'boot top'),(FREE,1,'upper hull')]
     n=len(stations)*2
@@ -92,11 +95,25 @@ def bridge(x, width, base, length, floors, floorh):
     box('white',(x+.2,0,z+floorh),(length*.95,width*1.15,.32))
     beam('rail',(x,0,z+floorh),(x,0,z+floorh+floorh*1.5),.18)
     beam('rail',(x,-width*.25,z+floorh*2.15),(x,width*.25,z+floorh*2.15),.13)
+    box('white',(x,0,z+floorh*2.18),(.4,width*.45,.16))
+    for side in (-1,1):
+        box('rail',(x+length*.35,side*(width/2+.08),base+1.2),(1.0,.12,2.4))
+        box('dark window',(x+length*.35,side*(width/2+.15),base+1.45),(.68,.08,1.1))
     # Funnel placed abaft bridge.
     fx=x-length*.32
     box('white',(fx,0,z+floorh*1.4),(length*.20,width*.23,floorh*.8))
-    box('boot top',(fx,0,z+floorh*1.82),(length*.21,width*.24,.35))
+    box('rubber',(fx,0,z+floorh*1.82),(length*.21,width*.24,.35))
+    box('orange',(fx,0,z+floorh*1.48),(length*.205,width*.235,.5))
     for side in (-1,1):
+        railing(x-length*.43,x+length*.43,side*width*.57,z+floorh+.18,max(1.8,length/7))
+    for side in (-1,1):
+        # Ladder with rungs gives the otherwise broad bridge side a human scale.
+        ladderx=x-length*.43
+        for offset in (-.35,.35):
+            beam('rail',(ladderx+offset,side*(width/2+.2),base+.3),(ladderx+offset,side*(width/2+.2),z+.2),.09)
+        for rung in range(int(floors*floorh/0.5)):
+            rz=base+.4+rung*.5
+            beam('rail',(ladderx-.35,side*(width/2+.22),rz),(ladderx+.35,side*(width/2+.22),rz),.065)
         for level in range(floors):
             for dx in (-.25, .05, .3):
                 box('dark window',(x+dx*length,side*(width/2+.04),base+floorh*(level+.58)),(length*.10,.09,floorh*.3))
@@ -105,7 +122,7 @@ def bridge(x, width, base, length, floors, floorh):
 
 def fittings():
     for side in (-1,1):
-        railing(-L*.36,L*.33,side*B*.45,FREE+.15,max(3,L/30))
+        railing(-L*.39,L*.33,side*B*.47,FREE+.15,max(3,L/30))
         for x in (-L*.4,L*.37):
             cylinder('yellow',(x,side*B*.36,FREE+.6),B*.025,1.2,segments=10)
     # bow windlass and anchor chain drums
@@ -121,6 +138,23 @@ def fittings():
         beam('pipe',(L*.412,y,FREE*.49),(L*.438,y,FREE*.49),max(.15,B*.014))
 
 hull(); fittings()
+# A submerged bulb, modeled as ring sections with capped ends.
+def bow_bulb():
+    segments=12
+    sections=[(.40,.50),(.45,.80),(.49,1.0),(.505,.84),(.52,.30)]
+    verts=[]
+    for x,r in sections:
+        for i in range(segments):
+            angle=2*math.pi*i/segments
+            verts.append((L*x, B*.09*r*math.cos(angle), -DRAFT*.55+B*.055*r*math.sin(angle)))
+    faces=[tuple(reversed(range(segments))),tuple(range((len(sections)-1)*segments,len(sections)*segments))]
+    for k in range(len(sections)-1):
+        for i in range(segments):
+            j=(i+1)%segments
+            faces.append((k*segments+i,k*segments+j,(k+1)*segments+j,(k+1)*segments+i))
+    mesh('red hull',verts,faces)
+bow_bulb()
+
 if KIND == 'container':
     bridge(-L*.38,B*.65,FREE,L*.11,3,2.8)
     # Feeder carries 40-foot boxes with varied colours and dark corner posts.
@@ -133,21 +167,43 @@ if KIND == 'container':
                 z=FREE+1.45+tier*2.75
                 color=colors[(row*7+col*3+tier*5)%4]
                 box(color,(x,y,z),(12.05,2.42,2.65))
+                # Painted corrugations are suggested by corner framing rather than extra bars.
                 for side in (-1,1):
-                    for dx in (-3,0,3): box(color,(x+dx,y+side*1.22,z),(.08,.08,2.52))
+                    box(color,(x,y+side*1.22,z),(.08,.08,2.52))
                 for dx in (-5.9,5.9):
                     box('rail',(x+dx,y,z),(.1,2.43,2.66))
                 # edge/door detail visible from aerial and oblique views
-                for dy in (-.65,0,.65): box('rail',(x+6.04,y+dy,z),(.025,.045,2.35))
+                for dy in (-.65,.65): box('rail',(x+6.04,y+dy,z),(.025,.045,2.35))
     for side in (-1,1):
-        box('orange',(-L*.37,side*B*.37,FREE+5),(6,2.2,1.8))
+        # Tapered enclosed lifeboat mounted on davits.
+        x=-L*.37; y=side*B*.37; z=FREE+5
+        boat=[(x-2.8,y-.9,z+.8),(x+2.8,y-.9,z+.8),(x+2.8,y+.9,z+.8),(x-2.8,y+.9,z+.8),
+              (x-2.1,y-.55,z-.8),(x+2.1,y-.55,z-.8),(x+2.1,y+.55,z-.8),(x-2.1,y+.55,z-.8)]
+        mesh('orange',boat,[(0,3,2,1),(4,5,6,7),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)])
+        box('white',(-L*.37,side*B*.37,FREE+5.94),(5.0,2.0,.16))
+        for dx in (-2,2): beam('rail',(-L*.37+dx,side*B*.33,FREE+6.2),(-L*.37+dx,side*B*.40,FREE+4.3),.12)
 elif KIND == 'tanker':
     bridge(-L*.4,B*.65,FREE,L*.105,3,3)
     # Long manifolds, cross pipes, valves and tank access domes on a clear deck.
     for y in (-B*.24,-B*.15,-B*.06,B*.04,B*.14,B*.24):
-        beam('pipe',(-L*.31,y,FREE+1.5),(L*.37,y,FREE+1.5),.65)
+        cylinder('pipe',(L*.03,y,FREE+1.5),.36,L*.68,axis='X',segments=10)
         for x in (-L*.25,-L*.10,L*.05,L*.20,L*.34):
             box('yellow',(x,y,FREE+.65),(.5,1.1,1.3))
+    # Elevated central walkway crossing the cargo deck.
+    box('rail',(0,0,FREE+2.7),(L*.58,1.7,.25))
+    for side in (-1,1):
+        railing(-L*.29,L*.29,side*.85,FREE+2.83,8)
+        for x in (-L*.28,-L*.18,-L*.08,L*.02,L*.12,L*.22,L*.28):
+            beam('rail',(x,side*.75,FREE+.1),(x,side*.75,FREE+2.6),.16)
+    # Paired midship manifold headers, hand wheels and bolted flanges.
+    for y in (-B*.29,B*.29):
+        beam('rust',(-L*.06,y,FREE+2.6),(L*.06,y,FREE+2.6),.8)
+        for x in (-L*.04,0,L*.04):
+            cylinder('rust',(x,y,FREE+3.5),.55,2.0,segments=10)
+            cylinder('rail',(x,y,FREE+4.55),.70,.20,segments=10)
+            cylinder('pipe',(x,y,FREE+2.6),.58,.24,axis='Y')
+            beam('yellow',(x,y,FREE+2.8),(x,y,FREE+4.1),.16)
+            cylinder('yellow',(x,y,FREE+4.1),.42,.12,segments=12)
     for x in (-L*.22,-L*.06,L*.10,L*.26):
         beam('rust',(x,-B*.32,FREE+2.1),(x,B*.32,FREE+2.1),.7)
         for y in (-B*.32,B*.32): cylinder('yellow',(x,y,FREE+1.2),.7,2.4)
@@ -155,7 +211,13 @@ elif KIND == 'tanker':
         for y in (-B*.35,B*.35):
             cylinder('deck',(x,y,FREE+.5),2.4,1)
             cylinder('rail',(x,y,FREE+1.08),1.6,.18)
-    for side in (-1,1): box('orange',(-L*.38,side*B*.36,FREE+5),(7,2.8,2))
+    for side in (-1,1):
+        x=-L*.38; y=side*B*.36; z=FREE+5
+        boat=[(x-3.4,y-1.25,z+.9),(x+3.4,y-1.25,z+.9),(x+3.4,y+1.25,z+.9),(x-3.4,y+1.25,z+.9),
+              (x-2.6,y-.7,z-.9),(x+2.6,y-.7,z-.9),(x+2.6,y+.7,z-.9),(x-2.6,y+.7,z-.9)]
+        mesh('orange',boat,[(0,3,2,1),(4,5,6,7),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)])
+        box('white',(x,y,z+1.0),(6,2.4,.18))
+        for dx in (-2.2,2.2): beam('rail',(x+dx,side*B*.32,z+1),(x+dx,side*B*.40,z-1),.14)
 elif KIND == 'bulk':
     bridge(-L*.41,B*.62,FREE,L*.095,3,2.7)
     # Five individual steel hatch covers and four deck cranes in the inter-hatch gaps.
@@ -163,39 +225,151 @@ elif KIND == 'bulk':
         x=-L*.24+i*L*.125
         box('rust',(x,0,FREE+1.0),(L*.105,B*.68,2))
         for j in range(1,6): box('rail',(x-L*.052+j*L*.105/6,0,FREE+2.03),(.13,B*.67,.12))
-        for y in (-B*.33,B*.33): box('upper hull',(x,y,FREE+1.1),(L*.108,.35,2.2))
+        for dx in (-L*.04,L*.04):
+            for y in (-B*.27,B*.27):
+                box('yellow',(x+dx,y,FREE+2.18),(.45,.55,.25))
+        for y in (-B*.35,B*.35): box('pipe',(x,y,FREE+1.1),(L*.11,.45,2.2))
+        for dx in (-L*.055,L*.055): box('pipe',(x+dx,0,FREE+1.1),(.45,B*.70,2.2))
+        for side in (-1,1):
+            for dx in (-L*.04,0,L*.04): box('yellow',(x+dx,side*B*.35,FREE+1.3),(.45,.55,.45))
     for i in range(4):
         x=-L*.177+i*L*.125
         cylinder('yellow',(x,0,FREE+1.6),2.0,3.2)
         box('yellow',(x,0,FREE+4),(4,4,2))
+        box('rail',(x,0,FREE+3.1),(5,5,.15))
+        for side in (-1,1):
+            beam('rail',(x-2,side*2.4,FREE+3.2),(x+2,side*2.4,FREE+3.2),.1)
+            beam('rail',(x-2,side*2.4,FREE+3.2),(x-2,side*2.4,FREE+4.1),.1)
+            beam('rail',(x+2,side*2.4,FREE+3.2),(x+2,side*2.4,FREE+4.1),.1)
+            beam('rail',(x-2,side*2.4,FREE+4.1),(x+2,side*2.4,FREE+4.1),.1)
+        for step in range(6): beam('rail',(x-1.3,-2.5,FREE+.5+step*.45),(x-.7,-2.5,FREE+.5+step*.45),.07)
+        for dx in (-1.3,-.7): beam('rail',(x+dx,-2.5,FREE+.3),(x+dx,-2.5,FREE+3.2),.09)
         beam('yellow',(x,0,FREE+4.8),(x+8,0,FREE+17),1.2,1.5)
+        beam('rail',(x-1,0,FREE+6),(x+8,0,FREE+17),.14)
+        cylinder('pipe',(x+8,0,FREE+16.8),.5,.5,axis='Y')
         beam('rail',(x+8,0,FREE+17),(x+8,0,FREE+5),.13)
         box('yellow',(x+8,0,FREE+4.7),(1.1,1.1,.6))
-    for side in (-1,1): box('orange',(-L*.4,side*B*.35,FREE+4),(6,2.2,1.7))
+        beam('pipe',(x+8,0,FREE+4.4),(x+8.45,0,FREE+3.7),.18)
+        beam('pipe',(x+8.45,0,FREE+3.7),(x+8.8,0,FREE+4),.18)
+    for side in (-1,1):
+        x=-L*.4; y=side*B*.35; z=FREE+4
+        boat=[(x-2.9,y-1,z+.8),(x+2.9,y-1,z+.8),(x+2.9,y+1,z+.8),(x-2.9,y+1,z+.8),
+              (x-2.2,y-.6,z-.8),(x+2.2,y-.6,z-.8),(x+2.2,y+.6,z-.8),(x-2.2,y+.6,z-.8)]
+        mesh('orange',boat,[(0,3,2,1),(4,5,6,7),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)])
+        box('white',(x,y,z+.9),(5.2,1.9,.16))
+        for dx in (-2,2): beam('rail',(x+dx,side*B*.31,z+1),(x+dx,side*B*.40,z-.7),.12)
 else:
+    def tyre(x,y,z,side):
+        vertices=[]; faces=[]; major=.48; minor=.20; around=16; cross=8
+        for i in range(around):
+            a=2*math.pi*i/around
+            for j in range(cross):
+                b=2*math.pi*j/cross
+                radius=major+minor*math.cos(b)
+                vertices.append((x+radius*math.cos(a),y+minor*math.sin(b),z+radius*math.sin(a)))
+        for i in range(around):
+            for j in range(cross):
+                faces.append((i*cross+j,((i+1)%around)*cross+j,((i+1)%around)*cross+(j+1)%cross,i*cross+(j+1)%cross))
+        mesh('rubber',vertices,faces)
     # Compact working tug with a tall wheelhouse and heavy rubber protection.
     bridge(-2,B*.63,FREE,9,2,2.1)
-    box('upper hull',(-L*.38,0,FREE+.5),(4,B*.55,1))
+    box('deck',(-L*.38,0,FREE+.5),(4,B*.55,1))
     for side in (-1,1):
-        def half_width(x):
-            stations=[(-.5,.23),(-.46,.69),(-.38,.96),(-.26,1),(.25,1),(.36,.95),(.43,.75),(.48,.43),(.5,.035)]
-            for (a,wa),(b,wb) in zip(stations,stations[1:]):
-                if a<=x/L<=b: return B/2*(wa+(wb-wa)*(x/L-a)/(b-a))
-            raise ValueError('outside hull')
         for x in (-12,-9,-6,-3,0,3,6,9,12):
-            cylinder('rubber',(x,side*(half_width(x)+.24),.9),.65,.55,axis='Y',segments=12)
-        points=[-L*.4,-L*.38,-L*.26,L*.25,L*.36,L*.38]
-        for a,b in zip(points,points[1:]):
-            beam('rubber',(a,side*half_width(a),FREE-.5),(b,side*half_width(b),FREE-.5),.55)
+            tyre(x,side*(B*.49+.15),.9,side)
+            beam('rail',(x,side*B*.50,FREE-.15),(x,side*(B*.49+.15),1.45),.07)
+        beam('rubber',(-L*.4,side*B*.50,FREE-.5),(L*.38,side*B*.50,FREE-.5),.55)
     for y in (-2,-1,0,1,2): cylinder('rubber',(L*.47,y,1),.7,.5,axis='Y')
     cylinder('yellow',(-10,0,FREE+.8),1.1,1.6)
-    box('orange',(-2,-B*.34,FREE+3),(2.7,.5,1))
-    box('orange',(-2,B*.34,FREE+3),(2.7,.5,1))
+    # Curved towing bar formed by short steel sections over the aft working deck.
+    for a,b in [((-12,-4,FREE+.2),(-12,-3,FREE+2.2)),((-12,-3,FREE+2.2),(-12,-1.5,FREE+2.9)),((-12,-1.5,FREE+2.9),(-12,1.5,FREE+2.9)),((-12,1.5,FREE+2.9),(-12,3,FREE+2.2)),((-12,3,FREE+2.2),(-12,4,FREE+.2))]: beam('yellow',a,b,.35)
+    cylinder('pipe',(-9,0,FREE+1),.85,3.0,axis='Y',segments=12)
+    for y in (-1.7,1.7): cylinder('yellow',(-9,y,FREE+1),1,.18,axis='Y',segments=12)
+    for y in (-1.25,-.75,-.25,.25,.75,1.25): cylinder('rust',(-9,y,FREE+1),.88,.12,axis='Y',segments=12)
+    beam('pipe',(-9,-1,FREE+1.8),(-12,0,FREE+2.7),.12)
+    for side in (-1,1):
+        box('orange',(-.35,side*B*.34,FREE+2.9),(1.0,.45,1.0))
+        box('white',(-.35,side*B*.37,FREE+2.9),(.35,.08,.7))
+        for wx in (-4.2,-2.7,-1.2,.3):
+            beam('rubber',(wx,side*B*.341,FREE+5.3),(wx+.45,side*B*.341,FREE+6.0),.045)
+    cylinder('white',(-.5,0,FREE+6.4),.55,.15,segments=12)
+    beam('white',(-.5,0,FREE+6.45),(-.5,0,FREE+7.2),.10)
 
 for name,(verts,faces) in geo.items():
     if not verts: continue
     data=bpy.data.meshes.new(name); data.from_pydata(verts,[],faces); data.update()
     obj=bpy.data.objects.new(name,data); scene.collection.objects.link(obj); data.materials.append(materials[name])
+# Bake a hull atlas from procedural Blender nodes. UV X follows ship length and
+# UV Y follows elevation, so the bands line up on both sides and across materials.
+def bake_hull_maps():
+    scene.render.engine='CYCLES'
+    scene.cycles.samples=1
+    bpy.ops.mesh.primitive_plane_add(size=2)
+    plane=bpy.context.object
+    mat=bpy.data.materials.new('Hull atlas bake source'); mat.use_nodes=True
+    plane.data.materials.append(mat)
+    nodes=mat.node_tree.nodes; nodes.clear(); links=mat.node_tree.links
+    uv=nodes.new('ShaderNodeTexCoord')
+    separate=nodes.new('ShaderNodeSeparateXYZ'); links.new(uv.outputs['UV'],separate.inputs[0])
+    noise=nodes.new('ShaderNodeTexNoise'); noise.inputs['Scale'].default_value=54
+    noise.inputs['Detail'].default_value=3; links.new(uv.outputs['UV'],noise.inputs['Vector'])
+    bands=nodes.new('ShaderNodeValToRGB'); links.new(separate.outputs['Y'],bands.inputs[0])
+    ramp=bands.color_ramp
+    ramp.interpolation='LINEAR'
+    # Values are linear RGB; the dark transition at the waterline is deliberate.
+    colors=[(0.0,(.23,.038,.023,1)),(.43,(.30,.055,.030,1)),(.465,(.10,.025,.014,1)),(.475,(.018,.022,.021,1)),(.535,(.018,.022,.021,1)),(.55,(.13,.053,.027,1)),(.57,(.07,.055,.043,1)),(.61,(.055,.073,.078,1)),(.91,(.055,.073,.078,1)),(1.0,(.025,.032,.030,1))]
+    ramp.elements.remove(ramp.elements[1]); ramp.elements[0].position=colors[0][0]; ramp.elements[0].color=colors[0][1]
+    for pos,color in colors[1:]: ramp.elements.new(pos).color=color
+    wave=nodes.new('ShaderNodeTexWave'); wave.wave_type='BANDS'; wave.bands_direction='X'; wave.inputs['Scale'].default_value=11; wave.inputs['Distortion'].default_value=0
+    links.new(uv.outputs['UV'],wave.inputs['Vector'])
+    seam=nodes.new('ShaderNodeValToRGB'); seam.color_ramp.elements[0].position=.015; seam.color_ramp.elements[0].color=(.32,.32,.32,1); seam.color_ramp.elements[1].position=.075; wave.inputs['Distortion'].default_value=.6; wave.inputs['Detail Scale'].default_value=2; links.new(wave.outputs['Fac'],seam.inputs[0])
+    horizontal=nodes.new('ShaderNodeTexWave'); horizontal.wave_type='BANDS'; horizontal.bands_direction='Y'; horizontal.inputs['Scale'].default_value=1.5
+    links.new(uv.outputs['UV'],horizontal.inputs['Vector'])
+    horizontal_ramp=nodes.new('ShaderNodeValToRGB'); horizontal_ramp.color_ramp.elements[0].position=.01; horizontal_ramp.color_ramp.elements[0].color=(.5,.5,.5,1); horizontal_ramp.color_ramp.elements[1].position=.04
+    links.new(horizontal.outputs['Fac'],horizontal_ramp.inputs[0])
+    multiply=nodes.new('ShaderNodeMixRGB'); multiply.blend_type='MULTIPLY'; multiply.inputs[0].default_value=.35; links.new(bands.outputs['Color'],multiply.inputs[1]); links.new(seam.outputs['Color'],multiply.inputs[2])
+    mottled=nodes.new('ShaderNodeMixRGB'); mottled.blend_type='MULTIPLY'; mottled.inputs[0].default_value=.22; links.new(multiply.outputs[0],mottled.inputs[1]); links.new(noise.outputs['Fac'],mottled.inputs[2])
+    plated=nodes.new('ShaderNodeMixRGB'); plated.blend_type='MULTIPLY'; plated.inputs[0].default_value=.35
+    links.new(mottled.outputs[0],plated.inputs[1]); links.new(horizontal_ramp.outputs[0],plated.inputs[2])
+    # Stretched noise forms irregular rust runs, restricted to the waterline.
+    stretched=nodes.new('ShaderNodeVectorMath'); stretched.operation='MULTIPLY'; stretched.inputs[1].default_value=(65,2.2,1)
+    links.new(uv.outputs['UV'],stretched.inputs[0])
+    streak=nodes.new('ShaderNodeTexNoise'); streak.inputs['Scale'].default_value=1; streak.inputs['Detail'].default_value=2
+    links.new(stretched.outputs['Vector'],streak.inputs['Vector'])
+    streak_mask=nodes.new('ShaderNodeValToRGB'); streak_mask.color_ramp.elements[0].position=.50; streak_mask.color_ramp.elements[1].position=.70
+    links.new(streak.outputs['Fac'],streak_mask.inputs[0])
+    water=nodes.new('ShaderNodeValToRGB'); wr=water.color_ramp
+    wr.elements[0].position=.48; wr.elements[0].color=(0,0,0,1); wr.elements[1].position=.74; wr.elements[1].color=(0,0,0,1)
+    wr.elements.new(.54).color=(.72,.72,.72,1); wr.elements.new(.59).color=(.65,.65,.65,1)
+    links.new(separate.outputs['Y'],water.inputs[0])
+    mask=nodes.new('ShaderNodeMath'); mask.operation='MULTIPLY'; links.new(water.outputs['Color'],mask.inputs[0]); links.new(streak_mask.outputs['Color'],mask.inputs[1])
+    weather=nodes.new('ShaderNodeMixRGB'); links.new(mask.outputs[0],weather.inputs[0]); links.new(plated.outputs[0],weather.inputs[1]); weather.inputs[2].default_value=(.20,.058,.022,1)
+    rough=nodes.new('ShaderNodeValToRGB'); links.new(separate.outputs['Y'],rough.inputs[0]); rr=rough.color_ramp
+    rr.elements[0].color=(.82,.82,.82,1); rr.elements[1].color=(.72,.72,.72,1)
+    for pos,val in ((.44,.83),(.48,.31),(.54,.31),(.58,.74),(.95,.8)):
+        rr.elements.new(pos).color=(val,val,val,1)
+    emission=nodes.new('ShaderNodeEmission'); output=nodes.new('ShaderNodeOutputMaterial'); links.new(emission.outputs[0],output.inputs['Surface'])
+    baked=[]
+    for name,source in [('Hull color atlas',weather.outputs[0]),('Hull roughness atlas',rough.outputs[0])]:
+        img=bpy.data.images.new(name,width=512,height=512,alpha=False)
+        tex=nodes.new('ShaderNodeTexImage'); tex.image=img; nodes.active=tex
+        links.new(source,emission.inputs['Color'])
+        bpy.ops.object.bake(type='EMIT',margin=2)
+        img.pack(); baked.append(img)
+    bpy.data.objects.remove(plane,do_unlink=True)
+    for name in ('red hull','boot top','upper hull'):
+        obj=bpy.data.objects[name]
+        uvmap=obj.data.uv_layers.new(name='Hull atlas')
+        for poly in obj.data.polygons:
+            for li in poly.loop_indices:
+                v=obj.data.vertices[obj.data.loops[li].vertex_index].co
+                uvmap.data[li].uv=((v.x/L)+.5,(.5 + .5*v.z/(FREE if v.z>=0 else DRAFT)))
+        target=materials[name]; n=target.node_tree.nodes; l=target.node_tree.links
+        bsdf=n.get('Principled BSDF')
+        color=n.new('ShaderNodeTexImage'); color.image=baked[0]; l.new(color.outputs['Color'],bsdf.inputs['Base Color'])
+        roughness=n.new('ShaderNodeTexImage'); roughness.image=baked[1]; roughness.image.colorspace_settings.name='Non-Color'; l.new(roughness.outputs['Color'],bsdf.inputs['Roughness'])
+bake_hull_maps()
+
 # Save editable generated source, and export only vessel objects.
 bpy.context.preferences.filepaths.save_version=0
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'sources'/(SLUG+'.blend')))
@@ -217,6 +391,11 @@ area((L*.2,-L*.6,L*.9),L*L*16,L*.8)
 area((-L*.6,L*.3,L*.6),L*L*9,L*.7)
 camdata=bpy.data.cameras.new('camera'); cam=bpy.data.objects.new('camera',camdata);scene.collection.objects.link(cam);scene.camera=cam
 camdata.type='ORTHO'; camdata.ortho_scale=L*1.32
-for name,pos in [('hero',(L*.8,-L*1.1,L*.9)),('stern',(-L*.85,L*1.05,L*.72)),('top',(L*.02,-L*.1,L*1.5))]:
-    cam.location=pos; aim(cam,(0,0,FREE*.6)); scene.render.filepath=str(ROOT/'previews'/(name+'.png')); bpy.ops.render.render(write_still=True)
+for name,pos,target,scale in [
+    ('side',(0,-L*1.4,FREE*.7),(0,0,FREE*.4),L*1.15),
+    ('hero',(L*.8,-L*1.3,L*.17),(0,0,FREE*.6),L*1.25),
+    ('bridge',(L*.38,-L*.75,FREE+L*.45),(-2,0,FREE+4.7),L*.57),
+    ('stern',(-L*.85,L*1.05,L*.72),(0,0,FREE*.6),L*1.32),
+    ('top',(L*.02,-L*.1,L*1.5),(0,0,FREE*.6),L*1.32)]:
+    camdata.ortho_scale=scale; cam.location=pos; aim(cam,target); scene.render.filepath=str(ROOT/'previews'/(name+'.png')); bpy.ops.render.render(write_still=True)
 print('FINISHED',SLUG)
