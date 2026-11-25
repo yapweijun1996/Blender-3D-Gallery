@@ -1,0 +1,56 @@
+{
+  "id": "bulk-carrier-handymax",
+  "name": "Handymax Bulk Carrier",
+  "summary": "A Handymax-size bulk carrier with five hatch covers and four deck cranes.",
+  "description": "A Handymax-size bulk carrier with five hatch covers and four deck cranes. Original generic vessel with simplified geometry for aerial and game use.",
+  "category": "Transport",
+  "tags": [
+    "Ship",
+    "Maritime",
+    "Singapore",
+    "Malaysia",
+    "Metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-25",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Deterministic original Blender Python geometry and material colors; no downloaded models or textures.",
+  "source": "sources/bulk-carrier-handymax.blend",
+  "generator": "generate.py",
+  "export": "exports/bulk-carrier-handymax.glb",
+  "preview": "previews/hero.webp",
+  "rights": "Original project asset; redistribution terms for public downloads are not specified.",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.7,
+      1.0
+    ]
+  },
+  "accuracy_notes": "Generic, simplified fictional vessel. Hull length 190 m and beam 32 m; 1 Blender unit = 1 m; Blender +X bow, +Z up, waterline Z=0 and origin at waterline amidships. glTF +X bow, +Y up, waterline Y=0. No real vessel represented; not an engineering or navigational model.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials; no external model or texture."
+    }
+  ],
+  "metrics": {
+    "glb_bytes": 136884,
+    "glb_sha256": "33c34cda5d5f9e8c99421b1a5bc6ad886c6223514578084b933387aa8caf6607",
+    "source_sha256": "4c75366878f4a4811925e138b4a2d06f36c07a520144d3a1ff858e9c8af70178",
+    "triangles": 2432,
+    "meshes": 12,
+    "hull_length_m": 190,
+    "hull_beam_m": 32,
+    "draft_m": 10,
+    "freeboard_m": 10
+  },
+  "verification": {
+    "blender_reimport": "PASS",
+    "binary_structure_and_nondegenerate_triangles": "PASS",
+    "preview_review": "PASS: hero, stern and top views of the imported GLB inspected",
+    "khronos_validator": "NOT RUN: dependency unavailable in this environment",
+    "browser_runtime": "NOT RUN"
+  }
+}

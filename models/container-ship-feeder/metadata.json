@@ -1,0 +1,56 @@
+{
+  "id": "container-ship-feeder",
+  "name": "Container Ship Feeder",
+  "summary": "A feeder container ship with coloured stacked containers, stern bridge and funnel.",
+  "description": "A feeder container ship with coloured stacked containers, stern bridge and funnel. Original generic vessel with simplified geometry for aerial and game use.",
+  "category": "Transport",
+  "tags": [
+    "Ship",
+    "Maritime",
+    "Singapore",
+    "Malaysia",
+    "Metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-25",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Deterministic original Blender Python geometry and material colors; no downloaded models or textures.",
+  "source": "sources/container-ship-feeder.blend",
+  "generator": "generate.py",
+  "export": "exports/container-ship-feeder.glb",
+  "preview": "previews/hero.webp",
+  "rights": "Original project asset; redistribution terms for public downloads are not specified.",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.7,
+      1.0
+    ]
+  },
+  "accuracy_notes": "Generic, simplified fictional vessel. Hull length 170 m and beam 27 m; 1 Blender unit = 1 m; Blender +X bow, +Z up, waterline Z=0 and origin at waterline amidships. glTF +X bow, +Y up, waterline Y=0. No real vessel represented; not an engineering or navigational model.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials; no external model or texture."
+    }
+  ],
+  "metrics": {
+    "glb_bytes": 1870492,
+    "glb_sha256": "8194628f2c3beea96768995621fd95ce24f1d0442ee5d09ec1105527017ff0be",
+    "source_sha256": "0cdc1caa1b0587aaff248f0989b9622410816b8f9e2ca433943c5f1b1f6c23d7",
+    "triangles": 36144,
+    "meshes": 15,
+    "hull_length_m": 170,
+    "hull_beam_m": 27,
+    "draft_m": 9,
+    "freeboard_m": 9
+  },
+  "verification": {
+    "blender_reimport": "PASS",
+    "binary_structure_and_nondegenerate_triangles": "PASS",
+    "preview_review": "PASS: hero, stern and top views of the imported GLB inspected",
+    "khronos_validator": "NOT RUN: dependency unavailable in this environment",
+    "browser_runtime": "NOT RUN"
+  }
+}

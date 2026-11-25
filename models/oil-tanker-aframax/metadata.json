@@ -1,0 +1,56 @@
+{
+  "id": "oil-tanker-aframax",
+  "name": "Aframax Oil Tanker",
+  "summary": "An Aframax-size tanker with stern bridge, pipe manifolds and tank access fittings.",
+  "description": "An Aframax-size tanker with stern bridge, pipe manifolds and tank access fittings. Original generic vessel with simplified geometry for aerial and game use.",
+  "category": "Transport",
+  "tags": [
+    "Ship",
+    "Maritime",
+    "Singapore",
+    "Malaysia",
+    "Metres"
+  ],
+  "status": "draft",
+  "created": "2026-11-25",
+  "author": "Blender-3D-Gallery original procedural modeling",
+  "blender_version": "5.3.0",
+  "creation_method": "Deterministic original Blender Python geometry and material colors; no downloaded models or textures.",
+  "source": "sources/oil-tanker-aframax.blend",
+  "generator": "generate.py",
+  "export": "exports/oil-tanker-aframax.glb",
+  "preview": "previews/hero.webp",
+  "rights": "Original project asset; redistribution terms for public downloads are not specified.",
+  "display": {
+    "previewRotationY": 0,
+    "previewCameraDirection": [
+      0.7,
+      0.7,
+      1.0
+    ]
+  },
+  "accuracy_notes": "Generic, simplified fictional vessel. Hull length 245 m and beam 42 m; 1 Blender unit = 1 m; Blender +X bow, +Z up, waterline Z=0 and origin at waterline amidships. glTF +X bow, +Y up, waterline Y=0. No real vessel represented; not an engineering or navigational model.",
+  "attribution": [
+    {
+      "credit": "Original procedural geometry and materials; no external model or texture."
+    }
+  ],
+  "metrics": {
+    "glb_bytes": 174416,
+    "glb_sha256": "baf141be9caef1fac1c4f96df6fd3f90b2c2359eadc868f5fadf7bc1ad62ccd7",
+    "source_sha256": "fc1fd9c024df18df288f7a3f38c3f6e6cc7f0ae43db348f331c707bf82b382b9",
+    "triangles": 3296,
+    "meshes": 12,
+    "hull_length_m": 245,
+    "hull_beam_m": 42,
+    "draft_m": 13,
+    "freeboard_m": 11
+  },
+  "verification": {
+    "blender_reimport": "PASS",
+    "binary_structure_and_nondegenerate_triangles": "PASS",
+    "preview_review": "PASS: hero, stern and top views of the imported GLB inspected",
+    "khronos_validator": "NOT RUN: dependency unavailable in this environment",
+    "browser_runtime": "NOT RUN"
+  }
+}
