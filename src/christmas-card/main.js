@@ -6,7 +6,8 @@ import { greeting } from './config.js';
 import { frameEnvelope, poseLandingCamera, poseOpeningCamera, setCameraPose } from './framing.js';
 import { createEntranceFlight, entranceBudgetMs, entranceDuration, frameDelta, poseEntrance, poseIdle, poseRecedingEnvelope } from './motion.js';
 import { createAddress, createEntranceTrail, trailLifetime } from './accents.js';
-import { createLetterFlight, handoverDuration, revealInterval } from './letter.js';
+import { createCardAudio } from './audio.js';
+import { createLetterFlight, handoverDuration, revealInterval, starApproachTime } from './letter.js';
 import { createMouthLight, createStardust } from './magic.js';
 import { applyPaperGrain } from './paper.js';
 import { cardPixelRatio, softwareRendering } from './raster.js';
@@ -19,18 +20,23 @@ const words = {
   en:{title:'A Christmas Greeting',subtitle:'A little wish, wrapped with love.',eyebrow:'✦  A LITTLE CHRISTMAS MAGIC  ✦',loading:'Loading your greeting…',open:'Tap to Open / 点击打开',replay:'Replay ↻',sound:'Sound on',muted:'Muted',update:'Check for updates',install:'Update now',checking:'Checking…',current:'You have the latest version.',ready:'An update is ready.',error:'Unable to check for updates.',fallback:'The 3D card could not be loaded. Here is your greeting:',lang:'Switch to Chinese'},
   zh:{title:'圣诞祝福',subtitle:'一份小小心意，满载温暖。',eyebrow:'✦  一点圣诞魔法  ✦',loading:'正在加载贺卡…',open:'点击打开 / Tap to Open',replay:'重新播放 ↻',sound:'声音开启',muted:'静音',update:'检查更新',install:'立即更新',checking:'正在检查…',current:'已是最新版本。',ready:'新版本已准备好。',error:'无法检查更新。',fallback:'无法加载 3D 贺卡，请阅读这份祝福：',lang:'切换为英文'},
 };
-let lang='en', muted=false, state='loading', mixer, action, envelope, letter, flap, seal;
-let renderer, scene, camera, registration, pendingUpdate=false, audio, burstTime, sealBreakTime, burstDone=false;
+let lang='en', state='loading', mixer, action, envelope, letter, flap, seal;
+let renderer, scene, camera, registration, pendingUpdate=false, burstTime, sealBreakTime, burstDone=false;
 let dust, mouthLight, sealEffect, letterFlight, revealed=0;
 let drawAddress, updateTrail, warmPaper, contactShadow, failed=false;
-let phaseTime=0, entranceTime=0, openingIdleTime=0, flight, cameraViews, last=null;
+let phaseTime=0, sequenceTime=0, entranceTime=0, openingIdleTime=0, flight, cameraViews, last=null;
 let loadingWatchdog, entranceWatchdog, entranceWatchdogStarted=null, entranceTimeLeft=entranceBudgetMs;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const audio=createCardAudio({visible:!document.hidden});
 // Freeze an actual rendered frame so the browser test can inspect the shot.
 let testCapture=null, testFrozen=false;
 const testHook=new URLSearchParams(location.search).has('card-test') ? {
   snapshot:null, frames:null,
-  captureAt(time, phase='opening'){this.snapshot=null;testCapture={time,phase};this.release()},
+  captureAt(time, phase='opening', freeze=true){
+    this.snapshot=null;
+    testCapture={time,phase,freeze};
+    if(freeze)this.release();
+  },
   release(){testFrozen=false;last=null},
 } : null;
 if(testHook) window.__christmasCardTest=testHook;
@@ -53,7 +59,8 @@ function localize() {
   document.documentElement.lang=lang==='zh'?'zh-Hans':'en';
   $('title').textContent=w.title; $('subtitle').textContent=w.subtitle; document.querySelector('.eyebrow').textContent=w.eyebrow;
   $('loading-text').textContent=w.loading; drawAddress?.(g.recipient);
-  $('open').textContent=w.open; $('replay').textContent=w.replay; $('mute').textContent=muted?w.muted:w.sound;
+  $('open').textContent=w.open; $('replay').textContent=w.replay; $('mute').textContent=audio.muted?w.muted:w.sound;
+  $('mute').setAttribute('aria-pressed',String(audio.muted));
   $('language').textContent=lang==='en'?'中文':'EN'; $('language').setAttribute('aria-label',w.lang);
   $('update').textContent=pendingUpdate?w.install:w.update; $('recipient').textContent=g.recipient; $('sender').textContent=g.sender; $('fallback').textContent=w.fallback;
   const lines=$('lines');
@@ -66,11 +73,22 @@ function localize() {
   if(!$('message').hidden)revealCopy(revealed);
 }
 $('language').addEventListener('click',()=>{lang=lang==='en'?'zh':'en';localize()});
-$('mute').addEventListener('click',()=>{muted=!muted;$('mute').setAttribute('aria-pressed',String(muted));localize()});
-function sound() {
-  if(muted)return;
-  try { audio ||= new AudioContext(); audio.resume(); for(const [i,f] of [523,659,784].entries()) { const o=audio.createOscillator(),g=audio.createGain(),t=audio.currentTime+i*.11; o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.08,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.35);o.connect(g).connect(audio.destination);o.start(t);o.stop(t+.36) } } catch {}
+function activateAudio() {
+  if(audio.activate()&&!reduced&&(state==='entrance'||state==='idle'))audio.play('entrance');
 }
+$('mute').addEventListener('click',event=>{
+  if(event.isTrusted){
+    audio.setMuted(!audio.muted);
+    if(!audio.muted)activateAudio();
+    localize();
+  }
+});
+document.addEventListener('click',event=>{
+  if(event.isTrusted&&event.target!==$('mute'))activateAudio();
+},true);
+$('moon-flight').addEventListener('animationend',event=>{
+  if(event.animationName==='moon-crossing')$('moon-flight').classList.remove('flying');
+});
 function revealCopy(count){
   revealed=count;
   $('message').querySelectorAll('[data-reveal]').forEach((item,i)=>item.toggleAttribute('data-pending',i>=count));
@@ -81,20 +99,35 @@ function positionMessage({left,top,right,bottom}){
   message.style.left=`${left}px`;message.style.top=`${top}px`;
   message.style.width=`${right-left}px`;message.style.height=`${bottom-top}px`;
 }
+function showApproachStar(rect, time){
+  const message=$('message');
+  if(message.hidden){
+    message.classList.add('arriving');
+    revealCopy(1);
+    message.hidden=false;
+  }
+  positionMessage(rect);
+  const progress=THREE.MathUtils.smoothstep(time,handoverDuration-starApproachTime,handoverDuration);
+  message.style.setProperty('--arrival-star-opacity',String(.67+.33*progress));
+}
 function clearMessageProjection(){
   const message=$('message');
-  message.classList.remove('on-paper');
-  for(const property of ['left','top','width','height'])message.style.removeProperty(property);
+  message.classList.remove('on-paper','arriving');
+  for(const property of ['left','top','width','height','--arrival-star-opacity'])message.style.removeProperty(property);
 }
 function showMessage(immediate=false) {
   state='message';phaseTime=0;
+  const message=$('message');
+  message.classList.remove('arriving');
+  message.style.removeProperty('--arrival-star-opacity');
   if(immediate){
     if(letter)letter.visible=false;
     clearMessageProjection();
   }
   localize();
   revealCopy(immediate?Infinity:1);
-  $('message').hidden=false;
+  message.hidden=false;
+  if(!failed)audio.play('arrival');
 }
 function fail(){
   if(failed)return;
@@ -110,7 +143,7 @@ let snowTexture;
 function makeSnowTexture(){const n=32,data=new Uint8Array(n*n*4);for(let y=0;y<n;y++)for(let x=0;x<n;x++){const i=(y*n+x)*4,d=Math.hypot((x+.5-n/2)/(n/2),(y+.5-n/2)/(n/2));data[i]=data[i+1]=data[i+2]=255;data[i+3]=Math.round(220*Math.max(0,1-d)**2)}const texture=new THREE.DataTexture(data,n,n,THREE.RGBAFormat);texture.magFilter=THREE.LinearFilter;texture.minFilter=THREE.LinearFilter;texture.needsUpdate=true;return texture}
 $('open').addEventListener('click',()=>{
   if(state!=='idle')return;
-  sound(); openingIdleTime=phaseTime; phaseTime=0; last=null; state='opening'; $('open').hidden=true; burstDone=false;
+  openingIdleTime=phaseTime; phaseTime=0; sequenceTime=0; last=null; state='opening'; $('open').hidden=true; burstDone=false;
   if(reduced){showMessage(true);return}
   action.reset().setLoop(THREE.LoopOnce,1);action.clampWhenFinished=true;action.play();
 });
@@ -234,6 +267,7 @@ async function warmScene(box, composition) {
 }
 
 document.addEventListener('visibilitychange',()=>{
+  audio.setVisible(!document.hidden);
   last=null;watchLoading();watchEntrance();
 });
 $('canvas').addEventListener('webglcontextlost',fail);
@@ -322,6 +356,7 @@ try {
     const reveal=state==='ready';
     const dt=reveal?0:frameDelta(now,last);
     last=now;phaseTime+=dt;
+    if(state==='opening'||state==='handover'||state==='message')sequenceTime+=dt;
     if(reveal){
       if(reduced)enterIdle();
       else {state='entrance';phaseTime=0}
@@ -341,9 +376,12 @@ try {
       const settle=1-THREE.MathUtils.smoothstep(phaseTime,0,.42);
       poseIdle(envelope,openingIdleTime,settle);
       poseOpeningCamera(camera,cameraViews,phaseTime,burstTime);
+      const previousTime=action.time, previousFlap=flap.rotation.x;
       mixer.update(dt);
       sealEffect.update(action.time);
-      if(!burstDone&&action.time>=burstTime){burstDone=true;burst()}
+      if(previousTime<sealBreakTime&&action.time>=sealBreakTime)audio.play('seal');
+      if(previousFlap>-.20&&flap.rotation.x<=-.20)audio.play('flap');
+      if(!burstDone&&action.time>=burstTime){burstDone=true;burst();audio.play('sparkle')}
       // Capture the lift endpoint after the mixer has applied its last pose.
       if(action.time>=action.getClip().duration){
         letterFlight.begin();
@@ -357,7 +395,7 @@ try {
       if(phaseTime>=handoverDuration){
         positionMessage(projectedLetter);
         showMessage();
-      }
+      }else if(phaseTime>=handoverDuration-starApproachTime)showApproachStar(projectedLetter,phaseTime);
     }else if(state==='message'&&!reduced){
       if(resized)positionMessage(letterFlight.pose(camera,box,composition,handoverDuration));
       const count=1+Math.floor(phaseTime/revealInterval);
@@ -378,6 +416,10 @@ try {
     renderer.render(scene,camera);
     if(reveal){
       canvas.classList.remove('warming');$('loading').hidden=true;
+      if(state==='entrance'){
+        $('moon-flight').classList.add('flying');
+        audio.play('entrance');
+      }
       clearTimeout(loadingWatchdog);watchEntrance();
     }
     if(testHook){
@@ -386,18 +428,30 @@ try {
       if(capture||testHook.frames){
         const particles=dust?.measure(camera,box)||[];
         const shot={
-          phase:state,time,timestamp:now,presentedAt:performance.now(),
+          phase:state,time,sequenceTime,timestamp:now,presentedAt:performance.now(),
           bounds:recordBounds(envelope,camera,box),canvas:recordedViewport,
           flap:flap.rotation.x,letter:letter.position.y,seal:sealEffect?.measure(),burst:burstDone,halo,
           cameraPosition:camera.position.toArray(),cameraPitch:camera.rotation.x,
           cameraRoll:camera.rotation.z,cameraFov:camera.fov,burstBounds:measureBurst(particles,box),particleCount:particles.length,
         };
         if(state==='opening'||state==='handover'||state==='message'){
-          if(letter.visible)shot.letterRect=projectedLetter||letterFlight.project(camera,box);
+          if(letter.visible){
+            shot.letterRect=projectedLetter||letterFlight.project(camera,box);
+            shot.letterBounds=recordBounds(letter,camera,box);
+          }
+        }
+        if(state==='handover'&&!$('message').hidden){
+          shot.starOpacity=Number(getComputedStyle($('message-star')).opacity);
         }
         if(state==='message'){
           shot.message=$('message').getBoundingClientRect().toJSON();
           shot.revealed=[...$('message').querySelectorAll('[data-reveal]:not([data-pending])')].map(element=>element.id||'line');
+          const replay=$('replay');
+          shot.replayOpaque=!replay.hasAttribute('data-pending')&&getComputedStyle(replay).opacity==='1';
+          if(phaseTime===0){
+            const star=getComputedStyle($('message-star'));
+            shot.starOpaque=star.visibility==='visible'&&star.opacity==='1';
+          }
         }
         if(state==='entrance'){
           const point=envelope.position.clone().project(camera);
@@ -411,7 +465,7 @@ try {
         }
         testHook.frames?.push(shot);
         if(capture){
-          testFrozen=true;testCapture=null;
+          testFrozen=testCapture.freeze;testCapture=null;
           testHook.snapshot={
             ...shot,burstTime,age:time-burstTime,
             camera:[...camera.matrixWorld.elements,...camera.projectionMatrix.elements],

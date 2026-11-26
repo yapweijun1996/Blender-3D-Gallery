@@ -52,6 +52,7 @@ RED_BACK = material("RedPaperBack", "6E0A14", 0.7)
 LINING = material("WarmLining", "9D3F2D", 0.85)
 CREAM = material("Cream", "F6EEDC", 0.8)
 GREEN = material("PineGreen", "14633A", 0.55)
+SATIN = material("SatinRibbon", "2B8F66", 0.31)
 GOLD = material("Gold", "FFE29A", 0.24, 1.0)
 WAX = material("GoldWax", "B87A22", 0.42, 0.85)
 BERRY = material("Berry", "D3172B", 0.25)
@@ -191,6 +192,88 @@ bpy.context.view_layer.update()
 trim("FlapTrim", [(-HW + 0.22, HH - 0.14), (-0.11, -0.14), (0.0, -0.18), (0.11, -0.14), (HW - 0.22, HH - 0.14)],
      -0.084, GOLD, flap, 0.012)
 
+# A crowned cross section gives the satin its highlight as the flap turns.
+def ribbon_strip(bm, center, widths, steps, crown):
+    rows = []
+    for i in range(steps + 1):
+        t = i / steps
+        tangent = center(min(t + 0.001, 1)) - center(max(t - 0.001, 0))
+        cross = Vector((tangent.z, 0, -tangent.x)).normalized()
+        width = widths[0] + (widths[1] - widths[0]) * math.sin(math.pi * t / 2)
+        point = center(t)
+        profile = ((-1, 0), (0, -crown), (1, 0), (1, 0.005), (0, 0.005 - crown), (-1, 0.005))
+        rows.append([bm.verts.new(point + side * width * cross + Vector((0, depth, 0)))
+                     for side, depth in profile])
+    for a, b in zip(rows, rows[1:]):
+        for k in range(len(a)):
+            j = (k + 1) % len(a)
+            bm.faces.new((a[k], a[j], b[j], b[k]))
+    bm.faces.new(tuple(reversed(rows[0])))
+    bm.faces.new(tuple(rows[-1]))
+
+
+def finish_ribbon(name, bm, parent):
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    mesh = bpy.data.meshes.new(name)
+    bm.to_mesh(mesh)
+    bm.free()
+    mesh.materials.append(SATIN)
+    for poly in mesh.polygons:
+        poly.use_smooth = True
+    return link(bpy.data.objects.new(name, mesh), parent)
+
+
+bow_center = Vector((0.97, -0.175, 0.79))
+bow_mesh = bmesh.new()
+
+
+def bow_strip(points, widths, steps):
+    a, b, c, d = points
+
+    def center(t):
+        u = 1.0 - t
+        return bow_center + a * (u ** 3) + b * (3 * t * u ** 2) + c * (3 * u * t ** 2) + d * (t ** 3)
+
+    ribbon_strip(bow_mesh, center, widths, steps, 0.019)
+
+
+for sign in (-1, 1):
+    bow_strip([Vector((sign * x, y, z)) for x, y, z in
+               ((0.052, -0.014, 0.034), (0.51, -0.097, 0.28), (0.48, -0.076, -0.22), (0.051, -0.019, -0.043))],
+              (0.032, 0.059), 17)
+    bow_strip([Vector((sign * x, y, z)) for x, y, z in
+               ((0.032, -0.006, -0.031), (0.040, -0.056, -0.120), (0.178, -0.041, -0.217), (0.154, -0.032, -0.300))],
+              (0.031, 0.057), 10)
+
+knot = bmesh.ops.create_uvsphere(bow_mesh, u_segments=16, v_segments=8, radius=1)["verts"]
+for v in knot:
+    v.co = bow_center + Vector((v.co.x * 0.082, v.co.y * 0.044, v.co.z * 0.072))
+
+# The cross and upper end lift with the knot. The lower end stays tucked
+# around the front pocket as the flap opens, leaving the address side clear.
+
+
+def cross_band(t):
+    x = 3.14 * (t - 0.5)
+    edge = max(0, (abs(x) - 1.39) / 0.18)
+    return Vector((x, -0.122 + 0.029 * edge ** 2, 0.804 + 0.012 * math.sin(math.pi * t)))
+
+
+def upper_band(t):
+    z = 0.438 + 0.522 * t
+    lift = max(0, min(1, (z - 0.52) / 0.20, (0.96 - z) / 0.07))
+    return Vector((bow_center.x, -0.108 - 0.043 * lift * lift * (3 - 2 * lift), z))
+
+
+ribbon_strip(bow_mesh, cross_band, (0.062, 0.062), 16, 0.006)
+ribbon_strip(bow_mesh, upper_band, (0.068, 0.068), 9, 0.008)
+finish_ribbon("RibbonBow", bow_mesh, flap)
+
+pocket_band = bmesh.new()
+ribbon_strip(pocket_band, lambda t: Vector((bow_center.x, -0.083 - 0.021 * t, -1.056 + 1.473 * t)),
+             (0.068, 0.068), 6, 0.009)
+finish_ribbon("RibbonPocketBand", pocket_band, root)
+
 # The medallion is assembled from five pieces with matching radial seams.
 SZ = -0.17
 seal = link(bpy.data.objects.new("Seal", None), flap)
@@ -323,7 +406,7 @@ print("objects:", len(scene.objects), "flap origin:", tuple(round(v, 3) for v in
 # Reproducible opening animation. The burst starts on the flap's final
 # swing, and the letter begins its eased lift while the burst is active.
 scene.render.fps = 24
-scene.frame_start, scene.frame_end = 1, 92
+scene.frame_start, scene.frame_end = 1, 83
 burst_frame = scene.timeline_markers.new("Burst", frame=40).frame
 root["burstTime"] = (burst_frame - scene.frame_start) / scene.render.fps
 break_frame = scene.timeline_markers.new("Seal break", frame=13).frame
@@ -331,7 +414,7 @@ root["sealBreakTime"] = (break_frame - scene.frame_start) / scene.render.fps
 for frame, angle in ((1, 0), (12, 0), (19, -32), (34, -138), (49, -174), (scene.frame_end, -174)):
     flap.rotation_euler.x = math.radians(angle)
     flap.keyframe_insert(data_path="rotation_euler", frame=frame, group="Flap")
-for frame, height in ((1, 0), (44, 0), (53, 0.19), (75, 1.55), (scene.frame_end, 2.12)):
+for frame, height in ((1, 0), (44, 0), (53, 0.19), (70, 1.55), (scene.frame_end, 2.12)):
     letter.location.z = height
     letter.keyframe_insert(data_path="location", frame=frame, group="Letter")
 # One glTF clip, with an NLA track shared by all animated objects.

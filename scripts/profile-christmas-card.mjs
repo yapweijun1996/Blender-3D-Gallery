@@ -10,7 +10,7 @@ try {
   browser = await chromium.launch(launchOptions);
   const baseline = baselineUrl && await profile(baselineUrl);
   const candidate = await profile(`${server.url}christmas-card/index.html`);
-  if (baseline) console.log('Stage A', JSON.stringify(baseline, null, 2));
+  if (baseline) console.log('Live reference', JSON.stringify(baseline, null, 2));
   console.log('Current build', JSON.stringify(candidate, null, 2));
   for (const phase of baseline ? phases : []) {
     const fps = candidate[phase].fps, minimum = baseline[phase].fps * .9;
@@ -44,7 +44,7 @@ async function profile(address) {
         const message = document.getElementById('message');
         const render = renderer.render;
         renderer.render = function (...args) {
-          if (!message.hidden) {
+          if (!message.hidden && !message.classList.contains('arriving')) {
             if (!tapped || presentedMessage) return render.apply(this, args);
             presentedMessage = true;
           }
@@ -66,7 +66,7 @@ async function profile(address) {
       return frames.length > 1 && frames.at(-1).start - frames[0].start >= 2000;
     }, undefined, {timeout: 8000});
     await page.locator('#open').click();
-    await page.locator('#message:visible').waitFor({timeout: 15000});
+    await page.locator('#message:not(.arriving):visible').waitFor({timeout: 15000});
     const {samples, completion, drawingBuffer, renderer} = await page.evaluate(() => {
       const canvas = document.getElementById('canvas');
       const gl = window.__christmasCardTest.renderer.getContext();

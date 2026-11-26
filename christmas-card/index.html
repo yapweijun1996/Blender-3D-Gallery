@@ -12,11 +12,76 @@
   <title>A Christmas Greeting</title>
 </head>
 <body>
+  <div class="night" aria-hidden="true">
+    <svg class="snow-ground" viewBox="0 0 1440 200" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="drift" x2="0" y2="1">
+          <stop stop-color="#446568"/><stop offset="1" stop-color="#142e39"/>
+        </linearGradient>
+        <linearGradient id="snow-edge" x2="1" y2="0">
+          <stop stop-color="#81999a" stop-opacity=".48"/><stop offset="1" stop-color="#81999a" stop-opacity=".08"/>
+        </linearGradient>
+      </defs>
+      <path fill="#243f49" d="M0 85c143-21 224 4 347 10 208 11 327-34 507-46 232-15 416 45 586-23v174H0Z"/>
+      <path fill="url(#drift)" d="M0 119c203-62 362 34 620 12 264-23 491-92 820-51v120H0Z"/>
+      <path fill="none" stroke="url(#snow-edge)" stroke-width="2" d="M0 119c203-62 362 34 620 12 264-23 491-92 820-51"/>
+      <path fill="#1b343e" d="M0 160c178-29 357 21 535 21 270-1 616-61 905-42v61H0Z"/>
+    </svg>
+    <svg class="fir" viewBox="0 0 220 280">
+      <defs>
+        <linearGradient id="fir-needles" x2="1" y2=".7">
+          <stop stop-color="#457867"/><stop offset=".52" stop-color="#28544c"/><stop offset="1" stop-color="#18343b"/>
+        </linearGradient>
+        <linearGradient id="fir-snow" x2="1" y2=".7">
+          <stop stop-color="#b3c7b7" stop-opacity=".75"/><stop offset="1" stop-color="#6c9294" stop-opacity=".10"/>
+        </linearGradient>
+        <radialGradient id="fir-star-glow">
+          <stop stop-color="#ffe5a6" stop-opacity=".75"/><stop offset=".43" stop-color="#efb86b" stop-opacity=".27"/>
+          <stop offset="1" stop-color="#efb86b" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="117" cy="261" rx="98" ry="11" fill="#0e2530" opacity=".55"/>
+      <path fill="#273b3b" d="m103 209-5 50q10 5 18 0l-3-50Z"/>
+      <path fill="url(#fir-needles)" d="M108 26q-9 34-38 63l17-2q-14 26-45 48l22-2q-21 34-48 49l23-3q-13 24-32 35 16 5 40 1l-9 11 42-7 7 9 25-8 18 7 8-9q31 10 62 4l-13-12 18-1q-26-15-46-49l18 2q-27-24-46-55l20 3q-28-27-41-55l12 1q-21-24-28-50Z"/>
+      <path fill="url(#fir-snow)" d="M108 26Q94 64 70 89l17-2 18-11 18-1Q112 50 108 26ZM86 100q-20 23-44 35l22-2 14-5 14 1 20-6 20 0q-25-7-46-23ZM62 149q-20 22-46 33l23-3 13-6 24 1 19-9 29 3q-33-7-62-19ZM40 197q-14 10-33 17 16 5 40 1l-9 11 42-7 7 9 25-8 18 7 8-9q-49 1-98-21Z"/>
+      <path fill="none" stroke="#b5ae87" stroke-opacity=".54" stroke-width="1.45" d="M87 84q24 18 50 15M64 133q40 28 94 23M39 179q58 31 137 23"/>
+      <circle cx="108" cy="22" r="22" fill="url(#fir-star-glow)"/>
+      <path fill="#fff1bb" stroke="#f8ce82" stroke-width="1" d="m108 8 3.4 9.4 10 .3-8 6.1 2.8 9.7-8.2-5.8-8.2 5.8 2.8-9.7-8-6.1 10-.3Z"/>
+      <g class="fir-lights" fill="#ffdfa0" stroke="#ffce87" stroke-width="5" stroke-opacity=".30">
+        <circle cx="91" cy="87" r="3"/><circle cx="123" cy="98" r="2.9"/><circle cx="69" cy="137" r="3.3"/>
+        <circle cx="105" cy="152" r="3"/><circle cx="152" cy="155" r="3.3"/><circle cx="48" cy="183" r="3"/>
+        <circle cx="84" cy="196" r="3.4"/><circle cx="125" cy="204" r="3"/><circle cx="172" cy="202" r="3.1"/>
+      </g>
+      <g class="fir-lights alternate" fill="#ffc6bc" stroke="#ffc6bc" stroke-width="5" stroke-opacity=".31">
+        <circle cx="106" cy="95" r="2.9"/><circle cx="136" cy="99" r="2.9"/><circle cx="85" cy="146" r="3.2"/>
+        <circle cx="128" cy="156" r="3"/><circle cx="65" cy="191" r="3.3"/><circle cx="104" cy="201" r="3.2"/>
+        <circle cx="150" cy="205" r="3.2"/>
+      </g>
+    </svg>
+  </div>
   <div class="snowfall" aria-hidden="true"></div>
   <main class="card">
     <div class="controls"><button id="language" type="button" aria-label="Switch language">中文</button><button id="mute" type="button" aria-pressed="false">Sound on</button></div>
     <header><span class="eyebrow">✦ &nbsp; A LITTLE CHRISTMAS MAGIC &nbsp; ✦</span><h1 id="title">A Christmas Greeting</h1><p id="subtitle">A little wish, wrapped with love.</p></header>
     <section class="scene" aria-label="Christmas envelope">
+      <div class="moon-sky" id="moon-flight" aria-hidden="true">
+        <div class="moon" id="moon"></div>
+        <svg class="sleigh" viewBox="-16 -5 168 49">
+          <defs>
+            <path id="reindeer" d="M0 21c4 0 6-3 10-3l12 1 4-3 3-7 2-3 2 1-1 4 5 1 1 2-2 2-5-1-2 8-5 3-3 7-7 3-1-2 5-4 1-5-6 1-3 8-6 3-1-2 4-4 1-7-4 1-4-3z M30 9l-4-5-1-4h2l1 4 3 2 1-4 2-1-1 7z M13 26l6 2 4 5 7 1v2h-8l-6-5-5-1z"/>
+          </defs>
+          <g fill="#102732" stroke="#ffe0ac" stroke-width="1.6" stroke-linejoin="round" paint-order="stroke">
+            <path d="M8 18c0-4 3-6 5-6 1-5 7-8 11-4l5 4-5 1-3-2-1 4 2 4 6 3-3 4h-8l-3-7-3 3-5-1z M0 22l8 3 11 1 13-1 5-4 3 1-2 5-7 4H8z M7 31h23l3-2-2 5H10z M1 34h34l4-3 1 1-3 5H5z M30 21l35-4 54-4 .3 1-55 5-34 4z"/>
+            <use href="#reindeer" x="47" y="3"/>
+            <use href="#reindeer" x="80" y="0"/>
+            <use href="#reindeer" x="113" y="-2"/>
+          </g>
+          <g fill="#ffe2a6">
+            <path d="m-8 27 .9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z"/>
+            <circle cx="-14" cy="39" r="1.05"/><circle cx="-4" cy="38" r="1.4"/><circle cx="2" cy="15" r="1.2"/>
+          </g>
+        </svg>
+      </div>
       <canvas id="canvas" class="warming" aria-hidden="true"></canvas>
       <div id="loading" role="status">
         <div class="loading-stars" aria-hidden="true"><span>✦</span><span>✦</span><span>✦</span></div>

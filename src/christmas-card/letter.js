@@ -1,7 +1,9 @@
 import { MathUtils, Vector3 } from 'three';
 
-export const handoverDuration = 1.18;
-export const revealInterval = .23;
+export const handoverDuration = .96;
+export const starApproachTime = .24;
+export const revealInterval = .13;
+export const revealFade = .12;
 
 export function createLetterFlight(letter, scene) {
   const [left, bottom, right, top] = letter.userData.paperBounds;

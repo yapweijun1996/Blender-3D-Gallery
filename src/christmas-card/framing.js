@@ -47,8 +47,11 @@ const angledBounds = closeBounds.flatMap(({ x, y, z }) => [
 ]);
 const idleBounds = frameBounds.map(point => point.clone().applyAxisAngle(axis, pitch));
 const wideBounds = burstBounds.map(point => point.clone().applyAxisAngle(axis, pitch));
+const liftedPaper = [];
+addBox(liftedPaper, 1.48, 1.14, 3.06, -.05, .024);
+const widePaperBounds = liftedPaper.map(point => point.applyAxisAngle(axis, pitch));
 
-function fitBounds(bounds, xSlope, topSlope, bottomSlope, aim, minimumDistance = 0) {
+function fitBounds(bounds, xSlope, topSlope, bottomSlope, aim, minimumDistance = 0, paperSlope = topSlope) {
   let distance = minimumDistance, upperEdge = -Infinity, lowerEdge = Infinity;
   for (const { x, y, z } of bounds) {
     distance = Math.max(distance, z + Math.abs(x) / xSlope);
@@ -58,7 +61,13 @@ function fitBounds(bounds, xSlope, topSlope, bottomSlope, aim, minimumDistance =
   // Each point constrains the vertical aim at a given distance. Move the
   // camera back just enough for all those intervals to overlap.
   distance = Math.max(distance, (upperEdge - lowerEdge) / (topSlope + bottomSlope));
-  const center = MathUtils.clamp(aim, upperEdge - distance * topSlope, lowerEdge + distance * bottomSlope);
+  let paperEdge = -Infinity;
+  if (paperSlope < topSlope) {
+    for (const {y, z} of widePaperBounds) paperEdge = Math.max(paperEdge, y + z * paperSlope);
+    distance = Math.max(distance, (paperEdge - lowerEdge) / (paperSlope + bottomSlope));
+  }
+  const topAim = Math.max(upperEdge - distance * topSlope, paperEdge - distance * paperSlope);
+  const center = MathUtils.clamp(aim, topAim, lowerEdge + distance * bottomSlope);
   return new Vector3(0, center, distance);
 }
 
@@ -78,8 +87,10 @@ export function frameEnvelope(camera, viewport, stage) {
   const closeSlope = 2 * closeTangent / stage.height;
   const close = fitBounds(angledBounds, closeSlope * (halfWidth - 5), closeSlope * (y - 9),
     closeSlope * (viewport.height - y - 9), .73, closeDistance);
+  // Keep room for the paper's upward arc as it leaves the wide shot.
   const wide = fitBounds(wideBounds, slope * (halfWidth - 10),
-    slope * (y - 10), slope * (viewport.height - y - 10), .93, entrance.z * 1.04);
+    slope * (y - 10), slope * (viewport.height - y - 10), .93, entrance.z * 1.04,
+    slope * (stage.height / 2 - 30));
   camera.fov = fov;
   camera.far = Math.max(50, entrance.z * 3.2);
   // Extend the view outside the composition area so the flight can cross

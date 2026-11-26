@@ -28,9 +28,85 @@ test('Christmas greeting is bilingual and the GLB contains the opening clip', ()
   assert.equal(seal.extras.crackRays.length, 10);
   const flap = gltf.nodes.find(node => node.name === 'Flap');
   assert.ok(gltf.meshes[flap.mesh].primitives.some(p => gltf.materials[p.material].name === 'WarmLining'));
-  const { burstTime, sealBreakTime } = gltf.nodes.find(node => node.name === 'Envelope').extras;
+  const bow = gltf.nodes.findIndex(node => node.name === 'RibbonBow');
+  assert.ok(flap.children.includes(bow), 'the ribbon is attached to the flap');
+  const envelope = gltf.nodes.find(node => node.name === 'Envelope');
+  const pocketBand = gltf.nodes.findIndex(node => node.name === 'RibbonPocketBand');
+  assert.ok(envelope.children.includes(pocketBand), 'the lower ribbon stays with the pocket');
+  const vertexAccessor = gltf.meshes[gltf.nodes[bow].mesh].primitives[0].attributes.POSITION;
+  const {min,max} = gltf.accessors[vertexAccessor];
+  assert.ok(max[0]-min[0]>3, 'the horizontal band crosses the envelope');
+  const { burstTime, sealBreakTime } = envelope.extras;
   assert.ok(0 < sealBreakTime && sealBreakTime < burstTime);
   assert.ok(gltf.meshes.find(mesh => mesh.name === 'LetterPaper').primitives[0].attributes.TEXCOORD_0 !== undefined);
+});
+
+test('the greeting reveal fits within 5.5 animation seconds including the Replay fade', async () => {
+  const { handoverDuration, revealInterval, revealFade, starApproachTime } = await import('../src/christmas-card/letter.js');
+  const { maxFrameDelta } = await import('../src/christmas-card/motion.js');
+  const { animations } = await loadModel();
+  const css = readFileSync('christmas-card/card.css', 'utf8');
+  assert.equal(Number(css.match(/animation:reveal-ink (\S+)s/)[1]), revealFade);
+  assert.match(css, /\[data-reveal\]:not\(\.letter-star,\[data-pending\]\)/, 'the arrival star is visible on its first frame');
+  assert.ok(starApproachTime >= 4 * maxFrameDelta && starApproachTime < handoverDuration);
+  for (const {lines} of Object.values(greeting)) {
+    const lastReveal = (lines.length + 3) * revealInterval;
+    const worst = animations[0].duration + handoverDuration + lastReveal + revealFade + 4 * maxFrameDelta;
+    assert.ok(worst <= 5.5, `Replay is fully visible by ${worst}s at the maximum frame step`);
+    assert.ok(revealInterval < .5);
+  }
+});
+
+test('audio waits for activation, mutes every voice, persists mute, and pauses while hidden', async () => {
+  const {createCardAudio, mutePreference} = await import('../src/christmas-card/audio.js');
+  const parameter = () => ({value: 1, setValueAtTime(value) { this.value = value; }, exponentialRampToValueAtTime() {}});
+  const node = () => ({connect(target) { return target; }, disconnect() {}});
+  const gains = [];
+  let contexts = 0, started = 0, stopped = 0, transport = null;
+  const context = {
+    state: 'suspended', currentTime: 0, destination: node(),
+    createGain() { const gain = parameter(); gains.push(gain); return {...node(), gain}; },
+    createOscillator() {
+      return {...node(), frequency: parameter(), start() { started++; }, stop(at) { if (at === 0) stopped++; }};
+    },
+    resume() { this.state = 'running'; return Promise.resolve(); },
+    suspend() { this.state = 'suspended'; return Promise.resolve(); },
+  };
+  const preference = new Map();
+  const storage = () => ({getItem: key => preference.get(key), setItem: (key, value) => preference.set(key, value)});
+  const audio = createCardAudio({
+    createContext() { contexts++; return context; }, storage,
+    schedule(run) { transport = run; return 1; },
+    cancel() { transport = null; },
+  });
+  audio.play('sparkle');
+  audio.setVisible(false);
+  audio.setVisible(true);
+  assert.equal(contexts, 0);
+  assert.equal(started, 0);
+  assert.equal(audio.activate(), true);
+  assert.ok(started > 0 && gains[0].value > 0 && transport, 'the gesture starts the music');
+  audio.play('sparkle');
+  const audibleVoices = started;
+  audio.setMuted(true);
+  assert.equal(gains[0].value, 0, 'music and effects share the master bus');
+  assert.equal(stopped, audibleVoices);
+  assert.equal(transport, null);
+  assert.equal(preference.get(mutePreference), '1');
+  audio.play('arrival');
+  assert.equal(started, audibleVoices);
+  assert.equal(createCardAudio({storage}).muted, true);
+  audio.setMuted(false);
+  audio.setVisible(false);
+  assert.equal(context.state, 'suspended');
+  assert.equal(gains[0].value, 0);
+  assert.equal(transport, null);
+  audio.setVisible(true);
+  assert.equal(context.state, 'running');
+  assert.ok(transport && gains[0].value > 0);
+  const isolated = createCardAudio({storage() { throw new Error('Storage disabled'); }});
+  isolated.setMuted(true);
+  assert.equal(isolated.muted, true);
 });
 
 test('card worker holds upgrades until the visitor approves them', async () => {
@@ -263,6 +339,12 @@ test('opening camera eases from idle toward the flap and widens to contain the b
   assert.ok(foldBack - borderFront > .004, `Letter border must clear the fold, got ${foldBack-borderFront}`);
   const flap = root.getObjectByName('Flap');
   const seal = root.getObjectByName('Seal');
+  const bow = root.getObjectByName('RibbonBow');
+  const pocketBand = root.getObjectByName('RibbonPocketBand');
+  const shards = seal.children.filter(part => /^SealShard\d+$/.test(part.name));
+  const bowBox = new THREE.Box3(), bandBox = new THREE.Box3(), shardBox = new THREE.Box3();
+  assert.ok(bowBox.setFromObject(bow,true).min.z>0 && bandBox.setFromObject(pocketBand,true).min.z>0,
+    'both ribbons sit on the front, with the address side clear');
   const letter = root.getObjectByName('Letter');
   const { burstTime, sealBreakTime } = root.getObjectByName('Envelope').userData;
   const dust = createStardust(scene);
@@ -305,6 +387,16 @@ test('opening camera eases from idle toward the flap and widens to contain the b
       previousFov = camera.fov;
       const { min, max } = projectedBounds(root, camera, THREE);
       assert.ok(min.x > -1 && max.x < 1 && min.y > -1 && max.y < 1, `Model clipped at ${time}s in ${width}×${height}`);
+      const letterBounds = projectedBounds(letter, camera, THREE);
+      assert.ok((1 - letterBounds.max.y) * height / 2 > stage.top,
+        `Rising letter must stay below the header at ${time}s in ${width}×${height}`);
+      bowBox.setFromObject(bow, true);
+      bandBox.setFromObject(pocketBand, true);
+      for (const shard of shards.filter(part => part.visible)) {
+        shard.updateWorldMatrix(true, true);
+        shardBox.setFromObject(shard,true);
+        assert.ok(!bowBox.intersectsBox(shardBox) && !bandBox.intersectsBox(shardBox), `Ribbon and ${shard.name} intersect at ${time}s`);
+      }
       assert.deepEqual(flap.position.toArray(), hinge.toArray());
       if (i === 0) {
         if (width === 390) assert.ok((max.x - min.x) / 2 >= .67 && (max.x - min.x) / 2 <= .75);
@@ -354,6 +446,7 @@ test('opening camera eases from idle toward the flap and widens to contain the b
       poseRecedingEnvelope(root, t);
       const rect = letterFlight.pose(camera, viewport, stage, t);
       assert.ok(rect.left > 0 && rect.top > 0 && rect.right < width && rect.bottom < height, 'the flying paper stays visible');
+      assert.ok(rect.top > stage.top, 'the flying paper clears the header');
       assert.ok(distance(previous, rect) < 21, 'the flying edges advance continuously');
       previous = rect;
       const { min, max } = projectedBounds(root, camera, THREE);

@@ -24,16 +24,21 @@ export function applyPaperGrain(root) {
   root.traverse(object => {
     if (!object.isMesh || !object.geometry.hasAttribute('uv')) return;
     const material = object.material;
-    if (!['Cream', 'WarmLining'].includes(material.name) && !material.name.startsWith('RedPaper')) return;
+    if (material.name === 'Cream') {
+      // The greeting face keeps its ivory reflectance at the turn and the landing.
+      object.material = new THREE.MeshBasicMaterial({ name: 'Cream', color: 0xf9f1df, map: grain, toneMapped: false });
+      return;
+    }
+    if (material.name !== 'WarmLining' && !material.name.startsWith('RedPaper')) return;
     material.map = grain;
     material.needsUpdate = true;
-    if (material.name === 'WarmLining' || material.name === 'Cream') {
+    if (material.name === 'WarmLining') {
       material.emissive.setHex(0xffbc6d);
       material.emissiveIntensity = 0;
       warm.add(material);
     }
   });
   return strength => {
-    for (const material of warm) material.emissiveIntensity = strength * (material.name === 'WarmLining' ? .12 : .055);
+    for (const material of warm) material.emissiveIntensity = strength * .12;
   };
 }
