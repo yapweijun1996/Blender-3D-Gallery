@@ -221,13 +221,23 @@ Offline shell + offline Game pack + coordinated, consent-based updates.
 
 ### 2.3 Service worker behaviour (`sw-template.js`)
 
-- Caches: `b3g-<scope>-shell-<BUILD>` and `b3g-<scope>-game-<BUILD>`.
-- `install`: fetches `build-info.json?v=BUILD` (must match), then fetches each
+- Build caches use `b3g-<scope>-shell-<BUILD>` and `b3g-<scope>-game-<BUILD>`.
+  The durable card-awareness marker lives in `b3g-<scope>-state`.
+- On install, the worker fetches `build-info.json?v=BUILD` (must match), then fetches each
   shell entry with `cache: "reload"` and verifies byte length + SHA-256 (+ `glTF`
-  magic for GLBs) before `cache.put`; any failure deletes the shell cache and
-  fails the install. Does not call `skipWaiting` automatically.
-- `fetch`: GET same-origin in-scope only. Navigations map to `index.html`; shell
-  entries come from cache or are re-fetched and verified; hashed `assets/` can
+  magic for GLBs) before `cache.put`. A failure deletes the shell cache and
+  fails the install. After verification, the installer calls `skipWaiting()`
+  when a gallery worker is active and the card-awareness marker is absent.
+  This one-time migration runs regardless of open tabs. A fresh registration
+  activates normally.
+- The first card-aware worker writes the marker on activation and reopens
+  card windows controlled by the gallery registration. Open gallery documents
+  keep running with their current Game state and can still load assets from
+  older caches. Later upgrades use the usual update approval flow.
+- Fetch handling covers same-origin, in-scope GET requests. Gallery navigations
+  map to `index.html`. Card navigations pass through, with a one-time redirect
+  to remove the recovery query parameter while keeping the fragment. Shell
+  entries come from cache or are re-fetched and verified. Hashed `assets/` can
   be served from the current or any older complete shell/pack cache of this
   scope (so old tabs keep working); otherwise network. Failed critical assets
   (`.glb/.js/.css`) return 503 and post `RESOURCE_LOAD_FAILED` to the client.

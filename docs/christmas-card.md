@@ -12,7 +12,7 @@ After precaching succeeds, the worker activates automatically, removes older car
 
 Opening or reloading a pre-1.4.0 card online lets the browser discover the fixed worker at the existing script URL. The fixed worker performs a one-time navigation to the new card because legacy pages can miss the takeover. Legacy pages cannot report animation or editor state to that worker. If a pending legacy installation blocks the update queue, fully close the browser and reopen the card online in the same profile. Reloading the page alone leaves the installation stuck.
 
-The gallery worker excludes card navigations and card clients from its update coordination, while its existing scope and caches remain separate. A previously installed older gallery worker may still route the first card navigation to the gallery until that gallery worker is updated through the gallery's own update flow. Offline support requires one successful online card visit and completed worker installation.
+The gallery worker passes card navigations through and excludes card clients from gallery update coordination. A pre-card gallery worker can return its cached gallery HTML for a card link. The first card-aware upgrade requests activation without user approval after the gallery shell is verified (see the known limitation below). It reopens any card tabs still controlled by the gallery worker and preserves their greeting fragments. Tabs controlled by the card worker keep their documents and editor state. Open gallery documents and active games keep running, and subsequent gallery updates follow the usual approval flow. Offline card support requires one successful online visit and completed card worker installation.
 
 Set the semantic release version in `src/christmas-card/version.js`. Bump the patch for a released fix, the minor for a backward-compatible feature, or the major for a breaking change. The button displays that version and its tooltip shows the generated build hash. The footer gives the version button and update status fixed space so update messages leave the envelope framing stable. `christmas-card/version.json` publishes both as `version` and `build`. The build hash identifies the precache even when the same semantic version is rebuilt.
 
@@ -39,3 +39,5 @@ Run the upgrade regression with Vite builds of commits `acdd9590` and `6abd140a`
 ```sh
 node scripts/test-christmas-card-upgrade.mjs /path/to/acdd9590/dist /path/to/6abd140a/dist dist
 ```
+
+Known limitation (2026-11-26): with a gallery page still open on a pre-card worker, activation of the new worker was observed to stay pending for at least 120 seconds, so a card link can remain broken until the site's tabs are closed. The cause is not established, and there is no passing automated browser regression for the open-tab and installed-before-visit cases yet.

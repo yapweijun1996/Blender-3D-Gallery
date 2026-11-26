@@ -9,6 +9,9 @@ const build = "old";
 const shellCache = "b3g-_Blender_3D_Gallery_-shell-old";
 const packCache = "b3g-_Blender_3D_Gallery_-game-old";
 const marker = "__game-pack-ready__";
+const stateCache = "b3g-_Blender_3D_Gallery_-state";
+const cardAware = "__gallery-card-aware__";
+const card = "christmas-card/index.html?test=a%20b#to=Riley&msg=Happy+holidays";
 const entries = { "index.html": "<title>Old</title>", "assets/page-OldHash1.js": "export const build = 'old';" };
 const shell = await Promise.all(Object.entries(entries).map(async ([url, body]) => {
   const bytes = new TextEncoder().encode(body);
@@ -16,8 +19,9 @@ const shell = await Promise.all(Object.entries(entries).map(async ([url, body]) 
   return { url, bytes: bytes.length, sha256: Buffer.from(hash).toString("hex") };
 }));
 
-function worker(pack = { build, files: [] }) {
-  const handlers = new Map(), storage = new Map(), messages = [], requests = [];
+function worker(pack = { build, files: [] }, { active, windows = [], storage = new Map() } = {}) {
+  const handlers = new Map(), messages = [], requests = [];
+  const skips = [], navigations = [];
   const key = (file) => new URL(file, scope).href;
   const network = new Map(Object.entries(entries).map(([file, body]) => [file, new Response(body)]));
   network.set("build-info.json", Response.json({ build }));
@@ -30,6 +34,10 @@ function worker(pack = { build, files: [] }) {
         async match(url) { return cache.get(url)?.clone(); },
       };
     },
+    async match(url, { cacheName } = {}) {
+      if (cacheName) return storage.get(cacheName)?.get(url)?.clone();
+      return [...storage.values()].find(cache => cache.has(url))?.get(url).clone();
+    },
     async keys() { return [...storage.keys()]; },
     async delete(name) { return storage.delete(name); },
   };
@@ -39,10 +47,20 @@ function worker(pack = { build, files: [] }) {
     .replace("__PACK__", JSON.stringify(pack)), {
     URL, TextDecoder, Uint8Array, Response, crypto, caches,
     self: {
-      registration: { scope },
+      registration: { scope, active },
       location: new URL(scope),
-      addEventListener: (type, handler) => handlers.set(type, handler),
-      clients: { async get() { return { postMessage: (message) => messages.push(message.type) }; } },
+      addEventListener(type, handler) {
+        if (type === "activate") assert.ok(!handlers.has(type), "Only one activate listener");
+        handlers.set(type, handler);
+      },
+      clients: {
+        async get() { return { postMessage: (message) => messages.push(message.type) }; },
+        async matchAll({ includeUncontrolled }) {
+          return windows.filter(window => includeUncontrolled || window.galleryControlled)
+            .map(({ url }) => ({ url: key(url), async navigate(target) { navigations.push(target); } }));
+        },
+      },
+      async skipWaiting() { skips.push([...storage.get(shellCache).keys()]); },
     },
     async fetch(input) {
       const url = new URL(input.url ?? input);
@@ -51,13 +69,15 @@ function worker(pack = { build, files: [] }) {
       return network.get(file)?.clone() ?? new Response("Not found", { status: 404 });
     },
   });
+  const lifecycle = (type) => {
+    let result;
+    handlers.get(type)({ waitUntil: (promise) => { result = promise; } });
+    return result;
+  };
   return {
-    key, network, storage, messages, requests,
-    install() {
-      let result;
-      handlers.get("install")({ waitUntil: (promise) => { result = promise; } });
-      return result;
-    },
+    key, network, storage, messages, requests, skips, navigations,
+    install: () => lifecycle("install"),
+    activate: () => lifecycle("activate"),
     async message(type) {
       let result;
       const replies = [];
@@ -110,14 +130,98 @@ test("evicted shell entries are fail-closed and can only recover their own bytes
 });
 
 test("install rejects wrong build metadata or wrong shell bytes and keeps other versions", async () => {
-  const sw = worker();
+  const sw = worker(undefined, { active: {} });
   sw.storage.set("b3g-_Blender_3D_Gallery_-shell-retained", new Map());
   sw.network.set("build-info.json", Response.json({ build: "new" }));
   await assert.rejects(sw.install(), /Build identity mismatch/);
   sw.network.set("build-info.json", Response.json({ build }));
   sw.network.set("index.html", new Response("<title>Mixed</title>"));
   await assert.rejects(sw.install(), /Resource identity mismatch/);
+  assert.deepEqual(sw.skips, []);
   assert.deepEqual([...sw.storage.keys()], ["b3g-_Blender_3D_Gallery_-shell-retained"]);
+});
+
+test("a legacy upgrade skips waiting after verification even without a card window", async () => {
+  const sw = worker(undefined, { active: {}, windows: [{ url: "index.html", galleryControlled: true }] });
+  sw.storage.set("card-cache", new Map([
+    [sw.key("christmas-card/version.json"), Response.json({ build: "card" })],
+  ]));
+  sw.storage.set("sibling-gallery-state", new Map([[sw.key(cardAware), new Response()]]));
+  const previousShell = new Map([[sw.key("index.html"), new Response("Legacy shell")]]);
+  const previousPack = new Map([[sw.key(marker), new Response("Legacy pack")]]);
+  sw.storage.set("b3g-_Blender_3D_Gallery_-shell-legacy", previousShell);
+  sw.storage.set("b3g-_Blender_3D_Gallery_-game-legacy", previousPack);
+
+  await sw.install();
+  assert.deepEqual(sw.skips, [Object.keys(entries).map(sw.key)]);
+  assert.ok(!sw.storage.has(stateCache), "Installation alone leaves the migration pending");
+  await sw.activate();
+  assert.ok(sw.storage.get(stateCache).has(sw.key(cardAware)));
+  assert.deepEqual(sw.navigations, []);
+  assert.equal(await previousShell.get(sw.key("index.html")).text(), "Legacy shell");
+  assert.equal(await previousPack.get(sw.key(marker)).text(), "Legacy pack");
+  assert.equal(sw.storage.get("b3g-_Blender_3D_Gallery_-shell-legacy"), previousShell);
+  assert.equal(sw.storage.get("b3g-_Blender_3D_Gallery_-game-legacy"), previousPack);
+});
+
+test("first install activates normally and a later candidate leaves user approval in place", async () => {
+  const sw = worker(undefined, { windows: [{ url: card }] });
+  await sw.install();
+  assert.deepEqual(sw.skips, []);
+  await sw.activate();
+  assert.deepEqual(sw.navigations, []);
+
+  const next = worker(undefined, {
+    active: {},
+    storage: sw.storage,
+    windows: [{ url: card, galleryControlled: true }],
+  });
+  await next.install();
+  assert.deepEqual(next.skips, []);
+  await next.activate();
+  assert.deepEqual(next.navigations, []);
+});
+
+test("an install waits for an activating predecessor to record card awareness", async () => {
+  let observeActivation, finishActivation;
+  const observed = new Promise(resolve => { observeActivation = resolve; });
+  const active = {
+    state: "activating",
+    addEventListener(type, listener) {
+      assert.equal(type, "statechange");
+      finishActivation = listener;
+      observeActivation();
+    },
+  };
+  const previous = worker();
+  await previous.install();
+  const next = worker(undefined, { active, storage: previous.storage });
+  const installation = next.install();
+  await observed;
+  await previous.activate();
+  active.state = "activated";
+  finishActivation();
+  await installation;
+  assert.deepEqual(next.skips, []);
+});
+
+test("activation only navigates gallery-controlled card windows and removes the recovery query", async () => {
+  const sw = worker(undefined, { active: {}, windows: [
+    { url: card, galleryControlled: true },
+    { url: "christmas-card/#healthy" },
+    { url: "index.html", galleryControlled: true },
+  ] });
+  await sw.install();
+  assert.deepEqual(sw.skips, [Object.keys(entries).map(sw.key)]);
+  await sw.activate();
+  const recovery = card.replace("#", "&__gallery_card_recovery=old#");
+  assert.deepEqual(sw.navigations, [sw.key(recovery)]);
+  const redirect = await sw.fetch(recovery.split("#")[0], "navigate");
+  assert.equal(redirect.status, 302);
+  assert.equal(redirect.headers.get("Location"), sw.key(card.split("#")[0]));
+  assert.equal(sw.fetch(card, "navigate"), undefined);
+  await sw.activate();
+  assert.deepEqual(sw.navigations, [sw.key(recovery)]);
 });
 
 test("a two-file pack needs its completion marker and both files", async () => {

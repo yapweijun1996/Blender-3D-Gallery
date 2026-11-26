@@ -6,6 +6,10 @@ const SCOPE = self.registration.scope,
   SHELL_CACHE = PREFIX + "shell-" + BUILD,
   PACK_CACHE = PREFIX + "game-" + BUILD;
 const absolute = (url) => new URL(url, SCOPE).href;
+const CARD_SCOPE = absolute("christmas-card/"),
+  CARD_RECOVERY_QUERY = "__gallery_card_recovery=" + BUILD,
+  GALLERY_STATE_CACHE = PREFIX + "state",
+  CARD_AWARE = absolute("__gallery-card-aware__");
 const shellEntries = new Map(SHELL.map((entry) => [absolute(entry.url), entry]));
 const marker = absolute("__game-pack-ready__");
 const packFiles = PACK.build === BUILD && Array.isArray(PACK.files) ? PACK.files : [];
@@ -41,12 +45,41 @@ self.addEventListener("install", (event) =>
         const cache = await caches.open(SHELL_CACHE);
         for (const entry of SHELL)
           await cache.put(absolute(entry.url), await verified(entry));
+
+        // An active card-aware worker may still be recording its marker.
+        const active = self.registration.active;
+        if (active?.state === "activating")
+          await new Promise((resolve) =>
+            active.addEventListener("statechange", resolve, { once: true }),
+          );
+        if (
+          self.registration.active &&
+          !(await caches.match(CARD_AWARE, { cacheName: GALLERY_STATE_CACHE }))
+        )
+          return self.skipWaiting();
       } catch (e) {
         await caches.delete(SHELL_CACHE);
         throw e;
       }
     })(),
   ),
+);
+self.addEventListener("activate", (event) =>
+  event.waitUntil((async () => {
+    const state = await caches.open(GALLERY_STATE_CACHE);
+    if (await state.match(CARD_AWARE)) return;
+    // Record activation so a superseded install cannot suppress the migration.
+    await state.put(CARD_AWARE, new Response());
+    // Only this gallery registration's clients take over. Leave card-controlled tabs alone.
+    for (const client of await self.clients.matchAll({ type: "window" })) {
+      if (!client.url.startsWith(CARD_SCOPE)) continue;
+      const url = new URL(client.url);
+      // Force a document load even when the original URL has a fragment.
+      url.search += (url.search ? "&" : "?") + CARD_RECOVERY_QUERY;
+      // The navigation's fetch waits for activation to finish.
+      void client.navigate(url.href).catch(() => {});
+    }
+  })()),
 );
 // Retention exception: an old/suspended tab can still request its hashed modules,
 // and the last complete pack may belong to an older build after a failed update.
@@ -176,7 +209,7 @@ self.addEventListener("message", (event) => {
               type: "window",
               includeUncontrolled: true,
             })
-          ).filter((client) => client.url.startsWith(SCOPE) && !client.url.startsWith(absolute("christmas-card/")));
+          ).filter((client) => client.url.startsWith(SCOPE) && !client.url.startsWith(CARD_SCOPE));
         let clients = [];
         const id = crypto.randomUUID(),
           answers = new Map();
@@ -246,11 +279,18 @@ self.addEventListener("fetch", (event) => {
     url = new URL(request.url);
   if (
     request.method !== "GET" ||
-    (request.mode === "navigate" && url.href.startsWith(absolute("christmas-card/"))) ||
     !request.url.startsWith(SCOPE) ||
     url.origin !== self.location.origin
   )
     return;
+  if (request.mode === "navigate" && url.href.startsWith(CARD_SCOPE)) {
+    if (url.search === "?" + CARD_RECOVERY_QUERY || url.search.endsWith("&" + CARD_RECOVERY_QUERY)) {
+      url.search = url.search.slice(0, -CARD_RECOVERY_QUERY.length - 1);
+      // Redirects inherit the navigation's fragment if Location omits it.
+      event.respondWith(Response.redirect(url.href));
+    }
+    return;
+  }
   event.respondWith(
     (async () => {
       const key = request.mode === "navigate" ? absolute("index.html") : url.origin + url.pathname;
