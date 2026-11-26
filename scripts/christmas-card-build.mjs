@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { cardVersion } from '../src/christmas-card/version.js';
 
 // Capture the card's Rollup dependency closure, including assets emitted by Vite.
 export function christmasCardBuild() {
@@ -25,15 +26,20 @@ export function christmasCardBuild() {
     },
     closeBundle() {
       const root = path.resolve('dist');
-      if (!fs.existsSync(path.join(root, 'christmas-card/index.html'))) return;
+      const htmlPath = path.join(root, 'christmas-card/index.html');
+      if (!fs.existsSync(htmlPath)) return;
       const files = ['christmas-card/index.html', 'christmas-card/manifest.webmanifest', 'christmas-card/icons/icon.svg', 'christmas-card/icons/icon-192.png', 'christmas-card/icons/icon-512.png', ...dependencies].sort();
       const hash = crypto.createHash('sha256');
       for (const file of files) hash.update(file).update(fs.readFileSync(path.join(root, file)));
       const template = fs.readFileSync('src/christmas-card/sw-template.js', 'utf8');
-      hash.update(template);
-      const version = hash.digest('hex').slice(0, 12);
-      fs.writeFileSync(path.join(root, 'christmas-card/version.json'), JSON.stringify({version}));
-      fs.writeFileSync(path.join(root, 'christmas-card/sw.js'), template.replace('__VERSION__', JSON.stringify(version)).replace('__FILES__', JSON.stringify([...files, 'christmas-card/version.json'])));
+      hash.update(template).update(cardVersion);
+      const build = hash.digest('hex').slice(0, 12);
+      // Fill the marker after hashing the shell so its build ID is available offline.
+      const html = fs.readFileSync(htmlPath, 'utf8');
+      if (!html.includes('data-build=""')) throw new Error('Christmas card build marker missing');
+      fs.writeFileSync(htmlPath, html.replace('data-build=""', `data-build="${build}"`));
+      fs.writeFileSync(path.join(root, 'christmas-card/version.json'), JSON.stringify({version: cardVersion, build}));
+      fs.writeFileSync(path.join(root, 'christmas-card/sw.js'), template.replace('__BUILD__', JSON.stringify(build)).replace('__FILES__', JSON.stringify([...files, 'christmas-card/version.json'])));
     },
   };
 }

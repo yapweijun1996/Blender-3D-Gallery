@@ -2,7 +2,13 @@
 
 `christmas-card/` is an independent Vite entry. Edit the recipient, message lines and sender for both languages in `src/christmas-card/config.js`. The model can be rebuilt using the instructions in `models/christmas-envelope/README.md`. No new dependencies or external resources are used.
 
-The card has a service worker scoped to its own path. Its build-time cache contains its HTML, manifest, icons and the Vite dependency closure including the GLB; upgrade installation waits until the visitor chooses Update now, even when old tabs close. A browser may terminate a long-pending installation; check for updates again if that happens. The gallery worker excludes card navigations and card clients from its update coordination, while its existing gallery scope and caches remain separate. A previously installed older gallery worker may still route the first card navigation to the gallery until that gallery worker is updated through the gallery's own update flow. Offline support requires one successful online card visit and completed worker installation.
+The card registers its own service worker with `updateViaCache: 'none'`. It checks for updates on load, when the tab becomes visible, and via **Check for updates**. The worker precaches the HTML, manifest, icons, and Vite dependency closure including the GLB. After precaching succeeds, it activates automatically, removes older card caches for its scope, and claims card clients. A failed installation leaves the previous offline card usable. On takeover the page reloads once at the next safe moment after the entrance or opening animation, any open dialog, and any focused editor. Reload preserves the URL fragment. The first installation claims the page without reloading it.
+
+Opening or reloading a pre-1.4.0 card online lets the browser discover the fixed worker at the existing script URL. The fixed worker performs a one-time navigation to the new card because legacy pages can miss the takeover. Legacy pages cannot report animation or editor state to that worker. When a legacy installation is already blocking the browser's update queue, the queued check can run once the browser ends that install. Chromium's install timeout is about five minutes. [Chromium's service worker job test](https://chromium.googlesource.com/chromium/src/+/9e4b946a30c888fa1142903b0ebd508680d15c8b/content/browser/service_worker/service_worker_job_unittest.cc)
+
+The gallery worker excludes card navigations and card clients from its update coordination, while its existing scope and caches remain separate. A previously installed older gallery worker may still route the first card navigation to the gallery until that gallery worker is updated through the gallery's own update flow. Offline support requires one successful online card visit and completed worker installation.
+
+Set the semantic release version in `src/christmas-card/version.js`. Bump the patch for a released fix, the minor for a backward-compatible feature, or the major for a breaking change. The button displays that version and its tooltip shows the generated build hash. `christmas-card/version.json` publishes both as `version` and `build`. The build hash identifies the precache even when the same semantic version is rebuilt.
 
 The deployment selector discovers the GLB through the literal model import. Its cache key is calculated from committed Git-index entries; untracked changes cannot be verified as deployment inputs until added to the index. Publication remains a separate authorized action.
 
@@ -21,3 +27,9 @@ Web Audio synthesizes the beat cues and a quiet music-box arrangement of Jingle 
 After building, run `node scripts/profile-christmas-card.mjs "$LIVE_CARD_URL"` to compare the local build with the live card in the same 1440×900 SwiftShader session. It checks the entrance and the first two seconds of idle and opening against 90% of the reference FPS. The profile reports warm-up draws, worst frame time, draw calls, and shader programs added. It checks for zero new programs in the local build from the first entrance frame through the letter handover. Omit the URL to profile only the local build.
 
 The browser test checks desktop entrance timing in a fresh context with a single late snapshot. It records a full trace in a separate run for the viewport, loop, and opening checks.
+
+Run the upgrade regression with Vite builds of commits `acdd9590` and `6abd140a`, plus the current build. The final argument defaults to `dist`. The test switches the served build on one origin. In the blocked-install case it uses Chromium DevTools Protocol to stop the genuinely pending legacy install and simulate the end of the browser timeout.
+
+```sh
+node scripts/test-christmas-card-upgrade.mjs /path/to/acdd9590/dist /path/to/6abd140a/dist dist
+```

@@ -109,28 +109,91 @@ test('audio waits for activation, mutes every voice, persists mute, and pauses w
   assert.equal(isolated.muted, true);
 });
 
-test('card worker holds upgrades until the visitor approves them', async () => {
+test('card worker only activates a complete precache and removes its own old caches', async () => {
   const { runInNewContext } = await import('node:vm');
-  const template = readFileSync('src/christmas-card/sw-template.js', 'utf8').replace('__VERSION__', '"test"').replace('__FILES__', '["christmas-card/index.html"]');
-  async function install(active) {
-    const handlers = {}, cache = { put: async () => {} };
-    let skipped = 0, promise;
-    const self = { registration: {scope:'https://example.test/site/christmas-card/', active}, addEventListener: (name, fn) => {handlers[name] = fn}, skipWaiting: async () => {skipped++} };
-    runInNewContext(template, {self, URL, caches:{open:async()=>cache,delete:async()=>{}}, fetch:async()=>({ok:true})});
-    handlers.install({waitUntil: value => {promise = value}});
-    return {handlers, promise, skipped: () => skipped};
+  const template = readFileSync('src/christmas-card/sw-template.js', 'utf8')
+    .replace('__BUILD__', '"latest"')
+    .replace('__FILES__', '["christmas-card/index.html", "christmas-card/version.json"]');
+  const scope = 'https://example.test/site/christmas-card/';
+  const latest = 'christmas-card:%2Fsite%2Fchristmas-card%2F:latest';
+  const legacy = 'christmas-card-_site_christmas_card_ae68edfc3497';
+  const gallery = 'b3g-_site_-shell-test';
+  const otherScope = 'christmas-card:%2Fother%2Fchristmas-card%2F:older';
+  function worker({fail = false, mismatchedShell = false, active = {}} = {}) {
+    const names = new Set([legacy, gallery, otherScope]), entries = new Map();
+    const handlers = {}, events = [];
+    const self = {
+      registration:{scope, active},
+      location:new URL(scope),
+      addEventListener(name, fn) { handlers[name] = fn; },
+      skipWaiting: async () => { events.push('skipWaiting'); },
+      clients:{
+        claim: async () => { events.push('claim'); },
+        matchAll: async () => [{url:scope+'?test=1#recipient', navigate: async url => { events.push(url); }}],
+      },
+    };
+    const caches = {
+      open: async name => {
+        names.add(name);
+        return {
+          match: async url => entries.get(url.href),
+          put: async (url, response) => { entries.set(url.href, response); },
+          delete: async url => { entries.delete(url.href); },
+        };
+      },
+      keys: async () => [...names],
+      match: async (url, {cacheName}) => cacheName === latest && entries.get(url.href),
+      delete: async name => { names.delete(name); },
+    };
+    const fetch = async request => {
+      const url = new URL(request.url ?? request);
+      events.push(url.pathname);
+      return new Response(mismatchedShell ? 'old page' : '<button data-build="latest">', {
+        status: fail && url.pathname.endsWith('version.json') ? 503 : 200,
+      });
+    };
+    runInNewContext(template, {self, URL, Response, caches, fetch});
+    return {
+      events, names,
+      run(name) {
+        let completion;
+        handlers[name]({waitUntil: value => { completion = value; }});
+        return completion;
+      },
+      respond(url, mode) {
+        let response;
+        handlers.fetch({request:{url, mode, method:'GET'}, respondWith: value => { response = value; }});
+        return response;
+      },
+    };
   }
-  const initial = await install(null);
-  await initial.promise;
-  assert.equal(initial.skipped(), 0);
-  const update = await install({});
-  let done = false;
-  update.promise.then(() => {done = true});
-  await new Promise(resolve => setImmediate(resolve));
-  assert.equal(done, false);
-  update.handlers.message({data:{type:'ACTIVATE'}});
-  await update.promise;
-  assert.equal(update.skipped(), 1);
+
+  const failed = worker({fail:true});
+  await assert.rejects(failed.run('install'), /Offline resource unavailable/);
+  assert.deepEqual(failed.names, new Set([legacy, gallery, otherScope]));
+  assert.ok(!failed.events.includes('skipWaiting'));
+
+  const mixed = worker({mismatchedShell:true});
+  await assert.rejects(mixed.run('install'), /shell changed/);
+  assert.deepEqual(mixed.names, failed.names);
+
+  const update = worker();
+  await update.run('install');
+  assert.deepEqual(update.events, ['/site/christmas-card/index.html', '/site/christmas-card/version.json', 'skipWaiting']);
+  const concurrent = 'christmas-card:%2Fsite%2Fchristmas-card%2F:newer';
+  update.names.add(concurrent);
+  await update.run('activate');
+  assert.deepEqual(update.names, new Set([latest, gallery, otherScope, concurrent]));
+  assert.deepEqual(update.events.slice(-2), ['claim', scope+'?test=1&christmas-card-reload=latest#recipient']);
+  const redirect = await update.respond(update.events.at(-1), 'navigate');
+  assert.equal(redirect.headers.get('location'), scope+'?test=1#recipient');
+  assert.equal((await update.respond(scope+'uncached.png', 'no-cors')).status, 200);
+  assert.equal(update.events.at(-1), '/site/christmas-card/uncached.png');
+
+  const initial = worker({active:null});
+  await initial.run('install');
+  await initial.run('activate');
+  assert.equal(initial.events.at(-1), 'claim', 'a first install never navigates its client');
 });
 
 test('the playback step stays bounded after a stalled or reactivated frame', async () => {

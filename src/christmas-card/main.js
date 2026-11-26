@@ -7,27 +7,30 @@ import { frameEnvelope, poseLandingCamera, poseOpeningCamera, setCameraPose } fr
 import { createEntranceFlight, entranceBudgetMs, entranceDuration, frameDelta, poseEntrance, poseIdle, poseRecedingEnvelope } from './motion.js';
 import { createAddress, createEntranceTrail, trailLifetime } from './accents.js';
 import { createCardAudio } from './audio.js';
-import { createLetterFlight, handoverDuration, revealInterval, starApproachTime } from './letter.js';
+import { createLetterFlight, handoverDuration, revealFade, revealInterval, starApproachTime } from './letter.js';
 import { createMouthLight, createStardust } from './magic.js';
 import { applyPaperGrain } from './paper.js';
 import { cardPixelRatio, softwareRendering } from './raster.js';
 import { createBoundsRecorder } from './recording.js';
 import { createSealEffect } from './seal.js';
 import { warmWithinBudget } from './warmup.js';
+import { startCardUpdates } from './updates.js';
 
 const $ = id => document.getElementById(id);
 const words = {
-  en:{title:'A Christmas Greeting',subtitle:'A little wish, wrapped with love.',eyebrow:'✦  A LITTLE CHRISTMAS MAGIC  ✦',loading:'Loading your greeting…',open:'Tap to Open / 点击打开',replay:'Replay ↻',sound:'Sound on',muted:'Muted',update:'Check for updates',install:'Update now',checking:'Checking…',current:'You have the latest version.',ready:'An update is ready.',error:'Unable to check for updates.',fallback:'The 3D card could not be loaded. Here is your greeting:',lang:'Switch to Chinese'},
-  zh:{title:'圣诞祝福',subtitle:'一份小小心意，满载温暖。',eyebrow:'✦  一点圣诞魔法  ✦',loading:'正在加载贺卡…',open:'点击打开 / Tap to Open',replay:'重新播放 ↻',sound:'声音开启',muted:'静音',update:'检查更新',install:'立即更新',checking:'正在检查…',current:'已是最新版本。',ready:'新版本已准备好。',error:'无法检查更新。',fallback:'无法加载 3D 贺卡，请阅读这份祝福：',lang:'切换为英文'},
+  en:{title:'A Christmas Greeting',subtitle:'A little wish, wrapped with love.',eyebrow:'✦  A LITTLE CHRISTMAS MAGIC  ✦',loading:'Loading your greeting…',open:'Tap to Open / 点击打开',replay:'Replay ↻',sound:'Sound on',muted:'Muted',fallback:'The 3D card could not be loaded. Here is your greeting:',lang:'Switch to Chinese'},
+  zh:{title:'圣诞祝福',subtitle:'一份小小心意，满载温暖。',eyebrow:'✦  一点圣诞魔法  ✦',loading:'正在加载贺卡…',open:'点击打开 / Tap to Open',replay:'重新播放 ↻',sound:'声音开启',muted:'静音',fallback:'无法加载 3D 贺卡，请阅读这份祝福：',lang:'切换为英文'},
 };
 let lang='en', state='loading', mixer, action, envelope, letter, flap, seal;
-let renderer, scene, camera, registration, pendingUpdate=false, burstTime, sealBreakTime, burstDone=false;
+let renderer, scene, camera, burstTime, sealBreakTime, burstDone=false;
 let dust, mouthLight, sealEffect, letterFlight, revealed=0;
 let drawAddress, updateTrail, warmPaper, contactShadow, failed=false;
 let phaseTime=0, sequenceTime=0, entranceTime=0, openingIdleTime=0, flight, cameraViews, last=null;
 let loadingWatchdog, entranceWatchdog, entranceWatchdogStarted=null, entranceTimeLeft=entranceBudgetMs;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const audio=createCardAudio({visible:!document.hidden});
+const updates=startCardUpdates({canReload:()=>state==='idle'||(state==='message'&&
+  (failed||reduced||phaseTime>=($('lines').children.length+3)*revealInterval+revealFade))});
 // Freeze an actual rendered frame so the browser test can inspect the shot.
 let testCapture=null, testFrozen=false;
 const testHook=new URLSearchParams(location.search).has('card-test') ? {
@@ -62,7 +65,7 @@ function localize() {
   $('open').textContent=w.open; $('replay').textContent=w.replay; $('mute').textContent=audio.muted?w.muted:w.sound;
   $('mute').setAttribute('aria-pressed',String(audio.muted));
   $('language').textContent=lang==='en'?'中文':'EN'; $('language').setAttribute('aria-label',w.lang);
-  $('update').textContent=pendingUpdate?w.install:w.update; $('recipient').textContent=g.recipient; $('sender').textContent=g.sender; $('fallback').textContent=w.fallback;
+  updates.localize(lang); $('recipient').textContent=g.recipient; $('sender').textContent=g.sender; $('fallback').textContent=w.fallback;
   const lines=$('lines');
   if(lines.dataset.language!==lang){
     lines.dataset.language=lang;
@@ -477,6 +480,3 @@ try {
   }
   requestAnimationFrame(frame);
 } catch { fail() }
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(r=>{registration=r;function ready(){pendingUpdate=!!r.waiting||!!(r.active&&r.installing);localize()}ready();r.addEventListener('updatefound',()=>r.installing?.addEventListener('statechange',ready));navigator.serviceWorker.addEventListener('controllerchange',()=>{if(pendingUpdate)location.reload()})}).catch(()=>{});}
-$('update').addEventListener('click',async()=>{if(!registration){$('update-status').textContent=words[lang].error;return}if(registration.waiting||registration.installing){pendingUpdate=true;(registration.waiting||registration.installing).postMessage({type:'ACTIVATE'});return}$('update-status').textContent=words[lang].checking;try{await registration.update();pendingUpdate=!!registration.waiting||!!registration.installing;localize();$('update-status').textContent=pendingUpdate?words[lang].ready:words[lang].current}catch{$('update-status').textContent=words[lang].error}});
-fetch('./version.json').then(r=>r.ok?r.json():Promise.reject()).then(info=>{$('version').textContent='v'+info.version}).catch(()=>{});
