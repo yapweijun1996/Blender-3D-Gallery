@@ -176,7 +176,7 @@ self.addEventListener("message", (event) => {
               type: "window",
               includeUncontrolled: true,
             })
-          ).filter((client) => client.url.startsWith(SCOPE));
+          ).filter((client) => client.url.startsWith(SCOPE) && !client.url.startsWith(absolute("christmas-card/")));
         let clients = [];
         const id = crypto.randomUUID(),
           answers = new Map();
@@ -246,6 +246,7 @@ self.addEventListener("fetch", (event) => {
     url = new URL(request.url);
   if (
     request.method !== "GET" ||
+    (request.mode === "navigate" && url.href.startsWith(absolute("christmas-card/"))) ||
     !request.url.startsWith(SCOPE) ||
     url.origin !== self.location.origin
   )

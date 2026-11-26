@@ -1,0 +1,37 @@
+:root {
+  --pine:#103b2b; --deep:#08291d; --gold:#ffe29a; --cream:#f6eedc;
+  --red:#a80c1a; --ink:#512e25; --muted:#e5d5ad; --letter-green:#14633a;
+  --letter-gold:#c69942; color-scheme:dark;
+  font-family:Georgia,'Times New Roman',serif; background:var(--deep); color:var(--cream);
+}
+* { box-sizing:border-box }
+html { touch-action:manipulation }
+body { margin:0; min-width:0; min-height:100dvh; background:radial-gradient(ellipse at 50% 38%,var(--pine),var(--deep) 75%) }
+button { font:inherit; color:inherit; min-width:44px; min-height:44px; cursor:pointer }
+button:focus-visible { outline:3px solid var(--gold); outline-offset:3px }
+.card { height:100dvh; min-height:480px; padding:max(8px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left)); display:flex; flex-direction:column; align-items:center; position:relative; text-align:center }
+.controls { align-self:stretch; display:flex; justify-content:flex-end; gap:4px; min-height:44px }
+.controls button, footer button { border:0; background:transparent; color:var(--gold); font:600 12px system-ui }
+header { flex:none }
+.eyebrow { font:600 10px/1.4 system-ui; letter-spacing:.22em; color:var(--gold) }
+h1 { font-size:clamp(29px,5vw,48px); font-weight:normal; margin:8px 0 4px }
+header p { color:var(--muted); font-size:15px; margin:0 }
+.scene { position:relative; width:min(100%,760px); flex:1 1 auto; min-height:0; max-height:720px; margin:auto 0 }
+canvas { width:100%; height:100%; display:block }
+.open { position:absolute; bottom:clamp(8px,4vh,32px); left:50%; transform:translateX(-50%); border:1px solid var(--gold); background:var(--red); padding:0 24px; border-radius:99px; white-space:nowrap; box-shadow:0 5px 20px var(--deep) }
+.open:disabled { opacity:.7 }
+.message { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:min(96%,680px); max-height:min(92%,580px); padding:10px; background:var(--cream); color:var(--ink); border:1px solid var(--letter-gold); box-shadow:0 12px 36px var(--deep); overflow:auto; animation:letter-arrives .8s ease-out both }
+.letter-frame { border:3px solid var(--letter-green); outline:1px solid var(--letter-gold); outline-offset:-8px; min-height:clamp(250px,39vh,380px); padding:20px 24px 14px; display:flex; flex-direction:column; align-items:center; justify-content:center }
+.letter-star { color:var(--letter-gold); font-size:clamp(28px,5vw,42px); line-height:1; margin-bottom:10px }
+.letter-copy { font-size:clamp(15px,2vw,20px); line-height:1.42; overflow-wrap:anywhere }
+.message p { margin:5px 0 }
+.message button { flex:none; background:var(--red); color:var(--cream); border:0; border-radius:30px; padding:0 22px; margin-top:14px }
+.message [data-pending] { opacity:0 }
+.fallback { max-width:440px; line-height:1.5 }
+.fallback[hidden], .message[hidden], .open[hidden] { display:none }
+footer { flex:none; color:var(--muted); font:11px system-ui; display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap }
+#update-status:not(:empty) { width:100% }
+#update-status:empty { display:none }
+@keyframes letter-arrives { from { opacity:.9; transform:translate(-50%,-50%) translateY(clamp(-75px,-8vh,-45px)) scale(.9) } to { opacity:1; transform:translate(-50%,-50%) scale(1) } }
+@media (max-height:700px) { h1 { font-size:27px; margin:4px 0 } header p { font-size:13px } .letter-frame { min-height:190px; padding:12px 18px } .letter-star { font-size:25px; margin-bottom:4px } .message button { margin-top:6px } }
+@media (prefers-reduced-motion:reduce) { * { scroll-behavior:auto!important; animation:none!important; transition:none!important } }

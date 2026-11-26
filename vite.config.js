@@ -5,6 +5,7 @@ import { loadDemos } from "./scripts/demo-registry.mjs";
 import { pwaBuildPlugin } from "./scripts/pwa-build.mjs";
 import { i18nBuildPlugin } from "./scripts/i18n-build.mjs";
 import { paletteBuildPlugin } from "./scripts/palette-build.mjs";
+import { christmasCardBuild } from "./scripts/christmas-card-build.mjs";
 import packageInfo from "./package.json" with { type: "json" };
 
 const { version } = packageInfo;
@@ -13,9 +14,10 @@ const demosId = "virtual:gallery-demos";
 export default defineConfig({
   base: "./",
   define: { __APP_VERSION__: JSON.stringify(version) },
-  build: { assetsInlineLimit: 0 },
+  build: { assetsInlineLimit: 0, rollupOptions: { input: { gallery: resolve("index.html"), christmasCard: resolve("christmas-card/index.html") } } },
   plugins: [
     pwaBuildPlugin(version),
+    christmasCardBuild(),
     paletteBuildPlugin(),
     i18nBuildPlugin(),
     {

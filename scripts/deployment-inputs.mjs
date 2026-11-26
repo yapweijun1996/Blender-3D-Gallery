@@ -11,7 +11,7 @@ const tracked = new Map(index.split('\0').filter(Boolean).map(row => {
   return [file, hash];
 }));
 const selected = new Set([...tracked.keys()].filter(file =>
-  /^(src|scripts|public|data)\//.test(file) ||
+  /^(src|scripts|public|data|christmas-card)\//.test(file) ||
   ['index.html', 'package.json', 'package-lock.json', 'vite.config.js', 'models/catalog.json'].includes(file)));
 function include(file) {
   if (!tracked.has(file)) throw new Error('Deployment references an untracked or missing file: ' + file);
