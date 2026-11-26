@@ -60,32 +60,27 @@ export function createAddress(envelope) {
   };
 }
 
-export function createEntranceTrail(scene, texture) {
-  const samples = Array.from({ length: 44 }, (_, i) => {
-    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
-      map: texture, color: i % 5 === 0 ? 0xfff8e9 : (i % 3 === 0 ? 0xe8ddff : 0xffd788), transparent: true,
-      depthWrite: false, toneMapped: false, blending: THREE.AdditiveBlending,
-    }));
-    sprite.visible = false;
-    scene.add(sprite);
-    return sprite;
-  });
+export function createEntranceTrail(batch) {
+  const samples = Array.from({ length: batch.capacity }, (_, i) => ({
+    age: .055 + i * .032,
+    x: Math.cos(i * 2.4), y: Math.sin(i * 2.4), z: .23 + Math.sin(i * 1.73) * .18,
+    phase: i * 3.2, size: .20 + (i % 4) * .043, kind: i % 5 === 0 ? 3 : i % 3 === 0 ? 4 : 2,
+  }));
   const pose = new THREE.Object3D();
   return (time, flight) => {
-    samples.forEach((sprite, i) => {
-      const age = .055 + i * .032;
+    let count = 0;
+    for (const { age, x, y, z, phase, size, kind } of samples) {
       const birth = time - age;
-      sprite.visible = birth > 0 && birth < entranceDuration - .1;
-      if (!sprite.visible) return;
+      if (birth <= 0 || birth >= entranceDuration - .1) continue;
       poseEntrance(pose, birth, flight);
-      sprite.position.copy(pose.position);
-      sprite.position.x += Math.cos(i * 2.4) * (.16 + age * .17);
-      sprite.position.y += Math.sin(i * 2.4) * (.10 + age * .22) - age * .075;
-      sprite.position.z += .23 + Math.sin(i * 1.73) * .18;
-      const twinkle = .78 + .22 * Math.sin(i * 3.2 + time * 9);
-      sprite.scale.setScalar((.20 + (i % 4) * .043) * (1 - .31 * age / trailLifetime));
-      sprite.material.opacity = twinkle * (1 - age / trailLifetime) ** .7 *
+      pose.position.x += x * (.16 + age * .17);
+      pose.position.y += y * (.10 + age * .22) - age * .075;
+      pose.position.z += z;
+      const twinkle = .78 + .22 * Math.sin(phase + time * 9);
+      const opacity = twinkle * (1 - age / trailLifetime) ** .7 *
         THREE.MathUtils.smoothstep(entranceDuration - .1 - birth, 0, .22);
-    });
+      batch.put(count++, pose.position, size * (1 - .31 * age / trailLifetime), opacity, kind);
+    }
+    batch.draw(count);
   };
 }

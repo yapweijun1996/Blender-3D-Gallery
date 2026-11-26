@@ -22,7 +22,13 @@
         <div class="loading-stars" aria-hidden="true"><span>✦</span><span>✦</span><span>✦</span></div>
         <span id="loading-text">Loading your greeting…</span>
       </div>
-      <section id="message" class="message" aria-live="polite" hidden><div class="letter-frame"><span class="letter-star" aria-hidden="true">★</span><div class="letter-copy"><p id="recipient"></p><div id="lines"></div><p id="sender"></p></div><button id="replay" type="button">Replay ↻</button></div></section>
+      <section id="message" class="message" aria-live="polite" hidden>
+        <div class="letter-frame">
+          <span id="message-star" class="letter-star" aria-hidden="true" data-reveal>★</span>
+          <div class="letter-copy"><p id="recipient" data-reveal></p><div id="lines"></div><p id="sender" data-reveal></p></div>
+          <button id="replay" type="button" data-reveal>Replay ↻</button>
+        </div>
+      </section>
     </section>
     <p id="fallback" class="fallback" hidden></p>
     <div class="card-actions">

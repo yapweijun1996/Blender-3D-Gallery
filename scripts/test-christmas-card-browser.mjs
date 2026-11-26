@@ -5,6 +5,8 @@ import path from 'node:path';
 import { chromium } from 'playwright';
 import { launchOptions } from './browser-test-utils.mjs';
 import { entranceBudgetMs, entranceDuration, loopStart, loopEnd, maxFrameDelta } from '../src/christmas-card/motion.js';
+import { handoverDuration } from '../src/christmas-card/letter.js';
+import { particleLimit } from '../src/christmas-card/magic.js';
 const root = path.resolve('dist'), base = '/Blender-3D-Gallery/';
 const types = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.png':'image/png','.glb':'model/gltf-binary'};
 const server = http.createServer(async (req,res) => {
@@ -34,11 +36,36 @@ async function envelopePixels(page) {
     return {width:maxX-minX+1,height:maxY-minY+1,minX,minY,maxX,maxY,canvasWidth:canvas.width,canvasHeight:canvas.height,count,median};
   },{base64:png.toString('base64'),canvasBox,buttonBox});
 }
-async function assertHero(page,width,height) {
+async function assertHero(page,width,height,idle=false) {
   const p=await envelopePixels(page);
-  if(width===390) assert.ok(p.width>=width*.85,`Mobile envelope width ${p.width}px is below 85% of ${width}px`);
+  if(width===390){
+    const ratio=p.width/width;
+    assert.ok(idle ? ratio>=.64&&ratio<=.78 : ratio>=.85,`Unexpected mobile ${idle?'rest':'close-up'} width: ${p.width}px`);
+  }
   else assert.ok(p.height>=height*.45,`Desktop envelope height ${p.height}px is below 45% of ${height}px`);
   assert.ok(p.minX>0&&p.maxX<p.canvasWidth-1&&p.minY>0&&p.maxY<p.canvasHeight-1,`Envelope clipped: ${JSON.stringify(p)}`);
+}
+async function assertPaperPixels(page, samples) {
+  const colors=await page.evaluate(async samples=>{
+    const result=[];
+    for(const {png,rect} of samples){
+      const bytes=Uint8Array.from(atob(png),c=>c.charCodeAt(0));
+      const bitmap=await createImageBitmap(new Blob([bytes],{type:'image/png'}));
+      const canvas=document.createElement('canvas');
+      canvas.width=bitmap.width;canvas.height=bitmap.height;
+      const ctx=canvas.getContext('2d');ctx.drawImage(bitmap,0,0);bitmap.close();
+      const x=Math.round(rect.left+(rect.right-rect.left)*.18);
+      const y=Math.round(rect.top+(rect.bottom-rect.top)*.72);
+      const data=ctx.getImageData(x-3,y-3,7,7).data;
+      const average=[0,0,0];
+      for(let i=0;i<data.length;i+=4)for(let j=0;j<3;j++)average[j]+=data[i+j]/49;
+      result.push(average);
+    }
+    return result;
+  },samples);
+  assert.ok(colors.every(([r,g,b])=>r>160&&g>130&&b>90),'Both frames show the cream paper surface');
+  assert.ok(colors[0].every((channel,i)=>Math.abs(channel-colors[1][i])<8),
+    `Paper color changed across the HTML reveal: ${JSON.stringify(colors)}`);
 }
 async function assertBurstPixels(page, snapshot) {
   const png=await page.locator('#canvas').screenshot();
@@ -67,8 +94,42 @@ async function assertMessageFits(page) {
   assert.ok(await page.locator('#message').evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight&&r.left>=0&&r.right<=innerWidth&&e.scrollHeight<=e.clientHeight}));
 }
 async function readSnapshot(page) {
-  await page.waitForFunction(()=>window.__christmasCardTest.snapshot!==null);
+  await page.waitForFunction(()=>window.__christmasCardTest.snapshot!==null,undefined,{polling:50});
   return page.evaluate(()=>window.__christmasCardTest.snapshot);
+}
+async function observeWarmDraws(page) {
+  await page.waitForFunction(()=>!!window.__christmasCardTest?.renderer);
+  await page.evaluate(()=>{
+    const hook=window.__christmasCardTest, renderer=hook.renderer;
+    const has=renderer.extensions.has.bind(renderer.extensions);
+    renderer.extensions.has=name=>name!=='KHR_parallel_shader_compile'&&has(name);
+    const warm=hook.warmDraws={draws:[],late:[],parallelCompiles:0};
+    const compile=renderer.compileAsync.bind(renderer);
+    renderer.compileAsync=(...args)=>{warm.parallelCompiles++;return compile(...args)};
+    const render=renderer.render.bind(renderer);
+    renderer.render=(scene,camera)=>{
+      const count=renderer.info.programs.length;
+      render(scene,camera);
+      const added=renderer.info.programs.length-count;
+      if(renderer.getScissorTest()){
+        const nodes=[];
+        scene.traverseVisible(object=>{if(object.name)nodes.push(object.name)});
+        warm.draws.push({nodes,calls:renderer.info.render.calls,letterDetached:scene.children.some(object=>object.name==='Letter')});
+      }else if(added>0){
+        warm.late.push({added,after:hook.frames?.at(-1)?.phase||'loading'});
+      }
+    };
+  });
+}
+function assertWarmDraws({draws,late,parallelCompiles}) {
+  assert.equal(parallelCompiles,0,'Exercise warm-up without the parallel shader extension');
+  assert.equal(draws.length,4,'Every warm-up pass renders within the deadline');
+  assert.ok(draws.every(draw=>draw.calls>0),'Warm-up submits real draw calls');
+  assert.ok(['Address','EntranceStardust'].every(name=>draws[0].nodes.includes(name)));
+  assert.ok(draws[1].nodes.includes('SealCracks'));
+  assert.ok(['SealShard1','SealShard5','MouthGlow','Stardust'].every(name=>draws[2].nodes.includes(name)));
+  assert.equal(draws[3].letterDetached,true);
+  assert.deepEqual(late,[],'Every playback shader is ready before the first entrance frame');
 }
 async function holdModel(page) {
   let release;
@@ -241,12 +302,13 @@ function assertViewportFlight(frames,width,height) {
     }
   }
   assert.ok(crossesLeft&&fullyEntered, 'Envelope crosses viewport x=0 and enters completely');
-  for (const phase of ['entrance','idle','opening','message']) assert.ok(phases.has(phase), `Missing ${phase} frames`);
+  for (const phase of ['entrance','idle','opening','handover','message']) assert.ok(phases.has(phase), `Missing ${phase} frames`);
 }
 function assertEntranceLoop(frames,idle,completion) {
   const entrance=frames.filter(frame=>frame.phase==='entrance');
   const first=entrance[0].bounds;
-  assert.ok(first.right-first.left<(idle.bounds.right-idle.bounds.left)*.42,'Envelope starts small in the distance');
+  assert.ok(first.right-first.left<(idle.bounds.right-idle.bounds.left)*(idle.canvas.width===390?.46:.42),
+    'Envelope starts small in the distance');
   assert.equal(completion?.reason,'timeline',`Full flight must finish on its timeline: ${JSON.stringify(completion)}`);
   assert.ok(completion.time>=entranceDuration&&completion.time<=entranceDuration+maxFrameDelta+.0001,
     'The completed flight takes 3.12 animation seconds');
@@ -294,10 +356,11 @@ function assertOpeningCamera(frames,idle,burstSnapshot) {
 }
 function assertOpeningCadence(frames, burstSnapshot) {
   const opening=frames.filter(frame=>frame.phase==='opening');
-  let lastMotion=0, pose={flap:0,seal:1,letter:0,burst:false};
+  let lastMotion=0, pose={flap:0,seal:{progress:0,separated:false},letter:0,burst:false};
   for(const frame of opening){
     assert.ok(frame.time-lastMotion<=.5,`Opening still for more than 0.5 s by ${frame.time}s`);
-    if(Math.abs(frame.flap-pose.flap)>=.035||Math.abs(frame.seal-pose.seal)>=.04||
+    if(Math.abs(frame.flap-pose.flap)>=.035||Math.abs(frame.seal.progress-pose.seal.progress)>=.04||
+        frame.seal.separated!==pose.seal.separated||
         Math.abs(frame.letter-pose.letter)>=.025||frame.burst!==pose.burst){
       lastMotion=frame.time;pose=frame;
     }
@@ -305,6 +368,41 @@ function assertOpeningCadence(frames, burstSnapshot) {
   const firstBurst=opening.find(frame=>frame.burst);
   assert.ok(firstBurst&&firstBurst.flap>-3.02&&burstSnapshot.flap<firstBurst.flap-.07,'Burst begins while the flap is still swinging');
   assert.ok(opening.some(frame=>frame.burst&&frame.time<firstBurst.time+.5&&frame.letter>.015),'Letter lift overlaps the burst');
+  const fracture=opening.find(frame=>frame.seal.separated);
+  assert.ok(opening.some(frame=>!frame.seal.separated&&frame.seal.progress>.80),'Golden cracks spread before the break');
+  assert.equal(fracture?.seal.visible,5);
+  assert.ok(opening.some(frame=>frame.seal.separated&&frame.seal.visible===0&&frame.particleCount>0),
+    'The seal dissolves into visible stardust');
+  assert.ok(burstSnapshot.halo>.75,'Warm beams accompany the burst');
+  assert.ok(burstSnapshot.particles.filter(p=>!p.gold).length>10,'The pool contains slow glowing snow');
+  assert.ok(new Set(burstSnapshot.particles.filter(p=>p.gold).map(p=>p.size.toFixed(3))).size>=3,
+    'Stardust has three distinct sizes');
+  assert.ok(frames.every(frame=>frame.particleCount<=particleLimit),'Particle pool keeps its hard cap');
+}
+function assertLetterHandover(frames) {
+  const distance=(a,b)=>Math.max(...['left','top','right','bottom'].map(edge=>Math.abs(a[edge]-b[edge])));
+  const lift=frames.filter(frame=>frame.phase==='opening').at(-1);
+  const flight=frames.filter(frame=>frame.phase==='handover');
+  const greeting=frames.filter(frame=>frame.phase==='message');
+  assert.ok(lift.letter>2.1&&distance(lift.letterRect,flight[0].letterRect)<2,'The fully lifted letter starts the flight in place');
+  let moving=flight[0], previous=flight[0];
+  for(const frame of flight){
+    assert.ok(distance(previous.letterRect,frame.letterRect)<21,'Projected paper edges move continuously');
+    assert.ok(frame.time-moving.time<=.5,'The letter keeps moving toward the reader');
+    if(distance(moving.letterRect,frame.letterRect)>.75)moving=frame;
+    previous=frame;
+  }
+  assert.ok(distance(previous.letterRect,greeting[0].letterRect)<1.5,'There is no jump when the greeting appears');
+  assert.ok(distance(greeting[0].message,greeting[0].letterRect)<1,'The HTML overlays the projected paper');
+  const order=['message-star','recipient','line','line','line','sender','replay'];
+  assert.deepEqual(greeting[0].revealed,order.slice(0,1));
+  let count=1;
+  for(const frame of greeting){
+    assert.deepEqual(frame.revealed,order.slice(0,frame.revealed.length));
+    assert.ok(frame.revealed.length>=count&&frame.revealed.length<=count+1,'One item appears at a time, top to bottom');
+    count=frame.revealed.length;
+  }
+  assert.equal(count,order.length);
 }
 try {
  await assertRecordingReady();
@@ -312,6 +410,10 @@ try {
  await assertLoadingWatchdog();
  for (const [width,height] of [[390,844],[1440,900]]) {
   const context=await browser.newContext({viewport:{width,height},deviceScaleFactor:1}),page=await context.newPage(),errors=[];
+  await page.addInitScript(()=>{
+    window.__cardCspViolations=[];
+    addEventListener('securitypolicyviolation',event=>window.__cardCspViolations.push(event.violatedDirective));
+  });
   await injectRenderStall(page,'opening');
   page.on('pageerror',e=>errors.push(e.message));
   page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
@@ -327,6 +429,7 @@ try {
   assert.ok(starBox&&loadingText&&starBox.y+starBox.height<loadingText.y,'Glowing stars sit above the loading text');
   assert.equal(await page.locator('.snowfall').evaluate(e=>getComputedStyle(e,'::before').animationName),'snow-near');
   await page.evaluate(()=>{window.__christmasCardTest.frames=[]});
+  if(width===1440)await observeWarmDraws(page);
   try {
     // Give a module-load clock time to expire while the model is still loading.
     await page.waitForTimeout(1500);
@@ -349,7 +452,7 @@ try {
   assert.equal(await page.locator('h1').count(),1);
   assert.ok(await page.evaluate(()=>document.querySelector('header').getBoundingClientRect().top>=document.querySelector('.controls').getBoundingClientRect().bottom));
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
-  await assertHero(page,width,height);
+  await assertHero(page,width,height,true);
   const body=await envelopePixels(page),[red,green,blue]=body.median;
   assert.ok(body.count>1000&&red>=130&&red<=180&&green<45&&blue<55,`Envelope body colour outside deep red range: ${JSON.stringify(body.median)}`);
   await page.screenshot({path:`output/christmas-card/${width}-01-idle.png`});
@@ -366,20 +469,32 @@ try {
   assert.ok(opening<mid&&mid<burstSnapshot.time&&burstSnapshot.age>=.29&&burstSnapshot.age<.5);
   await page.screenshot({path:`output/christmas-card/${width}-04-burst.png`});
   await assertBurstPixels(page,burstSnapshot);
+  await page.evaluate(time=>window.__christmasCardTest.captureAt(time,'handover'),handoverDuration-.065);
+  const flying=await readSnapshot(page);
+  const beforePaper=await page.locator('#canvas').screenshot();
+  await page.evaluate(()=>window.__christmasCardTest.captureAt(0,'message'));
+  const arrived=await readSnapshot(page);
+  const afterPaper=await page.locator('#canvas').screenshot();
+  await assertPaperPixels(page,[
+    {png:beforePaper.toString('base64'),rect:flying.letterRect},
+    {png:afterPaper.toString('base64'),rect:arrived.letterRect},
+  ]);
+  assert.equal(await page.locator('#message').evaluate(e=>getComputedStyle(e).backgroundColor),'rgba(0, 0, 0, 0)');
   await page.evaluate(()=>window.__christmasCardTest.release());
-  await page.locator('#message:not([hidden])').waitFor();
-  await page.waitForFunction(()=>document.querySelectorAll('#lines [data-pending]').length===0);
-  const {frames,completion}=await page.evaluate(()=>{
+  await page.waitForFunction(()=>!document.querySelector('#message [data-pending]'));
+  const {frames,completion,warmDraws}=await page.evaluate(()=>{
     const hook=window.__christmasCardTest, frames=hook.frames;
     hook.frames=null;
-    return {frames,completion:hook.entranceCompletion};
+    return {frames,completion:hook.entranceCompletion,warmDraws:hook.warmDraws};
   });
   assertViewportFlight(frames,width,height);
   assertEntranceLoop(frames,idle,completion);
+  if(width===1440)assertWarmDraws(warmDraws);
   assertOpeningCamera(frames,idle,burstSnapshot);
   assertStalledStep(frames,'opening');
   assertOpeningCadence(frames,burstSnapshot);
-  assert.equal(await page.locator('#lines [data-pending]').count(),0);
+  assertLetterHandover(frames);
+  assert.deepEqual(await page.evaluate(()=>window.__cardCspViolations),[],'HTML alignment preserves production CSP');
   await assertMessageFits(page);
   await page.screenshot({path:`output/christmas-card/${width}-05-message.png`});
   // Longer representative English and Chinese copy remains visible without clipping.
@@ -394,6 +509,9 @@ try {
   await page.locator('#replay').click();
   const replayIdle=await readSnapshot(page);
   assert.deepEqual(replayIdle.camera,idle.camera,'Replay resets the camera to the idle position');
+  assert.deepEqual(replayIdle.seal,{separated:false,visible:5,progress:0});
+  assert.equal(replayIdle.particleCount,0);
+  assert.equal(replayIdle.letter,0);
   await assertButtonClear(page,replayIdle);
   await page.evaluate(()=>window.__christmasCardTest.release());
   await page.locator('#open').click();

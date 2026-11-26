@@ -119,29 +119,37 @@ def star(cx, cz, outer, inner, spikes=5):
     return pts
 
 
+def paper_uv(obj):
+    mesh = obj.data
+    uv = mesh.uv_layers.new(name="Paper")
+    for loop in mesh.loops:
+        point = mesh.vertices[loop.vertex_index].co
+        uv.data[loop.index].uv = (point.x / W, point.z / H)
+
+
 root = link(bpy.data.objects.new("Envelope", None))
 bpy.context.view_layer.update()
 
 # Back panel
-prism("Back", [(-HW, -HH), (HW, -HH), (HW, HH), (-HW, HH)], 0.06, 0.025, RED_BACK, root, 0.01)
+paper_uv(prism("Back", [(-HW, -HH), (HW, -HH), (HW, HH), (-HW, HH)], 0.06, 0.025, RED_BACK, root, 0.01))
 
 # Letter card tucked inside
 letter = link(bpy.data.objects.new("Letter", None), root)
 bpy.context.view_layer.update()
 LW, LT, LB = 1.46, 0.93, -0.95
-prism("LetterPaper", [(-LW, LB), (LW, LB), (LW, LT), (-LW, LT)], 0.0, 0.014, CREAM, letter, 0.004)
+letter["paperBounds"] = [-LW, LB, LW, LT]
+paper_uv(prism("LetterPaper", [(-LW, LB), (LW, LB), (LW, LT), (-LW, LT)], 0.0, 0.014, CREAM, letter, 0.004))
 for inset, mat, radius in ((0.09, GREEN, 0.014), (0.14, GOLD, 0.008)):
     l, r, t, b = -LW + inset, LW - inset, LT - inset, LB + inset
     trim("LetterBorder", [(l, b), (r, b), (r, t), (l, t), (l, b)], -radius - 0.004, mat, letter, radius)
-prism("LetterStar", star(0, 0.52, 0.17, 0.072), -0.016, 0.012, GOLD, letter, 0.003)
 # Move the completed letter assembly behind the folds, without parent-inverse cancellation.
 letter.location.y = 0.02
 bpy.context.view_layer.update()
 
 # Front pocket: two side folds and the bottom fold
-prism("PocketLeft", [(-HW, -HH), (-0.02, -0.05), (-HW, HH)], -0.030, 0.012, RED_SIDE, root)
-prism("PocketRight", [(HW, -HH), (HW, HH), (0.02, -0.05)], -0.030, 0.012, RED_SIDE, root)
-prism("PocketBottom", [(-HW, -HH), (HW, -HH), (0.0, 0.17)], -0.044, 0.012, RED_BOTTOM, root)
+paper_uv(prism("PocketLeft", [(-HW, -HH), (-0.02, -0.05), (-HW, HH)], -0.030, 0.012, RED_SIDE, root))
+paper_uv(prism("PocketRight", [(HW, -HH), (HW, HH), (0.02, -0.05)], -0.030, 0.012, RED_SIDE, root))
+paper_uv(prism("PocketBottom", [(-HW, -HH), (HW, -HH), (0.0, 0.17)], -0.044, 0.012, RED_BOTTOM, root))
 trim("PocketTrim", [(-HW + 0.03, -HH + 0.02), (0.0, 0.15), (HW - 0.03, -HH + 0.02)], -0.058, GOLD, root, 0.010)
 
 # A folded shoulder brings the flap over the pocket from a real pivot inside
@@ -175,6 +183,7 @@ bm.to_mesh(mesh)
 bm.free()
 flap = link(bpy.data.objects.new("Flap", mesh), root)
 flap.location = hinge
+paper_uv(flap)
 bevel = flap.modifiers.new("Fold edges", "BEVEL")
 bevel.width = 0.004
 bevel.segments = 2
@@ -182,7 +191,7 @@ bpy.context.view_layer.update()
 trim("FlapTrim", [(-HW + 0.22, HH - 0.14), (-0.11, -0.14), (0.0, -0.18), (0.11, -0.14), (HW - 0.22, HH - 0.14)],
      -0.084, GOLD, flap, 0.012)
 
-# Wax seal, its own group so the web layer can break it before the flap opens
+# The medallion is assembled from five pieces with matching radial seams.
 SZ = -0.17
 seal = link(bpy.data.objects.new("Seal", None), flap)
 seal.location = (0, 0, 0)
@@ -192,10 +201,42 @@ for i in range(48):
     a = i / 48 * math.tau
     r = 0.30 + 0.014 * math.sin(a * 5 + 0.7) + 0.009 * math.sin(a * 11) + random.uniform(-0.004, 0.004)
     blob.append((r * math.cos(a), SZ + r * math.sin(a)))
-prism("SealWax", blob, -0.135, 0.06, WAX, seal, 0.022)
-trim("SealRing", [(0.215 * math.cos(i / 64 * math.tau), SZ + 0.215 * math.sin(i / 64 * math.tau)) for i in range(65)],
-     -0.152, GOLD, seal, 0.013)
-prism("SealStar", star(0, SZ, 0.17, 0.074), -0.168, 0.025, GOLD, seal, 0.006)
+
+
+def clip_seal_face(points, angle, side):
+    """Clip the gold relief against one side of a radial seam."""
+    def distance(point):
+        return side * (math.cos(angle) * (point[1] - SZ) - math.sin(angle) * point[0])
+
+    clipped = []
+    for start, end in zip(points[-1:] + points[:-1], points):
+        d0, d1 = distance(start), distance(end)
+        if (d0 < 0) != (d1 < 0):
+            t = d0 / (d0 - d1)
+            clipped.append(tuple(a + (b - a) * t for a, b in zip(start, end)))
+        if d1 >= 0:
+            clipped.append(end)
+    return [p for i, p in enumerate(clipped) if math.dist(p, clipped[i - 1]) > 1e-7]
+
+
+cuts = [2, 11, 22, 32, 41]
+shards = []
+seal["crackRays"] = [coordinate for i in cuts for coordinate in blob[i]]
+for index, (first, last) in enumerate(zip(cuts, cuts[1:] + [cuts[0] + len(blob)])):
+    a0, a1 = (i * math.tau / len(blob) for i in (first, last))
+    polygon = [(0, SZ)] + [blob[i % len(blob)] for i in range(first, last + 1)]
+    pivot_x = sum(p[0] for p in polygon) / len(polygon)
+    pivot_z = sum(p[1] for p in polygon) / len(polygon)
+    piece = link(bpy.data.objects.new(f"SealShard{index + 1}", None), seal)
+    piece.location = (pivot_x, -0.11, pivot_z)
+    shards.append(piece)
+    bpy.context.view_layer.update()
+    prism(f"SealWax{index}", polygon, -0.135, 0.06, WAX, piece, 0.003)
+    ring = [(0.215 * math.cos(a0 + (a1 - a0) * i / 14), SZ + 0.215 * math.sin(a0 + (a1 - a0) * i / 14))
+            for i in range(15)]
+    trim(f"SealRing{index}", ring, -0.150, GOLD, piece, 0.011)
+    relief = clip_seal_face(clip_seal_face(star(0, SZ, 0.17, 0.074), a0, 1), a1, -1)
+    prism(f"SealStar{index}", relief, -0.168, 0.023, GOLD, piece, 0.0025)
 
 
 def holly_leaf(name, cx, cz, angle, length, parent, y):
@@ -215,7 +256,7 @@ def holly_leaf(name, cx, cz, angle, length, parent, y):
 for index, degrees in enumerate((155, 25)):
     a = math.radians(degrees)
     holly_leaf(f"SealHolly{index}", 0.17 * math.cos(a), SZ - 0.19 + 0.02 * index, a if index else a + 0.35,
-               0.36, seal, -0.162 - 0.004 * index)
+               0.36, shards[3], -0.162 - 0.004 * index)
 for index, (bx, bz) in enumerate(((-0.055, SZ - 0.21), (0.055, SZ - 0.215), (0.0, SZ - 0.275))):
     bm = bmesh.new()
     bmesh.ops.create_icosphere(bm, subdivisions=3, radius=0.056)
@@ -227,7 +268,7 @@ for index, (bx, bz) in enumerate(((-0.055, SZ - 0.21), (0.055, SZ - 0.215), (0.0
         poly.use_smooth = True
     berry = bpy.data.objects.new(f"Berry{index}", mesh)
     berry.location = (bx, -0.19, bz)
-    link(berry, seal)
+    link(berry, shards[3])
     bpy.context.view_layer.update()
 
 
@@ -282,20 +323,19 @@ print("objects:", len(scene.objects), "flap origin:", tuple(round(v, 3) for v in
 # Reproducible opening animation. The burst starts on the flap's final
 # swing, and the letter begins its eased lift while the burst is active.
 scene.render.fps = 24
-scene.frame_start, scene.frame_end = 1, 88
+scene.frame_start, scene.frame_end = 1, 92
 burst_frame = scene.timeline_markers.new("Burst", frame=40).frame
 root["burstTime"] = (burst_frame - scene.frame_start) / scene.render.fps
-for frame, scale in ((1, 1.0), (11, 0.001)):
-    seal.scale = (scale,) * 3
-    seal.keyframe_insert(data_path="scale", frame=frame, group="Seal")
-for frame, angle in ((1, 0), (5, 0), (13, -23), (35, -138), (48, -174), (scene.frame_end, -174)):
+break_frame = scene.timeline_markers.new("Seal break", frame=13).frame
+root["sealBreakTime"] = (break_frame - scene.frame_start) / scene.render.fps
+for frame, angle in ((1, 0), (12, 0), (19, -32), (34, -138), (49, -174), (scene.frame_end, -174)):
     flap.rotation_euler.x = math.radians(angle)
     flap.keyframe_insert(data_path="rotation_euler", frame=frame, group="Flap")
-for frame, height in ((1, 0), (44, 0), (53, 0.13), (75, 1.08), (scene.frame_end, 1.25)):
+for frame, height in ((1, 0), (44, 0), (53, 0.19), (75, 1.55), (scene.frame_end, 2.12)):
     letter.location.z = height
     letter.keyframe_insert(data_path="location", frame=frame, group="Letter")
 # One glTF clip, with an NLA track shared by all animated objects.
-for obj in (seal, flap, letter):
+for obj in (flap, letter):
     action = obj.animation_data.action
     action.name = "Open_" + obj.name
     track = obj.animation_data.nla_tracks.new()

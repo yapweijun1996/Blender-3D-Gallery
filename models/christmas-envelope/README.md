@@ -6,7 +6,7 @@ The owner-approved design is reproduced by `build_envelope.py`. From the reposit
 /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup --python models/christmas-envelope/build_envelope.py
 ```
 
-The script saves `envelope.blend` before converting the trim curves to meshes for `envelope.glb` and stabilizes triangle ordering for repeat exports. The `Open` glTF clip begins with the seal shrinking on tap, rotates the lined flap to -174 degrees, and eases the letter out. The Blender timeline's Burst marker is exported as `burstTime` on the Envelope node, letting the web burst start during the final part of the flap swing and overlap the letter lift. The flap's folded shoulder pivots inside the back panel. Closed trim curves are cyclic, and the trim, letter and pocket surfaces are separated in depth to avoid coplanar artifacts. The web experience adds the address, stamp, particle burst and greeting text. The source design was supplied in the read-only Greeting-Card-3D project.
+The script saves `envelope.blend` before converting the trim curves to meshes for `envelope.glb` and stabilizes triangle ordering for repeat exports. Five wax pieces carry the segmented ring and gold relief. Their seam endpoints are exported as `crackRays` on the Seal node. The `Open` glTF clip rotates the lined flap to -174 degrees and lifts the letter fully out. The Seal break and Burst markers are exported on the Envelope node, and the Letter node exports its face bounds for the web flight and HTML alignment. The pocket and lining preserve clearance, and paper meshes export UVs for the web grain. The source design was supplied in the read-only Greeting-Card-3D project.
 
 Check hinge contact and letter clearance at half-frame intervals with:
 

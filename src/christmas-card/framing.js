@@ -37,6 +37,7 @@ for (let degrees = 0; degrees <= 174; degrees += 3) {
 }
 // Maximum reach of the existing burst, including the particle radii.
 const burstBounds = [...frameBounds];
+addBox(burstBounds, 1.48, 1.15, 3.10, -.05, .024);
 addBox(burstBounds, 2.25, -.12, 3.65, -.5, .82);
 const closeRotation = new Quaternion().setFromEuler(new Euler(-closePitch, 0, closeRoll));
 const inverseClose = closeRotation.clone().invert();
@@ -63,12 +64,12 @@ function fitBounds(bounds, xSlope, topSlope, bottomSlope, aim, minimumDistance =
 
 export function frameEnvelope(camera, viewport, stage) {
   const tangent = Math.tan(MathUtils.degToRad(fov / 2));
-  const idle = fitBounds(idleBounds, tangent * stage.width / stage.height * .985, tangent * .99, tangent * .99, .36);
+  const entrance = fitBounds(idleBounds, tangent * stage.width / stage.height * .985, tangent * .99, tangent * .99, .36);
   const x = stage.left + stage.width / 2 - viewport.left;
   const y = stage.top + stage.height / 2 - viewport.top;
   const slope = 2 * tangent / stage.height;
   const halfWidth = Math.min(x, viewport.width - x);
-  const closeDistance = idle.z * .67;
+  const closeDistance = entrance.z * .67;
   const closeWidth = 2 * (halfWidth - 5) / stage.height;
   // Widen the lens on narrow screens so the camera can get physically closer
   // without cropping the mouth. Desktop has room for the tighter lens.
@@ -78,23 +79,34 @@ export function frameEnvelope(camera, viewport, stage) {
   const close = fitBounds(angledBounds, closeSlope * (halfWidth - 5), closeSlope * (y - 9),
     closeSlope * (viewport.height - y - 9), .73, closeDistance);
   const wide = fitBounds(wideBounds, slope * (halfWidth - 10),
-    slope * (y - 10), slope * (viewport.height - y - 10), .93, idle.z * 1.04);
+    slope * (y - 10), slope * (viewport.height - y - 10), .93, entrance.z * 1.04);
   camera.fov = fov;
-  camera.far = Math.max(50, idle.z * 3.2);
+  camera.far = Math.max(50, entrance.z * 3.2);
   // Extend the view outside the composition area so the flight can cross
   // the full viewport while the settled envelope keeps its size and position.
   camera.setViewOffset(stage.width, stage.height, viewport.left - stage.left,
     viewport.top - stage.top, viewport.width, viewport.height);
-  idle.applyAxisAngle(axis, -pitch);
+  entrance.applyAxisAngle(axis, -pitch);
   wide.applyAxisAngle(axis, -pitch);
   close.applyQuaternion(closeRotation);
+  const restPullback = .24 * (1 - MathUtils.smoothstep(viewport.width, 415, 620));
   const views = {
-    idle: { position: idle, pitch, roll: 0, fov },
+    restPullback,
+    entrance: { position: entrance, pitch, roll: 0, fov },
+    idle: { position: entrance.clone().multiplyScalar(1 + restPullback), pitch, roll: 0, fov },
     close: { position: close, pitch: closePitch, roll: closeRoll, fov: MathUtils.radToDeg(2 * Math.atan(closeTangent)) },
     wide: { position: wide, pitch, roll: 0, fov },
   };
   setCameraPose(camera, views.idle);
   return views;
+}
+
+export function poseLandingCamera(camera, views, center, time) {
+  if (!views.restPullback) return;
+  const pullback = views.restPullback * MathUtils.smootherstep(time, 2.68, 3.12);
+  // Pull back along the sight line to keep the approved projected flight path.
+  camera.position.copy(views.entrance.position).multiplyScalar(1 + pullback).addScaledVector(center, -pullback);
+  camera.updateMatrixWorld();
 }
 
 function aimCamera(camera, angle, roll, lens) {

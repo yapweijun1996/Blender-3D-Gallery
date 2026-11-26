@@ -3,7 +3,7 @@ from mathutils.bvhtree import BVHTree
 s=bpy.context.scene
 flap_parts=[bpy.data.objects[n] for n in ('Flap','FlapTrim')]
 back=bpy.data.objects['Back']
-letter_parts=[bpy.data.objects[n] for n in ('LetterPaper','LetterBorder','LetterBorder.001','LetterStar')]
+letter_parts=[bpy.data.objects[n] for n in ('LetterPaper','LetterBorder','LetterBorder.001')]
 def tree(obj, dg):
     evaluated=obj.evaluated_get(dg)
     mesh=evaluated.to_mesh()
@@ -27,3 +27,8 @@ for tick in range(samples):
             hits=flap_tree.overlap(letter_tree)
             if hits: raise RuntimeError(f'Intersection at frame {frame + subframe}: {part.name} and {obj.name}: {len(hits)}')
 print(f'PASS: hinge joined and no flap/letter surface intersections in {samples} half-frame samples')
+bpy.context.scene.frame_set(s.frame_end)
+dg=bpy.context.evaluated_depsgraph_get()
+letter_paper=letter_parts[0].evaluated_get(dg)
+assert min((letter_paper.matrix_world @ v.co).z for v in letter_paper.data.vertices) > 1.05
+print('PASS: the letter fully clears the mouth at the end of the lift')
