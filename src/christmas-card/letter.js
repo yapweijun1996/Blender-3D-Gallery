@@ -35,9 +35,9 @@ export function createLetterFlight(letter, scene) {
       startPosition = letter.position.clone();
       startRotation = letter.quaternion.clone();
     },
-    pose(camera, viewport, stage, time) {
+    pose(camera, viewport, stage, time, minimumHeight = 385) {
       const width = Math.min(stage.width * .96, 660);
-      const height = Math.min(stage.height * .88, Math.max(385, width * .64));
+      const height = Math.min(stage.height * .88, Math.max(minimumHeight, width * .64));
       const x = stage.left + stage.width / 2, y = stage.top + stage.height / 2;
       const depth = Math.min(4.8, camera.position.z * .54);
       destination.set(2 * (x - viewport.left) / viewport.width - 1, 1 - 2 * (y - viewport.top) / viewport.height, .5)

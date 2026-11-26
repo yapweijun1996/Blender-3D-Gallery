@@ -2,12 +2,53 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { greeting } from '../src/christmas-card/config.js';
+import { codePointCount, decodeGreeting, encodeGreeting, fragmentLimit, greetingLimits } from '../src/christmas-card/greeting-link.js';
 
 const layouts = [
   [{ left: 0, top: 0, width: 390, height: 844 }, { left: 16, top: 126, width: 358, height: 622 }],
   [{ left: 0, top: 0, width: 1440, height: 900 }, { left: 340, top: 154, width: 760, height: 694 }],
   [{ left: 0, top: 0, width: 1366, height: 657 }, { left: 303, top: 115, width: 760, height: 490 }],
 ];
+
+test('greeting fragments round-trip names, emoji, Chinese, newlines, and URL metacharacters', () => {
+  const greeting = {to:'小美 🧑‍🎄',msg:'圣诞快乐 🎄\n\nLove + joy & peace = 🌟 #2026',from:'阿林 💛',lang:'zh'};
+  const fragment = encodeGreeting(greeting);
+  assert.match(fragment,/^#to=/);
+  assert.deepEqual(decodeGreeting(fragment),greeting);
+  assert.equal(new URLSearchParams(fragment.slice(1)).get('msg'),greeting.msg);
+  assert.deepEqual(decodeGreeting('#lang=en'),{to:'',msg:'',from:'',lang:'en'});
+  assert.equal(encodeGreeting({msg:'hello',from:'   ',lang:'en'}),'#msg=hello&lang=en');
+});
+
+test('greeting fragments enforce decoded code-point, line, and raw length limits', () => {
+  const {to,msg,from,lines}=greetingLimits;
+  const fragment = new URLSearchParams({to:'🎅'.repeat(to+1),msg:'🌟'.repeat(msg+1),from:'送'.repeat(from+1)});
+  const limited = decodeGreeting('#'+fragment);
+  assert.equal(codePointCount(limited.to),to);
+  assert.equal(codePointCount(limited.msg),msg);
+  assert.equal(codePointCount(limited.from),from);
+  assert.equal(limited.to,'🎅'.repeat(40));
+  assert.equal(decodeGreeting('#msg=一%0A二%0A三%0A四%0A五%0A六%0A七').msg.split('\n').length,lines);
+  assert.equal(decodeGreeting('#to='+'a'.repeat(fragmentLimit)).to,'');
+  assert.equal(decodeGreeting('#to='+'a'.repeat(fragmentLimit-3)).to,'a'.repeat(to));
+});
+
+test('greeting fragments remove controls and tolerate broken escapes and unknown fields', () => {
+  assert.deepEqual(decodeGreeting('#to=A%00%09%1FB%E2%80%AE%0AC&msg=X%0D%0AY%E2%80%A8Z%ZZ%&from=%E2%81%A7ok&lang=fr'),
+    {to:'AB C',msg:'X\nY\nZ%ZZ%',from:'ok',lang:undefined});
+  assert.equal(decodeGreeting('#msg=%E0%A4%A').msg,'�%A');
+  assert.equal(decodeGreeting('#x=ignored&msg=%3Cimg+onerror%3Dx%3E&msg=duplicate').msg,'<img onerror=x>');
+});
+
+test('address wrapping keeps whole emoji and breaks a name with no spaces', async () => {
+  const {wrapAddress}=await import('../src/christmas-card/fit-copy.js');
+  assert.deepEqual(wrapAddress('one two three', codePointCount, 7),['one two','three']);
+  const name='最长'.repeat(20);
+  const wrapped=wrapAddress(name,codePointCount,15);
+  assert.deepEqual(wrapped.map(codePointCount),[15,15,10]);
+  assert.equal(wrapped.join(''),name);
+  assert.deepEqual(wrapAddress('🧑‍🎄🧑‍🎄', codePointCount, 3),['🧑‍🎄','🧑‍🎄']);
+});
 
 test('Christmas greeting is bilingual and the GLB contains the opening clip', () => {
   for (const lang of ['en', 'zh']) {
@@ -131,6 +172,28 @@ test('card worker holds upgrades until the visitor approves them', async () => {
   update.handlers.message({data:{type:'ACTIVATE'}});
   await update.promise;
   assert.equal(update.skipped(), 1);
+});
+
+test('card navigations share one offline entry and the installed launch is fragment-free', async () => {
+  const {runInNewContext}=await import('node:vm');
+  const source=readFileSync('src/christmas-card/sw-template.js','utf8')
+    .replace('__VERSION__','"test"').replace('__FILES__','[]');
+  const handlers={}, keys=[];
+  runInNewContext(source,{
+    URL,
+    self:{registration:{scope:'https://example.test/site/christmas-card/'},location:{origin:'https://example.test'},
+      addEventListener(name,run){handlers[name]=run}},
+    caches:{open:async()=>({match:async key=>{keys.push(key.href);return 'cached'}})},
+  });
+  for(const suffix of ['','?card-test=1#msg=private','index.html#to=another']){
+    let response;
+    handlers.fetch({request:{method:'GET',mode:'navigate',url:'https://example.test/site/christmas-card/'+suffix},
+      respondWith(value){response=value}});
+    assert.equal(await response,'cached');
+  }
+  assert.deepEqual(keys,Array(3).fill('https://example.test/site/christmas-card/index.html'));
+  const manifest=JSON.parse(readFileSync('public/christmas-card/manifest.webmanifest','utf8'));
+  assert.equal(manifest.start_url,'./');
 });
 
 test('the playback step stays bounded after a stalled or reactivated frame', async () => {
@@ -455,6 +518,10 @@ test('opening camera eases from idle toward the flap and widens to contain the b
     const landing = letterFlight.pose(camera, viewport, stage, handoverDuration);
     assert.ok(distance(previous, landing) < .25, 'the last flying frame aligns with the readable paper');
     assert.ok(distance(landing, letterFlight.project(camera, viewport)) < .001, 'the paper remains in place under the HTML');
+    for (let t=0;t<=handoverDuration;t+=1/30) {
+      const custom=letterFlight.pose(camera, viewport, stage, t, 446);
+      assert.ok(custom.top>stage.top&&custom.bottom<stage.top+stage.height,'the taller custom paper clears the controls');
+    }
     action.stop();
     letterFlight.reset();
     sealEffect.reset();

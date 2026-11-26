@@ -60,6 +60,7 @@ button:focus-visible { outline:3px solid var(--gold); outline-offset:3px }
 .card { height:100dvh; min-height:480px; padding:max(8px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left)); display:flex; flex-direction:column; align-items:center; position:relative; z-index:1; text-align:center }
 .controls { align-self:stretch; display:flex; justify-content:flex-end; gap:4px; min-height:44px }
 .controls button, footer button { border:0; background:transparent; color:var(--gold); font:600 12px system-ui }
+#write-card { margin-inline-end:auto; padding-inline:10px }
 header { flex:none }
 .eyebrow { font:600 10px/1.4 system-ui; letter-spacing:.22em; color:var(--gold) }
 h1 { font-size:clamp(29px,5vw,48px); font-weight:normal; margin:8px 0 4px }
@@ -81,14 +82,23 @@ header p { color:var(--muted); font-size:15px; margin:0 }
 .message { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:min(96%,680px); max-height:min(92%,580px); padding:10px; background:var(--cream); color:var(--ink); border:1px solid var(--letter-gold); box-shadow:0 12px 36px var(--deep); overflow:auto }
 .letter-frame { border:3px solid var(--letter-green); outline:1px solid var(--letter-gold); outline-offset:-8px; min-height:clamp(250px,39vh,380px); padding:20px 24px 14px; display:flex; flex-direction:column; align-items:center; justify-content:center }
 .letter-star { color:#8b5115; font-size:clamp(32px,5vw,42px); line-height:1; margin-bottom:10px; text-shadow:0 0 9px #e6ad646e }
-.letter-copy { font-size:clamp(15px,2vw,20px); line-height:1.42; overflow-wrap:anywhere }
+.letter-copy { width:100%; min-width:0; font-size:clamp(15px,2vw,20px); line-height:1.42; white-space:pre-wrap; overflow-wrap:anywhere }
 .message p { margin:5px 0 }
+#lines p:empty { min-height:1lh }
+.message.compact p { margin:1px 0 }
+.message.compact .letter-copy { line-height:1.15 }
+.message.compact .letter-star { font-size:27px; margin-bottom:4px }
 .message button { flex:none; background:var(--red); color:var(--cream); border:0; border-radius:30px; padding:0 22px; margin-top:14px }
+.message.compact button { margin-top:6px }
 .message.on-paper { position:fixed; transform:none; max-height:none; border:0; padding:12px 18px; background:transparent; box-shadow:none }
+.message.on-paper.compact { padding:6px 13px }
 .message.arriving { pointer-events:none }
 .message.arriving .letter-star { opacity:var(--arrival-star-opacity,.67) }
 .on-paper .letter-frame { border:0; outline:0; min-height:100%; padding:8px 4px }
+.message.compact .letter-frame { padding:4px 11px }
+.message.on-paper.compact .letter-frame { padding-inline:4px }
 .message [data-pending] { visibility:hidden }
+.message [hidden] { display:none }
 .on-paper [data-reveal]:not(.letter-star,[data-pending]) { animation:reveal-ink .12s ease-out both }
 @keyframes reveal-ink { from { opacity:0 } to { opacity:1 } }
 .fallback { max-width:440px; line-height:1.5 }
@@ -101,6 +111,25 @@ footer { grid-row:2; grid-column:1; color:var(--muted); font:11px system-ui; dis
 }
 #update-status:not(:empty) { width:100% }
 #update-status:empty { display:none }
+#composer { inset:auto; position:fixed; left:50%; top:calc(var(--viewport-top,0px) + var(--visible-height,100dvh) / 2);
+  transform:translate(-50%,-50%); margin:0; width:min(calc(100% - 28px),480px); max-width:none;
+  max-height:min(90dvh,calc(var(--visible-height,100dvh) - 24px)); border:1px solid var(--gold);
+  padding:clamp(14px,4vw,24px); border-radius:16px; background:var(--deep); color:var(--cream);
+  font:16px/1.4 system-ui; overflow:auto; overscroll-behavior:contain }
+#composer::backdrop { background:color-mix(in srgb,var(--deep) 82%,transparent) }
+.compose-heading,.compose-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap }
+.compose-heading { justify-content:space-between }
+.compose-heading h2 { margin:0; font:normal clamp(23px,6vw,30px) Georgia,serif }
+#compose-privacy,#compose-status { color:var(--muted); font-size:14px }
+#compose-status:empty { display:none }
+.compose-field { display:grid; grid-template-columns:1fr auto; gap:4px 10px; margin:12px 0 }
+.compose-field[hidden] { display:none }
+.compose-count { color:var(--muted); font-size:12px; align-self:center }
+.compose-field input,.compose-field textarea { grid-column:1/-1; width:100%; min-width:0; min-height:44px;
+  border:1px solid var(--muted); border-radius:8px; padding:8px; background:var(--cream); color:var(--ink); font:inherit }
+.compose-field textarea { resize:vertical }
+#composer button { border:1px solid var(--gold); border-radius:24px; background:transparent; color:var(--gold); padding:6px 12px; font-size:14px }
+#composer #compose-preview { background:var(--red); color:var(--cream) }
 @keyframes snow-near { from { transform:translate(0,0) } to { transform:translate(184px,241px) } }
 @keyframes snow-far { from { transform:translate(0,0) } to { transform:translate(-131px,207px) } }
 @media (max-height:700px) { h1 { font-size:27px; margin:4px 0 } header p { font-size:13px } .letter-frame { min-height:190px; padding:12px 18px } .letter-star { font-size:25px; margin-bottom:4px } .message button { margin-top:6px } }

@@ -7,6 +7,7 @@ import { launchOptions } from './browser-test-utils.mjs';
 import { entranceBudgetMs, entranceDuration, loopStart, loopEnd, maxFrameDelta } from '../src/christmas-card/motion.js';
 import { handoverDuration, starApproachTime } from '../src/christmas-card/letter.js';
 import { mutePreference } from '../src/christmas-card/audio.js';
+import { codePointCount, decodeGreeting, fragmentLimit } from '../src/christmas-card/greeting-link.js';
 import { particleLimit } from '../src/christmas-card/magic.js';
 const root = path.resolve('dist'), base = '/Blender-3D-Gallery/';
 const types = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.png':'image/png','.glb':'model/gltf-binary'};
@@ -113,6 +114,145 @@ async function assertBurstPixels(page, snapshot) {
 }
 async function assertMessageFits(page) {
   assert.ok(await page.locator('#message').evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight&&r.left>=0&&r.right<=innerWidth&&e.scrollHeight<=e.clientHeight}));
+}
+async function assertSharedMessageFits(page) {
+  await page.waitForFunction(()=>{
+    const message=document.getElementById('message');
+    const rect=message.getBoundingClientRect();
+    const stage=document.querySelector('.scene').getBoundingClientRect();
+    const header=document.querySelector('header').getBoundingClientRect();
+    const actions=document.querySelector('.card-actions').getBoundingClientRect();
+    return !message.hidden&&rect.left>=0&&rect.right<=innerWidth&&rect.top>=header.bottom&&
+      rect.bottom<=actions.top&&Math.abs((rect.left+rect.right)-(stage.left+stage.right))<2&&
+      message.scrollWidth<=message.clientWidth&&message.scrollHeight<=message.clientHeight;
+  },undefined,{timeout:5000});
+  await assertMessageFits(page);
+}
+async function readSharedGreeting(page) {
+  return page.evaluate(()=>({
+    to:document.getElementById('recipient').textContent,
+    msg:[...document.querySelectorAll('#lines p')].map(p=>p.textContent).join('\n'),
+    from:document.getElementById('sender').textContent,
+  }));
+}
+const maxGreeting = {
+  to:'W'.repeat(60),
+  msg:Array.from({length:7},()=> '🎄'.repeat(40)).join('\n'),
+  from:'W'.repeat(60),
+  lang:'en',
+};
+const longFragment='#'+new URLSearchParams(maxGreeting);
+const supportedGreetingSizes=[{width:390,height:844},{width:1440,height:900},{width:1366,height:657}];
+async function assertGreetingLinks() {
+  const context=await browser.newContext({viewport:supportedGreetingSizes[0],deviceScaleFactor:1});
+  try {
+    const page=await context.newPage();
+    await page.addInitScript(()=>{
+      window.greetingProbe={address:[]};
+      Object.defineProperty(navigator,'clipboard',{value:{writeText:async value=>{window.greetingProbe.copied=value}}});
+      Object.defineProperty(navigator,'share',{value:async data=>{window.greetingProbe.shared=data}});
+      window.open=(url,target,features)=>{window.greetingProbe.whatsapp={url,target,features};return null};
+      const fillText=CanvasRenderingContext2D.prototype.fillText;
+      CanvasRenderingContext2D.prototype.fillText=function(text,...args){
+        if(this.canvas.width===960&&this.canvas.height===620)window.greetingProbe.address.push(text);
+        return fillText.call(this,text,...args);
+      };
+    });
+    await page.goto(url);
+    const write=page.locator('#write-card'), dialog=page.getByRole('dialog');
+    const box=await write.boundingBox();
+    assert.ok(box.width>=44&&box.height>=44,'The compose button is a 44px touch target');
+    await write.click();
+    await dialog.waitFor();
+    assert.equal(await dialog.locator('#compose-privacy').textContent(),'Anyone with the link can read your message.');
+    await page.waitForFunction(()=>document.activeElement?.id==='compose-title');
+    await page.keyboard.press('Escape');
+    await dialog.waitFor({state:'hidden'});
+    await page.waitForFunction(()=>document.activeElement?.id==='write-card');
+    await page.locator('#language').click();
+    await write.click();
+    assert.equal(await dialog.locator('#compose-privacy').textContent(),'任何拿到链接的人都可以阅读你的留言。');
+    await dialog.getByLabel('收件人').fill('🎅'.repeat(41));
+    assert.equal(await dialog.getByLabel('收件人').inputValue(),'🎅'.repeat(40));
+    const greeting={to:'小美 🧑‍🎄',msg:'圣诞快乐 🎄\n平安喜乐 & with love!',from:'阿林 💛'};
+    await dialog.getByLabel('收件人').fill(greeting.to);
+    await dialog.getByLabel('留言').fill(greeting.msg);
+    await dialog.getByLabel('寄件人（选填）').fill(greeting.from);
+    assert.ok((await dialog.locator('#compose-msg-count').textContent()).startsWith(codePointCount(greeting.msg)+'/240'));
+    await dialog.getByRole('button',{name:'复制链接'}).click();
+    const copied=new URL(await page.evaluate(()=>window.greetingProbe.copied));
+    assert.equal(copied.search,'','Shared greetings use only the fragment');
+    assert.deepEqual(decodeGreeting(copied.hash),{...greeting,lang:'zh'});
+    await dialog.getByRole('button',{name:'分享链接',exact:true}).click();
+    assert.deepEqual(await page.evaluate(()=>window.greetingProbe.shared),{url:copied.href});
+    await dialog.getByRole('button',{name:'分享到 WhatsApp'}).click();
+    const whatsapp=await page.evaluate(()=>window.greetingProbe.whatsapp);
+    const destination=new URL(whatsapp.url);
+    assert.equal(destination.origin,'https://wa.me');
+    assert.equal(destination.searchParams.get('text'),copied.href);
+    assert.match(whatsapp.features,/(^|,)noopener(,|$)/);
+    await dialog.getByRole('button',{name:'预览'}).click();
+    await dialog.waitFor({state:'hidden'});
+    const previewUrl=new URL(page.url());
+    assert.equal(previewUrl.searchParams.get('card-test'),'1');
+    assert.equal(previewUrl.hash,copied.hash);
+    await page.locator('#replay:visible').waitFor();
+    assert.deepEqual(await readSharedGreeting(page),greeting);
+    assert.ok((await page.evaluate(()=>window.greetingProbe.address)).includes(greeting.to),'The address side uses the composed recipient');
+    await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
+
+    await page.close();
+    await context.setOffline(true);
+    const shared=await context.newPage();
+    await shared.goto(copied.href);
+    await shared.locator('#open:not([disabled])').click();
+    await shared.locator('#replay:visible').waitFor();
+    assert.deepEqual(await readSharedGreeting(shared),greeting);
+    await shared.locator('#language').click();
+    assert.equal(await shared.locator('html').getAttribute('lang'),'en');
+    assert.deepEqual(await readSharedGreeting(shared),greeting,'The UI toggle preserves the sender’s words');
+    await assertSharedMessageFits(shared);
+    const {to,msg,from}=decodeGreeting(longFragment);
+    await shared.evaluate(fragment=>{location.hash=fragment},longFragment);
+    await shared.waitForFunction(expected=>document.getElementById('recipient').textContent===expected,to);
+    assert.deepEqual(await readSharedGreeting(shared),{to,msg,from});
+    for(const viewport of supportedGreetingSizes){
+      await shared.setViewportSize(viewport);
+      await assertSharedMessageFits(shared);
+    }
+    await shared.evaluate(()=>{location.hash='#msg=No+signature'});
+    await shared.waitForFunction(()=>document.getElementById('lines').textContent==='No signature');
+    assert.equal(await shared.locator('#sender').isHidden(),true,'An unsigned custom message omits the default sender');
+    await shared.evaluate(()=>{location.hash=''});
+    await shared.waitForFunction(()=>document.getElementById('sender').textContent.includes('With love'));
+    console.log('PASS compose, native share, WhatsApp, preview, offline link, and hash changes');
+  } finally {await context.close()}
+}
+async function assertUntrustedGreeting() {
+  const context=await browser.newContext({viewport:supportedGreetingSizes[0],serviceWorkers:'block'});
+  try {
+    const page=await context.newPage();
+    await page.route('**/*.glb',route=>route.abort());
+    const hostile='<img src=x onerror=window.greetingXss=1>';
+    const text='#to='+encodeURIComponent(hostile)+'&msg='+encodeURIComponent(hostile)+'%0Ahello%ZZ&lang=zh';
+    await page.goto(url+text);
+    await page.locator('#fallback:not([hidden])').waitFor();
+    assert.deepEqual(await readSharedGreeting(page),{to:hostile,msg:hostile+'\nhello%ZZ',from:''});
+    assert.equal(await page.locator('#message img,#message a,#message script').count(),0);
+    assert.equal(await page.evaluate(()=>window.greetingXss),undefined);
+    await page.evaluate(fragment=>{location.hash=fragment},longFragment);
+    const {to,msg,from}=decodeGreeting(longFragment);
+    await page.waitForFunction(expected=>document.getElementById('recipient').textContent===expected,to);
+    assert.deepEqual(await readSharedGreeting(page),{to,msg,from});
+    assert.equal(await page.locator('#lines p').count(),6);
+    for(const viewport of supportedGreetingSizes){
+      await page.setViewportSize(viewport);
+      await assertSharedMessageFits(page);
+    }
+    await page.evaluate(limit=>{location.hash='to='+'x'.repeat(limit)},fragmentLimit);
+    await page.waitForFunction(()=>document.getElementById('recipient').textContent==='Dear friend,');
+    console.log('PASS hostile text, malformed escapes, decoded limits, and fallback layout');
+  } finally {await context.close()}
 }
 const readHeaderBottom=page=>page.evaluate(()=>Math.max(...['header','.controls'].map(selector=>
   document.querySelector(selector).getBoundingClientRect().bottom)));
@@ -362,6 +502,8 @@ async function assertButtonClear(page, idle) {
   assert.ok(idle.bounds.bottom < button.y, `Envelope reaches ${idle.bounds.bottom}px, Open starts at ${button.y}px`);
   const stageBottom=await page.locator('.scene').evaluate(e=>e.getBoundingClientRect().bottom);
   assert.ok(button.y>=stageBottom, 'Open sits below the envelope stage');
+  const write=await page.locator('#write-card').boundingBox();
+  assert.ok(write&&write.width>=44&&write.height>=44&&idle.bounds.top>write.y+write.height,'Write a card clears the envelope');
 }
 function assertViewportFlight(frames,width,height) {
   let crossesLeft=false, fullyEntered=false;
@@ -724,4 +866,6 @@ try {
    await context.close();
  }
  console.log('PASS reduced motion and WebGL/GLB fallbacks');
+ await assertGreetingLinks();
+ await assertUntrustedGreeting();
 } finally {await browser.close();await new Promise(resolve=>server.close(resolve))}

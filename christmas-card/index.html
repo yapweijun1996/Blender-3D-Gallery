@@ -61,7 +61,7 @@
   </div>
   <div class="snowfall" aria-hidden="true"></div>
   <main class="card">
-    <div class="controls"><button id="language" type="button" aria-label="Switch language">中文</button><button id="mute" type="button" aria-pressed="false">Sound on</button></div>
+    <div class="controls"><button id="write-card" type="button" aria-haspopup="dialog">Write a card</button><button id="language" type="button" aria-label="Switch language">中文</button><button id="mute" type="button" aria-pressed="false">Sound on</button></div>
     <header><span class="eyebrow">✦ &nbsp; A LITTLE CHRISTMAS MAGIC &nbsp; ✦</span><h1 id="title">A Christmas Greeting</h1><p id="subtitle">A little wish, wrapped with love.</p></header>
     <section class="scene" aria-label="Christmas envelope">
       <div class="moon-sky" id="moon-flight" aria-hidden="true">
@@ -90,7 +90,7 @@
       <section id="message" class="message" aria-live="polite" hidden>
         <div class="letter-frame">
           <span id="message-star" class="letter-star" aria-hidden="true" data-reveal>★</span>
-          <div class="letter-copy"><p id="recipient" data-reveal></p><div id="lines"></div><p id="sender" data-reveal></p></div>
+          <div class="letter-copy"><p id="recipient" dir="auto" data-reveal></p><div id="lines"></div><p id="sender" dir="auto" data-reveal></p></div>
           <button id="replay" type="button" data-reveal>Replay ↻</button>
         </div>
       </section>
@@ -101,6 +101,35 @@
       <footer><span id="version">Version —</span><button id="update" type="button">Check for updates</button><span id="update-status" role="status"></span></footer>
     </div>
   </main>
+  <dialog id="composer" aria-labelledby="compose-title" aria-describedby="compose-privacy">
+    <form method="dialog" autocomplete="off">
+      <div class="compose-heading">
+        <h2 id="compose-title" data-compose="title" tabindex="-1" autofocus>Write a Christmas card</h2>
+        <button id="compose-close" type="button" data-compose="close">Close</button>
+      </div>
+      <p id="compose-privacy" data-compose="privacy">Anyone with the link can read your message.</p>
+      <label class="compose-field">
+        <span id="compose-to-label" data-compose="to">To</span><span class="compose-count" id="compose-to-count" aria-live="polite"></span>
+        <input id="compose-to" name="to" type="text" dir="auto" autocomplete="off" aria-labelledby="compose-to-label" aria-describedby="compose-to-count">
+      </label>
+      <label class="compose-field">
+        <span id="compose-msg-label" data-compose="msg">Message</span><span class="compose-count" id="compose-msg-count" aria-live="polite"></span>
+        <textarea id="compose-msg" name="msg" rows="4" dir="auto" autocomplete="off" aria-labelledby="compose-msg-label" aria-describedby="compose-msg-count"></textarea>
+      </label>
+      <label class="compose-field">
+        <span id="compose-from-label" data-compose="from">From (optional)</span><span class="compose-count" id="compose-from-count" aria-live="polite"></span>
+        <input id="compose-from" name="from" type="text" dir="auto" autocomplete="off" aria-labelledby="compose-from-label" aria-describedby="compose-from-count">
+      </label>
+      <div class="compose-actions">
+        <button id="compose-preview" type="button" data-compose="preview">Preview</button>
+        <button id="compose-copy" type="button" data-compose="copy">Copy link</button>
+        <button id="compose-share" type="button" data-compose="share" hidden>Share link</button>
+        <button id="compose-whatsapp" type="button" data-compose="whatsapp">Share on WhatsApp</button>
+      </div>
+      <label class="compose-field" hidden><span data-compose="link">Card link</span><input id="compose-link" type="text" readonly></label>
+      <p id="compose-status" role="status"></p>
+    </form>
+  </dialog>
   <script type="module" src="/src/christmas-card/main.js"></script>
 </body>
 </html>
