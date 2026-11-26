@@ -8,17 +8,27 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./card.css">
   <title>A Christmas Greeting</title>
 </head>
 <body>
+  <div class="snowfall" aria-hidden="true"></div>
   <main class="card">
     <div class="controls"><button id="language" type="button" aria-label="Switch language">中文</button><button id="mute" type="button" aria-pressed="false">Sound on</button></div>
     <header><span class="eyebrow">✦ &nbsp; A LITTLE CHRISTMAS MAGIC &nbsp; ✦</span><h1 id="title">A Christmas Greeting</h1><p id="subtitle">A little wish, wrapped with love.</p></header>
-    <section class="scene" aria-label="Christmas envelope"><canvas id="canvas" aria-hidden="true"></canvas><button id="open" class="open" type="button" disabled>Loading…</button>
+    <section class="scene" aria-label="Christmas envelope">
+      <canvas id="canvas" class="warming" aria-hidden="true"></canvas>
+      <div id="loading" role="status">
+        <div class="loading-stars" aria-hidden="true"><span>✦</span><span>✦</span><span>✦</span></div>
+        <span id="loading-text">Loading your greeting…</span>
+      </div>
       <section id="message" class="message" aria-live="polite" hidden><div class="letter-frame"><span class="letter-star" aria-hidden="true">★</span><div class="letter-copy"><p id="recipient"></p><div id="lines"></div><p id="sender"></p></div><button id="replay" type="button">Replay ↻</button></div></section>
     </section>
     <p id="fallback" class="fallback" hidden></p>
-    <footer><span id="version">Version —</span><button id="update" type="button">Check for updates</button><span id="update-status" role="status"></span></footer>
+    <div class="card-actions">
+      <button id="open" class="open" type="button" hidden disabled>Tap to Open / 点击打开</button>
+      <footer><span id="version">Version —</span><button id="update" type="button">Check for updates</button><span id="update-status" role="status"></span></footer>
+    </div>
   </main>
   <script type="module" src="/src/christmas-card/main.js"></script>
 </body>

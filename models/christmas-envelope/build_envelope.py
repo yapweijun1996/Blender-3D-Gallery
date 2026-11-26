@@ -4,8 +4,10 @@ Envelope lies in the XZ plane and faces -Y (becomes +Z in glTF).
 The flap pivots on the top edge: a negative X rotation opens it.
 """
 
+import json
 import math
 import random
+import struct
 
 import bmesh
 import bpy
@@ -47,6 +49,7 @@ RED = material("RedPaper", "A80C1A", 0.55)
 RED_SIDE = material("RedPaperSide", "940A17", 0.55)
 RED_BOTTOM = material("RedPaperBottom", "B20F1E", 0.55)
 RED_BACK = material("RedPaperBack", "6E0A14", 0.7)
+LINING = material("WarmLining", "9D3F2D", 0.85)
 CREAM = material("Cream", "F6EEDC", 0.8)
 GREEN = material("PineGreen", "14633A", 0.55)
 GOLD = material("Gold", "FFE29A", 0.24, 1.0)
@@ -141,12 +144,42 @@ prism("PocketRight", [(HW, -HH), (HW, HH), (0.02, -0.05)], -0.030, 0.012, RED_SI
 prism("PocketBottom", [(-HW, -HH), (HW, -HH), (0.0, 0.17)], -0.044, 0.012, RED_BOTTOM, root)
 trim("PocketTrim", [(-HW + 0.03, -HH + 0.02), (0.0, 0.15), (HW - 0.03, -HH + 0.02)], -0.058, GOLD, root, 0.010)
 
-# Flap, pivoting on the top edge
-hinge = (0.0, 0.015, HH)  # behind the letter, so the open flap clears it
-flap = prism("Flap", [(-HW, HH), (HW, HH), (0.12, -0.2), (0.0, -0.245), (-0.12, -0.2)],
-             -0.068, 0.012, RED, root, 0.006, hinge)
+# A folded shoulder brings the flap over the pocket from a real pivot inside
+# the back panel. The same mesh carries the lining on its reverse face.
+hinge = Vector((0.0, 0.073, HH - 0.006))
+crease_z = HH - 0.11
+crease_x = HW + (0.12 - HW) * (HH - crease_z) / (HH + 0.2)
+outline = [
+    (-HW, hinge.y, hinge.z), (HW, hinge.y, hinge.z),
+    (crease_x, -0.068, crease_z), (0.12, -0.068, -0.2),
+    (0.0, -0.068, -0.245), (-0.12, -0.068, -0.2),
+    (-crease_x, -0.068, crease_z),
+]
+count = len(outline)
+vertices = [Vector((x, y + depth, z)) - hinge for depth in (0.0, 0.012) for x, y, z in outline]
+panels = [(0, 1, 2, 6), (6, 2, 3, 4, 5)]
+faces = panels + [tuple(i + count for i in panel) for panel in panels]
+for i in range(count):
+    j = (i + 1) % count
+    faces.append((i, j, j + count, i + count))
+mesh = bpy.data.meshes.new("Flap")
+mesh.from_pydata(vertices, [], faces)
+mesh.materials.append(RED)
+mesh.materials.append(LINING)
+for poly in mesh.polygons[2:4]:
+    poly.material_index = 1
+bm = bmesh.new()
+bm.from_mesh(mesh)
+bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+bm.to_mesh(mesh)
+bm.free()
+flap = link(bpy.data.objects.new("Flap", mesh), root)
+flap.location = hinge
+bevel = flap.modifiers.new("Fold edges", "BEVEL")
+bevel.width = 0.004
+bevel.segments = 2
 bpy.context.view_layer.update()
-trim("FlapTrim", [(-HW + 0.09, HH - 0.02), (-0.11, -0.14), (0.0, -0.18), (0.11, -0.14), (HW - 0.09, HH - 0.02)],
+trim("FlapTrim", [(-HW + 0.22, HH - 0.14), (-0.11, -0.14), (0.0, -0.18), (0.11, -0.14), (HW - 0.22, HH - 0.14)],
      -0.084, GOLD, flap, 0.012)
 
 # Wax seal, its own group so the web layer can break it before the flap opens
@@ -246,25 +279,19 @@ scene.render.resolution_x, scene.render.resolution_y = 1200, 900
 bpy.context.view_layer.update()
 print("objects:", len(scene.objects), "flap origin:", tuple(round(v, 3) for v in flap.location))
 
-# Reproducible opening animation. Frames 10–18 dissolve the seal; the flap
-# clears the letter before it rises. glTF exports the three actions together.
+# Reproducible opening animation. The burst starts on the flap's final
+# swing, and the letter begins its eased lift while the burst is active.
 scene.render.fps = 24
-scene.frame_start, scene.frame_end = 1, 112
-for frame, scale in ((1, 1.0), (10, 1.0), (18, 0.001)):
+scene.frame_start, scene.frame_end = 1, 88
+burst_frame = scene.timeline_markers.new("Burst", frame=40).frame
+root["burstTime"] = (burst_frame - scene.frame_start) / scene.render.fps
+for frame, scale in ((1, 1.0), (11, 0.001)):
     seal.scale = (scale,) * 3
     seal.keyframe_insert(data_path="scale", frame=frame, group="Seal")
-for frame, angle in ((1, 0), (18, 0), (62, -178), (112, -178)):
+for frame, angle in ((1, 0), (5, 0), (13, -23), (35, -138), (48, -174), (scene.frame_end, -174)):
     flap.rotation_euler.x = math.radians(angle)
     flap.keyframe_insert(data_path="rotation_euler", frame=frame, group="Flap")
-# The flap face starts 0.083 in front of its hinge. As it rotates that
-# offset would lift the visible top edge away from the envelope. Compensate
-# vertically for the rotated offset while preserving its depth through the fold.
-face_offset = hinge[1] - (-0.068)
-for frame in range(1, 113):
-    scene.frame_set(frame)
-    flap.location.z = hinge[2] + face_offset * math.sin(flap.rotation_euler.x)
-    flap.keyframe_insert(data_path="location", index=2, frame=frame, group="Flap")
-for frame, height in ((1, 0), (72, 0), (112, 1.25)):
+for frame, height in ((1, 0), (44, 0), (53, 0.13), (75, 1.08), (scene.frame_end, 1.25)):
     letter.location.z = height
     letter.keyframe_insert(data_path="location", frame=frame, group="Letter")
 # One glTF clip, with an NLA track shared by all animated objects.
@@ -279,6 +306,7 @@ scene.frame_set(1)
 from pathlib import Path
 out = Path(__file__).resolve().parent
 bpy.context.preferences.filepaths.file_preview_type = "NONE"
+bpy.context.preferences.filepaths.save_version = 0
 bpy.ops.wm.save_as_mainfile(filepath=str(out / "envelope.blend"))
 # Curves are explicitly made meshes before export; retain the authored blend.
 for obj in list(scene.objects):
@@ -292,7 +320,36 @@ def select_tree(obj):
     obj.select_set(True)
     for child in obj.children:
         select_tree(child)
+
+
+def sort_exported_triangles(path):
+    """Stabilize Blender's triangle ordering while preserving every face's winding."""
+    data = bytearray(path.read_bytes())
+    json_end = 20 + struct.unpack_from("<I", data, 12)[0]
+    gltf = json.loads(data[20:json_end])
+    bin_start = json_end + 8
+    index_formats = {5121: "B", 5123: "H", 5125: "I"}
+    for mesh in gltf["meshes"]:
+        for primitive in mesh["primitives"]:
+            if primitive.get("mode", 4) != 4 or "indices" not in primitive:
+                continue
+            accessor = gltf["accessors"][primitive["indices"]]
+            view = gltf["bufferViews"][accessor["bufferView"]]
+            offset = bin_start + view.get("byteOffset", 0) + accessor.get("byteOffset", 0)
+            triangle = struct.Struct("<" + index_formats[accessor["componentType"]] * 3)
+            length = accessor["count"] // 3 * triangle.size
+            ordered = sorted(
+                min((a, b, c), (b, c, a), (c, a, b))
+                for a, b, c in triangle.iter_unpack(data[offset:offset + length])
+            )
+            for i, indices in enumerate(ordered):
+                triangle.pack_into(data, offset + i * triangle.size, *indices)
+    path.write_bytes(data)
+
+
 select_tree(root)
-bpy.ops.export_scene.gltf(filepath=str(out / "envelope.glb"), export_format="GLB",
-                          use_selection=True, export_animations=True,
+glb_path = out / "envelope.glb"
+bpy.ops.export_scene.gltf(filepath=str(glb_path), export_format="GLB",
+                          use_selection=True, export_animations=True, export_extras=True,
                           export_animation_mode="NLA_TRACKS")
+sort_exported_triangles(glb_path)

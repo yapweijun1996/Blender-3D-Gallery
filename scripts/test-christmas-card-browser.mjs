@@ -4,6 +4,7 @@ import http from 'node:http';
 import path from 'node:path';
 import { chromium } from 'playwright';
 import { launchOptions } from './browser-test-utils.mjs';
+import { entranceBudgetMs, entranceDuration, loopStart, loopEnd, maxFrameDelta } from '../src/christmas-card/motion.js';
 const root = path.resolve('dist'), base = '/Blender-3D-Gallery/';
 const types = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.png':'image/png','.glb':'model/gltf-binary'};
 const server = http.createServer(async (req,res) => {
@@ -65,16 +66,285 @@ async function assertBurstPixels(page, snapshot) {
 async function assertMessageFits(page) {
   assert.ok(await page.locator('#message').evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight&&r.left>=0&&r.right<=innerWidth&&e.scrollHeight<=e.clientHeight}));
 }
+async function readSnapshot(page) {
+  await page.waitForFunction(()=>window.__christmasCardTest.snapshot!==null);
+  return page.evaluate(()=>window.__christmasCardTest.snapshot);
+}
+async function holdModel(page) {
+  let release;
+  const gate=new Promise(resolve=>{release=resolve});
+  await page.route('**/*.glb',async route=>{await gate;await route.continue()},{times:1});
+  return release;
+}
+async function waitForOpen(page, started) {
+  const remaining=15000-(performance.now()-started);
+  assert.ok(remaining>0,'The 15 s readiness budget expired during navigation');
+  await page.locator('#open:not([hidden]):not([disabled])').waitFor({timeout:remaining});
+  assert.ok(performance.now()-started<=15000,'Open must become available within 15 s');
+  assert.equal(await page.locator('#loading').isVisible(),false);
+}
+async function assertRecordingReady() {
+  const viewport={width:1440,height:900};
+  const context=await browser.newContext({
+    viewport,deviceScaleFactor:1,recordVideo:{dir:'output/christmas-card/recording',size:viewport},
+  });
+  let video;
+  try {
+    const page=await context.newPage();
+    video=page.video();
+    const started=performance.now();
+    await page.goto(url,{waitUntil:'domcontentloaded',timeout:15000});
+    await waitForOpen(page,started);
+  } finally {await context.close()}
+  assert.ok((await fs.stat(await video.path())).size>0,'Desktop recording was saved');
+  console.log('PASS 1440x900 with recordVideo: Open available within 15 s');
+}
+async function assertWarmupRecovers(mode) {
+  const context=await browser.newContext({viewport:{width:1440,height:900},serviceWorkers:'block'});
+  try {
+    const page=await context.newPage(), release=await holdModel(page);
+    if(mode==='compile'){
+      // Keep the display at roughly 8 fps after reveal to exercise the entrance cap.
+      await page.addInitScript(()=>{
+        const requestFrame=window.requestAnimationFrame.bind(window);
+        window.requestAnimationFrame=callback=>requestFrame(time=>{
+          if(document.getElementById('loading')?.hidden&&document.getElementById('open')?.disabled){
+            setTimeout(()=>requestFrame(callback),120);
+          }else callback(time);
+        });
+      });
+    }else await injectRenderStall(page,'entrance');
+    const started=performance.now();
+    try {
+      await page.goto(url,{waitUntil:'domcontentloaded',timeout:15000});
+      await page.waitForFunction(()=>!!window.__christmasCardTest?.renderer);
+      await page.evaluate(mode=>{
+        const hook=window.__christmasCardTest, renderer=hook.renderer;
+        hook.frames=[];
+        const probe=window.__warmupProbe={compiles:0,draws:0,flushes:0,polls:0,deleted:0,loadingDuringPolls:true};
+        const has=renderer.extensions.has.bind(renderer.extensions);
+        renderer.extensions.has=name=>name==='KHR_parallel_shader_compile'||has(name);
+        renderer.compileAsync=()=>{
+          probe.compiles++;
+          return mode==='compile'?new Promise(()=>{}):Promise.resolve();
+        };
+        if(mode!=='fence')return;
+        const render=renderer.render.bind(renderer);
+        renderer.render=(...args)=>{
+          if(renderer.getScissorTest()){probe.draws++;return}
+          render(...args);
+        };
+        const gl=renderer.getContext(), flush=gl.flush.bind(gl), deleteSync=gl.deleteSync.bind(gl);
+        gl.flush=()=>{probe.flushes++;flush()};
+        gl.clientWaitSync=()=>{
+          probe.polls++;
+          probe.loadingDuringPolls &&= !document.getElementById('loading').hidden;
+          return gl.TIMEOUT_EXPIRED;
+        };
+        gl.deleteSync=fence=>{probe.deleted++;deleteSync(fence)};
+      },mode);
+    } finally {release()}
+    await waitForOpen(page,started);
+    const {probe,visibleMs,flight,completion} = await page.evaluate(()=>{
+      const flight=window.__christmasCardTest.frames.filter(frame=>frame.phase==='entrance');
+      return {
+        probe:window.__warmupProbe,
+        visibleMs:performance.now()-flight[0].presentedAt,
+        flight,completion:window.__christmasCardTest.entranceCompletion,
+      };
+    });
+    assert.equal(probe.compiles,1);
+    if(mode==='fence'){
+      assert.ok(probe.draws>0&&probe.flushes>0&&probe.polls>0,'The warm draw reached an unsignaled fence');
+      assert.equal(probe.deleted,1,'The timed-out fence was released');
+      assert.equal(probe.loadingDuringPolls,true);
+      assert.ok(flight[0].time===0&&flight[0].bounds.right<=.5,'A stalled entrance starts outside the viewport');
+      assert.ok(assertStalledStep(flight,'entrance').bounds.right<144,'The envelope stays near the left edge after a stall');
+    }else{
+      assert.equal(completion.reason,'watchdog');
+      assert.ok(completion.time<entranceDuration*.8,'The slow frames would not finish the full flight in time');
+      assert.ok(visibleMs>=entranceBudgetMs-150&&visibleMs<entranceBudgetMs+1000,'Persistent slow frames settle by the entrance watchdog');
+    }
+    console.log(`PASS warm-up recovery: ${mode} never completes`);
+  } finally {await context.close()}
+}
+async function assertLoadingWatchdog() {
+  const context=await browser.newContext({serviceWorkers:'block'});
+  try {
+    const page=await context.newPage(), release=await holdModel(page);
+    try {
+      await page.goto(url,{waitUntil:'domcontentloaded'});
+      await page.locator('#loading').waitFor();
+      await page.locator('#fallback').waitFor({timeout:15000});
+      assert.equal(await page.locator('#message').isVisible(),true);
+      assert.equal(await page.locator('#loading').isVisible(),false);
+    } finally {
+      release();
+      await page.unrouteAll({behavior:'wait'});
+    }
+    console.log('PASS loading watchdog: greeting remains available when the GLB request hangs');
+  } finally {await context.close()}
+}
+async function injectRenderStall(page,stalledPhase) {
+  await page.addInitScript(stalledPhase => {
+    const stallMs=1100;
+    const requestFrame=window.requestAnimationFrame.bind(window);
+    let stalled=false;
+    window.requestAnimationFrame=callback=>requestFrame(timestamp=>{
+      const last=window.__christmasCardTest?.frames?.at(-1);
+      const phase=last?.phase;
+      if(phase===stalledPhase&&(phase==='entrance'||(last.time>=1.22&&!last.burst))&&!stalled){
+        stalled=true;
+        // A blocked render leaves a gap between animation-frame timestamps.
+        const until=performance.now()+stallMs;
+        while(performance.now()<until){}
+      }
+      callback(timestamp);
+    });
+  },stalledPhase);
+}
+function assertStalledStep(frames,phase) {
+  let firstAfterStall;
+  for(let i=1;i<frames.length;i++){
+    const before=frames[i-1], after=frames[i];
+    if(before.phase!==phase||after.phase!==phase||after.timestamp-before.timestamp<1000)continue;
+    assert.ok(after.time-before.time<=maxFrameDelta+.0001,`The ${phase} skipped ahead after a stall`);
+    firstAfterStall??=after;
+  }
+  assert.ok(firstAfterStall,`No long render stall observed during ${phase}`);
+  return firstAfterStall;
+}
+async function assertButtonClear(page, idle) {
+  const button=await page.locator('#open').boundingBox();
+  assert.ok(button, 'Open button is visible');
+  assert.ok(button.y+button.height<=page.viewportSize().height, 'Open fits inside the viewport');
+  assert.ok(idle.bounds.bottom < button.y, `Envelope reaches ${idle.bounds.bottom}px, Open starts at ${button.y}px`);
+  const stageBottom=await page.locator('.scene').evaluate(e=>e.getBoundingClientRect().bottom);
+  assert.ok(button.y>=stageBottom, 'Open sits below the envelope stage');
+}
+function assertViewportFlight(frames,width,height) {
+  let crossesLeft=false, fullyEntered=false;
+  const phases=new Set();
+  for (const {phase,time,bounds,canvas,burstBounds} of frames) {
+    phases.add(phase);
+    assert.deepEqual([canvas.left,canvas.top,canvas.right,canvas.bottom],[0,0,width,height], 'Canvas covers the real viewport');
+    if(phase==='entrance'&&bounds.right<=0)continue;
+    if(phase==='entrance'&&!fullyEntered){
+      crossesLeft ||= bounds.left<0;
+      fullyEntered ||= bounds.left>=0;
+    }else assert.ok(bounds.left>=0, `Envelope cut off left during ${phase} at ${time}s`);
+    assert.ok(bounds.right<width&&bounds.top>0&&bounds.bottom<height,
+      `Envelope touches a viewport edge during ${phase} at ${time}s: ${JSON.stringify(bounds)}`);
+    if(burstBounds){
+      const {left,right,top,bottom}=burstBounds;
+      assert.ok(left>=0&&right<width&&top>0&&bottom<height,`Burst clipped at ${time}s: ${JSON.stringify(burstBounds)}`);
+    }
+  }
+  assert.ok(crossesLeft&&fullyEntered, 'Envelope crosses viewport x=0 and enters completely');
+  for (const phase of ['entrance','idle','opening','message']) assert.ok(phases.has(phase), `Missing ${phase} frames`);
+}
+function assertEntranceLoop(frames,idle,completion) {
+  const entrance=frames.filter(frame=>frame.phase==='entrance');
+  const first=entrance[0].bounds;
+  assert.ok(first.right-first.left<(idle.bounds.right-idle.bounds.left)*.42,'Envelope starts small in the distance');
+  assert.equal(completion?.reason,'timeline',`Full flight must finish on its timeline: ${JSON.stringify(completion)}`);
+  assert.ok(completion.time>=entranceDuration&&completion.time<=entranceDuration+maxFrameDelta+.0001,
+    'The completed flight takes 3.12 animation seconds');
+  assert.ok(entrance.at(-1).time>=entranceDuration-maxFrameDelta-.0001,
+    'The recorded flight reaches its final animation step');
+  const travelling=entrance.find(frame=>frame.time>=1.2), later=entrance.find(frame=>frame.time>=1.5);
+  assert.ok(travelling.bounds.left>0&&Math.hypot(later.center[0]-travelling.center[0],later.center[1]-travelling.center[1])>8,
+    'The envelope keeps travelling after 1.2 s');
+  const visibleAddress=entrance.filter(frame=>frame.address&&frame.bounds.left>0);
+  assert.ok(visibleAddress.at(-1).time-visibleAddress[0].time>1,'Address side stays in view for more than a second');
+  const loop=entrance.filter(frame=>frame.time>=loopStart&&frame.time<=loopEnd).map(frame=>frame.center);
+  const xs=loop.map(([x])=>x), ys=loop.map(([,y])=>y);
+  const cx=(Math.min(...xs)+Math.max(...xs))/2, cy=(Math.min(...ys)+Math.max(...ys))/2;
+  let sweep=0;
+  for(let i=1;i<loop.length;i++){
+    const ax=xs[i-1]-cx, ay=ys[i-1]-cy, bx=xs[i]-cx, by=ys[i]-cy;
+    sweep+=Math.atan2(ax*by-ay*bx,ax*bx+ay*by);
+  }
+  assert.ok(Math.abs(Math.abs(sweep)-2*Math.PI)<.25,'The envelope traces one complete loop');
+}
+function assertOpeningCamera(frames,idle,burstSnapshot) {
+  const opening=frames.filter(frame=>frame.phase==='opening');
+  const idlePosition=idle.cameraPosition, maxStep=idlePosition[2]*.047;
+  for(const frame of frames.filter(frame=>frame.phase==='idle'))assert.deepEqual(frame.cameraPosition,idlePosition);
+  assert.deepEqual(opening[0].cameraPosition,idlePosition,'Opening starts from the idle camera');
+  let previous=idle;
+  for(const frame of opening){
+    const step=Math.hypot(...frame.cameraPosition.map((value,axis)=>value-previous.cameraPosition[axis]));
+    assert.ok(step<=maxStep,`Camera moved ${step} units in one frame, above ${maxStep}`);
+    assert.ok(Math.abs(frame.cameraRoll-previous.cameraRoll)<=.0031,'Camera roll eases between frames');
+    assert.ok(Math.abs(frame.cameraPitch-previous.cameraPitch)<=.006,'Camera pitch eases between frames');
+    assert.ok(Math.abs(frame.cameraFov-previous.cameraFov)<=.67,'Lens eases between frames');
+    previous=frame;
+  }
+  const close=opening.reduce((closest,frame)=>frame.cameraPosition[2]<closest.cameraPosition[2]?frame:closest);
+  assert.ok(close.cameraPosition[2]<idlePosition[2]*.77,'Camera pushes in strongly while the flap opens');
+  assert.ok(Math.abs(close.cameraRoll)>=.035&&Math.abs(close.cameraRoll)<=.055,'Close shot has a slight tilt');
+  assert.ok(close.cameraPitch<idle.cameraPitch-.075,'Close shot looks more directly into the mouth');
+  if(close.canvas.width===390)assert.ok(close.mouthWidth>=close.canvas.width*.90,'Mouth nearly fills the mobile width');
+  else assert.ok(close.bounds.bottom-close.bounds.top>=close.canvas.height*.69,'The close shot fills most of the desktop height');
+  assert.ok(burstSnapshot.cameraPosition[2]>idlePosition[2],'Camera widens again by the burst');
+  assert.deepEqual(burstSnapshot.camera.slice(16),idle.camera.slice(16),'The lens and viewport projection stay fixed');
+  const firstMessage=frames.find(frame=>frame.phase==='message');
+  assert.deepEqual(firstMessage.cameraPosition,opening.at(-1).cameraPosition,'The wide shot settles before the message');
+}
+function assertOpeningCadence(frames, burstSnapshot) {
+  const opening=frames.filter(frame=>frame.phase==='opening');
+  let lastMotion=0, pose={flap:0,seal:1,letter:0,burst:false};
+  for(const frame of opening){
+    assert.ok(frame.time-lastMotion<=.5,`Opening still for more than 0.5 s by ${frame.time}s`);
+    if(Math.abs(frame.flap-pose.flap)>=.035||Math.abs(frame.seal-pose.seal)>=.04||
+        Math.abs(frame.letter-pose.letter)>=.025||frame.burst!==pose.burst){
+      lastMotion=frame.time;pose=frame;
+    }
+  }
+  const firstBurst=opening.find(frame=>frame.burst);
+  assert.ok(firstBurst&&firstBurst.flap>-3.02&&burstSnapshot.flap<firstBurst.flap-.07,'Burst begins while the flap is still swinging');
+  assert.ok(opening.some(frame=>frame.burst&&frame.time<firstBurst.time+.5&&frame.letter>.015),'Letter lift overlaps the burst');
+}
 try {
+ await assertRecordingReady();
+ for(const mode of ['fence','compile'])await assertWarmupRecovers(mode);
+ await assertLoadingWatchdog();
  for (const [width,height] of [[390,844],[1440,900]]) {
   const context=await browser.newContext({viewport:{width,height},deviceScaleFactor:1}),page=await context.newPage(),errors=[];
+  await injectRenderStall(page,'opening');
   page.on('pageerror',e=>errors.push(e.message));
   page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
   page.on('requestfailed',r=>errors.push(`${r.url()}: ${r.failure()?.errorText}`));
   page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`)});
-  await page.goto(url);
+  const releaseModel=await holdModel(page);
+  await page.goto(url,{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(()=>!!window.__christmasCardTest);
+  await page.locator('#loading').waitFor();
+  const loadingStar=page.locator('.loading-stars span').nth(1);
+  assert.equal(await loadingStar.evaluate(e=>getComputedStyle(e).animationName),'loading-twinkle');
+  const starBox=await loadingStar.boundingBox(), loadingText=await page.locator('#loading-text').boundingBox();
+  assert.ok(starBox&&loadingText&&starBox.y+starBox.height<loadingText.y,'Glowing stars sit above the loading text');
+  assert.equal(await page.locator('.snowfall').evaluate(e=>getComputedStyle(e,'::before').animationName),'snow-near');
+  await page.evaluate(()=>{window.__christmasCardTest.frames=[]});
+  try {
+    // Give a module-load clock time to expire while the model is still loading.
+    await page.waitForTimeout(1500);
+    assert.equal(await page.locator('#loading').isVisible(),true);
+  } finally {releaseModel()}
+  await page.waitForFunction(()=>window.__christmasCardTest.frames.some(frame=>frame.phase==='entrance'));
+  const first=await page.evaluate(()=>window.__christmasCardTest.frames.find(frame=>frame.phase==='entrance'));
+  assert.ok(first.time===0&&first.bounds.right<=.5,`First presented entrance frame is on-screen: ${JSON.stringify(first)}`);
+  assert.equal(await loadingStar.isVisible(),false);
+  assert.equal(await page.locator('#open').isDisabled(),true);
+  await page.locator('#open').dispatchEvent('click');
+  // Record the whole entrance without holding a frame while its watchdog runs.
+  await page.evaluate(()=>window.__christmasCardTest.captureAt(0,'idle'));
+  const idle=await readSnapshot(page);
   await page.locator('#open:not([disabled])').waitFor({timeout:30000});
-  await page.waitForTimeout(1700);
+  await assertButtonClear(page,idle);
+  await page.evaluate(()=>window.__christmasCardTest.captureAt(.38,'idle'));
+  assert.deepEqual((await readSnapshot(page)).camera,idle.camera,'Idle float leaves the camera still');
   assert.equal(await page.locator('meta[name=viewport]').getAttribute('content'),'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover');
   assert.equal(await page.locator('h1').count(),1);
   assert.ok(await page.evaluate(()=>document.querySelector('header').getBoundingClientRect().top>=document.querySelector('.controls').getBoundingClientRect().bottom));
@@ -83,25 +353,32 @@ try {
   const body=await envelopePixels(page),[red,green,blue]=body.median;
   assert.ok(body.count>1000&&red>=130&&red<=180&&green<45&&blue<55,`Envelope body colour outside deep red range: ${JSON.stringify(body.median)}`);
   await page.screenshot({path:`output/christmas-card/${width}-01-idle.png`});
-  await page.evaluate(()=>window.__christmasCardTest.captureAt(1));
+  await page.evaluate(()=>window.__christmasCardTest.captureAt(.58));
   await page.locator('#open').click();
-  await page.waitForFunction(()=>window.__christmasCardTest.snapshot!==null);
-  const opening=await page.evaluate(()=>window.__christmasCardTest.snapshot.time);
+  const opening=(await readSnapshot(page)).time;
   await page.screenshot({path:`output/christmas-card/${width}-02-opening.png`});
-  await page.evaluate(()=>window.__christmasCardTest.captureAt(1.5));
-  await page.waitForFunction(()=>window.__christmasCardTest.snapshot!==null);
-  const mid=await page.evaluate(()=>window.__christmasCardTest.snapshot.time);
+  await page.evaluate(()=>window.__christmasCardTest.captureAt(.98));
+  const mid=(await readSnapshot(page)).time;
   await assertHero(page,width,height);
   await page.screenshot({path:`output/christmas-card/${width}-03-mid-flap.png`});
-  await page.evaluate(()=>window.__christmasCardTest.captureAt(64/24+.3));
-  await page.waitForFunction(()=>window.__christmasCardTest.snapshot!==null);
-  const burstSnapshot=await page.evaluate(()=>window.__christmasCardTest.snapshot);
+  await page.evaluate(time=>window.__christmasCardTest.captureAt(time),idle.burstTime+.3);
+  const burstSnapshot=await readSnapshot(page);
   assert.ok(opening<mid&&mid<burstSnapshot.time&&burstSnapshot.age>=.29&&burstSnapshot.age<.5);
   await page.screenshot({path:`output/christmas-card/${width}-04-burst.png`});
   await assertBurstPixels(page,burstSnapshot);
   await page.evaluate(()=>window.__christmasCardTest.release());
   await page.locator('#message:not([hidden])').waitFor();
   await page.waitForFunction(()=>document.querySelectorAll('#lines [data-pending]').length===0);
+  const {frames,completion}=await page.evaluate(()=>{
+    const hook=window.__christmasCardTest, frames=hook.frames;
+    hook.frames=null;
+    return {frames,completion:hook.entranceCompletion};
+  });
+  assertViewportFlight(frames,width,height);
+  assertEntranceLoop(frames,idle,completion);
+  assertOpeningCamera(frames,idle,burstSnapshot);
+  assertStalledStep(frames,'opening');
+  assertOpeningCadence(frames,burstSnapshot);
   assert.equal(await page.locator('#lines [data-pending]').count(),0);
   await assertMessageFits(page);
   await page.screenshot({path:`output/christmas-card/${width}-05-message.png`});
@@ -112,14 +389,71 @@ try {
   await page.screenshot({path:`output/christmas-card/${width}-06-message-zh.png`});
   await page.locator('#lines p').evaluateAll(lines=>lines.forEach((line,i)=>line.textContent=['愿这个温暖的圣诞季为你和家人带来欢笑与幸福，','愿新的一年里每一天都充满希望、平安和美好，','愿我们珍惜相聚时光，拥有无尽的喜悦与祝福。'][i]));
   await assertMessageFits(page);
-  await page.locator('#replay').click();assert.equal(await page.locator('#open').isVisible(),true);
+  await page.locator('#language').click();
+  await page.evaluate(()=>window.__christmasCardTest.captureAt(0,'idle'));
+  await page.locator('#replay').click();
+  const replayIdle=await readSnapshot(page);
+  assert.deepEqual(replayIdle.camera,idle.camera,'Replay resets the camera to the idle position');
+  await assertButtonClear(page,replayIdle);
+  await page.evaluate(()=>window.__christmasCardTest.release());
+  await page.locator('#open').click();
+  await page.locator('#message:not([hidden])').waitFor();
   await page.waitForFunction(async()=>{const r=await navigator.serviceWorker.getRegistration('./');return !!r?.active});
   await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
   await context.setOffline(true);
   await page.reload();await page.locator('#open:not([disabled])').waitFor({timeout:30000});
   await page.locator('#open').click();await page.locator('#message:not([hidden])').waitFor();
   assert.deepEqual(errors,[]);
-  console.log(`PASS ${width}x${height}: interaction, layout and offline reload`);
+  console.log(`PASS ${width}x${height}: entrance loop, eased camera, interaction, layout and offline reload`);
   await context.close();
  }
+ const short=await browser.newContext({viewport:{width:1366,height:657},deviceScaleFactor:1});
+ const shortPage=await short.newPage();
+ await shortPage.goto(url);
+ await shortPage.locator('#open').waitFor();
+ await shortPage.evaluate(()=>window.__christmasCardTest.captureAt(3.5,'idle'));
+ await assertButtonClear(shortPage,await readSnapshot(shortPage));
+ await short.close();
+ console.log('PASS 1366x657: idle envelope clears the Open button');
+ const reduced=await browser.newContext({reducedMotion:'reduce'});
+ const reducedPage=await reduced.newPage();
+ const releaseReduced=await holdModel(reducedPage);
+ await reducedPage.goto(url);
+ await reducedPage.waitForFunction(()=>!!window.__christmasCardTest);
+ try {
+   const loadingStar=reducedPage.locator('.loading-stars span').nth(1);
+   await loadingStar.waitFor();
+   assert.equal(await loadingStar.evaluate(e=>getComputedStyle(e).animationName),'none');
+ } finally {releaseReduced()}
+ await reducedPage.evaluate(()=>{
+   window.__christmasCardTest.frames=[];
+   window.__christmasCardTest.captureAt(0,'idle');
+ });
+ const reducedIdle=await readSnapshot(reducedPage);
+ await reducedPage.evaluate(()=>window.__christmasCardTest.release());
+ await reducedPage.locator('#open').click();
+ await reducedPage.locator('#message:not([hidden])').waitFor();
+ await reducedPage.waitForFunction(()=>window.__christmasCardTest.frames.some(frame=>frame.phase==='message'));
+ const reducedFrames=await reducedPage.evaluate(()=>window.__christmasCardTest.frames);
+ assert.ok(reducedFrames.every(frame=>frame.phase!=='entrance'&&frame.phase!=='opening'));
+ for(const frame of reducedFrames)assert.deepEqual(frame.cameraPosition,reducedIdle.cameraPosition);
+ assert.equal(await reducedPage.locator('#lines [data-pending]').count(),0);
+ assert.equal(await reducedPage.locator('.snowfall').evaluate(e=>getComputedStyle(e,'::before').animationName),'none');
+ await reduced.close();
+ for(const failure of ['WebGL','GLB']){
+   const context=await browser.newContext({serviceWorkers:'block'}),page=await context.newPage();
+   if(failure==='GLB')await page.route('**/*.glb',route=>route.abort());
+   else await page.addInitScript(()=>{
+     const getContext=HTMLCanvasElement.prototype.getContext;
+     HTMLCanvasElement.prototype.getContext=function(type,...options){
+       return type.startsWith('webgl')?null:getContext.call(this,type,...options);
+     };
+   });
+   await page.goto(url);
+   await page.locator('#fallback:not([hidden])').waitFor();
+   assert.equal(await page.locator('#message').isVisible(),true);
+   assert.equal(await page.locator('#loading').isVisible(),false);
+   await context.close();
+ }
+ console.log('PASS reduced motion and WebGL/GLB fallbacks');
 } finally {await browser.close();await new Promise(resolve=>server.close(resolve))}
