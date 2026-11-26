@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { entranceDuration, poseEntrance } from './motion.js';
+import { wrapAddress } from './fit-copy.js';
 
 export const trailLifetime = 1.48;
 
@@ -26,10 +27,16 @@ export function createAddress(envelope) {
     ctx.fillStyle = '#f6eedc';
     ctx.font = '600 43px system-ui';
     ctx.fillText('To:', 221, 294);
-    ctx.font = '62px Georgia, serif';
-    ctx.fillText(recipient, 221, 368, 590);
+    let size = 62, lines;
+    do {
+      ctx.font = `${size}px Georgia, serif`;
+      lines = wrapAddress(recipient, text => ctx.measureText(text).width, 570);
+      if (lines.length <= 3 || size === 24) break;
+      size -= 2;
+    } while (true);
+    lines.forEach((line, i)=>ctx.fillText(line, 221, 367 + i * size * 1.1, 570));
     ctx.fillStyle = '#d2a367';
-    ctx.fillRect(221, 394, 425, 2);
+    ctx.fillRect(221, 394 + (lines.length - 1) * size * 1.1, 425, 2);
 
     // The perforated stamp and its fir motif share the address texture.
     ctx.fillStyle = '#f6eedc';

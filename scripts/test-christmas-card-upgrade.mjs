@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
+import os from 'node:os';
 import path from 'node:path';
 import { chromium } from 'playwright';
 import { launchOptions, serveBuild } from './browser-test-utils.mjs';
@@ -21,8 +22,9 @@ assert.notEqual(first.version, last.version, 'use two distinct legacy builds');
 assert.match(current.build, /^[a-f0-9]{12}$/);
 
 const server = await serveBuild(first.root);
-const url = server.url + 'christmas-card/index.html?card-test=1#recipient';
-const scopePath = new URL('./', url).pathname;
+const cardUrl = server.url + 'christmas-card/index.html';
+const url = cardUrl + '?card-test=1#to=Riley&msg=Happy+holidays&from=Alex&lang=en';
+const scopePath = new URL('./', cardUrl).pathname;
 const oldCache = release => 'christmas-card-' + scopePath.replace(/[^a-z0-9]/gi, '_') + release.version;
 const newCache = build => 'christmas-card:' + encodeURIComponent(scopePath) + ':' + build;
 const galleryCache = 'b3g-_Blender_3D_Gallery_-shell-upgrade-test';
@@ -34,37 +36,18 @@ const loads = page => page.evaluate(() => Number(sessionStorage.getItem('upgrade
 let browser;
 try {
   browser = await chromium.launch(launchOptions);
-  for (const [release, stuck] of [[first, false], [last, false], [first, true]]) {
+  const legacyOptions = {reducedMotion:'reduce', viewport:{width:420, height:740}};
+  for (const release of [first, last]) {
     server.setRoot(release.root);
-    const context = await browser.newContext({reducedMotion:'reduce', viewport:{width:420, height:740}});
+    const context = await browser.newContext(legacyOptions);
     try {
       const page = await context.newPage();
       await page.goto(url);
       await waitForControl(page);
       await page.locator('#version').filter({hasText:'v' + release.version}).waitFor();
       await page.evaluate(name => caches.open(name).then(() => {}), galleryCache);
-      let debug, blockedVersion;
-      if (stuck) {
-        debug = await context.newCDPSession(page);
-        debug.on('ServiceWorker.workerVersionUpdated', ({versions}) => {
-          for (const version of versions) {
-            if (version.status === 'installing' && version.scriptURL === new URL('./sw.js', url).href) {
-              blockedVersion = version.versionId;
-            }
-          }
-        });
-        await debug.send('ServiceWorker.enable');
-        server.setRoot(last.root);
-        await page.reload();
-        await page.waitForFunction(async name => {
-          const registration = await navigator.serviceWorker.getRegistration();
-          return registration?.installing?.state === 'installing' &&
-            !registration.waiting && !!(await caches.match('./version.json', {cacheName:name}));
-        }, oldCache(last));
-        assert.ok(blockedVersion, 'Chromium reports the blocked legacy installation');
-      }
       server.setRoot(current.root);
-      if (release === first && !stuck) {
+      if (release === first) {
         server.setFault(({relative}) => relative === 'christmas-card/version.json' ? {status:503} : null);
         const failure = context.waitForEvent('response', {
           predicate: response => response.url().endsWith('/christmas-card/version.json') && response.status() === 503,
@@ -82,12 +65,6 @@ try {
         server.setFault(null);
       }
       await page.reload();
-      if (debug) {
-        await page.locator('#version').filter({hasText:'v' + release.version}).waitFor();
-        // Playwright attaches a debugger to workers, which can suppress Chromium's install timeout.
-        await debug.send('ServiceWorker.stopWorker', {versionId:blockedVersion});
-        await debug.detach();
-      }
       await waitForBuild(page, current.build);
       assert.equal(page.url(), url, 'the upgrade preserves the URL, including the fragment');
       assert.deepEqual((await page.evaluate(() => caches.keys())).sort(), [galleryCache, newCache(current.build)].sort());
@@ -96,15 +73,56 @@ try {
       await waitForBuild(page, current.build);
       await page.locator('#open').click();
       await page.locator('#message:not([hidden])').waitFor();
+      assert.equal(await page.locator('#recipient').textContent(), 'Riley');
+      assert.equal(await page.locator('#lines').textContent(), 'Happy holidays');
       await page.locator('#update').click();
       await status(page).filter({hasText:'You’re offline'}).waitFor();
       await page.locator('#language').click();
       assert.equal(await page.locator('#update').textContent(), `v${current.version} · 检查更新`);
       await status(page).filter({hasText:'当前处于离线状态'}).waitFor();
-      console.log(`PASS legacy ${release.version}${stuck ? ' with pending install' : ''}: automatic upgrade, cache cleanup and offline card`);
+      await page.getByRole('button', {name:'写贺卡'}).click();
+      await page.getByRole('dialog', {name:'写一张圣诞贺卡'}).waitFor();
+      assert.equal(await page.locator('#compose-msg').inputValue(), 'Happy holidays');
+      console.log(`PASS legacy ${release.version}: automatic upgrade, cache cleanup and offline greeting`);
     } finally {
       server.setFault(null);
       await context.close();
+    }
+  }
+
+  const profile = await fs.mkdtemp(path.join(os.tmpdir(), 'christmas-card-upgrade-'));
+  let persistentContext;
+  try {
+    const openProfile = () => chromium.launchPersistentContext(profile, {...launchOptions, ...legacyOptions});
+    server.setRoot(first.root);
+    persistentContext = await openProfile();
+    let page = persistentContext.pages()[0];
+    await page.goto(cardUrl);
+    await waitForControl(page);
+    await page.locator('#version').filter({hasText:'v' + first.version}).waitFor();
+
+    server.setRoot(last.root);
+    await page.reload();
+    await page.waitForFunction(async name => {
+      const registration = await navigator.serviceWorker.getRegistration();
+      return registration?.installing?.state === 'installing' &&
+        !registration.waiting && !!(await caches.match('./version.json', {cacheName:name}));
+    }, oldCache(last));
+
+    server.setRoot(current.root);
+    await persistentContext.close();
+    persistentContext = await openProfile();
+    page = persistentContext.pages()[0];
+    await page.goto(cardUrl);
+    await waitForBuild(page, current.build);
+    assert.equal(page.url(), cardUrl);
+    assert.deepEqual(await page.evaluate(() => caches.keys()), [newCache(current.build)]);
+    console.log(`PASS legacy ${first.version} with pending install: browser restart recovers the card and removes old card caches`);
+  } finally {
+    try {
+      await persistentContext?.close();
+    } finally {
+      await fs.rm(profile, {recursive:true, force:true});
     }
   }
 
@@ -166,20 +184,27 @@ try {
   await page.locator('#update').click();
   await status(page).filter({hasText:'Update ready'}).waitFor();
   assert.equal(await loads(page), 3, 'an update waits during opening');
-  await page.evaluate(() => {
-    document.body.append(document.createElement('dialog'), document.createElement('textarea'));
-    document.querySelector('dialog').showModal();
-    window.__christmasCardTest.release();
-  });
+  await page.locator('#write-card').click();
+  await page.locator('#composer[open]').waitFor();
+  await page.waitForFunction(() => document.activeElement?.id === 'compose-title');
+  await page.evaluate(() => window.__christmasCardTest.release());
   await page.locator('#message:not([hidden]) #replay:not([data-pending])').waitFor();
+  await page.waitForTimeout(500);
   assert.equal(await loads(page), 3, 'an open dialog defers reload after the animation');
   await page.evaluate(() => {
-    document.querySelector('dialog').close();
-    document.querySelector('textarea').focus();
+    const editor = document.createElement('textarea');
+    editor.id = 'upgrade-test-editor';
+    document.body.append(editor);
+    const dialog = document.getElementById('composer');
+    dialog.addEventListener('close', () => editor.focus(), {once:true});
+    dialog.close();
+    editor.focus();
   });
-  await page.locator('textarea').fill('Unsaved greeting');
+  const editor = page.locator('#upgrade-test-editor');
+  await editor.fill('Unsaved greeting');
+  await page.waitForTimeout(500);
   assert.equal(await loads(page), 3, 'a focused editor defers reload');
-  await page.locator('textarea').blur();
+  await editor.blur();
   await waitForBuild(page, thirdBuild);
   await page.locator('#open').waitFor();
   assert.equal(await loads(page), 4, 'each takeover reloads exactly once');

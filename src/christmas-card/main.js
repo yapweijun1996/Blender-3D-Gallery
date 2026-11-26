@@ -7,6 +7,9 @@ import { frameEnvelope, poseLandingCamera, poseOpeningCamera, setCameraPose } fr
 import { createEntranceFlight, entranceBudgetMs, entranceDuration, frameDelta, poseEntrance, poseIdle, poseRecedingEnvelope } from './motion.js';
 import { createAddress, createEntranceTrail, trailLifetime } from './accents.js';
 import { createCardAudio } from './audio.js';
+import { createComposer } from './composer.js';
+import { decodeGreeting } from './greeting-link.js';
+import { fitGreeting } from './fit-copy.js';
 import { createLetterFlight, handoverDuration, revealFade, revealInterval, starApproachTime } from './letter.js';
 import { createMouthLight, createStardust } from './magic.js';
 import { applyPaperGrain } from './paper.js';
@@ -21,16 +24,30 @@ const words = {
   en:{title:'A Christmas Greeting',subtitle:'A little wish, wrapped with love.',eyebrow:'✦  A LITTLE CHRISTMAS MAGIC  ✦',loading:'Loading your greeting…',open:'Tap to Open / 点击打开',replay:'Replay ↻',sound:'Sound on',muted:'Muted',fallback:'The 3D card could not be loaded. Here is your greeting:',lang:'Switch to Chinese'},
   zh:{title:'圣诞祝福',subtitle:'一份小小心意，满载温暖。',eyebrow:'✦  一点圣诞魔法  ✦',loading:'正在加载贺卡…',open:'点击打开 / Tap to Open',replay:'重新播放 ↻',sound:'声音开启',muted:'静音',fallback:'无法加载 3D 贺卡，请阅读这份祝福：',lang:'切换为英文'},
 };
-let lang='en', state='loading', mixer, action, envelope, letter, flap, seal;
+let linkedGreeting=decodeGreeting(location.hash), lang=linkedGreeting.lang||'en', baseLanguage=lang;
+let state='loading', mixer, action, envelope, letter, flap, seal;
 let renderer, scene, camera, burstTime, sealBreakTime, burstDone=false;
 let dust, mouthLight, sealEffect, letterFlight, revealed=0;
 let drawAddress, updateTrail, warmPaper, contactShadow, failed=false;
 let phaseTime=0, sequenceTime=0, entranceTime=0, openingIdleTime=0, flight, cameraViews, last=null;
 let loadingWatchdog, entranceWatchdog, entranceWatchdogStarted=null, entranceTimeLeft=entranceBudgetMs;
+let previewPending=false, lastLines, copyItems=[], copyStep=revealInterval;
+let customGreeting=false, paperMinimum=385;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const audio=createCardAudio({visible:!document.hidden});
-const updates=startCardUpdates({canReload:()=>state==='idle'||(state==='message'&&
-  (failed||reduced||phaseTime>=($('lines').children.length+3)*revealInterval+revealFade))});
+const localizeComposer=createComposer({
+  getGreeting:()=>linkedGreeting,
+  preview(fragment){
+    const url=new URL(location.href);
+    url.hash=fragment;
+    history.replaceState(history.state,'',url);
+    applyFragment();
+    previewGreeting();
+  },
+});
+const updates=startCardUpdates({canReload:()=>
+  (state==='idle'&&!previewPending)||(state==='message'&&
+    (failed||reduced||phaseTime>=(copyItems.length-1)*copyStep+revealFade))});
 // Freeze an actual rendered frame so the browser test can inspect the shot.
 let testCapture=null, testFrozen=false;
 const testHook=new URLSearchParams(location.search).has('card-test') ? {
@@ -57,23 +74,56 @@ function measureBurst(particles,box){
 function sameBox(a,b){
   return b&&a.x===b.x&&a.y===b.y&&a.width===b.width&&a.height===b.height;
 }
+function applyFragment(){
+  linkedGreeting=decodeGreeting(location.hash);
+  lang=linkedGreeting.lang||lang;
+  baseLanguage=lang;
+  localize();
+}
+window.addEventListener('hashchange',applyFragment);
+
+function renderGreeting(){
+  customGreeting=[linkedGreeting.to,linkedGreeting.msg,linkedGreeting.from].some(text=>text.trim());
+  const defaults=greeting[customGreeting?baseLanguage:lang];
+  const to=linkedGreeting.to.trim()?linkedGreeting.to:defaults.recipient;
+  const msg=linkedGreeting.msg.trim()?linkedGreeting.msg:defaults.lines.join('\n');
+  const sender=customGreeting?linkedGreeting.from:defaults.sender;
+  drawAddress?.(to);
+  const recipient=$('recipient'), signature=$('sender'), lines=$('lines'), message=$('message');
+  if(recipient.textContent===to&&lastLines===msg&&signature.textContent===sender)return;
+  const complete=copyItems.length>0&&revealed>=copyItems.length;
+  recipient.textContent=to;
+  signature.textContent=sender;
+  signature.hidden=!sender.trim();
+  if(lastLines!==msg){
+    lastLines=msg;
+    lines.replaceChildren(...msg.split('\n').map(line=>{
+      const p=document.createElement('p');
+      p.dir='auto';
+      p.textContent=line;
+      p.setAttribute('data-reveal','');
+      return p;
+    }));
+  }
+  copyItems=[...message.querySelectorAll('[data-reveal]:not([hidden])')];
+  copyStep=Math.min(revealInterval,6*revealInterval/(copyItems.length-1));
+  if(!message.hidden){
+    revealCopy(complete?Infinity:revealed);
+    fitGreeting(message);
+  }
+}
 function localize() {
-  const w=words[lang], g=greeting[lang];
+  const w=words[lang];
   document.documentElement.lang=lang==='zh'?'zh-Hans':'en';
   $('title').textContent=w.title; $('subtitle').textContent=w.subtitle; document.querySelector('.eyebrow').textContent=w.eyebrow;
-  $('loading-text').textContent=w.loading; drawAddress?.(g.recipient);
+  $('loading-text').textContent=w.loading;
   $('open').textContent=w.open; $('replay').textContent=w.replay; $('mute').textContent=audio.muted?w.muted:w.sound;
   $('mute').setAttribute('aria-pressed',String(audio.muted));
   $('language').textContent=lang==='en'?'中文':'EN'; $('language').setAttribute('aria-label',w.lang);
-  updates.localize(lang); $('recipient').textContent=g.recipient; $('sender').textContent=g.sender; $('fallback').textContent=w.fallback;
-  const lines=$('lines');
-  if(lines.dataset.language!==lang){
-    lines.dataset.language=lang;
-    lines.replaceChildren(...g.lines.map(line=>{
-      const p=document.createElement('p');p.textContent=line;p.setAttribute('data-reveal','');return p;
-    }));
-  }
-  if(!$('message').hidden)revealCopy(revealed);
+  $('fallback').textContent=w.fallback;
+  updates.localize(lang);
+  localizeComposer(lang);
+  renderGreeting();
 }
 $('language').addEventListener('click',()=>{lang=lang==='en'?'zh':'en';localize()});
 function activateAudio() {
@@ -94,7 +144,7 @@ $('moon-flight').addEventListener('animationend',event=>{
 });
 function revealCopy(count){
   revealed=count;
-  $('message').querySelectorAll('[data-reveal]').forEach((item,i)=>item.toggleAttribute('data-pending',i>=count));
+  copyItems.forEach((item,i)=>item.toggleAttribute('data-pending',i>=count));
 }
 function positionMessage({left,top,right,bottom}){
   const message=$('message');
@@ -102,14 +152,16 @@ function positionMessage({left,top,right,bottom}){
   message.style.left=`${left}px`;message.style.top=`${top}px`;
   message.style.width=`${right-left}px`;message.style.height=`${bottom-top}px`;
 }
-function showApproachStar(rect, time){
+function showApproachStar(rect, time, resized){
   const message=$('message');
-  if(message.hidden){
+  const entering=message.hidden;
+  if(entering){
     message.classList.add('arriving');
     revealCopy(1);
     message.hidden=false;
   }
   positionMessage(rect);
+  if(entering||resized)fitGreeting(message);
   const progress=THREE.MathUtils.smoothstep(time,handoverDuration-starApproachTime,handoverDuration);
   message.style.setProperty('--arrival-star-opacity',String(.67+.33*progress));
 }
@@ -130,6 +182,7 @@ function showMessage(immediate=false) {
   localize();
   revealCopy(immediate?Infinity:1);
   message.hidden=false;
+  if(immediate||message.scrollHeight>message.clientHeight||message.scrollWidth>message.clientWidth)fitGreeting(message);
   if(!failed)audio.play('arrival');
 }
 function fail(){
@@ -144,18 +197,34 @@ function burst() {
 }
 let snowTexture;
 function makeSnowTexture(){const n=32,data=new Uint8Array(n*n*4);for(let y=0;y<n;y++)for(let x=0;x<n;x++){const i=(y*n+x)*4,d=Math.hypot((x+.5-n/2)/(n/2),(y+.5-n/2)/(n/2));data[i]=data[i+1]=data[i+2]=255;data[i+3]=Math.round(220*Math.max(0,1-d)**2)}const texture=new THREE.DataTexture(data,n,n,THREE.RGBAFormat);texture.magFilter=THREE.LinearFilter;texture.minFilter=THREE.LinearFilter;texture.needsUpdate=true;return texture}
-$('open').addEventListener('click',()=>{
+function startOpening(){
   if(state!=='idle')return;
   openingIdleTime=phaseTime; phaseTime=0; sequenceTime=0; last=null; state='opening'; $('open').hidden=true; burstDone=false;
   if(reduced){showMessage(true);return}
   action.reset().setLoop(THREE.LoopOnce,1);action.clampWhenFinished=true;action.play();
-});
-$('replay').addEventListener('click',()=>{
+}
+$('open').addEventListener('click',startOpening);
+function resetGreeting(){
   $('message').hidden=true;clearMessageProjection();
-  if(failed){showMessage(true);return}
   action.stop();letterFlight.reset();sealEffect?.reset();dust?.clear();mouthLight?.(envelope,0);
   burstDone=false;
-  poseIdle(envelope,0); enterIdle(); $('open').focus({preventScroll:true});
+  poseIdle(envelope,0);
+}
+function previewGreeting(){
+  if(failed){showMessage(true);return}
+  previewPending=true;
+  if(!['entrance','idle','opening','handover','message'].includes(state))return;
+  resetGreeting();
+  clearTimeout(entranceWatchdog);
+  entranceWatchdogStarted=null; entranceTimeLeft=entranceBudgetMs;
+  phaseTime=0; entranceTime=0; last=null; flight=null;
+  $('open').hidden=true; $('open').disabled=true;
+  state='ready';
+}
+$('replay').addEventListener('click',()=>{
+  if(failed){showMessage(true);return}
+  resetGreeting();
+  enterIdle(); $('open').focus({preventScroll:true});
 });
 function enterIdle(){
   clearTimeout(entranceWatchdog);entranceWatchdogStarted=null;
@@ -273,6 +342,10 @@ document.addEventListener('visibilitychange',()=>{
   audio.setVisible(!document.hidden);
   last=null;watchLoading();watchEntrance();
 });
+window.addEventListener('resize',()=>{
+  const message=$('message');
+  if(!message.hidden&&!message.classList.contains('on-paper'))fitGreeting(message);
+});
 $('canvas').addEventListener('webglcontextlost',fail);
 if ('ongesturestart' in window) document.addEventListener('gesturestart',event=>event.preventDefault(),{passive:false});
 localize();
@@ -356,6 +429,7 @@ try {
     if(state==='preparing'){void warmScene(box,composition);return}
     if(state==='loading'||state==='warming')return;
     if(testFrozen){renderer.render(scene,camera);return}
+    if(state==='idle'&&previewPending){previewPending=false;startOpening()}
     const reveal=state==='ready';
     const dt=reveal?0:frameDelta(now,last);
     last=now;phaseTime+=dt;
@@ -388,21 +462,27 @@ try {
       // Capture the lift endpoint after the mixer has applied its last pose.
       if(action.time>=action.getClip().duration){
         letterFlight.begin();
+        paperMinimum=customGreeting?446:385;
         state='handover';phaseTime=0;
       }
     }
     let projectedLetter;
     if(state==='handover'){
       poseRecedingEnvelope(envelope,phaseTime);
-      projectedLetter=letterFlight.pose(camera,box,composition,phaseTime);
+      projectedLetter=letterFlight.pose(camera,box,composition,phaseTime,paperMinimum);
       if(phaseTime>=handoverDuration){
         positionMessage(projectedLetter);
         showMessage();
-      }else if(phaseTime>=handoverDuration-starApproachTime)showApproachStar(projectedLetter,phaseTime);
+      }else if(phaseTime>=handoverDuration-starApproachTime)showApproachStar(projectedLetter,phaseTime,resized);
     }else if(state==='message'&&!reduced){
-      if(resized)positionMessage(letterFlight.pose(camera,box,composition,handoverDuration));
-      const count=1+Math.floor(phaseTime/revealInterval);
-      if(revealed!==count&&revealed<$('lines').children.length+4)revealCopy(count);
+      const minimum=customGreeting?446:385;
+      if(resized||paperMinimum!==minimum){
+        paperMinimum=minimum;
+        positionMessage(letterFlight.pose(camera,box,composition,handoverDuration,paperMinimum));
+        fitGreeting($('message'));
+      }
+      const count=1+Math.floor(phaseTime/copyStep);
+      if(revealed!==count&&revealed<copyItems.length)revealCopy(count);
     }
     if(updateTrail&&entranceTime<entranceDuration+trailLifetime){
       if(state!=='entrance')entranceTime+=dt;
@@ -448,7 +528,7 @@ try {
         }
         if(state==='message'){
           shot.message=$('message').getBoundingClientRect().toJSON();
-          shot.revealed=[...$('message').querySelectorAll('[data-reveal]:not([data-pending])')].map(element=>element.id||'line');
+          shot.revealed=copyItems.filter(element=>!element.hasAttribute('data-pending')).map(element=>element.id||'line');
           const replay=$('replay');
           shot.replayOpaque=!replay.hasAttribute('data-pending')&&getComputedStyle(replay).opacity==='1';
           if(phaseTime===0){

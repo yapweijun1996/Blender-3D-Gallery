@@ -29,8 +29,9 @@ const copy = {
 
 function formInUse() {
   const focused = document.activeElement;
-  return focused?.isContentEditable || focused?.matches('input, textarea, [role="textbox"]') ||
-    [...document.querySelectorAll('dialog[open], [role="dialog"], [role="alertdialog"]')]
+  return focused?.isContentEditable || focused?.matches('input, textarea, select, [role="textbox"]') ||
+    document.querySelector('dialog[open]') ||
+    [...document.querySelectorAll('[role="dialog"], [role="alertdialog"]')]
       .some(dialog => dialog.getClientRects().length && getComputedStyle(dialog).visibility === 'visible');
 }
 
