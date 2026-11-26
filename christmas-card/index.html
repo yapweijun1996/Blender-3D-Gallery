@@ -61,8 +61,8 @@
   </div>
   <div class="snowfall" aria-hidden="true"></div>
   <main class="card">
-    <div class="controls"><button id="write-card" type="button" aria-haspopup="dialog">Write a card</button><button id="language" type="button" aria-label="Switch language">中文</button><button id="mute" type="button" aria-pressed="false">Sound on</button></div>
-    <header><span class="eyebrow">✦ &nbsp; A LITTLE CHRISTMAS MAGIC &nbsp; ✦</span><h1 id="title">A Christmas Greeting</h1><p id="subtitle">A little wish, wrapped with love.</p></header>
+    <div class="controls"><button id="write-card" type="button" aria-haspopup="dialog">Write a card</button><button id="language" type="button" aria-label="Switch language">中文</button><button id="mute" type="button" aria-pressed="false">Tap for sound</button></div>
+    <header><span class="eyebrow">✦ &nbsp; A LITTLE CHRISTMAS MAGIC &nbsp; ✦</span><h1 id="title">A Christmas Greeting</h1><p id="subtitle">A little wish, wrapped with love.</p><p id="link-status" role="status"></p></header>
     <section class="scene" aria-label="Christmas envelope">
       <div class="moon-sky" id="moon-flight" aria-hidden="true">
         <div class="moon" id="moon"></div>
@@ -102,13 +102,17 @@
       <span id="update-status" role="status"></span>
     </footer>
   </main>
-  <dialog id="composer" aria-labelledby="compose-title" aria-describedby="compose-privacy">
+  <aside id="audio-debug" aria-label="Audio diagnostics" hidden>
+    <pre id="audio-reading"></pre>
+    <button id="test-sound" type="button">Test sound</button>
+  </aside>
+  <dialog class="card-dialog" id="composer" aria-labelledby="compose-title" aria-describedby="compose-privacy">
     <form method="dialog" autocomplete="off">
       <div class="compose-heading">
-        <h2 id="compose-title" data-compose="title" tabindex="-1" autofocus>Write a Christmas card</h2>
-        <button id="compose-close" type="button" data-compose="close">Close</button>
+        <h2 id="compose-title" data-compose="title">Write a Christmas card</h2>
+        <button id="compose-close" type="button" data-compose="close" autofocus>Close</button>
       </div>
-      <p id="compose-privacy" data-compose="privacy">Anyone with the link can read your message.</p>
+      <p class="dialog-note" id="compose-privacy" data-compose="privacy">Anyone with the full link can open this card unless you set a password.</p>
       <label class="compose-field">
         <span id="compose-to-label" data-compose="to">To</span><span class="compose-count" id="compose-to-count" aria-live="polite"></span>
         <input id="compose-to" name="to" type="text" dir="auto" autocomplete="off" aria-labelledby="compose-to-label" aria-describedby="compose-to-count">
@@ -121,6 +125,11 @@
         <span id="compose-from-label" data-compose="from">From (optional)</span><span class="compose-count" id="compose-from-count" aria-live="polite"></span>
         <input id="compose-from" name="from" type="text" dir="auto" autocomplete="off" aria-labelledby="compose-from-label" aria-describedby="compose-from-count">
       </label>
+      <label class="compose-field">
+        <span data-compose="password">Password (optional)</span>
+        <input id="compose-password" type="password" autocomplete="off" aria-describedby="compose-password-help">
+      </label>
+      <p class="dialog-note" id="compose-password-help" data-compose="passwordHelp">Send the password separately. A forgotten password cannot be recovered.</p>
       <div class="compose-actions">
         <button id="compose-preview" type="button" data-compose="preview">Preview</button>
         <button id="compose-copy" type="button" data-compose="copy">Copy link</button>
@@ -128,7 +137,25 @@
         <button id="compose-whatsapp" type="button" data-compose="whatsapp">Share on WhatsApp</button>
       </div>
       <label class="compose-field" hidden><span data-compose="link">Card link</span><input id="compose-link" type="text" readonly></label>
-      <p id="compose-status" role="status"></p>
+      <p class="dialog-note" id="compose-status" role="status"></p>
+    </form>
+  </dialog>
+  <dialog class="card-dialog" id="unlock-dialog" aria-labelledby="unlock-title" aria-describedby="unlock-help">
+    <form method="dialog" autocomplete="off">
+      <div class="compose-heading">
+        <h2 id="unlock-title" data-unlock="title">Unlock this Christmas card</h2>
+        <button id="unlock-language" type="button" data-unlock="language" aria-label="Switch to Chinese">中文</button>
+      </div>
+      <p class="dialog-note" id="unlock-help" data-unlock="help">Enter the password the sender shared with you.</p>
+      <label class="compose-field">
+        <span data-unlock="password">Password</span>
+        <input id="unlock-password" type="password" autocomplete="off" required autofocus aria-describedby="unlock-status">
+      </label>
+      <p class="dialog-note" id="unlock-status" role="status"></p>
+      <div class="compose-actions">
+        <button id="unlock-submit" type="submit" data-unlock="submit">Unlock</button>
+        <button id="unlock-cancel" type="button" data-unlock="cancel">View default card</button>
+      </div>
     </form>
   </dialog>
   <script type="module" src="/src/christmas-card/main.js"></script>

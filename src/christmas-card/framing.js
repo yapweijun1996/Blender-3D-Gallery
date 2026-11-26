@@ -145,4 +145,5 @@ export function poseOpeningCamera(camera, views, time, burstTime) {
   const lens = from.fov === to.fov ? from.fov : interpolate(from.fov, to.fov, ease);
   aimCamera(camera, interpolate(from.pitch, to.pitch, ease), interpolate(from.roll, to.roll, ease),
     lens);
+  return pushing ? ease : 1 - ease;
 }

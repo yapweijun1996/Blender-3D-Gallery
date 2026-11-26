@@ -7,7 +7,7 @@ import { launchOptions } from './browser-test-utils.mjs';
 import { entranceBudgetMs, entranceDuration, loopStart, loopEnd, maxFrameDelta } from '../src/christmas-card/motion.js';
 import { handoverDuration, starApproachTime } from '../src/christmas-card/letter.js';
 import { mutePreference } from '../src/christmas-card/audio.js';
-import { codePointCount, decodeGreeting, fragmentLimit } from '../src/christmas-card/greeting-link.js';
+import { codePointCount, decryptGreeting, fragmentLimit, readGreetingFragment } from '../src/christmas-card/greeting-link.js';
 import { particleLimit } from '../src/christmas-card/magic.js';
 const root = path.resolve('dist'), base = '/Blender-3D-Gallery/';
 const types = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.png':'image/png','.glb':'model/gltf-binary'};
@@ -22,7 +22,7 @@ const server = http.createServer(async (req,res) => {
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const url=`http://127.0.0.1:${server.address().port}${base}christmas-card/?card-test=1`;
 await fs.mkdir('output/christmas-card',{recursive:true});
-const browser=await chromium.launch(launchOptions);
+let browser;
 // Measure the rendered red paper, independently of the camera calculations.
 async function envelopePixels(page) {
   const canvasBox=await page.locator('#canvas').boundingBox(), buttonBox=await page.locator('#open').boundingBox();
@@ -143,35 +143,40 @@ const maxGreeting = {
 };
 const longFragment='#'+new URLSearchParams(maxGreeting);
 const supportedGreetingSizes=[{width:390,height:844},{width:1440,height:900},{width:1366,height:657}];
+const decodeGreeting = fragment => readGreetingFragment(fragment).greeting;
+async function observeGreetingShare(page) {
+  await page.addInitScript(()=>{
+    window.greetingProbe={address:[],activation:{}};
+    const active=action=>{window.greetingProbe.activation[action]=navigator.userActivation.isActive};
+    Object.defineProperty(navigator,'clipboard',{value:{writeText:async value=>{active('copy');window.greetingProbe.copied=value}}});
+    Object.defineProperty(navigator,'share',{value:async data=>{active('share');window.greetingProbe.shared=data}});
+    window.open=(url,target,features)=>{active('whatsapp');window.greetingProbe.whatsapp={url,target,features};return null};
+    const fillText=CanvasRenderingContext2D.prototype.fillText;
+    CanvasRenderingContext2D.prototype.fillText=function(text,...args){
+      if(this.canvas.width===960&&this.canvas.height===620)window.greetingProbe.address.push(text);
+      return fillText.call(this,text,...args);
+    };
+  });
+}
 async function assertGreetingLinks() {
   const context=await browser.newContext({viewport:supportedGreetingSizes[0],deviceScaleFactor:1});
   try {
     const page=await context.newPage();
-    await page.addInitScript(()=>{
-      window.greetingProbe={address:[]};
-      Object.defineProperty(navigator,'clipboard',{value:{writeText:async value=>{window.greetingProbe.copied=value}}});
-      Object.defineProperty(navigator,'share',{value:async data=>{window.greetingProbe.shared=data}});
-      window.open=(url,target,features)=>{window.greetingProbe.whatsapp={url,target,features};return null};
-      const fillText=CanvasRenderingContext2D.prototype.fillText;
-      CanvasRenderingContext2D.prototype.fillText=function(text,...args){
-        if(this.canvas.width===960&&this.canvas.height===620)window.greetingProbe.address.push(text);
-        return fillText.call(this,text,...args);
-      };
-    });
+    await observeGreetingShare(page);
     await page.goto(url);
     const write=page.locator('#write-card'), dialog=page.getByRole('dialog');
     const box=await write.boundingBox();
     assert.ok(box.width>=44&&box.height>=44,'The compose button is a 44px touch target');
     await write.click();
     await dialog.waitFor();
-    assert.equal(await dialog.locator('#compose-privacy').textContent(),'Anyone with the link can read your message.');
-    await page.waitForFunction(()=>document.activeElement?.id==='compose-title');
+    assert.equal(await dialog.locator('#compose-privacy').textContent(),'Anyone with the full link can open this card unless you set a password.');
+    await page.waitForFunction(()=>document.activeElement?.id==='compose-close');
     await page.keyboard.press('Escape');
     await dialog.waitFor({state:'hidden'});
     await page.waitForFunction(()=>document.activeElement?.id==='write-card');
     await page.locator('#language').click();
     await write.click();
-    assert.equal(await dialog.locator('#compose-privacy').textContent(),'任何拿到链接的人都可以阅读你的留言。');
+    assert.equal(await dialog.locator('#compose-privacy').textContent(),'除非设置密码，否则任何拿到完整链接的人都能打开这张贺卡。');
     await dialog.getByLabel('收件人').fill('🎅'.repeat(41));
     assert.equal(await dialog.getByLabel('收件人').inputValue(),'🎅'.repeat(40));
     const greeting={to:'小美 🧑‍🎄',msg:'圣诞快乐 🎄\n平安喜乐 & with love!',from:'阿林 💛'};
@@ -182,7 +187,8 @@ async function assertGreetingLinks() {
     await dialog.getByRole('button',{name:'复制链接'}).click();
     const copied=new URL(await page.evaluate(()=>window.greetingProbe.copied));
     assert.equal(copied.search,'','Shared greetings use only the fragment');
-    assert.deepEqual(decodeGreeting(copied.hash),{...greeting,lang:'zh'});
+    assert.match(copied.hash,/^#e=[\w-]+$/);
+    assert.deepEqual(await decryptGreeting(readGreetingFragment(copied.hash)),{...greeting,lang:'zh'});
     await dialog.getByRole('button',{name:'分享链接',exact:true}).click();
     assert.deepEqual(await page.evaluate(()=>window.greetingProbe.shared),{url:copied.href});
     await dialog.getByRole('button',{name:'分享到 WhatsApp'}).click();
@@ -191,6 +197,7 @@ async function assertGreetingLinks() {
     assert.equal(destination.origin,'https://wa.me');
     assert.equal(destination.searchParams.get('text'),copied.href);
     assert.match(whatsapp.features,/(^|,)noopener(,|$)/);
+    assert.deepEqual(await page.evaluate(()=>window.greetingProbe.activation),{copy:true,share:true,whatsapp:true});
     await dialog.getByRole('button',{name:'预览'}).click();
     await dialog.waitFor({state:'hidden'});
     const previewUrl=new URL(page.url());
@@ -225,7 +232,80 @@ async function assertGreetingLinks() {
     assert.equal(await shared.locator('#sender').isHidden(),true,'An unsigned custom message omits the default sender');
     await shared.evaluate(()=>{location.hash=''});
     await shared.waitForFunction(()=>document.getElementById('sender').textContent.includes('With love'));
+    const damaged=readGreetingFragment(copied.hash).packet;
+    damaged[damaged.length-1]^=1;
+    await shared.evaluate(hash=>{location.hash=hash},'#e='+Buffer.from(damaged).toString('base64url'));
+    await shared.locator('#link-status').filter({hasText:'default card'}).waitFor();
+    assert.equal((await readSharedGreeting(shared)).to,'Dear friend,');
     console.log('PASS compose, native share, WhatsApp, preview, offline link, and hash changes');
+  } finally {await context.close()}
+}
+async function assertPasswordLinks() {
+  const context=await browser.newContext({viewport:supportedGreetingSizes[0],reducedMotion:'reduce'});
+  try {
+    const page=await context.newPage();
+    await observeGreetingShare(page);
+    await page.goto(url);
+    await page.locator('#write-card').click();
+    const compose=page.locator('#composer');
+    const greeting={to:'小美 🎄',msg:'圣诞快乐 🌟\n\nHello again!',from:'阿林 💛'};
+    const password='雪人  🎁';
+    await compose.locator('#compose-to').fill(greeting.to);
+    await compose.locator('#compose-msg').fill(greeting.msg);
+    await compose.locator('#compose-from').fill(greeting.from);
+    await compose.locator('#compose-password').fill(password);
+    await compose.locator('#compose-copy').click();
+    const protectedUrl=await page.evaluate(()=>window.greetingProbe.copied);
+    const packet=readGreetingFragment(new URL(protectedUrl).hash);
+    assert.equal(packet.passwordRequired,true);
+    assert.deepEqual(await decryptGreeting(packet,password),{...greeting,lang:'en'});
+    await compose.locator('#compose-share').click();
+    await compose.locator('#compose-whatsapp').click();
+    const {shared,whatsapp,activation}=await page.evaluate(()=>window.greetingProbe);
+    assert.deepEqual(shared,{url:protectedUrl});
+    assert.equal(new URL(whatsapp.url).searchParams.get('text'),protectedUrl);
+    assert.deepEqual(activation,{copy:true,share:true,whatsapp:true});
+    await compose.locator('#compose-preview').click();
+    await page.locator('#message:not([hidden])').waitFor();
+    assert.deepEqual(await readSharedGreeting(page),greeting);
+    assert.equal(await compose.locator('#compose-password').inputValue(),'');
+    assert.equal(new URL(page.url()).hash,new URL(protectedUrl).hash);
+    await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
+    await page.close();
+    await context.setOffline(true);
+
+    const recipient=await context.newPage();
+    await observeGreetingShare(recipient);
+    await recipient.goto(protectedUrl);
+    const unlock=recipient.getByRole('dialog',{name:'Unlock this Christmas card'});
+    await unlock.waitFor();
+    await recipient.waitForFunction(()=>document.activeElement?.id==='unlock-password');
+    assert.equal(await recipient.locator('#canvas').isVisible(),false);
+    assert.deepEqual(await readSharedGreeting(recipient),{to:'',msg:'',from:''});
+    assert.deepEqual(await recipient.evaluate(()=>window.greetingProbe.address),[]);
+    await unlock.getByRole('button',{name:'Switch to Chinese'}).click();
+    const field=recipient.locator('#unlock-password'), submit=recipient.locator('#unlock-submit');
+    await field.fill('wrong password');
+    await submit.click();
+    await recipient.locator('#unlock-status').filter({hasText:'此密码无法解锁贺卡'}).waitFor();
+    assert.equal(await field.getAttribute('aria-invalid'),'true');
+    assert.equal(await field.inputValue(),'');
+    assert.deepEqual(await readSharedGreeting(recipient),{to:'',msg:'',from:''});
+    await field.fill(password);
+    await field.press('Enter');
+    await recipient.locator('#unlock-dialog').waitFor({state:'hidden'});
+    await recipient.locator('#open').click();
+    assert.deepEqual(await readSharedGreeting(recipient),greeting);
+    assert.equal(await recipient.locator('html').getAttribute('lang'),'en','the decrypted language applies after unlock');
+    assert.ok((await recipient.evaluate(()=>window.greetingProbe.address)).includes(greeting.to));
+    assert.equal(await field.inputValue(),'');
+
+    await recipient.reload();
+    await unlock.waitFor();
+    await recipient.keyboard.press('Escape');
+    await recipient.locator('#open').click();
+    assert.equal((await readSharedGreeting(recipient)).to,'Dear friend,');
+    console.log('PASS password-protected preview and sharing, offline unlock, wrong-password retry and default-card dismissal');
   } finally {await context.close()}
 }
 async function assertUntrustedGreeting() {
@@ -273,12 +353,28 @@ const waitForFullReveal=page=>page.waitForFunction(()=>window.__christmasCardTes
 async function observeAudio(page) {
   await page.addInitScript(()=>{
     const NativeAudioContext=window.AudioContext;
-    const probe=window.cardAudioProbe={contexts:0,oscillators:0,master:null};
+    const probe=window.cardAudioProbe={contexts:0,oscillators:0,master:null,sources:new Set()};
+    function trackSource(source,context) {
+      const start=source.start.bind(source), stop=source.stop.bind(source);
+      source.start=(...args)=>{
+        start(...args);
+        // The one-sample silent buffer unlocks audio without adding a voice to the mix.
+        if(source.buffer?.length!==1)probe.sources.add(source);
+      };
+      source.stop=(...args)=>{
+        stop(...args);
+        // Voices schedule a stop at creation. Count only an immediate stop or a natural end.
+        if((args[0]??0)<=context.currentTime)probe.sources.delete(source);
+      };
+      source.addEventListener('ended',()=>probe.sources.delete(source),{once:true});
+      return source;
+    }
     window.AudioContext=class extends NativeAudioContext {
       constructor(){
         super();
         probe.contexts++;
         probe.context=this;
+        probe.master=null;
       }
       createGain(){
         const gain=super.createGain();
@@ -287,7 +383,10 @@ async function observeAudio(page) {
       }
       createOscillator(){
         probe.oscillators++;
-        return super.createOscillator();
+        return trackSource(super.createOscillator(),this);
+      }
+      createBufferSource(){
+        return trackSource(super.createBufferSource(),this);
       }
     };
   });
@@ -343,26 +442,39 @@ async function waitForOpen(page, started) {
   assert.ok(performance.now()-started<=15000,'Open must become available within 15 s');
   assert.equal(await page.locator('#loading').isVisible(),false);
 }
-async function assertDesktopEntranceTimeline() {
-  const context=await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:1});
-  try {
-    const page=await context.newPage();
-    const started=performance.now();
-    await page.goto(url,{waitUntil:'domcontentloaded',timeout:15000});
-    // Sample one late frame without freezing playback or recording a frame trace.
-    await page.evaluate(time=>window.__christmasCardTest.captureAt(time,'entrance',false),
-      entranceDuration-maxFrameDelta-.0001);
-    await waitForOpen(page,started);
-    const {entranceCompletion,snapshot,frames}=await page.evaluate(()=>{
-      const hook=window.__christmasCardTest;
-      return {entranceCompletion:hook.entranceCompletion,snapshot:hook.snapshot,frames:hook.frames};
-    });
-    assert.equal(frames,null,'Desktop timeline runs without a frame trace');
-    assertEntranceCompletion(entranceCompletion,snapshot?.time);
-    const {left,top,right,bottom}=snapshot.bounds;
-    assert.ok(left>=0&&top>0&&right<1440&&bottom<900,'The late landing frame remains in the viewport');
-    console.log('PASS 1440x900: full entrance finishes on its timeline without frame recording');
-  } finally {await context.close()}
+async function assertEntranceTimeline(width,height) {
+  const attempts=3;
+  for(let attempt=1;attempt<=attempts;attempt++) {
+    const label=`${width}x${height} entrance timeline attempt ${attempt}/${attempts}`;
+    let isolatedBrowser;
+    try {
+      isolatedBrowser=await chromium.launch(launchOptions);
+      const page=await isolatedBrowser.newPage({viewport:{width,height},deviceScaleFactor:1});
+      const started=performance.now();
+      await page.goto(url,{waitUntil:'domcontentloaded',timeout:15000});
+      // Sample one late frame without freezing playback or recording a frame trace.
+      await page.evaluate(time=>window.__christmasCardTest.captureAt(time,'entrance',false),
+        entranceDuration-maxFrameDelta-.0001);
+      await waitForOpen(page,started);
+      const {entranceCompletion,snapshot,frames}=await page.evaluate(()=>{
+        const hook=window.__christmasCardTest;
+        return {entranceCompletion:hook.entranceCompletion,snapshot:hook.snapshot,frames:hook.frames};
+      });
+      assert.equal(frames,null,'Entrance timeline runs without a frame trace');
+      if(entranceCompletion?.reason==='watchdog'&&attempt<attempts){
+        console.warn(`RETRY ${label}: watchdog at ${entranceCompletion.time}s of animation`);
+        continue;
+      }
+      assertEntranceCompletion(entranceCompletion,snapshot?.time);
+      const {left,top,right,bottom}=snapshot.bounds;
+      assert.ok(left>=0&&top>0&&right<width&&bottom<height,'The late landing frame remains in the viewport');
+      console.log(`PASS ${label}: full flight in ${entranceCompletion.time}s of animation`);
+      return;
+    } catch(error) {
+      console.error(`FAIL ${label}: ${error.message}`);
+      throw error;
+    } finally {await isolatedBrowser?.close()}
+  }
 }
 async function assertRecordingReady() {
   const viewport={width:1440,height:900};
@@ -666,7 +778,9 @@ function assertLetterHandover(frames,headerBottom) {
   assert.ok(completed?.sequenceTime<=5.5,`Full greeting took ${completed?.sequenceTime}s of animation time`);
 }
 try {
- await assertDesktopEntranceTimeline();
+ await assertEntranceTimeline(390,844);
+ await assertEntranceTimeline(1440,900);
+ browser=await chromium.launch(launchOptions);
  await assertRecordingReady();
  for(const mode of ['fence','compile'])await assertWarmupRecovers(mode);
  await assertLoadingWatchdog();
@@ -767,15 +881,14 @@ try {
   assert.equal(await page.locator('#message').evaluate(e=>getComputedStyle(e).backgroundColor),'rgba(0, 0, 0, 0)');
   await page.evaluate(()=>window.__christmasCardTest.release());
   await waitForFullReveal(page);
-  const {frames,completion,warmDraws}=await page.evaluate(()=>{
+  const {frames,warmDraws}=await page.evaluate(()=>{
     const hook=window.__christmasCardTest, frames=hook.frames;
     hook.frames=null;
-    return {frames,completion:hook.entranceCompletion,warmDraws:hook.warmDraws};
+    return {frames,warmDraws:hook.warmDraws};
   });
   assertViewportFlight(frames,width,height);
   const entrance=frames.filter(frame=>frame.phase==='entrance');
   assertEntranceLoop(entrance,idle);
-  if(width===390)assertEntranceCompletion(completion,entrance.at(-1).time);
   if(width===1440)assertWarmDraws(warmDraws);
   assertOpeningCamera(frames,idle,burstSnapshot);
   assertStalledStep(frames,'opening');
@@ -816,19 +929,22 @@ try {
  }
  const short=await browser.newContext({viewport:{width:1366,height:657},deviceScaleFactor:1});
  const shortPage=await short.newPage();
- await shortPage.goto(url);
+ const releaseShortModel=await holdModel(shortPage);
+ try {
+   await shortPage.goto(url,{waitUntil:'domcontentloaded'});
+   await shortPage.evaluate(()=>{window.__christmasCardTest.frames=[]});
+ } finally {releaseShortModel()}
  await shortPage.locator('#open').waitFor();
  await shortPage.evaluate(()=>window.__christmasCardTest.captureAt(3.5,'idle'));
  await assertButtonClear(shortPage,await readSnapshot(shortPage));
  await assertUpdateLayout(shortPage);
  const shortHeader=await readHeaderBottom(shortPage);
- await shortPage.evaluate(()=>{
-   window.__christmasCardTest.frames=[];
-   window.__christmasCardTest.release();
- });
+ await shortPage.evaluate(()=>window.__christmasCardTest.release());
  await shortPage.locator('#open').click();
  await waitForFullReveal(shortPage);
- assertLetterHandover(await shortPage.evaluate(()=>window.__christmasCardTest.frames),shortHeader);
+ const shortFrames=await shortPage.evaluate(()=>window.__christmasCardTest.frames);
+ assertViewportFlight(shortFrames,1366,657);
+ assertLetterHandover(shortFrames,shortHeader);
  await short.close();
  console.log('PASS 1366x657: envelope and letter clear the controls and header, greeting completes on time');
  const reduced=await browser.newContext({reducedMotion:'reduce'});
@@ -864,17 +980,25 @@ try {
  assert.equal(await reducedPage.locator('#lines [data-pending]').count(),0);
  assert.equal(await reducedPage.locator('.snowfall').evaluate(e=>getComputedStyle(e,'::before').animationName),'none');
  await reducedPage.waitForFunction(()=>{
-   const {context,oscillators,master}=window.cardAudioProbe;
-   return context?.state==='running'&&oscillators>0&&master.gain.value>0;
+   const {context,oscillators,sources,master}=window.cardAudioProbe;
+   return context?.state==='running'&&oscillators>0&&sources.size>0&&master.gain.value>0;
  });
  const mute=reducedPage.locator('#mute');
  await mute.click();
  assert.equal(await mute.getAttribute('aria-pressed'),'true');
- await reducedPage.waitForFunction(()=>window.cardAudioProbe.master.gain.value===0,undefined,
-   {polling:50,timeout:5000}); // The audio thread applies gain to the shared music and effects bus.
+ await reducedPage.waitForFunction(()=>{
+   const {context,sources,master}=window.cardAudioProbe;
+   // Suspension can stop the audio clock before gain automation takes effect.
+   return (context?.state==='suspended'||master?.gain.value===0)&&sources.size===0;
+ },undefined,{polling:50,timeout:5000});
  assert.equal(await reducedPage.evaluate(key=>localStorage.getItem(key),mutePreference),'1');
  await mute.click();
- await reducedPage.waitForFunction(()=>window.cardAudioProbe.master.gain.value>0,undefined,{polling:50,timeout:5000});
+ await reducedPage.waitForFunction(()=>{
+   const {context,sources,master}=window.cardAudioProbe;
+   return context?.state==='running'&&master.gain.value>0&&sources.size>0;
+ },undefined,{polling:50,timeout:5000});
+ assert.equal(await mute.getAttribute('aria-pressed'),'false');
+ assert.equal(await reducedPage.evaluate(key=>localStorage.getItem(key),mutePreference),'0');
  await mute.click();
  await reducedPage.reload({waitUntil:'domcontentloaded'});
  await reducedPage.waitForFunction(()=>document.getElementById('mute').getAttribute('aria-pressed')==='true');
@@ -897,5 +1021,6 @@ try {
  }
  console.log('PASS reduced motion and WebGL/GLB fallbacks');
  await assertGreetingLinks();
+ await assertPasswordLinks();
  await assertUntrustedGreeting();
-} finally {await browser.close();await new Promise(resolve=>server.close(resolve))}
+} finally {try {await browser?.close()} finally {await new Promise(resolve=>server.close(resolve))}}

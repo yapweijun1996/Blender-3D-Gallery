@@ -240,11 +240,12 @@ export function createMouthLight(scene) {
   glow.renderOrder = 7;
   glow.visible = false;
   scene.add(glow);
-  return (envelope, strength) => {
+  return (envelope, strength, closeAmount = 0) => {
     glow.visible = strength > 0;
     if (!glow.visible) return;
     glow.position.set(0, 1.05, .25);
     envelope.localToWorld(glow.position);
+    glow.scale.y = 1 - .67 * closeAmount;
     glow.material.opacity = strength;
   };
 }

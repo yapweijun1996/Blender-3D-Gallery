@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { chromium } from 'playwright';
 import { launchOptions, serveBuild } from './browser-test-utils.mjs';
+import { encodeGreeting } from '../src/christmas-card/greeting-link.js';
 
 const [firstRoot, lastRoot, newRoot = 'dist'] = process.argv.slice(2);
 assert.ok(firstRoot && lastRoot, 'Usage: node scripts/test-christmas-card-upgrade.mjs <acdd9590-dist> <6abd140a-dist> [new-dist]');
@@ -186,7 +187,7 @@ try {
   assert.equal(await loads(page), 3, 'an update waits during opening');
   await page.locator('#write-card').click();
   await page.locator('#composer[open]').waitFor();
-  await page.waitForFunction(() => document.activeElement?.id === 'compose-title');
+  await page.waitForFunction(() => document.activeElement?.id === 'compose-close');
   await page.evaluate(() => window.__christmasCardTest.release());
   await page.locator('#message:not([hidden]) #replay:not([data-pending])').waitFor();
   await page.waitForTimeout(500);
@@ -210,6 +211,26 @@ try {
   assert.equal(await loads(page), 4, 'each takeover reloads exactly once');
   assert.equal(page.url(), url);
   assert.deepEqual(await page.evaluate(() => caches.keys()), [newCache(thirdBuild)]);
+
+  const password = 'separate password 🌟';
+  const protectedFragment = await encodeGreeting({to:'Riley', msg:'Happy holidays', lang:'en'}, password);
+  await page.evaluate(hash => { location.hash = hash; }, protectedFragment);
+  const unlock = page.locator('#unlock-dialog');
+  const passwordField = unlock.locator('#unlock-password');
+  await unlock.waitFor();
+  await passwordField.fill(password);
+  const fourthBuild = serveRebuild('unlock');
+  await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+  await page.waitForFunction(() => document.getElementById('update-status').textContent.includes('Update ready'));
+  await page.waitForTimeout(500);
+  assert.equal(await loads(page), 4, 'the password dialog defers the reload');
+  assert.equal(await passwordField.inputValue(), password);
+  await passwordField.press('Enter');
+  await page.waitForFunction(build => document.getElementById('update').dataset.build === build, fourthBuild);
+  await unlock.waitFor();
+  assert.equal(await loads(page), 5);
+  assert.equal(new URL(page.url()).hash, protectedFragment, 'the upgrade preserves the encrypted fragment');
+  assert.equal(await passwordField.inputValue(), '', 'the reloaded card asks for the password again');
   console.log('PASS first install, slow registration, localized update states, safe reload and no reload loop');
 } finally {
   await browser?.close();

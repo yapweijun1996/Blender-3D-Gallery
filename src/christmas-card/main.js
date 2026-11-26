@@ -8,46 +8,69 @@ import { createEntranceFlight, entranceBudgetMs, entranceDuration, frameDelta, p
 import { createAddress, createEntranceTrail, trailLifetime } from './accents.js';
 import { createCardAudio } from './audio.js';
 import { createComposer } from './composer.js';
-import { decodeGreeting } from './greeting-link.js';
+import { decryptGreeting, limitGreeting, readGreetingFragment } from './greeting-link.js';
 import { fitGreeting } from './fit-copy.js';
 import { createLetterFlight, handoverDuration, revealFade, revealInterval, starApproachTime } from './letter.js';
 import { createMouthLight, createStardust } from './magic.js';
 import { applyPaperGrain } from './paper.js';
 import { cardPixelRatio, softwareRendering } from './raster.js';
 import { createBoundsRecorder } from './recording.js';
+import { createRibbonEffect } from './ribbon.js';
 import { createSealEffect } from './seal.js';
 import { warmWithinBudget } from './warmup.js';
 import { startCardUpdates } from './updates.js';
+import { createUnlockDialog } from './unlock.js';
 
 const $ = id => document.getElementById(id);
 const words = {
-  en:{title:'A Christmas Greeting',subtitle:'A little wish, wrapped with love.',eyebrow:'✦  A LITTLE CHRISTMAS MAGIC  ✦',loading:'Loading your greeting…',open:'Tap to Open / 点击打开',replay:'Replay ↻',sound:'Sound on',muted:'Muted',fallback:'The 3D card could not be loaded. Here is your greeting:',lang:'Switch to Chinese'},
-  zh:{title:'圣诞祝福',subtitle:'一份小小心意，满载温暖。',eyebrow:'✦  一点圣诞魔法  ✦',loading:'正在加载贺卡…',open:'点击打开 / Tap to Open',replay:'重新播放 ↻',sound:'声音开启',muted:'静音',fallback:'无法加载 3D 贺卡，请阅读这份祝福：',lang:'切换为英文'},
+  en:{title:'A Christmas Greeting',subtitle:'A little wish, wrapped with love.',eyebrow:'✦  A LITTLE CHRISTMAS MAGIC  ✦',loading:'Loading your greeting…',open:'Tap to Open / 点击打开',replay:'Replay ↻',waiting:'Tap for sound',starting:'Starting sound…',playing:'Sound on',muted:'Muted',fallback:'The 3D card could not be loaded. Here is your greeting:',lang:'Switch to Chinese'},
+  zh:{title:'圣诞祝福',subtitle:'一份小小心意，满载温暖。',eyebrow:'✦  一点圣诞魔法  ✦',loading:'正在加载贺卡…',open:'点击打开 / Tap to Open',replay:'重新播放 ↻',waiting:'点击播放声音',starting:'正在开启声音…',playing:'声音开启',muted:'静音',fallback:'无法加载 3D 贺卡，请阅读这份祝福：',lang:'切换为英文'},
 };
-let linkedGreeting=decodeGreeting(location.hash), lang=linkedGreeting.lang||'en', baseLanguage=lang;
+const invalidLinkCopy = {
+  en: 'This card link couldn’t be opened. Here’s the default card.',
+  zh: '无法打开此贺卡链接，正在显示默认贺卡。',
+};
+const card=document.querySelector('.card');
+const defaultGreeting=limitGreeting({});
+let linkedGreeting=defaultGreeting, lang='en', baseLanguage=lang;
+let linkPending=false, invalidLink=false, fragmentRevision=0;
 let state='loading', mixer, action, envelope, letter, flap, seal;
 let renderer, scene, camera, burstTime, sealBreakTime, burstDone=false;
-let dust, mouthLight, sealEffect, letterFlight, revealed=0;
+let dust, mouthLight, sealEffect, updateRibbons, letterFlight, revealed=0;
 let drawAddress, updateTrail, warmPaper, contactShadow, failed=false;
 let phaseTime=0, sequenceTime=0, entranceTime=0, openingIdleTime=0, flight, cameraViews, last=null;
 let loadingWatchdog, entranceWatchdog, entranceWatchdogStarted=null, entranceTimeLeft=entranceBudgetMs;
 let previewPending=false, lastLines, copyItems=[], copyStep=revealInterval;
 let customGreeting=false, paperMinimum=385;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const audio=createCardAudio({visible:!document.hidden});
+const audioDebug=new URLSearchParams(location.search).has('audio-debug');
+const muteButton=$('mute'), testSoundButton=$('test-sound');
+const audio=createCardAudio({visible:!document.hidden,meter:audioDebug,onStatus:renderAudioStatus});
+const unlockDialog=createUnlockDialog(toggleLanguage);
 const localizeComposer=createComposer({
   getGreeting:()=>linkedGreeting,
-  preview(fragment){
+  preview(fragment, next){
     const url=new URL(location.href);
     url.hash=fragment;
     history.replaceState(history.state,'',url);
-    applyFragment();
+    fragmentRevision++;
+    finishLink(next);
     previewGreeting();
   },
 });
-const updates=startCardUpdates({canReload:()=>
+const updates=startCardUpdates({canReload:()=>!linkPending&&(
   (state==='idle'&&!previewPending)||(state==='message'&&
-    (failed||reduced||phaseTime>=(copyItems.length-1)*copyStep+revealFade))});
+    (failed||reduced||phaseTime>=(copyItems.length-1)*copyStep+revealFade)))});
+const dialogViewport=window.visualViewport;
+if(dialogViewport){
+  function sizeDialogs(){
+    document.body.style.setProperty('--visible-height',`${dialogViewport.height}px`);
+    document.body.style.setProperty('--viewport-top',`${dialogViewport.offsetTop}px`);
+  }
+  dialogViewport.addEventListener('resize',sizeDialogs);
+  dialogViewport.addEventListener('scroll',sizeDialogs);
+  sizeDialogs();
+}
 // Freeze an actual rendered frame so the browser test can inspect the shot.
 let testCapture=null, testFrozen=false;
 const testHook=new URLSearchParams(location.search).has('card-test') ? {
@@ -74,15 +97,66 @@ function measureBurst(particles,box){
 function sameBox(a,b){
   return b&&a.x===b.x&&a.y===b.y&&a.width===b.width&&a.height===b.height;
 }
-function applyFragment(){
-  linkedGreeting=decodeGreeting(location.hash);
+function finishLink(next=defaultGreeting, invalid=false){
+  linkedGreeting=next;
   lang=linkedGreeting.lang||lang;
   baseLanguage=lang;
+  invalidLink=invalid;
+  const wasPending=linkPending;
+  linkPending=false;
   localize();
+  card.inert=false;
+  card.removeAttribute('data-link-pending');
+  if(wasPending){
+    last=null;
+    watchLoading();
+    watchEntrance();
+  }
+}
+async function applyFragment(){
+  const revision=++fragmentRevision;
+  const hash=location.hash;
+  const isCurrent=()=>revision===fragmentRevision&&hash===location.hash;
+  unlockDialog.dismiss();
+  let askedForPassword=false;
+  try {
+    const link=readGreetingFragment(hash);
+    if(link.greeting){
+      finishLink(link.greeting);
+      return;
+    }
+    if(!globalThis.crypto?.subtle)throw new Error('Web Crypto unavailable');
+    linkPending=true;
+    card.inert=true;
+    card.setAttribute('data-link-pending','');
+    $('composer').close();
+    clearTimeout(loadingWatchdog);
+    watchEntrance();
+    drawAddress?.();
+    renderer?.clear();
+    $('recipient').textContent=$('sender').textContent=$('lines').textContent='';
+    lastLines=undefined;
+    localize();
+    let next, damaged=false;
+    if(link.passwordRequired){
+      const answer=await unlockDialog.request(link);
+      askedForPassword=true;
+      next=answer?.greeting;
+      damaged=answer?.invalid;
+    }else next=await decryptGreeting(link);
+    if(isCurrent())finishLink(next,damaged);
+  } catch {
+    if(isCurrent())finishLink(defaultGreeting,true);
+  }
+  if(askedForPassword&&isCurrent()){
+    const open=$('open');
+    (open.hidden||open.disabled?$('write-card'):open).focus({preventScroll:true});
+  }
 }
 window.addEventListener('hashchange',applyFragment);
 
 function renderGreeting(){
+  if(linkPending)return;
   customGreeting=[linkedGreeting.to,linkedGreeting.msg,linkedGreeting.from].some(text=>text.trim());
   const defaults=greeting[customGreeting?baseLanguage:lang];
   const to=linkedGreeting.to.trim()?linkedGreeting.to:defaults.recipient;
@@ -117,28 +191,64 @@ function localize() {
   document.documentElement.lang=lang==='zh'?'zh-Hans':'en';
   $('title').textContent=w.title; $('subtitle').textContent=w.subtitle; document.querySelector('.eyebrow').textContent=w.eyebrow;
   $('loading-text').textContent=w.loading;
-  $('open').textContent=w.open; $('replay').textContent=w.replay; $('mute').textContent=audio.muted?w.muted:w.sound;
-  $('mute').setAttribute('aria-pressed',String(audio.muted));
+  $('open').textContent=w.open; $('replay').textContent=w.replay;
+  renderAudioStatus();
   $('language').textContent=lang==='en'?'中文':'EN'; $('language').setAttribute('aria-label',w.lang);
   $('fallback').textContent=w.fallback;
+  $('link-status').textContent=invalidLink?invalidLinkCopy[lang]:'';
   updates.localize(lang);
   localizeComposer(lang);
+  unlockDialog.localize(lang);
   renderGreeting();
 }
-$('language').addEventListener('click',()=>{lang=lang==='en'?'zh':'en';localize()});
+function toggleLanguage(){lang=lang==='en'?'zh':'en';localize()}
+$('language').addEventListener('click',toggleLanguage);
+function renderAudioStatus() {
+  const status=audio.status, muted=status==='muted';
+  muteButton.textContent=words[lang][status];
+  muteButton.setAttribute('aria-pressed',String(muted));
+  testSoundButton.disabled=muted;
+}
 function activateAudio() {
   if(audio.activate()&&!reduced&&(state==='entrance'||state==='idle'))audio.play('entrance');
 }
-$('mute').addEventListener('click',event=>{
-  if(event.isTrusted){
-    audio.setMuted(!audio.muted);
-    if(!audio.muted)activateAudio();
-    localize();
+muteButton.addEventListener('click',event=>{
+  if(!event.isTrusted)return;
+  const status=audio.status;
+  if(status==='playing'||status==='starting')audio.setMuted(true);
+  else {
+    if(status==='muted')audio.setMuted(false);
+    activateAudio();
   }
 });
-document.addEventListener('click',event=>{
-  if(event.isTrusted&&event.target!==$('mute'))activateAudio();
-},true);
+for(const type of ['touchend','pointerup','click']){
+  document.addEventListener(type,event=>{
+    if(event.isTrusted&&event.target!==muteButton&&event.target!==testSoundButton)activateAudio();
+  },{capture:true,passive:true});
+}
+if(audioDebug){
+  $('audio-debug').hidden=false;
+  let heldPeak=-Infinity;
+  const level=value=>Number.isFinite(value)?value.toFixed(1):'−∞';
+  function showAudioDiagnostics(){
+    const info=audio.diagnostics();
+    if(info.level)heldPeak=Math.max(heldPeak,info.level.peak);
+    const clock=info.currentTime===undefined?'—':
+      `${info.currentTime.toFixed(2)} s (${info.advancing?'advancing':'not advancing'})`;
+    $('audio-reading').textContent=[
+      `Context: ${info.state}`,`Sample rate: ${info.sampleRate?info.sampleRate+' Hz':'—'}`,`Clock: ${clock}`,
+      `Audio session: ${info.session}`,`Last resume error: ${info.lastResumeError||'—'}`,
+      `Output: ${info.level?level(info.level.rms)+' dBFS RMS':'—'}`,`Peak held: ${level(heldPeak)} dBFS`,
+    ].join('\n');
+  }
+  testSoundButton.addEventListener('click',event=>{
+    if(!event.isTrusted)return;
+    heldPeak=-Infinity;
+    audio.testSound();
+  });
+  showAudioDiagnostics();
+  setInterval(showAudioDiagnostics,200);
+}
 $('moon-flight').addEventListener('animationend',event=>{
   if(event.animationName==='moon-crossing')$('moon-flight').classList.remove('flying');
 });
@@ -198,7 +308,7 @@ function burst() {
 let snowTexture;
 function makeSnowTexture(){const n=32,data=new Uint8Array(n*n*4);for(let y=0;y<n;y++)for(let x=0;x<n;x++){const i=(y*n+x)*4,d=Math.hypot((x+.5-n/2)/(n/2),(y+.5-n/2)/(n/2));data[i]=data[i+1]=data[i+2]=255;data[i+3]=Math.round(220*Math.max(0,1-d)**2)}const texture=new THREE.DataTexture(data,n,n,THREE.RGBAFormat);texture.magFilter=THREE.LinearFilter;texture.minFilter=THREE.LinearFilter;texture.needsUpdate=true;return texture}
 function startOpening(){
-  if(state!=='idle')return;
+  if(state!=='idle'||linkPending)return;
   openingIdleTime=phaseTime; phaseTime=0; sequenceTime=0; last=null; state='opening'; $('open').hidden=true; burstDone=false;
   if(reduced){showMessage(true);return}
   action.reset().setLoop(THREE.LoopOnce,1);action.clampWhenFinished=true;action.play();
@@ -207,6 +317,7 @@ $('open').addEventListener('click',startOpening);
 function resetGreeting(){
   $('message').hidden=true;clearMessageProjection();
   action.stop();letterFlight.reset();sealEffect?.reset();dust?.clear();mouthLight?.(envelope,0);
+  updateRibbons?.(0);
   burstDone=false;
   poseIdle(envelope,0);
 }
@@ -234,7 +345,7 @@ function enterIdle(){
 
 function watchLoading() {
   clearTimeout(loadingWatchdog);
-  if(!document.hidden&&!$('loading').hidden)loadingWatchdog=setTimeout(fail,12000);
+  if(!document.hidden&&!linkPending&&!$('loading').hidden)loadingWatchdog=setTimeout(fail,12000);
 }
 
 function watchEntrance() {
@@ -243,7 +354,7 @@ function watchEntrance() {
     entranceTimeLeft-=performance.now()-entranceWatchdogStarted;
     entranceWatchdogStarted=null;
   }
-  if(document.hidden||state!=='entrance')return;
+  if(document.hidden||linkPending||state!=='entrance')return;
   entranceWatchdogStarted=performance.now();
   entranceWatchdog=setTimeout(()=>{
     if(failed||state!=='entrance')return;
@@ -311,6 +422,7 @@ async function warmScene(box, composition) {
       poseOpeningCamera(camera,cameraViews,burstTime,burstTime);
       action.play();
       mixer.setTime(burstTime);
+      updateRibbons(burstTime);
       sealEffect.update(sealBreakTime+.30);
       warmPaper(.85);
       mouthLight(envelope,.85);
@@ -333,6 +445,7 @@ async function warmScene(box, composition) {
     // The model can still play if the optional GPU warm-up fails.
   } finally {
     action.stop();letterFlight.reset();sealEffect?.reset();dust?.clear();mouthLight?.(envelope,0);updateTrail?.(0,flight);
+    updateRibbons?.(0);
     warmPaper(0);poseIdle(envelope,0);setCameraPose(camera,cameraViews.entrance);
   }
   if(!failed)state='ready';
@@ -348,7 +461,7 @@ window.addEventListener('resize',()=>{
 });
 $('canvas').addEventListener('webglcontextlost',fail);
 if ('ongesturestart' in window) document.addEventListener('gesturestart',event=>event.preventDefault(),{passive:false});
-localize();
+void applyFragment();
 watchLoading();
 try {
   renderer=new THREE.WebGLRenderer({canvas:$('canvas'),alpha:true,antialias:true});
@@ -389,7 +502,10 @@ try {
     warmPaper=applyPaperGrain(envelope);
     envelope.visible=false;scene.add(envelope);
     letterFlight=createLetterFlight(letter,scene);
-    if(!reduced)sealEffect=createSealEffect(seal,scene,sealBreakTime,dust);
+    if(!reduced){
+      sealEffect=createSealEffect(seal,scene,sealBreakTime,dust);
+      updateRibbons=createRibbonEffect(envelope);
+    }
     mixer=new THREE.AnimationMixer(envelope);
     action=mixer.clipAction(clip);
     state='preparing';localize();
@@ -427,13 +543,15 @@ try {
     }
     const box=viewportBox, composition=stageBox;
     if(state==='preparing'){void warmScene(box,composition);return}
-    if(state==='loading'||state==='warming')return;
+    if(state==='loading'||state==='warming'||linkPending)return;
     if(testFrozen){renderer.render(scene,camera);return}
     if(state==='idle'&&previewPending){previewPending=false;startOpening()}
     const reveal=state==='ready';
     const dt=reveal?0:frameDelta(now,last);
     last=now;phaseTime+=dt;
-    if(state==='opening'||state==='handover'||state==='message')sequenceTime+=dt;
+    const openingSequence=state==='opening'||state==='handover'||state==='message';
+    if(openingSequence)sequenceTime+=dt;
+    let closeAmount=0;
     if(reveal){
       if(reduced)enterIdle();
       else {state='entrance';phaseTime=0}
@@ -452,10 +570,11 @@ try {
     }else if(state==='opening'){
       const settle=1-THREE.MathUtils.smoothstep(phaseTime,0,.42);
       poseIdle(envelope,openingIdleTime,settle);
-      poseOpeningCamera(camera,cameraViews,phaseTime,burstTime);
+      closeAmount=poseOpeningCamera(camera,cameraViews,phaseTime,burstTime);
       const previousTime=action.time, previousFlap=flap.rotation.x;
       mixer.update(dt);
       sealEffect.update(action.time);
+      updateRibbons(action.time);
       if(previousTime<sealBreakTime&&action.time>=sealBreakTime)audio.play('seal');
       if(previousFlap>-.20&&flap.rotation.x<=-.20)audio.play('flap');
       if(!burstDone&&action.time>=burstTime){burstDone=true;burst();audio.play('sparkle')}
@@ -492,8 +611,10 @@ try {
       ? THREE.MathUtils.smoothstep(-flap.rotation.x,.24,1.75)
       : state==='handover'?1-THREE.MathUtils.smoothstep(phaseTime,0,.78):0;
     warmPaper(halo);
-    mouthLight?.(envelope,halo);
-    contactShadow.position.set(envelope.position.x,-1.075+Math.min(0,envelope.position.y),envelope.position.z+.19);
+    // Let the rays reach full height as the camera widens and keep the shadow behind the close shot.
+    mouthLight?.(envelope,halo,closeAmount);
+    const shadowRetreat=openingSequence&&!reduced?1.16*THREE.MathUtils.smoothstep(sequenceTime,0,.7):0;
+    contactShadow.position.set(envelope.position.x,-1.075+Math.min(0,envelope.position.y),envelope.position.z+.19-shadowRetreat);
     contactShadow.material.opacity=THREE.MathUtils.clamp(.82-envelope.position.y*.6,0,.82);
     dust?.update(dt);
     renderer.render(scene,camera);

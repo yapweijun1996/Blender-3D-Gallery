@@ -111,25 +111,35 @@ header p { color:var(--muted); font-size:15px; margin:0 }
   #update { grid-area:1 / 3 }
   #update-status { grid-row:1 }
 }
-#composer { inset:auto; position:fixed; left:50%; top:calc(var(--viewport-top,0px) + var(--visible-height,100dvh) / 2);
+.card[data-link-pending] { visibility:hidden }
+#link-status { max-width:440px }
+#audio-debug { position:fixed; z-index:2; inset:auto max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) auto;
+  width:min(260px,calc(100% - 32px)); padding:8px 12px; border:1px solid var(--gold); border-radius:8px;
+  background:var(--deep); color:var(--cream); font:12px/1.4 system-ui }
+#audio-reading { margin:0; white-space:pre-wrap; overflow-wrap:anywhere }
+#test-sound { border:0; padding:0 8px; background:transparent; color:var(--gold) }
+#test-sound:disabled { opacity:.55; cursor:default }
+.card-dialog { inset:auto; position:fixed; left:50%; top:calc(var(--viewport-top,0px) + var(--visible-height,100dvh) / 2);
   transform:translate(-50%,-50%); margin:0; width:min(calc(100% - 28px),480px); max-width:none;
   max-height:min(90dvh,calc(var(--visible-height,100dvh) - 24px)); border:1px solid var(--gold);
   padding:clamp(14px,4vw,24px); border-radius:16px; background:var(--deep); color:var(--cream);
   font:16px/1.4 system-ui; overflow:auto; overscroll-behavior:contain }
-#composer::backdrop { background:color-mix(in srgb,var(--deep) 82%,transparent) }
+.card-dialog::backdrop { background:color-mix(in srgb,var(--deep) 82%,transparent) }
 .compose-heading,.compose-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap }
 .compose-heading { justify-content:space-between }
 .compose-heading h2 { margin:0; font:normal clamp(23px,6vw,30px) Georgia,serif }
-#compose-privacy,#compose-status { color:var(--muted); font-size:14px }
-#compose-status:empty { display:none }
+.dialog-note { color:var(--muted); font-size:14px }
+#compose-password-help { margin:-6px 0 12px }
+#compose-status:empty,#unlock-status:empty { margin:0 }
 .compose-field { display:grid; grid-template-columns:1fr auto; gap:4px 10px; margin:12px 0 }
 .compose-field[hidden] { display:none }
 .compose-count { color:var(--muted); font-size:12px; align-self:center }
 .compose-field input,.compose-field textarea { grid-column:1/-1; width:100%; min-width:0; min-height:44px;
   border:1px solid var(--muted); border-radius:8px; padding:8px; background:var(--cream); color:var(--ink); font:inherit }
 .compose-field textarea { resize:vertical }
-#composer button { border:1px solid var(--gold); border-radius:24px; background:transparent; color:var(--gold); padding:6px 12px; font-size:14px }
-#composer #compose-preview { background:var(--red); color:var(--cream) }
+.card-dialog button { border:1px solid var(--gold); border-radius:24px; background:transparent; color:var(--gold); padding:6px 12px; font-size:14px }
+.card-dialog #compose-preview,.card-dialog #unlock-submit { background:var(--red); color:var(--cream) }
+.card-dialog button:disabled { opacity:.55; cursor:default }
 @keyframes snow-near { from { transform:translate(0,0) } to { transform:translate(184px,241px) } }
 @keyframes snow-far { from { transform:translate(0,0) } to { transform:translate(-131px,207px) } }
 @media (max-height:700px) { h1 { font-size:27px; margin:4px 0 } header p { font-size:13px } .letter-frame { min-height:190px; padding:12px 18px } .letter-star { font-size:25px; margin-bottom:4px } .message button { margin-top:6px } }

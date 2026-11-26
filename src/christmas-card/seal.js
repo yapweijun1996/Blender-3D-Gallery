@@ -108,8 +108,10 @@ export function createSealEffect(seal, scene, breakTime, dust) {
     });
     const position = piece.position.clone(), rotation = piece.quaternion.clone();
     const sign = Math.sign(position.x);
+    // Give the lowest pieces enough lift to clear the bottom of the close shot.
+    const lift = Math.max(.46, .31 + (position.y + .17) * 1.9);
     return { piece, position, rotation, materials,
-      velocity: new THREE.Vector3(sign * (.30 + Math.abs(position.x) * 2.6), .31 + (position.y + .17) * 1.9, .39 + i % 3 * .16),
+      velocity: new THREE.Vector3(sign * (.30 + Math.abs(position.x) * 2.6), lift, .39 + i % 3 * .16),
       spin: new THREE.Euler(2.2 + .64 * i, sign * (2.9 + i * .4), sign * (1.2 + i * .7)),
       start: new THREE.Vector3(), facing: new THREE.Quaternion(), sparks: 0,
     };

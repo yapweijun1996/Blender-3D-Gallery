@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { greeting } from '../src/christmas-card/config.js';
-import { codePointCount, decodeGreeting, encodeGreeting, fragmentLimit, greetingLimits } from '../src/christmas-card/greeting-link.js';
+import { codePointCount, decryptGreeting, encodeGreeting, fragmentLimit, greetingLimits, passwordLimit, readGreetingFragment } from '../src/christmas-card/greeting-link.js';
 
 const layouts = [
   [{ left: 0, top: 0, width: 390, height: 844 }, { left: 16, top: 126, width: 358, height: 622 }],
@@ -10,26 +10,71 @@ const layouts = [
   [{ left: 0, top: 0, width: 1366, height: 657 }, { left: 303, top: 115, width: 760, height: 490 }],
 ];
 
-test('greeting fragments round-trip names, emoji, Chinese, newlines, and URL metacharacters', () => {
-  const greeting = {to:'小美 🧑‍🎄',msg:'圣诞快乐 🎄\n\nLove + joy & peace = 🌟 #2026',from:'阿林 💛',lang:'zh'};
-  const fragment = encodeGreeting(greeting);
-  assert.match(fragment,/^#to=/);
-  assert.deepEqual(decodeGreeting(fragment),greeting);
-  assert.equal(new URLSearchParams(fragment.slice(1)).get('msg'),greeting.msg);
-  assert.deepEqual(decodeGreeting('#lang=en'),{to:'',msg:'',from:'',lang:'en'});
-  assert.equal(encodeGreeting({msg:'hello',from:'   ',lang:'en'}),'#msg=hello&lang=en');
+const sharedGreeting = {to:'小美 🧑‍🎄',msg:'圣诞快乐 🎄\n\nLove + joy & peace = 🌟 #2026',from:'阿林 💛',lang:'zh'};
+const decodeGreeting = fragment => readGreetingFragment(fragment).greeting;
+const fragmentFromBytes = bytes => '#e=' + Buffer.from(bytes).toString('base64url');
+
+test('encrypted links round-trip Chinese, emoji, newlines and URL metacharacters without readable fields', async () => {
+  for (const password of ['', '雪🧤 a separate phrase']) {
+    const fragment = await encodeGreeting(sharedGreeting, password);
+    assert.match(fragment, /^#e=[\w-]+$/);
+    const link = readGreetingFragment(fragment);
+    assert.equal(link.passwordRequired, Boolean(password));
+    assert.equal(link.headerLength - 14, password ? 16 : 32, 'protected links carry a salt instead of a key');
+    assert.deepEqual(await decryptGreeting(link, password), sharedGreeting);
+    const bytes = Buffer.from(link.packet);
+    for (const value of [sharedGreeting.to,sharedGreeting.msg,sharedGreeting.from,'"lang"',password].filter(Boolean)) {
+      assert.equal(bytes.includes(value), false);
+      assert.equal(fragment.includes(encodeURIComponent(value)), false);
+    }
+    const second = readGreetingFragment(await encodeGreeting(sharedGreeting, password));
+    assert.notDeepEqual(second.packet.subarray(2,14), link.packet.subarray(2,14), 'fresh IV');
+    assert.notDeepEqual(second.packet.subarray(14,link.headerLength), link.packet.subarray(14,link.headerLength), 'fresh key or salt');
+  }
 });
 
-test('greeting fragments enforce decoded code-point, line, and raw length limits', () => {
+test('encrypted links reject tampering, garbage, and wrong passwords', async () => {
+  const fragment = await encodeGreeting(sharedGreeting);
+  const {packet} = readGreetingFragment(fragment);
+  for (const index of [2, 14, packet.length - 1]) {
+    const modified = packet.slice();
+    modified[index] ^= 1;
+    await assert.rejects(decryptGreeting(readGreetingFragment(fragmentFromBytes(modified))), {name:'OperationError'});
+  }
+  const unknown = packet.slice();
+  unknown[0]++;
+  for (const invalid of ['#broken', '#e=', '#e=ab!c', '#e=A', '#e=AQ', fragment+'=', fragment+'&to=Injected',
+    fragmentFromBytes(unknown), '#e='+'a'.repeat(fragmentLimit)]) {
+    assert.throws(() => readGreetingFragment(invalid));
+  }
+  const password = 'correct horse 🎄';
+  const protectedLink = readGreetingFragment(await encodeGreeting(sharedGreeting, password));
+  await assert.rejects(decryptGreeting(protectedLink));
+  await assert.rejects(decryptGreeting(protectedLink, 'wrong horse 🎄'), {name:'OperationError'});
+  await assert.rejects(encodeGreeting(sharedGreeting, 'x'.repeat(passwordLimit+1)));
+  const damaged = protectedLink.packet.slice();
+  damaged[damaged.length - 1] ^= 1;
+  await assert.rejects(decryptGreeting(readGreetingFragment(fragmentFromBytes(damaged)), password), {name:'OperationError'});
+  assert.deepEqual(await decryptGreeting(protectedLink, password), sharedGreeting);
+});
+
+test('old plain links still decode Chinese, emoji, newlines and URL metacharacters', () => {
+  assert.deepEqual(decodeGreeting('#'+new URLSearchParams(sharedGreeting)), sharedGreeting);
+  assert.deepEqual(decodeGreeting('#lang=en'),{to:'',msg:'',from:'',lang:'en'});
+});
+
+test('greeting fragments enforce decoded code-point, line, and raw length limits', async () => {
   const {to,msg,from,lines}=greetingLimits;
-  const fragment = new URLSearchParams({to:'🎅'.repeat(to+1),msg:'🌟'.repeat(msg+1),from:'送'.repeat(from+1)});
+  const oversized = {to:'🎅'.repeat(to+1),msg:'🌟'.repeat(msg+1),from:'送'.repeat(from+1),lang:'en'};
+  const fragment = new URLSearchParams(oversized);
   const limited = decodeGreeting('#'+fragment);
+  assert.deepEqual(await decryptGreeting(readGreetingFragment(await encodeGreeting(oversized))), limited);
   assert.equal(codePointCount(limited.to),to);
   assert.equal(codePointCount(limited.msg),msg);
   assert.equal(codePointCount(limited.from),from);
   assert.equal(limited.to,'🎅'.repeat(40));
   assert.equal(decodeGreeting('#msg=一%0A二%0A三%0A四%0A五%0A六%0A七').msg.split('\n').length,lines);
-  assert.equal(decodeGreeting('#to='+'a'.repeat(fragmentLimit)).to,'');
+  assert.throws(() => decodeGreeting('#to='+'a'.repeat(fragmentLimit)));
   assert.equal(decodeGreeting('#to='+'a'.repeat(fragmentLimit-3)).to,'a'.repeat(to));
 });
 
@@ -62,7 +107,7 @@ test('Christmas greeting is bilingual and the GLB contains the opening clip', ()
   const clip = gltf.animations.find(a => a.name === 'Open');
   assert.ok(clip);
   const names = new Set(clip.channels.map(c => gltf.nodes[c.target.node].name));
-  for (const name of ['Flap', 'Letter']) assert.ok(names.has(name), name);
+  for (const name of ['Flap', 'Letter', 'RibbonBow', 'RibbonPocketBand']) assert.ok(names.has(name), name);
   assert.ok(!names.has('Seal'), 'there is no seal shrink track');
   const seal = gltf.nodes.find(node => node.name === 'Seal');
   assert.equal(seal.children.filter(i => /^SealShard[1-5]$/.test(gltf.nodes[i].name)).length, 5);
@@ -70,10 +115,9 @@ test('Christmas greeting is bilingual and the GLB contains the opening clip', ()
   const flap = gltf.nodes.find(node => node.name === 'Flap');
   assert.ok(gltf.meshes[flap.mesh].primitives.some(p => gltf.materials[p.material].name === 'WarmLining'));
   const bow = gltf.nodes.findIndex(node => node.name === 'RibbonBow');
-  assert.ok(flap.children.includes(bow), 'the ribbon is attached to the flap');
   const envelope = gltf.nodes.find(node => node.name === 'Envelope');
   const pocketBand = gltf.nodes.findIndex(node => node.name === 'RibbonPocketBand');
-  assert.ok(envelope.children.includes(pocketBand), 'the lower ribbon stays with the pocket');
+  assert.ok([bow, pocketBand].every(node => envelope.children.includes(node)), 'both ribbons can fall independently of the flap');
   const vertexAccessor = gltf.meshes[gltf.nodes[bow].mesh].primitives[0].attributes.POSITION;
   const {min,max} = gltf.accessors[vertexAccessor];
   assert.ok(max[0]-min[0]>3, 'the horizontal band crosses the envelope');
@@ -98,56 +142,178 @@ test('the greeting reveal fits within 5.5 animation seconds including the Replay
   }
 });
 
-test('audio waits for activation, mutes every voice, persists mute, and pauses while hidden', async () => {
-  const {createCardAudio, mutePreference} = await import('../src/christmas-card/audio.js');
+function audioHarness() {
   const parameter = () => ({value: 1, setValueAtTime(value) { this.value = value; }, exponentialRampToValueAtTime() {}});
   const node = () => ({connect(target) { return target; }, disconnect() {}});
-  const gains = [];
-  let contexts = 0, started = 0, stopped = 0, transport = null;
-  const context = {
-    state: 'suspended', currentTime: 0, destination: node(),
-    createGain() { const gain = parameter(); gains.push(gain); return {...node(), gain}; },
-    createOscillator() {
-      return {...node(), frequency: parameter(), start() { started++; }, stop(at) { if (at === 0) stopped++; }};
+  const gains = [], contexts = [], events = [];
+  const session = {type: 'auto'};
+  const probe = {started: 0, stopped: 0, transport: null, time: 0};
+  probe.resume = context => { context.changeState('running'); return Promise.resolve(); };
+  return {
+    gains, contexts, events, session, probe,
+    options: {
+      audioSession: () => session,
+      now: () => probe.time,
+      schedule(run) { probe.transport = run; return 1; },
+      cancel() { probe.transport = null; },
+      createContext() {
+        events.push(session.type);
+        const context = {
+          state: 'suspended', currentTime: 0, sampleRate: 48000, destination: node(),
+          createGain() { const gain = parameter(); gains.push(gain); return {...node(), gain}; },
+          createDynamicsCompressor() {
+            return {...node(), threshold: parameter(), knee: parameter(), ratio: parameter(), attack: parameter(), release: parameter()};
+          },
+          createWaveShaper: node,
+          createOscillator() {
+            return {...node(), frequency: parameter(), start() { probe.started++; },
+              stop(at) { if (at === context.currentTime) probe.stopped++; }};
+          },
+          createBuffer: (_channels, length) => ({length}),
+          createBufferSource() {
+            return {...node(), start() { events.push(`buffer:${this.buffer.length}`); }};
+          },
+          changeState(state) { this.state = state; this.onstatechange?.(); },
+          resume() { events.push(`resume:${this.state}`); return probe.resume(this); },
+          suspend() { this.changeState('suspended'); return Promise.resolve(); },
+          close() { this.changeState('closed'); return Promise.resolve(); },
+        };
+        contexts.push(context);
+        return context;
+      },
     },
-    resume() { this.state = 'running'; return Promise.resolve(); },
-    suspend() { this.state = 'suspended'; return Promise.resolve(); },
   };
+}
+
+test('audio waits for activation, mutes every voice, persists mute, and pauses while hidden', async () => {
+  const {createCardAudio, mutePreference} = await import('../src/christmas-card/audio.js');
+  const {gains, contexts, events, session, probe, options} = audioHarness();
   const preference = new Map();
   const storage = () => ({getItem: key => preference.get(key), setItem: (key, value) => preference.set(key, value)});
-  const audio = createCardAudio({
-    createContext() { contexts++; return context; }, storage,
-    schedule(run) { transport = run; return 1; },
-    cancel() { transport = null; },
-  });
+  const audio = createCardAudio({...options, storage});
   audio.play('sparkle');
   audio.setVisible(false);
   audio.setVisible(true);
-  assert.equal(contexts, 0);
-  assert.equal(started, 0);
+  assert.equal(audio.status, 'waiting');
+  assert.equal(contexts.length, 0);
+  assert.equal(probe.started, 0);
   assert.equal(audio.activate(), true);
-  assert.ok(started > 0 && gains[0].value > 0 && transport, 'the gesture starts the music');
+  assert.deepEqual(events, ['playback', 'buffer:1', 'resume:suspended']);
+  const [context] = contexts;
+  assert.ok(probe.started > 0 && gains[0].value > 0 && probe.transport, 'the gesture starts the music');
+  assert.equal(audio.status, 'playing', 'the sound control can mute before the first clock sample');
+  assert.equal(audio.diagnostics().advancing, false);
+  context.currentTime = .1;
+  probe.transport();
+  assert.equal(audio.status, 'playing');
   audio.play('sparkle');
-  const audibleVoices = started;
+  const audibleVoices = probe.started;
   audio.setMuted(true);
+  assert.equal(audio.status, 'muted');
   assert.equal(gains[0].value, 0, 'music and effects share the master bus');
-  assert.equal(stopped, audibleVoices);
-  assert.equal(transport, null);
+  assert.equal(probe.stopped, audibleVoices);
+  assert.equal(context.state, 'suspended');
+  assert.equal(session.type, 'auto');
+  assert.equal(probe.transport, null);
   assert.equal(preference.get(mutePreference), '1');
   audio.play('arrival');
-  assert.equal(started, audibleVoices);
+  audio.testSound();
+  assert.equal(probe.started, audibleVoices);
   assert.equal(createCardAudio({storage}).muted, true);
   audio.setMuted(false);
+  audio.activate();
   audio.setVisible(false);
   assert.equal(context.state, 'suspended');
+  assert.equal(session.type, 'auto');
   assert.equal(gains[0].value, 0);
-  assert.equal(transport, null);
+  assert.equal(probe.transport, null);
   audio.setVisible(true);
   assert.equal(context.state, 'running');
-  assert.ok(transport && gains[0].value > 0);
+  assert.equal(session.type, 'playback');
+  assert.ok(probe.transport && gains[0].value > 0);
   const isolated = createCardAudio({storage() { throw new Error('Storage disabled'); }});
   isolated.setMuted(true);
   assert.equal(isolated.muted, true);
+});
+
+test('audio can be muted during a pending gesture resume and can be retried after suspension', async () => {
+  const {createCardAudio} = await import('../src/christmas-card/audio.js');
+  const {contexts, gains, probe, options} = audioHarness();
+  const runResume = probe.resume;
+  let finishResume;
+  probe.resume = () => new Promise(resolve => { finishResume = resolve; });
+  const audio = createCardAudio(options);
+  audio.activate();
+  assert.equal(contexts[0].state, 'suspended');
+  assert.equal(audio.status, 'starting');
+  audio.setMuted(true);
+  finishResume();
+  await Promise.resolve();
+  assert.equal(audio.status, 'muted');
+  assert.equal(gains[0].value, 0);
+
+  audio.setMuted(false);
+  probe.resume = runResume;
+  audio.activate();
+  assert.equal(audio.status, 'playing');
+  contexts[0].changeState('suspended');
+  assert.equal(audio.status, 'waiting');
+  audio.activate();
+  assert.equal(audio.status, 'playing');
+  contexts[0].changeState('interrupted');
+  assert.equal(audio.status, 'waiting');
+});
+
+test('audio retries interrupted playback and rebuilds a closed context or a stalled audio clock', async () => {
+  const {createCardAudio} = await import('../src/christmas-card/audio.js');
+  const {contexts, events, probe, options} = audioHarness();
+  const audio = createCardAudio(options);
+  const runResume = probe.resume;
+  probe.resume = () => Promise.reject(new Error('Audio route interrupted'));
+  audio.activate();
+  assert.equal(audio.status, 'starting');
+  await Promise.resolve();
+  assert.match(audio.diagnostics().lastResumeError, /Audio route interrupted/);
+  assert.equal(audio.status, 'waiting');
+  contexts[0].changeState('interrupted');
+  audio.activate();
+  assert.equal(events.at(-1), 'resume:interrupted');
+  assert.equal(contexts.length, 1);
+
+  audio.setVisible(false);
+  contexts[0].changeState('interrupted');
+  probe.resume = () => new Promise(() => {});
+  audio.setVisible(true);
+  assert.equal(events.at(-1), 'resume:interrupted');
+  probe.time += 1300;
+  probe.transport();
+  assert.equal(contexts[0].state, 'closed');
+  assert.equal(contexts.length, 2);
+  probe.time += 1300;
+  probe.transport();
+  assert.equal(contexts.length, 2, 'a pending resume does not start an endless rebuild loop');
+
+  probe.resume = runResume;
+  audio.activate();
+  assert.equal(contexts[1].state, 'closed');
+  assert.equal(contexts.length, 3);
+  assert.equal(audio.status, 'playing');
+  assert.equal(audio.diagnostics().advancing, false);
+  contexts[2].currentTime = .1;
+  probe.transport();
+  assert.equal(audio.status, 'playing');
+  probe.time += 1300;
+  probe.transport();
+  assert.equal(contexts[2].state, 'closed', 'a running context with a frozen clock is also replaced');
+  assert.equal(contexts.length, 4);
+  probe.time += 1300;
+  probe.transport();
+  assert.equal(contexts.length, 4, 'a replacement with a frozen clock does not start another rebuild');
+  assert.equal(audio.status, 'playing', 'a stalled running context can still be muted');
+  await contexts[3].close();
+  audio.activate();
+  assert.equal(contexts.length, 5);
+  assert.deepEqual(events.slice(-3), ['playback', 'buffer:1', 'resume:suspended']);
 });
 
 test('card worker only activates a complete precache and removes its own old caches', async () => {
@@ -450,7 +616,8 @@ test('opening camera eases from idle toward the flap and widens to contain the b
   const { frameEnvelope, poseOpeningCamera } = await import('../src/christmas-card/framing.js');
   const { poseIdle, poseRecedingEnvelope } = await import('../src/christmas-card/motion.js');
   const { createLetterFlight, handoverDuration } = await import('../src/christmas-card/letter.js');
-  const { createStardust, particleLimit } = await import('../src/christmas-card/magic.js');
+  const { createMouthLight, createStardust, particleLimit } = await import('../src/christmas-card/magic.js');
+  const { createRibbonEffect } = await import('../src/christmas-card/ribbon.js');
   const { createSealEffect } = await import('../src/christmas-card/seal.js');
   const gltf = await loadModel();
   const root = gltf.scene, mixer = new THREE.AnimationMixer(root), action = mixer.clipAction(gltf.animations[0]);
@@ -467,13 +634,23 @@ test('opening camera eases from idle toward the flap and widens to contain the b
   const seal = root.getObjectByName('Seal');
   const bow = root.getObjectByName('RibbonBow');
   const pocketBand = root.getObjectByName('RibbonPocketBand');
+  const ribbons = [bow, pocketBand];
+  const updateRibbons = createRibbonEffect(root);
   const shards = seal.children.filter(part => /^SealShard\d+$/.test(part.name));
   const bowBox = new THREE.Box3(), bandBox = new THREE.Box3(), shardBox = new THREE.Box3();
   assert.ok(bowBox.setFromObject(bow,true).min.z>0 && bandBox.setFromObject(pocketBand,true).min.z>0,
     'both ribbons sit on the front, with the address side clear');
   const letter = root.getObjectByName('Letter');
   const { burstTime, sealBreakTime } = root.getObjectByName('Envelope').userData;
+  for (const ribbon of ribbons) {
+    const [start, end] = ribbon.userData.releaseFade;
+    assert.ok(start > sealBreakTime && end > start && end < burstTime, `${ribbon.name} fades between the seal break and burst`);
+    updateRibbons((start + end) / 2);
+    assert.ok(ribbon.visible && Math.abs(ribbon.material.opacity - .5) < 1e-8, `${ribbon.name} fades while still visible`);
+  }
+  updateRibbons(0);
   const dust = createStardust(scene);
+  const mouthLight = createMouthLight(scene);
   let scattered = 0;
   const sealEffect = createSealEffect(seal, scene, sealBreakTime, {
     scatter(origin) { scattered++; dust.scatter(origin); },
@@ -497,12 +674,14 @@ test('opening camera eases from idle toward the flap and widens to contain the b
       const time = Math.min(i / 30, end);
       mixer.setTime(time);
       sealEffect.update(time);
+      updateRibbons(time);
       if (!burst && time >= burstTime) {
         burst = true;
         dust.mouth(root.localToWorld(new THREE.Vector3(0, 1.055, .26)));
       }
       dust.update(1 / 30);
-      poseOpeningCamera(camera, views, time, burstTime);
+      const closeAmount = poseOpeningCamera(camera, views, time, burstTime);
+      mouthLight(root, THREE.MathUtils.smoothstep(-flap.rotation.x, .24, 1.75), closeAmount);
       assert.ok(camera.position.distanceTo(previousCamera) < views.idle.position.z * .047, `Camera jumped at ${time}s`);
       assert.ok(Math.abs(camera.rotation.x - previousPitch) <= .006, `Camera pitch jumped at ${time}s`);
       assert.ok(Math.abs(camera.rotation.z - previousRoll) <= .0031, `Camera roll jumped at ${time}s`);
@@ -513,6 +692,9 @@ test('opening camera eases from idle toward the flap and widens to contain the b
       previousFov = camera.fov;
       const { min, max } = projectedBounds(root, camera, THREE);
       assert.ok(min.x > -1 && max.x < 1 && min.y > -1 && max.y < 1, `Model clipped at ${time}s in ${width}×${height}`);
+      const effects = projectedBounds(scene, camera, THREE);
+      assert.ok(effects.min.x > -1 && effects.max.x < 1 && effects.min.y > -1 && effects.max.y < 1,
+        `Glow or seal clipped at ${time}s in ${width}×${height}`);
       const letterBounds = projectedBounds(letter, camera, THREE);
       assert.ok((1 - letterBounds.max.y) * height / 2 > stage.top,
         `Rising letter must stay below the header at ${time}s in ${width}×${height}`);
@@ -561,6 +743,7 @@ test('opening camera eases from idle toward the flap and widens to contain the b
     assert.equal(camera.rotation.z, 0);
     assert.equal(camera.fov, views.wide.fov);
     assert.ok(letter.position.y > 2.1, 'fit includes the fully extracted letter');
+    assert.ok(ribbons.every(ribbon => !ribbon.visible), 'Both pieces finish fading before the letter lifts clear');
     assert.equal(sealEffect.measure().visible, 0);
     assert.equal(scattered, 10, 'each shard dissolves into two groups of stardust');
     const before = letterFlight.project(camera, viewport);
@@ -585,7 +768,13 @@ test('opening camera eases from idle toward the flap and widens to contain the b
       const custom=letterFlight.pose(camera, viewport, stage, t, 446);
       assert.ok(custom.top>stage.top&&custom.bottom<stage.top+stage.height,'the taller custom paper clears the controls');
     }
+    assert.ok(ribbons.every(ribbon => !ribbon.visible), 'The pieces stay hidden through the handover');
     action.stop();
+    updateRibbons(0);
+    for (const ribbon of ribbons) {
+      assert.ok(ribbon.visible && ribbon.material.opacity === 1, `${ribbon.name} restores for Replay`);
+      assert.deepEqual(ribbon.quaternion.toArray(), [0, 0, 0, 1]);
+    }
     letterFlight.reset();
     sealEffect.reset();
     poseIdle(root, 0);

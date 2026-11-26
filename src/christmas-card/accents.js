@@ -24,6 +24,8 @@ export function createAddress(envelope) {
     if(recipient === lastRecipient) return;
     lastRecipient = recipient;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    texture.needsUpdate = true;
+    if (!recipient) return;
     ctx.fillStyle = '#f6eedc';
     ctx.font = '600 43px system-ui';
     ctx.fillText('To:', 221, 294);
@@ -63,7 +65,6 @@ export function createAddress(envelope) {
     ctx.closePath();
     ctx.fill();
     ctx.fillRect(803, 181, 8, 13);
-    texture.needsUpdate = true;
   };
 }
 

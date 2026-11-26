@@ -1,21 +1,25 @@
-import { codePointCount, encodeGreeting, greetingLimits, limitGreeting } from './greeting-link.js';
+import { codePointCount, encodeGreeting, greetingLimits, limitGreeting, passwordLimit } from './greeting-link.js';
 
 const copy = {
   en: {
     write: 'Write a card', title: 'Write a Christmas card', close: 'Close',
-    privacy: 'Anyone with the link can read your message.',
+    privacy: 'Anyone with the full link can open this card unless you set a password.',
     to: 'To', msg: 'Message', from: 'From (optional)', preview: 'Preview',
+    password: 'Password (optional)', passwordHelp: 'Send the password separately. A forgotten password cannot be recovered.',
     copy: 'Copy link', whatsapp: 'Share on WhatsApp', share: 'Share link',
     link: 'Card link', copied: 'Link copied.', manual: 'Select and copy this link.',
     limit: 'The text was trimmed to fit the card.', lines: 'lines',
+    preparing: 'Preparing your link…', failed: 'Couldn’t create the card link. Edit the draft to try again.',
   },
   zh: {
     write: '写贺卡', title: '写一张圣诞贺卡', close: '关闭',
-    privacy: '任何拿到链接的人都可以阅读你的留言。',
+    privacy: '除非设置密码，否则任何拿到完整链接的人都能打开这张贺卡。',
     to: '收件人', msg: '留言', from: '寄件人（选填）', preview: '预览',
+    password: '密码（选填）', passwordHelp: '请另行发送密码。忘记密码后无法找回。',
     copy: '复制链接', whatsapp: '分享到 WhatsApp', share: '分享链接',
     link: '贺卡链接', copied: '链接已复制。', manual: '请选择并复制此链接。',
     limit: '文字已缩短，以便在贺卡上完整显示。', lines: '行',
+    preparing: '正在生成链接…', failed: '无法生成贺卡链接，请编辑草稿后重试。',
   },
 };
 
@@ -26,9 +30,15 @@ export function createComposer({getGreeting, preview}) {
   const output = dialog.querySelector('#compose-link');
   const status = dialog.querySelector('#compose-status');
   const fields = Object.fromEntries(['to','msg','from'].map(key=>[key, form.elements.namedItem(key)]));
+  const password = dialog.querySelector('#compose-password');
+  password.maxLength = passwordLimit;
   const labels = dialog.querySelectorAll('[data-compose]');
+  const previewButton = dialog.querySelector('#compose-preview');
+  const copyButton = dialog.querySelector('#compose-copy');
+  const whatsappButton = dialog.querySelector('#compose-whatsapp');
   const share = dialog.querySelector('#compose-share');
-  let lang = 'en', revision = 0;
+  const actions = [previewButton, copyButton, whatsappButton, share];
+  let lang = 'en', revision = 0, timer, prepared;
 
   function count() {
     for (const [key, field] of Object.entries(fields)) {
@@ -39,15 +49,36 @@ export function createComposer({getGreeting, preview}) {
     }
   }
 
-  function link() {
-    const destination = new URL(location.href);
-    destination.search = '';
-    destination.hash = encodeGreeting({...draft(), lang});
-    return destination.href;
+  function invalidate() {
+    clearTimeout(timer);
+    revision++;
+    prepared = null;
+    for (const button of actions) button.disabled = true;
+    output.parentElement.hidden = true;
+    output.value = '';
   }
 
-  function draft() {
-    return Object.fromEntries(Object.entries(fields).map(([key, field])=>[key, field.value]));
+  function prepare(trimmed = false) {
+    invalidate();
+    const draftRevision = revision;
+    status.textContent = copy[lang][trimmed ? 'limit' : 'preparing'];
+    // Prepare before a share gesture. Wait for a pause in typing before deriving a password key.
+    timer = setTimeout(async () => {
+      const greeting = limitGreeting({...Object.fromEntries(Object.entries(fields)
+        .map(([key, field]) => [key, field.value])), lang});
+      try {
+        const fragment = await encodeGreeting(greeting, password.value);
+        if (!dialog.open || draftRevision !== revision) return;
+        const url = new URL(location.href);
+        url.search = '';
+        url.hash = fragment;
+        prepared = {fragment, greeting, url: url.href};
+        for (const button of actions) button.disabled = false;
+        status.textContent = trimmed ? copy[lang].limit : '';
+      } catch {
+        if (dialog.open && draftRevision === revision) status.textContent = copy[lang].failed;
+      }
+    }, password.value ? 220 : 0);
   }
 
   function displayLink(url) {
@@ -58,30 +89,20 @@ export function createComposer({getGreeting, preview}) {
     status.textContent = copy[lang].manual;
   }
 
-  function sizeDialog() {
-    const viewport = window.visualViewport;
-    if (viewport && dialog.open) {
-      dialog.style.setProperty('--visible-height', `${viewport.height}px`);
-      dialog.style.setProperty('--viewport-top', `${viewport.offsetTop}px`);
-    }
-  }
-
   write.addEventListener('click', ()=>{
     if (dialog.open) return;
+    form.reset();
     const greeting = getGreeting();
     for (const [key, field] of Object.entries(fields)) field.value = greeting[key];
     count();
     dialog.showModal();
-    dialog.querySelector('#compose-title').focus({preventScroll:true});
-    sizeDialog();
+    prepare();
   });
-  window.visualViewport?.addEventListener('resize', sizeDialog);
-  window.visualViewport?.addEventListener('scroll', sizeDialog);
   form.addEventListener('submit', event=>event.preventDefault());
   dialog.addEventListener('close', ()=>{
-    revision++;
+    if (dialog.open) return;
+    invalidate();
     form.reset();
-    output.parentElement.hidden = true;
     status.textContent = '';
     write.focus({preventScroll:true});
   });
@@ -93,21 +114,24 @@ export function createComposer({getGreeting, preview}) {
       const trimmed = limited !== field.value;
       if (trimmed) field.value = limited;
       count();
-      revision++;
-      output.parentElement.hidden = true;
-      output.value = '';
-      status.textContent = trimmed ? copy[lang].limit : '';
+      prepare(trimmed);
     }
+    field.addEventListener('compositionstart', invalidate);
     field.addEventListener('input', update);
     field.addEventListener('compositionend', update);
   }
-  dialog.querySelector('#compose-preview').addEventListener('click', ()=>{
-    const fragment = encodeGreeting({...draft(), lang});
+  password.addEventListener('compositionstart', invalidate);
+  password.addEventListener('compositionend', () => prepare());
+  password.addEventListener('input', event => { if (!event.isComposing) prepare(); });
+  previewButton.addEventListener('click', ()=>{
+    if (!prepared) return;
+    const {fragment, greeting} = prepared;
     dialog.close();
-    preview(fragment);
+    preview(fragment, greeting);
   });
-  dialog.querySelector('#compose-copy').addEventListener('click', async ()=>{
-    const url = link(), action = ++revision;
+  copyButton.addEventListener('click', async ()=>{
+    if (!prepared) return;
+    const {url} = prepared, action = ++revision;
     try {
       await navigator.clipboard.writeText(url);
       if (dialog.open && action === revision) status.textContent = copy[lang].copied;
@@ -115,14 +139,16 @@ export function createComposer({getGreeting, preview}) {
       if (dialog.open && action === revision) displayLink(url);
     }
   });
-  dialog.querySelector('#compose-whatsapp').addEventListener('click', ()=>{
+  whatsappButton.addEventListener('click', ()=>{
+    if (!prepared) return;
     const whatsapp = new URL('https://wa.me/');
-    whatsapp.searchParams.set('text', link());
+    whatsapp.searchParams.set('text', prepared.url);
     window.open(whatsapp.href, '_blank', 'noopener,noreferrer');
   });
   share.hidden = typeof navigator.share !== 'function';
   share.addEventListener('click', async ()=>{
-    const url = link(), action = ++revision;
+    if (!prepared) return;
+    const {url} = prepared, action = ++revision;
     try { await navigator.share({url}); }
     catch (error) {
       if (dialog.open && action === revision && error.name !== 'AbortError') displayLink(url);
@@ -130,9 +156,13 @@ export function createComposer({getGreeting, preview}) {
   });
 
   return locale=>{
+    const changed = lang !== locale;
     lang = locale;
     write.textContent = copy[lang].write;
     for (const label of labels) label.textContent = copy[lang][label.dataset.compose];
-    if (dialog.open) count();
+    if (dialog.open && changed) {
+      count();
+      prepare();
+    }
   };
 }

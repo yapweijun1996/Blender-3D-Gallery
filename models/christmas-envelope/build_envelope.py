@@ -212,15 +212,18 @@ def ribbon_strip(bm, center, widths, steps, crown):
     bm.faces.new(tuple(rows[-1]))
 
 
-def finish_ribbon(name, bm, parent):
+def finish_ribbon(name, bm, pivot):
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    bmesh.ops.translate(bm, verts=list(bm.verts), vec=-Vector(pivot))
     mesh = bpy.data.meshes.new(name)
     bm.to_mesh(mesh)
     bm.free()
     mesh.materials.append(SATIN)
     for poly in mesh.polygons:
         poly.use_smooth = True
-    return link(bpy.data.objects.new(name, mesh), parent)
+    ribbon = link(bpy.data.objects.new(name, mesh), root)
+    ribbon.location = pivot
+    return ribbon
 
 
 bow_center = Vector((0.97, -0.175, 0.79))
@@ -249,8 +252,8 @@ knot = bmesh.ops.create_uvsphere(bow_mesh, u_segments=16, v_segments=8, radius=1
 for v in knot:
     v.co = bow_center + Vector((v.co.x * 0.082, v.co.y * 0.044, v.co.z * 0.072))
 
-# The cross and upper end lift with the knot. The lower end stays tucked
-# around the front pocket as the flap opens, leaving the address side clear.
+# The crossing band and upper end share the knot mesh. The loose lower end
+# has its own pivot so it can lag behind the bow as the wrapping slips off.
 
 
 def cross_band(t):
@@ -267,12 +270,12 @@ def upper_band(t):
 
 ribbon_strip(bow_mesh, cross_band, (0.062, 0.062), 16, 0.006)
 ribbon_strip(bow_mesh, upper_band, (0.068, 0.068), 9, 0.008)
-finish_ribbon("RibbonBow", bow_mesh, flap)
+bow = finish_ribbon("RibbonBow", bow_mesh, (0, -0.14, 0.8))
 
 pocket_band = bmesh.new()
 ribbon_strip(pocket_band, lambda t: Vector((bow_center.x, -0.083 - 0.021 * t, -1.056 + 1.473 * t)),
              (0.068, 0.068), 6, 0.009)
-finish_ribbon("RibbonPocketBand", pocket_band, root)
+band = finish_ribbon("RibbonPocketBand", pocket_band, (bow_center.x, -0.104, 0.417))
 
 # The medallion is assembled from five pieces with matching radial seams.
 SZ = -0.17
@@ -417,8 +420,39 @@ for frame, angle in ((1, 0), (12, 0), (19, -32), (34, -138), (49, -174), (scene.
 for frame, height in ((1, 0), (44, 0), (53, 0.19), (70, 1.55), (scene.frame_end, 2.12)):
     letter.location.z = height
     letter.keyframe_insert(data_path="location", frame=frame, group="Letter")
+
+# Peel forward before twisting the bow inward. The lower band lags behind
+# and lifts slightly to clear the pocket before dropping away.
+for ribbon, fade_frames, poses in (
+    (bow, (18, 23), (
+        (1, (0, 0, 0), (0, 0, 0)),
+        (12, (0, 0, 0), (0, 0, 0)),
+        (17, (0.012, -0.49, 0.15), (9, 7, -2)),
+        (24, (-0.11, -1.14, 0.055), (39, 36, -3)),
+        (31, (0.03, -1.65, -0.77), (82, 57, -14)),
+        (44, (-0.10, -1.45, -4.3), (251, 32, -82)),
+        (55, (0.04, -1.85, -9.0), (332, 50, -108)),
+    )),
+    (band, (22, 28), (
+        (1, (0, 0, 0), (0, 0, 0)),
+        (14, (0, 0, 0), (0, 0, 0)),
+        (19, (0.025, -0.18, 0.13), (-6, -5, 4)),
+        (25, (0.14, -0.32, 0.17), (-7, -13, 13)),
+        (32, (0.29, -0.44, 0.04), (-37, -29, 26)),
+        (43, (0.45, -1.15, -4.3), (-167, -58, 44)),
+        (55, (0.56, -1.35, -9.0), (-284, -85, 76)),
+    )),
+):
+    ribbon["releaseFade"] = [(frame - scene.frame_start) / scene.render.fps for frame in fade_frames]
+    pivot = ribbon.location.copy()
+    for frame, offset, angles in poses:
+        ribbon.location = pivot + Vector(offset)
+        ribbon.rotation_euler = tuple(map(math.radians, angles))
+        ribbon.keyframe_insert(data_path="location", frame=frame, group=ribbon.name)
+        ribbon.keyframe_insert(data_path="rotation_euler", frame=frame, group=ribbon.name)
+
 # One glTF clip, with an NLA track shared by all animated objects.
-for obj in (flap, letter):
+for obj in (flap, letter, bow, band):
     action = obj.animation_data.action
     action.name = "Open_" + obj.name
     track = obj.animation_data.nla_tracks.new()
