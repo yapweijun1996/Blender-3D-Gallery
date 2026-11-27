@@ -670,7 +670,8 @@ body:has(.topbar[data-smart])::before {
 .pwa-inline-update {
   margin-inline-start: 8px;
 }
-@media (max-width: 440px) {
+/* The full "Update to v…" label overflows the header up to about 500 px. */
+@media (max-width: 539px) {
   .header .topbar-update-short {
     display: inline;
   }
