@@ -106,3 +106,16 @@ Record device, OS/browser version, browser versus installed mode, orientation, n
 - For claimed Android installation support, repeat installation/offline/update on a recorded Android/Chrome device.
 
 Headless WebKit is not an iPhone. Safe-area simulation is not actual system chrome. Half-width reflow is not real browser zoom. No production Core Web Vitals or physical GPU/memory claim follows from these checks.
+
+## Shell precache without content images (0.3.1, 2026-11-27)
+
+The shell now excludes PNG files under `assets/`. Emitted shell: 112 entries / 27.43 MB before, 71 entries / 8.80 MB after.
+
+First visit to `?page=models` in headless Chromium at 1280x900, through a local server sharing 4 Mbps with 100 ms latency, two runs each:
+
+| Measurement | Before | After |
+| --- | --- | --- |
+| Worker installed (`serviceWorker.ready`) | 78.3 s, 78.2 s | 33.9 s, 34.0 s |
+| Visible thumbnails loaded | 7.2 s, 7.1 s | 7.1 s, 7.2 s |
+
+Install time stands in for how soon a waiting update can be offered. Thumbnail time did not improve. `npm test` (1114), `test:pwa`, `test:standard` and `test:library` passed. Physical devices and the live site are UNVERIFIED.

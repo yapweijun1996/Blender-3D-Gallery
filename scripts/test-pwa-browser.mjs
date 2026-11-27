@@ -6,6 +6,7 @@ import os from "node:os";
 import crypto from "node:crypto";
 import { chromium } from "playwright";
 import { messages } from "../src/i18n/index.js";
+import { isShellEntry } from "./pwa-build.mjs";
 import {
   serveBuild,
   launchOptions,
@@ -69,10 +70,7 @@ async function variant(
     await fs.readFile(path.join(root, "game-pack.json"), "utf8"),
   );
   pack.build = build;
-  const shell = files.filter(
-    (f) =>
-      f.url === "index.html" || /\.(js|css|webmanifest|png|svg)$/.test(f.url),
-  );
+  const shell = files.filter((f) => isShellEntry(f.url));
   await fs.writeFile(
     path.join(root, "build-info.json"),
     JSON.stringify({ build }),

@@ -6,6 +6,13 @@ import { RULES_VERSION } from "../src/game/rules.js";
 import { TABLE } from "../src/game/table.js";
 import { loadCatalog } from "./catalog.mjs";
 const hash = (b) => crypto.createHash("sha256").update(b).digest("hex");
+// Code, styles and install icons only. Content images under assets/ (posters, demo
+// textures) are fetched on demand: precaching them delayed install and competed
+// with the visible thumbnails.
+export function isShellEntry(url) {
+  if (url === "index.html" || /\.(js|css|webmanifest|svg)$/.test(url)) return true;
+  return url.endsWith(".png") && !url.startsWith("assets/");
+}
 export function pwaBuildPlugin(version) {
   return {
     name: "gallery-pwa-build",
@@ -49,14 +56,12 @@ export function pwaBuildPlugin(version) {
         version: [RULES_VERSION, TABLE.version].join("/"),
         files: required,
       };
+      const shell = files.filter((f) => isShellEntry(f.url));
+      // The selection is part of the identity: a rule change must not reuse a shell cache name.
       const build = hash(
-        JSON.stringify({ files, offlineGame }) + template + (process.env.B3G_TEST_BUILD || ""),
+        JSON.stringify({ files, shell: shell.map((f) => f.url), offlineGame }) +
+          template + (process.env.B3G_TEST_BUILD || ""),
       ).slice(0, 16);
-      const shell = files.filter(
-        (f) =>
-          f.url === "index.html" ||
-          /\.(js|css|webmanifest|png|svg)$/.test(f.url),
-      );
       const pack = { build, ...offlineGame };
       fs.writeFileSync(
         path.join(root, "build-info.json"),

@@ -26,6 +26,8 @@ Retain Editorial Moss as the default, preserve gallery assets and original sourc
 | Solar System | Online GLB loading; excluded from Game pack |
 | Original Blender files | Not downloaded by installation or Game preparation |
 
+The shell precaches HTML, scripts, styles, the manifest and install icons. Content images (posters and demo textures under `assets/`) are fetched on demand, so installation does not download them. `isShellEntry` in `scripts/pwa-build.mjs` is the single selection rule.
+
 A Game-cached model does not imply full-library offline availability. The runtime's verified pack state owns readiness; connectivity, pack status and update stage are separate facts. Tabs broadcast only a cache-change signal; each tab independently checks its own active build before reporting readiness. A failed initial worker installation can be retried from Game options without reloading.
 
 ## Updating and cache lifecycle

@@ -5,6 +5,7 @@ import os from "node:os";
 import crypto from "node:crypto";
 import { chromium } from "playwright";
 import { serveBuild, launchOptions, gameReady } from "./browser-test-utils.mjs";
+import { isShellEntry } from "./pwa-build.mjs";
 const catalog = JSON.parse(await fs.readFile(new URL("../models/catalog.json", import.meta.url), "utf8"));
 const { version } = JSON.parse(await fs.readFile(new URL("../package.json", import.meta.url), "utf8"));
 const nextVersion = version.replace(/\d+$/, (patch) => String(Number(patch) + 1));
@@ -187,10 +188,7 @@ async function buildVariant(label, root, appVersion = version) {
       await fs.readFile(path.join(root, "game-pack.json"), "utf8"),
     );
   pack.build = build;
-  const shell = files.filter(
-      (f) =>
-        f.url === "index.html" || /\.(js|css|webmanifest|png|svg)$/.test(f.url),
-    ),
+  const shell = files.filter((f) => isShellEntry(f.url)),
     template = await fs.readFile(
       process.env.TEST_SW_TEMPLATE || "src/pwa/sw-template.js",
       "utf8",
