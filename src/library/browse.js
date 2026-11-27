@@ -45,9 +45,13 @@ export function poster(url, title, live = false) {
   image.width = 400;
   image.height = 400;
   image.loading = "lazy";
+  // CSS shows the frame placeholder while this attribute is present.
+  image.dataset.loading = "";
+  image.addEventListener("load", () => delete image.dataset.loading, { once: true });
   image.addEventListener(
     "error",
     () => {
+      delete image.dataset.loading;
       image.hidden = true;
       const frame = image.parentElement;
       frame.classList.add("poster-unavailable");
