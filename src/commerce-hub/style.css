@@ -71,6 +71,39 @@
     linear-gradient(var(--commerce-line), var(--commerce-line)) center top / 2px calc(100% - 6px) no-repeat;
   pointer-events: none;
 }
+.ch-label[data-module="bags"] {
+  opacity: 0;
+  pointer-events: none;
+}
+.ch-label[data-module="bags"]:focus-visible {
+  opacity: 1;
+}
+.ch-label[data-module="bags"]::after {
+  display: none;
+}
+.ch-zoom {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  gap: 6px;
+}
+.ch-zoom button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--commerce-line);
+  border-radius: 10px;
+  background: var(--commerce-surface);
+  color: var(--commerce-text);
+  font: inherit;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.ch-zoom button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
 .ch-label svg {
   width: 24px;
   height: 24px;

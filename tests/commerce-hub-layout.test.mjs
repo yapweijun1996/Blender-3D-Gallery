@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { LINKS, MODULES, VIEW_YAW, linkSegments, placements } from "../src/commerce-hub/layout.js";
+import { LINKS, MODULES, VIEW_YAW, linkSegments, onPlinth, placements } from "../src/commerce-hub/layout.js";
 
 test("each module is rotated from the camera azimuth it was modelled for", () => {
   for (const { id, yaw } of MODULES) {
@@ -36,4 +36,12 @@ test("links join known modules with segments between their edges", () => {
     assert.ok(Math.hypot(b[0] - a[0], b[1] - a[1]) > 0.3);
   }
   for (const place of placements()) assert.ok(place.scale > 0 && Number.isFinite(place.x + place.z + place.rotation));
+});
+
+test("each link node sits on its module's plinth edge", () => {
+  const places = new Map(placements().map(place => [place.id, place]));
+  for (const { from, to, node, nodeModule } of linkSegments()) {
+    assert.ok(onPlinth(places.get(nodeModule), node, 0.3), `${from}-${to} node reaches ${nodeModule}`);
+    assert.ok(!onPlinth(places.get(nodeModule), node, -0.45), `${from}-${to} node is not inside ${nodeModule}`);
+  }
 });

@@ -82,3 +82,9 @@ edges, label centres, leader dots, link ends, the curved delivery link) with the
 exactly the 1536x1024 frame, and the content of some plinths is resized to the drawn proportions. Checked with
 a 50% overlay at 1320x880. Remaining: some building shapes differ (warehouse, shop roof), and bloom is softer
 in the anchor.
+
+## Zoom, picking and re-measured alignment (0.5.0)
+
+Positions were re-measured on gridded crops of the anchor (several modules were 26-40 px off). Links are thin
+with one node each, as drawn; travelling pulses and bag bobbing are removed. Added zoom buttons, pan and
+click-to-select on module geometry. Codex review: no P0/P1, five P2, all fixed. Models are unchanged.

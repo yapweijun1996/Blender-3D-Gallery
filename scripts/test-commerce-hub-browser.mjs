@@ -10,6 +10,12 @@ await fs.mkdir(out, { recursive: true });
 const server = await serveBuild("dist");
 const browser = await chromium.launch(launchOptions);
 const pass = (text) => console.log("PASS " + text);
+// Points on each module's own body in the 1536x1024 composition frame.
+const CLICKS = {
+  shop: [[260, 380], [290, 520]], warehouse: [[820, 150], [640, 270]], delivery: [[1150, 430], [1440, 505]],
+  payment: [[370, 720], [372, 800]], analytics: [[760, 880], [765, 945]], automation: [[1150, 700], [1145, 800]],
+  bags: [[720, 470], [768, 640]],
+};
 const ready = (page) => page.locator('.ch-stage[data-state="ready"]').waitFor({ timeout: 60000 });
 
 async function open(options = {}) {
@@ -27,10 +33,10 @@ try {
     await page.goto(server.url + "?page=commerce-hub");
     await ready(page);
     assert.equal(await page.locator("canvas").count(), 1);
-    assert.equal(await page.locator(".ch-label").count(), 6);
+    assert.equal(await page.locator(".ch-label").count(), 7);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `overflow at ${width}`);
     const stage = await page.locator(".ch-stage").boundingBox();
-    for (const label of await page.locator(".ch-label").all()) {
+    for (const label of await page.locator('.ch-label:not([data-module="bags"])').all()) {
       const box = await label.boundingBox();
       assert.ok(box.width >= 44 && box.height >= 44, "label target");
       assert.ok(box.x >= stage.x && box.x + box.width <= stage.x + stage.width + 1, "label inside stage");
@@ -47,6 +53,43 @@ try {
     await page.locator(".ch-stage").screenshot({ path: `${out}/focus-${width}.png` });
     await page.keyboard.press("Escape");
     assert.equal(await page.locator(".ch-panel h2").innerText(), messages.en["commerce.overview.title"]);
+    // Zoom out and in with the buttons, then click the bags themselves.
+    await page.waitForTimeout(900);
+    const canvas = page.locator(".ch-stage canvas");
+    const before = await canvas.screenshot();
+    await page.locator('[data-zoom="out"]').click();
+    await page.waitForTimeout(200);
+    assert.ok(!before.equals(await canvas.screenshot()), "zoom out changes the view");
+    await page.locator('[data-zoom="reset"]').click();
+    await page.waitForTimeout(900);
+    const box = await canvas.boundingBox();
+    // A drag that returns to its start must not select anything.
+    const cx = box.x + box.width / 2, cy = box.y + box.height / 2;
+    await page.mouse.move(cx, cy);
+    await page.mouse.down();
+    await page.mouse.move(cx + 80, cy, { steps: 4 });
+    await page.mouse.move(cx, cy, { steps: 4 });
+    await page.mouse.up();
+    assert.equal(await page.locator(".ch-panel h2").innerText(), messages.en["commerce.overview.title"]);
+    await page.locator('[data-zoom="reset"]').click();
+    await page.waitForTimeout(900);
+    await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * (box.width / box.height > 1.2 ? 0.5 : 0.52));
+    assert.equal(await page.locator(".ch-panel h2").innerText(), messages.en["commerce.bags.label"]);
+    await page.keyboard.press("Escape");
+    // Click every module's own body, not only the centre.
+    for (const id of ["shop", "warehouse", "delivery", "payment", "analytics", "automation", "bags"]) {
+      await page.locator('[data-zoom="reset"]').click();
+      await page.waitForTimeout(800);
+      const area = await canvas.boundingBox();
+      for (const [px, py] of CLICKS[id]) {
+        // Anchor-frame pixels to canvas pixels: the frame is fitted inside the canvas and centred.
+        const unit = Math.min(area.width / 1536, area.height / 1024);
+        await page.mouse.click(area.x + area.width / 2 + (px - 768) * unit, area.y + area.height / 2 + (py - 512) * unit);
+        assert.equal(await page.locator(".ch-panel h2").innerText(), messages.en[`commerce.${id}.label`], `${id} at ${px},${py} (${width}px)`);
+        await page.locator('[data-zoom="reset"]').click();
+        await page.waitForTimeout(800);
+      }
+    }
     assert.deepEqual(errors, []);
     pass(`${width}px loads seven modules, labels focus and Escape returns (${stats.calls} first-frame calls, ${stats.triangles} triangles)`);
     await context.close();
@@ -109,6 +152,7 @@ try {
     await page.locator('.ch-stage[data-state="interrupted"] .ch-loading button').waitFor();
     assert.equal(await page.locator(".ch-stage").getAttribute("aria-busy"), "false");
     assert.ok(await page.locator(".ch-reset").isDisabled());
+    assert.equal(await page.locator("[data-zoom]:disabled").count(), 3);
     pass("context loss shows a focusable recovery and disables controls");
     assert.deepEqual(errors, []);
     await context.close();

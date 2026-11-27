@@ -6,33 +6,36 @@ export const VIEW_ELEVATION = 30;
 export const FRAME = Object.freeze({ width: 1536, height: 1024, pixelsPerUnit: 100 });
 
 // Shared plinth (source/common.py): outer slab size, corner radius and half of its total height.
-const PLINTH = 4.6, CORNER = 0.56, WAIST = 0.255;
+const PLINTH = 4.6, CORNER = 0.56, WAIST = 0.17;
 export const PLINTH_TOP = 0.51;
 
 // left/right: outermost plinth pixels; y: pixel height of those side corners.
 // label: centre of the label pill; pin: the dot its leader line points at.
 // content: [width, height] of what stands on the plinth, where the anchor proportions it differently.
 export const MODULES = Object.freeze([
-  { id: "warehouse", yaw: 41.02, left: 470, right: 1168, y: 296, content: [0.9, 0.74], label: [711, 45], pin: [712, 143] },
-  { id: "shop", yaw: -34.22, left: 50, right: 524, y: 462, label: [184, 185], pin: [196, 262] },
-  { id: "bags", yaw: -43.83, left: 517, right: 1026, y: 603, content: [0.92, 0.9] },
-  { id: "delivery", yaw: 39.35, left: 1027, right: 1498, y: 479, content: [0.99, 0.85], label: [1323, 224], pin: [1328, 312] },
-  { id: "payment", yaw: 41.35, left: 179, right: 563, y: 759, label: [193, 628], pin: [196, 678] },
-  { id: "analytics", yaw: 49.24, left: 596, right: 933, y: 890, content: [0.95, 0.84], label: [766, 766], pin: [766, 842] },
-  { id: "automation", yaw: 47.2, left: 959, right: 1331, y: 739, content: [0.94, 0.9], label: [1355, 663], pin: [1353, 712] },
+  { id: "warehouse", yaw: 41.02, left: 467, right: 1157, y: 298, content: [0.9, 0.67], label: [711, 45], pin: [712, 143] },
+  { id: "shop", yaw: -34.22, left: 50, right: 516, y: 472, label: [185, 185], pin: [194, 232] },
+  { id: "bags", yaw: -43.83, left: 516, right: 1023, y: 597, content: [0.92, 0.9] },
+  { id: "delivery", yaw: 39.35, left: 1026, right: 1491, y: 505, content: [0.99, 0.93], label: [1323, 223], pin: [1327, 272] },
+  { id: "payment", yaw: 41.35, left: 177, right: 563, y: 772, label: [193, 627], pin: [196, 677] },
+  { id: "analytics", yaw: 49.24, left: 594, right: 932, y: 920, content: [0.95, 0.84], label: [767, 766], pin: [766, 842] },
+  { id: "automation", yaw: 47.2, left: 958, right: 1340, y: 779, content: [0.94, 0.9], label: [1356, 662], pin: [1354, 712] },
 ]);
 
-// from, to, start pixel, end pixel and an optional bend point.
+// from, to, the two end pixels, which end carries the glowing node (0 or 1) and an optional bend point.
 export const LINKS = Object.freeze([
-  ["shop", "warehouse", [470, 418], [579, 357]],
-  ["warehouse", "delivery", [1013, 375], [1102, 420]],
-  ["shop", "bags", [399, 524], [541, 592]],
-  ["delivery", "bags", [1133, 558], [1004, 598], [1066, 590]],
-  ["payment", "bags", [497, 722], [610, 663]],
-  ["automation", "bags", [913, 668], [1021, 722]],
-  ["payment", "analytics", [485, 822], [626, 893]],
-  ["analytics", "automation", [914, 883], [1029, 828]],
+  ["shop", "warehouse", [470, 410], [578, 357], 1],
+  ["warehouse", "delivery", [1013, 374], [1100, 418], 0],
+  ["shop", "bags", [401, 524], [522, 588], 0],
+  ["delivery", "bags", [1133, 558], [1015, 590], 0, [1068, 598]],
+  ["payment", "bags", [500, 718], [610, 664], 1],
+  ["automation", "bags", [1025, 724], [915, 668], 1],
+  ["payment", "analytics", [485, 823], [610, 892], 0],
+  ["analytics", "automation", [912, 888], [1027, 828], 1],
 ]);
+
+// Links run along the plinth sides, a little above the floor.
+export const LINK_HEIGHT = 0.12;
 
 const radians = degrees => degrees * Math.PI / 180;
 const yaw = radians(VIEW_YAW), elevation = radians(VIEW_ELEVATION);
@@ -63,15 +66,21 @@ export function placements() {
   });
 }
 
-/** Floor paths between modules, as ground points. */
+/** True when a ground point lies on a module's rotated square plinth. */
+export function onPlinth(place, [x, z], margin = 0) {
+  const dx = x - place.x, dz = z - place.z, cos = Math.cos(place.rotation), sin = Math.sin(place.rotation);
+  return Math.max(Math.abs(dx * cos - dz * sin), Math.abs(dx * sin + dz * cos)) <= place.radius + margin;
+}
+
+/** The traced floor paths between modules, with the point that carries each node. */
 export function linkSegments() {
-  return LINKS.map(([from, to, a, b, bend]) => ({
-    from, to,
-    points: (bend
-      ? Array.from({ length: 11 }, (_, i) => {
-        const t = i / 10, u = 1 - t;
+  return LINKS.map(([from, to, a, b, node, bend]) => {
+    const points = (bend
+      ? Array.from({ length: 13 }, (_, i) => {
+        const t = i / 12, u = 1 - t;
         return [0, 1].map(k => u * u * a[k] + 2 * u * t * bend[k] + t * t * b[k]);
       })
-      : [a, b]).map(pixel => groundPoint(pixel, 0.04)),
-  }));
+      : [a, b]).map(pixel => groundPoint(pixel, LINK_HEIGHT));
+    return { from, to, points, node: node ? points.at(-1) : points[0], nodeModule: node ? to : from };
+  });
 }

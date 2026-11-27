@@ -1,12 +1,12 @@
 import * as THREE from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
-import { linkSegments, PLINTH_TOP } from "./layout.js";
+import { LINK_HEIGHT, linkSegments, PLINTH_TOP, VIEW_ELEVATION, VIEW_YAW } from "./layout.js";
 
 // Parts that move keep their own node; everything else is merged to cut draw calls.
-const MOVING = /^(Bag_|Truck_|Conveyor_Box_|Card_(Bottom|Middle|Top)$|Bar_|Output_Card$|Indicator$)/;
+const MOVING = /^(Truck_|Conveyor_Box_|Card_(Bottom|Middle|Top)$|Bar_|Output_Card$|Indicator$)/;
 const bucket = value => Math.round(value * 4) / 4;
 
-function plain(geometry, color) {
+function plain(geometry, color, module) {
   const result = new THREE.BufferGeometry();
   const source = geometry.index ? geometry : geometry.clone().setIndex([...Array(geometry.attributes.position.count).keys()]);
   result.setIndex(source.index.clone());
@@ -16,6 +16,8 @@ function plain(geometry, color) {
   const colors = new Float32Array(source.attributes.position.count * 3);
   for (let i = 0; i < colors.length; i += 3) color.toArray(colors, i);
   result.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  // Merging loses the object tree, so each vertex remembers its module for picking.
+  result.setAttribute("module", new THREE.BufferAttribute(new Float32Array(source.attributes.position.count).fill(module), 1));
   return result;
 }
 
@@ -31,14 +33,27 @@ function mergeable(material) {
     material.emissive.getHex() === 0;
 }
 
+/** The module whose visible geometry the ray hits first; soft light and shadow layers are ignored. */
+export function pickModule(composed, places, raycaster) {
+  for (const hit of raycaster.intersectObject(composed.root, true)) {
+    const merged = hit.object.geometry.getAttribute("module");
+    if (merged) return places[merged.getX(hit.face.a)].id;
+    let node = hit.object, effect = false;
+    for (; node && !node.userData.module; node = node.parent) effect ||= node.name.startsWith("Fx_");
+    if (!effect && node) return node.userData.module;
+  }
+  return null;
+}
+
 export function composeModules(places, models) {
-  const root = new THREE.Group(), groups = new Map(), parts = new Map(), boxes = new Map();
+  const root = new THREE.Group(), groups = new Map(), parts = new Map();
   const buckets = new Map(), owned = [];
   for (const place of places) {
     const group = new THREE.Group();
     group.position.set(place.x, 0, place.z);
     group.rotation.y = place.rotation;
     group.scale.setScalar(place.scale);
+    group.userData.module = place.id;
     root.add(group);
     groups.set(place.id, group);
     const model = models.get(place.id);
@@ -53,9 +68,6 @@ export function composeModules(places, models) {
       group.add(node);
     }
     group.updateMatrixWorld(true);
-    boxes.set(place.id, new THREE.Box3().setFromCenterAndSize(
-      new THREE.Vector3(place.x, 1.2 * place.scale, place.z),
-      new THREE.Vector3(place.radius * 2, 2.4 * place.scale, place.radius * 2)));
     for (const node of [...group.children]) {
       if (MOVING.test(node.name)) {
         parts.set(`${place.id}:${node.name}`, { node, home: node.position.clone(), size: node.scale.x, height: node.scale.y });
@@ -72,7 +84,7 @@ export function composeModules(places, models) {
         }
         const settings = finish(material), key = JSON.stringify(settings);
         if (!buckets.has(key)) buckets.set(key, { geometries: [], settings });
-        const geometry = plain(mesh.geometry, material.color).applyMatrix4(mesh.matrixWorld);
+        const geometry = plain(mesh.geometry, material.color, places.indexOf(place)).applyMatrix4(mesh.matrixWorld);
         buckets.get(key).geometries.push(geometry);
         mesh.removeFromParent();
         mesh.geometry.dispose();
@@ -90,10 +102,10 @@ export function composeModules(places, models) {
     root.add(mesh);
     owned.push(mesh);
   }
-  return { root, groups, parts, boxes };
+  return { root, groups, parts };
 }
 
-/** Flat glowing ribbons on the floor, with one travelling pulse per link. */
+/** Thin glowing lines with one node each, as drawn in the anchor. Nothing travels along them. */
 export function createLinks() {
   const group = new THREE.Group(), paths = linkSegments();
   const ribbon = (width, height, color, opacity) => {
@@ -117,37 +129,20 @@ export function createLinks() {
     mesh.renderOrder = 2;
     group.add(mesh);
   };
-  ribbon(0.44, 0.03, 0xffcf5c, 0.3);
-  ribbon(0.2, 0.035, 0xffd970, 0.6);
-  ribbon(0.085, 0.04, 0xfff6d2, 1);
-  // A glowing node marks where each link meets its plinth.
-  const ends = paths.flatMap(({ points }) => [points[0], points.at(-1)]);
-  for (const [radius, color, opacity, height] of [[0.24, 0xffcf5c, 0.4, 0.045], [0.11, 0xfff6d2, 1, 0.05]]) {
-    const nodes = new THREE.InstancedMesh(new THREE.CircleGeometry(radius, 14).rotateX(-Math.PI / 2),
-      new THREE.MeshBasicMaterial({ color, opacity, transparent: true, depthWrite: false }), ends.length);
-    const at = new THREE.Matrix4();
-    ends.forEach(([x, z], i) => nodes.setMatrixAt(i, at.makeTranslation(x, height, z)));
-    nodes.renderOrder = 2;
+  ribbon(0.26, LINK_HEIGHT - 0.01, 0xffbe3d, 0.5);
+  ribbon(0.085, LINK_HEIGHT, 0xffe9a0, 1);
+  // The node sits on the plinth side face, so it is drawn over it.
+  for (const [radius, color, opacity] of [[0.19, 0xffcf5c, 0.45], [0.085, 0xfffbe8, 1]]) {
+    const nodes = new THREE.InstancedMesh(new THREE.CircleGeometry(radius, 16),
+      new THREE.MeshBasicMaterial({ color, opacity, transparent: true, depthWrite: false, depthTest: false }), paths.length);
+    const at = new THREE.Matrix4(), facing = new THREE.Quaternion().setFromEuler(
+      new THREE.Euler(-VIEW_ELEVATION * Math.PI / 180, VIEW_YAW * Math.PI / 180, 0, "YXZ"));
+    paths.forEach(({ node: [x, z] }, i) => nodes.setMatrixAt(i, at.compose(new THREE.Vector3(x, LINK_HEIGHT, z), facing, new THREE.Vector3(1, 1, 1))));
+    nodes.renderOrder = 4;
     nodes.frustumCulled = false;
     group.add(nodes);
   }
-  const pulses = new THREE.InstancedMesh(new THREE.CircleGeometry(0.12, 12).rotateX(-Math.PI / 2),
-    new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, depthWrite: false }), paths.length);
-  pulses.renderOrder = 3;
-  pulses.frustumCulled = false;
-  group.add(pulses);
-  const matrix = new THREE.Matrix4();
-  const update = time => {
-    paths.forEach(({ points }, i) => {
-      const t = (time * 0.32 + i * 0.137) % 1 * (points.length - 1);
-      const n = Math.min(points.length - 2, Math.floor(t)), k = t - n;
-      const [ax, az] = points[n], [bx, bz] = points[n + 1];
-      pulses.setMatrixAt(i, matrix.makeTranslation(ax + (bx - ax) * k, 0.06, az + (bz - az) * k));
-    });
-    pulses.instanceMatrix.needsUpdate = true;
-  };
-  update(0);
-  return { group, update };
+  return { group };
 }
 
 /** Idle motion for the named parts. Time zero is the authored pose. */
@@ -157,11 +152,7 @@ export function animateParts(parts, time) {
     const part = parts.get(key);
     if (part) part.node.position.set(part.home.x + x, part.home.y + y, part.home.z + z);
   };
-  ["Large", "Medium", "Small"].forEach((size, i) => {
-    const lift = Math.abs(wave(1.4, i * 1.9)) * 0.05;
-    move(`bags:Bag_${size}`, 0, lift, 0);
-    move(`bags:Bag_${size}_Handles`, 0, lift, 0);
-  });
+  // The shopping bags stay on the floor: independent bobbing read as misplaced bags.
   const drive = wave(0.7) * 0.12;
   for (const name of ["Body", "Wheel_FL", "Wheel_FR", "Wheel_RL", "Wheel_RR"]) move(`delivery:Truck_${name}`, drive, 0, 0);
   move("warehouse:Conveyor_Box_1", 0, 0, wave(0.9) * 0.16);
