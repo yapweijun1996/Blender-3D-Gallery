@@ -10,3 +10,11 @@ export function classifyUpdate({ waiting, pageVersion, latestVersion }) {
   if (typeof latestVersion !== "string" || typeof pageVersion !== "string") return "unknown";
   return latestVersion === pageVersion ? "current" : "stale";
 }
+
+/**
+ * The version to name on an update action. A waiting build that carries the page's own
+ * version would read as "Update to v<current>", so it gets the plain label (null) instead.
+ */
+export function updateLabelVersion(updateVersion, pageVersion) {
+  return updateVersion && updateVersion !== pageVersion ? updateVersion : null;
+}

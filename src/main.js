@@ -12,6 +12,7 @@ import demos from "virtual:gallery-demos";
 import { demoRoutes } from "./demo-routes.js";
 import { interactionKind } from "./model-interaction.js";
 import { setupPwa } from "./pwa/register.js";
+import { updateLabelVersion } from "./pwa/update-state.js";
 import { pwaCopy } from "./pwa/copy.js";
 import { getLanguage, localize, localizeTree, number, onLanguageChange, plural, syncLanguageAcrossTabs, t } from "./i18n/index.js";
 import { setupLanguagePicker } from "./i18n/picker.js";
@@ -560,7 +561,8 @@ function refreshVersion() {
 
 function refreshUpdateActions() {
   const { update, updateReady, updateVersion } = pwaState;
-  const label = updateVersion ? pwaCopy.updateTo(updateVersion) : pwaCopy.update;
+  const target = updateLabelVersion(updateVersion, __APP_VERSION__);
+  const label = target ? pwaCopy.updateTo(target) : pwaCopy.update;
   for (const button of document.querySelectorAll("[data-pwa-update]")) {
     button.hidden = !updateReady;
     const busy = update !== "available" && update !== "error";

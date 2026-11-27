@@ -7,6 +7,7 @@ import { chromium } from "playwright";
 import { serveBuild, launchOptions, gameReady } from "./browser-test-utils.mjs";
 const catalog = JSON.parse(await fs.readFile(new URL("../models/catalog.json", import.meta.url), "utf8"));
 const { version } = JSON.parse(await fs.readFile(new URL("../package.json", import.meta.url), "utf8"));
+const nextVersion = version.replace(/\d+$/, (patch) => String(Number(patch) + 1));
 const expectedDemos = JSON.parse(await fs.readFile(new URL("../data/demos.json", import.meta.url), "utf8"));
 const expectedDemoIds = expectedDemos.map(({ id }) => id).sort();
 const expectedAssetCount = catalog.collections.reduce((total, collection) => total + collection.assets.length, 0);
@@ -407,7 +408,7 @@ try {
           await page.goto(server.url + "?page=" + route);
           await safeInsets(page);
           assert.equal(await bar.locator("[data-app-version]").innerText(), `v${version}`);
-          const update = bar.getByRole("button", { name: "Update to v0.2.1" });
+          const update = bar.getByRole("button", { name: `Update to v${nextVersion}` });
           assert.equal(await update.count(), 0);
           if (route === "tripo-motion") {
             await page.locator(".motion-stage canvas").waitFor();
@@ -432,9 +433,9 @@ try {
               window.scrollTo({ top: 0, behavior: "instant" });
             });
           }
-          await page.evaluate(() => window.dispatchEvent(new CustomEvent("pwa-state-change", {
-            detail: { offlinePack: "missing", update: "available", updateReady: true, updateVersion: "0.2.1" },
-          })));
+          await page.evaluate((updateVersion) => window.dispatchEvent(new CustomEvent("pwa-state-change", {
+            detail: { offlinePack: "missing", update: "available", updateReady: true, updateVersion },
+          })), nextVersion);
           await safeRect(update, page.viewportSize(), "versioned topbar update");
           await noOverflow(page);
           await page.screenshot({ path: path.join(artifacts, `topbar-${route}-${width}.png`) });
@@ -442,7 +443,7 @@ try {
             await menu(page);
             const dialog = page.locator("#mobile-menu");
             assert.equal(await dialog.locator("[data-app-version]").innerText(), `v${version}`);
-            assert.equal(await dialog.getByRole("button", { name: "Update to v0.2.1" }).isVisible(), true);
+            assert.equal(await dialog.getByRole("button", { name: `Update to v${nextVersion}` }).isVisible(), true);
             await page.keyboard.press("Escape");
           }
         }
@@ -698,7 +699,7 @@ try {
           path.join(os.tmpdir(), "b3g-standard-update-"),
         ),
         a = await buildVariant("standard-A", path.join(temp, "A")),
-        b = await buildVariant("standard-B", path.join(temp, "B"), "0.2.1"),
+        b = await buildVariant("standard-B", path.join(temp, "B"), nextVersion),
         updates = await serveBuild(a.root);
       try {
         await page.goto(updates.url + "?page=demos");
@@ -713,7 +714,7 @@ try {
         await page.locator('.demo-card a[href="?page=tripo-motion"]').first().click();
         const recovery = page.locator("#tripo-motion-page");
         await recovery.getByRole("button", { name: "Retry experience" }).waitFor();
-        await recovery.getByRole("button", { name: "Update to v0.2.1" }).waitFor();
+        await recovery.getByRole("button", { name: `Update to v${nextVersion}` }).waitFor();
         updates.setFault(null);
         await page.evaluate(() => {
           history.pushState({}, "", "?page=added-in-next-build");
@@ -721,9 +722,9 @@ try {
         });
         const notice = page.locator(".pwa-notice");
         await notice.waitFor({ state: "visible" });
-        const topUpdate = page.locator(".topbar").getByRole("button", { name: "Update to v0.2.1" });
+        const topUpdate = page.locator(".topbar").getByRole("button", { name: `Update to v${nextVersion}` });
         await topUpdate.waitFor({ state: "visible" });
-        assert.equal(await page.locator("#route-notice").getByRole("button", { name: "Update to v0.2.1" }).isVisible(), true);
+        assert.equal(await page.locator("#route-notice").getByRole("button", { name: `Update to v${nextVersion}` }).isVisible(), true);
         assert.equal(
           await page
             .locator("meta[name=standard-test-build]")
