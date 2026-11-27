@@ -1,0 +1,114 @@
+{
+  "module": "bags",
+  "blender_version": "5.1.2",
+  "units": "metres, Blender +Z up, front -Y, origin at plinth base centre",
+  "render": {
+    "engine": "BLENDER_EEVEE",
+    "dimensions_px": [
+      1536,
+      1024
+    ],
+    "projection": "ORTHO",
+    "orthographic_width_m": 8.436040878295898,
+    "camera_location_m": [
+      -8.013668060302734,
+      -8.32320785522461,
+      7.032752990722656
+    ],
+    "camera_rotation_rad": [
+      1.0860859155654907,
+      -3.860109742959139e-08,
+      -0.7649930119514465
+    ],
+    "view_transform": "Standard",
+    "look": "None"
+  },
+  "triangles": 10884,
+  "bytes": 250932,
+  "primitives": 19,
+  "materials": 8,
+  "material_names": [
+    "Sage",
+    "Inner Grey",
+    "Unlit Gradient Effects",
+    "Warm Light Ring",
+    "Bag Paper",
+    "Bag Lining",
+    "Bag Lip",
+    "Bag Handle"
+  ],
+  "nodes": [
+    "Bag_Large",
+    "Bag_Large_Handles",
+    "Bag_Medium",
+    "Bag_Medium_Handles",
+    "Bag_Small",
+    "Bag_Small_Handles",
+    "Fx_AmbientOcclusion",
+    "Fx_ContactShadow",
+    "Fx_FloorGlow",
+    "Fx_RingHalo",
+    "GlowRing",
+    "Plinth_Inner",
+    "Plinth_Outer"
+  ],
+  "bounds_gltf_y_up_m": {
+    "min": [
+      -2.91,
+      0,
+      -2.91
+    ],
+    "max": [
+      2.91,
+      3.27248,
+      2.91
+    ]
+  },
+  "extensions_used": [
+    "KHR_materials_specular",
+    "KHR_materials_unlit"
+  ],
+  "validator_notes": {
+    "external_resources": [],
+    "blended_materials": [
+      "Unlit Gradient Effects"
+    ],
+    "emissive_materials": [
+      "Warm Light Ring"
+    ],
+    "unlit_vertex_alpha_nodes": [
+      "Fx_AmbientOcclusion",
+      "Fx_ContactShadow",
+      "Fx_FloorGlow",
+      "Fx_RingHalo"
+    ],
+    "khronos_validator": "not run by the generator"
+  },
+  "hard_limits": {
+    "triangles": 18200,
+    "bytes": 610000,
+    "primitives": 21
+  },
+  "sha256": {
+    "blend": "1e3f0441e9b264eb4950cb260329c7f06817bdda9ae11b5393116b28b4422ad5",
+    "glb": "9639086640973071c7472faf574d451b826d90743c0f251f792dd47d6bd7f114",
+    "png": "ac84381c378ebd517d65f0dde5bc02c77ca6b797b10c6c0ed23df50ef64ae39e",
+    "source": {
+      "common.py": "f5864c78790c2e7c9d1055542d29a5879be8cc51c23f57d65decf369a04d5a3a",
+      "build_bags.py": "08378570a71c10431155bb8439868781b5018d8dd9e1ea03b7e00613918df5b3"
+    },
+    "anchors": {
+      "anchor-scene.webp": "08b8dc56656594f97759fa09e4aa81ea4d67389e63a25599246fa30682811bf2",
+      "anchor-bags.webp": "5e0ea26435ab8711ba82d7867ec7436449182513bb4c0063959a5e3c8524e98b"
+    }
+  },
+  "visual_review": {
+    "status": "not reviewed",
+    "criteria": {
+      "silhouette": "Three upright tapered bags: large back-left, medium back-right, small front.",
+      "paper": "Hollow orange interiors, thin bright mouths, folded end gussets, two rounded handles each.",
+      "plinth": "Rounded sage outer tier, lighter inset tier, warm perimeter glow and contact shadow.",
+      "presentation": "Cream studio, warm-to-neutral balance, similar scale and three-quarter framing."
+    }
+  }
+}

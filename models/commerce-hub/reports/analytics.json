@@ -1,0 +1,111 @@
+{
+  "module": "analytics",
+  "blender_version": "5.1.2",
+  "units": "metres, Blender +Z up, front -Y, origin at plinth base centre",
+  "render": {
+    "engine": "BLENDER_EEVEE",
+    "dimensions_px": [
+      1536,
+      1024
+    ],
+    "projection": "ORTHO",
+    "orthographic_width_m": 8.242074966430664,
+    "camera_location_m": [
+      8.675385475158691,
+      -7.462457656860352,
+      7.211493492126465
+    ],
+    "camera_rotation_rad": [
+      1.0706361532211304,
+      -2.2760382023534476e-08,
+      0.8593371510505676
+    ],
+    "view_transform": "Standard",
+    "look": "None"
+  },
+  "triangles": 6884,
+  "bytes": 161236,
+  "primitives": 13,
+  "materials": 9,
+  "material_names": [
+    "Sage",
+    "Inner Grey",
+    "Unlit Gradient Effects",
+    "Analytics Platform Sage",
+    "Analytics Bar Cream",
+    "Analytics Bar Light Sage",
+    "Analytics Bar Amber",
+    "Analytics Frosted Glass",
+    "Analytics Chart Green"
+  ],
+  "nodes": [
+    "Analytics_Tier",
+    "Bar_High",
+    "Bar_Low",
+    "Bar_Mid",
+    "Chart_Details",
+    "Chart_Line",
+    "Fx_AmbientOcclusion",
+    "Fx_ContactShadow",
+    "Fx_FloorGlow",
+    "Panel_Glass",
+    "Plinth_Inner",
+    "Plinth_Outer"
+  ],
+  "bounds_gltf_y_up_m": {
+    "min": [
+      -2.91,
+      0,
+      -2.91
+    ],
+    "max": [
+      2.91,
+      2.716,
+      2.91
+    ]
+  },
+  "extensions_used": [
+    "KHR_materials_specular",
+    "KHR_materials_unlit"
+  ],
+  "validator_notes": {
+    "external_resources": [],
+    "blended_materials": [
+      "Unlit Gradient Effects",
+      "Analytics Frosted Glass"
+    ],
+    "emissive_materials": [],
+    "unlit_vertex_alpha_nodes": [
+      "Fx_AmbientOcclusion",
+      "Fx_ContactShadow",
+      "Fx_FloorGlow"
+    ],
+    "khronos_validator": "not run by the generator"
+  },
+  "hard_limits": {
+    "triangles": 7700,
+    "bytes": 250000,
+    "primitives": 15
+  },
+  "sha256": {
+    "blend": "3d6391003f6ba350e8bf16d70c6a8d02f45dd527385b384dd0ec1698e43ab1e1",
+    "glb": "90d091f4aff6ac7a8e3bc9650dbcc05c34882db7b2b4d28d55abdd1ec97321f7",
+    "png": "69984dc0d0e17babc95c92d7ccde7158c26da2ef9afb1ca2ba53514f6ad94729",
+    "source": {
+      "common.py": "29942a681e62dbd90bf4985b07d0b9e00c95bc15ae4f426ea62cd001a494d16d",
+      "build_analytics.py": "3ec828d9e05b181f2cfc653a2354250d7433df08f4f2bce6aefea9b06b574b7a"
+    },
+    "anchors": {
+      "anchor-scene.webp": "08b8dc56656594f97759fa09e4aa81ea4d67389e63a25599246fa30682811bf2",
+      "anchor-analytics.webp": "efb94d19eaa2c8ae9f6568e1324eb19cc25ef9f20a22e5845c2f91fa23767e1b"
+    }
+  },
+  "visual_review": {
+    "status": "not reviewed",
+    "criteria": {
+      "layout": "A sage third tier with ascending cream, light sage and amber bars.",
+      "chart": "Frosted translucent panel with a four-bar icon, two text lines and a three-node trend.",
+      "motion": "Three bars pivot at their bases, with separate trend and glass objects."
+    }
+  }
+}

@@ -11,4 +11,5 @@ export const demoRoutes = Object.freeze({
   "sg-heartland": "./city/page.js",
   "sg-world": "./world/page.js",
   "sg-mrt": "./mrt/page.js",
+  "commerce-hub": "./commerce-hub/page.js",
 });

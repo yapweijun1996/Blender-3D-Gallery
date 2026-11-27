@@ -47,7 +47,7 @@ for (const id of Object.keys(paletteThemes)) requireKey(`palette.${id}`, "src/de
 
 const templateFiles = [
   "index.html", "src/game/page.js", "src/game/scene.js", "src/library/browse.js", "src/solar/page.js", "src/product-studio/page.js",
-  "src/shelf-inspector/page.js", "src/chibi-motion/page.js", "src/main.js",
+  "src/shelf-inspector/page.js", "src/chibi-motion/page.js", "src/commerce-hub/page.js", "src/main.js",
   "src/pwa/register.js", "src/pwa/update-ui.js", "src/design/palette-picker.js",
   "src/viewer.js", "src/chibi-rig-controls.js", "src/fish-motion.js",
   "src/tripo-animation-preview.js", "src/shopping-cart/demo.js",
@@ -97,7 +97,7 @@ for (const path of templateFiles) {
 }
 
 for (const path of ["src/style.css", "src/i18n/picker.css", "src/design/palette-picker.css",
-  ...["game", "solar", "product-studio", "shelf-inspector", "chibi-motion"].map(dir => `src/${dir}/style.css`)]) {
+  ...["game", "solar", "product-studio", "shelf-inspector", "chibi-motion", "commerce-hub"].map(dir => `src/${dir}/style.css`)]) {
   for (const [, , value] of read(path).matchAll(/\bcontent:\s*(["'])(.*?)\1/g)) checkLiteral(value, path);
 }
 

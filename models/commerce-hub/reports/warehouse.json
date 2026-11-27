@@ -1,0 +1,120 @@
+{
+  "module": "warehouse",
+  "blender_version": "5.1.2",
+  "units": "metres, Blender +Z up, front -Y, origin at plinth base centre",
+  "render": {
+    "engine": "BLENDER_EEVEE",
+    "dimensions_px": [
+      1536,
+      1024
+    ],
+    "projection": "ORTHO",
+    "orthographic_width_m": 6.357507228851318,
+    "camera_location_m": [
+      8.24573040008545,
+      -9.468164443969727,
+      5.102241516113281
+    ],
+    "camera_rotation_rad": [
+      1.2728767395019531,
+      -1.3269618293065832e-08,
+      0.715991199016571
+    ],
+    "view_transform": "Standard",
+    "look": "None"
+  },
+  "triangles": 23088,
+  "bytes": 701680,
+  "primitives": 28,
+  "materials": 16,
+  "material_names": [
+    "Sage",
+    "Inner Grey",
+    "Unlit Gradient Effects",
+    "Warehouse Cream Siding",
+    "Warehouse Ivory Trim",
+    "Warehouse Roof Sage",
+    "Warehouse Frame Green",
+    "Warehouse Charcoal",
+    "Warehouse Satin Roller Metal",
+    "Warehouse Amber Glazing",
+    "Warehouse Warm Lamps",
+    "Warehouse Rack Orange",
+    "Warehouse Carton Kraft",
+    "Warehouse Carton Tape",
+    "Warehouse Pallet Wood",
+    "Warehouse Safety Yellow"
+  ],
+  "nodes": [
+    "Conveyor_Box_1",
+    "Conveyor_Box_2",
+    "Conveyor_Box_3",
+    "Fx_AmbientOcclusion",
+    "Fx_ContactShadow",
+    "Fx_FloorGlow",
+    "Fx_WarehouseWarmth",
+    "Plinth_Inner",
+    "Plinth_Outer",
+    "Warehouse_Static"
+  ],
+  "bounds_gltf_y_up_m": {
+    "min": [
+      -2.91,
+      0,
+      -2.91
+    ],
+    "max": [
+      2.91,
+      2.809,
+      2.91
+    ]
+  },
+  "extensions_used": [
+    "KHR_materials_emissive_strength",
+    "KHR_materials_unlit"
+  ],
+  "validator_notes": {
+    "external_resources": [],
+    "blended_materials": [
+      "Unlit Gradient Effects",
+      "Warehouse Amber Glazing"
+    ],
+    "emissive_materials": [
+      "Warehouse Warm Lamps"
+    ],
+    "unlit_vertex_alpha_nodes": [
+      "Fx_AmbientOcclusion",
+      "Fx_ContactShadow",
+      "Fx_FloorGlow",
+      "Fx_WarehouseWarmth"
+    ],
+    "khronos_validator": "not run by the generator"
+  },
+  "hard_limits": {
+    "triangles": 33200,
+    "bytes": 1060000,
+    "primitives": 29
+  },
+  "sha256": {
+    "blend": "63adf29b4b0898e5be6c87640f201334838152ffb21269a21f8118eab6c7913a",
+    "glb": "cdf47e314b42fa9f3d0ba0fb87432e1ccbbccb983cf6dc853380ad7a9dc8091d",
+    "png": "705aedd92e5bb776aa24b5f70f67fc6398308c778d7a1c18152270d1bd6b8c95",
+    "source": {
+      "common.py": "29942a681e62dbd90bf4985b07d0b9e00c95bc15ae4f426ea62cd001a494d16d",
+      "build_warehouse.py": "b133a45f6e0aa62d68bbcdab2059a2e3feb1b498232045d015c7990bfa1e7542"
+    },
+    "anchors": {
+      "anchor-scene.webp": "08b8dc56656594f97759fa09e4aa81ea4d67389e63a25599246fa30682811bf2",
+      "anchor-warehouse.webp": "08a5a0b2c9aa4c0d8a71e9f3836e8a96990a6c3f38599540a8b0ee3784821d05"
+    }
+  },
+  "visual_review": {
+    "status": "not reviewed",
+    "criteria": {
+      "architecture": "Cream gable shed, sage standing-seam roof, open front and side roller doors.",
+      "stock": "Shelving through both doors, a single large pallet load behind the front threshold, and a fully exposed exterior rack.",
+      "conveyors": "Three separated paths with spaced silver rollers, three travelling cartons and a carton at the side threshold.",
+      "presentation": "Front-right orthographic framing, neutral grey upper plinth and warm perimeter glow."
+    }
+  }
+}

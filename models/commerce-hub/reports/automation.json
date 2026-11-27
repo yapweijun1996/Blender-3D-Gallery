@@ -1,0 +1,110 @@
+{
+  "module": "automation",
+  "blender_version": "5.1.2",
+  "units": "metres, Blender +Z up, front -Y, origin at plinth base centre",
+  "render": {
+    "engine": "BLENDER_EEVEE",
+    "dimensions_px": [
+      1536,
+      1024
+    ],
+    "projection": "ORTHO",
+    "orthographic_width_m": 7.881200790405273,
+    "camera_location_m": [
+      8.308542251586914,
+      -7.725316524505615,
+      7.349518299102783
+    ],
+    "camera_rotation_rad": [
+      1.0470879077911377,
+      4.5751388455528286e-08,
+      0.8238409757614136
+    ],
+    "view_transform": "Standard",
+    "look": "None"
+  },
+  "triangles": 6133,
+  "bytes": 160624,
+  "primitives": 16,
+  "materials": 11,
+  "material_names": [
+    "Sage",
+    "Inner Grey",
+    "Unlit Gradient Effects",
+    "Automation Sage",
+    "Automation Amber Trim",
+    "Automation Slot Shade",
+    "Automation Warm Light",
+    "Automation Ivory Lettering",
+    "Automation Light Green",
+    "Automation Label Stock",
+    "Automation Label Ink"
+  ],
+  "nodes": [
+    "Fx_AmbientOcclusion",
+    "Fx_ContactShadow",
+    "Fx_FloorGlow",
+    "Indicator",
+    "Machine_Body",
+    "Output_Card",
+    "Plinth_Inner",
+    "Plinth_Outer"
+  ],
+  "bounds_gltf_y_up_m": {
+    "min": [
+      -2.91,
+      0,
+      -2.91
+    ],
+    "max": [
+      2.91,
+      2.3845,
+      2.91
+    ]
+  },
+  "extensions_used": [
+    "KHR_materials_emissive_strength",
+    "KHR_materials_unlit"
+  ],
+  "validator_notes": {
+    "external_resources": [],
+    "blended_materials": [
+      "Unlit Gradient Effects"
+    ],
+    "emissive_materials": [
+      "Automation Warm Light"
+    ],
+    "unlit_vertex_alpha_nodes": [
+      "Fx_AmbientOcclusion",
+      "Fx_ContactShadow",
+      "Fx_FloorGlow"
+    ],
+    "khronos_validator": "not run by the generator"
+  },
+  "hard_limits": {
+    "triangles": 9200,
+    "bytes": 290000,
+    "primitives": 17
+  },
+  "sha256": {
+    "blend": "e1d41255979ce317b0ce7b613e0d360a6b21352c76340e8e3b19beb3e8f807f0",
+    "glb": "c4a828d55e54664109cb357a4991af6d8c1e97be650a33c157d2b469a3328a05",
+    "png": "bd74f0fa502627dbaaae956c4f101818c3e6b24fb9a7e17af576b83b1be49120",
+    "source": {
+      "common.py": "29942a681e62dbd90bf4985b07d0b9e00c95bc15ae4f426ea62cd001a494d16d",
+      "build_automation.py": "b8dc5c330bc43f3e4a8d1769b296cfbaa183999f185339b2feead4a85898b12d"
+    },
+    "anchors": {
+      "anchor-scene.webp": "08b8dc56656594f97759fa09e4aa81ea4d67389e63a25599246fa30682811bf2",
+      "anchor-automation.webp": "50557fc1702a7b7a977f4db00c008047dde494e7279a517b0e38b563771a8533"
+    }
+  },
+  "visual_review": {
+    "status": "not reviewed",
+    "criteria": {
+      "machine": "Rounded sage housing with an amber indicator, a recessed warm-lit slot and right-face gear, lettering and swoosh.",
+      "label": "Protruding cream card with a green stripe, fixed non-encoding square artwork and five barcode bars.",
+      "motion": "Named machine and indicator meshes, with an output card pivot at the slot."
+    }
+  }
+}

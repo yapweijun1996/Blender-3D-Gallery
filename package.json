@@ -1,14 +1,14 @@
 {
   "name": "blender-3d-gallery",
   "private": true,
-  "version": "0.3.3",
+  "version": "0.4.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "npm run validate:assets && vite build",
     "build:deploy": "vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "validate:assets": "node scripts/validate-assets.mjs && node models/gjh-chibi-visitor/validate.mjs && node models/pomelo-stem/mascot/validate.mjs && node models/drive/validate.mjs && node models/city/validate.mjs",
+    "validate:assets": "node scripts/validate-assets.mjs && node models/gjh-chibi-visitor/validate.mjs && node models/pomelo-stem/mascot/validate.mjs && node models/drive/validate.mjs && node models/city/validate.mjs && node models/commerce-hub/validate.mjs",
     "test": "node scripts/check-i18n.mjs && node scripts/check-color-tokens.mjs && node scripts/check-palette-contrast.mjs && node --test tests/*.test.mjs",
     "test:browser": "node scripts/test-game-browser.mjs && node scripts/test-game-experience.mjs",
     "test:pwa": "node scripts/test-pwa-browser.mjs",
@@ -34,7 +34,8 @@
     "test:world-tile-queue": "node scripts/test-world-tile-queue-browser.mjs",
     "test:streamed-tunnel": "node scripts/test-world-streamed-tunnel-browser.mjs",
     "test:tunnel": "node scripts/test-world-tunnel-browser.mjs",
-    "test:mrt": "node scripts/test-mrt-browser.mjs"
+    "test:mrt": "node scripts/test-mrt-browser.mjs",
+    "test:commerce": "node scripts/test-commerce-hub-browser.mjs"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "^0.21.0",

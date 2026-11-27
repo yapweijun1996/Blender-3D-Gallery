@@ -1,0 +1,122 @@
+{
+  "module": "delivery",
+  "blender_version": "5.1.2",
+  "units": "metres, Blender +Z up, front -Y, origin at plinth base centre",
+  "render": {
+    "engine": "BLENDER_EEVEE",
+    "dimensions_px": [
+      1536,
+      1024
+    ],
+    "projection": "ORTHO",
+    "orthographic_width_m": 6.58888578414917,
+    "camera_location_m": [
+      7.955609321594238,
+      -9.65520191192627,
+      5.183876991271973
+    ],
+    "camera_rotation_rad": [
+      1.2567702531814575,
+      -2.39890596276382e-08,
+      0.6868176460266113
+    ],
+    "view_transform": "Standard",
+    "look": "None"
+  },
+  "triangles": 19099,
+  "bytes": 470496,
+  "primitives": 31,
+  "materials": 18,
+  "material_names": [
+    "Sage",
+    "Inner Grey",
+    "Unlit Gradient Effects",
+    "Delivery Ivory",
+    "Locker Canopy Sage",
+    "Pomelo Deep Green",
+    "Locker Cream Yellow",
+    "Delivery Warm Lamps",
+    "Delivery Charcoal",
+    "Pomelo Yellow",
+    "Parcel Kraft",
+    "Parcel Paper Tape",
+    "Delivery Leaf Shade",
+    "Delivery Leaf Green",
+    "Truck Cargo Cream",
+    "Truck Cab Pale Sage",
+    "Truck Smoked Glass",
+    "Truck Satin Wheel Metal"
+  ],
+  "nodes": [
+    "Delivery_Static",
+    "Fx_AmbientOcclusion",
+    "Fx_ContactShadow",
+    "Fx_FloorGlow",
+    "Plinth_Inner",
+    "Plinth_Outer",
+    "Truck_Body",
+    "Truck_Wheel_FL",
+    "Truck_Wheel_FR",
+    "Truck_Wheel_RL",
+    "Truck_Wheel_RR"
+  ],
+  "bounds_gltf_y_up_m": {
+    "min": [
+      -2.91,
+      0,
+      -2.91
+    ],
+    "max": [
+      2.91,
+      2.58701,
+      2.91
+    ]
+  },
+  "extensions_used": [
+    "KHR_materials_emissive_strength",
+    "KHR_materials_specular",
+    "KHR_materials_unlit"
+  ],
+  "validator_notes": {
+    "external_resources": [],
+    "blended_materials": [
+      "Unlit Gradient Effects"
+    ],
+    "emissive_materials": [
+      "Delivery Warm Lamps"
+    ],
+    "unlit_vertex_alpha_nodes": [
+      "Fx_AmbientOcclusion",
+      "Fx_ContactShadow",
+      "Fx_FloorGlow"
+    ],
+    "khronos_validator": "not run by the generator"
+  },
+  "hard_limits": {
+    "triangles": 23200,
+    "bytes": 760000,
+    "primitives": 31
+  },
+  "sha256": {
+    "blend": "8ac8c99ae7e9f29ac1221ed916bda238a13041ae228d72d3c7b55131350ac5ba",
+    "glb": "1ca5ab053609bfa048090ff7cf308e7186678b16e76125957834f9d1d740ecda",
+    "png": "7aa9bd025842804a4a945f97135fce298e516d3461b546e425e2fb1d9b6feacc",
+    "source": {
+      "common.py": "29942a681e62dbd90bf4985b07d0b9e00c95bc15ae4f426ea62cd001a494d16d",
+      "build_delivery.py": "62c834bb90c7d9184f8797236e63141ffdb927f0415859606c7666ca60c2f9a2"
+    },
+    "anchors": {
+      "anchor-scene.webp": "08b8dc56656594f97759fa09e4aa81ea4d67389e63a25599246fa30682811bf2",
+      "anchor-delivery.webp": "48cd543cdbdefd51861bf7953ffde7c46d981ca46cfef802e4a26faec51cd09e"
+    }
+  },
+  "visual_review": {
+    "status": "not reviewed",
+    "criteria": {
+      "layout": "Left foreground box truck, two-bank locker at the back and parcels and plant at right.",
+      "details": "Handle-free cream-yellow doors with visible seams, two warm locker strips, citrus branding, and detailed cab.",
+      "motion": "Independent truck body and four hub-centred wheels with local +Y axle.",
+      "presentation": "Front-right orthographic view, neutral grey upper plinth and warm perimeter glow."
+    }
+  }
+}

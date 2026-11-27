@@ -35,6 +35,8 @@ const textPairs = [
   ["game-loading-text", "game-board-surface"],
   ["power-handle-text", "power-handle"],
   ["solar-control-text", "solar-control-surface"],
+  ["commerce-text", "commerce-surface"],
+  ["commerce-accent", "commerce-surface"],
   ["studio-text", "studio-surface"],
   ["studio-text", "studio-control-surface"],
   ["studio-muted", "studio-surface"],

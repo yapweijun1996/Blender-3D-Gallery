@@ -1,0 +1,138 @@
+{
+  "module": "shop",
+  "blender_version": "5.1.2",
+  "units": "metres, Blender +Z up, front -Y, origin at plinth base centre",
+  "render": {
+    "engine": "BLENDER_EEVEE",
+    "dimensions_px": [
+      1536,
+      1024
+    ],
+    "projection": "ORTHO",
+    "orthographic_width_m": 7.433207988739014,
+    "camera_location_m": [
+      -6.966578483581543,
+      -10.238359451293945,
+      5.512973785400391
+    ],
+    "camera_rotation_rad": [
+      1.2424360513687134,
+      -1.3809859922275791e-08,
+      -0.5971766114234924
+    ],
+    "view_transform": "Standard",
+    "look": "None"
+  },
+  "triangles": 26049,
+  "bytes": 689956,
+  "primitives": 40,
+  "materials": 23,
+  "material_names": [
+    "Sage",
+    "Inner Grey",
+    "Unlit Gradient Effects",
+    "Warm Tile Joints",
+    "Warm Ivory Tile",
+    "Porcelain Trim",
+    "Sage Cornice",
+    "Recessed Roof Grey",
+    "Glazing Mullions",
+    "Satin Brass",
+    "Shop Glass",
+    "Honey Maple",
+    "Vanilla Ceramic and Paper",
+    "Pomelo Orange",
+    "Fern Ceramic and Paper",
+    "Pomelo Yellow Paper",
+    "Warm Pendant Glass",
+    "Potting Soil",
+    "Leaf Green",
+    "Leaf New Growth",
+    "Vine Green",
+    "Vine New Growth",
+    "Pomelo Sign Green"
+  ],
+  "nodes": [
+    "Fx_AmbientOcclusion",
+    "Fx_ContactShadow",
+    "Fx_FloorGlow",
+    "Fx_PendantHalo",
+    "Plinth_Inner",
+    "Plinth_Outer",
+    "Shop_Door",
+    "Shop_Door_Right",
+    "Shop_Glass",
+    "Shop_Glazing_Frame",
+    "Shop_Greenery",
+    "Shop_Merchandise",
+    "Shop_Pendant",
+    "Shop_Pomelo_Sign",
+    "Shop_Roof",
+    "Shop_Shell",
+    "Shop_Shelving"
+  ],
+  "bounds_gltf_y_up_m": {
+    "min": [
+      -2.91,
+      0,
+      -2.91
+    ],
+    "max": [
+      2.91,
+      2.92,
+      2.91
+    ]
+  },
+  "extensions_used": [
+    "KHR_materials_emissive_strength",
+    "KHR_materials_unlit"
+  ],
+  "validator_notes": {
+    "external_resources": [],
+    "blended_materials": [
+      "Unlit Gradient Effects",
+      "Shop Glass"
+    ],
+    "emissive_materials": [
+      "Warm Tile Joints",
+      "Warm Ivory Tile",
+      "Honey Maple",
+      "Warm Pendant Glass"
+    ],
+    "unlit_vertex_alpha_nodes": [
+      "Fx_AmbientOcclusion",
+      "Fx_ContactShadow",
+      "Fx_FloorGlow",
+      "Fx_PendantHalo"
+    ],
+    "khronos_validator": "not run by the generator"
+  },
+  "hard_limits": {
+    "triangles": 33200,
+    "bytes": 1110000,
+    "primitives": 41
+  },
+  "sha256": {
+    "blend": "26e0dd6f10d4d23823e3faa01c0c32622ecb9c8d486a6e725c72126b8ce1317f",
+    "glb": "234437fdac1354f0f4bff2a60846097ccb778d7647c54a49e051f6aef325948c",
+    "png": "bc6cfa5606e58aabfa33af1eb566d1aac0c0e5dde5392b92be289f03c528bc5c",
+    "source": {
+      "common.py": "29942a681e62dbd90bf4985b07d0b9e00c95bc15ae4f426ea62cd001a494d16d",
+      "build_shop.py": "d6810be17e9fd6d566b391411b4d30a60af9e91243e16d322f09974b388c9eb9"
+    },
+    "anchors": {
+      "anchor-scene.webp": "08b8dc56656594f97759fa09e4aa81ea4d67389e63a25599246fa30682811bf2",
+      "anchor-shop.webp": "99243115a460f406bf3c4d0bbe39883ef7f13099bd9b16142529dc47b1cfe713"
+    }
+  },
+  "visual_review": {
+    "status": "not reviewed",
+    "criteria": {
+      "architecture": "Sage and ivory trim, recessed flat roof with raised coping and grille.",
+      "glazing": "Front and left return glazing; visually readable paired doors, brass pulls and warm interior.",
+      "interior": "Honey shelves with miniature hollow mugs, packages, window displays and a lit pendant.",
+      "street_detail": "Geometry-only A-frame sign with pith and citrus segments, trailing leaves and potted plant.",
+      "presentation": "Shared two-tier plinth, cream studio, soft contact shadows and three-quarter framing."
+    }
+  }
+}

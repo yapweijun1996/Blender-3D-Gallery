@@ -3,6 +3,7 @@ let dressupPage = null;
 let drivePage = null;
 let worldPage = null;
 let mrtPage = null;
+let commercePage = null;
 let cityPage = null;
 let shelfInspectorPage = null;
 import "virtual:gallery-palette-colors.css";
@@ -613,6 +614,7 @@ async function syncRoute() {
   const city = page === "sg-heartland";
   const world = page === "sg-world";
   const mrt = page === "sg-mrt";
+  const commerce = page === "commerce-hub";
   const previousSearchMode = $("#gallery-page").classList.contains("search-mode");
   refreshScrollToTop();
   if (page !== "game" && gamePage && !gamePage.beforeLeave()) {
@@ -645,7 +647,7 @@ async function syncRoute() {
   if (page === "gallery") syncModelFilters();
   if (page === "demos") syncDemoFilters();
   refreshTitle(page, tunnel);
-  if (page === mountedRoute && !worldDriveChanged && (gamePage || solarPage || productStudioPage || shelfInspectorPage || motionPage || dressupPage || drivePage || cityPage || worldPage || mrtPage || pageController))
+  if (page === mountedRoute && !worldDriveChanged && (gamePage || solarPage || productStudioPage || shelfInspectorPage || motionPage || dressupPage || drivePage || cityPage || worldPage || mrtPage || commercePage || pageController))
     return;
   const run = ++routeRun;
   pageController?.abort();
@@ -659,6 +661,8 @@ async function syncRoute() {
   cityPage?.dispose();
   worldPage?.dispose();
   mrtPage?.dispose();
+  commercePage?.dispose();
+  commercePage = null;
   motionPage = dressupPage = drivePage = cityPage = worldPage = mrtPage = null;
   shelfInspectorPage?.dispose();
   gamePage = solarPage = productStudioPage = shelfInspectorPage = null;
@@ -700,6 +704,8 @@ async function syncRoute() {
             ? await module.mountWorld(root, demo.thumbnail, controller.signal, { tunnel })
           : mrt
             ? await module.mountMrt(root, demo.thumbnail, controller.signal)
+          : commerce
+            ? await module.mountCommerceHub(root, assets, controller.signal)
           : await module.mountSolar(
               root,
               module.solarSceneAssets(assets),
@@ -717,6 +723,7 @@ async function syncRoute() {
       else if (city) cityPage = result;
       else if (world) worldPage = result;
       else if (mrt) mrtPage = result;
+      else if (commerce) commercePage = result;
       else if (page === "shelf-inspector") shelfInspectorPage = result;
       else productStudioPage = result;
       window.dispatchEvent(new CustomEvent(`${page}-mounted`));

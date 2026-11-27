@@ -1,0 +1,153 @@
+.commerce-hub {
+  padding: 24px 0 48px;
+}
+.ch-heading p {
+  max-width: 620px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.ch-heading h1 {
+  margin: 8px 0;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+.ch-stage {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  max-height: 78vh;
+  width: 100%;
+  border-radius: 16px;
+  background: var(--commerce-stage);
+}
+.ch-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+.ch-stage canvas:focus-visible {
+  outline: 3px solid var(--commerce-accent);
+  outline-offset: -3px;
+  border-radius: 16px;
+}
+.ch-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--commerce-line);
+  border-radius: 99px;
+  background: var(--commerce-surface);
+  color: var(--commerce-text);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--commerce-text) 14%, transparent);
+  cursor: pointer;
+}
+.ch-label[hidden] {
+  display: none;
+}
+/* Leader pin from the label down to the module it names. */
+.ch-label::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: calc(50% - 4px);
+  width: 8px;
+  height: 22px;
+  background:
+    radial-gradient(circle at 50% calc(100% - 4px), var(--commerce-surface) 0 2px, var(--commerce-line) 3px 4px, transparent 4.5px),
+    linear-gradient(var(--commerce-line), var(--commerce-line)) center top / 2px calc(100% - 6px) no-repeat;
+  pointer-events: none;
+}
+.ch-label svg {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  color: var(--commerce-accent);
+}
+.ch-label[aria-pressed="true"] {
+  border-color: var(--commerce-accent);
+  box-shadow: 0 0 0 2px var(--commerce-accent);
+}
+.ch-loading {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  margin: 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--commerce-surface);
+  color: var(--commerce-text);
+}
+.ch-loading button,
+.ch-reset {
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid var(--commerce-line);
+  border-radius: 8px;
+  background: var(--commerce-surface);
+  color: var(--commerce-text);
+  font: inherit;
+  cursor: pointer;
+}
+.ch-reset:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.ch-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0 0;
+}
+.ch-panel h2 {
+  margin: 0 0 4px;
+  font-size: 1.2rem;
+}
+.ch-text,
+.ch-hint {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.ch-hint {
+  margin-top: 12px;
+  font-size: 0.8rem;
+}
+.ch-reset {
+  flex: none;
+}
+@media (max-width: 700px) {
+  .ch-stage {
+    aspect-ratio: 1;
+  }
+  .ch-label {
+    padding: 0;
+  }
+  .ch-label::after {
+    height: 14px;
+  }
+  .ch-label span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .ch-panel {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "module": "payment",
+  "blender_version": "5.1.2",
+  "units": "metres, Blender +Z up, front -Y, origin at plinth base centre",
+  "render": {
+    "engine": "BLENDER_EEVEE",
+    "dimensions_px": [
+      1536,
+      1024
+    ],
+    "projection": "ORTHO",
+    "orthographic_width_m": 7.574364185333252,
+    "camera_location_m": [
+      7.175687313079834,
+      -8.154190063476562,
+      8.022087097167969
+    ],
+    "camera_rotation_rad": [
+      0.9562746286392212,
+      -5.5680956734249776e-08,
+      0.7216548323631287
+    ],
+    "view_transform": "Standard",
+    "look": "None"
+  },
+  "triangles": 6801,
+  "bytes": 163100,
+  "primitives": 15,
+  "materials": 8,
+  "material_names": [
+    "Sage",
+    "Inner Grey",
+    "Unlit Gradient Effects",
+    "Payment Dark Sage",
+    "Payment Ivory Details",
+    "Payment Amber",
+    "Payment Sage",
+    "Payment Chip Gold"
+  ],
+  "nodes": [
+    "Card_Bottom",
+    "Card_Middle",
+    "Card_Top",
+    "Fx_AmbientOcclusion",
+    "Fx_CardContactShadows",
+    "Fx_ContactShadow",
+    "Fx_FloorGlow",
+    "Plinth_Inner",
+    "Plinth_Outer"
+  ],
+  "bounds_gltf_y_up_m": {
+    "min": [
+      -2.91,
+      0,
+      -2.91
+    ],
+    "max": [
+      2.91,
+      1.397766,
+      2.91
+    ]
+  },
+  "extensions_used": [
+    "KHR_materials_unlit"
+  ],
+  "validator_notes": {
+    "external_resources": [],
+    "blended_materials": [
+      "Unlit Gradient Effects"
+    ],
+    "emissive_materials": [],
+    "unlit_vertex_alpha_nodes": [
+      "Fx_AmbientOcclusion",
+      "Fx_CardContactShadows",
+      "Fx_ContactShadow",
+      "Fx_FloorGlow"
+    ],
+    "khronos_validator": "not run by the generator"
+  },
+  "hard_limits": {
+    "triangles": 8200,
+    "bytes": 260000,
+    "primitives": 15
+  },
+  "sha256": {
+    "blend": "34c12d626c746e9769406f14c6b2e097e3a56639517e0722f1009f7c1ef6e79a",
+    "glb": "3d764e7c9c9ae99b6456213f82064be8865e13403987da10ead22e5b893ff1cf",
+    "png": "c3dec459582d494609d6e5dcaaa06ef488a9290abff537c3ee137fef72fee83f",
+    "source": {
+      "common.py": "29942a681e62dbd90bf4985b07d0b9e00c95bc15ae4f426ea62cd001a494d16d",
+      "build_payment.py": "26a24dea44a88380c751d8f2c2e6b827e757e1b535b569169384d5adfac1a587"
+    },
+    "anchors": {
+      "anchor-scene.webp": "08b8dc56656594f97759fa09e4aa81ea4d67389e63a25599246fa30682811bf2",
+      "anchor-payment.webp": "561108d55065b3d27358833102a68f126f119f76390eafc54094a6c8df74e7eb"
+    }
+  },
+  "visual_review": {
+    "status": "not reviewed",
+    "criteria": {
+      "layout": "Three rounded floating cards above the common neutral grey plinth.",
+      "face": "Gold chip with contact grooves, number and name bars, contactless arcs, and an original citrus medallion.",
+      "motion": "Three separately named card meshes, each with its face details and a centred pivot.",
+      "presentation": "Soft exported contact shadows between cards and a warm floor glow."
+    }
+  }
+}
