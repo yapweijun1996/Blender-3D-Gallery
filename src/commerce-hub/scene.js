@@ -45,8 +45,42 @@ export function pickModule(composed, places, raycaster) {
   return null;
 }
 
+/** Where a module's label goes: above its highest point, with a pin touching it near the middle. */
+function labelAnchor(group) {
+  const yaw = VIEW_YAW * Math.PI / 180, elevation = VIEW_ELEVATION * Math.PI / 180;
+  const right = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
+  const up = new THREE.Vector3(-Math.sin(yaw) * Math.sin(elevation), Math.cos(elevation), -Math.cos(yaw) * Math.sin(elevation));
+  const points = [], solid = [];
+  group.traverse(mesh => {
+    if (!mesh.isMesh) return;
+    for (let node = mesh; node && node !== group; node = node.parent) if (/^(Plinth_|Fx_)/.test(node.name)) return;
+    // Thin lines, glass and handles count towards the height but make poor places for a pin.
+    let thin = false;
+    for (let node = mesh; node && node !== group; node = node.parent) thin ||= /Chart_|Glass|Handles/.test(node.name);
+    const position = mesh.geometry.attributes.position;
+    for (let i = 0; i < position.count; i++) {
+      const point = new THREE.Vector3().fromBufferAttribute(position, i).applyMatrix4(mesh.matrixWorld);
+      points.push(point);
+      if (!thin) solid.push(point);
+    }
+  });
+  let low = Infinity, high = -Infinity, top = null;
+  for (const point of points) {
+    const side = point.dot(right);
+    low = Math.min(low, side);
+    high = Math.max(high, side);
+    if (!top || point.dot(up) > top.dot(up)) top = point;
+  }
+  const middle = (low + high) / 2, band = (high - low) * 0.12;
+  let best = null;
+  for (const point of solid)
+    if (Math.abs(point.dot(right) - middle) <= band && (!best || point.dot(up) > best.dot(up))) best = point;
+  // The label clears the whole module; its leader reaches the point below its middle.
+  return { pin: best, top };
+}
+
 export function composeModules(places, models) {
-  const root = new THREE.Group(), groups = new Map(), parts = new Map();
+  const root = new THREE.Group(), groups = new Map(), parts = new Map(), anchors = new Map();
   const buckets = new Map(), owned = [];
   for (const place of places) {
     const group = new THREE.Group();
@@ -68,6 +102,7 @@ export function composeModules(places, models) {
       group.add(node);
     }
     group.updateMatrixWorld(true);
+    anchors.set(place.id, labelAnchor(group));
     for (const node of [...group.children]) {
       if (MOVING.test(node.name)) {
         parts.set(`${place.id}:${node.name}`, { node, home: node.position.clone(), size: node.scale.x, height: node.scale.y });
@@ -102,7 +137,7 @@ export function composeModules(places, models) {
     root.add(mesh);
     owned.push(mesh);
   }
-  return { root, groups, parts };
+  return { root, groups, parts, anchors };
 }
 
 /** Thin glowing lines with one node each, as drawn in the anchor. Nothing travels along them. */

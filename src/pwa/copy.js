@@ -3,6 +3,7 @@ import { t } from "../i18n/index.js";
 export const pwaCopy = {
   get update() { return t("pwa.update"); },
   updateTo: version => t("pwa.updateTo", { version }),
+  checkFor: version => t("pwa.checkFor", { version }),
   version: version => t("pwa.version", { version }),
   appVersion: version => t("pwa.appVersion", { version }),
 };

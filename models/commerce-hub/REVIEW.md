@@ -88,3 +88,9 @@ in the anchor.
 Positions were re-measured on gridded crops of the anchor (several modules were 26-40 px off). Links are thin
 with one node each, as drawn; travelling pulses and bag bobbing are removed. Added zoom buttons, pan and
 click-to-select on module geometry. Codex review: no P0/P1, five P2, all fixed. Models are unchanged.
+
+## Labels over modules; permanent update button (0.6.0)
+
+Labels no longer copy the anchor's offsets (two of them pointed at empty floor there): each is centred above
+its module from the module's geometry, on phones on the module itself. Codex review: one P1 and three P2,
+all fixed and not re-reviewed.

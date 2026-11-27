@@ -13,9 +13,9 @@
 .ch-stage {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 24 / 17;
   /* Keep the anchor frame's proportions even when the viewport is short. */
-  width: min(100%, 130vh);
+  width: min(100%, 122vh);
   margin-inline: auto;
   border-radius: 16px;
   background: var(--commerce-stage);
@@ -169,6 +169,9 @@
   }
   .ch-label {
     padding: 0;
+  }
+  .ch-label::after {
+    display: none;
   }
   .ch-label span {
     position: absolute;

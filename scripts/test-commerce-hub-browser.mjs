@@ -14,7 +14,7 @@ const pass = (text) => console.log("PASS " + text);
 const CLICKS = {
   shop: [[260, 380], [290, 520]], warehouse: [[820, 150], [640, 270]], delivery: [[1150, 430], [1440, 505]],
   payment: [[370, 720], [372, 800]], analytics: [[760, 880], [765, 945]], automation: [[1150, 700], [1145, 800]],
-  bags: [[720, 470], [768, 640]],
+  bags: [[720, 470], [590, 615]],
 };
 const ready = (page) => page.locator('.ch-stage[data-state="ready"]').waitFor({ timeout: 60000 });
 
@@ -64,7 +64,9 @@ try {
     await page.waitForTimeout(900);
     const box = await canvas.boundingBox();
     // A drag that returns to its start must not select anything.
-    const cx = box.x + box.width / 2, cy = box.y + box.height / 2;
+    // Start on the shopping bags themselves, clear of every label.
+    const unit = Math.min(box.width / 1536, box.height / 1088);
+    const cx = box.x + box.width / 2 - 48 * unit, cy = box.y + box.height / 2 - 10 * unit;
     await page.mouse.move(cx, cy);
     await page.mouse.down();
     await page.mouse.move(cx + 80, cy, { steps: 4 });
@@ -73,23 +75,48 @@ try {
     assert.equal(await page.locator(".ch-panel h2").innerText(), messages.en["commerce.overview.title"]);
     await page.locator('[data-zoom="reset"]').click();
     await page.waitForTimeout(900);
-    await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * (box.width / box.height > 1.2 ? 0.5 : 0.52));
+    await page.mouse.click(cx, cy);
     assert.equal(await page.locator(".ch-panel h2").innerText(), messages.en["commerce.bags.label"]);
     await page.keyboard.press("Escape");
+    // Every label's leader dot must touch its own module: click just below the dot.
+    for (const id of width < 700 ? [] : ["shop", "warehouse", "delivery", "payment", "analytics", "automation"]) {
+      await page.locator('[data-zoom="reset"]').click();
+      await page.waitForTimeout(800);
+      const dot = await page.locator(`.ch-label[data-module="${id}"]`).evaluate((el) => {
+        const box = el.getBoundingClientRect(), style = getComputedStyle(el);
+        const shift = parseFloat(style.getPropertyValue("--leader-shift")) || 0, leader = parseFloat(style.getPropertyValue("--leader"));
+        return { x: box.x + box.width / 2 + shift, y: box.y + box.height + leader - 4, centre: Math.abs(shift) };
+      });
+      assert.ok(dot.centre <= 1, `${id} label is centred over its pin (${width}px)`);
+      await page.mouse.click(dot.x, dot.y + 3);
+      assert.equal(await page.locator(".ch-panel h2").innerText(), messages.en[`commerce.${id}.label`], `${id} pin (${width}px)`);
+    }
     // Click every module's own body, not only the centre.
     for (const id of ["shop", "warehouse", "delivery", "payment", "analytics", "automation", "bags"]) {
       await page.locator('[data-zoom="reset"]').click();
       await page.waitForTimeout(800);
       const area = await canvas.boundingBox();
+      let reached = 0;
       for (const [px, py] of CLICKS[id]) {
         // Anchor-frame pixels to canvas pixels: the frame is fitted inside the canvas and centred.
-        const unit = Math.min(area.width / 1536, area.height / 1024);
-        await page.mouse.click(area.x + area.width / 2 + (px - 768) * unit, area.y + area.height / 2 + (py - 512) * unit);
+        const unit = Math.min(area.width / 1536, area.height / 1088);
+        const x = area.x + area.width / 2 + (px - 768) * unit, y = area.y + area.height / 2 + (py - 480) * unit;
+        // A label may legitimately cover a point, especially on phones.
+        // On phones a module's own icon sits on it; pressing that is selecting the module too.
+        const usable = await page.evaluate(([a, b, name]) => {
+          const hit = document.elementFromPoint(a, b);
+          return hit?.tagName === "CANVAS" || hit?.closest(".ch-label")?.dataset.module === name;
+        }, [x, y, id]);
+        if (!usable) continue;
+        reached += 1;
+        await page.mouse.click(x, y);
         assert.equal(await page.locator(".ch-panel h2").innerText(), messages.en[`commerce.${id}.label`], `${id} at ${px},${py} (${width}px)`);
         await page.locator('[data-zoom="reset"]').click();
         await page.waitForTimeout(800);
       }
+      assert.ok(reached > 0, `${id} has a clickable point (${width}px)`);
     }
+    await page.locator('[data-zoom="reset"]').click();
     assert.deepEqual(errors, []);
     pass(`${width}px loads seven modules, labels focus and Escape returns (${stats.calls} first-frame calls, ${stats.triangles} triangles)`);
     await context.close();

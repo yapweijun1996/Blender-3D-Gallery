@@ -4,22 +4,23 @@
 export const VIEW_YAW = 43;
 export const VIEW_ELEVATION = 30;
 export const FRAME = Object.freeze({ width: 1536, height: 1024, pixelsPerUnit: 100 });
+// Extra room above the anchor frame so a label fits over the tallest module.
+export const HEADROOM = 64;
 
 // Shared plinth (source/common.py): outer slab size, corner radius and half of its total height.
 const PLINTH = 4.6, CORNER = 0.56, WAIST = 0.17;
 export const PLINTH_TOP = 0.51;
 
 // left/right: outermost plinth pixels; y: pixel height of those side corners.
-// label: centre of the label pill; pin: the dot its leader line points at.
 // content: [width, height] of what stands on the plinth, where the anchor proportions it differently.
 export const MODULES = Object.freeze([
-  { id: "warehouse", yaw: 41.02, left: 467, right: 1157, y: 298, content: [0.9, 0.67], label: [711, 45], pin: [712, 143] },
-  { id: "shop", yaw: -34.22, left: 50, right: 516, y: 472, label: [185, 185], pin: [194, 232] },
+  { id: "warehouse", yaw: 41.02, left: 467, right: 1157, y: 298, content: [0.9, 0.67] },
+  { id: "shop", yaw: -34.22, left: 50, right: 516, y: 472 },
   { id: "bags", yaw: -43.83, left: 516, right: 1023, y: 597, content: [0.92, 0.9] },
-  { id: "delivery", yaw: 39.35, left: 1026, right: 1491, y: 505, content: [0.99, 0.93], label: [1323, 223], pin: [1327, 272] },
-  { id: "payment", yaw: 41.35, left: 177, right: 563, y: 772, label: [193, 627], pin: [196, 677] },
-  { id: "analytics", yaw: 49.24, left: 594, right: 932, y: 920, content: [0.95, 0.84], label: [767, 766], pin: [766, 842] },
-  { id: "automation", yaw: 47.2, left: 958, right: 1340, y: 779, content: [0.94, 0.9], label: [1356, 662], pin: [1354, 712] },
+  { id: "delivery", yaw: 39.35, left: 1026, right: 1491, y: 505, content: [0.99, 0.93] },
+  { id: "payment", yaw: 41.35, left: 177, right: 563, y: 772 },
+  { id: "analytics", yaw: 49.24, left: 594, right: 932, y: 920, content: [0.95, 0.84] },
+  { id: "automation", yaw: 47.2, left: 958, right: 1340, y: 779, content: [0.94, 0.9] },
 ]);
 
 // from, to, the two end pixels, which end carries the glowing node (0 or 1) and an optional bend point.
@@ -62,7 +63,7 @@ export function placements() {
     const rotation = radians(VIEW_YAW - module.yaw);
     const scale = (module.right - module.left) / FRAME.pixelsPerUnit / (2 * halfExtent(rotation));
     const [x, z] = groundPoint([(module.left + module.right) / 2, module.y], WAIST * scale);
-    return { id: module.id, content: module.content ?? [1, 1], x, z, scale, rotation, radius: PLINTH / 2 * scale, label: module.label, pin: module.pin };
+    return { id: module.id, content: module.content ?? [1, 1], x, z, scale, rotation, radius: PLINTH / 2 * scale };
   });
 }
 

@@ -1,5 +1,13 @@
 import { localize, mountMarkup } from "../i18n/index.js";
 
+const TITLES = {
+  error: "pwa.errorTitle",
+  checking: "pwa.checkingTitle",
+  latest: "pwa.latestTitle",
+  found: "pwa.foundTitle",
+  "check-failed": "pwa.errorTitle",
+};
+
 /** A native modal stays above viewers and Game menus without dismissing them. */
 export function createUpdateUi() {
   const dialog = document.createElement("dialog");
@@ -38,20 +46,24 @@ export function createUpdateUi() {
       pill.textContent = "";
       pill.hidden = true;
     }
-    busy = phase !== "error";
+    // A check can be abandoned; only a real update locks the page.
+    busy = !["error", "checking", "latest", "found", "check-failed"].includes(phase);
     dialog.dataset.phase = phase;
-    dialog.setAttribute("aria-busy", String(busy));
-    localize(title, remote ? "pwa.remoteTitle" : phase === "error" ? "pwa.errorTitle" : "pwa.updatingTitle");
+    dialog.setAttribute("aria-busy", String(busy || phase === "checking"));
+    localize(title, remote ? "pwa.remoteTitle" : TITLES[phase] ?? "pwa.updatingTitle");
     localize(status, key);
     actions.hidden = busy;
+    const primary = actions.querySelector('[data-update-action="retry"]');
+    primary.hidden = phase === "checking" || phase === "latest";
+    localize(primary, phase === "found" ? "pwa.updateNow" : "pwa.retry");
     document.body.classList.toggle("pwa-updating", busy);
     if (!dialog.open) {
       previousFocus = document.activeElement;
       dialog.showModal();
       title.focus();
     }
-    if (busy) title.focus();
-    else actions.querySelector("button").focus();
+    if (busy || phase === "checking") title.focus();
+    else actions.querySelector("button:not([hidden])").focus();
   };
   const versions = dialog.querySelector(".pwa-update-version");
   return {

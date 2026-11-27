@@ -268,7 +268,8 @@ export function setupPwa(getGame) {
   }
   const showUpdate = () => {
     const worker = registration?.waiting;
-    if (!worker || flow || reloaded || remoteLocks.size) return;
+    // A first installation also passes through "waiting"; with no active worker nothing is being updated.
+    if (!worker || !registration.active || flow || reloaded || remoteLocks.size) return;
     const changed = worker !== offeredWorker;
     offeredWorker = worker;
     localize(message, "pwa.updateAvailable");
@@ -352,6 +353,59 @@ export function setupPwa(getGame) {
       if (response.ok && !response.redirected) latestVersion = (await response.json())?.version ?? null;
     } catch { /* The version label is optional; "unknown" keeps the retry prompt. */ }
     return classifyUpdate({ waiting: registration?.waiting, pageVersion: __APP_VERSION__, latestVersion });
+  }
+  const installed = worker => new Promise((resolve, reject) => {
+    if (!worker || worker.state !== "installing") return resolve();
+    const timer = setTimeout(() => reject(copyError("pwa.checkFailed")), 90000);
+    worker.addEventListener("statechange", () => {
+      if (worker.state === "installing") return;
+      clearTimeout(timer);
+      if (worker.state === "redundant") reject(copyError("pwa.checkFailed"));
+      else resolve();
+    });
+  });
+  // The always-visible button checks on demand. Only a later explicit "Update now" activates anything.
+  let checkRun = 0;
+  async function checkNow() {
+    if (flow || reloaded || remoteLocks.size) return;
+    const run = ++checkRun;
+    const stale = () => run !== checkRun || !ui.dialog.open || flow || reloaded || remoteLocks.size;
+    const finish = (phase, key, version) => {
+      ui.setVersions(version ?? "");
+      ui.show(phase, key);
+    };
+    finish("checking", "pwa.checkingUpdate", pwaCopy.version(__APP_VERSION__));
+    try {
+      if (!supported || !navigator.onLine) throw copyError("pwa.checkFailed");
+      await ensureActiveWorker();
+      // Offer an update only once a worker is really waiting, or one has already taken over.
+      const settle = async () => {
+        await registration.update();
+        await installed(registration.installing);
+      };
+      if (!registration.waiting) await settle();
+      if (stale()) return;
+      let outcome = registration.waiting ? "waiting" : await reconcileUpdate();
+      if (!registration.waiting && registration.installing) {
+        await installed(registration.installing);
+        outcome = registration.waiting ? "waiting" : outcome;
+      }
+      if (stale()) return;
+      if (registration.waiting) {
+        showUpdate();
+        await readWaitingVersion(registration.waiting);
+      } else if (controllerChanged) offerReload();
+      else if (outcome === "current") return finish("latest", "pwa.latestStatus", pwaCopy.version(__APP_VERSION__));
+      // A newer build is published but not yet installable here: ask to retry rather than reload into the old one.
+      else throw copyError("pwa.checkFailed");
+      if (stale()) return;
+      const target = updateLabelVersion(state.updateVersion, __APP_VERSION__);
+      finish("found", "pwa.updateAvailable",
+        target ? `${pwaCopy.version(__APP_VERSION__)} → ${pwaCopy.version(target)}` : "");
+    } catch (error) {
+      if (stale()) return;
+      finish("check-failed", error?.copyKey ?? "pwa.checkFailed", pwaCopy.version(__APP_VERSION__));
+    }
   }
   function settleUpToDate() {
     clearTimeout(flow?.timer);
@@ -451,7 +505,7 @@ export function setupPwa(getGame) {
     }
   }
   action.onclick = () => void beginUpdate();
-  ui.onRetry(() => void beginUpdate());
+  ui.onRetry(() => void (ui.dialog.dataset.phase === "check-failed" ? checkNow() : beginUpdate()));
   ui.onClose(() => {
     ui.close();
     positionNotice();
@@ -602,5 +656,5 @@ export function setupPwa(getGame) {
     window.addEventListener("pageshow", () => void healNotice());
     window.addEventListener("online", () => void healNotice());
   }
-  return { beginUpdate, checkForUpdate, getState: () => state };
+  return { beginUpdate, checkForUpdate, checkNow, getState: () => state };
 }

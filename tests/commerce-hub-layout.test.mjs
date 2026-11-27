@@ -18,11 +18,10 @@ test("placements turn every module towards the shared camera", () => {
   }
 });
 
-test("every module keeps its traced width and every label has a pin", () => {
+test("every module keeps its traced width", () => {
   for (const [place, module] of placements().map((place, i) => [place, MODULES[i]])) {
     assert.ok(place.scale > 0.4 && place.scale < 1.3, place.id);
     assert.ok(place.content.length === 2 && place.content.every(value => value > 0.5 && value <= 1), place.id);
-    if (module.id !== "bags") assert.equal(module.label.length + module.pin.length, 4);
   }
 });
 

@@ -549,6 +549,8 @@ function syncModelUrl() {
 
 const pwaRuntime = setupPwa(() => gamePage);
 pwaState = pwaRuntime.getState?.() ?? null;
+// Fixed for the lifetime of the page; later state events need not repeat it.
+const updateSupported = Boolean(pwaState?.supported);
 refreshDemoOfflineStatus();
 
 function refreshVersion() {
@@ -563,17 +565,25 @@ function refreshUpdateActions() {
   const { update, updateReady, updateVersion } = pwaState;
   const target = updateLabelVersion(updateVersion, __APP_VERSION__);
   const label = target ? pwaCopy.updateTo(target) : pwaCopy.update;
+  const current = pwaCopy.version(__APP_VERSION__);
   for (const button of document.querySelectorAll("[data-pwa-update]")) {
-    button.hidden = !updateReady;
-    const busy = update !== "available" && update !== "error";
+    // Header and menu buttons stay visible and check on demand; inline offers appear only with an update.
+    const permanent = button.classList.contains("topbar-update");
+    button.hidden = permanent ? !updateSupported : !updateReady;
+    button.classList.toggle("has-update", updateReady);
+    const busy = updateReady && update !== "available" && update !== "error";
     if (busy) button.setAttribute("aria-disabled", "true");
     else button.removeAttribute("aria-disabled");
-    button.setAttribute("aria-label", label);
+    const idle = permanent && !updateReady;
+    const name = idle ? pwaCopy.checkFor(__APP_VERSION__) : label;
+    button.setAttribute("aria-label", name);
+    button.title = name;
+    const visible = idle ? current : label;
     const text = button.querySelector(".topbar-update-full, .update-label") ?? button;
-    if (text.textContent !== label) text.textContent = label;
-    // Narrow topbars show the icon with the target version; the full label stays the accessible name.
+    if (text.textContent !== visible) text.textContent = visible;
+    // Narrow topbars show the icon with a version; the full label stays the accessible name.
     const short = button.querySelector(".topbar-update-short");
-    if (short) short.textContent = target ? pwaCopy.version(target) : "";
+    if (short) short.textContent = idle ? current : target ? pwaCopy.version(target) : "";
   }
 }
 
@@ -588,8 +598,12 @@ function offerUpdate(container) {
 
 document.addEventListener("click", (event) => {
   const button = event.target.closest("[data-pwa-update]");
-  if (button && button.getAttribute("aria-disabled") !== "true")
-    void pwaRuntime.beginUpdate();
+  if (!button || button.getAttribute("aria-disabled") === "true") return;
+  if (pwaState.updateReady) void pwaRuntime.beginUpdate();
+  else {
+    closeMenu(false);
+    void pwaRuntime.checkNow();
+  }
 });
 refreshUpdateActions();
 window.addEventListener("pwa-state-change", (event) => {

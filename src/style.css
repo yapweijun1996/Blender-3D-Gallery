@@ -1172,7 +1172,7 @@ body.game-page .demo-breadcrumb {
   }
 }
 /* The narrowest desktop row cannot hold full Malay labels without wrapping them. */
-@media (min-width: 901px) and (max-width: 1099px) {
+@media (min-width: 901px) and (max-width: 1199px) {
   /* With an update offered, the palette button keeps only its swatch to make room. */
   .header:has(.topbar-update:not([hidden])) .palette-trigger {
     gap: 0;
@@ -1742,4 +1742,19 @@ dialog {
   .header:has(.topbar-update:not([hidden])) .brand small {
     display: none;
   }
+}
+/* The update button is permanent; it replaces the brand and menu version chips. */
+.header:has(.topbar-update:not([hidden])) .brand .version-chip,
+.menu-version:has(.topbar-update:not([hidden])) .version-chip {
+  display: none;
+}
+.header .topbar-update.has-update,
+.menu-version .topbar-update.has-update {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 700;
+}
+.pwa-update-dialog [data-update-action][hidden] {
+  display: none;
 }

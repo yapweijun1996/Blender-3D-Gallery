@@ -3,13 +3,15 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { localize, mountMarkup, t } from "../i18n/index.js";
-import { FRAME, placements, VIEW_ELEVATION, VIEW_YAW } from "./layout.js";
+import { FRAME, HEADROOM, placements, VIEW_ELEVATION, VIEW_YAW } from "./layout.js";
 import { animateParts, composeModules, createLinks, disposeTree, pickModule } from "./scene.js";
 import "./style.css";
 
 const icon = paths => `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
 const MIN_ZOOM = 0.6, MAX_ZOOM = 5;
-// Label positions come from layout.js. The centre module has no drawn label: it is clicked directly,
+// Shortest gap between a label and the point it names, in CSS pixels.
+const LEADER = 20;
+// Labels sit centred above their module. The centre module has no drawn label: it is clicked directly,
 // and its button appears only for keyboard focus.
 const LABELS = Object.freeze({
   bags: { icon: icon('<path d="M5 8h14l1 12H4zM9 8V6a3 3 0 0 1 6 0v2"/>') },
@@ -38,11 +40,6 @@ export async function mountCommerceHub(root, assets, signal) {
   const overview = new THREE.Vector3();
   const screenRight = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
   const screenUp = new THREE.Vector3().crossVectors(direction, screenRight);
-  // The world point behind an anchor pixel, at the same view depth as its module.
-  const framePoint = ([x, y], place) => screenRight.clone().multiplyScalar((x - FRAME.width / 2) / FRAME.pixelsPerUnit)
-    .addScaledVector(screenUp, (FRAME.height / 2 - y) / FRAME.pixelsPerUnit)
-    .addScaledVector(direction, new THREE.Vector3(place.x, 0, place.z).dot(direction));
-
   const showInfo = () => {
     localize($(".ch-panel h2"), selected ? `commerce.${selected}.label` : "commerce.overview.title");
     localize($(".ch-text"), selected ? `commerce.${selected}.text` : "commerce.overview.text");
@@ -50,6 +47,7 @@ export async function mountCommerceHub(root, assets, signal) {
     stage.dataset.selected = selected ?? "";
   };
 
+  const narrow = matchMedia("(max-width: 700px)");
   const placeLabels = () => {
     const width = stage.clientWidth, height = stage.clientHeight;
     const toScreen = point => {
@@ -57,21 +55,17 @@ export async function mountCommerceHub(root, assets, signal) {
       return { x: (projected.x + 1) / 2 * width, y: (1 - projected.y) / 2 * height, inside: Math.abs(projected.x) <= 1 && Math.abs(projected.y) <= 1.1 };
     };
     for (const [id, button] of buttons) {
-      const place = places.find(item => item.id === id);
-      if (!place.pin) {
-        const point = toScreen(new THREE.Vector3(place.x, 2.2 * place.scale, place.z));
-        // Keep it inside the stage: focusing an off-stage button would scroll the clipped canvas.
-        const left = Math.min(width - button.offsetWidth - 2, Math.max(2, point.x - button.offsetWidth / 2));
-        const top = Math.min(height - button.offsetHeight - 2, Math.max(2, point.y));
-        button.style.transform = `translate(${Math.round(left)}px, ${Math.round(top)}px)`;
-        continue;
-      }
-      const pin = toScreen(framePoint(place.pin, place)), label = toScreen(framePoint(place.label, place));
+      const anchor = composed?.anchors.get(id);
+      if (!anchor) continue;
+      const pin = toScreen(anchor.pin), top = toScreen(anchor.top), half = button.offsetWidth / 2, tall = button.offsetHeight;
       // Labels of modules that were moved off screen are hidden instead of piling up at the edges.
-      button.hidden = !pin.inside;
-      const half = button.offsetWidth / 2, tall = button.offsetHeight;
-      const x = Math.min(width - half - 2, Math.max(half + 2, label.x));
-      const y = Math.min(height - tall - 2, Math.max(2, label.y - tall / 2));
+      // The centre button is the only keyboard path to the bags, so it never leaves the tab order.
+      button.hidden = id !== "bags" && !pin.inside;
+      // Centred above the module, with the leader reaching down to its highest point.
+      const x = Math.min(width - half - 2, Math.max(half + 2, pin.x));
+      // On phones the icon sits on its own module, so it cannot cover a neighbour.
+      const above = Math.min(pin.y - LEADER, top.y - 4) - tall;
+      const y = Math.min(height - tall - 2, Math.max(2, narrow.matches ? pin.y - tall / 4 : above));
       button.style.transform = `translate(${Math.round(x - half)}px, ${Math.round(y)}px)`;
       button.style.setProperty("--leader", `${Math.max(8, Math.round(pin.y - y - tall + 4))}px`);
       button.style.setProperty("--leader-shift", `${Math.round(pin.x - x)}px`);
@@ -132,8 +126,11 @@ export async function mountCommerceHub(root, assets, signal) {
     renderer.setSize(width, height, false);
     // Overview shows exactly the anchor frame; other aspect ratios only add margin around it.
     const aspect = width / height;
-    halfHeight = Math.max(FRAME.height / 2, FRAME.width / 2 / aspect) / FRAME.pixelsPerUnit;
+    halfHeight = Math.max((FRAME.height + HEADROOM) / 2, FRAME.width / 2 / aspect) / FRAME.pixelsPerUnit;
     Object.assign(camera, { left: -halfHeight * aspect, right: halfHeight * aspect, top: halfHeight, bottom: -halfHeight });
+    // Centre the view on the frame plus its headroom.
+    const yawRight = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
+    overview.crossVectors(direction, yawRight).multiplyScalar(HEADROOM / 2 / FRAME.pixelsPerUnit);
     controls.target.copy(overview);
     camera.position.copy(overview).addScaledVector(direction, 60);
     camera.zoom = 1;
