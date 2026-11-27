@@ -557,7 +557,6 @@ function refreshVersion() {
     chip.textContent = versionText;
     chip.title = pwaCopy.appVersion(versionText);
   }
-  $(".topbar-update-short").textContent = pwaCopy.update;
 }
 
 function refreshUpdateActions() {
@@ -570,8 +569,11 @@ function refreshUpdateActions() {
     if (busy) button.setAttribute("aria-disabled", "true");
     else button.removeAttribute("aria-disabled");
     button.setAttribute("aria-label", label);
-    const text = button.querySelector(".topbar-update-full") ?? button;
+    const text = button.querySelector(".topbar-update-full, .update-label") ?? button;
     if (text.textContent !== label) text.textContent = label;
+    // Narrow topbars show the icon with the target version; the full label stays the accessible name.
+    const short = button.querySelector(".topbar-update-short");
+    if (short) short.textContent = target ? pwaCopy.version(target) : "";
   }
 }
 

@@ -1,7 +1,7 @@
 import { localize, mountMarkup, t } from "../i18n/index.js";
-import { copyError, workerErrorKey } from "./copy.js";
+import { copyError, pwaCopy, workerErrorKey } from "./copy.js";
 import { createUpdateUi } from "./update-ui.js";
-import { classifyUpdate } from "./update-state.js";
+import { classifyUpdate, updateLabelVersion } from "./update-state.js";
 
 const REQUEST_TIMEOUT = 12000,
   ACTIVATION_TIMEOUT = 15000;
@@ -392,6 +392,8 @@ export function setupPwa(getGame) {
       timer: null,
     };
     flow = current;
+    const target = updateLabelVersion(state.updateVersion, __APP_VERSION__);
+    ui.setVersions(target ? `${pwaCopy.version(__APP_VERSION__)} → ${pwaCopy.version(target)}` : "");
     action.disabled = later.disabled = true;
     publish({ update: "preparing", error: null });
     ui.show("preparing", "pwa.preparingUpdate");

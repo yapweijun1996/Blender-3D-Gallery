@@ -1172,7 +1172,13 @@ body.game-page .demo-breadcrumb {
   }
 }
 /* The narrowest desktop row cannot hold full Malay labels without wrapping them. */
-@media (min-width: 901px) and (max-width: 1023px) {
+@media (min-width: 901px) and (max-width: 1099px) {
+  /* With an update offered, the palette button keeps only its swatch to make room. */
+  .header:has(.topbar-update:not([hidden])) .palette-trigger {
+    gap: 0;
+    font-size: 0;
+    padding-inline: 14px;
+  }
   .header .desktop-nav {
     gap: 12px;
   }
@@ -1368,23 +1374,92 @@ dialog {
   font-size: 13px;
   cursor: pointer;
 }
+/* The updater covers the whole screen; the opaque backdrop also covers the safe-area insets. */
 .pwa-update-dialog {
-  max-width: 520px;
-  padding: 28px;
-  background: var(--surface);
+  width: calc(100vw - var(--safe-left) - var(--safe-right));
+  max-width: none;
+  height: calc(100dvh - var(--safe-top) - var(--safe-bottom));
+  max-height: none;
+  margin: 0;
+  padding: 24px;
+  background: var(--background);
   color: var(--text);
-  border: 1px solid var(--control-line);
+  border: 0;
   text-align: center;
 }
+.pwa-update-dialog[open] {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+}
 .pwa-update-dialog::backdrop {
-  background: color-mix(in srgb, var(--scrim) 92.941%, transparent);
+  background: var(--background);
 }
 .pwa-update-mark {
-  display: block;
-  font-size: 46px;
-  line-height: 1;
+  flex: none;
+  width: min(140px, 36vw);
   color: var(--accent);
-  margin-bottom: 20px;
+  margin-bottom: 28px;
+}
+.pwa-update-mark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.pwa-ring-track {
+  stroke: var(--line);
+}
+.pwa-ring-arc,
+.pwa-ring-star {
+  transform-origin: 60px 60px;
+}
+.pwa-update-version {
+  margin-bottom: 12px;
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+/* A frozen partial arc would look stuck, so reduced motion keeps only the full track. */
+@media (prefers-reduced-motion: reduce) {
+  .pwa-ring-arc {
+    display: none;
+  }
+}
+.pwa-update-dialog[data-phase="error"] .pwa-ring-arc {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pwa-update-dialog[aria-busy="true"] .pwa-ring-arc {
+    animation: pwa-spin 1s linear infinite;
+  }
+  .pwa-update-dialog[aria-busy="true"] .pwa-ring-star {
+    animation: pwa-spin 4s linear infinite reverse;
+  }
+  @keyframes pwa-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+.update-icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.header .topbar-update,
+.menu-version .topbar-update {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.header .topbar-update {
+  min-width: 44px;
 }
 .pwa-update-title {
   font: 400 32px var(--display-font);
@@ -1434,8 +1509,15 @@ dialog {
   }
 }
 .pwa-update-progress {
+  flex: none;
+  max-width: 360px;
   overflow: hidden;
   background: var(--line);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pwa-update-progress {
+    display: none;
+  }
 }
 .pwa-update-progress::before {
   content: "";
@@ -1650,3 +1732,14 @@ dialog {
 .asset-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 6px; }
 .asset-tags span { padding: 4px 8px; border: 1px solid var(--line); border-radius: 99px; color: var(--tag-text); font-size: 10px; }
 .viewer-actions .viewer-download { padding: 10px 16px; border: 1px solid var(--accent); color: var(--accent); }
+/* The heading only receives focus so screen readers announce it; it is not a control. */
+.pwa-update-title:focus,
+.pwa-update-title:focus-visible {
+  outline: none;
+}
+/* With the wider update button, the tagline would wrap on mid-size phones. */
+@media (max-width: 559px) {
+  .header:has(.topbar-update:not([hidden])) .brand small {
+    display: none;
+  }
+}
