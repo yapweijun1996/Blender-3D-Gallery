@@ -431,7 +431,7 @@ dialog::backdrop {
   :is(.asset-image, .hero-frame) img {
     transition: filter 0.2s, opacity 0.25s;
   }
-  :is(.asset-image, .hero-frame):has(img[data-loading])::before {
+  :is(.asset-image, .hero-frame):has(img[data-loading][data-visible])::before {
     animation: poster-pulse 0.9s ease-in-out infinite alternate;
   }
   @keyframes poster-pulse {

@@ -34,6 +34,14 @@ export function element(tag, className, text) {
   if (text !== undefined) node.textContent = text;
   return node;
 }
+let posterObserver;
+// Only on-screen posters pulse: animating every pending card in the library drops frames.
+function watchPoster(image) {
+  posterObserver ??= new IntersectionObserver((entries) => {
+    for (const { target, isIntersecting } of entries) target.toggleAttribute("data-visible", isIntersecting);
+  });
+  posterObserver.observe(image);
+}
 export function poster(url, title, live = false) {
   const image = element("img");
   image.src = url;
@@ -47,11 +55,16 @@ export function poster(url, title, live = false) {
   image.loading = "lazy";
   // CSS shows the frame placeholder while this attribute is present.
   image.dataset.loading = "";
-  image.addEventListener("load", () => delete image.dataset.loading, { once: true });
+  watchPoster(image);
+  const settle = () => {
+    delete image.dataset.loading;
+    posterObserver.unobserve(image);
+  };
+  image.addEventListener("load", settle, { once: true });
   image.addEventListener(
     "error",
     () => {
-      delete image.dataset.loading;
+      settle();
       image.hidden = true;
       const frame = image.parentElement;
       frame.classList.add("poster-unavailable");
