@@ -1430,7 +1430,8 @@ dialog {
     display: none;
   }
 }
-.pwa-update-dialog[data-phase="error"] .pwa-ring-arc {
+/* Outcome screens are finished: nothing may still look like it is working. */
+.pwa-update-dialog[aria-busy="false"] .pwa-ring-arc {
   display: none;
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -1526,7 +1527,7 @@ dialog {
   width: 34%;
   background: var(--accent);
 }
-.pwa-update-dialog[data-phase="error"] .pwa-update-progress {
+.pwa-update-dialog[aria-busy="false"] .pwa-update-progress {
   display: none;
 }
 @media (prefers-reduced-motion: no-preference) {

@@ -691,6 +691,21 @@ try {
     },
   );
   await run(
+    "a finished update check shows no progress bar or spinning ring",
+    async (page) => {
+      await page.goto(server.url + "?page=demos");
+      await page.evaluate(() => navigator.serviceWorker.ready);
+      await page.reload();
+      await page.waitForFunction(() => navigator.serviceWorker.controller);
+      await page.locator(".header .topbar-update").click();
+      const loader = page.locator("#pwa-update-dialog[data-phase=latest]");
+      await loader.waitFor({ state: "visible", timeout: 30000 });
+      assert.equal(await loader.locator(".pwa-update-progress").isVisible(), false);
+      assert.equal(await loader.locator(".pwa-ring-arc").isVisible(), false);
+    },
+    { serviceWorkers: "allow" },
+  );
+  await run(
     "missing demo GLB and unknown route offer the waiting worker, then topbar Update opens the loader",
     async (page) => {
       const temp = await fs.mkdtemp(
