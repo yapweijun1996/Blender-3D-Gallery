@@ -38,6 +38,8 @@ try {
     const stats = await page.locator(".ch-stage").evaluate((el) => ({ calls: +el.dataset.calls, triangles: +el.dataset.triangles }));
     await page.waitForTimeout(600);
     await page.locator(".ch-stage").screenshot({ path: `${out}/overview-${width}.png` });
+    // Every module must actually be drawn: a broken transform would silently hide its triangles.
+    assert.ok(stats.triangles > 150_000, `all modules rendered (${stats.triangles})`);
     await page.locator('.ch-label[data-module="warehouse"]').click();
     assert.equal(await page.locator(".ch-panel h2").innerText(), messages.en["commerce.warehouse.label"]);
     assert.equal(await page.locator('.ch-label[data-module="warehouse"]').getAttribute("aria-pressed"), "true");

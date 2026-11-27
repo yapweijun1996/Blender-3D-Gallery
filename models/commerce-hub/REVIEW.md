@@ -74,3 +74,11 @@ were not re-reviewed. Shadows of moving parts refresh every sixth frame.
 
 Open against the new anchor: softer, brighter bloom; the delivery link is curved in the anchor; the shop roof
 unit is round with a divided roof there; the card network mark intentionally stays an original citrus disc.
+
+## Alignment to the composed anchor (0.4.1)
+
+The owner reported that placement did not match. The layout is now traced from the anchor in pixels (plinth
+edges, label centres, leader dots, link ends, the curved delivery link) with the camera at 30 degrees showing
+exactly the 1536x1024 frame, and the content of some plinths is resized to the drawn proportions. Checked with
+a 50% overlay at 1320x880. Remaining: some building shapes differ (warehouse, shop roof), and bloom is softer
+in the anchor.

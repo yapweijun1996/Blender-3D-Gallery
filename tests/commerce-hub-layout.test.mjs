@@ -18,11 +18,22 @@ test("placements turn every module towards the shared camera", () => {
   }
 });
 
+test("every module keeps its traced width and every label has a pin", () => {
+  for (const [place, module] of placements().map((place, i) => [place, MODULES[i]])) {
+    assert.ok(place.scale > 0.4 && place.scale < 1.3, place.id);
+    assert.ok(place.content.length === 2 && place.content.every(value => value > 0.5 && value <= 1), place.id);
+    if (module.id !== "bags") assert.equal(module.label.length + module.pin.length, 4);
+  }
+});
+
 test("links join known modules with segments between their edges", () => {
   const ids = new Set(MODULES.map(module => module.id));
   assert.equal(ids.size, 7);
   assert.equal(LINKS.length, 8);
   for (const [from, to] of LINKS) assert.ok(ids.has(from) && ids.has(to));
-  for (const { a, b } of linkSegments()) assert.ok(Math.hypot(b[0] - a[0], b[1] - a[1]) > 0.3);
+  for (const { points } of linkSegments()) {
+    const [a, b] = [points[0], points.at(-1)];
+    assert.ok(Math.hypot(b[0] - a[0], b[1] - a[1]) > 0.3);
+  }
   for (const place of placements()) assert.ok(place.scale > 0 && Number.isFinite(place.x + place.z + place.rotation));
 });

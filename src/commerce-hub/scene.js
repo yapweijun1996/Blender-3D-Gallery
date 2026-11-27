@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
-import { linkSegments } from "./layout.js";
+import { linkSegments, PLINTH_TOP } from "./layout.js";
 
 // Parts that move keep their own node; everything else is merged to cut draw calls.
 const MOVING = /^(Bag_|Truck_|Conveyor_Box_|Card_(Bottom|Middle|Top)$|Bar_|Output_Card$|Indicator$)/;
@@ -42,14 +42,23 @@ export function composeModules(places, models) {
     root.add(group);
     groups.set(place.id, group);
     const model = models.get(place.id);
-    for (const node of [...model.children]) group.add(node);
+    for (const node of [...model.children]) {
+      // Resize what stands on the plinth around the centre of its top, leaving plinth and floor glow alone.
+      if (!/^(Plinth_|Fx_ContactShadow$|Fx_FloorGlow$)/.test(node.name)) {
+        const [width, height] = place.content, size = new THREE.Vector3(width, height, width);
+        node.position.y -= PLINTH_TOP;
+        node.position.multiply(size).y += PLINTH_TOP;
+        node.scale.multiply(size);
+      }
+      group.add(node);
+    }
     group.updateMatrixWorld(true);
     boxes.set(place.id, new THREE.Box3().setFromCenterAndSize(
       new THREE.Vector3(place.x, 1.2 * place.scale, place.z),
       new THREE.Vector3(place.radius * 2, 2.4 * place.scale, place.radius * 2)));
     for (const node of [...group.children]) {
       if (MOVING.test(node.name)) {
-        parts.set(`${place.id}:${node.name}`, { node, home: node.position.clone() });
+        parts.set(`${place.id}:${node.name}`, { node, home: node.position.clone(), size: node.scale.x, height: node.scale.y });
         node.traverse(mesh => { if (mesh.isMesh && !mesh.material.transparent) mesh.castShadow = mesh.receiveShadow = true; });
         continue;
       }
@@ -85,18 +94,22 @@ export function composeModules(places, models) {
 }
 
 /** Flat glowing ribbons on the floor, with one travelling pulse per link. */
-export function createLinks(places) {
-  const group = new THREE.Group(), segments = linkSegments(places);
+export function createLinks() {
+  const group = new THREE.Group(), paths = linkSegments();
   const ribbon = (width, height, color, opacity) => {
     const positions = [], indices = [];
-    segments.forEach(({ a, b }, i) => {
-      const dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz);
-      const ox = -dz / length * width / 2, oz = dx / length * width / 2;
-      positions.push(a[0] + ox, height, a[1] + oz, a[0] - ox, height, a[1] - oz,
-        b[0] - ox, height, b[1] - oz, b[0] + ox, height, b[1] + oz);
-      const n = i * 4;
-      indices.push(n, n + 2, n + 1, n, n + 3, n + 2);
-    });
+    for (const { points } of paths) {
+      const first = positions.length / 3;
+      points.forEach(([x, z], i) => {
+        const [ax, az] = points[Math.max(0, i - 1)], [bx, bz] = points[Math.min(points.length - 1, i + 1)];
+        const length = Math.hypot(bx - ax, bz - az), ox = -(bz - az) / length * width / 2, oz = (bx - ax) / length * width / 2;
+        positions.push(x + ox, height, z + oz, x - ox, height, z - oz);
+        if (i) {
+          const n = first + (i - 1) * 2;
+          indices.push(n, n + 1, n + 2, n + 1, n + 3, n + 2);
+        }
+      });
+    }
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
     geometry.setIndex(indices);
@@ -104,12 +117,12 @@ export function createLinks(places) {
     mesh.renderOrder = 2;
     group.add(mesh);
   };
-  ribbon(0.56, 0.03, 0xffcf5c, 0.34);
-  ribbon(0.26, 0.035, 0xffd970, 0.6);
-  ribbon(0.11, 0.04, 0xfff6d2, 1);
+  ribbon(0.44, 0.03, 0xffcf5c, 0.3);
+  ribbon(0.2, 0.035, 0xffd970, 0.6);
+  ribbon(0.085, 0.04, 0xfff6d2, 1);
   // A glowing node marks where each link meets its plinth.
-  const ends = segments.flatMap(({ a, b }) => [a, b]);
-  for (const [radius, color, opacity, height] of [[0.34, 0xffcf5c, 0.4, 0.045], [0.16, 0xfff6d2, 1, 0.05]]) {
+  const ends = paths.flatMap(({ points }) => [points[0], points.at(-1)]);
+  for (const [radius, color, opacity, height] of [[0.24, 0xffcf5c, 0.4, 0.045], [0.11, 0xfff6d2, 1, 0.05]]) {
     const nodes = new THREE.InstancedMesh(new THREE.CircleGeometry(radius, 14).rotateX(-Math.PI / 2),
       new THREE.MeshBasicMaterial({ color, opacity, transparent: true, depthWrite: false }), ends.length);
     const at = new THREE.Matrix4();
@@ -118,16 +131,18 @@ export function createLinks(places) {
     nodes.frustumCulled = false;
     group.add(nodes);
   }
-  const pulses = new THREE.InstancedMesh(new THREE.CircleGeometry(0.17, 12).rotateX(-Math.PI / 2),
-    new THREE.MeshBasicMaterial({ color: 0xfff3cf, transparent: true, depthWrite: false }), segments.length);
+  const pulses = new THREE.InstancedMesh(new THREE.CircleGeometry(0.12, 12).rotateX(-Math.PI / 2),
+    new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, depthWrite: false }), paths.length);
   pulses.renderOrder = 3;
   pulses.frustumCulled = false;
   group.add(pulses);
   const matrix = new THREE.Matrix4();
   const update = time => {
-    segments.forEach(({ a, b }, i) => {
-      const t = (time * 0.32 + i * 0.137) % 1;
-      pulses.setMatrixAt(i, matrix.makeTranslation(a[0] + (b[0] - a[0]) * t, 0.06, a[1] + (b[1] - a[1]) * t));
+    paths.forEach(({ points }, i) => {
+      const t = (time * 0.32 + i * 0.137) % 1 * (points.length - 1);
+      const n = Math.min(points.length - 2, Math.floor(t)), k = t - n;
+      const [ax, az] = points[n], [bx, bz] = points[n + 1];
+      pulses.setMatrixAt(i, matrix.makeTranslation(ax + (bx - ax) * k, 0.06, az + (bz - az) * k));
     });
     pulses.instanceMatrix.needsUpdate = true;
   };
@@ -155,11 +170,11 @@ export function animateParts(parts, time) {
   ["Bottom", "Middle", "Top"].forEach((level, i) => move(`payment:Card_${level}`, 0, wave(1.2, i * 1.3) * 0.045, 0));
   ["Low", "Mid", "High"].forEach((level, i) => {
     const bar = parts.get(`analytics:Bar_${level}`);
-    if (bar) bar.node.scale.y = 1 + wave(0.8, i * 1.1) * 0.07;
+    if (bar) bar.node.scale.y = bar.height * (1 + wave(0.8, i * 1.1) * 0.07);
   });
   move("automation:Output_Card", 0, 0, wave(1.1) * 0.14);
   const light = parts.get("automation:Indicator");
-  if (light) light.node.scale.setScalar(1 + Math.abs(wave(3)) * 0.18);
+  if (light) light.node.scale.setScalar(light.size * (1 + Math.abs(wave(3)) * 0.18));
 }
 
 export function disposeTree(object) {

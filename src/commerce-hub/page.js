@@ -3,23 +3,20 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { localize, mountMarkup, t } from "../i18n/index.js";
-import { placements, VIEW_ELEVATION, VIEW_YAW } from "./layout.js";
+import { FRAME, placements, VIEW_ELEVATION, VIEW_YAW } from "./layout.js";
 import { animateParts, composeModules, createLinks, disposeTree } from "./scene.js";
 import "./style.css";
 
 const icon = paths => `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
-// Label height is in module units above the ground.
+// Label positions come from layout.js.
 const LABELS = Object.freeze({
-  shop: { height: 3.3, icon: icon('<path d="M4 9h16l-1-5H5zM5 9v11h14V9M9 20v-6h6v6"/>') },
-  warehouse: { height: 3.4, icon: icon('<path d="M12 3l9 5v8l-9 5-9-5V8zM3 8l9 5 9-5M12 13v8"/>') },
-  delivery: { height: 3.2, icon: icon('<path d="M3 6h11v11H3zM14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>') },
-  payment: { height: 2.2, icon: icon('<path d="M3 6h18v12H3zM3 10h18M7 15h4"/>') },
-  analytics: { height: 3.0, icon: icon('<path d="M5 20v-6M12 20V9M19 20V4"/>') },
-  automation: { height: 2.5, icon: icon('<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/><circle cx="12" cy="12" r="7"/>') },
+  shop: { icon: icon('<path d="M4 9h16l-1-5H5zM5 9v11h14V9M9 20v-6h6v6"/>') },
+  warehouse: { icon: icon('<path d="M12 3l9 5v8l-9 5-9-5V8zM3 8l9 5 9-5M12 13v8"/>') },
+  delivery: { icon: icon('<path d="M3 6h11v11H3zM14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>') },
+  payment: { icon: icon('<path d="M3 6h18v12H3zM3 10h18M7 15h4"/>') },
+  analytics: { icon: icon('<path d="M5 20v-6M12 20V9M19 20V4"/>') },
+  automation: { icon: icon('<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/><circle cx="12" cy="12" r="7"/>') },
 });
-// Length of the leader pin between a label and the point it names (matches style.css).
-const LEADER = 22;
-
 export async function mountCommerceHub(root, assets, signal) {
   if (signal.aborted) throw new DOMException("Navigation cancelled", "AbortError");
   mountMarkup(root, `<section class="commerce-hub"><header class="ch-heading"><h1 data-i18n="commerce.title"></h1><p data-i18n="commerce.intro"></p></header><div class="ch-stage" aria-busy="true"><div class="ch-labels"></div><p class="ch-loading" role="status"></p></div><div class="ch-panel" aria-live="polite"><div><h2></h2><p class="ch-text"></p></div><button type="button" class="ch-reset" data-i18n="commerce.reset" disabled></button></div><p class="ch-hint" data-i18n="commerce.hint"></p></section>`);
@@ -35,6 +32,12 @@ export async function mountCommerceHub(root, assets, signal) {
   const yaw = VIEW_YAW * Math.PI / 180, elevation = VIEW_ELEVATION * Math.PI / 180;
   const direction = new THREE.Vector3(Math.sin(yaw) * Math.cos(elevation), Math.sin(elevation), Math.cos(yaw) * Math.cos(elevation));
   const overview = new THREE.Vector3();
+  const screenRight = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
+  const screenUp = new THREE.Vector3().crossVectors(direction, screenRight);
+  // The world point behind an anchor pixel, at the same view depth as its module.
+  const framePoint = ([x, y], place) => screenRight.clone().multiplyScalar((x - FRAME.width / 2) / FRAME.pixelsPerUnit)
+    .addScaledVector(screenUp, (FRAME.height / 2 - y) / FRAME.pixelsPerUnit)
+    .addScaledVector(direction, new THREE.Vector3(place.x, 0, place.z).dot(direction));
 
   const showInfo = () => {
     localize($(".ch-panel h2"), selected ? `commerce.${selected}.label` : "commerce.overview.title");
@@ -45,15 +48,21 @@ export async function mountCommerceHub(root, assets, signal) {
 
   const placeLabels = () => {
     const width = stage.clientWidth, height = stage.clientHeight;
+    const toScreen = point => {
+      const projected = point.clone().project(camera);
+      return { x: (projected.x + 1) / 2 * width, y: (1 - projected.y) / 2 * height, inside: Math.abs(projected.x) <= 1 && Math.abs(projected.y) <= 1.1 };
+    };
     for (const [id, button] of buttons) {
       const place = places.find(item => item.id === id);
-      const point = new THREE.Vector3(place.x, LABELS[id].height * place.scale, place.z).project(camera);
+      const pin = toScreen(framePoint(place.pin, place)), label = toScreen(framePoint(place.label, place));
       // While zoomed on one module, labels of off-screen modules are hidden instead of piling up at the edges.
-      button.hidden = selected !== null && (Math.abs(point.x) > 1 || point.y < -1 || point.y > 1.15);
+      button.hidden = selected !== null && !pin.inside;
       const half = button.offsetWidth / 2, tall = button.offsetHeight;
-      const x = Math.min(width - half - 4, Math.max(half + 4, (point.x + 1) / 2 * width));
-      const y = Math.min(height - tall - LEADER, Math.max(4, (1 - point.y) / 2 * height - tall - LEADER));
+      const x = Math.min(width - half - 2, Math.max(half + 2, label.x));
+      const y = Math.min(height - tall - 2, Math.max(2, label.y - tall / 2));
       button.style.transform = `translate(${Math.round(x - half)}px, ${Math.round(y)}px)`;
+      button.style.setProperty("--leader", `${Math.max(8, Math.round(pin.y - y - tall + 4))}px`);
+      button.style.setProperty("--leader-shift", `${Math.round(pin.x - x)}px`);
     }
   };
 
@@ -110,19 +119,10 @@ export async function mountCommerceHub(root, assets, signal) {
     const width = stage.clientWidth, height = stage.clientHeight;
     if (!width || !height || !composed) return;
     renderer.setSize(width, height, false);
-    const right = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
-    const up = new THREE.Vector3().crossVectors(direction, right);
-    const bounds = new THREE.Box2();
-    for (const box of composed.boxes.values())
-      for (let i = 0; i < 8; i++) {
-        const corner = new THREE.Vector3(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z);
-        bounds.expandByPoint(new THREE.Vector2(corner.dot(right), corner.dot(up)));
-      }
-    const size = bounds.getSize(new THREE.Vector2()), middle = bounds.getCenter(new THREE.Vector2());
+    // Overview shows exactly the anchor frame; other aspect ratios only add margin around it.
     const aspect = width / height;
-    halfHeight = Math.max(size.y / 2, size.x / 2 / aspect) * 1.02;
+    halfHeight = Math.max(FRAME.height / 2, FRAME.width / 2 / aspect) / FRAME.pixelsPerUnit;
     Object.assign(camera, { left: -halfHeight * aspect, right: halfHeight * aspect, top: halfHeight, bottom: -halfHeight });
-    overview.set(0, 0, 0).addScaledVector(right, middle.x).addScaledVector(up, middle.y);
     controls.target.copy(overview);
     camera.position.copy(overview).addScaledVector(direction, 60);
     camera.zoom = 1;
@@ -189,7 +189,7 @@ export async function mountCommerceHub(root, assets, signal) {
       if (failed) throw failed.reason;
       composed = composeModules(places, models);
       models.clear();
-      links = createLinks(places);
+      links = createLinks();
       scene.add(composed.root, links.group);
       renderer.shadowMap.needsUpdate = true;
       started = performance.now();
